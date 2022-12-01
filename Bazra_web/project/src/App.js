@@ -1,8 +1,8 @@
 import React , {Component} from 'react'
-import {FaHome} from 'react-icons/fa'
+import {Routes, Route, Link, useNavigate, Navigate, Router} from "react-router-dom";
+import {FaHome} from 'react-icons/fa';
 import { IconName } from "react-icons/ai";
 import SignIn from './components/Pages/Sign in page/SignIn';
-import Comp from './components/Pages/Dashboard/Dashboard';
 import Vehicle_Registration from './components/Pages/Registration/Vehicle_Registration';
 import Company_registration from './components/Pages/Registration/Company_registration';
 import Users from './components/Pages/Users/Users';
@@ -11,11 +11,14 @@ class App extends Component{
   render(){
   return (
     <div className="App">
-         {/* <SignIn></SignIn> */}
-         <Dashboard></Dashboard>
-         {/* <Company_registration></Company_registration> */}
-         {/* <Vehicle_Registration></Vehicle_Registration> */}
-         {/* <Users></Users> */}
+      
+      <Routes>
+        <Route path='/' element={<SignIn />}></Route>
+        <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route path="/users" element={<Users />}></Route>
+        <Route path="/Company_registration" element={<Company_registration />}></Route>
+        <Route path="/vehicle_registration" element={<Vehicle_Registration />}></Route>
+      </Routes>
 
     </div>
     

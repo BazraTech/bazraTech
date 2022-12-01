@@ -227,6 +227,9 @@ body {
     margin-top: 200px;
     margin-left: 55%;
 }
+.hide {
+    display: none;
+}
 
 .search p {
     display: flex;
@@ -258,6 +261,7 @@ body {
     background-color: rgb(67, 67, 67);
     border: none;
 }
+
 
 /* ------------------ filter ------------------- */
 
@@ -367,7 +371,7 @@ table thead tr {
         width: 70%;
         margin-left: 30px;
         position: absolute;
-        padding-left: 120px;
+        padding-left: 25%;
     }
 
     .search {
@@ -396,6 +400,16 @@ table thead tr {
 }
 
 @media screen and (max-width: 700px) {
+    .contents {
+        margin-top: 40px;
+        display: grid;
+        grid-template-columns: 100px;
+        justify-content: space-between;
+        width: 70%;
+        margin-left: 0px;
+        position: absolute;
+        padding-left: 20%;
+    }
 
     .user {
         position: absolute;
@@ -405,10 +419,6 @@ table thead tr {
         background-color: rgb(244, 244, 244);
         color: var(--black1);
         top: 75px;
-    }
-
-    .contents {
-        padding-left: 100px;
     }
 
     .search {
@@ -437,8 +447,16 @@ table thead tr {
 
 @media screen and (max-width: 600px) {
     .contents {
-        padding-left: 60px;
+        margin-top: 40px;
+        display: grid;
+        grid-template-columns: 100px;
+        justify-content: space-between;
+        width: 70%;
+        margin-left: 0px;
+        position: absolute;
+        padding-left: 17%;
     }
+
     .search {
         margin-top: 550px;
         margin-right: 10%;
@@ -448,8 +466,16 @@ table thead tr {
 }
 
 @media screen and (max-width: 500px) {
+
     .contents {
-        padding-left: 20px;
+        margin-top: 40px;
+        display: grid;
+        grid-template-columns: 100px;
+        justify-content: space-between;
+        width: 70%;
+        margin-left: 0px;
+        position: absolute;
+        padding-left: 8%;
     }
     .search {
         margin-top: 550px;

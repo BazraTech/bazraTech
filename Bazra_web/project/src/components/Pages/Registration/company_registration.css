@@ -234,25 +234,7 @@ body {
 }
 
 /* ------------------- button --------------------- */
-.button {
-  margin-top: 50px;
-  display: flex;
-  width: 100%;
-  column-gap: 46%;
-  justify-content: center;
 
-}
-
-.button .edit {
-  background-color: rgb(54, 57, 63);
-  width: 30%;
-  border: none;
-  padding: 10px;
-  color: var(--white);
-  border-radius: 10px;
-  margin-right: 150px;
-  transition: 0.5s;
-}
 
 .button .edit:hover {
   transform: scale(1.03);

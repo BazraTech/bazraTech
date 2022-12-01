@@ -104,12 +104,12 @@ body {
    width: calc(100% - 100px);
    left: 100px;
    min-height: 88vh;
-   background-color: rgb(248, 246, 246);
+   background-color: rgb(235, 235, 235);
    color: var(--black1);
    top: 75px;
 }
 
-.contents {
+.contentss {
    margin-top: 40px;
    display: grid;
    grid-template-columns: 100px 100px 100px;
@@ -121,18 +121,19 @@ body {
 
 .vehicle {
    width: 300px;
-   background-color: rgb(26, 131, 150);
+   background-color: rgb(255, 255, 255);
    height: 120px;
    margin-bottom: 50px;
-   border-radius: 10px;
+   border-radius: 10px 0px 0px 10px;
    text-align: center;
    transition: 0.3s;
    padding: 10%;
-   box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+   border-right: 8px solid #00802b;
+   box-shadow: 1px 4px 4px -4px rgb(0, 0, 0);
 }
 
 .vehicle h4 {
-   color: var(--white);
+   color:#00802b;
    padding: 15px;
 }
 
@@ -142,18 +143,19 @@ body {
 
 .users {
    width: 300px;
-   background-color: rgb(20, 148, 37);
+   background-color: rgb(255, 255, 255);
    height: 120px;
    margin-bottom: 50px;
-   border-radius: 10px;
+   border-radius: 10px 0px 0px 0px;
    text-align: center;
    transition: 0.3s;
    padding: 10%;
-   box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+   border-right: 8px solid #b35900;
+   box-shadow: 1px 4px 4px -4px rgb(0, 0, 0);
 }
 
 .users h4 {
-   color: var(--white);
+   color: #b35900;
    padding: 10px;
 }
 
@@ -163,18 +165,19 @@ body {
 
 .monitor-vehicle {
    width: 300px;
-   background-color: rgb(26, 131, 150);
+   background-color: rgb(255, 255, 255);
    height: 120px;
    margin-bottom: 50px;
-   border-radius: 10px;
+   border-radius: 10px 0px 0px 10px;
    text-align: center;
    transition: 0.3s;
    padding: 10%;
-   box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+   border-right: 8px solid #002e4d;
+   box-shadow: 1px 4px 4px -4px rgb(0, 0, 0);
 }
 
 .monitor-vehicle h4 {
-   color: var(--white);
+   color: #002e4d;
    padding: 10px;
 }
 
@@ -184,18 +187,19 @@ body {
 
 .alert {
    width: 300px;
-   background-color: rgb(16, 102, 66);
+   background-color: rgb(255, 255, 255);
    height: 120px;
    margin-bottom: 50px;
-   border-radius: 10px;
+   border-radius: 10px 0px 0px 10px;
    text-align: center;
    transition: 0.3s;
    padding: 10%;
-   box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+   border-right: 8px solid #006666;
+   box-shadow: 1px 4px 4px -4px rgb(0, 0, 0);
 }
 
 .alert h4 {
-   color: var(--white);
+   color: #006666;
    padding: 10px;
 }
 
@@ -205,18 +209,19 @@ body {
 
 .registration {
    width: 300px;
-   background-color: rgb(23, 134, 129);
+   background-color: rgb(255, 255, 255);
    height: 120px;
    margin-bottom: 50px;
-   border-radius: 10px;
+   border-radius: 10px 0px 0px 10px;
    text-align: center;
    transition: 0.3s;
    padding: 10%;
-   box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+   border-right: 8px solid #009999;
+   box-shadow: 1px 4px 4px -4px rgb(0, 0, 0);
 }
 
 .registration h4 {
-   color: var(--white);
+   color: #009999;
    padding: 10px;
 }
 
@@ -226,18 +231,19 @@ body {
 
 .communication {
    width: 300px;
-   background-color: rgb(15, 85, 189);
+   background-color: rgb(255, 255, 255);
    height: 120px;
    margin-bottom: 50px;
-   border-radius: 10px;
+   border-radius: 10px 0px 0px 10px;
    text-align: center;
    transition: 0.3s;
    padding: 10%;
-   box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+   border-right: 8px solid #005c99;
+   box-shadow: 1px 4px 4px -4px rgb(0, 0, 0);
 }
 
 .communication h4 {
-   color: var(--white);
+   color: #005c99;
    padding: 10px;
 }
 
@@ -247,18 +253,19 @@ body {
 
 .report {
    width: 300px;
-   background-color: rgb(201, 55, 55);
+   background-color: rgb(255, 255, 255);
    height: 120px;
    margin-bottom: 50px;
-   border-radius: 10px;
+   border-radius: 10px 0px 0px 10px;
    text-align: center;
    transition: 0.3s;
    padding: 10%;
-   box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+   border-right: 8px solid #ff0000;
+   box-shadow: 1px 4px 4px -4px rgb(0, 0, 0);
 }
 
 .report h4 {
-   color: var(--white);
+   color: #ff0000;
    padding: 10px;
 }
 
@@ -268,18 +275,19 @@ body {
 
 .tracking {
    width: 300px;
-   background-color: rgb(105, 105, 105);
+   background-color: rgb(255, 255, 255);
    height: 120px;
    margin-bottom: 50px;
-   border-radius: 10px;
+   border-radius: 10px 0px 0px 10px;
    text-align: center;
    transition: 0.3s;
    padding: 10%;
-   box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+   border-right: 8px solid #404040;
+   box-shadow: 1px 4px 4px -4px rgb(0, 0, 0);
 }
 
 .tracking h4 {
-   color: var(--white);
+   color: #404040;
    padding: 10px;
 }
 

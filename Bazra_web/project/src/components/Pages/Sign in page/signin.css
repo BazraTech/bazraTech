@@ -1,13 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 *{
-	padding: 0;
-	margin: 0;
-	box-sizing: border-box;
-}
-
-body{
-	height: 100vh;
-	width: 100%;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
 .container{
@@ -17,7 +13,7 @@ body{
 	display: flex;
 	justify-content: center;
 	padding: 20px 100px;
-	box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
+
 }
 .contact-box{
 	max-width: 1000px;
@@ -78,9 +74,15 @@ textarea{
 }
 .forget{
     color: #10783b;
-    margin-left: 270px;
+    margin-left: 190px;
     text-decoration: none;   
 }
+
+.validate_text{
+    color: red;
+    font-size: 13px;
+}
+  
 
 .btn{
 	width: 40%;
@@ -92,7 +94,7 @@ textarea{
 	cursor: pointer;
 	transition: .3s;
     border-radius: 10px;
-    margin-left: 150px;
+	margin-left: 30%;
     margin-top: 20px;
     height: 40px;
     transition: 0.5s;
@@ -101,29 +103,107 @@ textarea{
    transform: scale(1.1);
 
 }
+
+
 @media screen and (max-width: 880px){
 	.contact-box{
 		grid-template-columns: 1fr;
 	}
+	
 	.left{
 		height: 220px;
 		width: 280px;
 		justify-content: center;
 		position: auto;
+		border-right: solid 0px rgb(0, 0, 0);
+		margin-left: 23%;
 	}
     .forget{
-        text-align: right;
         color: #10783b;
-        margin-left: 40px;
-        position: relative;
+        margin-left: -10px;
+		position: absolute;
+		margin-top: 5px;
+		margin-left: 100px;
     }
     
     .btn{
-        margin-left: 55px;
-        margin-top: 20px;
+        margin-left: 30%;
+        margin-top: 50px;
         position: relative;
 		font-size: 15px;
     }
     
+}
+
+@media screen and (max-width: 700px){
+	.contact-box{
+		grid-template-columns: 1fr;
+	}
+	
+	.left{
+		height: 220px;
+		width: 280px;
+		justify-content: center;
+		position: auto;
+		border-right: solid 0px rgb(0, 0, 0);
+		margin-left: 18%;
+	}
+    .forget{
+        color: #10783b;
+        margin-left: -10px;
+		position: absolute;
+		margin-top: 5px;
+		margin-left: 70px;
+    }
+    
+    .btn{
+        margin-left: 20%;
+        margin-top: 50px;
+        position: relative;
+		font-size: 15px;
+		width: 50%;
+    }
+    
+}
+
+@media screen and (max-width: 500px){
+	.contact-box{
+		grid-template-columns: 1fr;
+	}
+	
+	.left{
+		height: 220px;
+		width: 280px;
+		justify-content: center;
+		position: auto;
+		border-right: solid 0px rgb(0, 0, 0);
+		margin-left: 8%;
+	}
+    .forget{
+        color: #10783b;
+        margin-left: -10px;
+		position: absolute;
+		margin-top: 5px;
+		margin-left: 70px;
+    }
+    
+    .btn{
+        margin-left: 1%;
+        margin-top: 50px;
+        position: relative;
+		font-size: 15px;
+		width: 100%;
+    }
+    .field{
+		width: 140%;
+		border: none;
+		outline: none;
+		background-color: rgb(255, 255, 255);
+		padding: 0.6rem 1rem;
+		font-size: 1.1rem;
+		margin-bottom: 22px;
+		transition: .3s;
+		border-bottom: solid 1px #10783b; 
+	}
 }
 

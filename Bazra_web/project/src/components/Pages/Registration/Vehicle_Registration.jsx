@@ -13,6 +13,7 @@ import { AiFillSetting } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import { FaStarOfLife } from 'react-icons/fa';
 import './Vehicle_registration.css';
+import { Link } from 'react-router-dom';
 
 export default function () {
   return (
@@ -23,7 +24,7 @@ export default function () {
       <div className="navigation">
         <ul>
           <li>
-            <p><FaHome size="2rem" color='white'></FaHome></p>
+            <Link to="/dashboard"> <p><FaHome size="2rem" color='white'></FaHome></p></Link>
           </li>
           <li>
             <p><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p>
@@ -35,7 +36,7 @@ export default function () {
             <p><MdMonitor size="2rem" color='white'></MdMonitor></p>
           </li>
           <li>
-            <p><FaUsers size="2rem" color='white'></FaUsers></p>
+            <Link to="/users">  <p><FaUsers size="2rem" color='white'></FaUsers></p></Link>
           </li>
           <li>
             <p><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
@@ -44,7 +45,7 @@ export default function () {
             <p><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p>
           </li>
           <li>
-            <p><FaRegIdCard size="1.8rem" color='white'></FaRegIdCard></p>
+            <Link to="/Company_registration"> <p><FaRegIdCard size="1.8rem" color='#00cc44'></FaRegIdCard></p></Link>
           </li>
           <li>
             <p><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>

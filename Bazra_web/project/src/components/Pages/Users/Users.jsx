@@ -18,9 +18,39 @@ import { AiFillCaretDown } from "react-icons/ai";
 import { GrFormNext } from "react-icons/gr";
 import { GrFormPrevious } from "react-icons/gr";
 import './users.css';
+import { Link } from 'react-router-dom';
+
 
 export default function () {
+
+    function tableSearch() {
+
+        console.log("nandu");
+        let input, filter, table, tr, td, txtValue;
+
+        console.log("nandu");
+        //Intialising Variables
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (let i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+
+    }
+
     return (
+
         <div className="containerr">
 
             {/*---------------navigation---------------*/}
@@ -28,7 +58,7 @@ export default function () {
             <div className="navigation">
                 <ul>
                     <li>
-                        <p><FaHome size="2rem" color='white'></FaHome></p>
+                        <Link to="/dashboard"> <p><FaHome size="2rem" color='white'></FaHome></p></Link>
                     </li>
                     <li>
                         <p><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p>
@@ -40,7 +70,7 @@ export default function () {
                         <p><MdMonitor size="2rem" color='white'></MdMonitor></p>
                     </li>
                     <li>
-                        <p><FaUsers size="2rem" color='white'></FaUsers></p>
+                        <Link to="/users"> <p><FaUsers size="2rem" color='#00cc44'></FaUsers></p></Link>
                     </li>
                     <li>
                         <p><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
@@ -49,7 +79,7 @@ export default function () {
                         <p><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p>
                     </li>
                     <li>
-                        <p><FaRegIdCard size="1.8rem" color='white'></FaRegIdCard></p>
+                        <Link to="/Company_registration"> <p><FaRegIdCard size="1.8rem" color='white'></FaRegIdCard></p></Link>
                     </li>
                     <li>
                         <p><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
@@ -91,10 +121,12 @@ export default function () {
                     </div>
                 </div>
 
+                {/* --------------- search --------------- */}
+
                 <div className='search'>
                     <p>
                         <BsSearch className='icn' size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                        <input type="search" placeholder='Search' ></input>
+                        <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
                         <button>Search</button>
                     </p>
                 </div>
@@ -106,13 +138,14 @@ export default function () {
                 </div>
 
                 {/* --------------------- Table ------------------- */}
-                <div className='table'>
-                    <table>
+                <div className='table' id='myTable'>
+                    <table class="table" id="myTable" data-filter-control="true" data-show-search-clear-button="true">
+
                         <thead>
                             <tr>
                                 <th>User</th>
                                 <th>Company ID</th>
-                                <th>Company NAme</th>
+                                <th>Company Name</th>
                                 <th>Number of Vehicle</th>
                                 <th>Number of Driver</th>
                                 <th>Status</th>
@@ -122,7 +155,7 @@ export default function () {
                         <tbody>
                             <tr className='active_row'>
                                 <td>User</td>
-                                <td>BA 000001</td>
+                                <td>BA 000002</td>
                                 <td>Bazra Motors</td>
                                 <td>40</td>
                                 <td>40</td>
@@ -140,7 +173,7 @@ export default function () {
                             </tr>
                             <tr className='active_row'>
                                 <td>User</td>
-                                <td>BA 000001</td>
+                                <td>BA 000002</td>
                                 <td>Bazra Motors</td>
                                 <td>40</td>
                                 <td>40</td>
@@ -158,7 +191,7 @@ export default function () {
                             </tr>
                             <tr className='active_row'>
                                 <td>User</td>
-                                <td>BA 000001</td>
+                                <td>BA 000002</td>
                                 <td>Bazra Motors</td>
                                 <td>40</td>
                                 <td>40</td>
@@ -176,7 +209,7 @@ export default function () {
                             </tr>
                             <tr className='active_row'>
                                 <td>User</td>
-                                <td>BA 000001</td>
+                                <td>BA 000002</td>
                                 <td>Bazra Motors</td>
                                 <td>40</td>
                                 <td>40</td>
@@ -184,6 +217,7 @@ export default function () {
                                 <td>Edit</td>
                             </tr>
                         </tbody>
+
                     </table>
                 </div>
                 <div className='page'>
@@ -194,6 +228,6 @@ export default function () {
                     <p><GrFormNext className='next' size="1rem" color='rgb(63, 63, 63)'></GrFormNext></p>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
