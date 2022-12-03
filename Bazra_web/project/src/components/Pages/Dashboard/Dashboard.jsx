@@ -74,7 +74,7 @@ export default function () {
                 <div className='contentss'>
                     <div className='vehicle'>
                         <h4>Total Number of Vehicles</h4>
-                        <AiFillCar size="3rem" color="#00802b"></AiFillCar>
+                        <AiFillCar size="3rem" color="#006666"></AiFillCar>
                     </div>
                     <div className='users'>
                         <h4>Comunication</h4>
@@ -86,7 +86,7 @@ export default function () {
                     </div>
                     <div className='alert'>
                         <h4>Registration</h4>
-                        <FaRegIdCard size="3rem" color='#006666'></FaRegIdCard>
+                        <FaRegIdCard size="3rem" color='#00802b'></FaRegIdCard>
                     </div>
                     <div className='registration'>
                         <h4>Monitor Vehicles</h4>

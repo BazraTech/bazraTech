@@ -254,7 +254,7 @@ export default function Company_registration() {
 
                     </div>
                     <div className='button'>
-                        <button className='edit'>Save and Continue</button>
+                    <Link to = "/vehicle_registration"><button className='edit'>Save and Continue</button></Link>
                     </div>
 
 

@@ -15,7 +15,7 @@ import { FaStarOfLife } from 'react-icons/fa';
 import './Vehicle_registration.css';
 import { Link } from 'react-router-dom';
 
-export default function () {
+export default function Vehicle_Registration() {
   return (
     <div className="containerr">
 

@@ -11,13 +11,15 @@ import { BsFillChatDotsFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
-import { FaWarehouse } from "react-icons/fa";
+import { FaRoute } from "react-icons/fa";
 import { BsSearch } from "react-icons/bs";
 import { AiFillFilter } from "react-icons/ai";
 import { AiFillCaretDown } from "react-icons/ai";
 import { GrFormNext } from "react-icons/gr";
 import { GrFormPrevious } from "react-icons/gr";
-import './users.css';
+import { FaParking } from "react-icons/fa";
+import { GrSettingsOption } from "react-icons/gr";
+import './detail.css';
 import { Link } from 'react-router-dom';
 
 
@@ -44,6 +46,7 @@ export default function () {
                 }
             }
         }
+
     }
 
     return (
@@ -58,7 +61,7 @@ export default function () {
                         <Link to="/dashboard"> <p><FaHome size="2rem" color='white'></FaHome></p></Link>
                     </li>
                     <li>
-                        <p><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p>
+                        <p><AiFillCar size="2rem" color='white'></AiFillCar></p>
                     </li>
                     <li>
                         <p><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
@@ -102,19 +105,23 @@ export default function () {
             {/* --------------- users --------------- */}
 
             <div className='user'>
-                <div className='contents'>
-                    <div className='total_users'>
-                        <h4>Total Users</h4>
-                        <p><FaUsers size="2.3rem" color='black'></FaUsers><b>100</b></p>
+                <div className='detail'>
+                    <div className='tootal_vehicle'>
+                        <h4>Total Vehicle</h4>
+                        <p><AiFillCar size="2.3rem" color='black'></AiFillCar><b>10</b></p>
                     </div>
                     <div className='company'>
-                        <h4>Company</h4>
-                        <p><FaWarehouse size="2.2rem" color='black'></FaWarehouse><b>100</b></p>
+                        <h4>On Route</h4>
+                        <p><FaRoute size="2.2rem" color='black'></FaRoute><b>10</b></p>
 
                     </div>
                     <div className='individual'>
-                        <h4>Individual</h4>
-                        <p><FaUserAlt size="2rem" color='black'></FaUserAlt><b>100</b></p>
+                        <h4>Parked</h4>
+                        <p><FaParking size="2rem" color='black'></FaParking><b>10</b></p>
+                    </div>
+                    <div className='maintenance'>
+                        <h4>Maintenance</h4>
+                        <p><GrSettingsOption size="2rem" color='black'></GrSettingsOption><b>10</b></p>
                     </div>
                 </div>
 
@@ -127,7 +134,7 @@ export default function () {
                         <button>Search</button>
                     </p>
                 </div>
-             
+
                 <div className='filter'>
                     <p>
                         <AiFillFilter className='fil' size="0.8rem" color='rgb(63, 63, 63)'></AiFillFilter>
@@ -136,95 +143,106 @@ export default function () {
                 </div>
 
                 {/* --------------------- Table ------------------- */}
-                <div className='tables' id='myTable'>
-                    <table class="table" id="myTable">
+                <div className='table' id='myTable'>
+                    <h2>On Route</h2>
+                    <table class="table" id="myTable" data-filter-control="true" data-show-search-clear-button="true">
 
                         <thead>
                             <tr>
-                                <th>User</th>
-                                <th>Company ID</th>
-                                <th>Company Name</th>
-                                <th>Number of Vehicle</th>
-                                <th>Number of Driver</th>
-                                <th>Status</th>
-                                <th>Detail</th>
-                                <th>Edit</th>
+                                <th>Profile</th>
+                                <th>Assigned Deriver</th>
+                                <th>Vehicle ID</th>
+                                <th>Vehicle Type</th>
+                                <th>Plate Number</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr className='active_row'>
-                               
-                                <td>User</td>
+                                <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
+                                <td>Abebe Alemu</td>
                                 <td>BA 000002</td>
-                                <td>BBazra Motors</td>
-                                <td>40</td>
-                                <td>40</td>
-                                <td>Active</td>
-                                <td><Link to = "/user_detail"><button>Detail</button></Link></td>
-                                <td>Edit</td>
+                                <td>Long Carrier</td>
+                                <td>Et 3 B23476</td>
                             </tr>
                             <tr>
-                                <td>User</td>
-                                <td>BA 000001</td>
-                                <td>Bazra Motors</td>
-                                <td>40</td>
-                                <td>40</td>
-                                <td>Active</td>
-                                <td><Link to = "/user_detail"><button>Detail</button></Link></td>
-                                <td>Edit</td>
+                            <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
+                                <td>Abebe Alemu</td>
+                                <td>BA 000002</td>
+                                <td>Long Carrier</td>
+                                <td>Et 3 B23476</td>
+
                             </tr>
                             <tr className='active_row'>
-                                <td>User</td>
+                            <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
+                                <td>Abebe Alemu</td>
                                 <td>BA 000002</td>
-                                <td>Bazra Motors</td>
-                                <td>40</td>
-                                <td>40</td>
-                                <td>Active</td>
-                                <td><Link to = "/user_detail"><button>Detail</button></Link></td>
-                                <td>Edit</td>
-                            </tr>
-                            <tr>
-                                <td>User</td>
-                                <td>BA 000001</td>
-                                <td>Bazra Motors</td>
-                                <td>40</td>
-                                <td>40</td>
-                                <td>Active</td> 
-                                <td><Link to = "/user_detail"><button>Detail</button></Link></td>
-                                <td>Edit</td>
-                            </tr>
-                            <tr className='active_row'>
-                                <td>User</td>
-                                <td>BA 000002</td>
-                                <td>Bazra Motors</td>
-                                <td>40</td>
-                                <td>40</td>
-                                <td>Active</td>
-                                <td><Link to = "/user_detail"><button>Detail</button></Link></td>
-                                <td>Edit</td>
-                            </tr>
-                            <tr>
-                                <td>User</td>
-                                <td>BA 000001</td>
-                                <td>Bazra Motors</td>
-                                <td>40</td>
-                                <td>40</td>
-                                <td>Active</td>
-                                <td><Link to = "/user_detail"><button>Detail</button></Link></td>
-                                <td>Edit</td>
-                            </tr>
-                            <tr className='active_row'>
-                                <td>User</td>
-                                <td>BA 000002</td>
-                                <td>Bazra Motors</td>
-                                <td>40</td>
-                                <td>40</td>
-                                <td>Active</td>
-                                <td><Link to = "/user_detail"><button>Detail</button></Link></td>
-                                <td>Edit</td>
+                                <td>Long Carrier</td>
+                                <td>Et 3 B23476</td>
+
                             </tr>
                         </tbody>
 
+                    </table>
+                    <h2>Parked</h2>
+                    <table class="table" id="myTable" data-filter-control="true" data-show-search-clear-button="true">
+
+                    <thead>
+                            <tr>
+                                <th>Profile</th>
+                                <th>Assigned Deriver</th>
+                                <th>Vehicle ID</th>
+                                <th>Vehicle Type</th>
+                                <th>Plate Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr className='active_row'>
+                            <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
+                                <td>Abebe Alemu</td>
+                                <td>BA 000002</td>
+                                <td>Long Carrier</td>
+                                <td>Et 3 B23476</td>
+                            </tr>
+                            <tr>
+                            <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
+                                <td>Abebe Alemu</td>
+                                <td>BA 000002</td>
+                                <td>Long Carrier</td>
+                                <td>Et 3 B23476</td>
+
+                            </tr>
+                        </tbody>
+
+                    </table>
+                    <h2 className='topic'>Maintenace</h2>
+                    <table class="table" id="myTable" data-filter-control="true" data-show-search-clear-button="true">
+
+                    <thead>
+                            <tr>
+                                <th>Profile</th>
+                                <th>Assigned Deriver</th>
+                                <th>Vehicle ID</th>
+                                <th>Vehicle Type</th>
+                                <th>Plate Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr className='active_row'>
+                            <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
+                                <td>Abebe Alemu</td>
+                                <td>BA 000002</td>
+                                <td>Long Carrier</td>
+                                <td>Et 3 B23476</td>
+                            </tr>
+                            <tr>
+                            <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
+                                <td>Abebe Alemu</td>
+                                <td>BA 000002</td>
+                                <td>Long Carrier</td>
+                                <td>Et 3 B23476</td>
+
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 <div className='page'>

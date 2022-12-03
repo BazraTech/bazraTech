@@ -115,20 +115,20 @@ body {
     top: 75px;
 }
 
-.contents {
+.detail {
     margin-top: 40px;
     display: grid;
-    grid-template-columns: 100px 100px 100px;
+    grid-template-columns: 50px 50px 50px 50px;
     justify-content: space-between;
     width: 70%;
     margin-left: 90px;
     position: absolute;
 }
 
-.total_users {
-    width: 300px;
+.tootal_vehicle {
+    width: 240px;
     background-color: rgb(255, 255, 255);
-    height: 120px;
+    height: 115px;
     margin-bottom: 50px;
     border-radius: 10px;
     text-align: center;
@@ -137,30 +137,30 @@ body {
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
 }
 
-.total_users h4 {
+.tootal_vehicle h4 {
     color: var(--black1);
     padding: 12px;
 }
 
-.total_users p {
+.tootal_vehicle p {
     display: grid;
     grid-template-columns: 50px 50px;
     justify-content: center;
 }
 
-.total_users p b {
+.tootal_vehicle p b {
     margin-top: 5px;
     font-size: 1.5rem;
 }
 
-.total_users:hover {
+.tootal_vehicle:hover {
     transform: scale(1.09);
 }
 
 .company {
-    width: 300px;
+    width: 240px;
     background-color: rgb(255, 255, 255);
-    height: 120px;
+    height: 115px;
     margin-bottom: 50px;
     border-radius: 10px;
     text-align: center;
@@ -190,9 +190,9 @@ body {
 }
 
 .individual {
-    width: 300px;
+    width: 240px;
     background-color: rgb(255, 255, 255);
-    height: 120px;
+    height: 115px;
     margin-bottom: 50px;
     border-radius: 10px;
     text-align: center;
@@ -213,11 +213,43 @@ body {
 }
 
 .individual p b {
-    margin-top: 5px;
+    margin-top: 3px;
     font-size: 1.5rem;
 }
 
 .individual:hover {
+    transform: scale(1.09);
+}
+
+.maintenance {
+    width: 240px;
+    background-color: rgb(255, 255, 255);
+    height: 115px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+    text-align: center;
+    transition: 0.3s;
+    padding: 10%;
+    box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+}
+
+.maintenance h4 {
+    color: var(--black1);
+    padding: 10px;
+}
+
+.maintenance p {
+    display: grid;
+    grid-template-columns: 50px 50px;
+    justify-content: center;
+}
+
+.maintenance p b {
+    margin-top: 1px;
+    font-size: 1.5rem;
+}
+
+.maintenance:hover {
     transform: scale(1.09);
 }
 
@@ -227,6 +259,7 @@ body {
     margin-top: 200px;
     margin-left: 55%;
 }
+
 .hide {
     display: none;
 }
@@ -284,36 +317,28 @@ body {
 
 /* ------------------ table ------------------- */
 
-.tables {
-    margin-top: 30px;
-}
 table {
     margin-left: 7%;
-    margin-top: 40px;
     border-collapse: collapse;
     width: 86%;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
     border-radius: 5px 5px 0px 0px;
     overflow: hidden;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    margin-top: -15px;
 }
 
-table thead  {
+.table h2 {
+    text-align: left;
+    padding-left: 90px;
+}
+
+table thead {
     background-color: #4a4a4a;
     color: var(--white);
     text-align: left;
     padding: 10px;
     margin-top: 20px;
-}
-
-.table button{
-    background-color: rgb(66, 66, 66);
-    color: var(--white);
-    padding: 5px;
-    border: none;
-    border-radius: 5px;
-    width: 60px;
-    font-size: 0.8rem;
 }
 
 .table th,
@@ -330,7 +355,7 @@ table thead  {
 }
 
 .table tbody tr:last-of-type {
-    border-bottom: 4px solid  #4a4a4a;
+    border-bottom: 4px solid #4a4a4a;
 }
 
 .table tbody .active_row {
@@ -338,7 +363,7 @@ table thead  {
 }
 
 /* ------------------ page ------------------- */
-.page{
+.page {
     align-content: center;
     align-items: center;
     text-align: center;
@@ -346,16 +371,19 @@ table thead  {
     display: flex;
     justify-content: center;
 }
-.num{
+
+.num {
     padding: 20px 10px 20px 20px;
 }
-.page .sel{
-   margin-right: 50px;
+
+.page .sel {
+    margin-right: 50px;
 }
-.page .next{
+
+.page .next {
     margin-top: 8px;
     margin-left: 10px;
- }
+}
 
 
 
@@ -491,6 +519,7 @@ table thead  {
         position: absolute;
         padding-left: 8%;
     }
+
     .search {
         margin-top: 550px;
         margin-right: 10%;

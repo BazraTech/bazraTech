@@ -7,6 +7,7 @@ import Vehicle_Registration from './components/Pages/Registration/Vehicle_Regist
 import Company_registration from './components/Pages/Registration/Company_registration';
 import Users from './components/Pages/Users/Users';
 import Dashboard from './components/Pages/Dashboard/Dashboard';
+import Detail from './components/Pages/Users/Detail';
 class App extends Component{
   render(){
   return (
@@ -18,6 +19,7 @@ class App extends Component{
         <Route path="/users" element={<Users />}></Route>
         <Route path="/Company_registration" element={<Company_registration />}></Route>
         <Route path="/vehicle_registration" element={<Vehicle_Registration />}></Route>
+        <Route path="/user_detail" element={<Detail />}></Route>
       </Routes>
 
     </div>
