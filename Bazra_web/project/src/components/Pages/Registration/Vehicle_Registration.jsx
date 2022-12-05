@@ -27,7 +27,7 @@ export default function Vehicle_Registration() {
             <Link to="/dashboard"> <p><FaHome size="2rem" color='white'></FaHome></p></Link>
           </li>
           <li>
-            <p><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p>
+            <Link to="/Vehicle_reg"><p><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p></Link>
           </li>
           <li>
             <p><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
@@ -149,7 +149,7 @@ export default function Vehicle_Registration() {
 
 
           <div className='button'>
-            <button className='edit'>Add Vehicle</button>
+          <Link to="/both"><button className='edit'>Add Vehicle</button></Link>
           </div>
 
 

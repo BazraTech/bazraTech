@@ -16,10 +16,10 @@
 
 body {
    min-height: 100vh;
-   overflow-x: hidden;
+   width: 100%;
 }
 
-.containerr {
+.dashboard_container {
    position: relative;
    width: 100%;
    text-decoration: none;
@@ -27,7 +27,7 @@ body {
 
 /* ---------------navigation--------------- */
 
-.navigation {
+.dashboard_navigation {
    position: fixed;
    width: 100px;
    height: 100%;
@@ -38,7 +38,7 @@ body {
    margin-top: 0px;
 }
 
-.navigation ul li {
+.dashboard_navigation ul li {
    text-decoration: none;
    margin-top: 10px;
    transition: 0.5s;
@@ -49,16 +49,16 @@ body {
    padding-bottom: 7px;
    padding-left: 5px;
 }
-.navigation ul li p{
+.dashboard_navigation ul li p{
    transition: 0.5s;
 }
-.navigation ul li p:hover {
+.dashboard_navigation ul li p:hover {
    transform: scale(1.2);
    transition: 0.5s;
 }
 
 /* ---------------header--------------- */
-.header {
+.dashboard_header {
    position: absolute;
    width: calc(100% - 100px);
    left: 100px;
@@ -69,14 +69,17 @@ body {
    z-index: 1;
    display: flex;
 }
+.menu_controler{
+   display: none;
+}
 
-.header h3{
+.dashboard_header h3{
    text-align: center;
    color: rgb(36, 114, 43);
    padding-left: 500px;
    padding-top: 4px;
 }
-.header h3 input{
+.dashboard_header h3 input{
    text-align: left;
    padding: 5px 10px 5px 20px;
    border: none;
@@ -84,32 +87,32 @@ body {
    margin-right: 100px;
 }
 
-.header h2 {
+.dashboard_header h2 {
    text-align: left;
 }
 
-.header p {
+.dashboard_header p {
    padding-right: 30px;
    padding-bottom: 10px;
    transition: 0.5s;
 }
-.header p:hover {
+.dashboard_header p:hover {
    transform: scale(1.2);
 }
 
 
 /* ---------------contents--------------- */
-.main {
+.dashboard_main {
    position: absolute;
    width: calc(100% - 100px);
    left: 100px;
-   min-height: 88vh;
+   height: 110vh;
    background-color: rgb(240, 240, 240);
    color: var(--black1);
    top: 75px;
 }
 
-.contentss {
+.dashboard_contents {
    margin-top: 40px;
    display: grid;
    grid-template-columns: 100px 100px 100px;
@@ -299,7 +302,7 @@ body {
    .header h3{
      display: none;
    }
-   .contents {
+   .dashboard_contents {
       display: grid;
       grid-template-columns: 100px 100px;
       justify-content: space-around;
@@ -311,45 +314,94 @@ body {
 }
 
 @media screen and (max-width: 800px) {
-   .contents {
+   .dashboard_contents {
       margin-top: 40px;
       display: grid;
       grid-template-columns: 100px;
       justify-content: space-between;
       width: 70%;
-      margin-left: 30px;
       position: absolute;
-      padding-left: 150px;
+      padding-left: 20%;
    }
 }
 @media screen and (max-width: 700px) {
-   .contents {
-      padding-left: 100px;
+   .dashboard_contents {
+      padding-left: 15%;
    }
 }
 @media screen and (max-width: 600px) {
-   .contents {
-      padding-left: 60px;
+   .dashboard_contents {
+      padding-left: 10%;
    }
+  
 }
 
 @media screen and (max-width: 500px) {
-   .contents {
-      padding-left: 20px;
+   .dashboard_contents {
+      margin-left: 10px;
+   }
+   h2{
+      display: none;
+   }
+   .menu_controler{
+      display: contents;
+   }
+   .vehicle {
+      width: 250px;
+   }
+   .vehicle h4 {
+      padding: 8px;
+   }
+   .users {
+      width: 250px;
+   }
+   .users h4 {
+      padding: 8px;
+   }
+   .monitor-vehicle {
+      width: 250px;
+   }
+   .monitor-vehicle h4 {
+      padding: 8px;
+   }
+   .alert {
+      width: 250px;
+   }
+   .alert h4 {
+      padding: 8px;
+   }
+   .registration {
+      width: 250px;
+   }
+   .registration h4 {
+      padding: 8px;
+   }
+   .communication {
+      width: 250px;
+   }
+   .communication h4 {
+      padding: 8px;
+   }
+   .report {
+      width: 250px;
+   }
+   .report h4 {
+      padding: 8px;
+   }
+   .tracking {
+      width: 250px;
+   }
+   .tracking h4 {
+      padding: 8px;
    }
 }
 @media screen and (max-width: 400px) {
-   .contents {
-      padding-left: 10px;
+   .dashboard_contents {
+      margin-left: -20px;
    }
+  
 }
-@media screen and (max-width: 360px) {
-   .contents {
-      padding-left: -100px;
-      margin-right: 200px;
-   }
-   
-}
+
 
 
 

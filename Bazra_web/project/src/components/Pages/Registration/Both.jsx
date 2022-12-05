@@ -127,14 +127,25 @@ export default function Both() {
                         <div className='address'>
                             <div className='input-box'>
                                 <p>Region <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                <input className='select' {...register("region", { required: '*please fill your region' })} placeholder="Please enter your region"></input>
-                                   
+                                <select className='select' {...register("region", { required: '*please fill your region' })}>
+                                    <option value=''>Select company sector</option>
+                                    <option value='plc'>Public Llimited Company</option>
+                                    <option value='plc'>Public Llimited Company</option>
+                                    <option >Public Llimited Company</option>
+                                    <option >Public Llimited Company</option>
+                                </select>
                                 {errors.region && <span className='validate_text'>{errors.region.message}</span>}
                             </div>
 
                             <div className='input-box'>
                                 <p>City <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                <input className='select' {...register("city", { required: '*please fill your city' })} placeholder="Please enter your City"></input>
+                                <select className='select' {...register("city", { required: '*please fill your city' })}>
+                                    <option value=''>Select company sector</option>
+                                    <option value='plc'>Public Llimited Company</option>
+                                    <option value='plc'>Public Llimited Company</option>
+                                    <option >Public Llimited Company</option>
+                                    <option >Public Llimited Company</option>
+                                </select>
                                 {errors.city && <span className='validate_text'>{errors.city.message}</span>}
                             </div>
 
@@ -143,7 +154,13 @@ export default function Both() {
                         <div className='address'>
                             <div className='input-box'>
                                 <p>Sub City <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                <input className='select' {...register("subCity", { required: '*please fill your Sub-city' })} placeholder="Please enter your Sub-City"></input>
+                                <select className='select'{...register("subCity", { required: '*please fill your Sub-city' })}>
+                                    <option value=''>Select company sector</option>
+                                    <option value='plc'>Public Llimited Company</option>
+                                    <option value='plc'>Public Llimited Company</option>
+                                    <option >Public Llimited Company</option>
+                                    <option >Public Llimited Company</option>
+                                </select>
                                 {errors.subCity && <span className='validate_text'>{errors.subCity.message}</span>}
                             </div>
 
@@ -214,22 +231,22 @@ export default function Both() {
                         <div className='input-box'>
                             <p>Notification Preference <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                             <select className='select' {...register("notificationPreference", { required: '*please choose your notification preference' })}>
-                                <option value=''>Select Notification Preference</option>
-                                <option value='plc'>Select Notification Preference</option>
-                                <option value='plc'>Select Notification Preference</option>
-                                <option>Select Notification Preference</option>
-                                <option>Select Notification Preference</option>
+                                <option value=''>Select company sector</option>
+                                <option value='plc'>Public Llimited Company</option>
+                                <option value='plc'>Public Llimited Company</option>
+                                <option>Public Llimited Company</option>
+                                <option>Public Llimited Company</option>
                             </select>
                             {errors.notificationPreference && <span className='validate_text'>{errors.notificationPreference.message}</span>}
                         </div>
                         <div className='input-box'>
                             <p>Service Neded <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                             <select className='select' {...register("serviceNeeded", { required: '**please choose service needed' })}>
-                                <option value=''>Select Service Neded</option>
-                                <option value='plc'>Select Service Neded</option>
-                                <option value='plc'>Select Service Neded</option>
-                                <option>Select Service Neded</option>
-                                <option>Select Service Neded</option>
+                                <option value=''>Select company sector</option>
+                                <option value='plc'>Public Llimited Company</option>
+                                <option value='plc'>Public Llimited Company</option>
+                                <option>Public Llimited Company</option>
+                                <option>Public Llimited Company</option>
                             </select>
                             {errors.serviceNeeded && <span className='validate_text'>{errors.serviceNeeded.message}</span>}
                         </div>
@@ -255,11 +272,11 @@ export default function Both() {
               <div className='input-box'>
                 <p>Vehicle Catagory <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                 <select className='select'>
-                  <option selected disabled>Select Vecicle Catagory</option>
-                  <option>Select Vecicle Catagory</option>
-                  <option>Select Vecicle Catagory</option>
-                  <option>Select Vecicle Catagory</option>
-                  <option>Select Vecicle Catagory</option>
+                  <option selected disabled>Select company sector</option>
+                  <option>Public Llimited Company</option>
+                  <option>Public Llimited Company</option>
+                  <option>Public Llimited Company</option>
+                  <option>Public Llimited Company</option>
                 </select>
               </div>
             </div>
@@ -275,11 +292,11 @@ export default function Both() {
               <div className='input-box'>
                 <p>Vehicle Condition <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                 <select className='select'>
-                  <option selected disabled>Select Vecicle Condition</option>
-                  <option>Select Vecicle Condition</option>
-                  <option>Select Vecicle Condition</option>
-                  <option>Select Vecicle Condition</option>
-                  <option>Select Vecicle Condition</option>
+                  <option selected disabled>Select company sector</option>
+                  <option>Public Llimited Company</option>
+                  <option>Public Llimited Company</option>
+                  <option>Public Llimited Company</option>
+                  <option>Public Llimited Company</option>
                 </select>
               </div>
 

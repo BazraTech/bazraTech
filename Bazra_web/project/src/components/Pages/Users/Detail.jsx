@@ -61,7 +61,7 @@ export default function () {
                         <Link to="/dashboard"> <p><FaHome size="2rem" color='white'></FaHome></p></Link>
                     </li>
                     <li>
-                        <p><AiFillCar size="2rem" color='white'></AiFillCar></p>
+                        <Link to="/Vehicle_reg"><p><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p></Link>
                     </li>
                     <li>
                         <p><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
@@ -70,7 +70,7 @@ export default function () {
                         <p><MdMonitor size="2rem" color='white'></MdMonitor></p>
                     </li>
                     <li>
-                        <Link to="/users"> <p><FaUsers size="2rem" color='#00cc44'></FaUsers></p></Link>
+                        <Link to="/users">  <p><FaUsers size="2rem" color='#00cc44'></FaUsers></p></Link>
                     </li>
                     <li>
                         <p><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
@@ -165,7 +165,7 @@ export default function () {
                                 <td>Et 3 B23476</td>
                             </tr>
                             <tr>
-                            <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
+                                <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
                                 <td>Abebe Alemu</td>
                                 <td>BA 000002</td>
                                 <td>Long Carrier</td>
@@ -173,7 +173,7 @@ export default function () {
 
                             </tr>
                             <tr className='active_row'>
-                            <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
+                                <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
                                 <td>Abebe Alemu</td>
                                 <td>BA 000002</td>
                                 <td>Long Carrier</td>
@@ -186,7 +186,7 @@ export default function () {
                     <h2>Parked</h2>
                     <table class="table" id="myTable" data-filter-control="true" data-show-search-clear-button="true">
 
-                    <thead>
+                        <thead>
                             <tr>
                                 <th>Profile</th>
                                 <th>Assigned Deriver</th>
@@ -197,14 +197,14 @@ export default function () {
                         </thead>
                         <tbody>
                             <tr className='active_row'>
-                            <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
+                                <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
                                 <td>Abebe Alemu</td>
                                 <td>BA 000002</td>
                                 <td>Long Carrier</td>
                                 <td>Et 3 B23476</td>
                             </tr>
                             <tr>
-                            <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
+                                <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
                                 <td>Abebe Alemu</td>
                                 <td>BA 000002</td>
                                 <td>Long Carrier</td>
@@ -217,7 +217,7 @@ export default function () {
                     <h2 className='topic'>Maintenace</h2>
                     <table class="table" id="myTable" data-filter-control="true" data-show-search-clear-button="true">
 
-                    <thead>
+                        <thead>
                             <tr>
                                 <th>Profile</th>
                                 <th>Assigned Deriver</th>
@@ -228,14 +228,14 @@ export default function () {
                         </thead>
                         <tbody>
                             <tr className='active_row'>
-                            <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
+                                <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
                                 <td>Abebe Alemu</td>
                                 <td>BA 000002</td>
                                 <td>Long Carrier</td>
                                 <td>Et 3 B23476</td>
                             </tr>
                             <tr>
-                            <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
+                                <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
                                 <td>Abebe Alemu</td>
                                 <td>BA 000002</td>
                                 <td>Long Carrier</td>

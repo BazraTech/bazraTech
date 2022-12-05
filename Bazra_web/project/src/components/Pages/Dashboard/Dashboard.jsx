@@ -12,22 +12,23 @@ import { FaUserAlt } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import { RiSearchLine } from "react-icons/ri";
+import { HiMenuAlt1 } from "react-icons/hi";
 import './dashboard.css';
 import { Link } from 'react-router-dom';
 
 export default function () {
     return (
-        <div className="containerr">
+        <div className="dashboard_container">
 
             {/*---------------navigation---------------*/}
 
-            <div className="navigation">
+            <div className="dashboard_navigation">
                 <ul>
                     <li>
                         <Link to="/dashboard"> <p><FaHome size="2rem" color='#00cc44'></FaHome></p></Link>
                     </li>
                     <li>
-                        <p><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p>
+                        <Link to="/Vehicle_reg"><p><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p></Link>
                     </li>
                     <li>
                         <p><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
@@ -62,16 +63,17 @@ export default function () {
 
             {/* ---------------header--------------- */}
 
-            <div className="header">
+            <div className="dashboard_header">
                 <h2>Bazra Motors</h2>
+                <p className='menu_controler'><HiMenuAlt1 size="2rem" color='black'></HiMenuAlt1></p>
                 <p><FiLogOut size="2rem" color='black'></FiLogOut></p>
             </div>
 
 
             {/* ---------------contents--------------- */}
 
-            <div className='main'>
-                <div className='contentss'>
+            <div className='dashboard_main'>
+                <div className='dashboard_contents'>
                     <div className='vehicle'>
                         <h4>Total Number of Vehicles</h4>
                         <AiFillCar size="3rem" color="#006666"></AiFillCar>

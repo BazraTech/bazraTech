@@ -58,7 +58,7 @@ export default function () {
                         <Link to="/dashboard"> <p><FaHome size="2rem" color='white'></FaHome></p></Link>
                     </li>
                     <li>
-                        <p><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p>
+                        <Link to="/Vehicle_reg"><p><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p></Link>
                     </li>
                     <li>
                         <p><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
@@ -67,7 +67,7 @@ export default function () {
                         <p><MdMonitor size="2rem" color='white'></MdMonitor></p>
                     </li>
                     <li>
-                        <Link to="/users"> <p><FaUsers size="2rem" color='#00cc44'></FaUsers></p></Link>
+                        <Link to="/users">  <p><FaUsers size="2rem" color='#00cc44'></FaUsers></p></Link>
                     </li>
                     <li>
                         <p><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
@@ -127,7 +127,7 @@ export default function () {
                         <button>Search</button>
                     </p>
                 </div>
-             
+
                 <div className='filter'>
                     <p>
                         <AiFillFilter className='fil' size="0.8rem" color='rgb(63, 63, 63)'></AiFillFilter>
@@ -153,14 +153,14 @@ export default function () {
                         </thead>
                         <tbody>
                             <tr className='active_row'>
-                               
+
                                 <td>User</td>
                                 <td>BA 000002</td>
                                 <td>BBazra Motors</td>
                                 <td>40</td>
                                 <td>40</td>
                                 <td>Active</td>
-                                <td><Link to = "/user_detail"><button>Detail</button></Link></td>
+                                <td><Link to="/user_detail"><button>Detail</button></Link></td>
                                 <td>Edit</td>
                             </tr>
                             <tr>
@@ -170,7 +170,7 @@ export default function () {
                                 <td>40</td>
                                 <td>40</td>
                                 <td>Active</td>
-                                <td><Link to = "/user_detail"><button>Detail</button></Link></td>
+                                <td><Link to="/user_detail"><button>Detail</button></Link></td>
                                 <td>Edit</td>
                             </tr>
                             <tr className='active_row'>
@@ -180,27 +180,7 @@ export default function () {
                                 <td>40</td>
                                 <td>40</td>
                                 <td>Active</td>
-                                <td><Link to = "/user_detail"><button>Detail</button></Link></td>
-                                <td>Edit</td>
-                            </tr>
-                            <tr>
-                                <td>User</td>
-                                <td>BA 000001</td>
-                                <td>Bazra Motors</td>
-                                <td>40</td>
-                                <td>40</td>
-                                <td>Active</td> 
-                                <td><Link to = "/user_detail"><button>Detail</button></Link></td>
-                                <td>Edit</td>
-                            </tr>
-                            <tr className='active_row'>
-                                <td>User</td>
-                                <td>BA 000002</td>
-                                <td>Bazra Motors</td>
-                                <td>40</td>
-                                <td>40</td>
-                                <td>Active</td>
-                                <td><Link to = "/user_detail"><button>Detail</button></Link></td>
+                                <td><Link to="/user_detail"><button>Detail</button></Link></td>
                                 <td>Edit</td>
                             </tr>
                             <tr>
@@ -210,7 +190,7 @@ export default function () {
                                 <td>40</td>
                                 <td>40</td>
                                 <td>Active</td>
-                                <td><Link to = "/user_detail"><button>Detail</button></Link></td>
+                                <td><Link to="/user_detail"><button>Detail</button></Link></td>
                                 <td>Edit</td>
                             </tr>
                             <tr className='active_row'>
@@ -220,7 +200,27 @@ export default function () {
                                 <td>40</td>
                                 <td>40</td>
                                 <td>Active</td>
-                                <td><Link to = "/user_detail"><button>Detail</button></Link></td>
+                                <td><Link to="/user_detail"><button>Detail</button></Link></td>
+                                <td>Edit</td>
+                            </tr>
+                            <tr>
+                                <td>User</td>
+                                <td>BA 000001</td>
+                                <td>Bazra Motors</td>
+                                <td>40</td>
+                                <td>40</td>
+                                <td>Active</td>
+                                <td><Link to="/user_detail"><button>Detail</button></Link></td>
+                                <td>Edit</td>
+                            </tr>
+                            <tr className='active_row'>
+                                <td>User</td>
+                                <td>BA 000002</td>
+                                <td>Bazra Motors</td>
+                                <td>40</td>
+                                <td>40</td>
+                                <td>Active</td>
+                                <td><Link to="/user_detail"><button>Detail</button></Link></td>
                                 <td>Edit</td>
                             </tr>
                         </tbody>

@@ -8,6 +8,10 @@ import Company_registration from './components/Pages/Registration/Company_regist
 import Users from './components/Pages/Users/Users';
 import Dashboard from './components/Pages/Dashboard/Dashboard';
 import Detail from './components/Pages/Users/Detail';
+import Vehicle_reg from './components/Pages/Vehicle/Vehicle_num';
+import Vehicle_map from './components/Pages/Vehicle/Vehicle_map';
+import Both from './components/Pages/Registration/Both';
+
 class App extends Component{
   render(){
   return (
@@ -20,6 +24,9 @@ class App extends Component{
         <Route path="/Company_registration" element={<Company_registration />}></Route>
         <Route path="/vehicle_registration" element={<Vehicle_Registration />}></Route>
         <Route path="/user_detail" element={<Detail />}></Route>
+        <Route path="/Vehicle_reg" element={<Vehicle_reg />}></Route>
+        <Route path="/Vehicle_map" element={<Vehicle_map />}></Route>
+        <Route path="/both" element={<Both></Both>}></Route>
       </Routes>
 
     </div>
