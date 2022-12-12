@@ -15,12 +15,7 @@
     --black2: #999;
 }
 
-body {
-    min-height: 100vh;
-    overflow-x: hidden;
-}
-
-.containerr {
+.alert_container {
     position: relative;
     width: 100%;
     text-decoration: none;
@@ -28,7 +23,7 @@ body {
 
 /* ---------------navigation--------------- */
 
-.navigation {
+.alert_navigation {
     position: fixed;
     width: 100px;
     height: 100%;
@@ -37,9 +32,10 @@ body {
     padding: 2px 28px;
     text-decoration: none;
     margin-top: 0px;
+    z-index: 1;
 }
 
-.navigation ul li {
+.alert_navigation ul li {
     text-decoration: none;
     margin-top: 10px;
     transition: 0.5s;
@@ -51,17 +47,17 @@ body {
     padding-left: 5px;
 }
 
-.navigation ul li p {
+.alert_navigation ul li p {
     transition: 0.5s;
 }
 
-.navigation ul li p:hover {
+.alert_navigation ul li p:hover {
     transform: scale(1.2);
     transition: 0.5s;
 }
 
 /* ---------------header--------------- */
-.header {
+.alert_header {
     position: absolute;
     width: calc(100% - 100px);
     left: 100px;
@@ -73,14 +69,14 @@ body {
     display: flex;
 }
 
-.header h3 {
+.alert_header h3 {
     text-align: center;
     color: rgb(36, 114, 43);
     padding-left: 500px;
     padding-top: 4px;
 }
 
-.header h3 input {
+.alert_header h3 input {
     text-align: left;
     padding: 5px 10px 5px 20px;
     border: none;
@@ -88,24 +84,24 @@ body {
     margin-right: 100px;
 }
 
-.header h2 {
+.alert_header h2 {
     text-align: left;
 }
 
-.header p {
+.alert_header p {
     padding-right: 30px;
     padding-bottom: 10px;
     transition: 0.5s;
 }
 
-.header p:hover {
+.alert_header p:hover {
     transform: scale(1.2);
 }
 
 
 /* --------------- users --------------- */
 
-.user {
+.alert_main {
     position: absolute;
     width: calc(100% - 100px);
     left: 100px;
@@ -115,20 +111,20 @@ body {
     top: 75px;
 }
 
-.detail {
-    margin-top: 40px;
+.alert_contents {
+    margin-top: 50px;
     display: grid;
-    grid-template-columns: 50px 50px 50px 50px;
+    grid-template-columns: 100px 100px 100px;
     justify-content: space-between;
     width: 70%;
-    margin-left: 90px;
+    margin-left: 150px;
     position: absolute;
 }
 
-.tootal_vehicle {
-    width: 240px;
+.alert_accident {
+    width: 180px;
     background-color: rgb(255, 255, 255);
-    height: 115px;
+    height: 90px;
     margin-bottom: 50px;
     border-radius: 10px;
     text-align: center;
@@ -137,119 +133,23 @@ body {
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
 }
 
-.tootal_vehicle h4 {
+.alert_accident h4 {
     color: var(--black1);
-    padding: 12px;
+    padding: 6px;
 }
 
-.tootal_vehicle p {
+.alert_accident p {
     display: grid;
     grid-template-columns: 50px 50px;
     justify-content: center;
 }
 
-.tootal_vehicle p b {
-    margin-top: 5px;
+.alert_accident p b {
+    margin-top: 2px;
     font-size: 1.5rem;
 }
 
-.tootal_vehicle:hover {
-    transform: scale(1.09);
-}
-
-.company {
-    width: 240px;
-    background-color: rgb(255, 255, 255);
-    height: 115px;
-    margin-bottom: 50px;
-    border-radius: 10px;
-    text-align: center;
-    transition: 0.3s;
-    padding: 10%;
-    box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
-}
-
-.company h4 {
-    color: var(--black1);
-    padding: 10px;
-}
-
-.company p {
-    display: grid;
-    grid-template-columns: 50px 50px;
-    justify-content: center;
-}
-
-.company p b {
-    margin-top: 5px;
-    font-size: 1.5rem;
-}
-
-.company:hover {
-    transform: scale(1.09);
-}
-
-.individual {
-    width: 240px;
-    background-color: rgb(255, 255, 255);
-    height: 115px;
-    margin-bottom: 50px;
-    border-radius: 10px;
-    text-align: center;
-    transition: 0.3s;
-    padding: 10%;
-    box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
-}
-
-.individual h4 {
-    color: var(--black1);
-    padding: 10px;
-}
-
-.individual p {
-    display: grid;
-    grid-template-columns: 50px 50px;
-    justify-content: center;
-}
-
-.individual p b {
-    margin-top: 3px;
-    font-size: 1.5rem;
-}
-
-.individual:hover {
-    transform: scale(1.09);
-}
-
-.maintenance {
-    width: 240px;
-    background-color: rgb(255, 255, 255);
-    height: 115px;
-    margin-bottom: 50px;
-    border-radius: 10px;
-    text-align: center;
-    transition: 0.3s;
-    padding: 10%;
-    box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
-}
-
-.maintenance h4 {
-    color: var(--black1);
-    padding: 10px;
-}
-
-.maintenance p {
-    display: grid;
-    grid-template-columns: 50px 50px;
-    justify-content: center;
-}
-
-.maintenance p b {
-    margin-top: 1px;
-    font-size: 1.5rem;
-}
-
-.maintenance:hover {
+.alert_accident:hover {
     transform: scale(1.09);
 }
 
@@ -259,7 +159,6 @@ body {
     margin-top: 200px;
     margin-left: 55%;
 }
-
 .hide {
     display: none;
 }
@@ -317,53 +216,61 @@ body {
 
 /* ------------------ table ------------------- */
 
-table {
+.outer_alert_table {
+    margin-top: 200px;
+}
+.alert_table {
     margin-left: 7%;
+    margin-top: 4px;
     border-collapse: collapse;
     width: 86%;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     border-radius: 5px 5px 0px 0px;
     overflow: hidden;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-    margin-top: -15px;
 }
 
-.table h2 {
-    text-align: left;
-    padding-left: 90px;
-}
-
-table thead {
+.alert_table thead  {
     background-color: #4a4a4a;
     color: var(--white);
     text-align: left;
     padding: 10px;
-    margin-top: 20px;
+    margin-top: 2px;
 }
 
-.table th,
-.table td {
+.alert_table button{
+    background-color: rgb(66, 66, 66);
+    color: var(--white);
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    width: 60px;
+    font-size: 0.8rem;
+}
+
+.alert_table th,
+.alert_table td {
     padding: 8px 15px;
 }
 
-.table tbody tr {
+.alert_tabletbody tr {
     border-bottom: 1px solid #bfbfbf;
 }
 
-.table tbody tr:nth-of-type(even) {
+.alert_table tbody tr:nth-of-type(even) {
     background-color: #ffffff;
 }
 
-.table tbody tr:last-of-type {
-    border-bottom: 4px solid #4a4a4a;
+.alert_table tbody tr:last-of-type {
+    border-bottom: 4px solid  #4a4a4a;
 }
 
-.table tbody .active_row {
+.alert_table tbody .active_row {
     color: #009879;
 }
 
 /* ------------------ page ------------------- */
-.page {
+.page{
     align-content: center;
     align-items: center;
     text-align: center;
@@ -371,63 +278,72 @@ table thead {
     display: flex;
     justify-content: center;
 }
-
-.num {
+.num{
     padding: 20px 10px 20px 20px;
 }
-
-.page .sel {
-    margin-right: 50px;
+.page .sel{
+   margin-right: 50px;
 }
-
-.page .next {
+.page .next{
     margin-top: 8px;
     margin-left: 10px;
-}
+ }
+ .alert_menu{
+    display: none;
+ }
 
 
 
 @media screen and (max-width: 1130px) {
 
-    .header h3 {
-        display: none;
+   
+    .outer_alert_table {
+        margin-top: 150px;
     }
 
-    .contents {
+    .alert_contents {
         display: grid;
         grid-template-columns: 100px 100px;
         justify-content: space-around;
         width: 70%;
-        margin-left: 30px;
+        margin-left: 12%;
         column-gap: 180px;
         padding-right: 50px;
+    }
+    .alert_table {
+        margin-top: 200px;
+    }
+    table {
+        margin-left: 7%;
+        margin-top: 350px;
     }
 }
 
 @media screen and (max-width: 800px) {
-    .contents {
+    .alert_contents {
         margin-top: 40px;
         display: grid;
         grid-template-columns: 100px;
         justify-content: space-between;
         width: 70%;
-        margin-left: 30px;
+        margin-left: 10%;
         position: absolute;
-        padding-left: 25%;
+        padding-left: 28%;
+    }
+    .outer_alert_table {
+        margin-top: 250px;
     }
 
     .search {
-        margin-top: 550px;
+        margin-top: 550px; 
         margin-right: 10%;
         margin-left: 150px;
         width: 60%;
     }
 
     table {
-        margin-left: 2%;
-        margin-top: 20px;
-        width: 80%;
-        margin-bottom: 100px;
+        margin-left: 7%;
+        margin-top: 450px;
     }
 
     table thead tr {
@@ -442,25 +358,18 @@ table thead {
 }
 
 @media screen and (max-width: 700px) {
-    .contents {
+    .alert_contents {
         margin-top: 40px;
         display: grid;
         grid-template-columns: 100px;
         justify-content: space-between;
         width: 70%;
-        margin-left: 0px;
+        margin-left: 15%;
         position: absolute;
         padding-left: 20%;
     }
-
-    .user {
-        position: absolute;
-        width: 100%;
-        left: 100px;
-        min-height: 88vh;
-        background-color: rgb(244, 244, 244);
-        color: var(--black1);
-        top: 75px;
+    .outer_alert_table {
+        margin-top: 10px;
     }
 
     .search {
@@ -470,14 +379,14 @@ table thead {
         width: 60%;
     }
 
-    table {
+    .alert_table {
         margin-left: 0%;
-        margin-top: 20px;
+        margin-top: 500px;
         max-width: 100%;
         margin-bottom: 100px;
     }
 
-    table thead tr {
+    .alert_table thead tr {
         padding: 8px;
     }
 
@@ -488,15 +397,21 @@ table thead {
 }
 
 @media screen and (max-width: 600px) {
-    .contents {
+    .alert_contents {
         margin-top: 40px;
         display: grid;
         grid-template-columns: 100px;
         justify-content: space-between;
         width: 70%;
-        margin-left: 0px;
+        margin-left: 5%px;
         position: absolute;
         padding-left: 17%;
+    }
+    .alert_menu {
+        display: contents;
+     }
+     .alert_header .header_title {
+        display: none;
     }
 
     .search {
@@ -509,17 +424,16 @@ table thead {
 
 @media screen and (max-width: 500px) {
 
-    .contents {
+    .alert_contents {
         margin-top: 40px;
         display: grid;
         grid-template-columns: 100px;
         justify-content: space-between;
         width: 70%;
-        margin-left: 0px;
+        margin-left: 2%px;
         position: absolute;
         padding-left: 8%;
     }
-
     .search {
         margin-top: 550px;
         margin-right: 10%;
@@ -529,15 +443,14 @@ table thead {
 }
 
 @media screen and (max-width: 400px) {
-    .contents {
-        padding-left: 10px;
+    .alert_contents {
+        padding-left: -10px;
     }
 }
 
 @media screen and (max-width: 360px) {
-    .contents {
-        padding-left: -100px;
-        margin-right: 200px;
+    .alert_contents {
+        padding-left: -200px;
     }
 
 }

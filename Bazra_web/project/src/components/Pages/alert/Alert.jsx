@@ -17,8 +17,11 @@ import { AiFillFilter } from "react-icons/ai";
 import { AiFillCaretDown } from "react-icons/ai";
 import { GrFormNext } from "react-icons/gr";
 import { GrFormPrevious } from "react-icons/gr";
+import { FaCarCrash } from "react-icons/fa";
+import { TbTriangleOff } from "react-icons/tb";
+import { FaUserSecret } from "react-icons/fa";
 import { HiMenuAlt1 } from "react-icons/hi";
-import './users.css';
+import './alert.css';
 import { Link } from 'react-router-dom';
 
 
@@ -49,11 +52,11 @@ export default function () {
 
     return (
 
-        <div className="containerr">
+        <div className="alert_container">
 
             {/*---------------navigation---------------*/}
 
-            <div className="navigation">
+            <div className="alert_navigation">
                 <ul>
                     <li>
                         <Link to="/dashboard"> <p class="hovertext" data-hover="Home"><FaHome size="2rem" color='white'></FaHome><p></p></p></Link>
@@ -68,10 +71,10 @@ export default function () {
                         <Link to="#"> <p class="hovertext" data-hover="Monitor Vehicles"><MdMonitor size="2rem" color='white'></MdMonitor></p></Link>
                     </li>
                     <li>
-                        <Link to="/users">  <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='#00cc44'></FaUsers></p></Link>
+                        <Link to="/users">  <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='white'></FaUsers></p></Link>
                     </li>
                     <li>
-                        <Link to="/alert"><p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p></Link>
+                        <Link to="/alert"><p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='#00cc44'></HiBellAlert></p></Link>
                     </li>
                     <li>
                         <Link to="#"><p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p></Link>
@@ -94,131 +97,76 @@ export default function () {
 
             {/* --------------- header --------------- */}
 
-            <div className="header">
-                <h2 className='header_title'>Bazra Motors / <h6> Users</h6></h2>
-                <p className='users_menu'><HiMenuAlt1 size="2rem" color='black'></HiMenuAlt1></p>
+            <div className="alert_header">
+                <h2 className='header_title'>Bazra Motors / <h6> Alert</h6></h2>
+                <p className='alert_menu'><HiMenuAlt1 size="2rem" color='black'></HiMenuAlt1></p>
                 <p><FiLogOut size="2rem" color='black'></FiLogOut></p>
             </div>
 
 
             {/* --------------- users --------------- */}
 
-            <div className='user'>
-                <div className='contents'>
-                    <div className='company'>
-                        <h4>Total Users</h4>
-                        <p><FaUsers size="2.2rem" color='black'></FaUsers><b>100</b></p>
-
+            <div className='alert_main'>
+                <div className='alert_contents'>
+                    <div className='alert_accident'>
+                        <h4>Accident</h4>
+                        <p>< FaCarCrash size="2.2rem" color='black'></ FaCarCrash><b>100</b></p>
                     </div>
-                    <div className='company'>
-                        <h4>Company</h4>
-                        <p><FaWarehouse size="2.2rem" color='black'></FaWarehouse><b>100</b></p>
-
+                    <div className='alert_accident'>
+                        <h4>Off Road</h4>
+                        <p><TbTriangleOff size="2.2rem" color='black'></TbTriangleOff><b>100</b></p>
                     </div>
-                    <div className='individual'>
-                        <h4>Individual</h4>
-                        <p><FaUserAlt size="2rem" color='black'></FaUserAlt><b>100</b></p>
+                    <div className='alert_accident'>
+                        <h4>Driver</h4>
+                        <p><FaUserSecret size="2rem" color='black'></FaUserSecret><b>100</b></p>
                     </div>
                 </div>
 
                 {/* --------------- search --------------- */}
 
-                <div className='users_search'>
-                    <p>
-                        <BsSearch className='icn' size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                        <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
-                        <button>Search</button>
-                    </p>
-                </div>
-
-                <div className='filter'>
-                    <p>
-                        <AiFillFilter className='fil' size="0.8rem" color='rgb(63, 63, 63)'></AiFillFilter>
-                        <h6>Filter</h6>
-                    </p>
-                </div>
 
                 {/* --------------------- Table ------------------- */}
-                <div className='tables' id='myTable'>
+                <div className='outer_alert_table' id='myTable'>
                     <div className='t_table'>
-                        <table class="user_table" id="myTable">
+                        <table class="alert_table" id="myTable">
 
                             <thead>
                                 <tr>
-                                    <th>User</th>
-                                    <th>Company ID</th>
-                                    <th>Company Name</th>
-                                    <th>Number of Vehicle</th>
-                                    <th>Number of Driver</th>
-                                    <th>Status</th>
-                                    <th>Detail</th>
+                                    <th>Profile</th>
+                                    <th>Driver</th>
+                                    <th>Vehicle Plate Number</th>
+                                    <th>Alert Location</th>
+                                    <th>Alert Type</th>
+                                    <th>Owner</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr className='active_row'>
 
-                                    <td>User</td>
-                                    <td>BA 000002</td>
-                                    <td>BBazra Motors</td>
-                                    <td>40</td>
-                                    <td>40</td>
-                                    <td>Active</td>
-                                    <td><Link to="/User_edit"><button>Detail</button></Link></td>
+                                    <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
+                                    <td>Anduamlak alehegne</td>
+                                    <td>Et A123443</td>
+                                    <td>Addis Ababa</td>
+                                    <td>Accident</td>
+                                    <td>Bazra Motors</td>
                                 </tr>
                                 <tr>
-                                    <td>User</td>
-                                    <td>BA 000001</td>
+                                    <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
+                                    <td>Anduamlak alehegne</td>
+                                    <td>Et A123443</td>
+                                    <td>Addis Ababa</td>
+                                    <td>Accident</td>
                                     <td>Bazra Motors</td>
-                                    <td>40</td>
-                                    <td>40</td>
-                                    <td>Active</td>
-                                    <td><Link to="/User_edit"><button>Detail</button></Link></td>
                                 </tr>
                                 <tr className='active_row'>
-                                    <td>User</td>
-                                    <td>BA 000002</td>
+                                    <td><FaUserAlt size="1.5rem" color='#404040'></FaUserAlt></td>
+                                    <td>Anduamlak alehegne</td>
+                                    <td>Et A123443</td>
+                                    <td>Addis Ababa</td>
+                                    <td>Accident</td>
                                     <td>Bazra Motors</td>
-                                    <td>40</td>
-                                    <td>40</td>
-                                    <td>Active</td>
-                                    <td><Link to="/User_edit"><button>Detail</button></Link></td>
                                 </tr>
-                                <tr>
-                                    <td>User</td>
-                                    <td>BA 000001</td>
-                                    <td>Bazra Motors</td>
-                                    <td>40</td>
-                                    <td>40</td>
-                                    <td>Active</td>
-                                    <td><Link to="/User_edit"><button>Detail</button></Link></td>
-                                </tr>
-                                <tr className='active_row'>
-                                    <td>User</td>
-                                    <td>BA 000002</td>
-                                    <td>Bazra Motors</td>
-                                    <td>40</td>
-                                    <td>40</td>
-                                    <td>Active</td>
-                                    <td><Link to="/User_edit"><button>Detail</button></Link></td>
-                                </tr>
-                                <tr>
-                                    <td>User</td>
-                                    <td>BA 000001</td>
-                                    <td>Bazra Motors</td>
-                                    <td>40</td>
-                                    <td>40</td>
-                                    <td>Active</td>
-                                    <td><Link to="/User_edit"><button>Detail</button></Link></td>
-                                </tr>
-                                <tr className='active_row'>
-                                    <td>User</td>
-                                    <td>BA 000002</td>
-                                    <td>Bazra Motors</td>
-                                    <td>40</td>
-                                    <td>40</td>
-                                    <td>Active</td>
-                                    <td><Link to="/User_edit"><button >Detail</button></Link></td>
-                                </tr>
+
                             </tbody>
 
                         </table>

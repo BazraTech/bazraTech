@@ -22,27 +22,27 @@ export default function SignIn() {
 	return (
 		<>
 
-			{/* Login page Form */}
+			{/*-------------- Login page Form ---------------*/}
 
-			<div className="container">
-				<div className="contact-box">
-					<div className="left">
+			<div className="signup_container">
+				<div className="signup_contact-box">
+					<div className="signup_left">
 					</div>
-					<div className="right">
-						<form className="right" onSubmit={handleSubmit(onSubmit)}>
+					<div className="signup_right">
+						<form className="signup_right" onSubmit={handleSubmit(onSubmit)}>
 							<h2>Welcome To Bazra</h2>
 							<lable><b>User Name</b></lable>
-							<input type="text" className="field" {...register("name", { required: true })} placeholder="Username" onChange={(e) => setName(e.target.value)} name="name"></input>
+							<input type="text" className="signup_input_field" {...register("name", { required: true })} placeholder="Username" onChange={(e) => setName(e.target.value)} name="name"></input>
 							{errors.name?.type === "required" && <span className='validate_text' >please enter your username</span>}
 
 							<lable><p><b>Password</b></p></lable>
-							<input type="password" className="field" {...register("password", { required: true })} placeholder="Password" onChange={(e) => setPasword(e.target.value)} name="password"></input>
+							<input type="password" className="signup_input_field" {...register("password", { required: true })} placeholder="Password" onChange={(e) => setPasword(e.target.value)} name="password"></input>
 							{errors.password?.type === "required" && <span className='validate_text' >please enter your password </span>}
 							<div className='for'>
-								<b><a href='#' className='forget'>Forget Password?</a></b>
+								<b><a href='#' className='signup_forget'>Forget Password?</a></b>
 							</div>
 							<nav>
-								<button className="btn" onSubmit={onSubmit}>Sign In</button>
+								<button className="signup_button" onSubmit={onSubmit}>Sign In</button>
 							</nav>
 						</form>
 					</div>

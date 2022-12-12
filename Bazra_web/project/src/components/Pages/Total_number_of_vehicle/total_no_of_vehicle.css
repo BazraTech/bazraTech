@@ -15,15 +15,15 @@
     --black2: #999;
 }
 
-.containerr {
+.vehicle_container {
     position: relative;
     width: 100%;
     text-decoration: none;
 }
 
-/* ---------------navigation--------------- */
 
-.navigation {
+/* --------------- Vehicle-navigation --------------- */
+.vehicle_navigation {
     position: fixed;
     width: 100px;
     height: 100%;
@@ -35,7 +35,7 @@
     z-index: 1;
 }
 
-.navigation ul li {
+.vehicle_navigation ul li {
     text-decoration: none;
     margin-top: 10px;
     transition: 0.5s;
@@ -47,17 +47,18 @@
     padding-left: 5px;
 }
 
-.navigation ul li p {
+.vehicle_navigation ul li p {
     transition: 0.5s;
 }
 
-.navigation ul li p:hover {
+.vehicle_navigation ul li p:hover {
     transform: scale(1.2);
     transition: 0.5s;
 }
 
-/* ---------------header--------------- */
-.header {
+
+/* --------------- Vehicle-header --------------- */
+.vehicle_header {
     position: absolute;
     width: calc(100% - 100px);
     left: 100px;
@@ -69,39 +70,34 @@
     display: flex;
 }
 
-.header h3 {
+.vehicle_header h3 {
     text-align: center;
     color: rgb(36, 114, 43);
     padding-left: 500px;
     padding-top: 4px;
 }
 
-.header h3 input {
-    text-align: left;
-    padding: 5px 10px 5px 20px;
-    border: none;
-    border-bottom: solid 1px rgb(0, 0, 0);
-    margin-right: 100px;
-}
-
-.header h2 {
+.vehicle_header h2 {
     text-align: left;
 }
 
-.header p {
+.header_title {
+    display: flex;
+}
+
+.vehicle_header p {
     padding-right: 30px;
     padding-bottom: 10px;
     transition: 0.5s;
 }
 
-.header p:hover {
+.vehicle_header p:hover {
     transform: scale(1.2);
 }
 
 
-/* --------------- users --------------- */
-
-.user {
+/* --------------- vehicle-main --------------- */
+.vehicle_outer {
     position: absolute;
     width: calc(100% - 100px);
     left: 100px;
@@ -111,20 +107,21 @@
     top: 75px;
 }
 
-.user .contents {
+.vehicle_contents {
     margin-top: 40px;
     display: grid;
-    grid-template-columns: 100px 100px 100px;
+    grid-template-columns: 10px 10px 10px 10px;
     justify-content: space-between;
     width: 70%;
-    margin-left: 8%;
+    margin-left: 5%;
     position: absolute;
 }
 
-.total_users {
-    width: 300px;
+/* ------------------ Total_vehicle ------------------- */
+.total_vehicle {
+    width: 240px;
     background-color: rgb(255, 255, 255);
-    height: 120px;
+    height: 100px;
     margin-bottom: 50px;
     border-radius: 10px;
     text-align: center;
@@ -133,62 +130,31 @@
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
 }
 
-.total_users h4 {
-    color: var(--black1);
-    padding: 12px;
-}
-
-.total_users p {
-    display: grid;
-    grid-template-columns: 50px 50px;
-    justify-content: center;
-}
-
-.total_users p b {
-    margin-top: 5px;
-    font-size: 1.5rem;
-}
-
-.total_users:hover {
-    transform: scale(1.09);
-}
-
-.company {
-    width: 300px;
-    background-color: rgb(255, 255, 255);
-    height: 120px;
-    margin-bottom: 50px;
-    border-radius: 10px;
-    text-align: center;
-    transition: 0.3s;
-    padding: 10%;
-    box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
-}
-
-.company h4 {
+.total_vehicle h4 {
     color: var(--black1);
     padding: 10px;
 }
 
-.company p {
+.total_vehicle p {
     display: grid;
     grid-template-columns: 50px 50px;
     justify-content: center;
 }
 
-.company p b {
+.total_vehicle p b {
     margin-top: 5px;
     font-size: 1.5rem;
 }
 
-.company:hover {
+.total_vehicle:hover {
     transform: scale(1.09);
 }
 
-.individual {
-    width: 300px;
+/* ------------------ On-Route ------------------- */
+.on_route {
+    width: 240px;
     background-color: rgb(255, 255, 255);
-    height: 120px;
+    height: 100px;
     margin-bottom: 50px;
     border-radius: 10px;
     text-align: center;
@@ -197,48 +163,114 @@
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
 }
 
-.individual h4 {
+.on_route h4 {
     color: var(--black1);
     padding: 10px;
 }
 
-.individual p {
+.on_route p {
     display: grid;
     grid-template-columns: 50px 50px;
     justify-content: center;
 }
 
-.individual p b {
+.on_route p b {
     margin-top: 5px;
     font-size: 1.5rem;
 }
 
-.individual:hover {
+.on_route:hover {
     transform: scale(1.09);
 }
 
-/* ------------------ search ------------------- */
+/* ------------------ Parked ------------------- */
+.parked {
+    width: 240px;
+    background-color: rgb(255, 255, 255);
+    height: 100px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+    text-align: center;
+    transition: 0.3s;
+    padding: 10%;
+    box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+}
 
-.users_search {
+.parked h4 {
+    color: var(--black1);
+    padding: 10px;
+}
+
+.parked p {
+    display: grid;
+    grid-template-columns: 50px 50px;
+    justify-content: center;
+}
+
+.parked p b {
+    margin-top: 5px;
+    font-size: 1.5rem;
+}
+
+.parked:hover {
+    transform: scale(1.09);
+}
+
+/* ------------------ Maintenance ------------------- */
+.maintenance {
+    width: 240px;
+    background-color: rgb(255, 255, 255);
+    height: 100px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+    text-align: center;
+    transition: 0.3s;
+    padding: 10%;
+    box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+}
+
+.maintenance h4 {
+    color: var(--black1);
+    padding: 10px;
+}
+
+.maintenance p {
+    display: grid;
+    grid-template-columns: 50px 50px;
+    justify-content: center;
+}
+
+.maintenance p b {
+    margin-top: 5px;
+    font-size: 1.5rem;
+}
+
+.maintenance:hover {
+    transform: scale(1.09);
+}
+
+/* ------------------ Vehicle-search ------------------- */
+.vehicle_search {
     margin-top: 230px;
     margin-left: 55%;
 }
+
 .hide {
     display: none;
 }
 
-.users_search p {
+.vehicle_search p {
     display: flex;
 }
 
-.users_search p .icn {
+.vehicle_search p .icn {
     margin-top: 8px;
     padding-left: -30px;
     margin-right: -42px;
     z-index: 1;
 }
 
-.users_search input {
+.vehicle_search input {
     width: 61%;
     height: 38px;
     padding-left: 50px;
@@ -248,7 +280,7 @@
     margin-left: 10px;
 }
 
-.users_search p button {
+.vehicle_search p button {
     width: 15%;
     background-color: #222;
     color: var(--white);
@@ -256,53 +288,57 @@
     border: none;
 }
 
-.users_search p button:hover {
+.vehicle_search p button:hover {
     background-color: rgb(67, 67, 67);
     border: none;
 }
 
 
-/* ------------------ filter ------------------- */
-
-.filter p {
-    margin-top: 5px;
+/* ------------------ Vehicle-filter ------------------- */
+.vehicle_filter p {
+    margin-top: 50px;
     margin-left: 80%;
     color: rgb(63, 63, 63);
     display: flex;
 }
 
-.filter p .fil {
+.vehicle_filter p .fil {
     margin-top: 1px;
 }
 
-.filter p h6 {
+.vehicle_filter p h6 {
     padding-left: 5px;
     font-size: 0.8rem;
-    padding-bottom: 10px;
 }
 
-/* ------------------ table ------------------- */
-
-.tables {
+/* ------------------ Vehicle-table ------------------- */
+.outer_vehicle_tables {
     overflow-x: scroll;
     padding: 1%;
 }
-.t_table{
+
+.t_table {
     padding: 1%;
     width: 100%;
 }
-.user_table {
+
+.vehicle_table {
     margin-left: 4%;
-    margin-top: 4px;
     border-collapse: collapse;
     width: 90%;
-    margin-bottom: 15px;
     border-radius: 5px 5px 0px 0px;
     overflow: hidden;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
+.outer_vehicle_tables p{
+    color: #009879;
+    font-size: 23px;
+    margin-left: 60px;
+    font-weight: 600;
 
-.user_table thead  {
+}
+
+.vehicle_table thead {
     background-color: #4a4a4a;
     color: var(--white);
     text-align: left;
@@ -310,8 +346,8 @@
     margin-top: 2%;
 }
 
-.user_table button{
-    background-color:  #404040;
+.vehicle_table button {
+    background-color: #404040;
     color: var(--white);
     padding: 3%;
     padding-top: 5px;
@@ -319,67 +355,73 @@
     padding-left: 15px;
     padding-right: 15px;
     border: none;
-    border-radius: 5px; 
-    width: 70px;
+    border-radius: 5px;
+    width: 80px;
     font-size: 0.8rem;
 }
-.user_table .edit_button{
+
+.vehicle_table .edit_button {
     background-color: #006666;
 }
 
-.user_table th,
-.user_table td {
+.vehicle_table th,
+.vehicle_table td {
     padding: 8px 15px;
 }
 
-.user_table tbody tr {
+.vehicle_table tbody tr {
     border-bottom: 1px solid #bfbfbf;
 }
 
-.user_table tbody tr:nth-of-type(even) {
+.vehicle_table tbody tr:nth-of-type(even) {
     background-color: #ffffff;
 }
 
-.user_table tbody tr:last-of-type {
-    border-bottom: 4px solid  #4a4a4a;
+.vehicle_table tbody tr:last-of-type {
+    border-bottom: 4px solid #4a4a4a;
 }
 
-.user_table tbody .active_row {
+.vehicle_table tbody .active_row {
     color: #009879;
 }
 
-/* ------------------ page ------------------- */
-.page{
+
+/* ------------------ Vehicle-page ------------------- */
+.page {
     align-content: center;
     align-items: center;
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 5px;
     display: flex;
     justify-content: center;
 }
-.num{
+
+.num {
     padding: 20px 10px 20px 20px;
 }
-.page .sel{
-   margin-right: 50px;
+
+.page .sel {
+    margin-right: 50px;
 }
-.page .next{
+
+.page .next {
     margin-top: 8px;
     margin-left: 10px;
- }
- .users_menu{
+}
+
+.vehicle_menu {
     display: none;
- }
+}
 
 
-
+/* ------------------ Responsivness ------------------- */
 @media screen and (max-width: 1130px) {
 
     .header h3 {
         display: none;
     }
 
-    .user .contents {
+    .vehicle_contents {
         display: grid;
         grid-template-columns: 100px 100px;
         justify-content: space-around;
@@ -388,10 +430,17 @@
         column-gap: 180px;
         padding-right: 50px;
     }
+    .vehicle_search {
+        margin-top: 400px;
+        margin-right: 10%;
+        margin-left: 150px;
+        width:60%;
+    }
 }
 
+
 @media screen and (max-width: 1000px) {
-    .user .contents {
+    .vehicle_contents {
         margin-top: 40px;
         display: grid;
         grid-template-columns: 100px 100px;
@@ -402,23 +451,24 @@
         padding-left: 5%;
     }
 
-    .users_search {
+    .vehicle_search {
         margin-top: 400px;
         margin-right: 10%;
         margin-left: 150px;
-        width:
-         60%;
+        width:60%;
     }
-    .filter p {
+
+    .vehicle_filter p {
         margin-top: 40px;
-        margin-left: 50%;
+        margin-left: 70%;
     }
-    
-    .t_table{
+
+    .t_table {
         padding: 2%;
         width: 98%;
     }
-    .user_table {
+
+    .vehicle_table {
         margin-left: 3%;
         margin-top: 4px;
         border-collapse: collapse;
@@ -431,8 +481,10 @@
 
 
 }
+
+
 @media screen and (max-width: 930px) {
-    .user .contents {
+    .vehicle_contents {
         margin-top: 40px;
         display: grid;
         grid-template-columns: 100px 100px;
@@ -443,18 +495,20 @@
         padding-left: 5%;
     }
 
-    .users_search {
+    .vehicle_search {
         margin-top: 400px;
         margin-right: 0%;
         margin-left: 150px;
         width: 60%;
     }
-    .t_table{
+
+    .t_table {
         padding: 2%;
         width: 97%;
         overflow-x: scroll;
     }
-    .user_table {
+
+    .vehicle_table {
         margin-left: 1%;
         margin-top: 4px;
         border-collapse: collapse;
@@ -464,12 +518,11 @@
         overflow: hidden;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     }
-  
 
 }
 
 @media screen and (max-width: 700px) {
-    .user .contents {
+    .vehicle_contents {
         margin-top: 40px;
         display: grid;
         grid-template-columns: 100px;
@@ -480,7 +533,7 @@
         padding-left: 20%;
     }
 
-    .user {
+    .vehicle_outer {
         position: absolute;
         width: 100%;
         left: 100px;
@@ -490,30 +543,27 @@
         top: 75px;
     }
 
-    .users_search {
-        margin-top: 550px;
-        margin-right: 10%;
-        margin-left: 150px;
-        width: 60%;
-    }
-    .filter{
+    .vehicle_filter {
         margin-top: 5px;
         margin-left: -50%;
         color: rgb(63, 63, 63);
         display: flex;
     }
-    .users_search {
-        margin-top: 550px;
+
+    .vehicle_search {
+        margin-top: 640px;
         margin-right: 10%;
         margin-left: 150px;
         width: 60%;
     }
-    .t_table{
+
+    .t_table {
         padding: 2%;
         width: 85%;
         overflow-x: scroll;
     }
-    .user_table {
+
+    .vehicle_table {
         margin-left: 2%;
         margin-top: 4px;
         border-collapse: collapse;
@@ -523,11 +573,11 @@
         overflow: hidden;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     }
-
 }
 
+
 @media screen and (max-width: 600px) {
-    .user .contents {
+    .vehicle_contents {
         margin-top: 40px;
         display: grid;
         grid-template-columns: 100px;
@@ -538,24 +588,27 @@
         padding-left: 17%;
     }
 
-    .users_search {
-        margin-top: 550px;
+    .vehicle_search {
+        margin-top: 640px;
         margin-right: 10%;
         margin-left: 50px;
         width: 70%;
     }
+
     .users_search {
         margin-top: 550px;
         margin-right: 10%;
         margin-left: 150px;
         width: 60%;
     }
-    .t_table{
+
+    .t_table {
         padding: 2%;
         width: 80%;
         overflow-x: scroll;
     }
-    .user_table {
+
+    .vehicle_table {
         margin-left: 1%;
         margin-top: 4px;
         border-collapse: collapse;
@@ -565,18 +618,20 @@
         overflow: hidden;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     }
-    .users_menu {
+
+    .vehicle_menu {
         display: contents;
     }
 
-    .header .header_title {
+    .vehicle_header .header_title {
         display: none;
     }
 }
 
+
 @media screen and (max-width: 500px) {
 
-    .user .contents {
+    .vehicle_contents {
         margin-top: 40px;
         display: grid;
         grid-template-columns: 100px;
@@ -586,24 +641,28 @@
         position: absolute;
         padding-left: 8%;
     }
-    .users_search {
-        margin-top: 550px;
+
+    .vehicle_search {
+        margin-top: 640px;
         margin-right: 10%;
         margin-left: 50px;
         width: 70%;
     }
+
     .users_search {
         margin-top: 550px;
         margin-right: 10%;
         margin-left: 150px;
         width: 60%;
     }
-    .t_table{
+
+    .t_table {
         padding: 2%;
         width: 80%;
         overflow-x: scroll;
     }
-    .user_table {
+
+    .vehicle_table {
         margin-left: 1%;
         margin-top: 4px;
         border-collapse: collapse;
@@ -613,25 +672,29 @@
         overflow: hidden;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     }
+
 }
 
+
 @media screen and (max-width: 400px) {
-    .user .contents {
+    .vehicle_contents {
         padding-left: 10px;
     }
-    .users_search {
-        margin-top: 500px;
+    .vehicle_search {
+        margin-top: 640px;
         margin-right: 10%;
         margin-left: 150px;
         width: 60%;
     }
-    .t_table{
+
+    .t_table {
         padding: 2%;
         background-color: rgb(0, 0, 0);
         width: 70%;
         overflow-x: scroll;
     }
-    .user_table {
+
+    .vehicle_table {
         margin-left: 1%;
         margin-top: 4px;
         border-collapse: collapse;
@@ -643,29 +706,34 @@
     }
 }
 
+
 @media screen and (max-width: 360px) {
-    .user .contents {
+    .vehicle_contents {
         padding-left: -100px;
         margin-right: 200px;
     }
-    .users_search {
+
+    .vehicle_search {
         margin-top: 520px;
         margin-right: 10%;
         margin-left: 110px;
         width: 60%;
     }
-    .filter{
+
+    .filter {
         margin-top: 5px;
         margin-left: -100%;
         color: rgb(63, 63, 63);
         display: flex;
     }
-    .t_table{
+
+    .t_table {
         padding: 8%;
         width: 80%;
         overflow-x: scroll;
     }
-    .user_table {
+
+    .vehicle_table {
         margin-left: 1%;
         margin-top: 4px;
         border-collapse: collapse;
