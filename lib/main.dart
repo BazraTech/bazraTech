@@ -1,6 +1,7 @@
 import 'package:bazralogin/Bottom/Bottom.dart';
 
-import 'package:bazralogin/Model/item.dart';
+import 'package:bazralogin/Model/car.dart';
+import 'package:bazralogin/Model/communica.dart';
 import 'package:bazralogin/Page/Loging/Login.dart';
 
 import 'package:bazralogin/Route/route.dart';
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => Carinfo(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Commuicationprovider(),
         ),
       ],
       child: MaterialApp(

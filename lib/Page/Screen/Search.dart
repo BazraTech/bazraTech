@@ -1,4 +1,4 @@
-import 'package:bazralogin/Model/item.dart';
+import 'package:bazralogin/Model/car.dart';
 import 'package:bazralogin/widget/carlist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,10 +17,13 @@ class _SearchscreenState extends State<Searchscreen> {
     super.initState();
     _searchTextController = TextEditingController();
     _searchTextController?.addListener(() {
-      setState(() {});
+      setState(() {
+        isWidget = true;
+      });
     });
   }
 
+  bool isWidget = false;
   @override
   void dispose() {
     super.dispose();
@@ -79,47 +82,68 @@ class _SearchscreenState extends State<Searchscreen> {
               ),
             ),
             Container(
-              child:
-                  _searchTextController!.text.isNotEmpty && _searchList.isEmpty
-                      ? Column(
-                          children: [
-                            SizedBox(
-                              height: 50,
-                            ),
-                            Icon(
-                              Icons.search,
-                              size: 60,
-                            ),
-                            SizedBox(
-                              height: 50,
-                            ),
-                            Text(
-                              'No results found',
-                              style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.w700),
-                            ),
-                          ],
-                        )
-                      : GridView.count(
+                child: _searchTextController!.text.isNotEmpty &&
+                        _searchList.isEmpty
+                    ? Column(
+                        children: [
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Icon(
+                            Icons.search,
+                            size: 60,
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Text(
+                            'No results found',
+                            style: TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.w700),
+                          ),
+                        ],
+                      )
+                    : Container(
+                        height: MediaQuery.of(context).size.height - 300,
+                        child: ListView(
                           physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          crossAxisCount: 2,
-                          childAspectRatio: 240 / 420,
-                          crossAxisSpacing: 8,
-                          mainAxisSpacing: 8,
                           children: List.generate(
                               _searchTextController!.text.isEmpty
-                                  ? productsList.length
+                                  ? 4
                                   : _searchList.length, (index) {
                             return ChangeNotifierProvider.value(
                               value: _searchTextController!.text.isEmpty
                                   ? productsList[index]
                                   : _searchList[index],
-                              child: Feedproducts(),
+                              child:
+                                  Container(height: 65, child: Feedproducts()),
                             );
                           }),
                         ),
-            )
+                      )
+                // : GridView(
+                //     physics: NeverScrollableScrollPhysics(),
+                //     gridDelegate:
+                //         const SliverGridDelegateWithMaxCrossAxisExtent(
+                //       childAspectRatio: 3.5 / 4,
+                //       maxCrossAxisExtent: 220,
+                //       crossAxisSpacing: 20,
+                //       mainAxisSpacing: 20,
+                //     ),
+                //     shrinkWrap: true,
+                //     children: List.generate(
+                //         _searchTextController!.text.isEmpty
+                //             ? productsList.length
+                //             : _searchList.length, (index) {
+                //       return ChangeNotifierProvider.value(
+                //         value: _searchTextController!.text.isEmpty
+                //             ? productsList[index]
+                //             : _searchList[index],
+                //         child: Feedproducts(),
+                //       );
+                //     }),
+                //   ),
+                )
           ],
         ),
       ),

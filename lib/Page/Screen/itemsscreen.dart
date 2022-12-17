@@ -1,4 +1,4 @@
-import 'package:bazralogin/Model/item.dart';
+import 'package:bazralogin/Model/car.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,199 +11,224 @@ class Category extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Color.fromRGBO(247, 250, 252, 1),
-          elevation: 0,
-          automaticallyImplyLeading: false,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Icon(
-                Icons.notification_add,
-                color: Color.fromRGBO(0, 207, 253, 1),
+        appBar: AppBar(
+            backgroundColor: Color.fromRGBO(247, 250, 252, 1),
+            elevation: 0,
+            automaticallyImplyLeading: false,
+            title: Center(
+              child: Text(
+                "  Wel-come yared ",
+                style: TextStyle(color: Colors.lightBlue),
               ),
-            )
-          ]),
-      body: Container(
-        color: const Color.fromRGBO(247, 250, 252, 1),
-        height: MediaQuery.of(context).size.height,
-        child: GridView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0, left: 8, right: 8),
-              child: Container(
-                  constraints: BoxConstraints(
-                    minHeight: 100,
-                    maxHeight: 100,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(22),
-                    color: Color.fromRGBO(217, 217, 217, 1),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(),
-                        child: Container(
-                          margin: EdgeInsets.only(top: 27),
-                          height: 70,
-                          width: MediaQuery.of(context).size.width,
-                          child: Icon(
-                            MdiIcons.carBack,
-                            size: 70,
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        child: Text("vechicle"),
-                      ),
-                    ],
-                  )),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0, left: 8, right: 8),
-              child: Container(
-                  constraints: BoxConstraints(
-                    minHeight: 100,
-                    maxHeight: 100,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(22),
-                    color: Color.fromRGBO(217, 217, 217, 1),
-                  ),
-                  child: Column(
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Icon(
+                  Icons.notification_add,
+                  color: Color.fromRGBO(0, 207, 253, 1),
+                ),
+              )
+            ]),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                color: const Color.fromRGBO(247, 250, 252, 1),
+                height: MediaQuery.of(context).size.height,
+                child: Container(
+                  child: GridView(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(14.0),
+                        padding:
+                            const EdgeInsets.only(top: 10.0, left: 8, right: 8),
                         child: Container(
-                            height: 70,
-                            margin: EdgeInsets.only(top: 27),
-                            width: MediaQuery.of(context).size.width,
-                            child: SvgPicture.asset("assets/icons/driver.svg")),
+                            constraints: BoxConstraints(
+                              minHeight: 60,
+                              maxHeight: 60,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(22),
+                              color: Color.fromRGBO(217, 217, 217, 1),
+                            ),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(),
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 40),
+                                    height: 70,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Icon(
+                                      MdiIcons.carBack,
+                                      size: 50,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  child: Text("vechicle"),
+                                ),
+                              ],
+                            )),
                       ),
-                      Container(
-                        child: Text("Driver"),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(top: 10.0, left: 8, right: 8),
+                        child: Container(
+                            constraints: BoxConstraints(
+                              minHeight: 60,
+                              maxHeight: 60,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(22),
+                              color: Color.fromRGBO(217, 217, 217, 1),
+                            ),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(14.0),
+                                  child: Container(
+                                      height: 70,
+                                      margin: EdgeInsets.only(top: 27),
+                                      width: MediaQuery.of(context).size.width,
+                                      child: SvgPicture.asset(
+                                          "assets/icons/driver.svg")),
+                                ),
+                                Container(
+                                  child: Text("Driver"),
+                                )
+                              ],
+                            )),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(top: 10.0, left: 8, right: 8),
+                        child: Container(
+                            constraints: BoxConstraints(
+                              minHeight: 60,
+                              maxHeight: 60,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(22),
+                              color: Color.fromRGBO(217, 217, 217, 1),
+                            ),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(14),
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 27),
+                                    height: 70,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: SvgPicture.asset(
+                                        "assets/icons/road.svg"),
+                                  ),
+                                ),
+                                Text("On Route"),
+                              ],
+                            )),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(top: 10.0, left: 8, right: 8),
+                        child: Container(
+                            constraints: BoxConstraints(
+                              minHeight: 60,
+                              maxHeight: 60,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(22),
+                              color: Color.fromRGBO(217, 217, 217, 1),
+                            ),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(14),
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 27),
+                                    height: 70,
+                                    width: MediaQuery.of(context).size.width,
+                                    child:
+                                        Image.asset("assets/images/report.png"),
+                                  ),
+                                ),
+                                Text("Report"),
+                              ],
+                            )),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(top: 10.0, left: 8, right: 8),
+                        child: Container(
+                            constraints: BoxConstraints(
+                              minHeight: 60,
+                              maxHeight: 60,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(22),
+                              color: Color.fromRGBO(217, 217, 217, 1),
+                            ),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(14),
+                                  child: Container(
+                                    height: 70,
+                                    margin: EdgeInsets.only(top: 27),
+                                    width: MediaQuery.of(context).size.width,
+                                    child:
+                                        Image.asset("assets/images/market.png"),
+                                  ),
+                                ),
+                                Text("Aviable market"),
+                              ],
+                            )),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(top: 10.0, left: 8, right: 8),
+                        child: Container(
+                            constraints: BoxConstraints(
+                              minHeight: 60,
+                              maxHeight: 60,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(22),
+                              color: Color.fromRGBO(217, 217, 217, 1),
+                            ),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(14),
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 27),
+                                    height: 70,
+                                    width: MediaQuery.of(context).size.width,
+                                    child:
+                                        Image.asset("assets/images/time.png"),
+                                  ),
+                                ),
+                                Text("Trip manegement"),
+                              ],
+                            )),
                       )
                     ],
-                  )),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0, left: 8, right: 8),
-              child: Container(
-                  constraints: BoxConstraints(
-                    minHeight: 100,
-                    maxHeight: 100,
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                      childAspectRatio: 3.5 / 4,
+                      maxCrossAxisExtent: 220,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20,
+                    ),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(22),
-                    color: Color.fromRGBO(217, 217, 217, 1),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(14),
-                        child: Container(
-                          margin: EdgeInsets.only(top: 27),
-                          height: 70,
-                          width: MediaQuery.of(context).size.width,
-                          child: SvgPicture.asset("assets/icons/road.svg"),
-                        ),
-                      ),
-                      Text("On Route"),
-                    ],
-                  )),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0, left: 8, right: 8),
-              child: Container(
-                  constraints: BoxConstraints(
-                    minHeight: 100,
-                    maxHeight: 100,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(22),
-                    color: Color.fromRGBO(217, 217, 217, 1),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(14),
-                        child: Container(
-                          margin: EdgeInsets.only(top: 27),
-                          height: 70,
-                          width: MediaQuery.of(context).size.width,
-                          child: Image.asset("assets/images/report.png"),
-                        ),
-                      ),
-                      Text("Report"),
-                    ],
-                  )),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0, left: 8, right: 8),
-              child: Container(
-                  constraints: BoxConstraints(
-                    minHeight: 100,
-                    maxHeight: 100,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(22),
-                    color: Color.fromRGBO(217, 217, 217, 1),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(14),
-                        child: Container(
-                          height: 70,
-                          margin: EdgeInsets.only(top: 27),
-                          width: MediaQuery.of(context).size.width,
-                          child: Image.asset("assets/images/market.png"),
-                        ),
-                      ),
-                      Text("Aviable market"),
-                    ],
-                  )),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0, left: 8, right: 8),
-              child: Container(
-                  constraints: BoxConstraints(
-                    minHeight: 100,
-                    maxHeight: 100,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(22),
-                    color: Color.fromRGBO(217, 217, 217, 1),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(14),
-                        child: Container(
-                          margin: EdgeInsets.only(top: 27),
-                          height: 70,
-                          width: MediaQuery.of(context).size.width,
-                          child: Image.asset("assets/images/time.png"),
-                        ),
-                      ),
-                      Text("Trip manegement"),
-                    ],
-                  )),
-            )
-          ],
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 2 / 1,
-            mainAxisExtent: 180,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
+                ),
+              ),
+            ],
           ),
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-        ),
-      ),
-    );
+        ));
   }
 }

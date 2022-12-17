@@ -21,9 +21,9 @@ class AppRoutes {
   static Map<String, WidgetBuilder> define() {
     return {
       authLogin: (context) => const Login(),
-      authRegister: (context) => const likedStack(),
+      authRegister: (context) => const RegistrationForm(),
       bottom: (context) => BottomBarScreen(),
-      mapTracking: (context) => displaycarlaction(),
+      mapTracking: (context) => Tracking(),
       mapSearch: (context) => Searchscreen(),
     };
   }

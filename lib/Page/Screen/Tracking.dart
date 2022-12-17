@@ -1,160 +1,191 @@
-import 'package:bazralogin/Model/item.dart';
+import 'package:bazralogin/Model/car.dart';
+import 'package:bazralogin/Page/Screen/Search.dart';
 import 'package:bazralogin/Page/Screen/carinfodisplayonMap.dart';
+import 'package:bazralogin/Page/Screen/communication/seachdriver.dart';
 import 'package:bazralogin/Route/route.dart';
-
+import 'package:bazralogin/const/color.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:location/location.dart';
+import 'package:syncfusion_flutter_maps/maps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 
-const double ZOOM = 1;
+// track all car
 
 class Tracking extends StatefulWidget {
   @override
   State<Tracking> createState() => _TrackingState();
 }
 
-List<Car> products = [];
-
 class _TrackingState extends State<Tracking> {
   final TextEditingController searchController = TextEditingController();
-
   GoogleMapController? mapController;
-  // GeoPoint? location;
-  // Object? latLng;
-  // int? length;
-  // void dispose() {
-  //   mapController.dispose();
+  static LatLng SOURCE_LOCATION = LatLng(9.005401, 38.763611);
+  static LatLng DEST_LOCATION = LatLng(8.5263, 39.2583);
 
-  // }
+  // get location
+  LocationData? currentLocation;
+  void getCurrentLocation() {
+    Location location = Location();
+    location.getLocation().then(
+      (location) {
+        currentLocation = location;
+      },
+    );
+  }
 
-  List<Marker> _marker = [];
-  List<Marker> _list = const [
-    Marker(
-        markerId: MarkerId("1"),
-        position: LatLng(9.005401, 38.763611),
-        infoWindow: InfoWindow(title: "car")),
-  ];
+  //polyline
+  Set<Polyline> _polylines = Set<Polyline>();
+  List<LatLng> polylineCoordinates = [];
+  PolylinePoints? polylinePoints;
+  late LatLng dEST_LOCATION;
+  late LatLng currentlocation;
+
+  @override
   void initState() {
+    polylinePoints = PolylinePoints();
+    this.setInitialLocation();
+
     super.initState();
-    _marker.addAll(_list);
+  }
+
+  void setInitialLocation() {
+    currentlocation =
+        LatLng(SOURCE_LOCATION.latitude, SOURCE_LOCATION.longitude);
+
+    dEST_LOCATION = LatLng(DEST_LOCATION.latitude, DEST_LOCATION.longitude);
   }
 
   @override
   Widget build(BuildContext context) {
     final carData = Provider.of<Carinfo>(context);
-    final productsList = carData.products;
-
-    
-    // final carmarker = CarData.products;  carmarker.forEach((Value) => _marker.add(const Marker(
-    //       markerId: MarkerId("car"),
-    //     )));
-    // Widget animatCar() {
-    //   return Container(
-    //     child: GoogleMap(
-    //       initialCameraPosition:
-    //           const CameraPosition(target: LatLng(9.005401, 38.763611)),
-    //       // Markers to be pointed
-    //       markers: Set<Marker>.of(_marker),
-    //       onMapCreated: (controller) {
-    //         // Assign the controller value to use it later
-    //         mapController = controller;
-    //       },
-    //     ),
-    //   );
-    // }
+    // dialog
+    Future onpenDialog() => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              content: Container(
+                  height: 100,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Trip"),
+                          ),
+                          Spacer(),
+                          Text(" 11 ,3,2022 ,move  to Adama ")
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Distance"),
+                          ),
+                          Spacer(),
+                          Text(" 11 ,3,2022 ,move  to Adama ")
+                        ],
+                      )
+                    ],
+                  )),
+            ));
 
     return Scaffold(
         body: Stack(
       children: [
         Container(
+          color: Color.fromRGBO(217, 217, 217, 1),
           child: GoogleMap(
+            polylines: _polylines,
+            myLocationEnabled: true,
             initialCameraPosition:
-                const CameraPosition(target: LatLng(9.005401, 38.763611)),
+                CameraPosition(target: LatLng(9.005401, 38.763611)),
             // Markers to be pointed
-
+            markers: {
+              Marker(
+                  markerId: MarkerId("strat"),
+                  position: currentlocation,
+                  icon: BitmapDescriptor.defaultMarkerWithHue(
+                      BitmapDescriptor.hueGreen),
+                  infoWindow: InfoWindow(title: "car")),
+              Marker(
+                  markerId: MarkerId("destinations"),
+                  position: dEST_LOCATION,
+                  icon: BitmapDescriptor.defaultMarkerWithHue(
+                      BitmapDescriptor.hueBlue),
+                  onTap: (() {}),
+                  infoWindow: InfoWindow(title: "Adama"))
+            },
             onMapCreated: (controller) {
               // Assign the controller value to use it later
               mapController = controller;
+              setPolylines();
             },
           ),
         ),
         Positioned(
             child: Container(
-                width: 200,
-                margin: const EdgeInsets.only(top: 60, left: 250, right: 8),
-                child: ElevatedButton(
-                  child: Row(
-                    children: const [Icon(Icons.search), Text(" Search car")],
-                  ),
+          margin: EdgeInsets.only(top: 200, left: 15),
+          child: Row(
+            children: [
+              ElevatedButton(
                   onPressed: (() {
-                    Navigator.of(context).pushNamed(AppRoutes.mapSearch);
+                    onpenDialog();
                   }),
-                )))
+                  child: Text(
+                    "History",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith((states) {
+                        if (states.contains(MaterialState.pressed)) {
+                          return ColorsConsts.backgroundColor;
+                        }
+                        return const Color.fromRGBO(255, 255, 255, 1);
+                      }),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              side: const BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(10)))))
+            ],
+          ),
+        ))
       ],
     ));
   }
+
+  void setPolylines() async {
+    PolylineResult result = await polylinePoints!.getRouteBetweenCoordinates(
+      "AIzaSyDd81MpJcxjNdICQeKRg3Emywp4e_29Sfc",
+      PointLatLng(
+        currentlocation.latitude,
+        currentlocation.longitude,
+      ),
+      PointLatLng(
+        dEST_LOCATION.latitude,
+        dEST_LOCATION.longitude,
+      ),
+    );
+    if (result.status == 'OK') {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+      print("yyyyyyyyyyyyyyyyyyyyyyyy");
+      setState(() {
+        _polylines.add(Polyline(
+            width: 3,
+            polylineId: PolylineId('polyLine'),
+            color: Colors.blue,
+            points: polylineCoordinates));
+      });
+    }
+  }
 }
-
-// class Listdat extends StatefulWidget {
-//   Listdat({super.key});
-
-//   @override
-//   State<Listdat> createState() => _ListdatState();
-// }
-
-// class _ListdatState extends State<Listdat> {
-//   int? dataLength;
-
-//   List<Car>? data;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final listOfcar = Provider.of<Carinfo>(context);
-
-//     final car = listOfcar.product;
-
-//     return Scaffold(
-//       body: ListView(
-//         children: [
-//           Container(
-//             child: TextFormField(
-//               onChanged: (value) {
-//                 setState(() {
-//                   dataLength = car
-//                       .where((element) =>
-//                           element.name!.toLowerCase().startsWith(value))
-//                       .length;
-
-//                   print(dataLength);
-//                   data = car
-//                       .where((element) =>
-//                           element.name!.toLowerCase().startsWith(value))
-//                       .toList();
-//                 });
-//               },
-//               decoration: InputDecoration(
-//                   hintText: "search", prefixIcon: Icon(Icons.search)),
-//             ),
-//           ),
-//           ...List.generate(dataLength == null ? car.length : dataLength!,
-//               (index) {
-//             final snapshot = data == null ? car[index] : data![index];
-//             final listOf = Provider.of<Car>(context);
-//             return InkWell(
-//               onTap: () {
-//                 Navigator.of(context)
-//                     .pushNamed(AppRoutes.mapTracking, arguments: listOf.id);
-//               },
-//               child: ListTile(
-//                 title: Text(snapshot.name),
-//                 subtitle: Text(snapshot.id.toString()),
-//               ),
-//             );
-//           })
-//         ],
-//       ),
-//     );
-//   }
-// }
