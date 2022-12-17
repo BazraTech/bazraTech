@@ -128,12 +128,6 @@
     transition: 0.3s;
     padding: 10%;
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
-    cursor: pointer;
-    display: inline-block;
-    text-decoration: none;
-}
-.vehicle_contents .active{
-    background-color: rgb(255, 0, 0);
 }
 
 .total_vehicle h4 {
@@ -155,9 +149,6 @@
 .total_vehicle:hover {
     transform: scale(1.09);
 }
- .nd{
-    background-color: #222;
-}
 
 /* ------------------ On-Route ------------------- */
 .on_route {
@@ -170,12 +161,6 @@
     transition: 0.3s;
     padding: 10%;
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
-    cursor: pointer;
-    display: inline-block;
-}
-.on_route.active{
-    background-color: rgb(255, 0, 0);
-    color: var(--white);
 }
 
 .on_route h4 {
@@ -209,7 +194,6 @@
     transition: 0.3s;
     padding: 10%;
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
-    cursor: pointer;
 }
 
 .parked h4 {
@@ -243,7 +227,6 @@
     transition: 0.3s;
     padding: 10%;
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
-    cursor: pointer;
 }
 
 .maintenance h4 {
@@ -329,32 +312,15 @@
 }
 
 /* ------------------ Vehicle-table ------------------- */
-
 .outer_vehicle_tables {
     overflow-x: scroll;
     padding: 1%;
 }
-.ant-table-content{
-   
-   margin-left: 100px;
-   
-}
-.ant-table-container{
-    margin-left: -250px;
-    width: 110%;
-    
-}
-.ant-table{
-    background-color: red;
+
+.t_table {
+    padding: 1%;
     width: 100%;
-
 }
-.ant-spin-container{
-
-    width: 80%;
-    margin-left: 100px;
-}
-
 
 .vehicle_table {
     margin-left: 4%;
@@ -367,9 +333,8 @@
 .outer_vehicle_tables p{
     color: #009879;
     font-size: 23px;
-    margin-left: 52px;
+    margin-left: 60px;
     font-weight: 600;
-    margin-bottom: -35px;
 
 }
 
@@ -450,7 +415,7 @@
 
 
 /* ------------------ Responsivness ------------------- */
-@media screen and (max-width: 1180px) {
+@media screen and (max-width: 1130px) {
 
     .header h3 {
         display: none;
@@ -461,9 +426,9 @@
         grid-template-columns: 100px 100px;
         justify-content: space-around;
         width: 70%;
-        margin-left: 7%;
+        margin-left: 30px;
         column-gap: 180px;
-        
+        padding-right: 50px;
     }
     .vehicle_search {
         margin-top: 400px;
@@ -476,13 +441,14 @@
 
 @media screen and (max-width: 1000px) {
     .vehicle_contents {
+        margin-top: 40px;
         display: grid;
         grid-template-columns: 100px 100px;
-        justify-content: space-around;
+        justify-content: space-between;
         width: 70%;
-        margin-left: 7%;
-        column-gap: 180px;
-        
+        margin-left: 30px;
+        position: absolute;
+        padding-left: 5%;
     }
 
     .vehicle_search {
@@ -501,6 +467,18 @@
         padding: 2%;
         width: 98%;
     }
+
+    .vehicle_table {
+        margin-left: 3%;
+        margin-top: 4px;
+        border-collapse: collapse;
+        width: 80%;
+        margin-bottom: 15px;
+        border-radius: 5px 5px 0px 0px;
+        overflow: hidden;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    }
+
 
 }
 
@@ -532,7 +510,7 @@
 
     .vehicle_table {
         margin-left: 1%;
-        margin-top: 40px;
+        margin-top: 4px;
         border-collapse: collapse;
         width: 85%;
         margin-bottom: 15px;
@@ -587,7 +565,7 @@
 
     .vehicle_table {
         margin-left: 2%;
-        margin-top: 40px;
+        margin-top: 4px;
         border-collapse: collapse;
         width: 80%;
         margin-bottom: 15px;
@@ -629,17 +607,17 @@
         width: 80%;
         overflow-x: scroll;
     }
+
     .vehicle_table {
-        margin-left: 2%;
-        margin-top: 40px;
+        margin-left: 1%;
+        margin-top: 4px;
         border-collapse: collapse;
-        width: 80%;
+        width: 85%;
         margin-bottom: 15px;
         border-radius: 5px 5px 0px 0px;
         overflow: hidden;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     }
-
 
     .vehicle_menu {
         display: contents;
@@ -648,7 +626,6 @@
     .vehicle_header .header_title {
         display: none;
     }
-   
 }
 
 
@@ -687,7 +664,7 @@
 
     .vehicle_table {
         margin-left: 1%;
-        margin-top: 40px;
+        margin-top: 4px;
         border-collapse: collapse;
         width: 75%;
         margin-bottom: 15px;
@@ -719,7 +696,7 @@
 
     .vehicle_table {
         margin-left: 1%;
-        margin-top: 40px;
+        margin-top: 4px;
         border-collapse: collapse;
         width: 85%;
         margin-bottom: 15px;
@@ -758,7 +735,7 @@
 
     .vehicle_table {
         margin-left: 1%;
-        margin-top: 40px;
+        margin-top: 4px;
         border-collapse: collapse;
         width: 88%;
         margin-bottom: 15px;

@@ -11,21 +11,25 @@ import { BsFillChatDotsFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
-import { FaWarehouse } from "react-icons/fa";
+import { FaRoute } from "react-icons/fa";
 import { BsSearch } from "react-icons/bs";
 import { AiFillFilter } from "react-icons/ai";
 import { AiFillCaretDown } from "react-icons/ai";
 import { GrFormNext } from "react-icons/gr";
 import { GrFormPrevious } from "react-icons/gr";
+import { FaParking } from "react-icons/fa";
+import { GrSettingsOption } from "react-icons/gr";
 import { HiMenuAlt1 } from "react-icons/hi";
-import './users.css';
+import './Report.css';
+import { Link, NavLink } from 'react-router-dom';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { total } from './Data/Data';
-import { on_route } from './Data/Data';
-import { parked } from './Data/Data';
-import { maintenance } from './Data/Data';
+
+import { total } from './data/jsonData';
+import { on_route } from './data/jsonData';
+import { parked } from './data/jsonData';
+import { maintenance } from './data/jsonData';
 import Tables from './Tables';
+
 
 
 export default function () {
@@ -33,6 +37,8 @@ export default function () {
     function tableSearch() {
 
         let input, filter, table, tr, td, txtValue, errors;
+
+
 
         //Intialising Variables
         input = document.getElementById("myInput");
@@ -53,8 +59,7 @@ export default function () {
         }
     }
 
-
-    let [active, setActive] = useState("total_users");
+    let [active, setActive] = useState("total_vehicle");
     let [state, setState] = useState("false");
     const color = () => {
         setState(state);
@@ -62,11 +67,11 @@ export default function () {
 
     return (
 
-        <div className="containerr">
+        <div className="vehicle_container">
 
             {/*---------------navigation---------------*/}
 
-            <div className="navigation">
+            <div className="vehicle_navigation">
                 <ul>
                     <li>
                         <Link to="/dashboard">
@@ -75,13 +80,13 @@ export default function () {
                     </li>
                     <li>
                         <Link to="/Total_number_of_vehicle">
-                            <p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p>
+                            <p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='00cc44'></AiFillCar></p>
                         </Link>
                     </li>
                     <li>
                         <Link to="/tracking">
-                            <p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill>
-                            </p></Link>
+                            <p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
+                        </Link>
                     </li>
                     <li>
                         <Link to="#">
@@ -90,13 +95,13 @@ export default function () {
                     </li>
                     <li>
                         <Link to="/users">
-                            <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='#00cc44'></FaUsers></p>
+                            <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='white'></FaUsers></p>
                         </Link>
                     </li>
                     <li>
                         <Link to="/alert">
-                            <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert>
-                            </p></Link>
+                            <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
+                        </Link>
                     </li>
                     <li>
                         <Link to="/report">
@@ -110,7 +115,8 @@ export default function () {
                     </li>
                     <li>
                         <Link to="/message_overview">
-                            <p class="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
+                            <p class="hovertext" data-hover="Communication">
+                                <BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
                         </Link>
                     </li>
                     <li>
@@ -129,44 +135,48 @@ export default function () {
 
             {/* --------------- header --------------- */}
 
-            <div className="header">
-                <h2 className='header_title'>Bazra Motors / <h6> Users</h6></h2>
-                <p className='users_menu'><HiMenuAlt1 size="2rem" color='black'></HiMenuAlt1></p>
+            <div className="vehicle_header">
+                <h2 className='header_title'>Bazra Motors / <h6>Total Number of Vehicle</h6></h2>
+                <p className='vehicle_menu'><HiMenuAlt1 size="2rem" color='black'></HiMenuAlt1></p>
                 <p><FiLogOut size="2rem" color='black'></FiLogOut></p>
             </div>
 
 
             {/* --------------- users --------------- */}
 
-            <div className='user'>
-                <div className='contents'>
-                    <div className='company' onClick={() => setActive("total_users")}>
-                        <h4>Total Users</h4>
-                        <p><FaUsers size="2.2rem" color='black'></FaUsers><b>100</b></p>
+            <div className='vehicle_outer' type="button" >
+                <div className='vehicle_contents'>
+                    <div className='total_vehicle ' onClick={() => setActive("total_vehicle")}>
+                        <h4>Total Vehicle</h4>
+
+                        <p><AiFillCar size="2.3rem" color='black'></AiFillCar><b>100</b></p>
 
                     </div>
-                    <div className='company' onClick={() => setActive("company")}>
-                        <h4>Company</h4>
-                        <p><FaWarehouse size="2.2rem" color='black'></FaWarehouse><b>100</b></p>
-
+                    <div className='on_route' onClick={() => setActive("on_route")} >
+                        <h4>On Route</h4>
+                        <p><FaRoute size="2.2rem" color='black'></FaRoute><b>100</b></p>
                     </div>
-                    <div className='individual' onClick={() => setActive("individual")}>
-                        <h4>Individual</h4>
-                        <p><FaUserAlt size="2rem" color='black'></FaUserAlt><b>100</b></p>
+                    <div className='parked' onClick={() => setActive("parked")}>
+                        <h4>Parked</h4>
+                        <p><FaParking size="2rem" color='black'></FaParking><b>10</b></p>
+                    </div>
+                    <div className='maintenance' onClick={() => setActive("maintenance")}>
+                        <h4>Maintenance</h4>
+                        <p><GrSettingsOption size="2rem" color='black'></GrSettingsOption><b>10</b></p>
                     </div>
                 </div>
 
                 {/* --------------- search --------------- */}
 
-                <div className='users_search'>
-                    <p>
+                <div className='vehicle_search'>
+                    <p title='search'> 
                         <BsSearch className='icn' size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
                         <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
                         <button>Search</button>
                     </p>
                 </div>
 
-                <div className='filter'>
+                <div className='vehicle_filter'> 
                     <p>
                         <AiFillFilter className='fil' size="0.8rem" color='rgb(63, 63, 63)'></AiFillFilter>
                         <h6>Filter</h6>
@@ -174,11 +184,14 @@ export default function () {
                 </div>
 
                 {/* --------------------- Table ------------------- */}
+
                 <div>
-                    {active === "total_users" && <Tables data={total} title=" Total Users" />}
-                    {active === "company" && <Tables data={on_route} title=" Company" />}
-                    {active === "individual" && <Tables data={parked} title=" Individual" />}
+                    {active === "total_vehicle" && <Tables datas={total} title=" Total Vehicle" />}
+                    {active === "on_route" && <Tables datas={on_route} title=" On Route" />}
+                    {active === "parked" && <Tables datas={parked} title=" Parked" />}
+                    {active === "maintenance" && <Tables datas={maintenance} title=" Maintenance" />}
                 </div>
+
             </div>
         </div >
     )

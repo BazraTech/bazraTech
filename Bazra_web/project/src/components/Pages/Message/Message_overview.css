@@ -151,10 +151,10 @@ body {
 }
 
 table {
-    margin-left: 10%;
+    margin-left: 15%;
     margin-top: 40px;
     border-collapse: collapse;
-    width: 86%;
+    width: 77%;
     margin-bottom: 15px;
     border-radius: 5px 5px 0px 0px;
     overflow: hidden;
@@ -234,7 +234,7 @@ table thead {
     padding-bottom: 2%;
 }
 .message-boxs{
-    box-shadow: 0px 0px 0px 1000px rgba(173, 173, 173, 0.75);
+    box-shadow: 0px 0px 0px 500px rgba(0, 0, 0, 0.75);
 
 }
 .x-button {

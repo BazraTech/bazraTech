@@ -41,37 +41,59 @@ class Users_edit extends Component {
                     <div className="users_edit_navigation">
                         <ul>
                             <li>
-                                <Link to="/dashboard"> <p class="hovertext" data-hover="Home"><FaHome size="2rem" color='white'></FaHome><p></p></p></Link>
+                                <Link to="/dashboard">
+                                    <p class="hovertext" data-hover="Home"><FaHome size="2rem" color='white'></FaHome><p></p></p>
+                                </Link>
                             </li>
                             <li>
-                                <Link to="/Total_number_of_vehicle"><p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p></Link>
+                                <Link to="/Total_number_of_vehicle">
+                                    <p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p>
+                                </Link>
                             </li>
                             <li>
-                                <Link to="/tracking"><p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill></p></Link>
+                                <Link to="/tracking">
+                                    <p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill>
+                                    </p></Link>
                             </li>
                             <li>
-                                <Link to="#"> <p class="hovertext" data-hover="Monitor Vehicles"><MdMonitor size="2rem" color='white'></MdMonitor></p></Link>
+                                <Link to="#">
+                                    <p class="hovertext" data-hover="Monitor Vehicles"><MdMonitor size="2rem" color='white'></MdMonitor></p>
+                                </Link>
                             </li>
                             <li>
-                                <Link to="/users">  <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='#00cc44'></FaUsers></p></Link>
+                                <Link to="/users">
+                                    <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='#00cc44'></FaUsers></p>
+                                </Link>
                             </li>
                             <li>
-                                <Link to="/alert"><p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p></Link>
+                                <Link to="/alert">
+                                    <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert>
+                                    </p></Link>
                             </li>
                             <li>
-                                <Link to="#"><p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p></Link>
+                                <Link to="/report">
+                                    <p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p>
+                                </Link>
                             </li>
                             <li>
-                                <Link to="/Company_registration"> <p class="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" color='white'></FaRegIdCard></p></Link>
+                                <Link to="/Company_registration">
+                                    <p class="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" color='white'></FaRegIdCard></p>
+                                </Link>
                             </li>
                             <li>
-                                <Link to="/message_overview"><p class="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p></Link>
+                                <Link to="/message_overview">
+                                    <p class="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
+                                </Link>
                             </li>
                             <li>
-                                <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
+                                <Link to="#">
+                                    <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
+                                </Link>
                             </li>
                             <li>
-                                <p class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='white'></AiFillSetting></p>
+                                <Link to="/settings">
+                                    <p class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='white'></AiFillSetting></p>
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -103,16 +125,16 @@ class Users_edit extends Component {
                                 <h1>Company Information</h1>
                                 <div className='company_information'>
                                     <div>
-                                        <p>Company Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                        <p>Company Name </p>
                                         <input type="text" placeholder='Bazra Motors' disabled={this.state.diabled}></input>
 
                                     </div>
                                     <div>
-                                        <p>Company Sector <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                        <p>Company Sector </p>
                                         <input type="text" placeholder='Motors' disabled={this.state.diabled}></input>
                                     </div>
                                     <div>
-                                        <p>Company Type <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                        <p>Company Type </p>
                                         <select disabled={this.state.diabled}>
                                             <option value=''>Transport</option>
                                             <option value='plc'>Public Llimited Company</option>

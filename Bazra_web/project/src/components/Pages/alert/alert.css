@@ -99,7 +99,7 @@
 }
 
 
-/* --------------- users --------------- */
+/* --------------- Alert Main --------------- */
 
 .alert_main {
     position: absolute;
@@ -111,6 +111,18 @@
     top: 75px;
 }
 
+.alert_vehicle_tables {
+    margin-top: 200px;
+}
+
+.alert_vehicle_tables p {
+    color: #009879;
+    font-size: 23px;
+    margin-left: 52px;
+    font-weight: 600;
+    margin-bottom: -35px;
+}
+
 .alert_contents {
     margin-top: 50px;
     display: grid;
@@ -119,8 +131,14 @@
     width: 70%;
     margin-left: 150px;
     position: absolute;
+    margin-bottom: 30%;
 }
 
+.alertTable {
+    margin-bottom: 100px;
+}
+
+/* --------------- ClassName alert_accident --------------- */
 .alert_accident {
     width: 180px;
     background-color: rgb(255, 255, 255);
@@ -132,6 +150,7 @@
     padding: 10%;
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
 }
+
 
 .alert_accident h4 {
     color: var(--black1);
@@ -153,72 +172,13 @@
     transform: scale(1.09);
 }
 
-/* ------------------ search ------------------- */
 
-.search {
-    margin-top: 200px;
-    margin-left: 55%;
-}
-.hide {
-    display: none;
-}
-
-.search p {
-    display: flex;
-}
-
-.search p .icn {
-    margin-top: 8px;
-}
-
-.search input {
-    width: 61%;
-    height: 38px;
-    padding-left: 20px;
-    border-radius: 6px 0px 0px 6px;
-    outline: none;
-    border: 1px solid rgb(0, 0, 0);
-    margin-left: 10px;
-}
-
-.search p button {
-    width: 15%;
-    background-color: #222;
-    color: var(--white);
-    border-radius: 0px 7px 7px 0px;
-    border: none;
-}
-
-.search p button:hover {
-    background-color: rgb(67, 67, 67);
-    border: none;
-}
-
-
-/* ------------------ filter ------------------- */
-
-.filter p {
-    margin-top: 50px;
-    margin-left: 80%;
-    color: rgb(63, 63, 63);
-    display: flex;
-}
-
-.filter p .fil {
-    margin-top: 1px;
-}
-
-.filter p h6 {
-    padding-left: 5px;
-    font-size: 0.8rem;
-    padding-bottom: 10px;
-}
-
-/* ------------------ table ------------------- */
+/* ------------------ Alert table ------------------- */
 
 .outer_alert_table {
     margin-top: 200px;
 }
+
 .alert_table {
     margin-left: 7%;
     margin-top: 4px;
@@ -230,7 +190,7 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 
-.alert_table thead  {
+.alert_table thead {
     background-color: #4a4a4a;
     color: var(--white);
     text-align: left;
@@ -238,7 +198,7 @@
     margin-top: 2px;
 }
 
-.alert_table button{
+.alert_table button {
     background-color: rgb(66, 66, 66);
     color: var(--white);
     padding: 5px;
@@ -262,41 +222,17 @@
 }
 
 .alert_table tbody tr:last-of-type {
-    border-bottom: 4px solid  #4a4a4a;
+    border-bottom: 4px solid #4a4a4a;
 }
 
 .alert_table tbody .active_row {
     color: #009879;
 }
 
-/* ------------------ page ------------------- */
-.page{
-    align-content: center;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 50px;
-    display: flex;
-    justify-content: center;
-}
-.num{
-    padding: 20px 10px 20px 20px;
-}
-.page .sel{
-   margin-right: 50px;
-}
-.page .next{
-    margin-top: 8px;
-    margin-left: 10px;
- }
- .alert_menu{
-    display: none;
- }
-
-
+/* ------------------ Responsivness ------------------- */
 
 @media screen and (max-width: 1130px) {
 
-   
     .outer_alert_table {
         margin-top: 150px;
     }
@@ -310,9 +246,11 @@
         column-gap: 180px;
         padding-right: 50px;
     }
+
     .alert_table {
         margin-top: 200px;
     }
+
     table {
         margin-left: 7%;
         margin-top: 350px;
@@ -330,12 +268,13 @@
         position: absolute;
         padding-left: 28%;
     }
+
     .outer_alert_table {
         margin-top: 250px;
     }
 
     .search {
-        margin-top: 550px; 
+        margin-top: 550px;
         margin-right: 10%;
         margin-left: 150px;
         width: 60%;
@@ -368,6 +307,7 @@
         position: absolute;
         padding-left: 20%;
     }
+
     .outer_alert_table {
         margin-top: 10px;
     }
@@ -407,10 +347,12 @@
         position: absolute;
         padding-left: 17%;
     }
+
     .alert_menu {
         display: contents;
-     }
-     .alert_header .header_title {
+    }
+
+    .alert_header .header_title {
         display: none;
     }
 
@@ -434,6 +376,7 @@
         position: absolute;
         padding-left: 8%;
     }
+
     .search {
         margin-top: 550px;
         margin-right: 10%;

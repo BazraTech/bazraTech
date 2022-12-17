@@ -20,59 +20,81 @@ import { HiMenuAlt1 } from "react-icons/hi";
 export default function Company_registration() {
 
 
-    {/*------------------Validation for company registration----------------- */ }
+    {/*------------------ Validation for company registration ----------------- */ }
 
-    {/*----------------handle events----------------- */ }
+    {/*---------------- handle events ----------------- */ }
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-    {/*----------------handle submit values----------------- */ }
+    {/*---------------- handle submit values ----------------- */ }
     const onSubmit = data => console.log(data);
 
     return (
         <div className="company_container">
 
-            {/*---------------navigation---------------*/}
+            {/*--------------- Company Container ---------------*/}
 
             <div className="company_navigation">
-            <ul>
+                <ul>
                     <li>
-                        <Link to="/dashboard"> <p class="hovertext" data-hover="Home"><FaHome size="2rem" color='white'></FaHome><p></p></p></Link>
+                        <Link to="/dashboard">
+                            <p class="hovertext" data-hover="Home"><FaHome size="2rem" color='white'></FaHome><p></p></p>
+                        </Link>
                     </li>
                     <li>
-                        <Link to="/Total_number_of_vehicle"><p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p></Link>
+                        <Link to="/Total_number_of_vehicle">
+                            <p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p>
+                        </Link>
                     </li>
                     <li>
-                        <Link to="/tracking"><p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill></p></Link>
+                        <Link to="/tracking">
+                            <p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
+                        </Link>
                     </li>
                     <li>
-                        <Link to="#"> <p  class="hovertext" data-hover="Monitor Vehicles"><MdMonitor size="2rem" color='white'></MdMonitor></p></Link>
+                        <Link to="#">
+                            <p class="hovertext" data-hover="Monitor Vehicles"><MdMonitor size="2rem" color='white'></MdMonitor></p>
+                        </Link>
                     </li>
                     <li>
-                        <Link to="/users">  <p  class="hovertext" data-hover="Users"><FaUsers size="2rem" color='white'></FaUsers></p></Link>
+                        <Link to="/users">
+                            <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='white'></FaUsers></p>
+                        </Link>
                     </li>
                     <li>
-                        <Link to="/alert"><p  class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p></Link>
+                        <Link to="/alert">
+                            <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
+                        </Link>
                     </li>
                     <li>
-                    <Link to="#"><p  class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p></Link>
+                        <Link to="/report">
+                            <p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p>
+                        </Link>
                     </li>
                     <li>
-                        <Link to="/Company_registration"> <p  class="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" color='00cc44'></FaRegIdCard></p></Link>
+                        <Link to="/Company_registration">
+                            <p class="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" color='00cc44'></FaRegIdCard></p>
+                        </Link>
                     </li>
                     <li>
-                        <Link to="/message_overview"><p  class="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p></Link>
+                        <Link to="/message_overview">
+                            <p class="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
+                        </Link>
                     </li>
                     <li>
-                        <p  class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
+                        <Link to="#">
+                            <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
+                        </Link>
                     </li>
                     <li>
-                        <p  class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='white'></AiFillSetting></p>
+                        <Link to="/settings">
+                            <p class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='white'></AiFillSetting></p>
+                        </Link>
                     </li>
                 </ul>
             </div>
 
 
-            {/* ---------------header--------------- */}
+            {/* --------------- Company header --------------- */}
 
             <div className="company_header">
                 <h2 className='header_title'>Bazra Motors / <h6>Registaration</h6></h2>
@@ -81,10 +103,12 @@ export default function Company_registration() {
             </div>
 
 
-            {/* ---------------Registration--------------- */}
+            {/* --------------- Registration- -------------- */}
 
             <section className='company_register'>
                 <form className='form' onSubmit={handleSubmit(onSubmit)}>
+
+                    {/* --------------- Company information- -------------- */}
 
                     <div className='first_div'>
                         <h1>Company Information</h1>
@@ -113,7 +137,7 @@ export default function Company_registration() {
                         </div>
                     </div>
 
-
+                    {/* --------------- Company Address- -------------- */}
                     <div className='second_div'>
                         <h1>Company Address</h1>
                         <div className='company_Address'>
@@ -154,6 +178,7 @@ export default function Company_registration() {
                         </div>
                     </div>
 
+                    {/* --------------- Owner information- -------------- */}
                     <div className='Third_div'>
                         <h1>Owner Information</h1>
                         <div className='owner_information'>
@@ -209,7 +234,7 @@ export default function Company_registration() {
                     </div>
 
                     <div className='second_div'>
-                        <h1>Vehicle Information</h1>
+                        <div className='registerd_vehicle'><h1>Vehicle Information</h1> <div className='Vehicle_number'><h1>Registerd Vehicle</h1><h1 className='number' >10</h1></div></div>
                         <div className='vehicle_information'>
                             <div>
                                 <p>Vehicle Catagory <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
@@ -241,7 +266,13 @@ export default function Company_registration() {
                             <div>
                                 <p>Plate Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                 <div className='plate_number'>
-                                    <input type="text" {...register("plateNumber", { required: '*plate number is required' })} placeholder='Enter Plate Number'></input>
+                                    <select className='select' {...register("plateNumber", { required: '*plate number is required' })}>
+                                        <option value=''>AD</option>
+                                        <option>ET</option>
+                                        <option>ORO</option>
+                                        <option>AM</option>
+                                        <option>TG</option>
+                                    </select>
                                     <input type="number" {...register("code")} placeholder='4'></input>
                                     <input type="number" {...register("idd")} placeholder='00034'></input>
                                     {errors.plateNumber && <span className='validate_text'>{errors.plateNumber.message}</span>}

@@ -13,6 +13,10 @@ import Alert from './components/Pages/alert/Alert';
 import Users_edit from './components/Pages/Users/Users_edit';
 import Vehicle_detail from './components/Pages/Total_number_of_vehicle/Vehicle_detail';
 import Message_overview from './components/Pages/Message/Message_overview';
+import Settings from './components/Pages/Settings/Settings';
+import Report from './components/Pages/Report/Report';
+import Report_detail from './components/Pages/Report/Report_detail';
+
 
 
 
@@ -34,6 +38,9 @@ class App extends Component{
         <Route path="/alert" element={<Alert />}></Route>
         <Route path="/vehicle_detail" element={<Vehicle_detail />}></Route>
         <Route path="/message_overview" element={<Message_overview />}></Route>
+        <Route path="/settings" element={<Settings />}></Route>
+        <Route path="/report" element={<Report />}></Route>
+        <Route path="/report_detail" element={<Report_detail />}></Route>
       </Routes>
 
     </div>
