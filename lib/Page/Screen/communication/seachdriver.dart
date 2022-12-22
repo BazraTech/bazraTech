@@ -10,16 +10,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-class Seardriver extends StatefulWidget {
+class Searchdriver extends StatefulWidget {
   final Function? onChangeman;
-  const Seardriver({super.key, required this.onChangeman});
+  const Searchdriver({super.key, required this.onChangeman});
 
   @override
-  State<Seardriver> createState() => _SeardriverState();
+  State<Searchdriver> createState() => _SearchdriverState();
 }
 
-class _SeardriverState extends State<Seardriver> {
+class _SearchdriverState extends State<Searchdriver> {
   TextEditingController? _searchTextController;
+  bool value = false;
 
   final FocusNode _node = FocusNode();
   void initState() {
@@ -48,12 +49,12 @@ class _SeardriverState extends State<Seardriver> {
       body: Column(
         children: [
           Padding(
-              padding: const EdgeInsets.all(0.0),
+              padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
                   Container(
                     width: 300,
-                    height: 35,
+                    height: 43,
                     child: TextField(
                       controller: _searchTextController,
                       minLines: 1,
@@ -62,11 +63,11 @@ class _SeardriverState extends State<Seardriver> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide:
-                              BorderSide(color: Colors.black!, width: 1.5),
+                              BorderSide(color: Colors.black!, width: 1),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
-                            width: 1.5,
+                            width: 1,
                             color: Colors.black,
                           ),
                           borderRadius: BorderRadius.circular(10.0),
@@ -120,6 +121,26 @@ class _SeardriverState extends State<Seardriver> {
                   ),
                 ],
               )),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Container(
+                  height: 6,
+                  child: Transform.scale(
+                    scale: 0.8,
+                    child: Checkbox(
+                        activeColor: Colors.green,
+                        value: value,
+                        onChanged: (value) => setState(() {
+                              this.value = value!;
+                            })),
+                  ),
+                ),
+              ),
+            ],
+          ),
           Container(
               height: MediaQuery.of(context).size.height - 280,
               width: MediaQuery.of(context).size.width - 16,
@@ -166,6 +187,6 @@ class _SeardriverState extends State<Seardriver> {
       ),
     );
   }
-  
+
   onChangeman() {}
 }

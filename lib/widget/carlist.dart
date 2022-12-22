@@ -3,14 +3,14 @@ import 'package:bazralogin/Route/route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Feedproducts extends StatefulWidget {
-  Feedproducts({super.key});
+class Feedcar extends StatefulWidget {
+  Feedcar({super.key});
 
   @override
-  State<Feedproducts> createState() => _FeedproductsState();
+  State<Feedcar> createState() => _FeedcarState();
 }
 
-class _FeedproductsState extends State<Feedproducts> {
+class _FeedcarState extends State<Feedcar> {
   @override
   Widget build(BuildContext context) {
     Car carAttributes = Provider.of<Car>(context);
@@ -19,8 +19,8 @@ class _FeedproductsState extends State<Feedproducts> {
         padding: const EdgeInsets.all(0.0),
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context)
-                .pushNamed(AppRoutes.mapTracking, arguments: carAttributes.id);
+            Navigator.of(context).pushNamed(AppRoutes.display,
+                arguments: {"id": carAttributes.name});
           },
           child: Container(
             width: 5,

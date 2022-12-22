@@ -1,7 +1,7 @@
 import 'package:bazralogin/Page/Screen/carinfodisplayonMap.dart';
 import 'package:bazralogin/Page/Screen/communication/Communication.dart';
 import 'package:bazralogin/Page/Screen/Profile.dart';
-import 'package:bazralogin/Page/Screen/Tracking.dart';
+
 import 'package:bazralogin/Page/Screen/itemsscreen.dart';
 
 import 'package:flutter/material.dart';
@@ -68,7 +68,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
               onTap: _selectPage,
               backgroundColor: Colors.white,
               unselectedItemColor: const Color.fromRGBO(66, 74, 109, 1),
-              selectedItemColor: const Color.fromRGBO(25, 205, 54, 1),
+              selectedItemColor: const Color.fromRGBO(77, 129, 212, 1),
               showUnselectedLabels: true,
               currentIndex: _selectedPageIndex,
               items: const [

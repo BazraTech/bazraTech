@@ -21,11 +21,7 @@ class Communications with ChangeNotifier {
 // communications provider
 class Commuicationprovider with ChangeNotifier {
   List<Communications> products = [
-    Communications(
-      value: false,
-      name: " Abebe",
-      Status: "  Assigned ",
-    ),
+    Communications(value: false, name: " Abebe", Status: 'Assigned'),
     Communications(name: " Alex", Status: " Assigned", value: false),
     Communications(name: " Robel", Status: "Assigned", value: false),
     Communications(name: " Roman", Status: " Assigned", value: false),

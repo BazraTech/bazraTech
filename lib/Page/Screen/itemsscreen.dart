@@ -1,8 +1,10 @@
 import 'package:bazralogin/Model/car.dart';
+import 'package:bazralogin/Route/route.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +20,7 @@ class Category extends StatelessWidget {
             title: Center(
               child: Text(
                 "  Wel-come yared ",
-                style: TextStyle(color: Colors.lightBlue),
+                style: TextStyle(color: Colors.black),
               ),
             ),
             actions: [
@@ -145,12 +147,18 @@ class Category extends StatelessWidget {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.all(14),
-                                  child: Container(
-                                    margin: EdgeInsets.only(top: 27),
-                                    height: 70,
-                                    width: MediaQuery.of(context).size.width,
-                                    child:
-                                        Image.asset("assets/images/report.png"),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .pushNamed(AppRoutes.report);
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(top: 27),
+                                      height: 70,
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Image.asset(
+                                          "assets/images/report.png"),
+                                    ),
                                   ),
                                 ),
                                 Text("Report"),

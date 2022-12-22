@@ -77,6 +77,7 @@ class _SearchscreenState extends State<Searchscreen> {
                   _searchTextController!.text.toLowerCase();
                   setState(() {
                     _searchList = carData.searchQuery(value);
+                    isWidget = true;
                   });
                 },
               ),
@@ -103,24 +104,26 @@ class _SearchscreenState extends State<Searchscreen> {
                           ),
                         ],
                       )
-                    : Container(
-                        height: MediaQuery.of(context).size.height - 300,
-                        child: ListView(
-                          physics: NeverScrollableScrollPhysics(),
-                          children: List.generate(
-                              _searchTextController!.text.isEmpty
-                                  ? 4
-                                  : _searchList.length, (index) {
-                            return ChangeNotifierProvider.value(
-                              value: _searchTextController!.text.isEmpty
-                                  ? productsList[index]
-                                  : _searchList[index],
-                              child:
-                                  Container(height: 65, child: Feedproducts()),
-                            );
-                          }),
-                        ),
-                      )
+                    : isWidget
+                        ? null
+                        : Container(
+                            height: MediaQuery.of(context).size.height - 300,
+                            child: ListView(
+                              physics: NeverScrollableScrollPhysics(),
+                              children: List.generate(
+                                  _searchTextController!.text.isEmpty
+                                      ? 4
+                                      : _searchList.length, (index) {
+                                return ChangeNotifierProvider.value(
+                                  value: _searchTextController!.text.isEmpty
+                                      ? productsList[index]
+                                      : _searchList[index],
+                                  child:
+                                      Container(height: 65, child: Feedcar()),
+                                );
+                              }),
+                            ),
+                          )
                 // : GridView(
                 //     physics: NeverScrollableScrollPhysics(),
                 //     gridDelegate:

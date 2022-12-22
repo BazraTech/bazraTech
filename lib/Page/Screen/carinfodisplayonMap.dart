@@ -1,10 +1,12 @@
 // ignore: file_names
 import 'dart:convert';
 
-import 'package:bazralogin/Page/Screen/Search.dart';
+import 'package:bazralogin/Page/Screen/Searchcar.dart';
 import 'package:bazralogin/Route/route.dart';
 
+
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:bazralogin/Model/car.dart';
@@ -26,15 +28,52 @@ class _displaycarlactionState extends State<displaycarlaction> {
   GoogleMapController? mapController;
   static LatLng SOURCE_LOCATION = LatLng(9.005401, 38.763611);
   static LatLng DEST_LOCATION = LatLng(8.5263, 39.2583);
-  CustomInfoWindowController _customInfoWindowController =
-      CustomInfoWindowController();
 
   // search
   bool isLoading = false;
-
+  String? userSelected;
   late List<String>? autoCompleteData;
+  String? latitude;
+  String? longitude;
 
   late TextEditingController controller;
+  // get current location
+  Location currentLocationcar = Location();
+  Set<Marker> _markers = {};
+
+  void getLocation() async {
+    var location = await currentLocationcar.getLocation();
+    currentLocationcar.onLocationChanged.listen((LocationData loc) {
+      mapController
+          ?.animateCamera(CameraUpdate.newCameraPosition(new CameraPosition(
+        target: LatLng(loc.latitude ?? 0.0, loc.longitude ?? 0.0),
+        zoom: 12.0,
+      )));
+      print(loc.latitude);
+      print(loc.longitude);
+      setState(() {
+        _markers.add(Marker(
+            markerId: MarkerId('Home'),
+            position: LatLng(loc.latitude ?? 0.0, loc.longitude ?? 0.0)));
+      });
+    });
+  }
+
+  Future<void> _goto(double x, double y) async {
+    mapController?.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(x, y), zoom: 18)));
+    Marker(
+        markerId: MarkerId("strat"),
+        position: LatLng(x, y),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        infoWindow: InfoWindow(title: "CarB"));
+    Marker(
+        markerId: MarkerId("Adama"),
+        position: currentlocation,
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+        infoWindow: InfoWindow(title: "CarB"));
+    setPolylines();
+  }
 
   Future fetchAutoCompleteData() async {
     setState(() {
@@ -66,11 +105,11 @@ class _displaycarlactionState extends State<displaycarlaction> {
     polylinePoints = PolylinePoints();
     this.setInitialLocation();
     fetchAutoCompleteData();
+    getLocation();
     super.initState();
   }
 
   void dispose() {
-    _customInfoWindowController.dispose();
     super.dispose();
   }
 
@@ -82,12 +121,6 @@ class _displaycarlactionState extends State<displaycarlaction> {
   }
 
   Widget build(BuildContext context) {
-    final CarData = Provider.of<Carinfo>(context);
-
-    final CarId = ModalRoute.of(context)?.settings.arguments as String?;
-
-    final CarList = CarData.products;
-// history display
     Future onpenDialog() => showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -105,6 +138,9 @@ class _displaycarlactionState extends State<displaycarlaction> {
                     ],
                   )),
             ));
+
+// history display
+
     return Scaffold(
         body: Stack(
       children: [
@@ -123,7 +159,7 @@ class _displaycarlactionState extends State<displaycarlaction> {
                 infoWindow: InfoWindow(title: "CarB")),
             Marker(
                 markerId: MarkerId("destinations"),
-                position: DEST_LOCATION,
+                position: dEST_LOCATION,
                 icon: BitmapDescriptor.defaultMarkerWithHue(
                     BitmapDescriptor.hueBlue),
                 onTap: (() {}),
@@ -132,122 +168,208 @@ class _displaycarlactionState extends State<displaycarlaction> {
           onMapCreated: (controller) {
             // Assign the controller value to use it later
             mapController = controller;
-            setPolylines();
+            // setPolylines();
           },
         ),
         Container(
-          margin: EdgeInsets.only(left: 200, top: 30, bottom: 150),
           child: Positioned(
-            child: Container(
-              child: isLoading
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Container(
-                        child: Column(
-                          children: [
-                            Autocomplete(
-                              optionsBuilder:
-                                  (TextEditingValue textEditingValue) {
-                                if (textEditingValue.text.isEmpty) {
-                                  return const Iterable<String>.empty();
-                                } else {
-                                  return autoCompleteData!.where((word) => word
-                                      .toLowerCase()
-                                      .contains(
-                                          textEditingValue.text.toLowerCase()));
-                                }
-                              },
-                              optionsViewBuilder: (context,
-                                  Function(String) onSelected, options) {
-                                return Container(
-                                  child: Material(
-                                    elevation: 4,
-                                    child: Container(
-                                      child: ListView.separated(
-                                        padding: EdgeInsets.zero,
-                                        itemBuilder: (context, index) {
-                                          final option =
-                                              options.elementAt(index);
-
-                                          return Container(
-                                            child: GestureDetector(
-                                              onTap: (() {
-                                                Navigator.of(context).pushNamed(
-                                                  AppRoutes.mapTracking,
-                                                );
-                                              }),
-                                              child: ListTile(
-                                                // title: Text(option.toString()),
-                                                title: SubstringHighlight(
-                                                  text: option.toString(),
-                                                  term: controller.text,
-                                                  textStyleHighlight: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w700),
-                                                ),
-                                                leading: Image.asset(
-                                                    "assets/images/car1.png"),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        separatorBuilder: (context, index) =>
-                                            Divider(),
-                                        itemCount: options.length,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                              onSelected: (selectedString) {
-                                print(selectedString);
-                              },
-                              fieldViewBuilder: (context, controller, focusNode,
-                                  onEditingComplete) {
-                                this.controller = controller;
-
-                                return Container(
-                                  color: Colors.white,
-                                  child: TextField(
-                                    controller: controller,
-                                    focusNode: focusNode,
-                                    onEditingComplete: onEditingComplete,
-                                    decoration: InputDecoration(
-                                      fillColor: Colors.white,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                        borderSide: BorderSide(
-                                            color: Colors.grey[300]!),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                        borderSide:
-                                            BorderSide(color: Colors.black!),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                        borderSide:
-                                            BorderSide(color: Colors.black!),
-                                      ),
-                                      hintText: "Search car",
-                                      prefixIcon: Icon(Icons.search),
-                                    ),
-                                  ),
-                                );
-                              },
-                            )
-                          ],
-                        ),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: 100,
+                    child: ElevatedButton(
+                      onPressed: (() {
+                        onpenDialog();
+                      }),
+                      child: Text(
+                        "History",
+                        style: TextStyle(color: Colors.black),
                       ),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith((states) {
+                            if (states.contains(MaterialState.pressed)) {
+                              return Colors.white;
+                            }
+                            return const Color.fromRGBO(255, 255, 255, 1);
+                          }),
+                          shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  side: const BorderSide(
+                                      color: Color.fromRGBO(162, 184, 212, 1)),
+                                  borderRadius: BorderRadius.circular(18)))),
                     ),
+                  ),
+                ),
+                Container(
+                  width: 200,
+                  margin: EdgeInsets.only(left: 100),
+                  child: isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: Container(
+                            child: isLoading
+                                ? Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Container(
+                                      child: Column(
+                                        children: [
+                                          Autocomplete(
+                                            optionsBuilder: (TextEditingValue
+                                                textEditingValue) {
+                                              if (textEditingValue
+                                                  .text.isEmpty) {
+                                                return const Iterable<
+                                                    String>.empty();
+                                              } else {
+                                                return autoCompleteData!.where(
+                                                    (word) => word
+                                                        .toLowerCase()
+                                                        .contains(
+                                                            textEditingValue
+                                                                .text
+                                                                .toLowerCase()));
+                                              }
+                                            },
+                                            optionsViewBuilder: (context,
+                                                Function(String) onSelected,
+                                                options) {
+                                              return Container(
+                                                height: 50,
+                                                width: 150,
+                                                child: Material(
+                                                  elevation: 4,
+                                                  child: Container(
+                                                    child: ListView.separated(
+                                                      padding: EdgeInsets.zero,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        final option = options
+                                                            .elementAt(index);
+
+                                                        return Container(
+                                                          height: 50,
+                                                          child: ListTile(
+                                                            onTap: () async {
+                                                              _goto(9.005401,
+                                                                  38.763611);
+                                                            },
+                                                            // title: Text(option.toString()),
+                                                            title:
+                                                                SubstringHighlight(
+                                                              text: option
+                                                                  .toString(),
+                                                              term: controller
+                                                                  .text,
+                                                              textStyleHighlight:
+                                                                  TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700),
+                                                            ),
+                                                            leading: Image.asset(
+                                                                "assets/images/download-removebg-preview (1).png"),
+                                                          ),
+                                                        );
+                                                      },
+                                                      separatorBuilder:
+                                                          (context, index) =>
+                                                              Divider(),
+                                                      itemCount: options.length,
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            onSelected:
+                                                (String selectedString) {
+                                              setState(() {
+                                                userSelected = selectedString;
+                                              });
+                                            },
+                                            fieldViewBuilder: (context,
+                                                controller,
+                                                focusNode,
+                                                onEditingComplete) {
+                                              this.controller = controller;
+
+                                              return Container(
+                                                margin:
+                                                    EdgeInsets.only(top: 23),
+                                                color: Colors.white,
+                                                child: TextField(
+                                                  controller: controller,
+                                                  focusNode: focusNode,
+                                                  onEditingComplete:
+                                                      onEditingComplete,
+                                                  decoration: InputDecoration(
+                                                    border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              18),
+                                                      borderSide: BorderSide(
+                                                          width: 1,
+                                                          color: Colors.black),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              14),
+                                                      borderSide: BorderSide(
+                                                          width: 1,
+                                                          color: Colors.black),
+                                                    ),
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      borderSide: BorderSide(
+                                                          width: 1,
+                                                          color: Colors.black),
+                                                    ),
+                                                    hintText:
+                                                        "Search Something",
+                                                    prefixIcon:
+                                                        Icon(Icons.search),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                          ),
+                        ),
+                ),
+              ],
             ),
           ),
         )
       ],
     ));
+    floatingActionButton:
+    FloatingActionButton(
+      child: Icon(
+        Icons.location_searching,
+        color: Colors.white,
+      ),
+      onPressed: () {
+        getLocation();
+      },
+    );
   }
 
 // draw polyline

@@ -25,13 +25,16 @@ class _FeeddriverState extends State<Feeddriver> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                carAttributes.name,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.black,
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text(
+                  carAttributes.name,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black,
+                  ),
                 ),
               ),
               // Spacer(),
@@ -41,6 +44,7 @@ class _FeeddriverState extends State<Feeddriver> {
                   scale: 0.8,
                   child: Checkbox(
                       activeColor: Colors.green,
+                      
                       value: carAttributes.value,
                       onChanged: (value) => setState(() {
                             carAttributes.value = !carAttributes.value;
@@ -51,7 +55,12 @@ class _FeeddriverState extends State<Feeddriver> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text(carAttributes.Status)],
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text(carAttributes.Status),
+              )
+            ],
           ),
         ],
       )),

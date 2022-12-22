@@ -1,18 +1,18 @@
 import 'package:bazralogin/Bottom/Bottom.dart';
+import 'package:bazralogin/Model/Reportmodel.dart';
 
 import 'package:bazralogin/Model/car.dart';
 import 'package:bazralogin/Model/communica.dart';
 import 'package:bazralogin/Page/Loging/Login.dart';
-
+import 'package:bazralogin/Page/Screen/communication/seachdriver.dart';
+import 'package:bazralogin/Page/Screen/test.dart';
 import 'package:bazralogin/Route/route.dart';
-import 'package:firebase_core/firebase_core.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 
@@ -30,6 +30,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => Commuicationprovider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => TravelReportinfo(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -38,7 +41,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         routes: AppRoutes.define(),
-        home: const Login(),
+        home: Login(),
       ),
     );
   }
