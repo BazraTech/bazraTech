@@ -6,12 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Feeddriver extends StatefulWidget {
-  final Function? onChange;
-  Feeddriver({super.key, required this.onChange});
+  final Function? selectAll;
+  Feeddriver({super.key, required this.selectAll});
 
   @override
   State<Feeddriver> createState() => _FeeddriverState();
 }
+
+List<Communications> productk = [];
+List multipleSelected = [];
 
 class _FeeddriverState extends State<Feeddriver> {
   @override
@@ -42,13 +45,16 @@ class _FeeddriverState extends State<Feeddriver> {
                 margin: EdgeInsets.fromLTRB(20.0, 0, 2, 0),
                 child: Transform.scale(
                   scale: 0.8,
-                  child: Checkbox(
-                      activeColor: Colors.green,
-                      
-                      value: carAttributes.value,
-                      onChanged: (value) => setState(() {
-                            carAttributes.value = !carAttributes.value;
-                          })),
+                  child: InkWell(
+                    onTap: (){},
+                    child: Checkbox(
+                        activeColor: Colors.green,
+                        value: carAttributes.value,
+                        onChanged: (value) => setState(() {
+                              carAttributes.value = !carAttributes.value;
+                              selectAll(value);
+                            })),
+                  ),
                 ),
               ),
             ],
@@ -65,5 +71,21 @@ class _FeeddriverState extends State<Feeddriver> {
         ],
       )),
     );
+  }
+
+  void selectAll(bool? value) {
+    setState(() {
+      productk.clear();
+      for (var element in productk) {
+        if (element.value == false) {
+          element.value = true;
+          multipleSelected.add(element);
+          print(element);
+        } else {
+          element.value = false;
+          multipleSelected.remove(element);
+        }
+      }
+    });
   }
 }

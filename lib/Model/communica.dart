@@ -7,7 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 // communications  model
 class Communications with ChangeNotifier {
   final String name;
-  final String Status;
+  late final String Status;
   bool value;
 
   Communications({

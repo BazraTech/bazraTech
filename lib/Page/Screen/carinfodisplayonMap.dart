@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:bazralogin/Page/Screen/Searchcar.dart';
 import 'package:bazralogin/Route/route.dart';
 
-
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
@@ -176,12 +175,14 @@ class _displaycarlactionState extends State<displaycarlaction> {
             child: Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(top: 13.0, left: 10),
                   child: Container(
                     width: 100,
+                    height: 45,
+                    margin: EdgeInsets.only(top: 200),
                     child: ElevatedButton(
                       onPressed: (() {
-                        onpenDialog();
+                        Navigator.pushNamed(context, AppRoutes.carhistory);
                       }),
                       child: Text(
                         "History",
@@ -205,7 +206,8 @@ class _displaycarlactionState extends State<displaycarlaction> {
                   ),
                 ),
                 Container(
-                  width: 200,
+                  width: 180,
+                  height: 100,
                   margin: EdgeInsets.only(left: 100),
                   child: isLoading
                       ? Center(
@@ -219,8 +221,9 @@ class _displaycarlactionState extends State<displaycarlaction> {
                                     child: CircularProgressIndicator(),
                                   )
                                 : Padding(
-                                    padding: const EdgeInsets.all(16.0),
+                                    padding: const EdgeInsets.all(0.0),
                                     child: Container(
+                                      height: 100,
                                       child: Column(
                                         children: [
                                           Autocomplete(
@@ -244,7 +247,7 @@ class _displaycarlactionState extends State<displaycarlaction> {
                                                 Function(String) onSelected,
                                                 options) {
                                               return Container(
-                                                height: 50,
+                                                height: 20,
                                                 width: 150,
                                                 child: Material(
                                                   elevation: 4,
@@ -304,44 +307,54 @@ class _displaycarlactionState extends State<displaycarlaction> {
 
                                               return Container(
                                                 margin:
-                                                    EdgeInsets.only(top: 23),
+                                                    EdgeInsets.only(top: 40),
                                                 color: Colors.white,
-                                                child: TextField(
-                                                  controller: controller,
-                                                  focusNode: focusNode,
-                                                  onEditingComplete:
-                                                      onEditingComplete,
-                                                  decoration: InputDecoration(
-                                                    border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              18),
-                                                      borderSide: BorderSide(
-                                                          width: 1,
-                                                          color: Colors.black),
+                                                child: SizedBox(
+                                                  height: 50,
+                                                  child: TextField(
+                                                    controller: controller,
+                                                    focusNode: focusNode,
+                                                    onEditingComplete:
+                                                        onEditingComplete,
+                                                    decoration: InputDecoration(
+                                                      border:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(18),
+                                                        borderSide: BorderSide(
+                                                            width: 1,
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(14),
+                                                        borderSide: BorderSide(
+                                                            width: 1,
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        borderSide: BorderSide(
+                                                            width: 1,
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                      hintText: "Search  ",
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 10),
+                                                      prefixIcon: Icon(
+                                                        Icons.search,
+                                                        size: 23,
+                                                      ),
                                                     ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              14),
-                                                      borderSide: BorderSide(
-                                                          width: 1,
-                                                          color: Colors.black),
-                                                    ),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      borderSide: BorderSide(
-                                                          width: 1,
-                                                          color: Colors.black),
-                                                    ),
-                                                    hintText:
-                                                        "Search Something",
-                                                    prefixIcon:
-                                                        Icon(Icons.search),
                                                   ),
                                                 ),
                                               );

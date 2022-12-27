@@ -1,5 +1,6 @@
 import 'package:bazralogin/Bottom/Bottom.dart';
-import 'package:bazralogin/Model/Reportmodel.dart';
+import 'package:bazralogin/Model/SingleReportmodel.dart';
+import 'package:bazralogin/Model/Tripmodel.dart';
 
 import 'package:bazralogin/Model/car.dart';
 import 'package:bazralogin/Model/communica.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => TravelReportinfo(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => TripHistoryinfo(),
         ),
       ],
       child: MaterialApp(

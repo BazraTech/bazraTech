@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 // car model
 class TravelReport with ChangeNotifier {
   final double totalTraveltime;
-  final String dateOftravelstart;
+  final dateOftravelstart;
   final String dateOftravelend;
   final double speedOfcar;
   final String travelPlace;
@@ -27,7 +27,7 @@ class TravelReportinfo with ChangeNotifier {
       totalTraveltime: 12,
       speedOfcar: 22,
       travelPlace: "jimma  - Addisa ",
-      dateOftravelstart: "12/19/202",
+      dateOftravelstart: "24/02/2023",
       dateOftravelend: "12/19/202",
     ),
     TravelReport(
@@ -53,23 +53,23 @@ class TravelReportinfo with ChangeNotifier {
     ),
     TravelReport(
       totalTraveltime: 12,
-      dateOftravelstart: "12/01/2023",
+      dateOftravelstart: "24/12/2022",
       speedOfcar: 22,
       travelPlace: "Gondar - Mekele",
-      dateOftravelend: "12/01/2023",
+      dateOftravelend: "12/24/2022",
     ),
     TravelReport(
       totalTraveltime: 12,
       dateOftravelstart: "12/01/2023",
       speedOfcar: 22,
       travelPlace: "Debra merkos - Addisa ",
-      dateOftravelend: "12/19/202",
+      dateOftravelend: "19/01/2023",
     ),
     TravelReport(
       totalTraveltime: 12,
       speedOfcar: 22,
       travelPlace: "Jimma - Debra merkos ",
-      dateOftravelend: "12/19/202",
+      dateOftravelend: "19/01/2023",
       dateOftravelstart: "12/01/2023",
     )
   ];

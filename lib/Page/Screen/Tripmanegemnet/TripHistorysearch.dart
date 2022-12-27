@@ -1,10 +1,11 @@
 import 'dart:ffi';
 
-import 'package:bazralogin/Model/Reportmodel.dart';
-import 'package:bazralogin/Model/car.dart';
-import 'package:bazralogin/Model/communica.dart';
+import 'package:bazralogin/Model/SingleReportmodel.dart';
+import 'package:bazralogin/Model/Tripmodel.dart';
+
 import 'package:bazralogin/const/color.dart';
-import 'package:bazralogin/widget/Reportfeed.dart';
+import 'package:bazralogin/widget/Triphistoryfeed.dart';
+
 import 'package:bazralogin/widget/testwidget.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
@@ -13,21 +14,21 @@ import 'package:date_format/date_format.dart';
 
 import 'package:provider/provider.dart';
 
-class SearchReport extends StatefulWidget {
-  const SearchReport({
+class SearchTriphistory extends StatefulWidget {
+  const SearchTriphistory({
     super.key,
   });
 
   @override
-  State<SearchReport> createState() => _SearchReportState();
+  State<SearchTriphistory> createState() => _SearchTriphistoryState();
 }
 
-class _SearchReportState extends State<SearchReport> {
+class _SearchTriphistoryState extends State<SearchTriphistory> {
   TextEditingController? _searchTextController;
   // ignore: prefer_typing_uninitialized_variables
   var end;
   // ignore: prefer_typing_uninitialized_variables
-  var start;
+  String? start;
 
   final FocusNode _node = FocusNode();
   void initState() {
@@ -46,38 +47,22 @@ class _SearchReportState extends State<SearchReport> {
     _searchTextController?.dispose();
   }
 
-  List<TravelReport> _searchList = [];
-  List<TravelReport> _categoryList = [];
-  List<TravelReport> productk = [];
+  List<TripHistory> _searchList = [];
+  List<TripHistory> _categoryList = [];
+  List<TripHistory> productk = [];
   DateTimeRange? selectDateRange;
 
-  List<TravelReport> currentList = [];
+  List<TripHistory> currentList = [];
 
   @override
   Widget build(BuildContext context) {
-    final carData = Provider.of<TravelReportinfo>(context);
-    final productsList = carData.products;
+    final carHistory = Provider.of<TripHistoryinfo>(context);
+    final HistoryList = carHistory.products;
 
-    filterCars(String names, String names1) {
-      // Prepare lists
-      List<TravelReport> tmp = [];
-      currentList.clear();
-
-      String name = names.toString();
-      String name1 = names.toString();
-      print("filter cars for name " + name);
-
-      for (TravelReport c in productsList) {
-        if (c.dateOftravelstart.toLowerCase().startsWith(name.toString()) &&
-            c.dateOftravelstart.toLowerCase().startsWith(name1.toString())) {
-          tmp.add(c);
-        }
-      }
-      currentList = tmp;
-      print(currentList);
+    Widget buildreport() {
+      return (Container());
     }
 
-    print(start);
     _showDate() async {
       final DateTimeRange? result = await showDateRangePicker(
         context: context,
@@ -85,25 +70,52 @@ class _SearchReportState extends State<SearchReport> {
         lastDate: DateTime(2030, 12, 31),
         currentDate: DateTime.now(),
         saveText: "Confirm",
+
         // builder: (context, child) {
         //   return (Container(
         //     child: filterCars(),
         //   ));
         // },
       );
+      // filterCars('   ${DateFormat('dd/MM/yyy').format(selectDateRange!.start)}',
+      //     '   ${DateFormat('dd/MM/yyy').format(selectDateRange!.start)}');
       if (result != null) {
+        // Prepare list
+
         setState(() {
           selectDateRange = result;
         });
       } else {
         return null;
       }
+      List<TripHistory> tmp = [];
+      currentList.clear();
+
+      // String? name =
+      //     ;
+      // print("filter cars for name " + name);
+      // print(name.runtimeType);
+
+      for (TripHistory c in HistoryList) {
+        if (c.dateOftravelstart.toLowerCase().contains(
+                '${DateFormat('dd/MM/yyy').format(selectDateRange!.start)}'
+                    .toString()) &&
+            c.dateOftravelend.toLowerCase().contains(
+                '${DateFormat('dd/MM/yyy').format(selectDateRange!.end)}'
+                    .toString())) {
+          tmp.add(c);
+        }
+      }
+      currentList = tmp;
+      print('   ${DateFormat('dd/MM/yyy').format(selectDateRange!.start)}'
+          .toString());
+      print(currentList);
     }
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        child: SingleChildScrollView(
           child: Column(
             children: [
               Padding(
@@ -152,7 +164,7 @@ class _SearchReportState extends State<SearchReport> {
                           onChanged: (value) {
                             _searchTextController!.text.toLowerCase();
                             setState(() {
-                              _searchList = carData.searchQuery(value);
+                              _searchList = carHistory.searchQuery(value);
                             });
                           },
                         ),
@@ -178,7 +190,7 @@ class _SearchReportState extends State<SearchReport> {
                       child: _searchTextController!.text.isNotEmpty &&
                               _searchList.isEmpty
                           ? Column(
-                              children: [
+                              children: const [
                                 Icon(
                                   Icons.search,
                                   size: 60,
@@ -191,53 +203,43 @@ class _SearchReportState extends State<SearchReport> {
                                 ),
                               ],
                             )
-                          : Container(
+                          : SizedBox(
                               width: MediaQuery.of(context).size.width - 4,
                               child: Container(
                                 child: ListView(
-                                  physics: NeverScrollableScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   children: List.generate(
                                       _searchTextController!.text.isEmpty
-                                          ? productsList.length
+                                          ? HistoryList.length
                                           : _searchList.length, (index) {
                                     return ChangeNotifierProvider.value(
                                       value: _searchTextController!.text.isEmpty
-                                          ? productsList[index]
+                                          ? HistoryList[index]
                                           : _searchList[index],
-                                      child: Container(
+                                      child: SizedBox(
                                         height: 86,
                                         width: 100,
-                                        child: Reportfeed(onChange: null),
+                                        child: TripFeed(onChange: null),
                                       ),
                                     );
                                   }),
                                 ),
                               ),
                             ))
-                  : Container(
+                  : SizedBox(
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width - 10,
                       child: Card(
                         child: Column(
                           children: [
                             Container(
-                              height: 20,
-                              child: ElevatedButton(
-                                child: Text("Report"),
-                                onPressed: (() {
-                                  filterCars("12/01/2023", "12/08/2023");
-                                }),
-                              ),
-                            ),
-                            Container(
                                 height: 20,
-                                margin: EdgeInsets.all(8),
+                                margin: const EdgeInsets.all(8),
                                 child: Row(
                                   children: [
-                                    Text("Start"),
+                                    const Text("Start"),
                                     Text(start =
-                                        '   ${DateFormat('dd/MM/yyy').format(selectDateRange!.start)}'
-                                            .toString()),
+                                        '   ${DateFormat('dd/MM/yyy').format(selectDateRange!.start)}'),
                                   ],
                                 )),
                             SizedBox(
@@ -247,55 +249,56 @@ class _SearchReportState extends State<SearchReport> {
                                     padding: const EdgeInsets.only(left: 8.0),
                                     child: Row(
                                       children: [
-                                        Text("End"),
+                                        const Text("End"),
                                         Text(end =
-                                            '     ${DateFormat('dd/MM/yyy').format(selectDateRange!.end)}'
-                                                .toString()),
+                                            '     ${DateFormat('dd/MM/yyy').format(selectDateRange!.end)}'),
                                       ],
                                     ),
                                   ),
                                 )),
                             Container(
-                              height: MediaQuery.of(context).size.height,
-                              margin: EdgeInsets.only(top: 30),
+                              height: MediaQuery.of(context).size.height - 120,
+                              margin: const EdgeInsets.only(top: 30),
                               child: Column(
                                   children: currentList.map((driver) {
                                 return Card(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        height: 86,
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              driver.travelPlace,
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.black,
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 86,
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                driver.travelPlace,
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.black,
+                                                ),
                                               ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Container(
-                                                child: Text(
-                                                    "${driver.totalTraveltime} hr"),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  child: Text(
+                                                      "${driver.totalTraveltime} hr"),
+                                                ),
                                               ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Container(
-                                                child: Text(
-                                                    "${driver.speedOfcar} km/hr"),
-                                              ),
-                                            )
-                                          ],
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  child: Text(
+                                                      "${driver.speedOfcar} km/hr"),
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 );
                               }).toList()),

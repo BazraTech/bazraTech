@@ -39,11 +39,15 @@ class _SearchdriverState extends State<Searchdriver> {
   }
 
   List<Communications> _searchList = [];
-  List<Communications> productk = [];
+  
   @override
   Widget build(BuildContext context) {
     final carData = Provider.of<Commuicationprovider>(context);
     final productsList = carData.products;
+
+    _selectAll() {
+     
+    }
 
     return Scaffold(
       body: Column(
@@ -101,7 +105,7 @@ class _SearchdriverState extends State<Searchdriver> {
                   ),
                   Spacer(),
                   ElevatedButton(
-                    onPressed: onChangeman(),
+                    onPressed: (() => _selectAll()),
                     child: Text("Select all"),
                     style: ButtonStyle(
                         backgroundColor:
@@ -176,7 +180,7 @@ class _SearchdriverState extends State<Searchdriver> {
                                       height: 86,
                                       width: 100,
                                       child: Feeddriver(
-                                        onChange: null,
+                                        selectAll: _selectAll(),
                                       )),
                                 );
                               }),

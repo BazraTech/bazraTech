@@ -1,28 +1,22 @@
-import 'package:bazralogin/Model/SingleReportmodel.dart';
-import 'package:bazralogin/Model/car.dart';
+import 'package:bazralogin/Model/Tripmodel.dart';
 
 import 'package:bazralogin/Route/route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class newReport extends StatefulWidget {
-  String? date;
-
-  newReport({
-    super.key,
-    required this.date,
-  });
+class TripFeed extends StatefulWidget {
+  final Function? onChange;
+  TripFeed({super.key, required this.onChange});
 
   @override
-  State<newReport> createState() => _newReportState();
+  State<TripFeed> createState() => _TripFeedState();
 }
 
-class _newReportState extends State<newReport> {
-  List<TravelReport> _categoryList = [];
+class _TripFeedState extends State<TripFeed> {
   @override
   Widget build(BuildContext context) {
-    TravelReport reportAttributes = Provider.of<TravelReport>(context);
-    
+    TripHistory reportAttributes = Provider.of<TripHistory>(context);
+
     return Scaffold(
       body: Card(
           child: Column(
@@ -71,7 +65,7 @@ class _newReportState extends State<newReport> {
                 padding: const EdgeInsets.all(4.0),
                 child: Text(
                   "Start"
-                  " ${widget.date}",
+                  " ${reportAttributes.dateOftravelstart}",
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: TextStyle(
@@ -87,9 +81,9 @@ class _newReportState extends State<newReport> {
               Padding(
                 padding: const EdgeInsets.all(0.0),
                 child: Container(
-                  margin: EdgeInsets.only(left: 290),
+                  margin: EdgeInsets.only(left: 310),
                   child: Text("End "
-                      "${widget.date}"),
+                      "${reportAttributes.dateOftravelstart}"),
                 ),
               )
             ],

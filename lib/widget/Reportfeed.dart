@@ -1,4 +1,4 @@
-import 'package:bazralogin/Model/Reportmodel.dart';
+import 'package:bazralogin/Model/SingleReportmodel.dart';
 import 'package:bazralogin/Model/car.dart';
 
 import 'package:bazralogin/Route/route.dart';

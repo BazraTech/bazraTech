@@ -1,16 +1,16 @@
-import 'package:bazralogin/Page/Screen/Report/ReportSearch.dart';
-import 'package:flutter/cupertino.dart';
+
+import 'package:bazralogin/Page/Screen/Tripmanegemnet/TripHistorysearch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_selector/flutter_custom_selector.dart';
 
-class TripReport extends StatefulWidget {
-  const TripReport({super.key});
+class TripHistory extends StatefulWidget {
+  const TripHistory({super.key});
 
   @override
-  State<TripReport> createState() => _TripReportState();
+  State<TripHistory> createState() => _TripHistoryState();
 }
 
-class _TripReportState extends State<TripReport> {
+class _TripHistoryState extends State<TripHistory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +49,7 @@ class _TripReportState extends State<TripReport> {
               Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
-                child: SearchReport(),
+                child: SearchTriphistory(),
               )
             ],
           ),
