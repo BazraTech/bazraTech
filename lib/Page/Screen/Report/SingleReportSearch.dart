@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 import 'package:bazralogin/Model/SingleReportmodel.dart';
 import 'package:bazralogin/Model/car.dart';
-import 'package:bazralogin/Model/communica.dart';
+import 'package:bazralogin/Model/Communications.dart';
 import 'package:bazralogin/const/color.dart';
 import 'package:bazralogin/widget/Reportfeed.dart';
 import 'package:bazralogin/widget/testwidget.dart';

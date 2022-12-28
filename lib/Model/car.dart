@@ -1,6 +1,5 @@
 import 'dart:ffi';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -33,7 +32,7 @@ class Carinfo with ChangeNotifier {
         distance: 12,
         id: "111",
         time: "12/12/2022",
-        location: LatLng(7.6785, 36.8384),
+        location: const LatLng(7.6785, 36.8384),
         image: "assets/images/download-removebg-preview.png",
         name: " carA",
         history: "  11 ,3,2022 ,move  to Adama , 11,3,2025, to Gondar  "),
@@ -41,7 +40,7 @@ class Carinfo with ChangeNotifier {
         distance: 300,
         time: "12/12/2029",
         id: "222",
-        location: LatLng(7.6785, 36.8384),
+        location: const LatLng(7.6785, 36.8384),
         name: " carB",
         image: "assets/images/download-removebg-preview.png",
         history: "  11 ,3,2022 ,move  to Adama , 11,3,2025, to Gondar  "),
@@ -49,7 +48,7 @@ class Carinfo with ChangeNotifier {
         distance: 400,
         time: "12/12/2026",
         id: "333",
-        location: LatLng(7.6785, 36.8384),
+        location: const LatLng(7.6785, 36.8384),
         name: " Track",
         image: "assets/images/sinotrack.png",
         history: "  11 ,3,2022 ,move  to Adama , 11,3,2025, to Gondar  "),
@@ -57,7 +56,7 @@ class Carinfo with ChangeNotifier {
         distance: 160,
         time: "12/15/2022",
         id: "6621",
-        location: LatLng(7.6785, 36.8384),
+        location: const LatLng(7.6785, 36.8384),
         name: " Minbus",
         image: "assets/images/izu.png",
         history: "  11 ,3,2022 ,move  to Adama , 11,3,2025, to Gondar  "),
@@ -65,7 +64,7 @@ class Carinfo with ChangeNotifier {
         distance: 100,
         time: "12/12/2025",
         id: "6691",
-        location: LatLng(7.6785, 36.8384),
+        location: const LatLng(7.6785, 36.8384),
         name: " Minbus",
         image: "assets/images/download-removebg-preview.png",
         history: "  11 ,3,2022 ,move  to Adama , 11,3,2025, to Gondar  "),
@@ -73,7 +72,7 @@ class Carinfo with ChangeNotifier {
         distance: 60,
         time: "12/12/2027",
         id: "6621",
-        location: LatLng(7.6785, 36.8384),
+        location: const LatLng(7.6785, 36.8384),
         name: " Minbus",
         image: "assets/images/download-removebg-preview.png",
         history: "  11 ,3,2022 ,move  to Adama , 11,3,2025, to Gondar  "),
@@ -81,7 +80,7 @@ class Carinfo with ChangeNotifier {
         distance: 100,
         time: "12/14/2022",
         id: "6621",
-        location: LatLng(7.6785, 36.8384),
+        location: const LatLng(7.6785, 36.8384),
         name: " Minbus",
         image: "assets/images/download-removebg-preview.png",
         history: "  11 ,3,2022 ,move  to Adama , 11,3,2025, to Gondar  ")

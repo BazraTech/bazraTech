@@ -1,5 +1,5 @@
 // ignore: file_names
-import 'package:bazralogin/Page/Screen/communication/seachdriver.dart';
+import 'package:bazralogin/Page/Screen/communication/CommunicationPage.dart';
 import 'package:bazralogin/const/color.dart';
 import 'package:flutter/material.dart';
 
@@ -74,8 +74,7 @@ class _CommunicationState extends State<Communication> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(right: 8.0),
                                   child: ElevatedButton(
-                                    onPressed: (() {
-                                    }),
+                                    onPressed: (() {}),
                                     child: const Text("send"),
                                     style: ButtonStyle(
                                         backgroundColor:
@@ -108,12 +107,9 @@ class _CommunicationState extends State<Communication> {
                 Padding(
                   padding: const EdgeInsets.all(0.0),
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height - 210,
-                    width: MediaQuery.of(context).size.width,
-                    child: const Searchdriver(
-                      onChangeman: null,
-                    ),
-                  ),
+                      height: MediaQuery.of(context).size.height - 210,
+                      width: MediaQuery.of(context).size.width,
+                      child: CommunicationPage()),
                 ),
               ],
             ),

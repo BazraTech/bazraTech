@@ -3,10 +3,9 @@ import 'package:bazralogin/Model/SingleReportmodel.dart';
 import 'package:bazralogin/Model/Tripmodel.dart';
 
 import 'package:bazralogin/Model/car.dart';
-import 'package:bazralogin/Model/communica.dart';
+import 'package:bazralogin/Model/Communications.dart';
 import 'package:bazralogin/Page/Loging/Login.dart';
-import 'package:bazralogin/Page/Screen/communication/seachdriver.dart';
-import 'package:bazralogin/Page/Screen/test.dart';
+
 import 'package:bazralogin/Route/route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,9 +26,6 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => Carinfo(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => Commuicationprovider(),
         ),
         ChangeNotifierProvider(
           create: (_) => TravelReportinfo(),

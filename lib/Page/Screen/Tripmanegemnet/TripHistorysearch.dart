@@ -1,6 +1,3 @@
-import 'dart:ffi';
-
-import 'package:bazralogin/Model/SingleReportmodel.dart';
 import 'package:bazralogin/Model/Tripmodel.dart';
 
 import 'package:bazralogin/const/color.dart';
@@ -10,7 +7,6 @@ import 'package:bazralogin/widget/testwidget.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
-import 'package:date_format/date_format.dart';
 
 import 'package:provider/provider.dart';
 
@@ -183,6 +179,39 @@ class _SearchTriphistoryState extends State<SearchTriphistory> {
                       ),
                     ],
                   )),
+
+              // Container(
+              //   height: 30,
+              //   color: Colors.amber,
+              //   child: Column(
+              //     children: [
+              //       SizedBox(
+              //         width: 20,
+              //         child: Row(
+              //           children: [Text("Trip")],
+              //         ),
+              //       ),
+              //       SizedBox(
+              //         width: 20,
+              //         child: Row(
+              //           children: [Text("Average Speed")],
+              //         ),
+              //       ),
+              //       SizedBox(
+              //         width: 20,
+              //         child: Row(
+              //           children: [Text(" Total distance")],
+              //         ),
+              //       ),
+              //       SizedBox(
+              //         width: 20,
+              //         child: Row(
+              //           children: [Text("Date")],
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               selectDateRange == null
                   ? Container(
                       height: MediaQuery.of(context).size.height - 282,

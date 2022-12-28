@@ -152,10 +152,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                   width: 4,
-                                  color: Color.fromARGB(255, 233, 237, 235)),
+                                  color: const Color.fromARGB(255, 233, 237, 235)),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                               color: Color.fromARGB(255, 255, 235, 255),
                             ),
                             border: OutlineInputBorder(
@@ -170,10 +170,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
                           validator: (val) => val!.isEmpty || !val.contains("@")
                               ? "Enter a valid eamil"
                               : null,
-                          style: TextStyle(fontSize: 15, color: Colors.white),
+                          style: const TextStyle(fontSize: 15, color: Colors.white),
                         ),
                         //password
-                        SizedBox(
+                        const SizedBox(
                           height: 16,
                         ),
                         TextFormField(
@@ -191,12 +191,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   width: 4,
                                   color: Color.fromARGB(255, 233, 237, 235)),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                               color: Color.fromARGB(255, 255, 235, 255),
                             ),
                             border: OutlineInputBorder(
@@ -214,10 +214,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
                             }
                             return null;
                           },
-                          style: TextStyle(fontSize: 15, color: Colors.white),
+                          style: const TextStyle(fontSize: 15, color: Colors.white),
                         ),
                         //Confirm Password
-                        SizedBox(
+                        const SizedBox(
                           height: 16,
                         ),
                         TextFormField(
@@ -235,12 +235,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   width: 4,
                                   color: Color.fromARGB(255, 233, 237, 235)),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                               color: Color.fromARGB(255, 255, 235, 255),
                             ),
                             border: OutlineInputBorder(
@@ -258,9 +258,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
                             }
                             return null;
                           },
-                          style: TextStyle(fontSize: 15, color: Colors.white),
+                          style: const TextStyle(fontSize: 15, color: Colors.white),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 16,
                         ),
                         Container(
@@ -270,11 +270,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
                               Navigator.of(context).pushNamed(AppRoutes.bottom);
                             },
                             child: Container(
-                              margin: EdgeInsets.only(top: 5.0),
+                              margin: const EdgeInsets.only(top: 5.0),
                               height: 50,
                               width: 310,
-                              child: Center(
-                                child: const Text(
+                              child: const Center(
+                                child: Text(
                                   "SIGNUP",
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 20),
@@ -285,10 +285,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
                                 backgroundColor:
                                     MaterialStateProperty.resolveWith((states) {
                                   if (states.contains(MaterialState.pressed)) {
-                                    return Color.fromRGBO(255, 148, 165, 223);
+                                    return const Color.fromRGBO(255, 148, 165, 223);
                                   }
                                   // 98, 172, 181
-                                  return Color.fromRGBO(100, 172, 181, 1);
+                                  return const Color.fromRGBO(100, 172, 181, 1);
                                 }),
                                 shape: MaterialStateProperty.all<
                                         RoundedRectangleBorder>(
@@ -300,12 +300,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            margin: EdgeInsets.only(left: 4),
+                            margin: const EdgeInsets.only(left: 4),
                             height: 16,
                             width: MediaQuery.of(context).size.width,
                             child: Row(
                               children: [
-                                Text(
+                                const Text(
                                   'Already have an account! ',
                                   style: TextStyle(
                                     color: Colors.white,
@@ -352,7 +352,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                               child: CircleAvatar(
                                 radius: 68,
                                 backgroundImage: _pickedImage == null
-                                    ? AssetImage("assets/images/profile.png")
+                                    ? const AssetImage("assets/images/profile.png")
                                     : FileImage(File(_pickedImage!.path))
                                         as ImageProvider,
                               ),
@@ -360,114 +360,112 @@ class _RegistrationFormState extends State<RegistrationForm> {
                             Positioned(
                               top: 100,
                               left: 75,
-                              child: Container(
-                                child: RawMaterialButton(
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext contex) {
-                                          return AlertDialog(
-                                            title: Text('Choose Option',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.lightBlue,
-                                                )),
-                                            content: SingleChildScrollView(
-                                              child: ListBody(children: [
-                                                InkWell(
-                                                    onTap: () {
-                                                      takePicture(
-                                                          ImageSource.camera);
-                                                    },
-                                                    splashColor:
-                                                        Colors.lightBlue,
-                                                    child: Row(
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Icon(
-                                                            Icons.camera,
-                                                            color: Colors
-                                                                .lightBlue,
-                                                          ),
+                              child: RawMaterialButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext contex) {
+                                        return AlertDialog(
+                                          title: const Text('Choose Option',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.lightBlue,
+                                              )),
+                                          content: SingleChildScrollView(
+                                            child: ListBody(children: [
+                                              InkWell(
+                                                  onTap: () {
+                                                    takePicture(
+                                                        ImageSource.camera);
+                                                  },
+                                                  splashColor:
+                                                      Colors.lightBlue,
+                                                  child: Row(
+                                                    children: [
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets
+                                                                .all(8.0),
+                                                        child: Icon(
+                                                          Icons.camera,
+                                                          color: Colors
+                                                              .lightBlue,
                                                         ),
-                                                        Text('Camera',
-                                                            style: TextStyle(
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                color: Colors
-                                                                    .grey[500]))
-                                                      ],
-                                                    )),
-                                                InkWell(
-                                                    onTap: () {
-                                                      takePicture(
-                                                          ImageSource.gallery);
-                                                    },
-                                                    splashColor:
-                                                        Colors.lightBlue,
-                                                    child: Row(
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Icon(
-                                                            Icons
-                                                                .browse_gallery,
-                                                            color: Colors
-                                                                .lightBlue,
-                                                          ),
+                                                      ),
+                                                      Text('Camera',
+                                                          style: TextStyle(
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: Colors
+                                                                  .grey[500]))
+                                                    ],
+                                                  )),
+                                              InkWell(
+                                                  onTap: () {
+                                                    takePicture(
+                                                        ImageSource.gallery);
+                                                  },
+                                                  splashColor:
+                                                      Colors.lightBlue,
+                                                  child: Row(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Icon(
+                                                          Icons
+                                                              .browse_gallery,
+                                                          color: Colors
+                                                              .lightBlue,
                                                         ),
-                                                        Text('Galley',
-                                                            style: TextStyle(
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                color: Colors
-                                                                    .grey[500]))
-                                                      ],
-                                                    )),
-                                                InkWell(
-                                                    onTap: () {},
-                                                    splashColor:
-                                                        Colors.lightBlue,
-                                                    child: Row(
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Icon(
-                                                            Icons.remove_circle,
-                                                            color: Colors.red,
-                                                          ),
+                                                      ),
+                                                      Text('Galley',
+                                                          style: TextStyle(
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: Colors
+                                                                  .grey[500]))
+                                                    ],
+                                                  )),
+                                              InkWell(
+                                                  onTap: () {},
+                                                  splashColor:
+                                                      Colors.lightBlue,
+                                                  child: Row(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Icon(
+                                                          Icons.remove_circle,
+                                                          color: Colors.red,
                                                         ),
-                                                        Text('Remove',
-                                                            style: TextStyle(
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                color: Colors
-                                                                    .grey[500]))
-                                                      ],
-                                                    )),
-                                              ]),
-                                            ),
-                                          );
-                                        });
-                                  },
-                                  elevation: 10,
-                                  fillColor: Colors.lightBlue,
-                                  child: Icon(Icons.add_a_photo),
-                                  shape: CircleBorder(),
-                                ),
+                                                      ),
+                                                      Text('Remove',
+                                                          style: TextStyle(
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: Colors
+                                                                  .grey[500]))
+                                                    ],
+                                                  )),
+                                            ]),
+                                          ),
+                                        );
+                                      });
+                                },
+                                elevation: 10,
+                                fillColor: Colors.lightBlue,
+                                child: Icon(Icons.add_a_photo),
+                                shape: CircleBorder(),
                               ),
                             )
                           ],
