@@ -9,7 +9,7 @@ import Dashboard from './components/Pages/Dashboard/Dashboard';
 import Total_number_of_vehile from './components/Pages/Total_number_of_vehicle/Total_number_of_vehile';
 import Tracking_history from './components/Pages/Tracking/Tracking_history';
 import Tracking from './components/Pages/Tracking/Tracking';
-import Alert from './components/Pages/alert/Alert';
+import Alert from './components/Pages/alert/Off_road';
 import Users_edit from './components/Pages/Users/Users_edit';
 import Vehicle_detail from './components/Pages/Total_number_of_vehicle/Vehicle_detail';
 import Message_overview from './components/Pages/Message/Message_overview';
@@ -22,8 +22,15 @@ import Individual_registration from './components/Pages/Registration/Individual_
 import Set_Trip from './components/Pages/Trip Management/Set_Trip';
 import Trip_history from './components/Pages/Trip Management/Trip_history';
 import Avialable_trip from './components/Pages/Trip Management/Avialable_trip';
-
-
+import Table from './components/Pages/Report/Tables';
+import On_route from './components/Pages/Total_number_of_vehicle/On_route';
+import On_stock from './components/Pages/Total_number_of_vehicle/On_stock';
+import Maintenance from './components/Pages/Total_number_of_vehicle/Maintenance';
+import Company from './components/Pages/Users/Company';
+import Individual from './components/Pages/Users/Individual';
+import Accident from './components/Pages/alert/Accident';
+import Driver from './components/Pages/alert/Driver';
+import Off_road from './components/Pages/alert/Off_road';
 
 
 class App extends Component{
@@ -42,7 +49,7 @@ class App extends Component{
         <Route path="/Total_number_of_vehicle" element={<Total_number_of_vehile />}></Route>
         <Route path="/tracking_hitory" element={<Tracking_history />}></Route>
         <Route path="/tracking" element={<Tracking />}></Route>
-        <Route path="/alert" element={<Alert />}></Route>
+        <Route path="/off_road" element={<Off_road />}></Route>
         <Route path="/vehicle_detail" element={<Vehicle_detail />}></Route>
         <Route path="/message_overview" element={<Message_overview />}></Route>
         <Route path="/settings" element={<Settings />}></Route>
@@ -53,6 +60,13 @@ class App extends Component{
         <Route path="/set_trip" element={<Set_Trip />}></Route>
         <Route path="/trip_history" element={<Trip_history />}></Route>
         <Route path="/avialable_trip" element={<Avialable_trip />}></Route>
+        <Route path="/on_route" element={<On_route />}></Route>
+        <Route path="/on_stock" element={<On_stock />}></Route>
+        <Route path="/maintenance" element={<Maintenance />}></Route>
+        <Route path="/company" element={<Company />}></Route>
+        <Route path="/register_individual" element={<Individual />}></Route>
+        <Route path="/accident" element={<Accident />}></Route>
+        <Route path="/driver" element={<Driver />}></Route>
       </Routes>
 
     </div>

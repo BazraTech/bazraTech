@@ -80,7 +80,7 @@ export default function () {
                             {popup1 ? <p class="hovertext trip" data-hover="Set Trip"><SiTripdotcom size="2rem" margin-left='20px' color='00cc44'></SiTripdotcom></p> : ""}
                         </Link>
                         <Link to="/trip_history">
-                            {popup1 ? <p class="hovertext trip" data-hover="Trip History"><BiTrip size="2rem" color='#00cc44'></BiTrip></p> : ""}
+                            {popup1 ? <p class="hovertext trip" data-hover="Trip History"><BiTrip size="2rem" color='#009933'></BiTrip></p> : ""}
                         </Link>
                     </li>
                     <li>
@@ -103,7 +103,7 @@ export default function () {
                     </li>
                     <li>
                         <Link to="/settings">
-                            <p class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='#00cc44'></AiFillSetting></p>
+                            <p class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='white'></AiFillSetting></p>
                         </Link>
                     </li>
                 </ul>
@@ -163,7 +163,7 @@ export default function () {
                                     <th>Start Date/Time</th>
                                     <th>End Date/Time</th>
                                     <th>Detail</th>
-                                </tr>
+                                </tr> 
                             </thead>
 
                             <tbody>

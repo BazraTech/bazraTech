@@ -131,18 +131,26 @@ export default function Users_edit() {
 
 
 
-                <section className='company_register'>
-                    <div className='user_header'>
+                <section className='company_register1'>
+                    {/* <div className='user_header'>
                         <p>User ID</p>
                         <p>BA 00001</p>
                         <p>Name</p>
                         <p>Abebe</p>
+                    </div> */}
+
+                    <div className='company_individual_header'>
+                        <p ><h1 className='nmn'>Vehicle Detail</h1></p>
+                        <p ><h4 className='vehicleDetail'>Name : Abebe Alemu <br/> User ID : BA 00001</h4></p>
                     </div>
                     <form className='form'>
 
+                    <div className='allDiv'>
                         <div className='second_div'>
-                            <div className='registerd_vehicle'><h1>Vehicle Information</h1></div>
+                            <div className='registerd_vehicle'><h1></h1></div>
+                            {/* <h1>Company Information</h1> */}
                             <div className='vehicle_information1'>
+                            
                                 <div>
                                     <p>Vehicle Catagory </p>
                                     <select className='select' disabled={diabled}>
@@ -187,16 +195,19 @@ export default function Users_edit() {
                             </div>
                         </div>
 
-                    </form>
-                    <div className='company_button'>
-                        <button className='addd' onClick={() => {
+                        <div className='company_button'>
+                        <p className='addd' onClick={() => {
                             handleChange()
                             toggle()
-                        }}>{state ? "Cancle" : "Edit"}</button>
+                        }}>{state ? "Cancle" : "Edit"}</p>
                         <br />
-                        <button className='ad' disabled={diabled}>Update</button>
+                        <button type='submit' className='ad' disabled={diabled}>Update</button>
 
                     </div>
+                        </div>
+
+                    </form>
+                    
 
 
                 </section>

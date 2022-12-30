@@ -2,7 +2,6 @@ import React from 'react'
 import { FaHome } from 'react-icons/fa';
 import { AiFillCar } from "react-icons/ai";
 import { RiGpsFill } from "react-icons/ri";
-import { MdMonitor } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 import { HiBellAlert } from "react-icons/hi2";
 import { HiDocumentReport } from "react-icons/hi";
@@ -10,11 +9,9 @@ import { FaRegIdCard } from 'react-icons/fa';
 import { BsFillChatDotsFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
-import { FiLogOut } from "react-icons/fi";
-import { HiMenuAlt1 } from "react-icons/hi";
 import { BiTrip } from "react-icons/bi";
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import { SiTripdotcom } from "react-icons/si";
 import { SiGoogletagmanager } from "react-icons/si";
 
@@ -30,7 +27,7 @@ export default function Navigation() {
 
     const getColor = (curr) => {
         if (location.pathname === curr) {
-            return 'green'
+            return '#00cc44'
         }
         
         else {
@@ -42,7 +39,7 @@ export default function Navigation() {
             <div className="dashboard_navigation">
                 <ul>
                     <li>
-                        <Link to="/dashboard" style={{ color: getColor('/dashboard') }}>
+                        <Link to="/dashboard" style={{ color: getColor('/dashboard')  }}>
                             <p className="hovertext" data-hover="Home"><FaHome size="2rem" ></FaHome></p>
                         </Link>
                     </li>
@@ -76,7 +73,7 @@ export default function Navigation() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/alert" style={{ color: getColor('/alert') }}>
+                        <Link to="/accident" style={{ color: getColor('/accident') }}>
                             <p className="hovertext" data-hover="Alert"><HiBellAlert size="2rem" ></HiBellAlert></p>
                         </Link>
                     </li>

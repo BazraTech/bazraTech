@@ -118,9 +118,9 @@
 }
 
 /* ------------------ Total_vehicle ------------------- */
-.total_vehicle {
+.activeNav {
     width: 240px;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(71, 71, 71);
     height: 100px;
     margin-bottom: 50px;
     border-radius: 10px;
@@ -131,28 +131,63 @@
     cursor: pointer;
     display: inline-block;
     text-decoration: none;
+    color: rgb(255, 255, 255);
 }
-.vehicle_contents .active{
+.activeNav .active{
     background-color: rgb(255, 0, 0);
 }
 
-.total_vehicle h4 {
-    color: var(--black1);
+.activeNav h4 {
     padding: 10px;
 }
 
-.total_vehicle p {
+.activeNav p {
     display: grid;
     grid-template-columns: 50px 50px;
     justify-content: center;
 }
 
-.total_vehicle p b {
+.activeNav p b {
     margin-top: 5px;
     font-size: 1.5rem;
 }
 
-.total_vehicle:hover {
+.activeNav:hover {
+    transform: scale(1.09);
+}
+ .nd{
+    background-color: #222;
+}
+.total_vehicle1 {
+    width: 240px;
+    background-color: rgb(255, 255, 255);
+    height: 100px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+    text-align: center;
+    transition: 0.3s;
+    padding: 10%;
+    box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+    cursor: pointer;
+    color: #000;
+}
+
+.total_vehicle1 h4 {
+    padding: 10px;
+}
+
+.total_vehicle1 p {
+    display: grid;
+    grid-template-columns: 50px 50px;
+    justify-content: center;
+}
+
+.total_vehicle1 p b {
+    margin-top: 5px;
+    font-size: 1.5rem;
+}
+
+.total_vehicle1:hover {
     transform: scale(1.09);
 }
  .nd{
@@ -172,6 +207,7 @@
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
     cursor: pointer;
     display: inline-block;
+    color: #000;
 }
 .on_route.active{
     background-color: rgb(255, 0, 0);
@@ -179,7 +215,6 @@
 }
 
 .on_route h4 {
-    color: var(--black1);
     padding: 10px;
 }
 
@@ -210,10 +245,10 @@
     padding: 10%;
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
     cursor: pointer;
+    color: #000;
 }
 
 .parked h4 {
-    color: var(--black1);
     padding: 10px;
 }
 
@@ -244,10 +279,10 @@
     padding: 10%;
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
     cursor: pointer;
+    color: #000;
 }
 
 .maintenance h4 {
-    color: var(--black1);
     padding: 10px;
 }
 

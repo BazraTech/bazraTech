@@ -91,48 +91,44 @@ export default function () {
 
                        <div className='setTrip'> 
                             <div className='avilabel_trips' >
-                                <p><lable>Plate Number :</lable></p>
-                                <p><lable>Assigned Driver :</lable></p>
-                                <p><lable>Vehicle Name :</lable></p>
-                                <p><lable>Current Location :</lable></p>
-                            </div><p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Availabel</button></Link></p>
+                                <p><lable>Plate Number : <b>ET 03 123</b></lable></p>
+                                <p><lable>Assigned Driver : <b>Abebe Alemu</b></lable></p>
+                                <p><lable>Vehicle Name : <b>Tractor</b></lable></p>
+                                <p><lable>Current Location : <b>Addis Ababa</b></lable></p>
+                            </div><p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
                         </div>
-                        <Link to="/set_trip" style={{ textDecoration: 'none' }}><div className='setTrip'> 
+                        <div className='setTrip'> 
                             <div className='avilabel_trips' >
-                                <p><lable>Plate Number :</lable></p>
-                                <p><lable>Assigned Driver :</lable></p>
-                                <p><lable>Vehicle Name :</lable></p>
-                                <p><lable>Current Location :</lable></p>
-                                <p><button>Availabel</button></p>
-                            </div>
-                        </div></Link>
-                        <Link to="/set_trip" style={{ textDecoration: 'none' }}><div className='setTrip'> 
+                                <p><lable>Plate Number : <b>ET 03 123</b></lable></p>
+                                <p><lable>Assigned Driver : <b>Abebe Alemu</b></lable></p>
+                                <p><lable>Vehicle Name : <b>Tractor</b></lable></p>
+                                <p><lable>Current Location : <b>Addis Ababa</b></lable></p>
+                            </div><p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
+                        </div>
+                        <div className='setTrip'> 
                             <div className='avilabel_trips' >
-                                <p><lable>Plate Number :</lable></p>
-                                <p><lable>Assigned Driver :</lable></p>
-                                <p><lable>Vehicle Name :</lable></p>
-                                <p><lable>Current Location :</lable></p>
-                                <p><button>Availabel</button></p>
-                            </div>
-                        </div></Link>
-                        <Link to="/set_trip" style={{ textDecoration: 'none' }}><div className='setTrip'> 
+                                <p><lable>Plate Number : <b>ET 03 123</b></lable></p>
+                                <p><lable>Assigned Driver : <b>Abebe Alemu</b></lable></p>
+                                <p><lable>Vehicle Name : <b>Tractor</b></lable></p>
+                                <p><lable>Current Location : <b>Addis Ababa</b></lable></p>
+                            </div><p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
+                        </div>
+                        <div className='setTrip'> 
                             <div className='avilabel_trips' >
-                                <p><lable>Plate Number :</lable></p>
-                                <p><lable>Assigned Driver :</lable></p>
-                                <p><lable>Vehicle Name :</lable></p>
-                                <p><lable>Current Location :</lable></p>
-                                <p><button>Availabel</button></p>
-                            </div>
-                        </div></Link>
-                        <Link to="/set_trip" style={{ textDecoration: 'none' }}><div className='setTrip'> 
+                                <p><lable>Plate Number : <b>ET 03 123</b></lable></p>
+                                <p><lable>Assigned Driver : <b>Abebe Alemu</b></lable></p>
+                                <p><lable>Vehicle Name : <b>Tractor</b></lable></p>
+                                <p><lable>Current Location : <b>Addis Ababa</b></lable></p>
+                            </div><p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
+                        </div>
+                        <div className='setTrip'> 
                             <div className='avilabel_trips' >
-                                <p><lable>Plate Number :</lable></p>
-                                <p><lable>Assigned Driver :</lable></p>
-                                <p><lable>Vehicle Name :</lable></p>
-                                <p><lable>Current Location :</lable></p>
-                                <p><button>Availabel</button></p>
-                            </div>
-                        </div></Link>
+                                <p><lable>Plate Number : <b>ET 03 123</b></lable></p>
+                                <p><lable>Assigned Driver : <b>Abebe Alemu</b></lable></p>
+                                <p><lable>Vehicle Name : <b>Tractor</b></lable></p>
+                                <p><lable>Current Location : <b>Addis Ababa</b></lable></p>
+                            </div><p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
+                        </div>
                         {/* <div className='company_button'>
                             <button className='add'>Add</button>
                         </div> */}

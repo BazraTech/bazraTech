@@ -121,9 +121,9 @@
     position: absolute;
 }
 
-.total_users {
+.activeNav2 {
     width: 300px;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(75, 75, 75);
     height: 120px;
     margin-bottom: 50px;
     border-radius: 10px;
@@ -131,25 +131,25 @@
     transition: 0.3s;
     padding: 10%;
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
 }
 
-.total_users h4 {
-    color: var(--black1);
+.activeNav2 h4 {
     padding: 12px;
 }
 
-.total_users p {
+.activeNav2 p {
     display: grid;
     grid-template-columns: 50px 50px;
     justify-content: center;
 }
 
-.total_users p b {
+.activeNav2 p b {
     margin-top: 5px;
     font-size: 1.5rem;
 }
 
-.total_users:hover {
+.activeNav2:hover {
     transform: scale(1.09);
 }
 
@@ -163,6 +163,7 @@
     transition: 0.3s;
     padding: 10%;
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+    color: #000;
 }
 
 
@@ -196,6 +197,7 @@
     transition: 0.3s;
     padding: 10%;
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+    color: #000;
 }
 
 .individual h4 {

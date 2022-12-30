@@ -12,23 +12,29 @@
 }
 .avilabel_trips{
     display: grid;
-    grid-template-columns: 200px 200px;
-    gap: 4%;
-    column-gap: 35%; 
-    padding-left: 4%;
+    grid-template-columns: 300px 300px;
+    column-gap: 20%; 
+    row-gap: 20px;
+    padding-left: 8%;
+    margin-top: 20px;
+}
+.avilabel_trips p b{
+   
+    color: green;
 }
 .setTrip button{
    background-color: green;
    padding: 5px;
-   padding-right: 5%;
+   padding-right: 5%; 
    padding-left: 5%;
    border: none;
    color: white;
    border-radius: 5px;
    margin-top: 20px;
-   display: grid;
-   justify-content: right;
+   display: flex;
+   justify-content: center;
    text-align: center;
+   margin-left: 38%;
 }
 .avilabel_trips button:hover{
     background-color: rgb(1, 86, 1);
@@ -37,12 +43,7 @@
 .setTrip:hover {
     background-color: rgb(175, 175, 175);
     color: rgb(255, 255, 255);
-    transform: scale(1.03);
-    /* margin-left: 330px;
-    margin-right: 280px;
-    padding-left: 6%; */
-
-    /* box-shadow: 1px 1px 3px 0px; */
+    transform: scale(1.1);
 }
 
 .search {

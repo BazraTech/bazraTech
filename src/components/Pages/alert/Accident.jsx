@@ -71,18 +71,26 @@ export default function () {
             <div className='alert_main'>
                 <div className='alert_contents'>
 
-                    <div className='alert_accident' onClick={() => setActive("accident")}>
+                <Link  style={{ textDecoration: 'none' }} to="/accident">
+                    <div className='activeNav' onClick={() => setActive("accident")}>
                         <h4>Accident</h4>
-                        <p>< FaCarCrash size="2.2rem" color='black'></ FaCarCrash><b>100</b></p>
+                        <p>< FaCarCrash size="2.2rem" ></ FaCarCrash><b>100</b></p>
                     </div>
-                    <div className='alert_accident' onClick={() => setActive("off_road")}>
+                    </Link>
+
+                    <Link style={{ textDecoration: 'none' }} to="/off_road">
+                    <div className='parked'   onClick={() => setActive("off_road")}>
                         <h4>Off Road</h4>
-                        <p><TbTriangleOff size="2.2rem" color='black'></TbTriangleOff><b>100</b></p>
+                        <p><TbTriangleOff size="2.2rem" ></TbTriangleOff><b>100</b></p>
                     </div>
-                    <div className='alert_accident' onClick={() => setActive("driver")}>
+                    </Link>
+
+                    <Link style={{ textDecoration: 'none' }} to="/driver">
+                    <div className='parked'   onClick={() => setActive("driver")}>
                         <h4>Driver</h4>
-                        <p><FaUserSecret size="2rem" color='black'></FaUserSecret><b>100</b></p>
+                        <p><FaUserSecret size="2rem"></FaUserSecret><b>100</b></p>
                     </div>
+                    </Link>
 
                 </div>
 

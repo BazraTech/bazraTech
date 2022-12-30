@@ -62,7 +62,7 @@ export default function () {
     }
 
 
-    let [active, setActive] = useState("total_users");
+    let [active, setActive] = useState("individual");
     let [state, setState] = useState("false");
     const color = () => {
         setState(state);
@@ -79,7 +79,6 @@ export default function () {
         },
 
     };
-
 
     const url = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners";
 
@@ -101,13 +100,77 @@ export default function () {
     }
 
 
-
     return (
 
         <div className="containerr">
 
             {/*---------------navigation---------------*/}
-            <Navigation></Navigation>
+            <div className="company_navigation">
+                    <ul>
+                        <li>
+                            <Link to="/dashboard">
+                                <p class="hovertext" data-hover="Home"><FaHome size="2rem" color='white'></FaHome><p></p></p>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/Total_number_of_vehicle">
+                                <p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/tracking">
+                                <p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="#">
+                                <p onClick={handleClickopen} class="hovertext" data-hover="Trip Management"><SiGoogletagmanager size="1.8rem" color='white'></SiGoogletagmanager></p>
+                            </Link>
+                            <Link to="/set_trip">
+                                {popup ? <p class="hovertext trip" data-hover="Set Trip"><SiTripdotcom size="2rem" margin-left='20px' color='00cc44'></SiTripdotcom></p> : ""}
+                            </Link>
+                            <Link to="/trip_history">
+                                {popup ? <p class="hovertext trip" data-hover="Trip History"><BiTrip size="2rem" color='#00cc44'></BiTrip></p> : ""}
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/users">
+                                <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='00cc44'></FaUsers></p>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/alert">
+                                <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/report">
+                                <p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/Company_registration">
+                                <p class="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" color='white'></FaRegIdCard></p>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/message_overview">
+                                <p class="hovertext" data-hover="Communication">
+                                    <BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="#">
+                                <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/settings">
+                                <p class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='white'></AiFillSetting></p>
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
 
             {/* --------------- header --------------- */}
 
@@ -117,26 +180,28 @@ export default function () {
 
             <div className='user'>
                 <div className='contents'>
-                    <Link style={{ textDecoration: 'none' }} to="/users">
-                    <div className='activeNav2' onClick={() => setActive("total_users")}>
-                        <h4>Total Users</h4>
-                        <p><FaUsers size="2.2rem"></FaUsers><b>{dataSource.length}</b></p>
-                    </div>
+                <Link style={{ textDecoration: 'none' }} to="/users">
+                        <div className='company' onClick={() => setActive("total_users")}>
+                            <h4>Total Users</h4>
+                            <p><FaUsers size="2.2rem" color='black'></FaUsers><b>{dataSource.length}</b></p>
+                        </div>
                     </Link>
 
                     <Link style={{ textDecoration: 'none' }} to="/company">
-                    <div className='company' onClick={() => setActive("company")}>
-                        <h4>Company</h4>
-                        <p><FaWarehouse size="2.2rem" color='black'></FaWarehouse><b>100</b></p>
-                    </div>
+                        <div className='company' onClick={() => setActive("company")}>
+                            <h4>Company</h4>
+                            <p><FaWarehouse size="2.2rem" ></FaWarehouse><b>100</b></p>
+                        </div>
                     </Link>
+
                     <Link style={{ textDecoration: 'none' }} to="/register_individual">
-                    <div className='individual' onClick={() => setActive("individual")}>
+                    <div className='activeNav2' onClick={() => setActive("individual")}>
                         <h4>Individual</h4>
                         <p><FaUserAlt size="2rem"></FaUserAlt><b>100</b></p>
                     </div>
                     </Link>
                 </div>
+                
 
                 {/* --------------- search --------------- */}
 

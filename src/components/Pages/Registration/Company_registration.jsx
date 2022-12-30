@@ -1,26 +1,9 @@
 import React from 'react'
-import { FaHome } from 'react-icons/fa';
-import { AiFillCar } from "react-icons/ai";
-import { RiGpsFill } from "react-icons/ri";
-import { MdMonitor } from "react-icons/md";
-import { FaUsers } from "react-icons/fa";
-import { HiBellAlert } from "react-icons/hi2";
-import { HiDocumentReport } from "react-icons/hi";
-import { FaRegIdCard } from 'react-icons/fa';
-import { BsFillChatDotsFill } from "react-icons/bs";
-import { FaUserAlt } from "react-icons/fa";
-import { AiFillSetting } from "react-icons/ai";
-import { FiLogOut } from "react-icons/fi";
 import { FaStarOfLife } from 'react-icons/fa';
 import './company_registration.css';
 import { useForm } from 'react-hook-form';
 import { Link, NavLink } from 'react-router-dom';
-import { HiMenuAlt1 } from "react-icons/hi";
-import { SiTripdotcom } from "react-icons/si";
-import { SiGoogletagmanager } from "react-icons/si";
-import { BiTrip } from "react-icons/bi";
 import { useState, useEffect } from 'react';
-import { IoIosArrowDropdownCircle } from "react-icons/io";
 import swal from "sweetalert";
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
@@ -247,7 +230,7 @@ export default function Company_registration() {
                 <div className='company_individual_header'>
                     <p ><NavLink to="/Company_registration"><h1 className='nmn'>Company</h1></NavLink></p>
                     <p><NavLink to="/individual"><h1>Individual</h1></NavLink></p>
-                </div>
+                </div> 
 
                 <form className='form' onSubmit={handleSubmit(onSubmit)}>
 
