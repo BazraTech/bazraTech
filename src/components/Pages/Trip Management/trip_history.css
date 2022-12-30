@@ -1,0 +1,84 @@
+.setTrip {
+    background-color: rgb(234, 234, 234);
+    margin-left: 4%;
+    padding: 2%;
+    margin-top: 30px;
+    padding-left: -5%;
+    border-radius: 10px;
+    /* box-shadow: 1px 1px 3px 0px; */
+    transition: 0.8s;
+    text-decoration: none;
+    color: black;
+}
+.avilabel_trips{
+    display: grid;
+    grid-template-columns: 200px 200px;
+    gap: 4%;
+    column-gap: 35%; 
+    padding-left: 4%;
+}
+.setTrip button{
+   background-color: green;
+   padding: 5px;
+   padding-right: 5%;
+   padding-left: 5%;
+   border: none;
+   color: white;
+   border-radius: 5px;
+   margin-top: 20px;
+   display: grid;
+   justify-content: right;
+   text-align: center;
+}
+.avilabel_trips button:hover{
+    background-color: rgb(1, 86, 1);
+
+ }
+.setTrip:hover {
+    background-color: rgb(175, 175, 175);
+    color: rgb(255, 255, 255);
+    transform: scale(1.03);
+    /* margin-left: 330px;
+    margin-right: 280px;
+    padding-left: 6%; */
+
+    /* box-shadow: 1px 1px 3px 0px; */
+}
+
+.search {
+    background-color: rgb(255, 255, 255);
+    padding: 3.5%;
+    border: none;
+    width: 127%;
+    border-radius: 5px;
+    outline: none;
+    margin-top: 60px;
+}
+
+.trip_date {
+    display: flex;
+    justify-content: right;
+}
+
+.trip_date1 {
+    position: relative;
+    height: 30px;
+    width: 23%;
+    outline: none;
+    /* background-color: rgb(223, 223, 223); */
+    border: none;
+    border-bottom: 1px solid rgb(2, 99, 116);
+    /* border-radius: 6px; */
+    padding: 0 15px;
+}
+.trip_date button{
+    position: relative;
+    height: 30px;
+    width: 10%;
+    outline: none;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 6px;
+    margin-left: 10px;
+}
