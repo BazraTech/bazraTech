@@ -117,7 +117,7 @@ class _SearchTriphistoryState extends State<SearchTriphistory> {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
-                      Container(
+                      SizedBox(
                         width: 250,
                         height: 45,
                         child: TextField(
@@ -137,7 +137,7 @@ class _SearchTriphistoryState extends State<SearchTriphistory> {
                               ),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.search,
                             ),
                             hintText: 'Search',
@@ -164,17 +164,15 @@ class _SearchTriphistoryState extends State<SearchTriphistory> {
                           },
                         ),
                       ),
-                      Spacer(),
-                      Container(
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.calendar_month,
-                            size: 40,
-                          ),
-                          onPressed: () {
-                            _showDate();
-                          },
+                      const Spacer(),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.calendar_month,
+                          size: 40,
                         ),
+                        onPressed: () {
+                          _showDate();
+                        },
                       ),
                     ],
                   )),
@@ -182,26 +180,26 @@ class _SearchTriphistoryState extends State<SearchTriphistory> {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  color: Color.fromRGBO(69, 92, 128, 1),
+                  color: const Color.fromRGBO(69, 92, 128, 1),
                   child: Row(
                     children: [
                       Container(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 8.0),
                           child: Text("Trip"),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 87),
-                        child: Text(" Total hour"),
+                        margin: const EdgeInsets.only(left: 87),
+                        child: const Text(" Total hour"),
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 10),
-                        child: Text(" Total Speed"),
+                        margin: const EdgeInsets.only(left: 10),
+                        child: const Text(" Total Speed"),
                       ),
                       Container(
-                          margin: EdgeInsets.only(left: 35),
-                          child: Text(" Date"))
+                          margin: const EdgeInsets.only(left: 35),
+                          child: const Text(" Date"))
                     ],
                   ),
                 ),
@@ -260,25 +258,23 @@ class _SearchTriphistoryState extends State<SearchTriphistory> {
                             )
                           : SizedBox(
                               width: MediaQuery.of(context).size.width - 4,
-                              child: Container(
-                                child: ListView(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  children: List.generate(
-                                      _searchTextController!.text.isEmpty
-                                          ? HistoryList.length
-                                          : _searchList.length, (index) {
-                                    return ChangeNotifierProvider.value(
-                                      value: _searchTextController!.text.isEmpty
-                                          ? HistoryList[index]
-                                          : _searchList[index],
-                                      child: SizedBox(
-                                        height: 86,
-                                        width: 100,
-                                        child: TripFeed(onChange: null),
-                                      ),
-                                    );
-                                  }),
-                                ),
+                              child: ListView(
+                                physics: const NeverScrollableScrollPhysics(),
+                                children: List.generate(
+                                    _searchTextController!.text.isEmpty
+                                        ? HistoryList.length
+                                        : _searchList.length, (index) {
+                                  return ChangeNotifierProvider.value(
+                                    value: _searchTextController!.text.isEmpty
+                                        ? HistoryList[index]
+                                        : _searchList[index],
+                                    child: SizedBox(
+                                      height: 86,
+                                      width: 100,
+                                      child: TripFeed(onChange: null),
+                                    ),
+                                  );
+                                }),
                               ),
                             ))
                   : SizedBox(
@@ -292,8 +288,8 @@ class _SearchTriphistoryState extends State<SearchTriphistory> {
                                 margin: const EdgeInsets.only(right: 8),
                                 child: Row(
                                   children: [
-                                    SizedBox(
-                                        width: 100, child: const Text("Start")),
+                                    const SizedBox(
+                                        width: 100, child: Text("Start")),
                                     Text(start =
                                         '   ${DateFormat('dd/MM/yyy').format(selectDateRange!.start)}'),
                                   ],

@@ -61,7 +61,7 @@ class _LoginState extends State<Login> {
       Loginapiservice apiService = new Loginapiservice();
       apiService.login(requestModel!).then((value) {
         if (value.token!.isNotEmpty) {
-          Navigator.of(context).pushNamed(AppRoutes.bottom);
+          Navigator.of(context).pushNamed(AppRoutes.authRegister);
         }
       });
     }
@@ -269,18 +269,26 @@ class _LoginState extends State<Login> {
                                                       ),
                                                     ),
                                                     child: TextButton(
-                                                      onPressed: (() {
-                                                        if (_formKey
-                                                            .currentState!
-                                                            .validate()) {
-                                                          Navigator.of(context)
-                                                              .pushNamed(AppRoutes
-                                                                  .authRegister);
-                                                        }
-                                                      }),
+                                                      onPressed: () {
+                                                        // if (_formKey
+                                                        //     .currentState!
+                                                        //     .validate()) {
+                                                        Navigator.of(context)
+                                                            .pushNamed(AppRoutes
+                                                                .bottom);
+                                                        //   }
+                                                        // }),
+                                                      },
                                                       child: ElevatedButton(
-                                                        onPressed:
-                                                            Loginvalidate,
+                                                        onPressed: () {
+                                                          // if (_formKey
+                                                          //     .currentState!
+                                                          //     .validate()) {}
+                                                          Navigator.of(context)
+                                                              .pushNamed(
+                                                                  AppRoutes
+                                                                      .bottom);
+                                                        },
                                                         child: Container(
                                                           margin:
                                                               EdgeInsets.only(

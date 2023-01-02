@@ -10,7 +10,7 @@ class Loginapiservice {
       Uri.parse(url),
       body: requestModel.toJson(),
       headers: {
-        "Content-Type": "application/json",
+        
       },
     );
     if (response.statusCode == 200 || response.statusCode == 400) {

@@ -1,4 +1,3 @@
-
 import 'package:bazralogin/Model/communication.dart';
 import 'package:bazralogin/Page/Screen/communication/Communication.dart';
 import 'package:bazralogin/const/color.dart';
@@ -145,33 +144,33 @@ class _CommunicationPageState extends State<CommunicationPage> {
                     shadowColor: Colors.black,
                     child: Row(
                       children: [
-                        Container(
+                        SizedBox(
                           height: 60,
                           // margin: const EdgeInsets.only(left: 30),
                           child: Column(
                             children: <Widget>[
-                              Container(
+                              SizedBox(
                                 width: MediaQuery.of(context).size.width - 20,
                                 child: Row(
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Container(
+                                      child: SizedBox(
                                         height: 20,
                                         child: Text(
                                           " " + driver.name,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
+                                          style: const TextStyle(
+                                              // fontWeight: FontWeight.bold,
                                               fontSize: 14,
-                                              color: Colors.grey[500]),
+                                              color: Colors.black),
                                         ),
                                       ),
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           right: 8.0, top: 8),
-                                      child: Container(
+                                      child: SizedBox(
                                         width: 17,
                                         height: 10,
                                         child: Transform.scale(
@@ -195,15 +194,15 @@ class _CommunicationPageState extends State<CommunicationPage> {
                               Padding(
                                 padding:
                                     const EdgeInsets.only(left: 8.0, right: 8),
-                                child: Container(
+                                child: SizedBox(
                                   height: 20,
                                   width: MediaQuery.of(context).size.width - 30,
                                   child: Text(
-                                    " " + driver.Status,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                    " ${driver.Status}",
+                                    style: const TextStyle(
+                                        // fontWeight: FontWeight.bold,
                                         fontSize: 14,
-                                        color: Colors.grey[500]),
+                                        color: Colors.black),
                                   ),
                                 ),
                               ),
