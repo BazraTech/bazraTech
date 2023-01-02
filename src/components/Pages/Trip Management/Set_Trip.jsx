@@ -21,7 +21,7 @@ import { SiGoogletagmanager } from "react-icons/si";
 import { FaStarOfLife } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import Header from '../../Header/Header';
-import Navigation from '../Navigation/Navigation';
+import Navigation from '../Navigation/Navigation'; 
 
 export default function () {
 

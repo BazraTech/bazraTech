@@ -73,7 +73,7 @@ export default function Dashboard() {
 
             {/* ---------------contents--------------- */}
 
-            <div className='dashboard_main' onClick={handleClickopen1}>
+            <div className='main_content' onClick={handleClickopen1}>
                 <div className='dashboard_contents'>
                     <p><Link to="/Total_number_of_vehicle" >
                         <div className='vehicle'>

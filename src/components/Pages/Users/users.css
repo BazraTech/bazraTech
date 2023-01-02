@@ -1,25 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "monospace";
-}
-
-:root {
-    --blue: #2a2185;
-    --white: #fff;
-    --gray: #f5f5f5;
-    --black1: #222;
-    --black2: #999;
-}
-
-.containerr {
-    position: relative;
-    width: 100%;
-    text-decoration: none;
-}
 
 /* ---------------navigation--------------- */
 
@@ -109,6 +89,13 @@
     background-color: rgb(244, 244, 244);
     color: var(--black1);
     top: 75px;
+}
+
+.vehicle_information3{
+    width: 800px;
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    gap: 10%;
 }
 
 .user .contents {

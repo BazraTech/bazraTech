@@ -14,6 +14,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { SiTripdotcom } from "react-icons/si";
 import { SiGoogletagmanager } from "react-icons/si";
+import './navigation.css';
 
 export default function Navigation() {
 
@@ -36,7 +37,7 @@ export default function Navigation() {
     }
     return (
         <div>
-            <div className="dashboard_navigation">
+            <div className="All_navigation">
                 <ul>
                     <li>
                         <Link to="/dashboard" style={{ color: getColor('/dashboard')  }}>

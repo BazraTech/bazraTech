@@ -134,10 +134,10 @@ export default function Users_edit() {
                     </div> */}
 
                     <div className='company_individual_header'>
-                        <p ><h1 className='nmn'>Vehicle Detail</h1></p>
+                        <p ><h1 className='nmn'>Company Detail</h1></p>
                         <p ><h4 className='vehicleDetail'>Name : Abebe Alemu <br/> User ID : BA 00001</h4></p>
                     </div>
-                    <form className='form'>
+                    <form className='form'> 
 
                         <div className='allDiv'>
                             <div className='first_div'>

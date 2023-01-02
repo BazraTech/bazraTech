@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FaUserAlt } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { IoIosArrowDropdownCircle } from "react-icons/io";
+import "./header.css"
 
 export default function Header({title}) {
 

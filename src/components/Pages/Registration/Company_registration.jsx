@@ -469,7 +469,7 @@ export default function Company_registration() {
                                                 return <option >{item.catagory}</option>
                                             })
                                         }
-                                    </select>
+                                    </select> 
                                     {/* {errors.vehicleCatagory && <span className='validate_text'>{errors.vehicleCatagory.message}</span>} */}
                                 </div>
 
@@ -509,7 +509,7 @@ export default function Company_registration() {
                                         {/* {errors.serviceNeeded && <span className='validate_text'>{errors.serviceNeeded.message}</span>} */}
                                     </div>
 
-                                </div>
+                                </div> 
 
                                 <div>
                                     <p>Manufacture Date <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>

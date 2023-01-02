@@ -8,6 +8,8 @@ import { Pagination } from 'antd';
 import { FaStarOfLife } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import swal from "sweetalert";
+import Popup from './Popup';
+import './popup.css';
 
 export default function Cards({ title, data }) {
 
@@ -16,8 +18,9 @@ export default function Cards({ title, data }) {
   {/*---------------- handle submit values ----------------- */ }
   const onSubmit = data => console.log(data);
 
-  const [popup, setPop] = useState(false);
+  const [buttonPopup, setButtonPopup] = useState(false);
   const [popup2, setPop2] = useState(false);
+  const [popup, setPop] = useState(false);
   const [popup3, setPop3] = useState(false);
   const [popup4, setPop4] = useState(false);
   const [popup5, setPop5] = useState(false);
@@ -29,6 +32,12 @@ export default function Cards({ title, data }) {
 
   const handleClickopen = () => {
     setPop({ popup: false });
+  }
+  if (popup == true) {
+    document.body.classList.add("active_modal")
+  }
+  else {
+    document.body.classList.remove("active_modal")
   }
   const handleClickopen2 = () => {
     setPop2(!popup2);
@@ -145,18 +154,16 @@ export default function Cards({ title, data }) {
               <th>User</th>
               <th>Company ID</th>
               <th>Company Name</th>
-              <th>Number Of Vehicle</th>
-              <th>Number Of Driver</th>
-              <th>Status</th>
+              <th>Number Of Vehicle</th> 
+              <th>Number Of Driver</th> 
+              <th>Status</th> 
               <th>Detail</th>
               <th>Add Vehicle</th>
             </tr>
           </thead>
           <tbody>
             {dataSource.map(item => (
-
               <tr className='active_row'>
-
                 <td>{item.firstName}</td>
                 <td>{item.companyInfo.id}</td>
                 <td>{item.companyInfo.name}</td>
@@ -164,7 +171,7 @@ export default function Cards({ title, data }) {
                 <td>{item.number_of_driver}</td>
                 <td>{item.number_of_driver}</td>
                 <td><Link to="/user_edit"><button>Detail</button></Link></td>
-                <td>  <Link to="#"><button onClick={handleClickopen}>Add </button></Link></td>
+                <td>  <Link to="#"><button onClick={() => { handleClickopen() }}>Add </button></Link></td>
               </tr>
             ))}
           </tbody>
@@ -172,66 +179,67 @@ export default function Cards({ title, data }) {
 
 
         <div className='page'>
-
           {popup ?
-            <div className='report-popup'>
-              <div className='x-button-report'>
-                <button className='x-press-report' onClick={closePopup5}>X</button>
-              </div>
-              <div className="item-report">
-                <div className="popup_box_one_first">
-                  <div> <h2>Add Vehicle 1</h2></div>
-                  <div className='popup_button'><button onClick={handleClickopen2}>Add Vehicle </button>
-                    <button onClick={() => {
-                      handleClickMessage()
-                      closePopup5()
-                    }}>Submit</button></div>
-                  <div className='pop_input'>
-                    <div className='pop_input2'>
-                      <div className='inline'>
-                        <h3>Vehicle Category</h3>
-                        <select name="catagory"
-                          // {...register("vehicleCatagory", { required: '*Vehicle catagoty  is required' })}
-                           // value={catagory} onChange={(e) => setVehicleCategory(e.target.value)} >
-                            >
+            <div>
+              <div className='popup'>
+                <div className='popup-inner'>
+                  <lable className="zxc">Add Vehicle 1</lable>
+                  <div className='ewq'>
+                    <div className='qwe'>
+                      <div className='asd'>
+                        <button className='close-btn' onClick={closePopup5}>X</button>
+                        <lable>Vehicle Cataegory</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Catagory</option>
-                          {
-                            dataSource3.map(item => {
-                              return <option >{item.catagory}</option>
-                            })
-                          }
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Name</h3>
-                        <input placeholder='Please enter Vehicle name' type="text" />
+
+                      <div className='asd'>
+                        <lable>Vehicle Name</lable>
+                        <input name='vehicleName' type="text"
+                          placeholder='Enter Vehicle Name'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Condition</h3>
-                        <select className='select' name='conditionName'
-                        // value={conditionName}
-                        // {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
-                        // onChange={(e) => setVehicleCondition(e.target.value)} 
-                        >
+
+                      <div className='asd'>
+                        <lable>Vehicle Condition</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Condition</option>
-                          {
-                            dataSource4.map(item => {
-                              return <option>{item.conditionName}</option>
-                            })
-                          }
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Plate Number</h3>
-                        <input placeholder='Please enter plate number' type="text" />
+
+                      <div className='asd'>
+                        <lable>Plate Number</lable>
+                        <input placeholder='Please Enter Plate Number'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Manufacture Date</h3>
-                        <input placeholder='Please enter date' type="date" />
+
+                      <div className='asd'>
+                        <lable>Manufacture Date</lable>
+                        <input placeholder='Enter Manufactureing Date'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Device Id</h3>
-                        <input placeholder='Please enter  device id' type="text" />
+
+                      <div className='asd'>
+                        <lable>Device ID</lable>
+                        <input placeholder='Enter Device ID'></input>
+                      </div>
+                      <div className='asdy'>
+                        {/* <button>Back</button> */}
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => {
+                          handleClickMessage()
+                          closePopup5()
+                        }}>Submit </button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen2() }}>Add Vehicle</button>
                       </div>
                     </div>
                   </div>
@@ -240,66 +248,66 @@ export default function Cards({ title, data }) {
             </div> : ""}
 
           {popup2 ?
-            <div className='report-popup'>
-              <div className='x-button-report'>
-                <button className='x-press-report' onClick={closePopup5}>X</button>
-              </div>
-              <div className="item-report">
-                <div className="popup_box_one">
-                  <div> <h2>Add Vehicle 2</h2></div>
-                  <div className='popup_button'>
-                    <button className='previous' onClick={handleClickopen2}>Previous </button>
-                    <button onClick={handleClickopen3}>Add Vehicle </button>
-                    <button onClick={() => {
-                      handleClickMessage()
-                      closePopup5()
-                    }}>Submit </button></div>
-                  <div className='pop_input'>
-                    <div className='pop_input2'>
-                      <div className='inline'>
-                        <h3>Vehicle Category</h3>
-                        <select name="catagory"
-                          // {...register("vehicleCatagory", { required: '*Vehicle catagoty  is required' })}
-                           // value={catagory} onChange={(e) => setVehicleCategory(e.target.value)} >
-                            >
+            <div>
+              <div className='popup2'>
+                <div className='popup-inner'>
+                  <lable className="zxc">Add Vehicle 2</lable>
+                  <div className='ewq'>
+                    <div className='qwe'>
+                      <div className='asd'>
+                        <button className='close-btn' onClick={closePopup5}>X</button>
+                        <lable>Vehicle Cataegory</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Catagory</option>
-                          {
-                            dataSource3.map(item => {
-                              return <option >{item.catagory}</option>
-                            })
-                          }
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Name</h3>
-                        <input placeholder='Please enter Vehicle name' type="text" />
+
+                      <div className='asd'>
+                        <lable>Vehicle Name</lable>
+                        <input name='vehicleName' type="text"
+                          placeholder='Enter Vehicle Name'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Condition</h3>
-                        <select className='select' name='conditionName'
-                        // value={conditionName}
-                        // {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
-                        // onChange={(e) => setVehicleCondition(e.target.value)} 
-                        >
+
+                      <div className='asd'>
+                        <lable>Vehicle Condition</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Condition</option>
-                          {
-                            dataSource4.map(item => {
-                              return <option>{item.conditionName}</option>
-                            })
-                          }
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Plate Number</h3>
-                        <input placeholder='Please enter plate number' type="text" />
+
+                      <div className='asd'>
+                        <lable>Plate Number</lable>
+                        <input placeholder='Please Enter Plate Number'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Manufacture Date</h3>
-                        <input placeholder='Please enter date' type="date" />
+
+                      <div className='asd'>
+                        <lable>Manufacture Date</lable>
+                        <input placeholder='Enter Manufactureing Date'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Device Id</h3>
-                        <input placeholder='Please enter  device id' type="text" />
+
+                      <div className='asd'>
+                        <lable>Device ID</lable>
+                        <input placeholder='Enter Device ID'></input>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen2() }}>Back</button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => {
+                          handleClickMessage()
+                          closePopup5()
+                        }}>Submit </button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen3() }}>Add Vehicle</button>
                       </div>
                     </div>
                   </div>
@@ -308,66 +316,66 @@ export default function Cards({ title, data }) {
             </div> : ""}
 
           {popup3 ?
-            <div className='report-popup'>
-              <div className='x-button-report'>
-                <button className='x-press-report' onClick={closePopup5}>X</button>
-              </div>
-              <div className="item-report">
-                <div className="popup_box_one">
-                  <div> <h2>Add Vehicle 3</h2></div>
-                  <div className='popup_button'>
-                    <button className='previous' onClick={handleClickopen3}>Previous </button>
-                    <button onClick={handleClickopen4}>Add Vehicle </button>
-                    <button onClick={() => {
-                      handleClickMessage()
-                      closePopup5()
-                    }}>Submit </button></div>
-                  <div className='pop_input'>
-                    <div className='pop_input2'>
-                      <div className='inline'>
-                        <h3>Vehicle Category</h3>
-                        <select name="catagory"
-                          // {...register("vehicleCatagory", { required: '*Vehicle catagoty  is required' })}
-                           // value={catagory} onChange={(e) => setVehicleCategory(e.target.value)} >
-                            >
+            <div>
+              <div className='popup2'>
+                <div className='popup-inner'>
+                  <lable className="zxc">Add Vehicle 3</lable>
+                  <div className='ewq'>
+                    <div className='qwe'>
+                      <div className='asd'>
+                        <button className='close-btn' onClick={closePopup5}>X</button>
+                        <lable>Vehicle Cataegory</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Catagory</option>
-                          {
-                            dataSource3.map(item => {
-                              return <option >{item.catagory}</option>
-                            })
-                          }
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Name</h3>
-                        <input placeholder='Please enter Vehicle name' type="text" />
+
+                      <div className='asd'>
+                        <lable>Vehicle Name</lable>
+                        <input name='vehicleName' type="text"
+                          placeholder='Enter Vehicle Name'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Condition</h3>
-                        <select className='select' name='conditionName'
-                        // value={conditionName}
-                        // {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
-                        // onChange={(e) => setVehicleCondition(e.target.value)} 
-                        >
+
+                      <div className='asd'>
+                        <lable>Vehicle Condition</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Condition</option>
-                          {
-                            dataSource4.map(item => {
-                              return <option>{item.conditionName}</option>
-                            })
-                          }
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Plate Number</h3>
-                        <input placeholder='Please enter plate number' type="text" />
+
+                      <div className='asd'>
+                        <lable>Plate Number</lable>
+                        <input placeholder='Please Enter Plate Number'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Manufacture Date</h3>
-                        <input placeholder='Please enter date' type="date" />
+
+                      <div className='asd'>
+                        <lable>Manufacture Date</lable>
+                        <input placeholder='Enter Manufactureing Date'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Device Id</h3>
-                        <input placeholder='Please enter  device id' type="text" />
+
+                      <div className='asd'>
+                        <lable>Device ID</lable>
+                        <input placeholder='Enter Device ID'></input>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen3() }}>Back</button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => {
+                          handleClickMessage()
+                          closePopup5()
+                        }}>Submit </button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen4() }}>Add Vehicle</button>
                       </div>
                     </div>
                   </div>
@@ -377,485 +385,481 @@ export default function Cards({ title, data }) {
 
 
           {popup4 ?
-            <div className='report-popup'>
-              <div className='x-button-report'>
-                <button className='x-press-report' onClick={closePopup5}>X</button>
-              </div>
-              <div className="item-report">
-                <div className="popup_box_one">
-                  <div> <h2>Add Vehicle 4</h2></div>
-                  <div className='popup_button'>
-                    <button className='previous' onClick={handleClickopen4}>Previous </button>
-                    <button onClick={handleClickopen5}>Add Vehicle </button>
-                    <button onClick={() => {
-                      handleClickMessage()
-                      closePopup5()
-                    }}>Submit </button></div>
-                  <div className='pop_input'>
-                    <div className='pop_input2'>
-                      <div className='inline'>
-                        <h3>Vehicle Category</h3>
-                        <select name="catagory"
-                          // {...register("vehicleCatagory", { required: '*Vehicle catagoty  is required' })}
-                           // value={catagory} onChange={(e) => setVehicleCategory(e.target.value)} >
-                            >
+            <div>
+              <div className='popup2'>
+                <div className='popup-inner'>
+                  <lable className="zxc">Add Vehicle 4</lable>
+                  <div className='ewq'>
+                    <div className='qwe'>
+                      <div className='asd'>
+                        <button className='close-btn' onClick={closePopup5}>X</button>
+                        <lable>Vehicle Cataegory</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Catagory</option>
-                          {
-                            dataSource3.map(item => {
-                              return <option >{item.catagory}</option>
-                            })
-                          }
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Name</h3>
-                        <input placeholder='Please enter Vehicle name' type="text" />
+
+                      <div className='asd'>
+                        <lable>Vehicle Name</lable>
+                        <input name='vehicleName' type="text"
+                          placeholder='Enter Vehicle Name'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Condition</h3>
-                        <select className='select' name='conditionName'
-                        // value={conditionName}
-                        // {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
-                        // onChange={(e) => setVehicleCondition(e.target.value)} 
-                        >
+
+                      <div className='asd'>
+                        <lable>Vehicle Condition</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Condition</option>
-                          {
-                            dataSource4.map(item => {
-                              return <option>{item.conditionName}</option>
-                            })
-                          }
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Plate Number</h3>
-                        <input placeholder='Please enter plate number' type="text" />
+
+                      <div className='asd'>
+                        <lable>Plate Number</lable>
+                        <input placeholder='Please Enter Plate Number'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Manufacture Date</h3>
-                        <input placeholder='Please enter date' type="date" />
+
+                      <div className='asd'>
+                        <lable>Manufacture Date</lable>
+                        <input placeholder='Enter Manufactureing Date'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Device Id</h3>
-                        <input placeholder='Please enter  device id' type="text" />
+
+                      <div className='asd'>
+                        <lable>Device ID</lable>
+                        <input placeholder='Enter Device ID'></input>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen4() }}>Back</button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => {
+                          handleClickMessage()
+                          closePopup5()
+                        }}>Submit </button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen5() }}>Add Vehicle</button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div> : ""}
-
 
           {popup5 ?
-            <div className='report-popup'>
-              <div className='x-button-report'>
-                <button className='x-press-report' onClick={closePopup5}>X</button>
-              </div>
-              <div className="item-report">
-                <div className="popup_box_one">
-                  <div> <h2>Add Vehicle 5</h2></div>
-                  <div className='popup_button'>
-                    <button className='previous' onClick={handleClickopen5}>Previous </button>
-                    <button onClick={handleClickopen6}>Add Vehicle </button>
-                    <button onClick={() => {
-                      handleClickMessage()
-                      closePopup5()
-                    }}>Submit </button></div>
-                  <div className='pop_input'>
-                    <div className='pop_input2'>
-                      <div className='inline'>
-                        <h3>Vehicle Category</h3>
-                        <select name="catagory"
-                          // {...register("vehicleCatagory", { required: '*Vehicle catagoty  is required' })}
-                           // value={catagory} onChange={(e) => setVehicleCategory(e.target.value)} >
-                            >
+            <div>
+              <div className='popup2'>
+                <div className='popup-inner'>
+                  <lable className="zxc">Add Vehicle 5</lable>
+                  <div className='ewq'>
+                    <div className='qwe'>
+                      <div className='asd'>
+                        <button className='close-btn' onClick={closePopup5}>X</button>
+                        <lable>Vehicle Cataegory</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Catagory</option>
-                          {
-                            dataSource3.map(item => {
-                              return <option >{item.catagory}</option>
-                            })
-                          }
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Name</h3>
-                        <input placeholder='Please enter Vehicle name' type="text" />
+
+                      <div className='asd'>
+                        <lable>Vehicle Name</lable>
+                        <input name='vehicleName' type="text"
+                          placeholder='Enter Vehicle Name'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Condition</h3>
-                        <select className='select' name='conditionName'
-                        // value={conditionName}
-                        // {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
-                        // onChange={(e) => setVehicleCondition(e.target.value)} 
-                        >
+
+                      <div className='asd'>
+                        <lable>Vehicle Condition</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Condition</option>
-                          {
-                            dataSource4.map(item => {
-                              return <option>{item.conditionName}</option>
-                            })
-                          }
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Plate Number</h3>
-                        <input placeholder='Please enter plate number' type="text" />
+
+                      <div className='asd'>
+                        <lable>Plate Number</lable>
+                        <input placeholder='Please Enter Plate Number'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Manufacture Date</h3>
-                        <input placeholder='Please enter date' type="date" />
+
+                      <div className='asd'>
+                        <lable>Manufacture Date</lable>
+                        <input placeholder='Enter Manufactureing Date'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Device Id</h3>
-                        <input placeholder='Please enter  device id' type="text" />
+
+                      <div className='asd'>
+                        <lable>Device ID</lable>
+                        <input placeholder='Enter Device ID'></input>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen5() }}>Back</button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => {
+                          handleClickMessage()
+                          closePopup5()
+                        }}>Submit </button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen6() }}>Add Vehicle</button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div> : ""}
-
 
           {popup6 ?
-            <div className='report-popup'>
-              <div className='x-button-report'>
-                <button className='x-press-report' onClick={closePopup5}>X</button>
-              </div>
-              <div className="item-report">
-                <div className="popup_box_one">
-                  <div> <h2>Add Vehicle 6</h2></div>
-                  <div className='popup_button'>
-                    <button className='previous' onClick={handleClickopen6}>Previous </button>
-                    <button onClick={handleClickopen7}>Add Vehicle </button>
-                    <button onClick={() => {
-                      handleClickMessage()
-                      closePopup5()
-                    }}>Submit </button></div>
-                  <div className='pop_input'>
-                    <div className='pop_input2'>
-                      <div className='inline'>
-                        <h3>Vehicle Category</h3>
-                        <select name="catagory"
-                          // {...register("vehicleCatagory", { required: '*Vehicle catagoty  is required' })}
-                           // value={catagory} onChange={(e) => setVehicleCategory(e.target.value)} >
-                            >
+            <div>
+              <div className='popup2'>
+                <div className='popup-inner'>
+                  <lable className="zxc">Add Vehicle 6</lable>
+                  <div className='ewq'>
+                    <div className='qwe'>
+                      <div className='asd'>
+                        <button className='close-btn' onClick={closePopup5}>X</button>
+                        <lable>Vehicle Cataegory</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Catagory</option>
-                          {
-                            dataSource3.map(item => {
-                              return <option >{item.catagory}</option>
-                            })
-                          }
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Name</h3>
-                        <input placeholder='Please enter Vehicle name' type="text" />
+
+                      <div className='asd'>
+                        <lable>Vehicle Name</lable>
+                        <input name='vehicleName' type="text"
+                          placeholder='Enter Vehicle Name'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Condition</h3>
-                        <select className='select' name='conditionName'
-                        // value={conditionName}
-                        // {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
-                        // onChange={(e) => setVehicleCondition(e.target.value)} 
-                        >
+
+                      <div className='asd'>
+                        <lable>Vehicle Condition</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Condition</option>
-                          {
-                            dataSource4.map(item => {
-                              return <option>{item.conditionName}</option>
-                            })
-                          }
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Plate Number</h3>
-                        <input placeholder='Please enter plate number' type="text" />
+
+                      <div className='asd'>
+                        <lable>Plate Number</lable>
+                        <input placeholder='Please Enter Plate Number'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Manufacture Date</h3>
-                        <input placeholder='Please enter date' type="date" />
+
+                      <div className='asd'>
+                        <lable>Manufacture Date</lable>
+                        <input placeholder='Enter Manufactureing Date'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Device Id</h3>
-                        <input placeholder='Please enter  device id' type="text" />
+
+                      <div className='asd'>
+                        <lable>Device ID</lable>
+                        <input placeholder='Enter Device ID'></input>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen6() }}>Back</button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => {
+                          handleClickMessage()
+                          closePopup5()
+                        }}>Submit </button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen7() }}>Add Vehicle</button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div> : ""}
-
 
           {popup7 ?
-            <div className='report-popup'>
-              <div className='x-button-report'>
-                <button className='x-press-report' onClick={closePopup5}>X</button>
-              </div>
-              <div className="item-report">
-                <div className="popup_box_one">
-                  <div> <h2>Add Vehicle 7</h2></div>
-                  <div className='popup_button'>
-                    <button className='previous' onClick={handleClickopen7}>Previous </button>
-                    <button onClick={handleClickopen8}>Add Vehicle</button>
-                    <button onClick={() => {
-                      handleClickMessage()
-                      closePopup5()
-                    }}>Submit </button></div>
-                  <div className='pop_input'>
-                    <div className='pop_input2'>
-                      <div className='inline'>
-                      <select name="catagory"
-                          // {...register("vehicleCatagory", { required: '*Vehicle catagoty  is required' })}
-                           // value={catagory} onChange={(e) => setVehicleCategory(e.target.value)} >
-                            >
+            <div>
+              <div className='popup2'>
+                <div className='popup-inner'>
+                  <lable className="zxc">Add Vehicle 7</lable>
+                  <div className='ewq'>
+                    <div className='qwe'>
+                      <div className='asd'>
+                        <button className='close-btn' onClick={closePopup5}>X</button>
+                        <lable>Vehicle Cataegory</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Catagory</option>
-                          {
-                            dataSource3.map(item => {
-                              return <option >{item.catagory}</option>
-                            })
-                          }
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
                         </select>
-                        <input placeholder='Please enter Vehicle type' type="text" />
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Name</h3>
-                        <input placeholder='Please enter Vehicle name' type="text" />
+
+                      <div className='asd'>
+                        <lable>Vehicle Name</lable>
+                        <input name='vehicleName' type="text"
+                          placeholder='Enter Vehicle Name'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Condition</h3>
-                        <select className='select' name='conditionName'
-                        // value={conditionName}
-                        // {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
-                        // onChange={(e) => setVehicleCondition(e.target.value)} 
-                        >
+
+                      <div className='asd'>
+                        <lable>Vehicle Condition</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Condition</option>
-                          {
-                            dataSource4.map(item => {
-                              return <option>{item.conditionName}</option>
-                            })
-                          }
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Plate Number</h3>
-                        <input placeholder='Please enter plate number' type="text" />
+
+                      <div className='asd'>
+                        <lable>Plate Number</lable>
+                        <input placeholder='Please Enter Plate Number'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Manufacture Date</h3>
-                        <input placeholder='Please enter date' type="date" />
+
+                      <div className='asd'>
+                        <lable>Manufacture Date</lable>
+                        <input placeholder='Enter Manufactureing Date'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Device Id</h3>
-                        <input placeholder='Please enter  device id' type="text" />
+
+                      <div className='asd'>
+                        <lable>Device ID</lable>
+                        <input placeholder='Enter Device ID'></input>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen7() }}>Back</button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => {
+                          handleClickMessage()
+                          closePopup5()
+                        }}>Submit </button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen8() }}>Add Vehicle</button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div> : ""}
-
 
           {popup8 ?
-            <div className='report-popup'>
-              <div className='x-button-report'>
-                <button className='x-press-report' onClick={closePopup5}>X</button>
-              </div>
-              <div className="item-report">
-                <div className="popup_box_one">
-                  <div> <h2>Add Vehicle 8</h2></div>
-                  <div className='popup_button'>
-                    <button className='previous' onClick={handleClickopen8}>Previous </button>
-                    <button onClick={handleClickopen9}>Add Vehicle </button>
-                    <button onClick={() => {
-                      handleClickMessage()
-                      closePopup5()
-                    }}>Submit </button></div>
-                  <div className='pop_input'>
-                    <div className='pop_input2'>
-                      <div className='inline'>
-                        <h3>Vehicle Category</h3>
-                        <select name="catagory"
-                          // {...register("vehicleCatagory", { required: '*Vehicle catagoty  is required' })}
-                           // value={catagory} onChange={(e) => setVehicleCategory(e.target.value)} >
-                            >
+            <div>
+              <div className='popup2'>
+                <div className='popup-inner'>
+                  <lable className="zxc">Add Vehicle 8</lable>
+                  <div className='ewq'>
+                    <div className='qwe'>
+                      <div className='asd'>
+                        <button className='close-btn' onClick={closePopup5}>X</button>
+                        <lable>Vehicle Cataegory</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Catagory</option>
-                          {
-                            dataSource3.map(item => {
-                              return <option >{item.catagory}</option>
-                            })
-                          }
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Name</h3>
-                        <input placeholder='Please enter Vehicle name' type="text" />
+
+                      <div className='asd'>
+                        <lable>Vehicle Name</lable>
+                        <input name='vehicleName' type="text"
+                          placeholder='Enter Vehicle Name'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Condition</h3>
-                        <select className='select' name='conditionName'
-                        // value={conditionName}
-                        // {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
-                        // onChange={(e) => setVehicleCondition(e.target.value)} 
-                        >
+
+                      <div className='asd'>
+                        <lable>Vehicle Condition</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Condition</option>
-                          {
-                            dataSource4.map(item => {
-                              return <option>{item.conditionName}</option>
-                            })
-                          }
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Plate Number</h3>
-                        <input placeholder='Please enter plate number' type="text" />
+
+                      <div className='asd'>
+                        <lable>Plate Number</lable>
+                        <input placeholder='Please Enter Plate Number'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Manufacture Date</h3>
-                        <input placeholder='Please enter date' type="date" />
+
+                      <div className='asd'>
+                        <lable>Manufacture Date</lable>
+                        <input placeholder='Enter Manufactureing Date'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Device Id</h3>
-                        <input placeholder='Please enter  device id' type="text" />
+
+                      <div className='asd'>
+                        <lable>Device ID</lable>
+                        <input placeholder='Enter Device ID'></input>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen8() }}>Back</button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => {
+                          handleClickMessage()
+                          closePopup5()
+                        }}>Submit </button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen9() }}>Add Vehicle</button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div> : ""}
-
 
           {popup9 ?
-            <div className='report-popup'>
-              <div className='x-button-report'>
-                <button className='x-press-report' onClick={closePopup5}>X</button>
-              </div>
-              <div className="item-report">
-                <div className="popup_box_one">
-                  <div> <h2>Add Vehicle 9</h2></div>
-                  <div className='popup_button'>
-                    <button className='previous' onClick={handleClickopen9}>Previous </button>
-                    <button onClick={handleClickopen10}>Add Vehicle </button>
-                    <button onClick={() => {
-                      handleClickMessage()
-                      closePopup5()
-                    }}>Submit </button></div>
-                  <div className='pop_input'>
-                    <div className='pop_input2'>
-                      <div className='inline'>
-                        <h3>Vehicle Category</h3>
-                        <select name="catagory"
-                          // {...register("vehicleCatagory", { required: '*Vehicle catagoty  is required' })}
-                           // value={catagory} onChange={(e) => setVehicleCategory(e.target.value)} >
-                            >
+            <div>
+              <div className='popup2'>
+                <div className='popup-inner'>
+                  <lable className="zxc">Add Vehicle 9</lable>
+                  <div className='ewq'>
+                    <div className='qwe'>
+                      <div className='asd'>
+                        <button className='close-btn' onClick={closePopup5}>X</button>
+                        <lable>Vehicle Cataegory</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Catagory</option>
-                          {
-                            dataSource3.map(item => {
-                              return <option >{item.catagory}</option>
-                            })
-                          }
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Name</h3>
-                        <input placeholder='Please enter Vehicle name' type="text" />
+
+                      <div className='asd'>
+                        <lable>Vehicle Name</lable>
+                        <input name='vehicleName' type="text"
+                          placeholder='Enter Vehicle Name'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Condition</h3>
-                        <select className='select' name='conditionName'
-                        // value={conditionName}
-                        // {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
-                        // onChange={(e) => setVehicleCondition(e.target.value)} 
-                        >
+
+                      <div className='asd'>
+                        <lable>Vehicle Condition</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Condition</option>
-                          {
-                            dataSource4.map(item => {
-                              return <option>{item.conditionName}</option>
-                            })
-                          }
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Plate Number</h3>
-                        <input placeholder='Please enter plate number' type="text" />
+
+                      <div className='asd'>
+                        <lable>Plate Number</lable>
+                        <input placeholder='Please Enter Plate Number'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Manufacture Date</h3>
-                        <input placeholder='Please enter date' type="date" />
+
+                      <div className='asd'>
+                        <lable>Manufacture Date</lable>
+                        <input placeholder='Enter Manufactureing Date'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Device Id</h3>
-                        <input placeholder='Please enter  device id' type="text" />
+
+                      <div className='asd'>
+                        <lable>Device ID</lable>
+                        <input placeholder='Enter Device ID'></input>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen9() }}>Back</button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => {
+                          handleClickMessage()
+                          closePopup5()
+                        }}>Submit </button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen10() }}>Add Vehicle</button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div> : ""}
-
 
           {popup10 ?
-            <div className='report-popup'>
-              <div className='x-button-report'>
-                <button className='x-press-report' onClick={closePopup5}>X</button>
-              </div>
-              <div className="item-report">
-                <div className="popup_box_one">
-                  <div> <h2>Add Vehicle 10</h2></div>
-                  <div className='popup_button'>
-                    <button className='previous' onClick={handleClickopen10}>Previous </button>
-                    <button onClick={() => {
-                      handleClickMessage()
-                      closePopup5()
-                    }}>Submit </button></div>
-                  <div className='pop_input'>
-                    <div className='pop_input2'>
-                      <div className='inline'>
-                        <h3>Vehicle Category</h3>
-                        <select name="catagory"
-                          // {...register("vehicleCatagory", { required: '*Vehicle catagoty  is required' })}
-                           // value={catagory} onChange={(e) => setVehicleCategory(e.target.value)} >
-                            >
+            <div>
+              <div className='popup2'>
+                <div className='popup-inner'>
+                  <lable className="zxc">Add Vehicle 10</lable>
+                  <div className='ewq'>
+                    <div className='qwe'>
+                      <div className='asd'>
+                        <button className='close-btn' onClick={closePopup5}>X</button>
+                        <lable>Vehicle Cataegory</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Catagory</option>
-                          {
-                            dataSource3.map(item => {
-                              return <option >{item.catagory}</option>
-                            })
-                          }
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
+                          <option>Select Vecicle Catagory</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Name</h3>
-                        <input placeholder='Please enter Vehicle name' type="text" />
+
+                      <div className='asd'>
+                        <lable>Vehicle Name</lable>
+                        <input name='vehicleName' type="text"
+                          placeholder='Enter Vehicle Name'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Vehicle Condition</h3>
-                        <select className='select' name='conditionName'
-                        // value={conditionName}
-                        // {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
-                        // onChange={(e) => setVehicleCondition(e.target.value)} 
-                        >
+
+                      <div className='asd'>
+                        <lable>Vehicle Condition</lable>
+                        <select className='select' placeholder='Select Vecicle Catagory'>
                           <option>Select Vecicle Condition</option>
-                          {
-                            dataSource4.map(item => {
-                              return <option>{item.conditionName}</option>
-                            })
-                          }
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
+                          <option>Select Vecicle Condition</option>
                         </select>
                       </div>
-                      <div className='inline'>
-                        <h3>Plate Number</h3>
-                        <input placeholder='Please enter plate number' type="text" />
+
+                      <div className='asd'>
+                        <lable>Plate Number</lable>
+                        <input placeholder='Please Enter Plate Number'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Manufacture Date</h3>
-                        <input placeholder='Please enter date' type="date" />
+
+                      <div className='asd'>
+                        <lable>Manufacture Date</lable>
+                        <input placeholder='Enter Manufactureing Date'></input>
                       </div>
-                      <div className='inline'>
-                        <h3>Device Id</h3>
-                        <input placeholder='Please enter  device id' type="text" />
+
+                      <div className='asd'>
+                        <lable>Device ID</lable>
+                        <input placeholder='Enter Device ID'></input>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => { handleClickopen10() }}>Back</button>
+                      </div>
+                      <div className='asdy'>
+                        <button onClick={() => {
+                          handleClickMessage()
+                          closePopup5()
+                        }}>Submit </button>
+                      </div>
+                      <div className='asdy'>
+                        {/* <button onClick={() => { handleClickopen3() }}>Add Vehicle</button> */}
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div> : ""}
+
 
 
         </div>
