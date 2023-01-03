@@ -31,16 +31,17 @@ environment:
 dependencies:
   awesome_snackbar_content: ^0.1.0
   badges: ^2.0.3
+  charts_flutter: ^0.11.0
   clippy_flutter: ^1.1.1
   cloud_firestore: ^4.1.0
+  curved_navigation_bar: ^1.0.3
   custom_info_window: ^1.0.0
+  date_utils: ^0.2.0
   dio: ^4.0.6
-  firebase_core: ^2.3.0
-  intl: ^0.17.0
-  file_picker: ^5.2.3
   file_manager: ^1.0.1
-  substring_highlight: ^1.0.33
-  http: ^0.13.5
+  file_picker: ^5.2.3
+  firebase_core: ^2.3.0
+  fl_chart: ^0.55.2
   flutter:
     sdk: flutter
   flutter_feather_icons: ^2.0.0+1
@@ -53,21 +54,19 @@ dependencies:
   geolocator: ^9.0.2
   get: ^4.6.5
   google_maps_flutter: ^2.2.1
+  http: ^0.13.5
   image_picker: ^0.8.6
+  intl: ^0.17.0
   location: ^4.4.0
   map_controller: ^0.9.0
   material_design_icons_flutter: ^6.0.7096
   permission_handler: ^10.2.0
   provider: ^6.0.4
-  syncfusion_flutter_maps: ^20.3.60
-  fl_chart: ^0.55.2
-  date_utils: ^0.2.0
-  syncfusion_flutter_datepicker: ^20.4.38
-  charts_flutter: ^0.11.0
+  shared_preferences: ^2.0.15
+  substring_highlight: ^1.0.33
   syncfusion_flutter_charts: ^20.4.38
-  curved_navigation_bar: ^1.0.3
- 
-
+  syncfusion_flutter_datepicker: ^20.4.38
+  syncfusion_flutter_maps: ^20.3.60
 
 dev_dependencies:
   flutter_lints: ^2.0.0

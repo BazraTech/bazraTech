@@ -1,4 +1,5 @@
 // ignore: file_names
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:bazralogin/Model/Loginmodel.dart';
@@ -6,9 +7,10 @@ import 'package:bazralogin/Page/service/loginapi.dart';
 import 'package:bazralogin/Route/route.dart';
 import 'package:bazralogin/Theme/clippbox.dart';
 import 'package:bazralogin/const/color.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -37,33 +39,39 @@ class _LoginState extends State<Login> {
     });
   }
 
-  LoginRequestModel? requestModel;
-
   bool isAppprocess = false;
 
   @override
   void initState() {
     super.initState();
-    requestModel = new LoginRequestModel();
   }
 
   TextEditingController password = TextEditingController();
   TextEditingController emailControl = TextEditingController();
 
-  Loginvalidate() {
-    if (validateandSave()) {
-      print(requestModel?.toJson());
-
-      setState(() {
-        isAppprocess = true;
-      });
-
-      Loginapiservice apiService = new Loginapiservice();
-      apiService.login(requestModel!).then((value) {
-        if (value.token!.isNotEmpty) {
-          Navigator.of(context).pushNamed(AppRoutes.authRegister);
-        }
-      });
+  Loginvalidate(email, pass) async {
+    try {
+      var headers = {
+        // 'Content-Type': "application/json",
+        'Content-Type': 'application/json',
+        // 'authorization': 'Basic c3R1ZHlkb3RlOnN0dWR5ZG90ZTEyMw=='
+      };
+      final body = {'username': email, 'password': pass};
+      var response = await http.post(
+        Uri.parse("http://198.199.67.201:9090/Api/SignIn/Admin"),
+        headers: headers,
+        body: jsonEncode(body),
+      );
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body.toString());
+        Navigator.of(context).pushNamed(AppRoutes.bottom);
+        print(data);
+        print('Login successfully');
+      } else {
+        print("wrong");
+      }
+    } catch (e) {
+      print(e.toString());
     }
   }
 
@@ -131,9 +139,10 @@ class _LoginState extends State<Login> {
                                               bottom: 10),
                                           child: SizedBox(
                                             child: TextFormField(
-                                              keyboardType: TextInputType.text,
-                                              onSaved: (Value) => requestModel
-                                                  ?.username = Value,
+                                              controller: emailControl,
+
+                                              // onSaved: (Value) => requestModel
+                                              //     ?.username = Value,
                                               cursorColor: Colors.white,
                                               style: const TextStyle(
                                                   color: Colors.white),
@@ -176,9 +185,7 @@ class _LoginState extends State<Login> {
                                                   return null;
                                                 }
                                               },
-                                              keyboardType: TextInputType.text,
-                                              onSaved: (input) => requestModel
-                                                  ?.password = input,
+                                              controller: password,
                                               cursorColor: Colors.white,
                                               style: const TextStyle(
                                                   color: Colors.white),
@@ -249,89 +256,69 @@ class _LoginState extends State<Login> {
                                             height: 70,
                                             child: Container(
                                                 child: Container(
-                                                    // ignore: prefer_const_constructors
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                              .only(
-                                                        topLeft:
-                                                            Radius.circular(
-                                                                22.0),
-                                                        bottomLeft:
-                                                            Radius.circular(
-                                                                22.0),
-                                                        bottomRight:
-                                                            Radius.circular(
-                                                                22.0),
-                                                        topRight:
-                                                            Radius.circular(
-                                                                22.0),
+                                              // ignore: prefer_const_constructors
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  topLeft:
+                                                      Radius.circular(22.0),
+                                                  bottomLeft:
+                                                      Radius.circular(22.0),
+                                                  bottomRight:
+                                                      Radius.circular(22.0),
+                                                  topRight:
+                                                      Radius.circular(22.0),
+                                                ),
+                                              ),
+                                              child: Container(
+                                                height: 50,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    Loginvalidate(
+                                                        emailControl.text,
+                                                        password.text);
+                                                  },
+                                                  child: Container(
+                                                    margin: EdgeInsets.only(
+                                                        top: 5.0),
+                                                    height: 40,
+                                                    width: 310,
+                                                    child: const Center(
+                                                      child: Text(
+                                                        "SIGN IN",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 20),
                                                       ),
                                                     ),
-                                                    child: TextButton(
-                                                      onPressed: () {
-                                                        // if (_formKey
-                                                        //     .currentState!
-                                                        //     .validate()) {
-                                                        Navigator.of(context)
-                                                            .pushNamed(AppRoutes
-                                                                .bottom);
-                                                        //   }
-                                                        // }),
-                                                      },
-                                                      child: ElevatedButton(
-                                                        onPressed: () {
-                                                          // if (_formKey
-                                                          //     .currentState!
-                                                          //     .validate()) {}
-                                                          Navigator.of(context)
-                                                              .pushNamed(
-                                                                  AppRoutes
-                                                                      .bottom);
-                                                        },
-                                                        child: Container(
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                                  top: 5.0),
-                                                          height: 40,
-                                                          width: 310,
-                                                          child: const Center(
-                                                            child: Text(
-                                                              "SIGN IN",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 20),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        style: ButtonStyle(
-                                                            backgroundColor:
-                                                                MaterialStateProperty
-                                                                    .resolveWith(
-                                                                        (states) {
-                                                              if (states.contains(
-                                                                  MaterialState
-                                                                      .pressed)) {
-                                                                return Color
-                                                                    .fromRGBO(
-                                                                        255,
-                                                                        148,
-                                                                        165,
-                                                                        223);
-                                                              }
-                                                              // 98, 172, 181
-                                                              return Colors
-                                                                  .lightBlue;
-                                                            }),
-                                                            shape: MaterialStateProperty.all<
-                                                                    RoundedRectangleBorder>(
-                                                                RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            25)))),
-                                                      ),
-                                                    ))),
+                                                  ),
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStateProperty
+                                                              .resolveWith(
+                                                                  (states) {
+                                                        if (states.contains(
+                                                            MaterialState
+                                                                .pressed)) {
+                                                          return Color.fromRGBO(
+                                                              255,
+                                                              148,
+                                                              165,
+                                                              223);
+                                                        }
+                                                        // 98, 172, 181
+                                                        return Colors.lightBlue;
+                                                      }),
+                                                      shape: MaterialStateProperty.all<
+                                                              RoundedRectangleBorder>(
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          25)))),
+                                                ),
+                                              ),
+                                            )),
                                           ),
                                         )
                                       ],
@@ -416,15 +403,5 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
-  }
-
-  // ignore: non_constant_identifier_names
-  bool validateandSave() {
-    final form = _formKey.currentState;
-    if (form!.validate()) {
-      form.save();
-      return true;
-    }
-    return false;
   }
 }
