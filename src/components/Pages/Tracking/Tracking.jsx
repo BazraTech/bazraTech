@@ -40,13 +40,13 @@ export default function () {
       <Navigation></Navigation>
 
       {/* --------------- tracking header --------------- */}
+ 
+      <Header title="Tracking"></Header> 
 
-      <Header title="Tracking"></Header>
-
-      <div className='main_content'>
+      <div className='main_content'> 
 
 
-        {/*-----------------Search bar-------------- */}
+        {/*-----------------Search bar-------------- */} 
 
         {/*-----------------Search bar rename-------------- */}
 
