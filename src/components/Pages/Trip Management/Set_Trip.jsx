@@ -13,7 +13,7 @@ import { AiFillSetting } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { BiTrip } from "react-icons/bi";
-// import './dashboard.css';
+import './setTrip.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { SiTripdotcom } from "react-icons/si";
@@ -77,15 +77,15 @@ export default function () {
 
             {/* ---------------contents--------------- */}
 
-            <section className='company_register1'>
+            <section className='register'>
 
-                <div className='company_individual_header'>
+                <div className='setTripHeader'>
                     <p ><h1 className='nmn'>Set Trip</h1></p>
                 </div>
                 <form className='form' onSubmit={handleSubmit(onSubmit)}>
-                    <div className='allDiv'>
+                    <div className='set_allDiv'>
 
-                        <div className='vehicle_information1'>
+                        <div className='vehicle_information0'>
                             <div>
                                 <p>Trip Type <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                 <select  name="catagory" 

@@ -111,7 +111,7 @@ export default function () {
       {/* ---------------end header--------------- */}
 
       {/*-----------------Search bar-------------- */}
-      <div className='tracking_history_main'>
+      <div className='main_content'>
 
         <div className="sssearch">
           <p>
@@ -120,26 +120,27 @@ export default function () {
             <button>Search</button>
           </p>
         </div>
+        <b><p className='makeCenter'>Description</p></b>
         <div className='colomnnn'>
-          <div className='user-11'>
-            <b><p className='makeCenter'>Description</p></b>
+          <div className='VehicleHistory'>
+           
             <div className="table11">
               <table class="table22" >
                 <tbody>
                   <tr className='row-table'>
-                    <td>Vehicle ID</td>
+                    <td className='green'>Vehicle ID</td>
                     <td>BA 000002</td>
                   </tr>
                   <tr className='row-table'>
-                    <td>Vehicle owner</td>
+                    <td className='green'>Vehicle owner</td>
                     <td>Bazra motors</td>
                   </tr>
                   <tr className='row-table'>
-                    <td>Vehicle Type</td>
+                    <td className='green'>Vehicle Type</td>
                     <td>Log carrier</td>
                   </tr>
                   <tr className='row-table'>
-                    <td>Plate number</td>
+                    <td className='green'>Plate number</td>
                     <td>ET 3-A12345</td>
                   </tr>
                 </tbody>
@@ -148,30 +149,29 @@ export default function () {
 
             </div>
           </div>
-          <div className='user-12'>
-            <b><p className='makeCenter' >Current Status</p></b>
-            <p className="for-route">On route</p>
-            <b><p className='makeCenter'>History</p></b>
+          <div className='VehicleHistory2'>
+          <b><p className='makeCenter2'>History</p></b>
+            <b><p className='makeCente' >Current Status : <b className='green'>On Route</b></p></b>
             <table class="table22" >
               <tbody>
                 <tr className='active_roww'>
-                  <td>Start Date</td>
+                  <td className='green'>Start Date</td>
                   <td>02/12/2022 04:30 am</td>
                 </tr>
                 <tr>
-                  <td>Start From</td>
+                  <td className='green'>Start From</td>
                   <td>Addis Ababa</td>
                 </tr>
                 <tr className='activeroww'>
-                  <td>Total travel time</td>
+                  <td className='green'>Total travel time</td>
                   <td>34:30:15</td>
                 </tr>
                 <tr>
-                  <td>Total kilometer</td>
+                  <td className='green'>Total kilometer</td>
                   <td>1021km</td>
                 </tr>
                 <tr>
-                  <td>Current location</td>
+                  <td className='green'>Current location</td>
                   <td>Jijiga</td>
                 </tr>
               </tbody>

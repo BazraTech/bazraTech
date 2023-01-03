@@ -13,7 +13,7 @@ import { AiFillSetting } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { BiTrip } from "react-icons/bi";
-import './trip_history.css';
+import './available.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { SiTripdotcom } from "react-icons/si";
@@ -78,7 +78,7 @@ export default function () {
 
             {/* ---------------contents--------------- */}
 
-            <section className='company_register1'>
+            <section className='register'>
 
                 <div className='company_individual_header'>
                     <p ><h1 className='nmn'>Avialable Trip</h1></p>

@@ -57,11 +57,11 @@ export default function () {
 
 
     return (
-        <div className="dashboard_container" id="navLinks" >
+        <div className="dashboard_container">
 
             {/*---------------navigation---------------*/}
 
-            <div className="dashboard_navigation" id="nandu">
+            <div className="dashboard_navigation">
                 <ul>
                     <li>
                         <Link to="/dashboard"> <p class="hovertext" data-hover="Home"><FaHome size="2rem" color='white'></FaHome><p></p></p></Link>
@@ -113,6 +113,7 @@ export default function () {
 
             <Header title="Report Detail"></Header>
 
+            <div className='main_content2'>
             <div className="Report-main">
                 <div className="vehicle-detail">
                     <div className="vehicle-name">
@@ -163,7 +164,7 @@ export default function () {
                                     <th>Start Date/Time</th>
                                     <th>End Date/Time</th>
                                     <th>Detail</th>
-                                </tr> 
+                                </tr>
                             </thead>
 
                             <tbody>
@@ -192,91 +193,39 @@ export default function () {
                                 }
                             </tbody>
 
-
-                            {/* <tbody>
-                           
-                                <tr className='active_row'>
-                                    <td>Addi Ababa To Jima</td>
-                                    <td>100hour</td>
-                                    <td>60Km/hr</td>
-                                    <td>20/05/2015 04:30</td>
-                                    <td>22/05/2015 10:30</td>
-                                    <td><button onClick={handleClickopen}>Detail</button></td>
-                                   
-                                </tr>
-
-                            </tbody> */}
-
                         </table>
                     </div>
                 </div>
+
                 {popup ?
-                    <div className='report-popup'>
-                        <div className='x-button-report'>
-                            <button className='x-press-report' onClick={closePopup}>X</button>
-                        </div>
-
-                        <div className="item-report">
-                            <div className="report-status-popup">
-                                <table class="table-report-popup" >
-                                    <tbody>
-                                        <tr className='ind-report'>
-                                            <td><b className='ind-report'>Addis Ababa to Jima</b></td>
-                                            <td><b className='ind-report'>20/05/2015 04:30</b></td>
-                                            <td><b className='ind-report'>22/05/2015 10:30</b></td>
-                                            <td ><b className='ind-report'></b></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="Status-report">
-                                <div className="donut-chart">
+                    <div>
+                        <div className='popup'>
+                            <div className='popup-inner0'>
+                            <button className='close-btn' onClick={closePopup}>X</button>
+                          <div className='startEndPoint'>
+                            <p>Addis Ababa To Jimma</p>
+                            <p>Addis Ababa To Jimma</p>
+                            <p>Addis Ababa To Jimma</p>
+                          </div>
+                                <div className='chart-donat'>
+                                    <div className='travelTime'>
                                     <DonutChart />
+                                    </div>
+                                    <div className='speedHistory'>
+                                        Average Speed : <b className='green'>{Avarage_speed}/hr</b>
+                                    <ChartLine></ChartLine>
+                                    </div>
                                 </div>
 
-                                <div className="line-chart">
-                                    <div>Averege Speed : {Avarage_speed}</div>
-                                    <ChartLine></ChartLine>
-                                </div>
                             </div>
                         </div>
                     </div> : ""}
 
-
-
-                {/* {popup1 ?
-                    <div className='report-popup'>
-                        <div className='x-button-report'>
-                            <button className='x-press-report' onClick={closePopup1}>X</button>
-                        </div>
-
-                        <div className="item-report">
-                            <div className="report-status-popup">
-                                <table class="table-report-popup" >
-                                    <tbody>
-                                        <tr className='ind-report'>
-                                           
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="Status-report">
-                                <div className="donut-chart">
-                                    
-                                </div>
-
-                                <div className="line-chart">
-                                    <div>Averege Speed : {Avarage_speed}</div>
-                                    <button onClick={handleClickopen1}>Add Vehicle</button>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div> : ""} */}
-
+            </div>
             </div>
 
-        </div>
+
+         </div>
 
     )
 }

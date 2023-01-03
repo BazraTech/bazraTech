@@ -7,6 +7,7 @@ import { FaUsers } from "react-icons/fa";
 import { HiBellAlert } from "react-icons/hi2";
 import { HiDocumentReport } from "react-icons/hi";
 import { FaRegIdCard } from 'react-icons/fa';
+import { BiTrip } from "react-icons/bi";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -99,10 +100,10 @@ export default function Dashboard() {
                             <FaRegIdCard size="3rem" color='#00802b'></FaRegIdCard>
                         </div>
                     </Link> </p>
-                    <p><Link to="/Vehicle_reg">
+                    <p><Link to="/avialable_trip">
                         <div className='monitor_vehicle'>
-                            <h4>Monitor Vehicles</h4>
-                            <MdMonitor size="3rem" color='#009999'></MdMonitor>
+                            <h4>Trip Management</h4>
+                            <BiTrip size="3rem" color='#009999'></BiTrip>
                         </div>
                     </Link> </p>
                     <p><Link to="/report">

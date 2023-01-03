@@ -1,7 +1,16 @@
 
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
-
+  body {
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    content: attr(width=device-width);
+    /* scale: 1.0; */
+ }
+ body .active_modal{
+  overflow: hidden;
+ }
 /* ---------------navigation--------------- */
 .users_edit_navigation {
   position: fixed;
@@ -274,7 +283,7 @@ h1 {
   justify-content: space-around;
 
 }
-.company_button .addd{
+.company_button .addd{ 
   padding: 1%;
   padding-left: 10%;
   padding-right: 10%;

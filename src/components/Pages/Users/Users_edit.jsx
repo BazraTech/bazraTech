@@ -125,7 +125,7 @@ export default function Users_edit() {
 
                 {/* ---------------Registration--------------- */}
 
-                <section className='company_register1'>
+                <section className='register'>
                     {/* <div className='user_header'>
                         <p>User ID</p>
                         <p>BA 00001</p>

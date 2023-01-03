@@ -156,11 +156,11 @@ export default function () {
 
             {/* --------------- header --------------- */}
 
-            <Header title="Vehicles"></Header>
+            <Header title="Maintenance"></Header>
 
             {/* --------------- users --------------- */}
 
-            <div className='vehicle_outer' type="button" >
+            <div className='main_content' >
             <div className='vehicle_contents'>
                    <Link to="/Total_number_of_vehicle"  style={{ textDecoration: 'none' }}> <div className='total_vehicle1 '>
                         <h4>Total Vehicle</h4>

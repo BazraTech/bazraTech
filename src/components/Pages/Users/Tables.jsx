@@ -31,14 +31,15 @@ export default function Cards({ title, data }) {
   const [popup10, setPop10] = useState(false);
 
   const handleClickopen = () => {
-    setPop({ popup: false });
+    setPop(!popup);
+    if (popup === true) {
+      document.body.classList.add("active_modal")
+    }
+    else {
+      document.body.classList.remove("active_modal")
+    }
   }
-  if (popup == true) {
-    document.body.classList.add("active_modal")
-  }
-  else {
-    document.body.classList.remove("active_modal")
-  }
+ 
   const handleClickopen2 = () => {
     setPop2(!popup2);
   }
@@ -181,7 +182,7 @@ export default function Cards({ title, data }) {
         <div className='page'>
           {popup ?
             <div>
-              <div className='popup'>
+              <div className='popup3'>
                 <div className='popup-inner'>
                   <lable className="zxc">Add Vehicle 1</lable>
                   <div className='ewq'>

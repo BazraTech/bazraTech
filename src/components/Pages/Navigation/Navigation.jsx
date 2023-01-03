@@ -55,7 +55,7 @@ export default function Navigation() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="" style={{ color: getColor('/set_trip') }}>
+                        <Link to="/avialable_trip" style={{ color: getColor('/avialable_trip') }}>
                             <p onClick={handleClickopen} className="hovertext" data-hover="Trip Management"><SiGoogletagmanager size="1.8rem" ></SiGoogletagmanager></p>
                         </Link>
 

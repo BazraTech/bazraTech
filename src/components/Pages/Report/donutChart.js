@@ -11,6 +11,9 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const DonutChart = () => {
     const [data, setData] = useState({
         labels: UserStatus.map((data) => data.status +' '+ data.time + ' ' + 'Hour' ), 
+        // backgroundColor: [
+        //     'black',
+        // ],
 
         datasets: [
             {
@@ -19,6 +22,7 @@ const DonutChart = () => {
                     'red',
                     'green',
                     'grey',
+                    // 'black',
                 ],
                 borderWidth: 1,
             },

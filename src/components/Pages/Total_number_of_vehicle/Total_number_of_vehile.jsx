@@ -6,6 +6,7 @@ import { BsSearch } from "react-icons/bs";
 import { AiFillFilter } from "react-icons/ai";
 import { FaParking } from "react-icons/fa";
 import { GrSettingsOption } from "react-icons/gr";
+import { IoSettingsOutline } from "react-icons/io5";
 import './total_no_of_vehicle.css';
 import { Link, NavLink } from 'react-router-dom';
 import { useState } from 'react';
@@ -63,7 +64,7 @@ export default function () {
         }
         else {
             return 'white'
-        }
+        } 
 
     }
 
@@ -77,11 +78,11 @@ export default function () {
 
             {/* --------------- header --------------- */}
 
-            <Header title="Vehicles"></Header>
+            <Header title="Total Vehicles"></Header>
 
             {/* --------------- users --------------- */}
 
-            <div className='vehicle_outer' type="button" >
+            <div className='main_content'>
                 <div className='vehicle_contents'>
                    <Link to="/Total_number_of_vehicle" style={{ textDecoration: 'none' }}> <div className='activeNav '>
                         <h4>Total Vehicle</h4>
@@ -104,7 +105,7 @@ export default function () {
                     <Link style={{ textDecoration: 'none' }} to="/maintenance">
                     <div className='maintenance'>
                         <h4>Maintenance</h4>
-                        <p><GrSettingsOption size="2rem" ></GrSettingsOption><b>10</b></p>
+                        <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>10</b></p>
                     </div>
                     </Link>
                 </div>
@@ -160,7 +161,7 @@ export default function () {
                 <td>{item.vehicleId}</td>
                 <td>{item.vehicleType}</td>
                 <td>{item.planeNumber}</td>
-                <td><Link to="/vehicle_detail"><button>Detail</button></Link></td>
+                <td><Link to="/vehicle_detail"><button className="button">Detail</button></Link></td>
                 <td><Link to="/tracking"><button>Tracking</button></Link></td>
               </tr>
             ))}

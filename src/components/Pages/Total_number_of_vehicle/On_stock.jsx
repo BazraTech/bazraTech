@@ -19,6 +19,7 @@ import { useState, useEffect } from 'react';
 import { SiTripdotcom } from "react-icons/si";
 import { SiGoogletagmanager } from "react-icons/si";
 import { BiTrip } from "react-icons/bi";
+import { IoSettingsOutline } from "react-icons/io5";
 import { FiLogOut } from "react-icons/fi";
 import './total_no_of_vehicle.css';
 import { Link, NavLink } from 'react-router-dom';
@@ -155,11 +156,11 @@ export default function () {
 
             {/* --------------- header --------------- */}
 
-            <Header title="Vehicles"></Header>
+            <Header title="On Stock"></Header>
 
             {/* --------------- users --------------- */}
 
-            <div className='vehicle_outer' type="button" >
+            <div className='main_content'>
             <div className='vehicle_contents'>
                    <Link to="/Total_number_of_vehicle"  style={{ textDecoration: 'none' }}> <div className='total_vehicle1'>
                         <h4>Total Vehicle</h4>
@@ -179,7 +180,7 @@ export default function () {
                     <Link style={{ textDecoration: 'none' }} to="/maintenance">
                     <div className='maintenance'>
                         <h4>Maintenance</h4>
-                        <p><GrSettingsOption size="2rem"></GrSettingsOption><b>10</b></p>
+                        <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>10</b></p>
                     </div>
                     </Link>
                 </div>

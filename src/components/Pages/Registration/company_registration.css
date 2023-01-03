@@ -126,7 +126,7 @@
   /* border-radius: 10px; */
   text-transform: none;
 }
-
+ 
 .company_individual_header .vehicleDetail {
   background-color: rgb(255, 255, 255);
   color: rgb(20, 132, 0);
@@ -140,7 +140,7 @@
   row-gap: 10px;
 }
 
-.company_register1 {
+.register {
   position: relative;
   width: calc(100% - 100px);
   left: 100px;

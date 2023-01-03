@@ -81,6 +81,21 @@
 
 /* --------------- users --------------- */
 
+.vehicle_register {
+    position: relative;
+    width: calc(100% - 100px);
+    left: 100px;
+    min-height: 88vh;
+    background-color: rgb(238, 238, 238);
+    color: var(--black1);
+    top: 75px;
+    padding: 10%;
+    padding-left: 6%;
+    padding-top: 2px;
+    padding-bottom: 3%;
+  
+  }
+
 .user {
     position: absolute;
     width: calc(100% - 100px);

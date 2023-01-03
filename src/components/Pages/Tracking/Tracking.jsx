@@ -43,7 +43,7 @@ export default function () {
 
       <Header title="Tracking"></Header>
 
-      <div className='trucking_main'>
+      <div className='main_content'>
 
 
         {/*-----------------Search bar-------------- */}
@@ -64,8 +64,8 @@ export default function () {
           <iframe width="100%" height="100%" id="gmap_canvas" src="https://maps.google.com/maps?q=ethio&t=&z=11&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
         </div>
 
-        <div className='historyview'>
-          <Link to="/tracking_hitory"><button className='editt'>Show Full History</button></Link>
+        <div>
+          <Link to="/tracking_hitory"><button className='track_history'>Show Full History</button></Link>
         </div>
 
       </div>

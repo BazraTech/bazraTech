@@ -1,27 +1,16 @@
 
 
-.dashboard_container {
+/* .dashboard_container {
    position: relative;
    width: 100%;
    text-decoration: none;
-}
+} */
 
 
 /* ----------------- header ----------------- */
 
 
-
 /* ----------------- contents ----------------- */
-.dashboard_main {
-   position: absolute;
-   width: calc(100% - 100px);
-   left: 100px;
-   min-height: calc(100vh - 12.3vh);
-   opacity: var(--black2);
-   color: var(--black1);
-   top: 75px;
-   background-color: rgb(242, 242, 242);
-}
 
 
 .dashboard_contents {
@@ -30,12 +19,12 @@
    grid-template-columns: 100px 100px 100px;
    justify-content: space-between;
    width: 70%;
-   margin-left: 90px;
+   margin-left: 90px; 
    position: absolute;
 }
 
 
-/* ----------------- vehicle ----------------- */
+/* ----------------- Vehicle ----------------- */
 .vehicle {
    width: 300px;
    background-color: rgb(255, 255, 255);
@@ -61,7 +50,7 @@
    transform: scale(1.09);
 }
 
-/* ----------------- comunication ----------------- */
+/* ----------------- Comunication ----------------- */
 .comunication {
    width: 300px;
    background-color: rgb(255, 255, 255);
@@ -85,7 +74,7 @@
    transform: scale(1.09);
 }
 
-/* ----------------- users ----------------- */
+/* ----------------- Users ----------------- */
 .users {
    width: 300px;
    background-color: rgb(255, 255, 255);
@@ -109,7 +98,7 @@
    transform: scale(1.09);
 }
 
-/* ----------------- registration ----------------- */
+/* ----------------- Registration ----------------- */
 .registration {
    width: 300px;
    background-color: rgb(255, 255, 255);
@@ -133,7 +122,7 @@
    transform: scale(1.09);
 }
 
-/* ----------------- monitor_vehicle ----------------- */
+/* ----------------- Monitor_vehicle ----------------- */
 .monitor_vehicle {
    width: 300px;
    background-color: rgb(255, 255, 255);
@@ -157,7 +146,7 @@
    transform: scale(1.09);
 }
 
-/* ----------------- report ----------------- */
+/* ----------------- Report ----------------- */
 .report {
    width: 300px;
    background-color: rgb(255, 255, 255);

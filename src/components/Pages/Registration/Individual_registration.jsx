@@ -307,7 +307,7 @@ export default function Individual_registration() {
 
             {/* --------------- Registration- -------------- */}
 
-            <section className='company_register1'>
+            <section className='register'>
 
                 <div className='company_individual_header'>
                     <p className='llll'><NavLink to="/Company_registration"><h1>Company</h1></NavLink></p>

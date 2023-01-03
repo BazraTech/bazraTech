@@ -13,7 +13,7 @@ import { AiFillSetting } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { BiTrip } from "react-icons/bi";
-import './trip_history.css';
+import './available.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { SiTripdotcom } from "react-icons/si";
@@ -64,6 +64,7 @@ export default function () {
     }
 
     return (
+
         <div className="dashboard_container">
 
             {/*---------------navigation---------------*/}
@@ -72,81 +73,61 @@ export default function () {
 
             {/* ---------------header--------------- */}
 
-            <Header title="Trip History"></Header>
+            <Header title="Avialable Trip"></Header>
 
 
             {/* ---------------contents--------------- */}
 
-            <section className='company_register1'>
+            <section className='register'>
 
                 <div className='company_individual_header'>
                     <p ><h1 className='nmn'>Trip History</h1></p>
-                    <p ><input className='search' type="search" placeholder='search...'></input></p>
+                    <p ></p>
                 </div>
-                
+
                 <form className='form' onSubmit={handleSubmit(onSubmit)}>
                     <div className='allDiv'>
-                       <div className='trip_date'> <input className='trip_date1'type="date" /><button>Search</button></div>
+                        <div className='trip_date'> <input placeholder='Search...' className='trip_date1' type="date" /><button>Search</button></div>
 
-                        <div className='setTrip'>
-                            <div className='vehicle_information1'>
-        
-                            <p><lable>First Trip</lable></p>
-                            <p><lable>First Trip</lable></p>
-                            <p><lable>First Trip</lable></p>
-                            <p><lable>First Trip</lable></p>
-                            <p><lable>First Trip</lable></p>
-                            <p><lable>First Trip</lable></p>
+                       <div className='setTrip'> 
+                            <div className='avilabel_trips' >
+                                <p><lable>Total Travel Time : <b>123km/hr</b></lable></p>
+                                <p><lable>Avarage Speed : <b>Abebe Alemu</b></lable></p>
+                                <p><lable>Start Date/Time : <b>Tractor</b></lable></p>
+                                <p><lable>End Date/Time  : <b>12/02/2022</b></lable></p>
                             </div>
-                            
                         </div>
-                        <div className='setTrip'>
-                            <div className='vehicle_information1'>
-        
-                            <p><lable>Second Trip</lable></p>
-                            <p><lable>Second Trip</lable></p>
-                            <p><lable>Second Trip</lable></p>
-                            <p><lable>Second Trip</lable></p>
-                            <p><lable>Second Trip</lable></p>
-                            <p><lable>Second Trip</lable></p>
+                        <div className='setTrip'> 
+                        <div className='avilabel_trips' >
+                                <p><lable>Total Travel Time : <b>123km/hr</b></lable></p>
+                                <p><lable>Avarage Speed : <b>Abebe Alemu</b></lable></p>
+                                <p><lable>Start Date/Time : <b>Tractor</b></lable></p>
+                                <p><lable>End Date/Time  : <b>12/02/2022</b></lable></p>
                             </div>
-                            
                         </div>
-                        <div className='setTrip'>
-                            <div className='vehicle_information1'>
-        
-                            <p><lable>Third Trip</lable></p>
-                            <p><lable>Third Trip</lable></p>
-                            <p><lable>Third Trip</lable></p>
-                            <p><lable>Third Trip</lable></p>
-                            <p><lable>Third Trip</lable></p>
-                            <p><lable>Third Trip</lable></p>
+                        <div className='setTrip'> 
+                        <div className='avilabel_trips' >
+                                <p><lable>Total Travel Time : <b>123km/hr</b></lable></p>
+                                <p><lable>Avarage Speed : <b>Abebe Alemu</b></lable></p>
+                                <p><lable>Start Date/Time : <b>Tractor</b></lable></p>
+                                <p><lable>End Date/Time  : <b>12/02/2022</b></lable></p>
                             </div>
-                            
                         </div>
-                        <div className='setTrip'>
-                            <div className='vehicle_information1'>
-        
-                            <p><lable>Third Trip</lable></p>
-                            <p><lable>Third Trip</lable></p>
-                            <p><lable>Third Trip</lable></p>
-                            <p><lable>Third Trip</lable></p>
-                            <p><lable>Third Trip</lable></p>
-                            <p><lable>Third Trip</lable></p>
+                        <div className='setTrip'> 
+                        <div className='avilabel_trips' >
+                                <p><lable>Total Travel Time : <b>123km/hr</b></lable></p>
+                                <p><lable>Avarage Speed : <b>Abebe Alemu</b></lable></p>
+                                <p><lable>Start Date/Time : <b>Tractor</b></lable></p>
+                                <p><lable>End Date/Time  : <b>12/02/2022</b></lable></p>
                             </div>
-                            
                         </div>
-                        <div className='setTrip'>
-                            <div className='vehicle_information1'>
-        
-                            <p><lable>Third Trip</lable></p>
-                            <p><lable>Third Trip</lable></p>
-                            <p><lable>Third Trip</lable></p>
-                            <p><lable>Third Trip</lable></p>
-                            <p><lable>Third Trip</lable></p>
-                            <p><lable>Third Trip</lable></p>
+                        <div className='setTrip'> 
+                        <div className='avilabel_trips' >
+                                <p><lable>Total Travel Time : <b>123km/hr</b></lable></p>
+                                <p><lable>Avarage Speed : <b>Abebe Alemu</b></lable></p>
+                                <p><lable>Start Date/Time : <b>Tractor</b></lable></p>
+                                <p><lable>End Date/Time  : <b>12/02/2022</b></lable></p>
                             </div>
-                            
                         </div>
                         {/* <div className='company_button'>
                             <button className='add'>Add</button>

@@ -15,14 +15,7 @@
    --black2: #999;
 }
 
-body {
-   height: 100%;
-   width: 100%;
-   overflow-x: hidden;
-   text-decoration: none;
-   content: attr(width=device-width);
-   /* scale: 1.0; */
-}
+
 
 .dashboard_container {
    position: relative;
@@ -30,7 +23,7 @@ body {
    text-decoration: none;
 }
 
-/* ----------------- navigation --------------- */
+/* ----------------- Navigation --------------- */
 
 .All_navigation {
    position: fixed;
@@ -81,7 +74,7 @@ body {
    display: none;
  } */
 
-/* ----------------- Navigation hover Descreption ----------------- */
+/* ----------------- Navigation hover ----------------- */
 .hovertext:hover:before {
    opacity: 1;
    visibility: visible;
@@ -102,16 +95,31 @@ body {
    left: 37px;
    top: 13%;
    border: none;
-   font-size: 10px;
+   font-size: 10px; 
 }
 
+
+/* ----------------- contents ----------------- */
 .main_content{
     position: absolute;
-    width: calc(100% - 100px);
+    width: calc(100% - 100px); 
     left: 100px;
     min-height: calc(100vh - 12.3vh);
     opacity: var(--black2);
     color: var(--black1);
     top: 75px;
     background-color: rgb(242, 242, 242);
+    z-index: -1;  
+
+}
+.main_content2{
+   position: absolute;
+   width: calc(100% - 100px); 
+   left: 100px;
+   min-height: calc(100vh - 12.3vh);
+   opacity: var(--black2);
+   color: var(--black1);
+   top: 75px;
+   background-color: rgb(242, 242, 242);
+
 }

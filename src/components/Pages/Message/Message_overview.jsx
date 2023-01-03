@@ -78,7 +78,7 @@ export default function () {
             {/* ---------------header--------------- */}
             <Header title="Message"></Header>
 
-            <div className='dashboard_main' >
+            <div className='main_content' >
 
                 <div className="messageOverview-search">
                     {/* --------- Class for the search bar from the table   ------------ */}

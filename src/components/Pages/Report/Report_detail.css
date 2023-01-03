@@ -3,7 +3,7 @@
 .dashboard_container {
     position: relative;
     width: 100%;
-    text-decoration: none;
+    text-decoration: none; 
 }
 
 /* ----------------- navigation --------------- */
@@ -47,93 +47,25 @@
 }
 
 
-/* ----------------- Navigation hover ----------------- */
-.hovertext:hover:before {
-    opacity: 1;
-    visibility: visible;
-}
-
-.hovertext:before {
-    content: attr(data-hover);
-    opacity: 0;
-    width: max-content;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 5px;
-    padding: 5px 5px;
-    transition: opacity 1s ease-in-out;
-    position: absolute;
-    z-index: 10;
-    left: 37px;
-    top: 13%;
-    border: none;
-    font-size: 10px;
-}
-
-/* ----------------- header ----------------- */
-.dashboard_header {
-    position: absolute;
-    width: calc(100% - 100px);
-    left: 100px;
-    height: 12.3vh;
-    box-shadow: 0 5px 7px -4px rgba(0, 0, 0, 0.4);
-    padding: 20px 0px 0 30px;
-    justify-content: space-between;
-    z-index: 1;
-    display: flex;
-}
-
-.menu_controler {
-    display: none;
-}
-
-.dashboard_header h3 {
-    text-align: center;
-    color: rgb(36, 114, 43);
-    padding-left: 500px;
-    padding-top: 4px;
-}
-
-.dashboard_header h3 input {
-    text-align: left;
-    padding: 5px 10px 5px 20px;
-    border: none;
-    border-bottom: solid 1px rgb(0, 0, 0);
-    margin-right: 100px;
-}
-
-.dashboard_header h2 {
-    text-align: left;
-}
-
-.dashboard_header p {
-    padding-right: 30px;
-    padding-bottom: 10px;
-    transition: 0.5s;
-}
-
-.dashboard_header p:hover {
-    transform: scale(1.2);
-}
-
 /*------------ vehicle name & plate number----------------*/
 
 .vehicle-detail {
     display: grid;
     grid-template-columns: 34% 34%;
-    padding-top: 130px;
-    margin-left: 30%;
+    padding-top: 40px;
+    margin-left: 20%;
     margin-bottom: 0px;
     padding-bottom: 25px;
 }
 
 .vehicle-name {
-    box-shadow: 0px 0px 5px -1px #000000;
+    box-shadow: 2px 2px 4px 0px;
+    background-color: white;
 }
 
 .plate-number {
-    box-shadow: 0px 0px 5px -1px #000000;
+    box-shadow: 2px 2px 5px 0px;
+    background-color: white;
 }
 
 .table-report {
@@ -142,18 +74,21 @@
     width: 90%;
     box-shadow: none;
     margin-bottom: 0%;
+    
 }
 
 .row-two {
     display: grid;
     align-content: center;
     grid-template-columns: 25% 25%;
-    margin-left: 14%;
+    margin-left: 7%;
+    
 }
 
 .report-status {
     padding: 5px;
-    box-shadow: 0px 0px 5px -1px #000000;
+    box-shadow: 2px 2px 5px 0px;
+    background-color: white;
 }
 
 .table-report-status {
@@ -187,30 +122,19 @@
     border: 1px solid rgba(21, 113, 146, 0.4);
 
 }
+/* .Report-main{
+    background-color: #000000;
+} */
 
 
-.trip-tables {
-    margin-left: 9%;
-    overflow-x: scroll;
-}
-
-.t-table {
-    padding: 1%;
+/* .trip-tables{
+    margin-left: -5%;
     width: 100%;
-}
-
-.vehicle-trip-table {
-    margin-left: 4%;
-    border-collapse: collapse;
-    width: 90%;
-    border-radius: 5px 5px 0px 0px;
-    overflow: hidden;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-}
+} */
 
 .trip-tables p {
     color: #009879;
-    font-size: 23px;
+    font-size: 21px;
     margin-left: 60px;
     font-weight: 600;
 
@@ -265,7 +189,7 @@
 
 /*--------------Popup page------------------*/
 .report-popup {
-    width: 100%;
+    width: 95%;
     height: 100px;
     position: fixed;
     top: 0;
@@ -299,14 +223,13 @@
     transform: scale(1.04);
 }
 
-
 .table-report-popup {
     border-radius: 5px 5px 0px 0px;
     border-bottom: 4px solid #4a4a4a;
     box-shadow: 0px 0px 0px 1000px rgba(0, 0, 0, 0.75);
-    background-color: #f7f7f7;
+    background-color: #ff0000;
     height: 70px;
-    width: 80%;
+    width: 70%;
     margin-top: -10px;
     padding-left: 20px;
     /* background-color: red */
@@ -320,15 +243,16 @@
 /*-----------Chart place-------------------*/
 
 .Status-report {
-    background-color: #f7f7f7;
+  
     display: grid;
-    grid-template-columns: 40% 60%;
-    box-shadow: 0px 0px 0px 1000px rgba(0, 0, 0, 0.75);
-    margin-left: 11%;
-    width: 85%;
+    grid-template-columns: 30% 30%;
+    column-gap: 10%;
+    width: 100%;
     height: 450px;
-    margin-left: 5%;
-    padding-top: 30px;
+    /* background-color: #ffffff; */
+    /* padding: %; */
+    padding-left: 20px;
+ 
 
 }
 
@@ -454,17 +378,18 @@
 }
 
 
-
-
-.donut-chart {
+/* .donut-chart {
     margin-right: 10%;
     margin-left: 10%;
-    padding: 35px;
-    /* background-color: red; */
-    width: 1050px;
-    height: 300px;
+    padding: 3px;
+    background-color: red;
+    width: 120%;
+    height: 80%;
+    margin-top: 50px;
+    padding-top: 20px;
+    background-color: white;
 
-}
+} */
 
 .line-chart {
     margin-top: 5%;
@@ -476,4 +401,78 @@
 .ind-report {
     padding-left: 20px;
     /* background-color: red */
+}
+
+.popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2; 
+}
+.popup-inner0{
+    position: relative;
+    padding: 5%;
+    padding-top: 5%;
+    padding-bottom: 2%;
+    width: 100%;
+    max-width: 1100px;
+    background-color: rgb(230, 230, 230);
+    z-index: 2;
+    border-radius: 4px;
+    border-radius: 5px;
+}
+
+.popup-inner0 .close-btn{
+    position: absolute;
+    top: 20px ;
+    right: 26px;
+    background-color: red;
+    padding: 2px;
+    padding-left: 2%;
+    padding-right: 2%;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    
+}
+
+.startEndPoint{
+    display: grid;
+    grid-template-columns: 32% 32% 32%;
+    background-color: white;
+    column-gap: 7%;
+    padding: 2%;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px 0px;
+}
+.chart-donat{
+    display: grid;
+    grid-template-columns: 35% 65%;
+    column-gap: 30px;
+    margin-left: -30px;
+    
+    
+}
+
+.travelTime{
+    background-color: white;
+    padding-top: 20px;
+    padding-left: 15px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px 0px;
+}
+
+.speedHistory{
+    background-color: white;
+    padding-top: 20px;
+    padding-left: 40px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px 0px;
 }

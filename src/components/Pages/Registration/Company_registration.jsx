@@ -225,7 +225,7 @@ export default function Company_registration() {
 
             {/* --------------- Registration- -------------- */}
 
-            <section className='company_register1'>
+            <section className='register'>
 
                 <div className='company_individual_header'>
                     <p ><NavLink to="/Company_registration"><h1 className='nmn'>Company</h1></NavLink></p>
