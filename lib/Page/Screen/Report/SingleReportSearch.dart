@@ -1,12 +1,11 @@
 import 'dart:ffi';
 
-
 import 'package:bazralogin/Model/report.dart';
+import 'package:bazralogin/const/constant.dart';
 import 'package:bazralogin/widget/Reportfeed.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
-
 
 import 'package:provider/provider.dart';
 
@@ -54,28 +53,6 @@ class _SearchReportState extends State<SearchReport> {
   Widget build(BuildContext context) {
     final carData = Provider.of<TravelReportinfo>(context);
     final productsList = carData.products;
-
-    // print("${start.toString()}".runtimeType);
-    // filterCars(names, names1) {
-    //   // Prepare list
-    //   List<TravelReport> tmp = [];
-    //   currentList.clear();
-
-    //   names;
-    //   String name1 = names;
-    //   print("filter cars for name " + names);
-    //   print(names.runtimeType);
-
-    //   for (TravelReport c in productsList) {
-    //     if (c.dateOftravelstart.toLowerCase().startsWith(names)) {
-    //       tmp.add(c);
-    //     }
-    //   }
-    //   currentList = tmp;
-    //   print(currentList);
-    // }
-
-    // print(start);
 
     Widget buildreport() {
       return (Container());
@@ -205,33 +182,51 @@ class _SearchReportState extends State<SearchReport> {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  color: const Color.fromRGBO(69, 92, 128, 1),
+                  color: kPrimaryColor,
                   child: Row(
                     children: [
                       Container(
+                        // color: const Color.fromRGBO(69, 92, 128, 1),
                         child: const Padding(
                           padding: EdgeInsets.only(left: 8.0),
-                          child: Text("Trip"),
+                          child: Text("Trip place",
+                              style: TextStyle(color: Colors.white)),
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 87),
-                        child: Text(" Total hour"),
+                        // margin: EdgeInsets.only(
+                        //     left: MediaQuery.of(context).size.width - 430),
+
+                        // margin: EdgeInsets.only(
+                        //     left: MediaQuery.of(context).size.width - 350),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width - 400),
+                            child: const Text(
+                              " Total hour",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(left: 10),
-                        child: const Text(" Total Speed"),
+                        child: const Text(" Total Speed",
+                            style: TextStyle(color: Colors.white)),
                       ),
                       Container(
-                          margin: const EdgeInsets.only(left: 35),
-                          child: const Text(" Date"))
+                          margin: const EdgeInsets.only(left: 20),
+                          child: const Text(" Date",
+                              style: TextStyle(color: Colors.white)))
                     ],
                   ),
                 ),
               ),
               selectDateRange == null
                   ? Container(
-                      height: MediaQuery.of(context).size.height - 282,
+                      height: MediaQuery.of(context).size.height - 270,
                       width: MediaQuery.of(context).size.width - 16,
                       child: _searchTextController!.text.isNotEmpty &&
                               _searchList.isEmpty
@@ -263,8 +258,9 @@ class _SearchReportState extends State<SearchReport> {
                                           ? productsList[index]
                                           : _searchList[index],
                                       child: SizedBox(
-                                        height: 86,
-                                        width: 100,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.1,
                                         child: Reportfeed(onChange: null),
                                       ),
                                     );
@@ -279,32 +275,8 @@ class _SearchReportState extends State<SearchReport> {
                         child: Column(
                           children: [
                             Container(
-                                height: 20,
-                                margin: const EdgeInsets.all(8),
-                                child: Row(
-                                  children: [
-                                    const Text("Start"),
-                                    Text(start =
-                                        '   ${DateFormat('dd/MM/yyy').format(selectDateRange!.start)}'),
-                                  ],
-                                )),
-                            SizedBox(
-                                height: 20,
-                                child: Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Row(
-                                      children: [
-                                        const Text("End"),
-                                        Text(end =
-                                            '     ${DateFormat('dd/MM/yyy').format(selectDateRange!.end)}'),
-                                      ],
-                                    ),
-                                  ),
-                                )),
-                            Container(
                               height: MediaQuery.of(context).size.height - 120,
-                              margin: const EdgeInsets.only(top: 30),
+                              margin: EdgeInsets.zero,
                               child: Column(
                                   children: currentList.map((driver) {
                                 return Card(
@@ -312,32 +284,62 @@ class _SearchReportState extends State<SearchReport> {
                                     child: Column(
                                       children: [
                                         SizedBox(
-                                          height: 86,
+                                          height: 70,
                                           child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
-                                                driver.travelPlace,
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                                style: const TextStyle(
-                                                  fontSize: 15,
-                                                  color: Colors.black,
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  driver.travelPlace,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black,
+                                                  ),
                                                 ),
                                               ),
                                               Padding(
                                                 padding:
-                                                    const EdgeInsets.all(8.0),
+                                                    const EdgeInsets.all(0.0),
                                                 child: Container(
                                                   child: Text(
-                                                      "${driver.totalTraveltime} hr"),
+                                                    "${driver.totalTraveltime} hr",
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                               Padding(
                                                 padding:
-                                                    const EdgeInsets.all(8.0),
+                                                    const EdgeInsets.all(0.0),
                                                 child: Container(
                                                   child: Text(
-                                                      "${driver.speedOfcar} km/hr"),
+                                                    "${driver.speedOfcar} km/hr",
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(0.0),
+                                                child: Container(
+                                                  child: Text(
+                                                    "${driver.dateOftravelstart} ",
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
                                                 ),
                                               )
                                             ],

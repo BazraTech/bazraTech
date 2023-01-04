@@ -2,7 +2,7 @@
 import 'package:bazralogin/Model/communication.dart';
 import 'package:bazralogin/Model/item.dart';
 import 'package:bazralogin/Model/report.dart';
-import 'package:bazralogin/Model/yaredtripmanagement.dart';
+import 'package:bazralogin/Model/Tripmanagementmodel.dart';
 import 'package:bazralogin/Page/Loging/Login.dart';
 import 'package:bazralogin/Route/route.dart';
 import 'package:firebase_core/firebase_core.dart';

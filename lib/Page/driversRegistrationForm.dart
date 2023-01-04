@@ -79,7 +79,7 @@ class _DriversFormState extends State<DriversForm> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.fromLTRB(20, 50, 20, 0),
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               children: <Widget>[
                 TextFormField(
@@ -89,10 +89,10 @@ class _DriversFormState extends State<DriversForm> {
                   decoration: InputDecoration(
                     hintText: 'First Name',
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 2, color: Colors.blueGrey),
+                      borderSide: const BorderSide(width: 2, color: Colors.blueGrey),
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                       color: Color.fromARGB(177, 0, 0, 0),
                     ),
                     border: OutlineInputBorder(
@@ -110,9 +110,9 @@ class _DriversFormState extends State<DriversForm> {
                     }
                     return null;
                   },
-                  style: TextStyle(fontSize: 15, color: Colors.black),
+                  style: const TextStyle(fontSize: 15, color: Colors.black),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 TextFormField(
@@ -122,10 +122,10 @@ class _DriversFormState extends State<DriversForm> {
                   decoration: InputDecoration(
                     hintText: 'Last Name',
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 2, color: Colors.blueGrey),
+                      borderSide: const BorderSide(width: 2, color: Colors.blueGrey),
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                       color: Color.fromARGB(177, 0, 0, 0),
                     ),
                     border: OutlineInputBorder(
@@ -143,9 +143,9 @@ class _DriversFormState extends State<DriversForm> {
                     }
                     return null;
                   },
-                  style: TextStyle(fontSize: 15, color: Colors.black),
+                  style: const TextStyle(fontSize: 15, color: Colors.black),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 TextFormField(
@@ -155,10 +155,10 @@ class _DriversFormState extends State<DriversForm> {
                   decoration: InputDecoration(
                     hintText: 'Gender',
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 2, color: Colors.blueGrey),
+                      borderSide: const BorderSide(width: 2, color: Colors.blueGrey),
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                       color: Color.fromARGB(177, 0, 0, 0),
                     ),
                     border: OutlineInputBorder(

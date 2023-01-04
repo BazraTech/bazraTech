@@ -1,7 +1,7 @@
-
-import 'package:bazralogin/Model/yaredtripmanagement.dart';
+import 'package:bazralogin/Model/Tripmanagementmodel.dart';
 import 'package:bazralogin/const/color.dart';
-import 'package:bazralogin/widget/Tripfeed.dart';
+import 'package:bazralogin/const/constant.dart';
+import 'package:bazralogin/widget/Tripmangaefeed.dart';
 
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
@@ -65,15 +65,8 @@ class _SearchTriphistoryState extends State<SearchTriphistory> {
         lastDate: DateTime(2030, 12, 31),
         currentDate: DateTime.now(),
         saveText: "Confirm",
-
-        // builder: (context, child) {
-        //   return (Container(
-        //     child: filterCars(),
-        //   ));
-        // },
       );
-      // filterCars('   ${DateFormat('dd/MM/yyy').format(selectDateRange!.start)}',
-      //     '   ${DateFormat('dd/MM/yyy').format(selectDateRange!.start)}');
+
       if (result != null) {
         // Prepare list
 
@@ -180,62 +173,48 @@ class _SearchTriphistoryState extends State<SearchTriphistory> {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  color: const Color.fromRGBO(69, 92, 128, 1),
+                  color: kPrimaryColor,
                   child: Row(
                     children: [
                       Container(
+                        // color: const Color.fromRGBO(69, 92, 128, 1),
                         child: const Padding(
                           padding: EdgeInsets.only(left: 8.0),
-                          child: Text("Trip"),
+                          child: Text("Trip place",
+                              style: TextStyle(color: Colors.white)),
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 87),
-                        child: const Text(" Total hour"),
+                        // margin: EdgeInsets.only(
+                        //     left: MediaQuery.of(context).size.width - 430),
+
+                        // margin: EdgeInsets.only(
+                        //     left: MediaQuery.of(context).size.width - 350),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width - 400),
+                            child: const Text(
+                              " Total hour",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(left: 10),
-                        child: const Text(" Total Speed"),
+                        child: const Text(" Total Speed",
+                            style: TextStyle(color: Colors.white)),
                       ),
                       Container(
-                          margin: const EdgeInsets.only(left: 35),
-                          child: const Text(" Date"))
+                          margin: const EdgeInsets.only(left: 20),
+                          child: const Text(" Date",
+                              style: TextStyle(color: Colors.white)))
                     ],
                   ),
                 ),
               ),
-              // Container(
-              //   height: 30,
-              //   color: Colors.amber,
-              //   child: Column(
-              //     children: [
-              //       SizedBox(
-              //         width: 20,
-              //         child: Row(
-              //           children: [Text("Trip")],
-              //         ),
-              //       ),
-              //       SizedBox(
-              //         width: 20,
-              //         child: Row(
-              //           children: [Text("Average Speed")],
-              //         ),
-              //       ),
-              //       SizedBox(
-              //         width: 20,
-              //         child: Row(
-              //           children: [Text(" Total distance")],
-              //         ),
-              //       ),
-              //       SizedBox(
-              //         width: 20,
-              //         child: Row(
-              //           children: [Text("Date")],
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               selectDateRange == null
                   ? Container(
                       height: MediaQuery.of(context).size.height - 282,
@@ -256,7 +235,7 @@ class _SearchTriphistoryState extends State<SearchTriphistory> {
                                 ),
                               ],
                             )
-                          : SizedBox(
+                          : Container(
                               width: MediaQuery.of(context).size.width - 4,
                               child: ListView(
                                 physics: const NeverScrollableScrollPhysics(),
@@ -268,10 +247,13 @@ class _SearchTriphistoryState extends State<SearchTriphistory> {
                                     value: _searchTextController!.text.isEmpty
                                         ? HistoryList[index]
                                         : _searchList[index],
-                                    child: SizedBox(
-                                      height: 86,
-                                      width: 100,
-                                      child: TripFeed(onChange: null),
+                                    child: Container(
+                                      // height: 50,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.1,
+
+                                      child: TripmangeFeed(onChange: null),
                                     ),
                                   );
                                 }),
@@ -280,94 +262,99 @@ class _SearchTriphistoryState extends State<SearchTriphistory> {
                   : SizedBox(
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width - 10,
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Container(
-                                height: 20,
-                                margin: const EdgeInsets.only(right: 8),
-                                child: Row(
-                                  children: [
-                                    const SizedBox(
-                                        width: 100, child: Text("Start")),
-                                    Text(start =
-                                        '   ${DateFormat('dd/MM/yyy').format(selectDateRange!.start)}'),
-                                  ],
-                                )),
-                            SizedBox(
-                                height: 20,
-                                child: Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                            width: 100,
-                                            child: const Text("End")),
-                                        Text(end =
-                                            '     ${DateFormat('dd/MM/yyy').format(selectDateRange!.end)}'),
-                                      ],
-                                    ),
-                                  ),
-                                )),
-                            Container(
-                              height: MediaQuery.of(context).size.height - 120,
-                              margin: const EdgeInsets.only(top: 30),
-                              child: Column(
-                                  children: currentList.map((driver) {
-                                return Card(
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 86,
-                                          child: Row(
-                                            children: [
-                                              SizedBox(
-                                                width: 150,
-                                                child: Text(
-                                                  driver.travelPlace,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                  style: const TextStyle(
-                                                    fontSize: 15,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Container(
-                                                  child: SizedBox(
-                                                    width: 60,
+                      child: Container(
+                        // margin: EdgeInsets.zero,
+                        child: Card(
+                          elevation: 1,
+                          child: Column(
+                            children: [
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height - 120,
+                                width: MediaQuery.of(context).size.width,
+                                // margin: EdgeInsets.zero,
+                                child: Column(
+                                    children: currentList.map((driver) {
+                                  return Card(
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            // height: 86,
+                                            child: Row(
+                                              children: [
+                                                SizedBox(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
                                                     child: Text(
-                                                        "${driver.totalTraveltime} hr"),
+                                                      driver.travelPlace,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: const TextStyle(
+                                                        fontSize: 13,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Container(
-                                                  child: SizedBox(
-                                                    width: 60,
-                                                    child: Text(
-                                                        "${driver.speedOfcar} km/hr"),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Container(
+                                                    child: SizedBox(
+                                                      child: Text(
+                                                        "${driver.totalTraveltime} hr",
+                                                        style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              )
-                                            ],
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Container(
+                                                    child: SizedBox(
+                                                      child: Text(
+                                                        "${driver.speedOfcar} km/hr",
+                                                        style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Container(
+                                                    child: SizedBox(
+                                                      child: Text(
+                                                        "${driver.dateOftravelstart} ",
+                                                        style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                );
-                              }).toList()),
-                            )
-                          ],
+                                  );
+                                }).toList()),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

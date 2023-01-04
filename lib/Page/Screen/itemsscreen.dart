@@ -322,8 +322,7 @@ class _CategoryState extends State<Category> {
                 padding: const EdgeInsets.all(10),
                 child: GestureDetector(
                   onTap: (() {
-                    Navigator.of(context)
-                        .pushNamed(AppRoutes.driversCommunicate);
+                    Navigator.of(context).pushNamed(AppRoutes.tripmanage);
                   }),
                   child: AnimatedContainer(
                       //padding: EdgeInsets.only(bottom: _padding),

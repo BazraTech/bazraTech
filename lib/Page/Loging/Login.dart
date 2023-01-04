@@ -2,8 +2,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:bazralogin/Model/Loginmodel.dart';
-import 'package:bazralogin/Page/service/loginapi.dart';
+import 'package:bazralogin/Model/Loginandregistrationmodel.dart';
 import 'package:bazralogin/Route/route.dart';
 import 'package:bazralogin/Theme/clippbox.dart';
 import 'package:bazralogin/const/color.dart';
@@ -27,6 +26,7 @@ class _LoginState extends State<Login> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   void _passwordView() {
     //if (isHiddenPassword == true) {
     //isHiddenPassword = false;
@@ -104,6 +104,11 @@ class _LoginState extends State<Login> {
                               child: Container(
                                   decoration: const BoxDecoration(
                                 image: DecorationImage(
+                                    repeat: ImageRepeat.repeatY,
+                                    colorFilter: ColorFilter.mode(
+                                      Color.fromRGBO(155, 161, 182, 1),
+                                      BlendMode.modulate,
+                                    ),
                                     fit: BoxFit.cover,
                                     image: AssetImage("assets/images/a.jpg")),
                               )),
@@ -253,7 +258,7 @@ class _LoginState extends State<Login> {
                                           padding: const EdgeInsets.all(8.0),
                                           child: SizedBox(
                                             width: 300,
-                                            height: 70,
+                                            height: 40,
                                             child: Container(
                                                 child: Container(
                                               // ignore: prefer_const_constructors
@@ -271,17 +276,20 @@ class _LoginState extends State<Login> {
                                                 ),
                                               ),
                                               child: Container(
-                                                height: 50,
+                                                height: 20,
                                                 child: ElevatedButton(
                                                   onPressed: () {
-                                                    Loginvalidate(
-                                                        emailControl.text,
-                                                        password.text);
+                                                    Navigator.of(context)
+                                                        .pushNamed(
+                                                            AppRoutes.bottom);
+                                                    // Loginvalidate(
+                                                    //     emailControl.text,
+                                                    //     password.text);
                                                   },
                                                   child: Container(
                                                     margin: EdgeInsets.only(
                                                         top: 5.0),
-                                                    height: 40,
+                                                    height: 20,
                                                     width: 310,
                                                     child: const Center(
                                                       child: Text(
@@ -374,6 +382,11 @@ class _LoginState extends State<Login> {
                     width: double.infinity,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
+                          repeat: ImageRepeat.repeatY,
+                          colorFilter: ColorFilter.mode(
+                            Color.fromRGBO(155, 161, 182, 1),
+                            BlendMode.modulate,
+                          ),
                           fit: BoxFit.cover,
                           image: AssetImage("assets/images/a.jpg")),
                     ),

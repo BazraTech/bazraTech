@@ -19,10 +19,10 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   List Screens = [
-    Category(),
-    displaycarlaction(),
-    Communication(),
-    Trip(),
+    const Category(),
+    const displaycarlaction(),
+    const Communication(),
+    const Trip(),
   ];
   int _selectedIndex = 0;
   @override
@@ -48,7 +48,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         duration: const Duration(microseconds: 10),
         child: CurvedNavigationBar(
           index: _selectedIndex,
-          animationDuration: Duration(microseconds: 1),
+          animationDuration: const Duration(microseconds: 1),
           backgroundColor: Colors.white,
           items: const [
             Icon(

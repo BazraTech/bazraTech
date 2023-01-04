@@ -12,7 +12,7 @@ import 'package:bazralogin/Page/Screen/Search.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../Page/Screen/Report/CarReport.dart';
-import '../Page/Screen/Tripmanegemnet/TripHistory.dart';
+import '../Page/Screen/Tripmanegemnet/Tripmanagement.dart';
 import '../Page/Screen/itemsscreen.dart';
 import '../Page/Screen/vehicle.dart';
 import '../Page/driversPage.dart';
@@ -34,12 +34,13 @@ class AppRoutes {
   static const String driver = '/auth-driver';
   static const String vehicle = '/vehicle';
   static const String report = '/report';
-  static const String trip = '/trip';
+
   static const String singlereport = '/auth-report';
   static const String carreport = '/auth-carreport';
   static const String carhistory = '/auth-history';
-  static const String trippage = '/auth-trip';
+  static const String tripmanage = '/auth-trip';
   static const String market = '/auth-market';
+  //  static const String Tripmange = '/auth-tripmanage';
   static Map<String, WidgetBuilder> define() {
     return {
       authLogin: (context) => const Login(),
@@ -47,15 +48,16 @@ class AppRoutes {
       driversProfile: (context) => DriversProfile(),
       driverRegistration: (context) => DriversForm(),
       vehicle: (context) => PlateList(),
-      trip: (context) => Trip(),
+
       driversCommunicate: (context) => communicate_screen(),
       bottom: (context) => BottomNavBar(),
       mapTracking: (context) => displaycarlaction(),
       mapSearch: (context) => Searchscreen(),
       singlereport: (context) => TripReport(),
       carreport: (context) => Report(),
-      trippage: (context) => TripHistorys(),
+      tripmanage: (context) => Tripmanegement(),
       market: (context) => SetTrip(),
+      //  Tripmange: (context) => T,
     };
   }
 }

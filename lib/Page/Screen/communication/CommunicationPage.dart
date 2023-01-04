@@ -84,7 +84,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
                       width: 220,
                       margin: EdgeInsets.only(top: 10),
                       decoration: BoxDecoration(
-                        color: Color.fromRGBO(244, 243, 243, 1),
+                        color: Color.fromRGBO(255, 255, 255, 1),
                         borderRadius: BorderRadius.circular(25),
                       ),
                       child: Padding(
@@ -140,8 +140,9 @@ class _CommunicationPageState extends State<CommunicationPage> {
                 Column(
                     children: profiles.map((driver) {
                   return Card(
-                    // elevation: 10,
-                    shadowColor: Colors.black,
+                    elevation: 1,
+                    // margin: EdgeInsets.zero,
+                    // shadowColor: Colors.black,
                     child: Row(
                       children: [
                         SizedBox(

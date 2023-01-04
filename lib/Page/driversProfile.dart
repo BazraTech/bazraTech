@@ -95,9 +95,9 @@ class _DriversProfileState extends State<DriversProfile> {
             backgroundColor: kPrimaryColor,
             title: Container(
               height: 60,
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               decoration: BoxDecoration(
-                color: Color.fromRGBO(244, 243, 243, 1),
+                color: const Color.fromRGBO(244, 243, 243, 1),
                 borderRadius: BorderRadius.circular(25),
               ),
               child: TextField(
