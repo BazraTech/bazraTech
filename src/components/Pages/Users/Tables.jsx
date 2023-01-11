@@ -13,7 +13,7 @@ import './popup.css';
 import SyncLoader from "react-spinners/SyncLoader";
 import { createStoreHook } from 'react-redux';
 
-export default function Cards({ title, data }) {
+export default function Cards({ title, data }) { 
 
 
 
