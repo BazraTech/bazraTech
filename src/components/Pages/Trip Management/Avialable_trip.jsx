@@ -1,27 +1,12 @@
 import React from 'react'
-import { FaHome } from 'react-icons/fa';
-import { AiFillCar } from "react-icons/ai";
-import { RiGpsFill } from "react-icons/ri";
-import { MdMonitor } from "react-icons/md";
-import { FaUsers } from "react-icons/fa";
-import { HiBellAlert } from "react-icons/hi2";
-import { HiDocumentReport } from "react-icons/hi";
-import { FaRegIdCard } from 'react-icons/fa';
-import { BsFillChatDotsFill } from "react-icons/bs";
-import { FaUserAlt } from "react-icons/fa";
-import { AiFillSetting } from "react-icons/ai";
-import { FiLogOut } from "react-icons/fi";
-import { HiMenuAlt1 } from "react-icons/hi";
-import { BiTrip } from "react-icons/bi";
 import './available.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { SiTripdotcom } from "react-icons/si";
-import { SiGoogletagmanager } from "react-icons/si";
-import { FaStarOfLife } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
+import { total } from './data/data';
 
 export default function () {
 
@@ -59,88 +44,175 @@ export default function () {
 
 
     const [popup, setPop] = useState(false);
+    const [state, setState] = useState("");
     const handleClickopen = () => {
         setPop(!popup);
     }
-
-    return (
-
-        <div className="dashboard_container">
-
-            {/*---------------navigation---------------*/}
-
-            <Navigation></Navigation>
-
-            {/* ---------------header--------------- */}
-
-            <Header title="Avialable Trip"></Header>
+    // {
+    //     total[0]
+    //     .map((item) => {
+    //         setState(item.assignedDriver.toLowerCase().includes(search))
+    //     })}
 
 
-            {/* ---------------contents--------------- */}
+        const [search, setSearch] = useState('');
+        // if (search === state) {
+        //   alert("success")
+        //  }
 
-            <section className='register'>
+       
+        const [popup1, setPop1] = useState(true);
 
-                <div className='company_individual_header'>
-                    <p ><h1 className='nmn'>Avialable Trip</h1></p>
-                    <p ></p>
-                </div>
 
-                <form className='form' onSubmit={handleSubmit(onSubmit)}>
-                    <div className='allDiv'>
-                        <div className='trip_date'> <input placeholder='Search...' className='trip_date1' type="search" /><button>Search</button></div>
 
-                       <div className='setTrip'> 
-                            <div className='avilabel_trips' >
-                                <p><lable>Plate Number : <b>ET 03 123</b></lable></p>
-                                <p><lable>Assigned Driver : <b>Abebe Alemu</b></lable></p>
-                                <p><lable>Vehicle Name : <b>Tractor</b></lable></p>
-                                <p><lable>Current Location : <b>Addis Ababa</b></lable></p>
-                            </div><p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
+        return (
+
+            <div className="dashboard_container">
+
+                {/*---------------navigation---------------*/}
+
+                <Navigation></Navigation>
+
+                {/* ---------------header--------------- */}
+
+                <Header title="Avialable Trip"></Header>
+
+
+                {/* ---------------contents--------------- */}
+
+                <section className='register'>
+
+                    <div className='company_individual_header'>
+                    <Link style={{ textDecoration: 'none' }} to="/avialable_trip"><p><h1 className='nmn'>Avialable Trip</h1></p></Link>
+                    <Link style={{ textDecoration: 'none' }} to="/trip_history"><p><h1 className='nmnn'>Trip History</h1></p></Link>
+                    </div>
+
+                    <form className='form' onSubmit={handleSubmit(onSubmit)}>
+                        <div className='allDiv'>
+
+                            <div className='trip_date'>
+                                <input onChange={(e) => setSearch(e.target.value)} placeholder='Search...' className='trip_date1' type="search" /><button>Search</button>
+                            </div>
+
+                            {popup1 ?
+
+                                <div className='setTrip' id='myInput'>
+                                    {/* <div className='result'>There is No Result</div> */}
+
+                                    {total[0]
+                                        .filter((item) => {
+                                            return search.toLowerCase() === ''
+                                                ? item
+                                                : item.assignedDriver.toLowerCase().includes(search);
+                                        })
+                                        .map(item => (
+                                            <>
+
+                                                <div className='avilabel_trips' >
+
+
+                                                    <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
+                                                    <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
+                                                    <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
+                                                    <p><lable>Current Location : <b>{item.location}</b></lable></p>
+                                                    </div>
+
+                                                    <div className='set_history'>
+                                                        <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
+                                                        {/* <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p> */}
+                                                    </div>
+
+                                                
+                                                <div className='borderBottom'></div>
+
+                                            </>
+                                        ))}
+
+                                </div> : ""}
+
+
+                            {/* <div className='setTrip'>
+                        <div className='avilabel_trips' >
+                                {total[0].map(item => (
+                                    <>
+                                        <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
+                                        <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
+                                        <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
+                                        <p><lable>Current Location : <b>{item.location}</b></lable></p>
+                                    </>
+                                ))}
+                            </div>
+                            <div className='set_history'>
+                                <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
+                                <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p>
+                            </div>
                         </div>
-                        <div className='setTrip'> 
-                            <div className='avilabel_trips' >
-                                <p><lable>Plate Number : <b>ET 03 123</b></lable></p>
-                                <p><lable>Assigned Driver : <b>Abebe Alemu</b></lable></p>
-                                <p><lable>Vehicle Name : <b>Tractor</b></lable></p>
-                                <p><lable>Current Location : <b>Addis Ababa</b></lable></p>
-                            </div><p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
+
+                        <div className='setTrip'>
+                        <div className='avilabel_trips' >
+                                {total[0].map(item => (
+                                    <>
+
+                                        <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
+                                        <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
+                                        <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
+                                        <p><lable>Current Location : <b>{item.location}</b></lable></p>
+                                    </>
+                                ))}
+                            </div>
+                            <div className='set_history'>
+                                <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
+                                <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p>
+                            </div>
                         </div>
-                        <div className='setTrip'> 
-                            <div className='avilabel_trips' >
-                                <p><lable>Plate Number : <b>ET 03 123</b></lable></p>
-                                <p><lable>Assigned Driver : <b>Abebe Alemu</b></lable></p>
-                                <p><lable>Vehicle Name : <b>Tractor</b></lable></p>
-                                <p><lable>Current Location : <b>Addis Ababa</b></lable></p>
-                            </div><p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
+
+                        <div className='setTrip'>
+                        <div className='avilabel_trips' >
+                                {total[0].map(item => (
+                                    <>
+
+                                        <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
+                                        <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
+                                        <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
+                                        <p><lable>Current Location : <b>{item.location}</b></lable></p>
+                                    </>
+                                ))}
+                            </div>
+                            <div className='set_history'>
+                                <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
+                                <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p>
+                            </div>
                         </div>
-                        <div className='setTrip'> 
-                            <div className='avilabel_trips' >
-                                <p><lable>Plate Number : <b>ET 03 123</b></lable></p>
-                                <p><lable>Assigned Driver : <b>Abebe Alemu</b></lable></p>
-                                <p><lable>Vehicle Name : <b>Tractor</b></lable></p>
-                                <p><lable>Current Location : <b>Addis Ababa</b></lable></p>
-                            </div><p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
-                        </div>
-                        <div className='setTrip'> 
-                            <div className='avilabel_trips' >
-                                <p><lable>Plate Number : <b>ET 03 123</b></lable></p>
-                                <p><lable>Assigned Driver : <b>Abebe Alemu</b></lable></p>
-                                <p><lable>Vehicle Name : <b>Tractor</b></lable></p>
-                                <p><lable>Current Location : <b>Addis Ababa</b></lable></p>
-                            </div><p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
-                        </div>
-                        {/* <div className='company_button'>
+
+                        <div className='setTrip'>
+                           <div className='avilabel_trips' >
+                                {total[0].map(item => (
+                                    <>
+
+                                        <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
+                                        <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
+                                        <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
+                                        <p><lable>Current Location : <b>{item.location}</b></lable></p>
+                                    </>
+                                ))}
+                            </div>
+                            <div className='set_history'>
+                                <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
+                                <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p>
+                            </div>
+                        </div> */}
+                            {/* <div className='company_button'>
                             <button className='add'>Add</button>
                         </div> */}
-                    </div>
-                </form>
-            </section>
+                        </div>
+                    </form>
+                </section>
 
 
-            {/* ---------------end contents--------------- */}
+                {/* ---------------end contents--------------- */}
 
 
-        </div>
+            </div>
 
-    )
-}
+        )
+    }

@@ -54,6 +54,7 @@ export default function () {
             return setAvargeSpeed(`${average_speed}`)
         })
     }
+    const [search, setSearch] = useState('');
 
 
     return (
@@ -64,39 +65,49 @@ export default function () {
             <div className="dashboard_navigation">
                 <ul>
                     <li>
-                        <Link to="/dashboard"> <p class="hovertext" data-hover="Home"><FaHome size="2rem" color='white'></FaHome><p></p></p></Link>
-                    </li>
-                    <li>
-                        <Link to="/Total_number_of_vehicle"><p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p></Link>
-                    </li>
-                    <li>
-                        <Link to="/tracking"><p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill></p></Link>
-                    </li>
-                    <li>
-                        <Link to="#">
-                            <p onClick={handleClickopen1} class="hovertext" data-hover="Trip Management"><SiGoogletagmanager size="1.8rem" color='white'></SiGoogletagmanager></p>
-                        </Link>
-                        <Link to="/set_trip">
-                            {popup1 ? <p class="hovertext trip" data-hover="Set Trip"><SiTripdotcom size="2rem" margin-left='20px' color='00cc44'></SiTripdotcom></p> : ""}
-                        </Link>
-                        <Link to="/trip_history">
-                            {popup1 ? <p class="hovertext trip" data-hover="Trip History"><BiTrip size="2rem" color='#009933'></BiTrip></p> : ""}
+                        <Link to="/dashboard">
+                            <p class="hovertext" data-hover="Home"><FaHome size="2rem" color='white'></FaHome><p></p></p>
                         </Link>
                     </li>
                     <li>
-                        <Link to="/users">  <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='white'></FaUsers></p></Link>
+                        <Link to="/Total_number_of_vehicle">
+                            <p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p>
+                        </Link>
                     </li>
                     <li>
-                        <Link to="/alert"><p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p></Link>
+                        <Link to="/tracking">
+                            <p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
+                        </Link>
                     </li>
                     <li>
-                        <Link to="/report"><p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='#00cc44'></HiDocumentReport></p></Link>
+                        <Link to="/avialable_trip">
+                            <p className="hovertext" data-hover="Trip Management"><BiTrip color='white' size="2rem" ></BiTrip></p>
+                        </Link>
                     </li>
                     <li>
-                        <Link to="/Company_registration"> <p class="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" color='white'></FaRegIdCard></p></Link>
+                        <Link to="/users">
+                            <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='white'></FaUsers></p>
+                        </Link>
                     </li>
                     <li>
-                        <Link to="/message_overview"><p class="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p></Link>
+                        <Link to="/accident">
+                            <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/report">
+                            <p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='#00cc44'></HiDocumentReport></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/Company_registration">
+                            <p class="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" color='white'></FaRegIdCard></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/message_overview">
+                            <p class="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
+                        </Link>
                     </li>
                     <li>
                         <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
@@ -114,118 +125,127 @@ export default function () {
             <Header title="Report Detail"></Header>
 
             <div className='main_content2'>
-            <div className="Report-main">
-                <div className="vehicle-detail">
-                    <div className="vehicle-name">
-                        <table class="table-report" >
-                            <tbody>
-                                <tr className='row-table'>
-                                    <td><b>Vehicle Name</b></td>
-                                    <td>Sino</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div className="Report-main">
+                    <div className="vehicle-detail">
+                        <div className="vehicle-name">
+                            <table class="table-report" >
+                                <tbody>
+                                    <tr className='row-table'>
+                                        <td><b>Vehicle Name</b></td>
+                                        <td>Sino</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="plate-number">
+                            <table class="table-report" >
+                                <tbody>
+                                    <tr>
+                                        <td><b>Plate Number</b></td>
+                                        <td>ET 000345</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div className="plate-number">
-                        <table class="table-report" >
-                            <tbody>
-                                <tr>
-                                    <td><b>Plate Number</b></td>
-                                    <td>ET 000345</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div className="row-two">
-                    <div className="report-status">
-                        <table class="table-report-status" >
-                            <tbody>
-                                <tr>
-                                    <td><b>Current Status</b></td>
-                                    <td className='colors-report'><b>On route</b></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div className='report-date'>
-                        <p><input type="date" placeholder='Select date'></input></p>
-                    </div>
-                </div>
+                    <div className="row-two">
+                        <div className="report-status">
+                            <table class="table-report-status" >
+                                <tbody>
+                                    <tr>
+                                        <td><b>Current Status</b></td>
+                                        <td className='colors-report'><b>On route</b></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className='report-date'>
+                            <p><input onChange={(e) => {
+                                setSearch(e.target.value)
+                                // nandu()
 
-                <div className='trip-tables' >
-                    <div className='t-table'>
-                        <table class="vehicle-trip-table">
-                            <thead>
-                                <tr>
-                                    <th>Trip</th>
-                                    <th>Total Travel Time</th>
-                                    <th>Average Speed</th>
-                                    <th>Start Date/Time</th>
-                                    <th>End Date/Time</th>
-                                    <th>Detail</th>
-                                </tr>
-                            </thead>
+                            }} type="date" placeholder='Select date'></input></p>
+                        </div>
+                    </div>
 
-                            <tbody>
-                                {
-                                    Report_Data.map(item => {
+                    <div className='trip-tables' >
+                        <div className='t-table'>
+                            <table class="vehicle-trip-table">
+                                <thead>
+                                    <tr>
+                                        <th>Trip</th>
+                                        <th>Total Travel Time</th>
+                                        <th>Average Speed</th>
+                                        <th>Start Date/Time</th>
+                                        <th>End Date/Time</th>
+                                        <th>Detail</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {
+                                    Report_Data
+                                    .filter((item) => {
+                                            return search.toLowerCase() === ''
+                                                ? item
+                                                : item.start_date.toLowerCase().includes(search);
+                                        })
+                                    .map(item => {
                                         return <tr className='active_row'>
 
-                                            <td>{item.trip}</td>
-                                            <td>{item.total_travel_time}</td>
-                                            <td>{item.average_speed}</td>
-                                            <td>{item.start_date}</td>
-                                            <td>{item.end_date}</td>
-                                            <td>
-                                                <p className='notification_actions'>
-                                                    <button onClick={() => {
-                                                        handleClickopen()
-                                                        AvargeSpeed(item.average_speed)
-                                                    }}>Detail</button>
+                                        <td>{item.trip}</td>
+                                        <td>{item.total_travel_time}</td>
+                                        <td>{item.average_speed}</td>
+                                        <td>{item.start_date}</td>
+                                        <td>{item.end_date}</td>
+                                        <td>
+                                            <h4 className='notification_actions0'>
+                                                <button onClick={() => {
+                                                    handleClickopen()
+                                                    AvargeSpeed(item.average_speed)
+                                                }}>Detail</button>
 
-                                                </p>
-                                            </td>
-
-                                        </tr>
+                                            </h4>
+                                        </td>
+                                    </tr>
 
                                     })
                                 }
-                            </tbody>
+                                </tbody>
 
-                        </table>
-                    </div>
-                </div>
-
-                {popup ?
-                    <div>
-                        <div className='popup'>
-                            <div className='popup-inner0'>
-                            <button className='close-btn' onClick={closePopup}>X</button>
-                          <div className='startEndPoint'>
-                            <p>Addis Ababa To Jimma</p>
-                            <p>Addis Ababa To Jimma</p>
-                            <p>Addis Ababa To Jimma</p>
-                          </div>
-                                <div className='chart-donat'>
-                                    <div className='travelTime'>
-                                    <DonutChart />
-                                    </div>
-                                    <div className='speedHistory'>
-                                        Average Speed : <b className='green'>{Avarage_speed}/hr</b>
-                                    <ChartLine></ChartLine>
-                                    </div>
-                                </div>
-
-                            </div>
+                            </table>
                         </div>
-                    </div> : ""}
+                    </div>
 
+                    {popup ?
+                        <div>
+                            <div className='popup'>
+                                <div className='popup-inner0'>
+                                    <button className='close-btn' onClick={closePopup}>X</button>
+                                    <div className='startEndPoint'>
+                                        <p>Addis Ababa To Jimma</p>
+                                        <p>Addis Ababa To Jimma</p>
+                                        <p>Addis Ababa To Jimma</p>
+                                    </div>
+                                    <div className='chart-donat'>
+                                        <div className='travelTime'>
+                                            <DonutChart />
+                                        </div>
+                                        <div className='speedHistory'>
+                                            Average Speed : <b className='green'>{Avarage_speed}/hr</b>
+                                            <ChartLine></ChartLine>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div> : ""}
+
+                </div>
             </div>
-            </div>
 
 
-         </div>
+        </div>
 
     )
 }

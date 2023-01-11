@@ -52,7 +52,7 @@ export default function () {
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
                     tr[i].style.display = "";
                 } else {
-                    tr[i].style.display = "none"; 
+                    tr[i].style.display = "none";
                 }
             }
         }
@@ -87,72 +87,63 @@ export default function () {
 
             {/*---------------navigation---------------*/}
 
-            <div className="company_navigation">
-                    <ul>
-                        <li>
-                            <Link to="/dashboard">
-                                <p class="hovertext" data-hover="Home"><FaHome size="2rem" color='white'></FaHome><p></p></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/Total_number_of_vehicle">
-                                <p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='00cc44'></AiFillCar></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/tracking">
-                                <p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="#">
-                                <p onClick={handleClickopen} class="hovertext" data-hover="Trip Management"><SiGoogletagmanager size="1.8rem" color='white'></SiGoogletagmanager></p>
-                            </Link>
-                            <Link to="/set_trip">
-                                {popup ? <p class="hovertext trip" data-hover="Set Trip"><SiTripdotcom size="2rem" margin-left='20px' color='00cc44'></SiTripdotcom></p> : ""}
-                            </Link>
-                            <Link to="/trip_history">
-                                {popup ? <p class="hovertext trip" data-hover="Trip History"><BiTrip size="2rem" color='#00cc44'></BiTrip></p> : ""}
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/users">
-                                <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='white'></FaUsers></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/alert">
-                                <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/report">
-                                <p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/Company_registration">
-                                <p class="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" color='white'></FaRegIdCard></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/message_overview">
-                                <p class="hovertext" data-hover="Communication">
-                                    <BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="#">
-                                <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/settings">
-                                <p class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='white'></AiFillSetting></p>
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
+            <div className="dashboard_navigation">
+                <ul>
+                    <li>
+                        <Link to="/dashboard">
+                            <p class="hovertext" data-hover="Home"><FaHome size="2rem" color='white'></FaHome><p></p></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/Total_number_of_vehicle">
+                            <p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='00cc44'></AiFillCar></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/tracking">
+                            <p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/avialable_trip">
+                            <p className="hovertext" data-hover="Trip Management"><BiTrip color='white' size="2rem" ></BiTrip></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/users">
+                            <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='white'></FaUsers></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/accident">
+                            <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/report">
+                            <p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/Company_registration">
+                            <p class="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" color='white'></FaRegIdCard></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/message_overview">
+                            <p class="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
+                    </li>
+                    <li>
+                        <Link to="/settings">
+                            <p class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='white'></AiFillSetting></p>
+                        </Link>
+                    </li>
+                </ul>
+            </div>
 
             {/* --------------- header --------------- */}
 
@@ -161,8 +152,8 @@ export default function () {
             {/* --------------- users --------------- */}
 
             <div className='main_content' >
-            <div className='vehicle_contents'>
-                   <Link to="/Total_number_of_vehicle"  style={{ textDecoration: 'none' }}> <div className='total_vehicle1 '>
+                <div className='vehicle_contents'>
+                    <Link to="/Total_number_of_vehicle" style={{ textDecoration: 'none' }}> <div className='total_vehicle1 '>
                         <h4>Total Vehicle</h4>
                         <p><AiFillCar size="2.3rem"></AiFillCar><b>100</b></p>
 
@@ -171,23 +162,23 @@ export default function () {
                         <h4>On Route</h4>
                         <p><FaRoute size="2.2rem"></FaRoute><b>100</b></p>
                     </div></Link>
-                    <Link to="/on_stock"  style={{ textDecoration: 'none' }}>
-                    <div className='parked' >
-                        <h4>On Stock</h4>
-                        <p><FaParking size="2rem"></FaParking><b>10</b></p>
-                    </div>
+                    <Link to="/on_stock" style={{ textDecoration: 'none' }}>
+                        <div className='parked' >
+                            <h4>On Stock</h4>
+                            <p><FaParking size="2rem"></FaParking><b>10</b></p>
+                        </div>
                     </Link>
                     <Link style={{ textDecoration: 'none' }} to="/maintenance1">
-                    <div className='activeNav'>
-                        <h4>Maintenance</h4>
-                        <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>10</b></p>
-                    </div>
+                        <div className='activeNav'>
+                            <h4>Maintenance</h4>
+                            <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>10</b></p>
+                        </div>
                     </Link>
                 </div>
 
                 {/* --------------- search --------------- */}
 
-                <div className='vehicle_search'>
+                <div className='vehicle_search1'>
                     <p title='search'>
                         <BsSearch className='icn' size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
                         <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
@@ -195,12 +186,12 @@ export default function () {
                     </p>
                 </div>
 
-                <div className='vehicle_filter'>
+                {/* <div className='vehicle_filter'>
                     <p>
                         <AiFillFilter className='fil' size="0.8rem" color='rgb(63, 63, 63)'></AiFillFilter>
                         <h6>Filter</h6>
                     </p>
-                </div>
+                </div> */}
 
                 {/* --------------------- Table ------------------- */}
 
@@ -212,37 +203,37 @@ export default function () {
                 </div>
 
                 <div className='outer_vehicle_tables' id='myTable'>
-        <p>Maintenance</p>
+                    <p>Maintenance</p>
 
-        <table class="vehicle_table" id="myTable">
+                    <table class="vehicle_table" id="myTable">
 
-          <thead>
-            <tr>
-              <th>Profile</th>
-              <th>Assigned Driver</th>
-              <th>Vehicle ID</th>
-              <th>Vehicle Type</th>
-              <th>Plate Number</th>
-              <th>Detail</th>
-              <th>Tracking</th>
-            </tr>
-          </thead>
-          <tbody>
-            {maintenance[0].map(item => (
-              <tr className='active_row'>
+                        <thead>
+                            <tr>
+                                <th>Profile</th>
+                                <th>Assigned Driver</th>
+                                <th>Vehicle ID</th>
+                                <th>Vehicle Type</th>
+                                <th>Plate Number</th>
+                                <th>Detail</th>
+                                <th>Tracking</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {maintenance[0].map(item => (
+                                <tr className='active_row'>
 
-                <td>{item.user}</td>
-                <td>{item.assignedDriver}</td>
-                <td>{item.vehicleId}</td>
-                <td>{item.vehicleType}</td>
-                <td>{item.planeNumber}</td>
-                <td><Link to="/vehicle_detail"><button>Detail</button></Link></td>
-                <td><button>Remove</button></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                                    <td>{item.user}</td>
+                                    <td>{item.assignedDriver}</td>
+                                    <td>{item.vehicleId}</td>
+                                    <td>{item.vehicleType}</td>
+                                    <td>{item.planeNumber}</td>
+                                    <td><Link to="/vehicle_detail"><button>Detail</button></Link></td>
+                                    <td><button>Remove</button></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
         </div >

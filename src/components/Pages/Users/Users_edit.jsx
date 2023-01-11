@@ -21,8 +21,12 @@ import { SiTripdotcom } from "react-icons/si";
 import { SiGoogletagmanager } from "react-icons/si";
 import { BiTrip } from "react-icons/bi";
 import Header from '../../Header/Header';
+import { total } from './Data/jsonData';
+import { on_route } from './Data/Data';
+import { parked } from './Data/Data';
+import {dataSource} from './Tables'
 
-export default function Users_edit() {
+export default function Users_edit( props) {
 
     const [state, setState] = useState(false);
     //const [companyType, setCompantType] = useState("");
@@ -30,6 +34,8 @@ export default function Users_edit() {
     // state = {
     //     diabled: true
     // }
+    const xx = props.show;
+    console.log(xx);
 
     const toggle = () => {
         setState(!state);
@@ -45,6 +51,13 @@ export default function Users_edit() {
         setPop1(!popup1);
     }
 
+    let [active, setActive] = useState("total_users");
+    let [state2, setState2] = useState("false");
+    const color = () => {
+        setState(state);
+    }
+
+
 
     return (
         <div>
@@ -52,7 +65,7 @@ export default function Users_edit() {
 
                 {/*---------------navigation---------------*/}
 
-                <div className="users_edit_navigation">
+                <div className="dashboard_navigation">
                     <ul>
                         <li>
                             <Link to="/dashboard">
@@ -66,18 +79,12 @@ export default function Users_edit() {
                         </li>
                         <li>
                             <Link to="/tracking">
-                                <p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill>
-                                </p></Link>
+                                <p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
+                            </Link>
                         </li>
                         <li>
-                            <Link to="#">
-                                <p onClick={handleClickopen} class="hovertext" data-hover="Trip Management"><SiGoogletagmanager size="1.8rem" color='white'></SiGoogletagmanager></p>
-                            </Link>
-                            <Link to="/set_trip">
-                                {popup1 ? <p class="hovertext trip" data-hover="Set Trip"><SiTripdotcom size="2rem" margin-left='20px' color='00cc44'></SiTripdotcom></p> : ""}
-                            </Link>
-                            <Link to="/trip_history">
-                                {popup1 ? <p class="hovertext trip" data-hover="Trip History"><BiTrip size="2rem" color='#00cc44'></BiTrip></p> : ""}
+                            <Link to="/avialable_trip">
+                                <p className="hovertext" data-hover="Trip Management"><BiTrip color='white' size="2rem" ></BiTrip></p>
                             </Link>
                         </li>
                         <li>
@@ -86,9 +93,9 @@ export default function Users_edit() {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/alert">
-                                <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert>
-                                </p></Link>
+                            <Link to="/accident">
+                                <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
+                            </Link>
                         </li>
                         <li>
                             <Link to="/report">
@@ -106,9 +113,7 @@ export default function Users_edit() {
                             </Link>
                         </li>
                         <li>
-                            <Link to="#">
-                                <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
-                            </Link>
+                            <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
                         </li>
                         <li>
                             <Link to="/settings">
@@ -117,7 +122,6 @@ export default function Users_edit() {
                         </li>
                     </ul>
                 </div>
-
 
                 {/* ---------------header--------------- */}
 
@@ -135,9 +139,9 @@ export default function Users_edit() {
 
                     <div className='company_individual_header'>
                         <p ><h1 className='nmn'>Company Detail</h1></p>
-                        <p ><h4 className='vehicleDetail'>Name : Abebe Alemu <br/> User ID : BA 00001</h4></p>
+                        <p ><h4 className='vehicleDetail'>Name : Abebe Alemu <br /> User ID : BA 00001</h4></p>
                     </div>
-                    <form className='form'> 
+                    <form className='form'>
 
                         <div className='allDiv'>
                             <div className='first_div'>
@@ -251,26 +255,84 @@ export default function Users_edit() {
                                 </div>
                             </div>
 
+                            <div className='company_button'>
+                                <p className='addd' onClick={() => {
+                                    handleChange()
+                                    toggle()
+                                }}>{state ? "Cancle" : "Edit"}</p>
+                                <br />
+                                <button className='ad' disabled={diabled}>Update</button>
+
+                            </div>
+                            {/* <div className='outer_vehicle_tables' id='myTable'> */}
+
+                            {/* {total[0].map(item => (
+                                <>
+                                    <p>{item.id}</p>
+                                    <p>{item.firstname}</p>
+                                </>
+                            ))} */}
+
+                            <div className='outer_vehicle_tables0' id='myTable'>
                             <div className='second_div'>
                                 <div className='registerd_vehicle_no'> <div className='Vehicle_number'><h1>Registerd Vehicle</h1><h1 className='number' >10</h1></div></div>
                             </div>
+                                <p>Registerd Vehicles</p>
 
-                            <div className='company_button'>
-                        <p className='addd' onClick={() => {
-                            handleChange()
-                            toggle()
-                        }}>{state ? "Cancle" : "Edit"}</p>
-                        <br />
-                        <button className='ad' disabled={diabled}>Update</button>
+                                <table class="vehicle_table" id="myTable">
 
-                    </div>
+                                    <thead>
+                                        <tr>
+                                            <th>Profile</th>
+                                            <th>Assigned Driver</th>
+                                            <th>Vehicle ID</th>
+                                            <th>Vehicle Type</th>
+                                            <th>Plate Number</th>
+                                            <th>Detail</th>
+                                            <th>Tracking</th>
+                                        </tr>
+                                    </thead> 
+                                    <tbody>
+                                        {total[0]
+                                        .map(item => (
+                                            <tr className='active_row'>
 
+                                                <td>{item.user}</td>
+                                                <td>{item.assignedDriver}</td>
+                                                <td>{item.vehicleId}</td>
+                                                <td>{item.vehicleType}</td>
+                                                <td>{item.planeNumber}</td>
+                                                <td><Link to="/vehicle_detail"><button>Detail</button></Link></td>
+                                                <td><Link to="/tracking"><button>Tracking</button></Link></td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div className='page'>
+
+
+                                {/* <Pagination
+                                        onChange={(page) => setCurentPage(page)}
+                                        pageSize={postPerPage}
+                                        current={page}
+                                        total={total}
+                                        showQuickJumper
+                                        showSizeChanger
+                                        onShowSizeChange={onShowSizeChange}
+
+                                    /> */}
+                            </div>
                         </div>
-                    </form>
-                    
 
+                        {/* </div> */}
+
+                    </form>
 
                 </section>
+
+
 
 
                 {/* ---------------end Registaration--------------- */}

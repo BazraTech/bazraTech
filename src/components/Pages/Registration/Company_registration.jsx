@@ -45,11 +45,13 @@ export default function Company_registration() {
     const [plateNumber, setPlateNumber] = useState("");
     // const [plate_number2, setPlateNumber2] = useState("");
     // const [plate_number3, setPlateNumber3] = useState("");
-    // const [manufacture_date, setmanufactureDate] = useState("");
-    // const [device_id, setdeviceId] = useState("");
+    const [manufactureDate, setmanufactureDate] = useState("");
+    const [deviceID, setdeviceId] = useState("");
 
     const handleClick = (e) => {
+
         registerCompany();
+
     };
     useEffect(() => {
     }, []);
@@ -114,6 +116,7 @@ export default function Company_registration() {
                     buttons: false,
                     timer: 2000,
                 });
+                companyName = ''
 
             } else {
                 console.log("failed");
@@ -230,7 +233,7 @@ export default function Company_registration() {
                 <div className='company_individual_header'>
                     <p ><NavLink to="/Company_registration"><h1 className='nmn'>Company</h1></NavLink></p>
                     <p><NavLink to="/individual"><h1>Individual</h1></NavLink></p>
-                </div> 
+                </div>
 
                 <form className='form' onSubmit={handleSubmit(onSubmit)}>
 
@@ -244,46 +247,46 @@ export default function Company_registration() {
                                     <p>Company Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input
                                         name='companyName'
-                                        value={companyName}
+                                        // value={companyName}
                                         type="text"
                                         {...register("organizationName", { required: true })}
                                         placeholder='Enter organization name'
                                         onChange={(e) => setCompanyName(e.target.value)}>
                                     </input>
-                                    {errors.organizationName?.type === "required" && <span className='validate_text'>*please enter the organization name</span>}
+                                    {companyName <= 0 && errors.organizationName?.type === "required" && <span className='validate_text'>*please enter the organization name</span>}
                                 </div>
 
                                 <div>
                                     <p>Company Type <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select
-                                        value={serviceRequired}
+                                        // value={companyType}
                                         name='serviceRequired'
-                                        // {...register("serviceNeeded", { required: '*please choose service needed' })}
-                                        onChange={(e) => setServiceNeeded(e.target.value)} >
-                                        <option>Select Conmpany Type</option>
+                                        {...register("companyType", { required: '*please choose company type' })}
+                                        onChange={(e) => setCompantType(e.target.value)} >
+                                        <option selected disabled value="">Select Conmpany Type</option>
                                         <option>Individual</option>
                                         <option>Company</option>
                                     </select>
-                                    {/* {errors.serviceNeeded && <span className='validate_text'>{errors.serviceNeeded.message}</span>} */}
+                                    {companyType <= 0 && errors.companyType && <span className='validate_text'>{errors.companyType.message}</span>}
                                 </div>
 
                                 <div>
                                     <p>Company Sector <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                    {/* <h5>{companySector}</h5> */}
                                     <select
-
-                                        {...register("sectorType", { required: '*Company sector is required' })}
-                                        value={companySector} name='companySector'
+                                        {...register("companySector", { required: '*Company sector is required' })} name='companySector'
+                                        // value={companySector} 
                                         onChange={(e) => setCompanySector(e.target.value)}>
-                                        <option value="s">Please Select Company Sector Type</option>
+                                        <option selected disabled value="">Please Select Company Sector Type</option>
                                         {
                                             dataSource.map(item => {
                                                 return <>
-                                                    <option >{item.sectorName}</option>
+                                                    <option>{item.sectorName}</option>
                                                 </>
                                             })
                                         }
                                     </select>
-                                    {errors.sectorType && <span className='validate_text'>{errors.sectorType.message}</span>}
+                                    {companySector <= 0 && errors.companySector && <span className='validate_text'>{errors.companySector.message}</span>}
                                 </div>
                             </div>
                         </div>
@@ -294,78 +297,85 @@ export default function Company_registration() {
                             <div className='company_Address1'>
                                 <div>
                                     <p>Region <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='region' value={region}
+                                    <input name='region' 
+                                    // value={region}
                                         {...register("region", { required: '*please fill your Region' })}
                                         placeholder="Please enter your Region"
                                         onChange={(e) => setRegion(e.target.value)}>
                                     </input>
-                                    {errors.region && <span className='validate_text'>{errors.region.message}</span>}
+                                    {region <= 0 && errors.region && <span className='validate_text'>{errors.region.message}</span>}
                                 </div>
 
                                 <div>
                                     <p>Sub City <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='subCity' value={subCity}
+                                    <input name='subCity' 
+                                    // value={subCity}
                                         {...register("subCity", { required: '*please fill your Sub-city' })}
                                         placeholder="Please enter your Sub-city"
                                         onChange={(e) => setSubCity(e.target.value)}>
                                     </input>
-                                    {errors.subCity && <span className='validate_text'>{errors.subCity.message}</span>}
+                                    {subCity <= 0 && errors.subCity && <span className='validate_text'>{errors.subCity.message}</span>}
                                 </div>
 
                                 <div>
                                     <p>Specfic Location <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='specificLocation' value={specificLocation}
-                                        {...register("specficLocation", { required: '*please fill your Specfic Location' })}
+                                    <input name='specificLocation' 
+                                    // value={specificLocation}
+                                        {...register("specificLocation", { required: '*please fill your Specfic Location' })}
                                         placeholder="Please enter your Specfic Location"
                                         onChange={(e) => setSpecficLocation(e.target.value)}>
                                     </input>
-                                    {errors.specficLocation && <span className='validate_text'>{errors.specficLocation.message}</span>}
+                                    {specificLocation <= 0 && errors.specificLocation && <span className='validate_text'>{errors.specificLocation.message}</span>}
                                 </div>
 
                                 <div>
                                     <p>City <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='city' value={city}
+                                    <input name='city' 
+                                    // value={city}
                                         {...register("city", { required: '*please fill your City' })}
                                         placeholder="Please enter your City"
                                         onChange={(e) => setCity(e.target.value)}>
                                     </input>
-                                    {errors.city && <span className='validate_text'>{errors.city.message}</span>}
+                                    {city <= 0 && errors.city && <span className='validate_text'>{errors.city.message}</span>}
                                 </div>
 
                                 <div>
                                     <p>Woreda <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='woreda' type="text" value={woreda}
-                                        // {...register("Woreda", {
-                                        //     required: "*please fill your Woreda",
-                                        //     pattern: { value: /^[0-9]+[0-9]*$/, message: 'please enter a vaild number' }
-                                        // })}
+                                    <input name='woreda' type="text" 
+                                    // value={woreda}
+                                        {...register("woreda", {
+                                            required: "*please fill your Woreda",
+                                            pattern: { value: /^[0-9]+[0-9]*$/, message: 'please enter a vaild number' }
+                                        })}
                                         placeholder='Enter Your Woreda'
                                         onChange={(e) => setWoreda(e.target.value)}>
                                     </input>
-                                    {/* {errors.Woreda && <span className='validate_text'>{errors.Woreda.message}</span>} */}
+                                    {woreda <= 0 && errors.woreda && <span className='validate_text'>{errors.woreda.message}</span>}
                                 </div>
 
                                 <div>
                                     <p>House Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='houseNumber' type="text" value={houseNumber}
-                                        // {...register("houseNumber", {
-                                        //     required: "*please fill your house number",
-                                        //     pattern: { value: /^[0-9]+[0-9]*$/, message: 'please enter a vaild number' }
-                                        // })}
+                                    <input name='houseNumber' type="text" 
+                                    // value={houseNumber}
+                                        {...register("houseNumber", {
+                                            required: "*please fill your house number",
+                                            pattern: { value: /^[0-9]+[0-9]*$/, message: 'please enter a vaild number' }
+                                        })}
                                         placeholder='Enter House Number'
                                         onChange={(e) => setHouseNumber(e.target.value)}>
                                     </input>
-                                    {/* {errors.houseNumber && <span className='validate_text'>{errors.houseNumber.message}</span>} */}
+                                    {houseNumber <= 0 && errors.houseNumber && <span className='validate_text'>{errors.houseNumber.message}</span>}
                                 </div>
 
                                 <div>
                                     <p>Phone Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='phoneNumber' type="text" value={phoneNumber}
-                                        {...register("officeNumber", { required: "*please fill your company number" })}
+                                    <input name='phoneNumber' type="text" 
+                                    // value={phoneNumber}
+                                        {...register("phoneNumber", { required: "*please fill your company number" })}
                                         placeholder='Enter Phone Number'
                                         onChange={(e) => setPhonenumber(e.target.value)}>
                                     </input>
-                                    {errors.officeNumber && <span className='validate_text'>{errors.officeNumber.message}</span>}
+                                    {phoneNumber <= 0 && errors.phoneNumber && <span className='validate_text'>{errors.phoneNumber.message}</span>}
                                 </div>
 
                             </div>
@@ -377,42 +387,46 @@ export default function Company_registration() {
                             <div className='owner_information1'>
                                 <div>
                                     <p>First Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='firstName' type="text" value={firstName}
+                                    <input name='firstName' type="text" 
+                                    // value={firstName}
                                         {...register("firstName", { required: true })}
                                         placeholder='Enter Your first name'
                                         onChange={(e) => setFirstName(e.target.value)}>
                                     </input>
-                                    {errors.firstName?.type === "required" && <span className='validate_text'>*please enter your name</span>}
+                                    {firstName <= 0 && errors.firstName?.type === "required" && <span className='validate_text'>*please enter your name</span>}
                                 </div>
                                 <div>
                                     <p>Last Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='lastName' type="text" value={lastName}
+                                    <input name='lastName' type="text" 
+                                    // value={lastName}
                                         {...register("lastName", { required: true })}
                                         placeholder='Enter Your last name'
                                         onChange={(e) => setLastname(e.target.value)}>
                                     </input>
-                                    {errors.lastName?.type === "required" && <span className='validate_text'>*please enter your last name</span>}
+                                    {lastName <= 0 && errors.lastName?.type === "required" && <span className='validate_text'>*please enter your last name</span>}
                                 </div>
                                 <div>
                                     <p>Phone Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='ownerPhoneNumber' type="text" value={ownerPhoneNumber}
-                                        {...register("customerNumber", { required: "*please fill your mobile nuber" })}
+                                    <input name='ownerPhoneNumber' type="text" 
+                                    // value={ownerPhoneNumber}
+                                        {...register("ownerPhoneNumber", { required: "*please fill your mobile nuber" })}
                                         placeholder='Enter Phone Number'
                                         onChange={(e) => setPhoneNumber2(e.target.value)}>
                                     </input>
-                                    {errors.customerNumber && <span className='validate_text'>{errors.customerNumber.message}</span>}
+                                    {ownerPhoneNumber <= 0 && errors.ownerPhoneNumber && <span className='validate_text'>{errors.ownerPhoneNumber.message}</span>}
                                 </div>
                                 <div>
                                     <p>Email <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='email' type="email" value={email}
-                                        {...register("emailAddress", {
+                                    <input name='email' type="email" 
+                                    // value={email}
+                                        {...register("email", {
                                             required: "*please enter your email address",
                                             pattern: { value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/, message: 'Please fill a valid Email' }
                                         })}
                                         placeholder='Enter your Email'
                                         onChange={(e) => setEmail(e.target.value)}>
                                     </input>
-                                    {errors.emailAddress && <span className='validate_text'>{errors.emailAddress.message}</span>}
+                                    {email <= 0 && errors.email && <span className='validate_text'>{errors.email.message}</span>}
                                 </div>
                             </div>
                         </div>
@@ -424,113 +438,116 @@ export default function Company_registration() {
                                     <p>Notification Pereference <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select
                                         name='notificationmedia'
-                                        value={notificationmedia}
-                                        // {...register("notificationPreference", { required: '*please choose your notification preference' })}
+                                        // value={notificationmedia}
+                                        {...register("notificationmedia", { required: '*please choose your notification preference' })}
                                         onChange={(e) => setNotificationPreference(e.target.value)}>
-                                        <option>Select Notification Preference</option>
+                                        <option selected disabled value="">Please Notification preference</option>
                                         {
                                             dataSource2.map(item2 => {
                                                 return <option >{item2.medium}</option>
                                             })
                                         }
                                     </select>
-                                    {/* {errors.notificationPreference && <span className='validate_text'>{errors.notificationPreference.message}</span>} */}
+                                    {notificationmedia <= 0 && errors.notificationmedia && <span className='validate_text'>{errors.notificationmedia.message}</span>}
                                 </div>
 
                                 <div>
                                     <p>Service Neded <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select
-                                        value={serviceRequired}
+                                        // value={serviceRequired}
                                         name='serviceRequired'
-                                        // {...register("serviceNeeded", { required: '*please choose service needed' })}
+                                        {...register("serviceRequired", { required: '*please choose service needed' })}
                                         onChange={(e) => setServiceNeeded(e.target.value)} >
-                                        <option>Select Service Needed</option>
+                                        <option selected disabled value="">Select Service Needed</option>
                                         <option>Trucking</option>
                                         <option>Trucking and Marketing</option>
                                     </select>
-                                    {/* {errors.serviceNeeded && <span className='validate_text'>{errors.serviceNeeded.message}</span>} */}
+                                    {serviceRequired <= 0 && errors.serviceRequired && <span className='validate_text'>{errors.serviceRequired.message}</span>}
                                 </div>
                             </div>
                         </div>
 
                         <div className='second_div'>
-                            <div className='registerd_vehicle'><h1>Vehicle Information</h1></div>
+                            <div className='registerd_vehiclel'><h1>Vehicle Information</h1></div>
                             <div className='vehicle_information1'>
                                 <div>
                                     <p>Vehicle Catagory <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select
-                                        // {...register("vehicleCatagory", { required: '*Vehicle catagoty  is required' })}
+                                        {...register("catagory", { required: '*Vehicle catagoty  is required' })}
                                         name="catagory"
-                                        value={catagory}
+                                        // value={catagory}
                                         onChange={(e) => setVehicleCategory(e.target.value)} >
-                                        <option>Select Vecicle Catagory</option>
+                                        <option selected disabled value="">Select Vecicle Catagory</option>
                                         {
                                             dataSource3.map(item => {
                                                 return <option >{item.catagory}</option>
                                             })
                                         }
-                                    </select> 
-                                    {/* {errors.vehicleCatagory && <span className='validate_text'>{errors.vehicleCatagory.message}</span>} */}
+                                    </select>
+                                    {catagory <= 0 && errors.catagory && <span className='validate_text'>{errors.catagory.message}</span>}
                                 </div>
 
                                 <div>
                                     <p>Vehicle Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='vehicleName' type="text" value={vehicleName}
+                                    <input name='vehicleName' type="text" 
+                                    // value={vehicleName}
                                         {...register("vehicleName", { required: true })}
                                         placeholder='Enter Vehicle Name'
                                         onChange={(e) => setvehicleName(e.target.value)} ></input>
-                                    {errors.organizationName?.type === "required" && <span className='validate_text'>*please enter vehicle name</span>}
+                                    {vehicleName <= 0 && errors.vehicleName?.type === "required" && <span className='validate_text'>*please enter vehicle name</span>}
                                 </div>
 
                                 <div>
                                     <p>Vehicle Condition <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <select className='select' value={conditionName} name='conditionName'
-
-                                        // {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
+                                    <select className='select' name='conditionName'
+                                        // value={conditionName}
+                                        {...register("conditionName", { required: '*Vecicle Condition is required' })}
                                         onChange={(e) => setVehicleCondition(e.target.value)} >
-                                        <option>Select Vecicle Condition</option>
+                                        <option value="">Select Vecicle Condition</option>
                                         {
                                             dataSource4.map(item => {
                                                 return <option>{item.conditionName}</option>
                                             })
                                         }
                                     </select>
-                                    {/* {errors.vehicleCondition && <span className='validate_text'>{errors.vehicleCondition.message}</span>} */}
+                                    {conditionName <= 0 && errors.conditionName && <span className='validate_text'>{errors.conditionName.message}</span>}
                                 </div>
 
                                 <div>
                                     <p>Plate Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <div className='plate_numbera'>
-                                        <input placeholder='Please Enter Plate Number'
-                                            value={plateNumber} name='conditionName'
-                                            // {...register("serviceNeeded", { required: '*please choose service needed' })}
+                                        <input placeholder='Please Enter Plate Number' name='conditionName'
+                                            // value={plateNumber} 
+                                            {...register("plateNumber", { required: '*please choose service needed' })}
                                             onChange={(e) => setPlateNumber(e.target.value)} >
                                         </input>
-                                        {/* {errors.serviceNeeded && <span className='validate_text'>{errors.serviceNeeded.message}</span>} */}
+                                        {plateNumber <= 0 && errors.plateNumber && <span className='validate_text'>{errors.plateNumber.message}</span>}
                                     </div>
 
-                                </div> 
+                                </div>
 
                                 <div>
                                     <p>Manufacture Date <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input name='manufacture_date' type="date"
+                                        // value={manufactureDate}
                                         {...register("manufactureDate", { required: '*Manufacture date is required' })}
                                         placeholder='Enter Manufactureing Date'
-                                    ></input>
-                                    {errors.manufactureDate && <span className='validate_text'>{errors.manufactureDate.message}</span>}
+                                        onChange={(e) => setmanufactureDate(e.target.value)} ></input>
+                                    {manufactureDate <= 0 && errors.manufactureDate && <span className='validate_text'>{errors.manufactureDate.message}</span>}
                                 </div>
                                 <div>
                                     <p>Device ID <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='device_id' type="text"
+                                    <input name='deviceID' type="text"
                                         {...register("deviceID", { required: '*Device ID is required' })}
                                         placeholder='Enter Device ID'
-                                    ></input>
-                                    {errors.deviceID && <span className='validate_text'>{errors.deviceID.message}</span>}
+                                        onChange={(e) => setdeviceId(e.target.value)} ></input>
+                                    {deviceID <= 0 && errors.deviceID && <span className='validate_text'>{errors.deviceID.message}</span>}
                                 </div>
                             </div>
                         </div>
                         <div className='company_button'>
                             <button className='add'>Register</button>
+                            <button type='reset' className='add'>Clear</button>
                         </div>
 
                     </div>

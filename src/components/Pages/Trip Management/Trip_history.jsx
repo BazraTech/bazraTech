@@ -22,6 +22,8 @@ import { FaStarOfLife } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
+import { total } from './data/data';
+import swal from "sweetalert";
 
 export default function () {
 
@@ -62,14 +64,96 @@ export default function () {
     const handleClickopen = () => {
         setPop(!popup);
     }
+    const [search, setSearch] = useState('');
+    const [result, setResult] = useState('');
+    console.log(search)
 
+    console.log(result)
+
+    const nandu = () => {
+        if (search === result) {
+            // swal("error", "Ther Is no Such File", "error", {
+            //     buttons: false,
+            //     timer: 2000,
+            //   })
+        }
+        else {
+            swal("error", "Ther Is no Such File", "error", {
+                // buttons: false,
+                // timer: 2000,
+            })
+
+
+        }
+    }
+
+    const [trip, setTrip] = useState("nandu"); 
+    const [popup1, setPop1] = useState(true);
+    const [loading, setLoading] = useState(false); 
+ 
     return (
 
         <div className="dashboard_container">
 
             {/*---------------navigation---------------*/}
 
-            <Navigation></Navigation>
+            <div className="dashboard_navigation">
+                <ul>
+                    <li>
+                        <Link to="/dashboard">
+                            <p class="hovertext" data-hover="Home"><FaHome size="2rem" color='white'></FaHome><p></p></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/Total_number_of_vehicle">
+                            <p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/tracking">
+                            <p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/avialable_trip">
+                            <p className="hovertext" data-hover="Trip Management"><BiTrip color='#00cc44' size="2rem" ></BiTrip></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/users">
+                            <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='white'></FaUsers></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/accident">
+                            <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/report">
+                            <p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/Company_registration">
+                            <p class="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" color='white'></FaRegIdCard></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/message_overview">
+                            <p class="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
+                    </li>
+                    <li>
+                        <Link to="/settings">
+                            <p class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='white'></AiFillSetting></p>
+                        </Link>
+                    </li>
+                </ul>
+            </div>
 
             {/* ---------------header--------------- */}
 
@@ -81,54 +165,129 @@ export default function () {
             <section className='register'>
 
                 <div className='company_individual_header'>
-                    <p ><h1 className='nmn'>Trip History</h1></p>
-                    <p ></p>
+                    <Link style={{ textDecoration: 'none' }} to="/avialable_trip"><p><h1 className='nmnn'>Avialable Trip</h1></p></Link>
+                    <Link style={{ textDecoration: 'none' }} to="/trip_history"><p><h1 className='nmn'>Trip History</h1></p></Link>
                 </div>
 
                 <form className='form' onSubmit={handleSubmit(onSubmit)}>
                     <div className='allDiv'>
-                        <div className='trip_date'> <input placeholder='Search...' className='trip_date1' type="date" /><button>Search</button></div>
+                        <div className='trip_date'>
 
-                       <div className='setTrip'> 
-                            <div className='avilabel_trips' >
-                                <p><lable>Total Travel Time : <b>123km/hr</b></lable></p>
-                                <p><lable>Avarage Speed : <b>Abebe Alemu</b></lable></p>
-                                <p><lable>Start Date/Time : <b>Tractor</b></lable></p>
-                                <p><lable>End Date/Time  : <b>12/02/2022</b></lable></p>
-                            </div>
+                            <>
+                                <input onChange={(e) => {
+                                    setSearch(e.target.value)
+                                    // nandu()
+
+                                }} placeholder='Search...' className='trip_date1' type="date" /><button>Search</button>
+                            </>
+
                         </div>
-                        <div className='setTrip'> 
+                        {loading ? 
+                        <p>jjjj</p>
+                      
+                        : <div className='setTrip' id='myInput'>
+                                 
+                                {
+                                total[0]
+                                
+                                
+                                    .filter((item) => {
+                                        return search.toLowerCase() === ''
+                                            ? item
+                                            : item.date.toLowerCase().includes(search);
+                                         
+                                    }) 
+                                    .map(item => (
+                                        <>
+                                            <div className='avilabel_trips' >
+
+                                                <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
+                                                <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
+                                                <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
+                                                <p><lable>Current Location : <b>{item.date} </b></lable></p>
+                                                {/* { setResult(item.id)} */}
+
+                                            </div>
+                                            <div className='borderBottom'></div>
+
+                                        </>
+
+                                    ))}
+
+                            </div> 
+                             }
+
+
+                        {/* <div className='setTrip'>
                         <div className='avilabel_trips' >
-                                <p><lable>Total Travel Time : <b>123km/hr</b></lable></p>
-                                <p><lable>Avarage Speed : <b>Abebe Alemu</b></lable></p>
-                                <p><lable>Start Date/Time : <b>Tractor</b></lable></p>
-                                <p><lable>End Date/Time  : <b>12/02/2022</b></lable></p>
+                                {total[0].map(item => (
+                                    <>
+                                        <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
+                                        <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
+                                        <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
+                                        <p><lable>Current Location : <b>{item.location}</b></lable></p>
+                                    </>
+                                ))}
+                            </div>
+                            <div className='set_history'>
+                                <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
+                                <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p>
                             </div>
                         </div>
-                        <div className='setTrip'> 
+
+                        <div className='setTrip'>
                         <div className='avilabel_trips' >
-                                <p><lable>Total Travel Time : <b>123km/hr</b></lable></p>
-                                <p><lable>Avarage Speed : <b>Abebe Alemu</b></lable></p>
-                                <p><lable>Start Date/Time : <b>Tractor</b></lable></p>
-                                <p><lable>End Date/Time  : <b>12/02/2022</b></lable></p>
+                                {total[0].map(item => (
+                                    <>
+
+                                        <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
+                                        <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
+                                        <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
+                                        <p><lable>Current Location : <b>{item.location}</b></lable></p>
+                                    </>
+                                ))}
+                            </div>
+                            <div className='set_history'>
+                                <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
+                                <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p>
                             </div>
                         </div>
-                        <div className='setTrip'> 
+
+                        <div className='setTrip'>
                         <div className='avilabel_trips' >
-                                <p><lable>Total Travel Time : <b>123km/hr</b></lable></p>
-                                <p><lable>Avarage Speed : <b>Abebe Alemu</b></lable></p>
-                                <p><lable>Start Date/Time : <b>Tractor</b></lable></p>
-                                <p><lable>End Date/Time  : <b>12/02/2022</b></lable></p>
+                                {total[0].map(item => (
+                                    <>
+
+                                        <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
+                                        <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
+                                        <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
+                                        <p><lable>Current Location : <b>{item.location}</b></lable></p>
+                                    </>
+                                ))}
+                            </div>
+                            <div className='set_history'>
+                                <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
+                                <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p>
                             </div>
                         </div>
-                        <div className='setTrip'> 
-                        <div className='avilabel_trips' >
-                                <p><lable>Total Travel Time : <b>123km/hr</b></lable></p>
-                                <p><lable>Avarage Speed : <b>Abebe Alemu</b></lable></p>
-                                <p><lable>Start Date/Time : <b>Tractor</b></lable></p>
-                                <p><lable>End Date/Time  : <b>12/02/2022</b></lable></p>
+
+                        <div className='setTrip'>
+                           <div className='avilabel_trips' >
+                                {total[0].map(item => (
+                                    <>
+
+                                        <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
+                                        <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
+                                        <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
+                                        <p><lable>Current Location : <b>{item.location}</b></lable></p>
+                                    </>
+                                ))}
                             </div>
-                        </div>
+                            <div className='set_history'>
+                                <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
+                                <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p>
+                            </div>
+                        </div> */}
                         {/* <div className='company_button'>
                             <button className='add'>Add</button>
                         </div> */}

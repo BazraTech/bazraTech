@@ -85,9 +85,7 @@ export default function () {
 
     <div className="vehicle_container">
 
-      {/*---------------navigation---------------*/}
-
-      <div className="company_navigation">
+      <div className="dashboard_navigation">
         <ul>
           <li>
             <Link to="/dashboard">
@@ -105,14 +103,8 @@ export default function () {
             </Link>
           </li>
           <li>
-            <Link to="#">
-              <p onClick={handleClickopen} class="hovertext" data-hover="Trip Management"><SiGoogletagmanager size="1.8rem" color='white'></SiGoogletagmanager></p>
-            </Link>
-            <Link to="/set_trip">
-              {popup ? <p class="hovertext trip" data-hover="Set Trip"><SiTripdotcom size="2rem" margin-left='20px' color='00cc44'></SiTripdotcom></p> : ""}
-            </Link>
-            <Link to="/trip_history">
-              {popup ? <p class="hovertext trip" data-hover="Trip History"><BiTrip size="2rem" color='#00cc44'></BiTrip></p> : ""}
+            <Link to="/avialable_trip">
+              <p className="hovertext" data-hover="Trip Management"><BiTrip color='white' size="2rem" ></BiTrip></p>
             </Link>
           </li>
           <li>
@@ -121,7 +113,7 @@ export default function () {
             </Link>
           </li>
           <li>
-            <Link to="/alert">
+            <Link to="/accident">
               <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
             </Link>
           </li>
@@ -137,14 +129,11 @@ export default function () {
           </li>
           <li>
             <Link to="/message_overview">
-              <p class="hovertext" data-hover="Communication">
-                <BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
+              <p class="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
             </Link>
           </li>
           <li>
-            <Link to="#">
-              <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
-            </Link>
+            <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
           </li>
           <li>
             <Link to="/settings">
@@ -166,7 +155,7 @@ export default function () {
             <h4>Total Vehicle</h4>
             <p><AiFillCar size="2.3rem" ></AiFillCar><b>100</b></p>
 
-          </div></Link> 
+          </div></Link>
           <Link style={{ textDecoration: 'none' }} to="/on_route"><div className='activeNav' >
             <h4>On Route</h4>
             <p><FaRoute size="2.2rem" ></FaRoute><b>100</b></p>
@@ -187,7 +176,7 @@ export default function () {
 
         {/* --------------- search --------------- */}
 
-        <div className='vehicle_search'>
+        <div className='vehicle_search1'>
           <p title='search'>
             <BsSearch className='icn' size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
             <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
@@ -195,12 +184,12 @@ export default function () {
           </p>
         </div>
 
-        <div className='vehicle_filter'>
+        {/* <div className='vehicle_filter'>
           <p>
             <AiFillFilter className='fil' size="0.8rem" color='rgb(63, 63, 63)'></AiFillFilter>
             <h6>Filter</h6>
           </p>
-        </div>
+        </div> */}
 
         {/* --------------------- Table ------------------- */}
 

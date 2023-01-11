@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import swal from "sweetalert";
 
-export default function PopUp({title}) {
+export default function PopUp(props) {
 
     const [popup, setPop] = useState(false);
 
@@ -13,6 +13,7 @@ export default function PopUp({title}) {
     const closePopup = () => {
         setPop(false);
     }
+    const title = props.title
 
     const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
 
@@ -21,24 +22,24 @@ export default function PopUp({title}) {
     const onSubmit = (data) => {
         console.log(data);
         if (title === 'Add_Notification') {
-            Add_Notification();  
+            Add_Notification();
         }
         if (title === 'Add_Vehicle_Condition') {
-            Add_Vehicle_Condition(); 
+            Add_Vehicle_Condition();
         }
         if (title === 'Add_vehicle_category') {
-            Add_vehicle_category(); 
+            Add_vehicle_category();
         }
         if (title === 'Add_company_sector') {
-            Add_company_sector(); 
+            Add_company_sector();
         }
-       
+
     };
     const [notifications, setNotification] = useState("");
     const notification = notifications;
     const vehicleConditon = notifications;
-    const vehicleCatagory= notifications;
-    const companysector= notifications;
+    const vehicleCatagory = notifications;
+    const companysector = notifications;
     // const handleClick = (e) => {
     //     signupxx();
     // };
@@ -116,7 +117,7 @@ export default function PopUp({title}) {
             console.error(error);
         }
     }
-    
+
 
     async function Add_Vehicle_Condition() {
         let item =
@@ -231,13 +232,13 @@ export default function PopUp({title}) {
     }
 
 
-    return (
+    return ( 
 
-    <>
-    <div>
-        <div className='add_notification' onClick={handleClickopen}>{title}</div>
-    </div>
+        <>
             <div>
+                <div className='add_notification' onClick={handleClickopen}>{title}</div>
+            </div>
+            {/* <div>
                 {popup ?
                     <div className='popup_modal'>
                         <div className='popup_close_button'>
@@ -265,8 +266,29 @@ export default function PopUp({title}) {
 
                     </div> : ""}
 
-            </div>
-            </>
+            </div> */}
+            <div>
+                {popup ?
+                    <div>
+                        <div className='popup0'> 
+                            <div className='popup-innerq'>
+                                <div onClick={closePopup} className='close'>X</div>
+                                <div className='fgf'>
+                                    <h2 className='mnm'>{title}</h2>
+                                    <form className='form'  onSubmit={handleSubmit(onSubmit)}>
+                                    <input placeholder={title}></input>
+                                    <div className='send_button'>
+                                        <button className='popup_add'>Add</button>
+                                        <button onClick={closePopup} className='popup_cancle'>Cancle</button>
+                                    </div>
+                                    </form>
+                                </div>
 
-            )
+                            </div>
+                        </div>
+                    </div> : ""}
+            </div>
+        </>
+
+    )
 }

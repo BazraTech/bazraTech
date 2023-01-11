@@ -32,6 +32,7 @@ import { SiGoogletagmanager } from "react-icons/si";
 import { BiTrip } from "react-icons/bi";
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
+import swal from "sweetalert";
 
 
 export default function () {
@@ -56,6 +57,10 @@ export default function () {
                     tr[i].style.display = "";
                 } else {
                     tr[i].style.display = "none";
+                    // swal("Successful", "Successful Added", "error", {
+                    //     buttons: false,
+                    //     timer: 2000,
+                    //   })
                 }
             }
         }
@@ -146,14 +151,14 @@ export default function () {
                         <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
                         <button>Search</button>
                     </p>
-                </div>
+                </div> 
 
-                <div className='filter'>
+                {/* <div className='filter'>
                     <p>
                         <AiFillFilter className='fil' size="0.8rem" color='rgb(63, 63, 63)'></AiFillFilter>
                         <h6>Filter</h6>
                     </p>
-                </div>
+                </div> */}
 
                 {/* --------------------- Table ------------------- */}
                 <div>

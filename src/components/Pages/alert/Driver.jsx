@@ -60,7 +60,7 @@ export default function () {
         <div className="alert_container">
 
             {/*---------------navigation---------------*/}
-            <div className="company_navigation">
+            <div className="dashboard_navigation">
                 <ul>
                     <li>
                         <Link to="/dashboard">
@@ -78,14 +78,8 @@ export default function () {
                         </Link>
                     </li>
                     <li>
-                        <Link to="#">
-                            <p onClick={handleClickopen} class="hovertext" data-hover="Trip Management"><SiGoogletagmanager size="1.8rem" color='white'></SiGoogletagmanager></p>
-                        </Link>
-                        <Link to="/set_trip">
-                            {popup ? <p class="hovertext trip" data-hover="Set Trip"><SiTripdotcom size="2rem" margin-left='20px' color='00cc44'></SiTripdotcom></p> : ""}
-                        </Link>
-                        <Link to="/trip_history">
-                            {popup ? <p class="hovertext trip" data-hover="Trip History"><BiTrip size="2rem" color='#00cc44'></BiTrip></p> : ""}
+                        <Link to="/avialable_trip">
+                            <p className="hovertext" data-hover="Trip Management"><BiTrip color='white' size="2rem" ></BiTrip></p>
                         </Link>
                     </li>
                     <li>
@@ -94,8 +88,8 @@ export default function () {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/alert">
-                            <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='00cc44'></HiBellAlert></p>
+                        <Link to="/accident">
+                            <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='#00cc44'></HiBellAlert></p>
                         </Link>
                     </li>
                     <li>
@@ -110,14 +104,11 @@ export default function () {
                     </li>
                     <li>
                         <Link to="/message_overview">
-                            <p class="hovertext" data-hover="Communication">
-                                <BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
+                            <p class="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
                         </Link>
                     </li>
                     <li>
-                        <Link to="#">
-                            <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
-                        </Link>
+                        <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
                     </li>
                     <li>
                         <Link to="/settings">

@@ -30,7 +30,7 @@ export default function Navigation() {
         if (location.pathname === curr) {
             return '#00cc44'
         }
-        
+
         else {
             return 'white'
         }
@@ -38,9 +38,15 @@ export default function Navigation() {
     return (
         <div>
             <div className="All_navigation">
+
+                {/* <Link to="/dashboard" style={{ color: getColor('/dashboard') }}>
+                    <p className="hovertext" data-hover="Home"><FaHome size="2rem" ></FaHome></p>
+                </Link> */}
                 <ul>
+
+                    {/* <br></br> */}
                     <li>
-                        <Link to="/dashboard" style={{ color: getColor('/dashboard')  }}>
+                        <Link to="/dashboard" style={{ color: getColor('/dashboard') }}>
                             <p className="hovertext" data-hover="Home"><FaHome size="2rem" ></FaHome></p>
                         </Link>
                     </li>
@@ -56,15 +62,7 @@ export default function Navigation() {
                     </li>
                     <li>
                         <Link to="/avialable_trip" style={{ color: getColor('/avialable_trip') }}>
-                            <p onClick={handleClickopen} className="hovertext" data-hover="Trip Management"><SiGoogletagmanager size="1.8rem" ></SiGoogletagmanager></p>
-                        </Link>
-
-                        <Link to="/avialable_trip" style={{ color: getColor('/avialable_trip') }}>
-                            {popup ? <p className="hovertext trip" data-hover="Set Trip"><SiTripdotcom size="2rem" margin-left='20px'></SiTripdotcom></p> : ""}
-                        </Link>
-
-                        <Link to="/trip_history" style={{ color: getColor('/trip_history') }}>
-                            {popup ? <p className="hovertext trip" data-hover="Trip History"><BiTrip size="2rem" ></BiTrip></p> : ""}
+                            <p onClick={handleClickopen} className="hovertext" data-hover="Trip Management"><BiTrip size="2rem" ></BiTrip></p>
                         </Link>
 
                     </li>
@@ -79,19 +77,19 @@ export default function Navigation() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/report"  style={{ color: getColor('/report') }}>
+                        <Link to="/report" style={{ color: getColor('/report') }}>
                             <p className="hovertext" data-hover="Report"><HiDocumentReport size="2rem" ></HiDocumentReport>
                             </p>
                         </Link>
                     </li>
                     <li>
-                        <Link to="/Company_registration"  style={{ color: getColor('/Company_registration') }}>
+                        <Link to="/Company_registration" style={{ color: getColor('/Company_registration') }}>
                             <p className="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" ></FaRegIdCard></p>
                         </Link>
                         {/* <Link to="/individual"  style={{ color: getColor('/individual') }}><p>gg</p></Link> */}
                     </li>
                     <li>
-                        <Link to="/message_overview"  style={{ color: getColor('/message_overview') }}>
+                        <Link to="/message_overview" style={{ color: getColor('/message_overview') }}>
                             <p className="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" ></BsFillChatDotsFill></p>
                         </Link>
                     </li>
@@ -101,7 +99,7 @@ export default function Navigation() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/settings"  style={{ color: getColor('/settings') }}>
+                        <Link to="/settings" style={{ color: getColor('/settings') }}>
                             <p className="hovertext" data-hover="Setting"><AiFillSetting size="2rem" ></AiFillSetting></p>
                         </Link>
                     </li>

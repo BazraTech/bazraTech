@@ -64,7 +64,7 @@ export default function () {
         }
         else {
             return 'white'
-        } 
+        }
 
     }
 
@@ -84,7 +84,7 @@ export default function () {
 
             <div className='main_content'>
                 <div className='vehicle_contents'>
-                   <Link to="/Total_number_of_vehicle" style={{ textDecoration: 'none' }}> <div className='activeNav '>
+                    <Link to="/Total_number_of_vehicle" style={{ textDecoration: 'none' }}> <div className='activeNav '>
                         <h4>Total Vehicle</h4>
                         <p><AiFillCar size="2.3rem"></AiFillCar><b>100</b></p>
 
@@ -96,23 +96,23 @@ export default function () {
                     </div></Link>
 
                     <Link style={{ textDecoration: 'none' }} to="/on_stock">
-                    <div className='parked'>
-                        <h4>On Stock</h4>
-                        <p><FaParking size="2rem" ></FaParking><b>10</b></p>
-                    </div>
+                        <div className='parked'>
+                            <h4>On Stock</h4>
+                            <p><FaParking size="2rem" ></FaParking><b>10</b></p>
+                        </div>
                     </Link>
 
                     <Link style={{ textDecoration: 'none' }} to="/maintenance">
-                    <div className='maintenance'>
-                        <h4>Maintenance</h4>
-                        <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>10</b></p>
-                    </div>
+                        <div className='maintenance'>
+                            <h4>Maintenance</h4>
+                            <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>10</b></p>
+                        </div>
                     </Link>
                 </div>
 
                 {/* --------------- search --------------- */}
 
-                <div className='vehicle_search'>
+                <div className='vehicle_search1'>
                     <p title='search'>
                         <BsSearch className='icn' size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
                         <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
@@ -120,12 +120,12 @@ export default function () {
                     </p>
                 </div>
 
-                <div className='vehicle_filter'>
+                {/* <div className='vehicle_filter'>
                     <p>
                         <AiFillFilter className='fil' size="0.8rem" color='rgb(63, 63, 63)'></AiFillFilter>
                         <h6>Filter</h6>
                     </p>
-                </div>
+                </div> */}
 
                 {/* --------------------- Table ------------------- */}
 
@@ -137,37 +137,37 @@ export default function () {
                 </div>
 
                 <div className='outer_vehicle_tables' id='myTable'>
-        <p>Total Vehicle</p>
+                    <p>Total Vehicle</p>
 
-        <table class="vehicle_table" id="myTable">
+                    <table class="vehicle_table" id="myTable">
 
-          <thead>
-            <tr>
-              <th>Profile</th>
-              <th>Assigned Driver</th>
-              <th>Vehicle ID</th>
-              <th>Vehicle Type</th>
-              <th>Plate Number</th>
-              <th>Detail</th>
-              <th>Tracking</th>
-            </tr>
-          </thead>
-          <tbody>
-            {total[0].map(item => (
-              <tr className='active_row'>
+                        <thead>
+                            <tr>
+                                <th>Profile</th>
+                                <th>Assigned Driver</th> 
+                                <th>Vehicle ID</th>
+                                <th>Vehicle Type</th>
+                                <th>Plate Number</th>
+                                <th>Detail</th>
+                                <th>Tracking</th>
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            {total[0].map(item => (
+                                <tr className='active_row'>
 
-                <td>{item.user}</td>
-                <td>{item.assignedDriver}</td>
-                <td>{item.vehicleId}</td>
-                <td>{item.vehicleType}</td>
-                <td>{item.planeNumber}</td>
-                <td><Link to="/vehicle_detail"><button className="button">Detail</button></Link></td>
-                <td><Link to="/tracking"><button>Tracking</button></Link></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                                    <td>{item.user}</td>
+                                    <td>{item.assignedDriver}</td>
+                                    <td>{item.vehicleId}</td>
+                                    <td>{item.vehicleType}</td>
+                                    <td>{item.planeNumber}</td>
+                                    <td><Link to="/vehicle_detail"><button>Detail</button></Link></td>
+                                    <td><Link to="/tracking"><button>Tracking</button></Link></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
         </div >

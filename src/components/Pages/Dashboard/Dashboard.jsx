@@ -49,9 +49,8 @@ export default function Dashboard() {
     const handleClickopen1 = () => {
         setPop1(!popup1);
     }
-    const handleClickopen2 = () => {
-        setPop1(popup = false);
-    }
+   
+
     // const [data, setdata] = useState("");  
     // const zz = localStorage.getItem("tuser");
     // const [username, setUsername] = useState(""); 
@@ -109,19 +108,19 @@ export default function Dashboard() {
                     <p><Link to="/report">
                         <div className='report'>
                             <h4>Report</h4>
-                            <HiDocumentReport size="3rem" color='#005c99'></HiDocumentReport>
+                            <HiDocumentReport size="3rem" color='#005c99'></HiDocumentReport> 
                         </div>
                     </Link> </p>
-                    <p><Link to="/alert">
+                    <p><Link to="/accident">
                         <div className='alert'>
                             <h4>Alert</h4>
-                            <HiBellAlert size="3rem" color='#ff0000'></HiBellAlert>
+                            <HiBellAlert size="3rem" color='#F80404'></HiBellAlert> 
                         </div>
                     </Link></p>
                     <p><Link to="/tracking">
                         <div className='tracking'>
                             <h4>Real Time Tracking</h4>
-                            <RiGpsFill size="3rem" color='#404040'></RiGpsFill>
+                            <RiGpsFill size="3rem" color='#404040'></RiGpsFill> 
                         </div>
                     </Link></p>
                 </div>
@@ -129,6 +128,7 @@ export default function Dashboard() {
 
             {/* ---------------end contents--------------- */}
 
+           
 
         </div>
 

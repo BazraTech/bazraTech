@@ -12,21 +12,36 @@ import swal from "sweetalert";
 export default function SignIn() {
 
 
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	  } = useForm();
-	  const onSubmit = (data) => {
-		console.log(data);
-		login();
-	  
-	  };
+	// const {
+	// 	register,
+	// 	handleSubmit,
+	// 	formState: { errors },
+	//   } = useForm();
+	//   const onSubmit = (data) => {
+	// 	console.log(data);
+	// 	validation();
+		
+		
+	//   };
 
-		const history = useNavigate(); 
+		// const history = useNavigate(); 
 		const [username, setUsername] = useState(""); 
 		const [password, setPassword] = useState("");
-		const [data, setdata] = useState("");  
+		const [data, setdata] = useState(""); 
+		const [error, setError] = useState(false);   
+
+		const validation =(e) =>{
+			e.preventDefault();
+
+			if(username.length==0|| password.length==0) {
+				setError(true);
+			}
+
+			if (username&&password) {
+				login();
+			} 
+		}
+
 		useEffect(() => {
 
 		}, []);
@@ -54,7 +69,7 @@ export default function SignIn() {
 
 				localStorage.setItem("user", JSON.stringify(result["user"]));
 
-				const user = localStorage.getItem("user");
+				const user = localStorage.getItem("user"); 
 				
 			
 
@@ -75,11 +90,11 @@ export default function SignIn() {
 						localStorage.getItem("user");
 						localStorage.setItem("jwt", JSON.stringify(result["jwt"]));
 						localStorage.getItem("jwt");
-						window.location.href = "/dashboard";
+						window.location.href = "/dashboard"; 
 					
 						
 					}).finally(() => {
-						// setLoading(false)
+						// setLoading(false) 
 					});
 				} else {
 					// setLoading(false)
@@ -106,11 +121,6 @@ export default function SignIn() {
 		// }
 
 
-
-
-
-
-
 		// const [name, setName] = useState("")
 		// const [pass, setPasword] = useState("")
 		// const { watch, formState} = useForm();
@@ -127,25 +137,25 @@ export default function SignIn() {
 
 				{/*-------------- Login page Form ---------------*/}
 
-				<div className="signup_container">
+				<div className="signup_container"> 
 					<div className="signup_contact-box">
 						<div className="signup_left">
 						</div>
 						<div className="signup_right">
-							<form className="signup_right" onSubmit={handleSubmit(onSubmit)}>
+							<form className="signup_right" onSubmit={validation}>
 								<h2>Welcome To Bazra</h2>
 								<lable><b>User Name</b></lable>
-								<input type="username" className="signup_input_field" {...register("username", { required: true })} placeholder="Username" onChange={(e) => setUsername(e.target.value)} name="username"></input>
-								{errors.username?.type === "required" && <span className='validate_text' >please enter your username</span>}
+								<input type="username" className="signup_input_field" placeholder="Username" onChange={e => setUsername(e.target.value)} name="username"></input>
+								{error&&username.length<=0 ? <span className='validateText' >please enter your username</span> :""}
 
 								<lable><p><b>Password</b></p></lable>
-								<input type="password" className="signup_input_field" {...register("password", { required: true })} placeholder="Password" onChange={(e) => setPassword(e.target.value)} name="password"></input>
-								{errors.password?.type === "required" && <span className='validate_text' >please enter your password </span>}
+								<input type="password" className="signup_input_field"  placeholder="Password" onChange={e => setPassword(e.target.value)} name="password"></input>
+								{error&&password.length<=0 ? <span className='validateText' >please enter your password</span> :""}
 								<div className='for'>
 									<b><a href='#' className='signup_forget'>Forget Password?</a></b>
 								</div>
 								<nav>
-									<button className="signup_button" onSubmit={onSubmit}>Sign In</button>
+									<button className="signup_button">Sign In</button>
 								</nav>
 							</form>
 						</div>

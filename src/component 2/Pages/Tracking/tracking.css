@@ -1,0 +1,109 @@
+
+/* ------------------ search ------------------- */
+
+.map_search {
+    margin-left: 60%;
+    padding-top: 40px;
+}
+
+.hide {
+    display: none;
+}
+
+.map_search p {
+    display: flex;
+}
+
+.map_search p .iiicn {
+    margin-top: 8px;
+}
+
+.map_search input {
+    width: 61%;
+    height: 38px;
+    padding-left: 20px;
+    border-radius: 6px 0px 0px 6px;
+    outline: none;
+    border: 1px solid rgb(0, 0, 0);
+    margin-left: 10px;
+}
+
+.map_search p button {
+    width: 15%;
+    background-color: #222;
+    color: var(--white);
+    border-radius: 0px 7px 7px 0px;
+    border: none;
+}
+
+.map_search p button:hover {
+    background-color: rgb(67, 67, 67);
+    border: none;
+}
+
+/* -------------------Place for map --------------------- */
+
+.m-mapclone {
+    box-shadow: 0px 0px 11px -1px #000000; 
+    border-radius: 2%;
+    margin-top: 2%;
+    margin-left: 8%;
+    margin-right: 7%;
+    margin-bottom: 1%;
+    height: 420px;
+}
+
+.m-mapclone p .mapsize {
+    width: 100%;
+    height: 100%;
+}
+.track_history{
+    background-color: #000000;
+    color: white;
+    padding: 6px;
+    margin-left: 83%;
+    border-radius: 7px;
+}
+
+@media screen and (max-width: 750px) {
+    .m-mapclone {
+        margin-left: 17%;
+    }
+
+}
+
+
+@media screen and (max-width: 610px) {
+    .m-search {
+        margin-right: 10%;
+    }
+
+    .m-search p button {
+        width: 29%;
+    }
+
+    .m-ion{
+        size: 0.5rem;
+    }
+
+    .m-mapclone {
+        margin-left: 24%;
+    }
+    .menu_controler {
+        display: contents;
+    }
+
+    .tracking_header .header_title {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .m-search {
+        margin-right: 10%;
+    }
+
+    .m-mapclone {
+        margin-left: 25%;
+    }
+}

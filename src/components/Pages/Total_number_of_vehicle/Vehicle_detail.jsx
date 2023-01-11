@@ -54,72 +54,63 @@ export default function Users_edit() {
 
                 {/*---------------navigation---------------*/}
 
-                <div className="company_navigation">
-                    <ul>
-                        <li>
-                            <Link to="/dashboard">
-                                <p class="hovertext" data-hover="Home"><FaHome size="2rem" color='white'></FaHome><p></p></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/Total_number_of_vehicle">
-                                <p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='00cc44'></AiFillCar></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/tracking">
-                                <p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="#">
-                                <p onClick={handleClickopen} class="hovertext" data-hover="Trip Management"><SiGoogletagmanager size="1.8rem" color='white'></SiGoogletagmanager></p>
-                            </Link>
-                            <Link to="/set_trip">
-                                {popup ? <p class="hovertext trip" data-hover="Set Trip"><SiTripdotcom size="2rem" margin-left='20px' color='00cc44'></SiTripdotcom></p> : ""}
-                            </Link>
-                            <Link to="/trip_history">
-                                {popup ? <p class="hovertext trip" data-hover="Trip History"><BiTrip size="2rem" color='#00cc44'></BiTrip></p> : ""}
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/users">
-                                <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='white'></FaUsers></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/alert">
-                                <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/report">
-                                <p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/Company_registration">
-                                <p class="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" color='white'></FaRegIdCard></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/message_overview">
-                                <p class="hovertext" data-hover="Communication">
-                                    <BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="#">
-                                <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/settings">
-                                <p class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='white'></AiFillSetting></p>
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
+                <div className="dashboard_navigation">
+                <ul>
+                    <li>
+                        <Link to="/dashboard">
+                            <p class="hovertext" data-hover="Home"><FaHome size="2rem" color='white'></FaHome><p></p></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/Total_number_of_vehicle">
+                            <p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='#00cc44'></AiFillCar></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/tracking">
+                            <p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/avialable_trip">
+                            <p className="hovertext" data-hover="Trip Management"><BiTrip color='white' size="2rem" ></BiTrip></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/users">
+                            <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='white'></FaUsers></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/accident">
+                            <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/report">
+                            <p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/Company_registration">
+                            <p class="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" color='white'></FaRegIdCard></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/message_overview">
+                            <p class="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
+                    </li>
+                    <li>
+                        <Link to="/settings">
+                            <p class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='white'></AiFillSetting></p>
+                        </Link>
+                    </li>
+                </ul>
+            </div>
 
 
                 {/* --------------- Vehicle header --------------- */}
@@ -146,13 +137,14 @@ export default function Users_edit() {
                     <form className='form'>
 
                     <div className='allDiv'>
-                        <div className='second_div'>
+                        <button className='addToMaintenace'>Add To Maintenance</button>
+                        <div className='second_div1'>
                             <div className='registerd_vehicle'><h1></h1></div>
                             {/* <h1>Company Information</h1> */}
                             <div className='vehicle_information1'>
                             
                                 <div>
-                                    <p>Vehicle Catagory </p>
+                                    <p>Vehicle Catagory </p> 
                                     <select className='select' disabled={diabled}>
                                         <option selected disabled>Long</option>
                                         <option>Select Vecicle Catagory</option>
