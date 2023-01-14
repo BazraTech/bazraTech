@@ -14,7 +14,7 @@ import { FiLogOut } from "react-icons/fi";
 import { FaStarOfLife } from 'react-icons/fa';
 import './users_edit.css';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { HiMenuAlt1 } from "react-icons/hi";
 import { useState, useEffect } from 'react';
 import { SiTripdotcom } from "react-icons/si";
@@ -24,9 +24,9 @@ import Header from '../../Header/Header';
 import { total } from './Data/jsonData';
 import { on_route } from './Data/Data';
 import { parked } from './Data/Data';
-import {dataSource} from './Tables'
 
-export default function Users_edit( props) {
+export default function Users_edit() {
+ 
 
     const [state, setState] = useState(false);
     //const [companyType, setCompantType] = useState("");
@@ -34,8 +34,7 @@ export default function Users_edit( props) {
     // state = {
     //     diabled: true
     // }
-    const xx = props.show;
-    console.log(xx);
+
 
     const toggle = () => {
         setState(!state);
@@ -57,6 +56,65 @@ export default function Users_edit( props) {
         setState(state);
     }
 
+    const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
+
+    const options = {
+
+        headers: {
+            'Content-Type': 'application/json',
+            "Accept": "application/json",
+            "Authorization": `Bearer ${jwt}`
+        },
+
+    };
+
+
+    // const [Loading, setLoading] = useState(false)
+    const [totalPages, setTotalPage] = useState(1);
+    const [cc, setCc] = useState([]);
+    const [dataSource, setDataSource] = useState({
+        "id": '',
+        "phoneNumber": "",
+        "firstName": "",
+        "lastName": "",
+        "email": "",
+        "role": ""
+    })
+    const [dataSource2, setDataSource2] = useState([])
+    const [dataSource3, setDataSource3] = useState([])
+    const [dataSource4, setDataSource4] = useState([])
+
+    const [Loading, setLoading] = useState([]);
+    const { id, companyId } = useParams();
+
+    const url = `http://198.199.67.201:9090/Api/Admin/All/VehicleOwner/${id}`;
+    useEffect(() => {
+        setLoading(true)
+        fetch(url, options)
+            .then((response) => response.json())
+            .then((json) => {
+                setDataSource(json)
+                setDataSource2(json.companyInfo)
+                setDataSource3(json.companyInfo.sector)
+                setDataSource4(json.companyAddressINF)
+
+                console.log(json)
+                setLoading(false)
+            });
+    }, [])
+
+    // if (dataSource.firstName === dataSource.lastName) {
+    //     setIndividual(false);
+    // }
+    // else{
+    //     setIndividual(true);
+    // }
+    const [selecttag, setSelectTag] = useState(false)
+    const [inputtag, setinputTag] = useState(true)
+    const select = () => {
+        setSelectTag(!selecttag);
+        setinputTag(!inputtag);
+    }
 
 
     return (
@@ -137,37 +195,68 @@ export default function Users_edit( props) {
                         <p>Abebe</p>
                     </div> */}
 
+
+
                     <div className='company_individual_header'>
                         <p ><h1 className='nmn'>Company Detail</h1></p>
                         <p ><h4 className='vehicleDetail'>Name : Abebe Alemu <br /> User ID : BA 00001</h4></p>
                     </div>
                     <form className='form'>
+                        {/* {dataSource.map(item => { */}
 
                         <div className='allDiv'>
+                            {/* {dataSource.id=1 ? */}
+                            {/* {dataSource.id ==39?  */}
                             <div className='first_div'>
                                 <h1>Company Information</h1>
+                                <div className='company_button'>
+                                {/* <p className='addd' onClick={() => {
+                                    handleChange()
+                                    toggle()
+                                    select()
+                                }}>{state ? "Cancle" : "Edit"}</p>
+                                <br /> */}
+
+                            </div>
                                 <div className='company_information1'>
+                                    
                                     <div>
                                         <p>Company Name </p>
-                                        <input type="text" placeholder='Bazra Motors' disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource(e.target.value)} value={dataSource2.name} type="text" disabled={diabled}></input>
 
+                                    </div>
+                                    <div>
+                                        <p>Company type</p>
+                                        {inputtag ? <input onChange={(e) => setDataSource(e.target.value)} value={dataSource2.companyType} className='select' disabled={diabled}></input> : ""}
+                                        {selecttag ? <select  className='select' disabled={diabled}>
+                                            <option value='plc'>Set Company Type</option>
+                                            <option value='plc'>Public Llimited Company</option>
+                                            <option value='plc'>Public Llimited Company</option>
+                                        </select> : ""}
+                                        {/* <input onChange={(e) => setDataSource(e.target.value)} value={dataSource2.companyType} type="text" disabled={diabled}></input> */}
                                     </div>
                                     <div>
                                         <p>Company Sector </p>
-                                        <input type="text" placeholder='Motors' disabled={diabled}></input>
-                                    </div>
-                                    <div>
-                                        <p>Company Type </p>
-                                        <select disabled={diabled}>
+
+                                        {inputtag ? <input Value={dataSource3.sectorName} className='select' disabled={diabled}></input> : ""}
+                                        {selecttag ? <select  className='select' disabled={diabled}>
+                                            <option value='plc'>Selecet Company Sector</option>
+                                            <option value='plc'>Government</option>
+                                            <option value='plc'>Public Llimited Company</option>
+                                            <option value='plc'>Public Llimited Company</option>
+                                        </select> : ""}
+                                        {/* <select disabled={diabled} >
                                             <option value=''>Transport</option>
                                             <option value='plc'>Public Llimited Company</option>
                                             <option value='plc'>Government</option>
                                             <option value='plc'>Public Llimited Company</option>
                                             <option value='plc'>Public Llimited Company</option>
-                                        </select>
+                                        </select> */}
                                     </div>
                                 </div>
                             </div>
+                            {/* :""} */}
+
 
 
                             <div className='second_div'>
@@ -175,31 +264,31 @@ export default function Users_edit( props) {
                                 <div className='company_Address1'>
                                     <div>
                                         <p>Region </p>
-                                        <input placeholder="Addis Ababa" disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.region} disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Sub City </p>
-                                        <input placeholder="Bole" disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.subcity}  disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Specfic Location </p>
-                                        <input type="text" placeholder='Friendship' disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.specificLocation}  type="text" disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>City </p>
-                                        <input placeholder="Addis Ababa" disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.city} disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Woreda </p>
-                                        <input type="text" placeholder='18' disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.woreda}  type="text" disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>House Number </p>
-                                        <input type="text" placeholder='21/122' disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.houseNum}  type="text" disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Phone Number </p>
-                                        <input type="text" placeholder='0911893462' disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.phone} disabled type="text" ></input>
                                     </div>
                                 </div>
                             </div>
@@ -209,20 +298,20 @@ export default function Users_edit( props) {
                                 <div className='owner_information1'>
                                     <div>
                                         <p>First Name</p>
-                                        <input type="text" placeholder='Abebe' disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.firstName} type="text" disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Last Name </p>
-                                        <input type="text" placeholder='Abebe' disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.lastName} type="text" disabled={diabled}></input>
 
                                     </div>
                                     <div>
                                         <p>Phone Number</p>
-                                        <input type="text" placeholder='0911893462' disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.phoneNumber} type="text" disabled></input>
                                     </div>
                                     <div>
                                         <p>Email </p>
-                                        <input type="email" placeholder='xyz@gmail.com' disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.email} type="email" disabled></input>
                                     </div>
                                 </div>
                             </div>
@@ -232,7 +321,7 @@ export default function Users_edit( props) {
                                 <div className='additional_information1'>
                                     <div>
                                         <p>Notification Pereference</p>
-                                        <select className='select' disabled={diabled}>
+                                        <select className='select' disabled>
                                             <option value=''>SMS</option>
                                             <option value='plc'>Select Notification Preference</option>
                                             <option value='plc'>Select Notification Preference</option>
@@ -243,7 +332,7 @@ export default function Users_edit( props) {
                                     </div>
                                     <div>
                                         <p>Service Neded</p>
-                                        <select className='select' disabled={diabled}>
+                                        <select className='select' disabled>
                                             <option value=''>Tracking</option>
                                             <option value='plc'>Select Service Neded</option>
                                             <option value='plc'>Select Service Neded</option>
@@ -259,6 +348,7 @@ export default function Users_edit( props) {
                                 <p className='addd' onClick={() => {
                                     handleChange()
                                     toggle()
+                                    select()
                                 }}>{state ? "Cancle" : "Edit"}</p>
                                 <br />
                                 <button className='ad' disabled={diabled}>Update</button>
@@ -274,9 +364,9 @@ export default function Users_edit( props) {
                             ))} */}
 
                             <div className='outer_vehicle_tables0' id='myTable'>
-                            <div className='second_div'>
-                                <div className='registerd_vehicle_no'> <div className='Vehicle_number'><h1>Registerd Vehicle</h1><h1 className='number' >10</h1></div></div>
-                            </div>
+                                <div className='second_div'>
+                                    <div className='registerd_vehicle_no'> <div className='Vehicle_number'><h1>Registerd Vehicle</h1><h1 className='number' >10</h1></div></div>
+                                </div>
                                 <p>Registerd Vehicles</p>
 
                                 <table class="vehicle_table" id="myTable">
@@ -291,21 +381,21 @@ export default function Users_edit( props) {
                                             <th>Detail</th>
                                             <th>Tracking</th>
                                         </tr>
-                                    </thead> 
+                                    </thead>
                                     <tbody>
                                         {total[0]
-                                        .map(item => (
-                                            <tr className='active_row'>
+                                            .map(item => (
+                                                <tr className='active_row'>
 
-                                                <td>{item.user}</td>
-                                                <td>{item.assignedDriver}</td>
-                                                <td>{item.vehicleId}</td>
-                                                <td>{item.vehicleType}</td>
-                                                <td>{item.planeNumber}</td>
-                                                <td><Link to="/vehicle_detail"><button>Detail</button></Link></td>
-                                                <td><Link to="/tracking"><button>Tracking</button></Link></td>
-                                            </tr>
-                                        ))}
+                                                    <td>{item.user}</td>
+                                                    <td>{item.assignedDriver}</td>
+                                                    <td>{item.vehicleId}</td>
+                                                    <td>{item.vehicleType}</td>
+                                                    <td>{item.planeNumber}</td>
+                                                    <td><Link to="/vehicle_detail"><button>Detail</button></Link></td>
+                                                    <td><Link to="/tracking"><button>Tracking</button></Link></td>
+                                                </tr>
+                                            ))}
                                     </tbody>
                                 </table>
                             </div>
@@ -326,7 +416,9 @@ export default function Users_edit( props) {
                             </div>
                         </div>
 
-                        {/* </div> */}
+
+
+                        {/* })}  */}
 
                     </form>
 

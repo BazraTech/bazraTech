@@ -81,6 +81,48 @@ export default function () {
 
     }
 
+    const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
+
+  const options = {
+    headers: {
+      'Content-Type': 'application/json',
+      "Accept": "application/json",
+      "Authorization": `Bearer ${jwt}`
+    },
+
+  };
+
+  const url = "http://198.199.67.201:9090/Api/Vehicle/Status/inroute";
+  const [dataSource, setDataSource] = useState([])
+  const [Loading, setLoading] = useState([])
+  useEffect(() => {
+    setLoading(true);
+    fetch(url, options)
+      .then(respnse => respnse.json())
+      .then(data => {
+        setDataSource(data.inRoutelist)
+        console.log(dataSource)
+        setLoading(false);
+
+      })
+  }, [])
+
+  const url2 = "http://198.199.67.201:9090/Api/Vehicle/All";
+
+  const [dataSource2, setDataSource2] = useState([])
+  useEffect(() => {
+      setLoading(true);
+      fetch(url2, options)
+          .then(respnse => respnse.json())
+          .then(data => {
+              setDataSource2(data.vehicles)
+              console.log(dataSource2)
+              setLoading(false);
+
+          })
+  }, [])
+
+
     return (
 
         <div className="vehicle_container">
@@ -155,12 +197,12 @@ export default function () {
                 <div className='vehicle_contents'>
                     <Link to="/Total_number_of_vehicle" style={{ textDecoration: 'none' }}> <div className='total_vehicle1'>
                         <h4>Total Vehicle</h4>
-                        <p><AiFillCar size="2.3rem" color='black'></AiFillCar><b>100</b></p>
+                        <p><AiFillCar size="2.3rem" color='black'></AiFillCar><b>{dataSource2.length}</b></p>
 
                     </div></Link>
                     <Link to="/on_route"><div className='on_route' style={{ textDecoration: 'none' }}>
                         <h4>On Route</h4>
-                        <p><FaRoute size="2.2rem"></FaRoute><b>100</b></p>
+                        <p><FaRoute size="2.2rem"></FaRoute><b>{dataSource.length}</b></p>
                     </div></Link>
                     <Link to="/on_stock">
                         <div className='activeNav' style={{ textDecoration: 'none' }}>

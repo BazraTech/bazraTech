@@ -7,7 +7,7 @@ import { AiFillFilter } from "react-icons/ai";
 import { FaParking } from "react-icons/fa";
 import { GrSettingsOption } from "react-icons/gr";
 import { RiGpsFill } from "react-icons/ri";
-import { MdMonitor } from "react-icons/md";
+import { MdMonitor } from "react-icons/md"; 
 import { FaUsers } from "react-icons/fa";
 import { HiBellAlert } from "react-icons/hi2";
 import { HiDocumentReport } from "react-icons/hi";
@@ -19,9 +19,9 @@ import { useState, useEffect } from 'react';
 import { SiTripdotcom } from "react-icons/si";
 import { SiGoogletagmanager } from "react-icons/si";
 import { BiTrip } from "react-icons/bi";
-import { FiLogOut } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
-import './total_no_of_vehicle.css';
+import { FiLogOut } from "react-icons/fi";
+// import './total_no_of_vehicle.css';
 import { Link, NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { total } from './data/jsonData';
@@ -29,7 +29,7 @@ import { on_route } from './data/jsonData';
 import { parked } from './data/jsonData';
 import { maintenance } from './data/jsonData';
 import Header from '../../Header/Header';
-// import Navigation from '../Navigation/Navigation';
+import Navigation from '../Navigation/Navigation';
 
 
 
@@ -81,6 +81,48 @@ export default function () {
 
     }
 
+    const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
+
+  const options = {
+    headers: {
+      'Content-Type': 'application/json',
+      "Accept": "application/json",
+      "Authorization": `Bearer ${jwt}`
+    },
+
+  };
+
+  const url = "http://198.199.67.201:9090/Api/Vehicle/Status/inroute";
+  const [dataSource, setDataSource] = useState([])
+  const [Loading, setLoading] = useState([])
+  useEffect(() => {
+    setLoading(true);
+    fetch(url, options)
+      .then(respnse => respnse.json())
+      .then(data => {
+        setDataSource(data.inRoutelist)
+        console.log(dataSource)
+        setLoading(false);
+
+      })
+  }, [])
+
+  const url2 = "http://198.199.67.201:9090/Api/Vehicle/All";
+
+  const [dataSource2, setDataSource2] = useState([])
+  useEffect(() => {
+      setLoading(true);
+      fetch(url2, options)
+          .then(respnse => respnse.json())
+          .then(data => {
+              setDataSource2(data.vehicles)
+              console.log(dataSource2)
+              setLoading(false);
+
+          })
+  }, [])
+
+
     return (
 
         <div className="vehicle_container">
@@ -96,7 +138,7 @@ export default function () {
                     </li>
                     <li>
                         <Link to="/Total_number_of_vehicle">
-                            <p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='00cc44'></AiFillCar></p>
+                            <p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p>
                         </Link>
                     </li>
                     <li>
@@ -109,11 +151,11 @@ export default function () {
                             <p className="hovertext" data-hover="Trip Management"><BiTrip color='white' size="2rem" ></BiTrip></p>
                         </Link>
                     </li>
-                    {/* <li>
+                    <li>
                         <Link to="/users">
                             <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='white'></FaUsers></p>
                         </Link>
-                    </li> */}
+                    </li>
                     <li>
                         <Link to="/accident">
                             <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
@@ -121,57 +163,55 @@ export default function () {
                     </li>
                     <li>
                         <Link to="/report">
-                            <p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p>
+                            <p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='00cc44'></HiDocumentReport></p>
                         </Link>
                     </li>
-                    {/* <li>
+                    <li>
                         <Link to="/Company_registration">
                             <p class="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" color='white'></FaRegIdCard></p>
                         </Link>
-                    </li> */}
+                    </li>
                     <li>
                         <Link to="/message_overview">
                             <p class="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
                         </Link>
                     </li>
                     <li>
-                        <Link to="/Useruser_edit">
-                            <p className="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
-                        </Link>
+                        <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
                     </li>
-                    {/* <li>
+                    <li>
                         <Link to="/settings">
                             <p class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='white'></AiFillSetting></p>
                         </Link>
-                    </li> */}
+                    </li>
                 </ul>
             </div>
 
             {/* --------------- header --------------- */}
 
-            <Header title="Maintenance"></Header>
+            <Header title="On Stock"></Header>
 
             {/* --------------- users --------------- */}
 
-            <div className='main_content' >
+            <div className='main_content'>
                 <div className='vehicle_contents'>
-                    <Link to="/Total_number_of_vehicle" style={{ textDecoration: 'none' }}> <div className='total_vehicle1 '>
+                    <Link to="/report" style={{ textDecoration: 'none' }}> <div className='total_vehicle1'>
                         <h4>Total Vehicle</h4>
-                        <p><AiFillCar size="2.3rem"></AiFillCar><b>100</b></p>
+                        <p><AiFillCar size="2.3rem" color='black'></AiFillCar><b>{dataSource2.length}</b></p>
 
                     </div></Link>
-                    <Link to="/on_route"><div className='on_route' style={{ textDecoration: 'none' }} >
+                    <Link to="/ReportOn_route"><div className='on_route' style={{ textDecoration: 'none' }}>
                         <h4>On Route</h4>
-                        <p><FaRoute size="2.2rem"></FaRoute><b>100</b></p>
+                        <p><FaRoute size="2.2rem"></FaRoute><b>{dataSource.length}</b></p>
                     </div></Link>
-                    <Link to="/on_stock" style={{ textDecoration: 'none' }}>
-                        <div className='parked' >
+                    <Link to="/ReportOn_stock">
+                        <div className='activeNav' style={{ textDecoration: 'none' }}>
                             <h4>On Stock</h4>
-                            <p><FaParking size="2rem"></FaParking><b>10</b></p>
+                            <p><FaParking size="2rem" ></FaParking><b>10</b></p>
                         </div>
                     </Link>
-                    <Link style={{ textDecoration: 'none' }} to="/maintenance1">
-                        <div className='activeNav'>
+                    <Link style={{ textDecoration: 'none' }} to="/ReportMaintenance">
+                        <div className='maintenance'>
                             <h4>Maintenance</h4>
                             <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>10</b></p>
                         </div>
@@ -196,7 +236,7 @@ export default function () {
                 </div> */}
 
                 {/* --------------------- Table ------------------- */}
-
+ 
                 <div>
                     {/* {active === "total_vehicle" && <Tables datas={total} title=" Total Vehicle" />}
                     {active === "on_route" && <Tables datas={on_route} title=" On Route" />}
@@ -205,7 +245,7 @@ export default function () {
                 </div>
 
                 <div className='outer_vehicle_tables' id='myTable'>
-                    <p>Maintenance</p>
+                    <p>On Stock</p>
 
                     <table class="vehicle_table" id="myTable">
 
@@ -216,12 +256,12 @@ export default function () {
                                 <th>Vehicle ID</th>
                                 <th>Vehicle Type</th>
                                 <th>Plate Number</th>
-                                <th>Detail</th>
-                                <th>Tracking</th>
+                                <th>Report</th>
+                                <th>History</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {maintenance[0].map(item => (
+                            {parked[0].map(item => (
                                 <tr className='active_row'>
 
                                     <td>{item.user}</td>
@@ -229,8 +269,8 @@ export default function () {
                                     <td>{item.vehicleId}</td>
                                     <td>{item.vehicleType}</td>
                                     <td>{item.planeNumber}</td>
-                                    <td><Link to="/vehicle_detail"><button>Detail</button></Link></td>
-                                    <td><button>Remove</button></td>
+                                    <td><Link to={`/report_detail/${item.id}`}><button>Report</button></Link></td>
+                                    <td><Link to="/trip_history"><button>History</button></Link></td>
                                 </tr>
                             ))}
                         </tbody>

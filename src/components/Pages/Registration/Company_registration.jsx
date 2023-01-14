@@ -51,7 +51,7 @@ export default function Company_registration() {
     const handleClick = (e) => {
 
         registerCompany();
-
+ 
     };
     useEffect(() => {
     }, []);
@@ -75,7 +75,6 @@ export default function Company_registration() {
             email,
             notificationmedia,
             serviceRequired,
-
             vehicles: [
                 {
                     vehicleName,
@@ -87,6 +86,7 @@ export default function Company_registration() {
                     },
 
                     plateNumber,
+                    manufactureDate,
                 },
 
             ]
@@ -186,6 +186,28 @@ export default function Company_registration() {
             })
     }, [])
 
+    const urlFive = "http://198.199.67.201:9090/Api/Admin/All/Services";
+    const [dataSource5, setDataSource5] = useState([])
+    useEffect(() => {
+        fetch(urlFive, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource5(data.service)
+                console.log(dataSource4)
+            })
+    }, [])
+
+    const url5 = "http://198.199.67.201:9090/Api/Admin/All/CompanyType/";
+    const [dataSourc6, setDataSource6] = useState([])
+    useEffect(() => {
+        fetch(url5, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource6(data.companyTypes)
+                console.log(dataSource)
+            })
+    }, [])
+
     const [popup, setPop] = useState(false);
     const handleClickopen = () => {
         setPop(!popup);
@@ -264,8 +286,13 @@ export default function Company_registration() {
                                         {...register("companyType", { required: '*please choose company type' })}
                                         onChange={(e) => setCompantType(e.target.value)} >
                                         <option selected disabled value="">Select Conmpany Type</option>
-                                        <option>Individual</option>
-                                        <option>Company</option>
+                                        {
+                                            dataSourc6.map(item => {
+                                                return <>
+                                                    <option>{item.companyType}</option>
+                                                </>
+                                            })
+                                        }
                                     </select>
                                     {companyType <= 0 && errors.companyType && <span className='validate_text'>{errors.companyType.message}</span>}
                                 </div>
@@ -459,8 +486,13 @@ export default function Company_registration() {
                                         {...register("serviceRequired", { required: '*please choose service needed' })}
                                         onChange={(e) => setServiceNeeded(e.target.value)} >
                                         <option selected disabled value="">Select Service Needed</option>
-                                        <option>Trucking</option>
-                                        <option>Trucking and Marketing</option>
+                                        {
+                                            dataSource5.map(item => {
+                                                return <>
+                                                    <option>{item.service}</option>
+                                                </>
+                                            })
+                                        }
                                     </select>
                                     {serviceRequired <= 0 && errors.serviceRequired && <span className='validate_text'>{errors.serviceRequired.message}</span>}
                                 </div>

@@ -1,39 +1,23 @@
 import React from 'react'
 import { FaHome } from 'react-icons/fa';
 import { AiFillCar } from "react-icons/ai";
-import { RiGpsFill } from "react-icons/ri";
-import { MdMonitor } from "react-icons/md";
-import { FaUsers } from "react-icons/fa";
-import { HiBellAlert } from "react-icons/hi2";
-import { HiDocumentReport } from "react-icons/hi";
-import { FaRegIdCard } from 'react-icons/fa';
-import { BsFillChatDotsFill } from "react-icons/bs";
-import { FaUserAlt } from "react-icons/fa";
-import { AiFillSetting } from "react-icons/ai";
-import { FiLogOut } from "react-icons/fi";
 import { FaRoute } from "react-icons/fa";
 import { BsSearch } from "react-icons/bs";
 import { AiFillFilter } from "react-icons/ai";
-import { AiFillCaretDown } from "react-icons/ai";
-import { GrFormNext } from "react-icons/gr";
-import { GrFormPrevious } from "react-icons/gr";
 import { FaParking } from "react-icons/fa";
 import { GrSettingsOption } from "react-icons/gr";
-import { HiMenuAlt1 } from "react-icons/hi";
-import { SiTripdotcom } from "react-icons/si";
-import { SiGoogletagmanager } from "react-icons/si";
-import { BiTrip } from "react-icons/bi";
-import './Report.css';
+import { IoSettingsOutline } from "react-icons/io5";
+// import './total_no_of_vehicle.css';
 import { Link, NavLink } from 'react-router-dom';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { total } from './data/jsonData';
 import { on_route } from './data/jsonData';
 import { parked } from './data/jsonData';
 import { maintenance } from './data/jsonData';
-import Tables from './Tables';
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
+import { Pagination } from 'antd';
 
 
 
@@ -42,8 +26,6 @@ export default function () {
     function tableSearch() {
 
         let input, filter, table, tr, td, txtValue, errors;
-
-
 
         //Intialising Variables
         input = document.getElementById("myInput");
@@ -66,14 +48,74 @@ export default function () {
 
     let [active, setActive] = useState("total_vehicle");
     let [state, setState] = useState("false");
-    const color = () => {
-        setState(state);
-    }
-
+    // const color = () => {
+    //     setState(state);
+    // }
     const [popup, setPop] = useState(false);
     const handleClickopen = () => {
         setPop(!popup);
     }
+
+    const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
+
+    const options = {
+
+        headers: {
+            'Content-Type': 'application/json',
+            "Accept": "application/json",
+            "Authorization": `Bearer ${jwt}`
+        },
+
+    };
+
+    const url = "http://198.199.67.201:9090/Api/Vehicle/Status/inroute";
+
+    const [dataSource, setDataSource] = useState([])
+    const [Loading, setLoading] = useState([])
+    useEffect(() => {
+        setLoading(true);
+        fetch(url, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource(data.inRoutelist)
+                console.log(dataSource)
+                setLoading(false);
+
+            })
+    }, [])
+
+    const url2 = "http://198.199.67.201:9090/Api/Vehicle/All";
+
+    const [dataSource2, setDataSource2] = useState([])
+    useEffect(() => {
+        setLoading(true);
+        fetch(url2, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource2(data.vehicles)
+                console.log(dataSource2)
+                setLoading(false);
+
+            })
+    }, [])
+
+    const [list, setList] = useState(dataSource2);
+    const [total, setTotal] = useState(dataSource2.length);
+    const [page, setCurentPage] = useState(1);
+    const [postPerPage, setpostPerPage] = useState(10);
+  
+    const onShowSizeChange = (current, pageSize) => {
+      setpostPerPage(pageSize);
+    }
+  
+    useEffect(() => {
+      setTotal([dataSource2.length])
+    }, []);
+
+    const indexOfLastPage = page + postPerPage;
+    const indexOfFirstPage = indexOfLastPage - postPerPage;
+    const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
+  
 
     return (
 
@@ -85,30 +127,36 @@ export default function () {
 
             {/* --------------- header --------------- */}
 
-            <Header title="Report"></Header>
+            <Header title="Total Vehicles"></Header>
 
             {/* --------------- users --------------- */}
 
-            <div className='vehicle_outer' type="button" >
+            <div className='main_content'>
                 <div className='vehicle_contents'>
-                    <div className='total_vehicle ' onClick={() => setActive("total_vehicle")}>
+                    <Link to="/report" style={{ textDecoration: 'none' }}> <div className='activeNav '>
                         <h4>Total Vehicle</h4>
+                        <p><AiFillCar size="2.3rem"></AiFillCar><b>{dataSource2.length}</b></p>
 
-                        <p><AiFillCar size="2.3rem" color='black'></AiFillCar><b>100</b></p>
+                    </div></Link>
 
-                    </div>
-                    <div className='on_route' onClick={() => setActive("on_route")} >
+                    <Link style={{ textDecoration: 'none' }} to="/ReportOn_route"><div className='on_route'>
                         <h4>On Route</h4>
-                        <p><FaRoute size="2.2rem" color='black'></FaRoute><b>100</b></p>
-                    </div>
-                    <div className='parked' onClick={() => setActive("parked")}>
-                        <h4>Parked</h4>
-                        <p><FaParking size="2rem" color='black'></FaParking><b>10</b></p>
-                    </div>
-                    <div className='maintenance' onClick={() => setActive("maintenance")}>
-                        <h4>Maintenance</h4>
-                        <p><GrSettingsOption size="2rem" color='black'></GrSettingsOption><b>10</b></p>
-                    </div>
+                        <p><FaRoute size="2.2rem" ></FaRoute><b>{dataSource.length}</b></p>
+                    </div></Link>
+
+                    <Link style={{ textDecoration: 'none' }} to="/ReportOn_stock">
+                        <div className='parked'>
+                            <h4>On Stock</h4>
+                            <p><FaParking size="2rem" ></FaParking><b>10</b></p>
+                        </div>
+                    </Link>
+
+                    <Link style={{ textDecoration: 'none' }} to="/ReportMaintenance">
+                        <div className='maintenance'>
+                            <h4>Maintenance</h4>
+                            <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>10</b></p>
+                        </div>
+                    </Link>
                 </div>
 
                 {/* --------------- search --------------- */}
@@ -121,21 +169,67 @@ export default function () {
                     </p>
                 </div>
 
-                <div className='vehicle_filter'>
+                {/* <div className='vehicle_filter'>
                     <p>
                         <AiFillFilter className='fil' size="0.8rem" color='rgb(63, 63, 63)'></AiFillFilter>
                         <h6>Filter</h6>
                     </p>
-                </div>
+                </div> */}
 
                 {/* --------------------- Table ------------------- */}
 
                 <div>
-                    {active === "total_vehicle" && <Tables datas={total} title=" Total Vehicle" />}
+                    {/* {active === "total_vehicle" && <Tables datas={total} title=" Total Vehicle" />}
                     {active === "on_route" && <Tables datas={on_route} title=" On Route" />}
                     {active === "parked" && <Tables datas={parked} title=" Parked" />}
-                    {active === "maintenance" && <Tables datas={maintenance} title=" Maintenance" />}
+                    {active === "maintenance" && <Tables datas={maintenance} title=" Maintenance" />} */}
                 </div>
+
+                <div className='outer_vehicle_tables' id='myTable'>
+                    <p>Total Vehicle</p>
+
+                    <table class="vehicle_table" id="myTable">
+
+                        <thead>
+                            <tr>
+                                <th>Profile</th>
+                                <th>Assigned Driver</th> 
+                                <th>Vehicle ID</th>
+                                <th>Vehicle Type</th>
+                                <th>Plate Number</th>
+                                <th>Report</th>
+                                <th>History</th>
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            {currentPage.map(item => (
+                                <tr className='active_row'>
+
+                                    <td>{item.vehicleName}</td>
+                                    <td>{item.driver}</td>
+                                    <td>{item.id}</td>
+                                    <td>{item.vehicleCatagory.catagory}</td>
+                                    <td>{item.plateNumber}</td>
+                                    <td><Link to={`/report_detail/${item.vehicleName}/${item.plateNumber}`}><button>Report</button></Link></td>
+                                    <td><Link to="/trip_history"><button>History</button></Link></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div className='page'>
+        <Pagination
+          onChange={(page) => setCurentPage(page)}
+          pageSize={postPerPage}
+          current={page}
+          total={total}
+          showQuickJumper
+          showSizeChanger
+          onShowSizeChange={onShowSizeChange}
+
+        />
+      </div>
 
             </div>
         </div >

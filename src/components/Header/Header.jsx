@@ -21,6 +21,11 @@ export default function Header({ title }) {
     const handleClickopen2 = () => {
         setPop2(!popup2);
     }
+    const remove = () => {
+        localStorage.removeItem("jwt");
+        window.location.href = "/";
+    }
+   
     return (
         <div>
             <div className="dashboard_headers" onClick={handleLogout}>
@@ -57,9 +62,9 @@ export default function Header({ title }) {
                                     <h2 className='mnmn'>Are You Sure You want to want Log out</h2> 
                                     {/* <input placeholder={edit}></input> */}
                                     <div className='send_button'>
-                                        <Link to="/" style={{ textDecoration: 'none' }}><button onClick={() => {
-                                            localStorage.removeItem("jwt")
-                                        }}  className='popup_add'>Ok</button></Link>
+                                       <button onClick={() => {
+                                            remove()
+                                        }}  className='popup_add'>Ok</button>
                                         <button onClick={handleClickopen2} className='popup_cancle'>Cancle</button>
                                     </div>
                                 </div>

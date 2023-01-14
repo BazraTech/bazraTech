@@ -81,6 +81,47 @@ export default function () {
 
   }
 
+  const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
+
+  const options = {
+    headers: {
+      'Content-Type': 'application/json',
+      "Accept": "application/json",
+      "Authorization": `Bearer ${jwt}`
+    },
+
+  };
+
+  const url = "http://198.199.67.201:9090/Api/Vehicle/Status/inroute";
+  const [dataSource, setDataSource] = useState([])
+  const [Loading, setLoading] = useState([])
+  useEffect(() => {
+    setLoading(true);
+    fetch(url, options)
+      .then(respnse => respnse.json())
+      .then(data => {
+        setDataSource(data.inRoutelist)
+        console.log(dataSource)
+        setLoading(false);
+
+      })
+  }, [])
+
+  const url2 = "http://198.199.67.201:9090/Api/Vehicle/All";
+
+  const [dataSource2, setDataSource2] = useState([])
+  useEffect(() => {
+      setLoading(true);
+      fetch(url2, options)
+          .then(respnse => respnse.json())
+          .then(data => {
+              setDataSource2(data.vehicles)
+              console.log(dataSource2)
+              setLoading(false);
+
+          })
+  }, [])
+
   return (
 
     <div className="vehicle_container">
@@ -153,12 +194,12 @@ export default function () {
         <div className='vehicle_contents'>
           <Link style={{ textDecoration: 'none' }} to="/Total_number_of_vehicle"> <div className='total_vehicle1 '>
             <h4>Total Vehicle</h4>
-            <p><AiFillCar size="2.3rem" ></AiFillCar><b>100</b></p>
+            <p><AiFillCar size="2.3rem" ></AiFillCar><b>{dataSource2.length}</b></p>
 
           </div></Link>
           <Link style={{ textDecoration: 'none' }} to="/on_route"><div className='activeNav' >
             <h4>On Route</h4>
-            <p><FaRoute size="2.2rem" ></FaRoute><b>100</b></p>
+            <p><FaRoute size="2.2rem" ></FaRoute><b>{dataSource.length}</b></p>
           </div></Link>
           <Link style={{ textDecoration: 'none' }} to="/on_stock">
             <div className='parked'>
@@ -176,7 +217,7 @@ export default function () {
 
         {/* --------------- search --------------- */}
 
-        <div className='vehicle_search1'>
+        <div className='vehicle_search'>
           <p title='search'>
             <BsSearch className='icn' size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
             <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
@@ -217,14 +258,14 @@ export default function () {
               </tr>
             </thead>
             <tbody>
-              {on_route[0].map(item => (
+              {dataSource.map(item => (
                 <tr className='active_row'>
 
-                  <td>{item.user}</td>
-                  <td>{item.assignedDriver}</td>
-                  <td>{item.vehicleId}</td>
-                  <td>{item.vehicleType}</td>
-                  <td>{item.planeNumber}</td>
+                  <td>{item.vehicleName}</td>
+                  <td>{item.driver}</td>
+                  <td>{item.id}</td>
+                  <td>{item.vehicleCatagory.catagory}</td>
+                  <td>{item.plateNumber}</td>
                   <td><Link to="/vehicle_detail"><button>Detail</button></Link></td>
                   <td><Link to="/tracking"><button>Tracking</button></Link></td>
                 </tr>

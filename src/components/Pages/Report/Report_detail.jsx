@@ -8,12 +8,12 @@ import { HiBellAlert } from "react-icons/hi2";
 import { HiDocumentReport } from "react-icons/hi";
 import { FaRegIdCard } from 'react-icons/fa';
 import { BsFillChatDotsFill } from "react-icons/bs";
-import { FaUserAlt } from "react-icons/fa";
+import { FaUserAlt } from "react-icons/fa"; 
 import { AiFillSetting } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import { HiMenuAlt1 } from "react-icons/hi";
 import './Report_detail.css';
-import { Link } from 'react-router-dom';
+import { Link , useParams} from 'react-router-dom';
 import { Report_Data } from "./data/jsonData"
 import { SiTripdotcom } from "react-icons/si";
 import { SiGoogletagmanager } from "react-icons/si";
@@ -55,6 +55,8 @@ export default function () {
         })
     }
     const [search, setSearch] = useState('');
+
+    const { id , platenumber} = useParams();
 
 
     return (
@@ -132,7 +134,7 @@ export default function () {
                                 <tbody>
                                     <tr className='row-table'>
                                         <td><b>Vehicle Name</b></td>
-                                        <td>Sino</td>
+                                        <td>{id}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -142,7 +144,7 @@ export default function () {
                                 <tbody>
                                     <tr>
                                         <td><b>Plate Number</b></td>
-                                        <td>ET 000345</td>
+                                        <td>{platenumber}</td>
                                     </tr>
                                 </tbody>
                             </table>

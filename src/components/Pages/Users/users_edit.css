@@ -279,7 +279,7 @@ h1 {
 }
 .company_button{
   margin-top: 5%;
-  display: flex;
+  display: flex; 
   justify-content: space-around;
 
 }

@@ -13,7 +13,7 @@ import './popup.css';
 import SyncLoader from "react-spinners/SyncLoader";
 import { createStoreHook } from 'react-redux';
 
-export default function Cards({ title, data }) { 
+export default function Cards({ title, data }) {
 
 
 
@@ -25,8 +25,8 @@ export default function Cards({ title, data }) {
     validation();
   }
 
-  const [buttonPopup, setButtonPopup] = useState(false); 
-  const [popup2, setPop2] = useState(false); 
+  const [buttonPopup, setButtonPopup] = useState(false);
+  const [popup2, setPop2] = useState(false);
   const [popup, setPop] = useState(false);
   const [popup3, setPop3] = useState(false);
   const [popup4, setPop4] = useState(false);
@@ -106,13 +106,13 @@ export default function Cards({ title, data }) {
     },
 
   };
-  const url = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners";
+
 
   // const [Loading, setLoading] = useState(false)
   const [totalPages, setTotalPage] = useState(1);
   const [dataSource, setDataSource] = useState([])
   const [Loading, setLoading] = useState([])
-
+  const url = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners";
   useEffect(() => {
     setLoading(true)
     fetch(url, options)
@@ -152,19 +152,19 @@ export default function Cards({ title, data }) {
   const [page, setCurentPage] = useState(1);
   const [postPerPage, setpostPerPage] = useState(10);
 
-  const onShowSizeChange=( current, pageSize) => { 
+  const onShowSizeChange = (current, pageSize) => {
     setpostPerPage(pageSize);
   }
 
-    useEffect(() => {
-      setTotal([dataSource.length])
+  useEffect(() => {
+    setTotal([dataSource.length])
   }, []);
 
 
   const indexOfLastPage = page + postPerPage;
   const indexOfFirstPage = indexOfLastPage - postPerPage;
   const currentPage = dataSource.slice(indexOfFirstPage, indexOfLastPage);
-  
+
 
   const [vehicleName, setvehicleName] = useState("");
   const [catagory, setVehicleCategory] = useState("");
@@ -211,6 +211,7 @@ export default function Cards({ title, data }) {
     })
   }
 
+  const [individual, setIndividual] = useState();
   return (
     <>
 
@@ -247,16 +248,17 @@ export default function Cards({ title, data }) {
                 </tr>
               </thead>
               <tbody>
-                {currentPage.map(item => (
+                {dataSource.map(item => (
                   <tr className='active_row'>
                     <td>{item.firstName}</td>
-                    <td>{item.companyInfo.id}</td>
+                    <td>{item.companyInfo.id}</td> 
                     <td>{item.companyInfo.name}</td>
                     <td>{item.number_of_vehicle}</td>
                     <td>{item.number_of_driver}</td>
                     <td>{item.number_of_driver}</td>
-                    <td><Link to="/user_edit"><button>Detail</button></Link></td>
-                    <td>  <Link to="#"><button onClick={() => { handleClickopen() }}>Add </button></Link></td>
+                    <td><Link to={`/user_edit/${item.id}/${item.companyInfo.id}`}>
+                      <button>Detail</button></Link></td>
+                    <td><Link to="#"><button onClick={() => { handleClickopen() }}>Add </button></Link></td>
                   </tr>
                 ))}
               </tbody>
@@ -315,8 +317,8 @@ export default function Cards({ title, data }) {
 
                             <div className='asd'>
                               <lable>Vehicle Name</lable>
-                              <input name='vehicleName' type="text" 
-                              // value={vehicleName}
+                              <input name='vehicleName' type="text"
+                                // value={vehicleName}
                                 {...register("vehicleName", { required: true })}
                                 placeholder='Enter Vehicle Name'
                                 onChange={(e) => setvehicleName(e.target.value)} ></input>
@@ -326,7 +328,7 @@ export default function Cards({ title, data }) {
                             <div className='asd'>
                               <lable>Vehicle Condition</lable>
                               <select className='select' name='conditionName'
-                              // value={conditionName}
+                                // value={conditionName}
 
                                 {...register("conditionName", { required: '*Vecicle Condition is required' })}
                                 onChange={e => setVehicleCondition(e.target.value)} >
@@ -352,8 +354,8 @@ export default function Cards({ title, data }) {
 
                             <div className='asd'>
                               <lable>Manufacture Date</lable>
-                              <input name='manufacture_date' type="date" 
-                              // value={manufactureDate}
+                              <input name='manufacture_date' type="date"
+                                // value={manufactureDate}
                                 {...register("manufactureDate", { required: '*Manufacture date is required' })}
                                 placeholder='Enter Manufactureing Date'
                                 onChange={(e) => setmanufactureDate(e.target.value)} ></input>
@@ -362,8 +364,8 @@ export default function Cards({ title, data }) {
 
                             <div className='asd'>
                               <lable>Device ID</lable>
-                              <input name='deviceID' type="text" 
-                              // value={deviceID}
+                              <input name='deviceID' type="text"
+                                // value={deviceID}
                                 {...register("deviceID", { required: '*Device ID is required' })}
                                 placeholder='Enter Device ID'
                                 onChange={(e) => setdeviceId(e.target.value)} ></input>

@@ -90,6 +90,26 @@ export default function () {
                 console.log(dataSource)
             })
     }, [])
+    const url5 = "http://198.199.67.201:9090/Api/Admin/All/CompanyType/";
+    const [dataSourc5, setDataSource5] = useState([])
+    useEffect(() => {
+        fetch(url5, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource5(data.companyTypes)
+                console.log(dataSource)
+            })
+    }, [])
+    const url6 = "http://198.199.67.201:9090/Api/Admin/All/Services";
+    const [datasource6, setDataSource6] = useState([])
+    useEffect(() => {
+        fetch(url6, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource6(data.service)
+                console.log(dataSource4)
+            })
+    }, [])
     const [Loading, setLoading] = useState([])
     let [color, setColor] = useState("green");
     let [margin, setMargin] = useState("");
@@ -247,7 +267,7 @@ export default function () {
 
                 <div className='outer_setting'>
                     <div className='setting_header'>Service Needed</div>
-                    <PopUp title="Add Service Needed " />
+                    <PopUp title="Add_Service_Needed " />
                     <div>
                         {Loading ?
                             <p className='loading'><SyncLoader
@@ -268,10 +288,10 @@ export default function () {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {service_needed.map(item => {
+                                    {datasource6.map(item => {
                                         return <tr className='active_row'>
                                             <td>{item.id}</td>
-                                            <td>{item.service_neended}</td>
+                                            <td>{item.service}</td>
                                             <td>{item.status}</td>
                                             <td>
                                                 <p className='notification_actions'>
@@ -410,10 +430,10 @@ export default function () {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {dataSource.map(item => {
+                                    {dataSourc5.map(item => {
                                         return <tr className='active_row'>
                                             <td>{item.id}</td>
-                                            <td>{item.sectorName}</td>
+                                            <td>{item.companyType}</td>
                                             <td>{item.status}</td>
                                             <td>
                                                 <p className='notification_actions'>
@@ -499,7 +519,7 @@ export default function () {
                                 </div>
                             </div>
                         </div> : ""}
-                </div>
+                </div> 
 
                 <div>
                     {popup1 ?

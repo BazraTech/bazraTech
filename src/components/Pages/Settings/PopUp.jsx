@@ -33,6 +33,12 @@ export default function PopUp(props) {
         if (title === 'Add_company_sector') {
             Add_company_sector();
         }
+        if (title === 'Add_company_type') {
+            Add_company_type();
+        }
+        if (title === 'Add_company_type') {
+            Add_Service_Needed();
+        }
 
     };
     const [notifications, setNotification] = useState("");
@@ -40,6 +46,8 @@ export default function PopUp(props) {
     const vehicleConditon = notifications;
     const vehicleCatagory = notifications;
     const companysector = notifications;
+    const companyTypes = notifications;
+    const service = notifications;
     // const handleClick = (e) => {
     //     signupxx();
     // };
@@ -194,10 +202,10 @@ export default function PopUp(props) {
         }
     }
 
-    async function Add() {
+    async function Add_company_type() {
         let item =
         {
-            companysector,
+            companyTypes,
         };
         const options = {
             method: "POST",
@@ -208,7 +216,44 @@ export default function PopUp(props) {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Admin/CreateCompanySector";
+        const url = "http://198.199.67.201:9090/Api/Admin/CreateCompanyType";
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            console.log(result);
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            console.log(mess);
+            if (response.ok) {
+                console.log("Signup successful");
+                swal("Successful", "Notification Preference Registerd Successfuly", "success", {
+                    buttons: false,
+                    timer: 2000,
+                });
+            } else {
+                console.log("failed");
+                swal(`Failed To Register ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function Add_Service_Needed() {
+        let item =
+        {
+            service,
+        };
+        const options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
+            body: JSON.stringify(item),
+        };
+        const url = "http://198.199.67.201:9090/Api/Admin/CreateCompanyType";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -276,7 +321,7 @@ export default function PopUp(props) {
                                 <div className='fgf'>
                                     <h2 className='mnm'>{title}</h2>
                                     <form className='form'  onSubmit={handleSubmit(onSubmit)}>
-                                    <input placeholder={title}></input>
+                                    <input value={notifications}  placeholder={title}  onChange={(e) => setNotification(e.target.value)}></input>
                                     <div className='send_button'>
                                         <button className='popup_add'>Add</button>
                                         <button onClick={closePopup} className='popup_cancle'>Cancle</button>

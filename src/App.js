@@ -32,37 +32,40 @@ import Individual from './components/Pages/Users/Individual';
 import Accident from './components/Pages/alert/Accident';
 import Driver from './components/Pages/alert/Driver';
 import Off_road from './components/Pages/alert/Off_road';
+import ReportOn_route from './components/Pages/Report/ReportOn_route';
+import ReportOn_stock from './components/Pages/Report/ReportOn_stock';
+import ReportMaintenance from './components/Pages/Report/ReportMaintenance';
 
 
-import UserSignIn from './component 2/Pages/Sign in page/UserSignIn';
-import UserCompany_registration from './component 2/Pages/Registration/UserCompany_registration';
-import UserUsers from './component 2/Pages/Users/UserUsers';
-import UserDashboard from './component 2/Pages/Dashboard/UserDashboard';
-import UserTotal_number_of_vehile from './component 2/Pages/Total_number_of_vehicle/UserTotal_number_of_vehile';
-import UserTracking_history from './component 2/Pages/Tracking/UserTracking_history';
-import UserTracking from './component 2/Pages/Tracking/UserTracking';
-import UserAlert from './component 2/Pages/alert/UserOff_road';
-import UserUsers_edit from './component 2/Pages/Users/UserUsers_edit';
-import UserVehicle_detail from './component 2/Pages/Total_number_of_vehicle/UserVehicle_detail';
-import UserMessage_overview from './component 2/Pages/Message/UserMessage_overview';
-import UserSettings from './component 2/Pages/Settings/UserSettings';
-import UserReport from './component 2/Pages/Report/UserReport';
-import UserReport_detail from './component 2/Pages/Report/UserReport_detail';
-import UserPopUp from './component 2/Pages/Settings/UserPopUp';
-import UserAdd_vehicle from "./component 2/Pages/Users/UserAdd_vehicle"
-import UserIndividual_registration from './component 2/Pages/Registration/UserIndividual_registration';
-import UserSet_Trip from './component 2/Pages/Trip Management/UserSet_Trip';
-import UserTrip_history from './component 2/Pages/Trip Management/UserTrip_history';
-import UserAvialable_trip from './component 2/Pages/Trip Management/UserAvialable_trip';
-import UserTable from './component 2/Pages/Report/UserTables';
-import UserOn_route from './component 2/Pages/Total_number_of_vehicle/UserOn_route';
-import UserOn_stock from './component 2/Pages/Total_number_of_vehicle/UserOn_stock';
-import UserMaintenance from './component 2/Pages/Total_number_of_vehicle/UserMaintenance';
-import UserCompany from './component 2/Pages/Users/UserCompany';
-import UserIndividual from './component 2/Pages/Users/UserIndividual';
-import UserAccident from './component 2/Pages/alert/UserAccident';
-import UserDriver from './component 2/Pages/alert/UserDriver';
-import UserOff_road from './component 2/Pages/alert/UserOff_road';
+// import UserSignIn from './component 2/Pages/Sign in page/UserSignIn';
+// import UserCompany_registration from './component 2/Pages/Registration/UserCompany_registration';
+// import UserUsers from './component 2/Pages/Users/UserUsers';
+// import UserDashboard from './component 2/Pages/Dashboard/UserDashboard';
+// import UserTotal_number_of_vehile from './component 2/Pages/Total_number_of_vehicle/UserTotal_number_of_vehile';
+// import UserTracking_history from './component 2/Pages/Tracking/UserTracking_history';
+// import UserTracking from './component 2/Pages/Tracking/UserTracking';
+// import UserAlert from './component 2/Pages/alert/UserOff_road';
+// import UserUsers_edit from './component 2/Pages/Users/UserUsers_edit';
+// import UserVehicle_detail from './component 2/Pages/Total_number_of_vehicle/UserVehicle_detail';
+// import UserMessage_overview from './component 2/Pages/Message/UserMessage_overview';
+// import UserSettings from './component 2/Pages/Settings/UserSettings';
+// import UserReport from './component 2/Pages/Report/UserReport';
+// import UserReport_detail from './component 2/Pages/Report/UserReport_detail';
+// import UserPopUp from './component 2/Pages/Settings/UserPopUp';
+// import UserAdd_vehicle from "./component 2/Pages/Users/UserAdd_vehicle"
+// import UserIndividual_registration from './component 2/Pages/Registration/UserIndividual_registration';
+// import UserSet_Trip from './component 2/Pages/Trip Management/UserSet_Trip';
+// import UserTrip_history from './component 2/Pages/Trip Management/UserTrip_history';
+// import UserAvialable_trip from './component 2/Pages/Trip Management/UserAvialable_trip';
+// import UserTable from './component 2/Pages/Report/UserTables';
+// import UserOn_route from './component 2/Pages/Total_number_of_vehicle/UserOn_route';
+// import UserOn_stock from './component 2/Pages/Total_number_of_vehicle/UserOn_stock';
+// import UserMaintenance from './component 2/Pages/Total_number_of_vehicle/UserMaintenance';
+// import UserCompany from './component 2/Pages/Users/UserCompany';
+// import UserIndividual from './component 2/Pages/Users/UserIndividual';
+// import UserAccident from './component 2/Pages/alert/UserAccident';
+// import UserDriver from './component 2/Pages/alert/UserDriver';
+// import UserOff_road from './component 2/Pages/alert/UserOff_road';
 
 
 class App extends Component{
@@ -71,11 +74,11 @@ class App extends Component{
     <div className="App">
       
       <Routes>
-        <Route path='/admin' element={<SignIn />}></Route>
+        <Route path='/' element={<SignIn />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/users" element={<Users />}></Route>
-        <Route path="/vehicle_detail" element={<Vehicle_detail></Vehicle_detail>}></Route> 
-        <Route path="/User_edit" element={<Users_edit />}></Route>
+        <Route path="/vehicle_detail/:id" element={<Vehicle_detail></Vehicle_detail>}></Route> 
+        <Route path="/User_edit/:id/:companyId" element={<Users_edit />}></Route>
         <Route path="/Company_registration" element={<Company_registration />}></Route>
         <Route path="/individual" element={<Individual_registration />}></Route>
         <Route path="/Total_number_of_vehicle" element={<Total_number_of_vehile />}></Route>
@@ -86,7 +89,7 @@ class App extends Component{
         <Route path="/message_overview" element={<Message_overview />}></Route>
         <Route path="/settings" element={<Settings />}></Route>
         <Route path="/report" element={<Report />}></Route>
-        <Route path="/report_detail" element={<Report_detail />}></Route>
+        <Route path="/report_detail/:id/:platenumber" element={<Report_detail />}></Route>
         <Route path="/popup" element={<PopUp />}></Route>
         <Route path="/Add_vehicle" element={<Add_vehicle />}></Route>
         <Route path="/set_trip" element={<Set_Trip />}></Route>
@@ -98,10 +101,13 @@ class App extends Component{
         <Route path="/company" element={<Company />}></Route>
         <Route path="/register_individual" element={<Individual />}></Route>
         <Route path="/accident" element={<Accident />}></Route>
-        <Route path="/driver" element={<Driver />}></Route>
+        <Route path="/driver" element={<Driver />}></Route> 
+        <Route path="/ReportOn_route" element={<ReportOn_route />}></Route> 
+        <Route path="/ReportOn_stock" element={<ReportOn_stock />}></Route> 
+        <Route path="/ReportMaintenance" element={<ReportMaintenance />}></Route> 
 
 
-        <Route path='/' element={<UserSignIn />}></Route>
+        {/* <Route path='/' element={<UserSignIn />}></Route>
         <Route path="/Userdashboard" element={<UserDashboard />}></Route>
         <Route path="/Userusers" element={<UserUsers />}></Route>
         <Route path="/Uservehicle_detail" element={<UserVehicle_detail></UserVehicle_detail>}></Route> 
@@ -128,7 +134,7 @@ class App extends Component{
         <Route path="/Usercompany" element={<UserCompany />}></Route>
         <Route path="/Userregister_individual" element={<UserIndividual />}></Route>
         <Route path="/Useraccident" element={<UserAccident />}></Route>
-        <Route path="/Userdriver" element={<UserDriver />}></Route>
+        <Route path="/Userdriver" element={<UserDriver />}></Route> */}
       </Routes>
 
     </div>

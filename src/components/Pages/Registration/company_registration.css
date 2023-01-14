@@ -177,7 +177,7 @@ h1 {
   outline: none;
   border-radius: 6px;
   padding: 0 15px;
-  background-color: rgb(246, 246, 246);
+  background-color: rgb(242, 242, 242);
   border: none;
 }
 
@@ -195,7 +195,7 @@ h1 {
   border: none;
   border-radius: 6px;
   padding: 0 15px;
-  background-color: rgb(247, 247, 247);
+  background-color: rgb(242, 242, 242);
 }
 
 /* -------------------- company_Address -------------------- */
@@ -219,7 +219,7 @@ h1 {
   height: 40px;
   width: 100%;
   outline: none;
-  background-color: rgb(246, 246, 246);
+  background-color: rgb(242, 242, 242);
   border: none;
   border-radius: 6px;
   padding: 0 15px;
@@ -233,6 +233,7 @@ h1 {
   border: 1px solid rgb(129, 129, 129);
   border-radius: 6px;
   padding: 0 15px;
+  background-color: rgb(242, 242, 242);
 }
 
 .company_Address1 input:focus {
@@ -258,7 +259,7 @@ h1 {
   height: 40px;
   width: 100%;
   outline: none;
-  background-color: rgb(246, 246, 246);
+  background-color: rgb(242, 242, 242);
   border: none;
   border-radius: 6px;
   padding: 0 15px;
@@ -271,7 +272,8 @@ h1 {
   outline: none;
   border: 1px solid rgb(129, 129, 129);
   border-radius: 6px;
-  padding: 0 15px;
+  padding: 0 15px; 
+  background-color: rgb(242, 242, 242);
 }
 
 .owner_information1 input:focus {
@@ -302,7 +304,7 @@ h1 {
   height: 40px;
   width: 100%;
   outline: none;
-  background-color: rgb(246, 246, 246);
+  background-color: rgb(242, 242, 242);
   border: none;
   border-radius: 6px;
   padding: 0 15px;
@@ -313,7 +315,7 @@ h1 {
   height: 40px;
   width: 100%;
   outline: none;
-  background-color: rgb(246, 246, 246);
+  background-color: rgb(242, 242, 242);
   border: none;
   border-radius: 6px;
   padding: 0 15px;
@@ -391,7 +393,7 @@ h1 {
   height: 40px;
   width: 100%;
   outline: none;
-  background-color: rgb(246, 246, 246);
+  background-color: rgb(242, 242, 242);
   border: none;
   border-radius: 6px;
   padding: 0 15px;
@@ -409,7 +411,7 @@ h1 {
   height: 40px;
   width: 100%;
   outline: none;
-  background-color: rgb(246, 246, 246);
+  background-color: rgb(242, 242, 242);
   border: none;
   border-radius: 6px;
   padding: 0 15px; 
