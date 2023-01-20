@@ -267,7 +267,7 @@ export default function () {
 
                 <div className='outer_setting'>
                     <div className='setting_header'>Service Needed</div>
-                    <PopUp title="Add_Service_Needed " />
+                    <PopUp title="Add_Service_Needed" />
                     <div>
                         {Loading ?
                             <p className='loading'><SyncLoader

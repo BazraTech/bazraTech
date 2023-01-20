@@ -170,31 +170,31 @@ export default function () {
             <div className='alert_main'>
                 <div className='currentHistory'>
                     <Link style={{ textDecoration: 'none' }} to="/accident">
-                        <p className='sd'>Current</p></Link>
+                        <p className='sdd'>Current</p></Link>
                     <Link style={{ textDecoration: 'none' }} to="/AccidentHistory">
-                        <p className='sdd'>Hisrory</p></Link>
+                        <p className='sd'>Hisrory</p></Link>
                 </div>
                 <div className='allDivalert'>
 
                     <div className='alert_contents'>
 
 
-                        <Link style={{ textDecoration: 'none' }} to="/accident">
+                        <Link style={{ textDecoration: 'none' }} to="/AccidentHistory">
                             <div className='parked' onClick={() => setActive("accident")}>
                                 <h4>Accident</h4>
                                 <p>< FaCarCrash size="2.2rem" ></ FaCarCrash><b>100</b></p>
                             </div>
                         </Link>
 
-                        <Link style={{ textDecoration: 'none' }} to="/off_road">
-                            <div className='activeNav1' onClick={() => setActive("off_road")}>
+                        <Link style={{ textDecoration: 'none' }} to="/OffRoadHistory">
+                            <div className='parked' onClick={() => setActive("off_road")}>
                                 <h4>Off Road</h4>
                                 <p><TbTriangleOff size="2.2rem" ></TbTriangleOff><b>100</b></p>
                             </div>
                         </Link>
 
-                        <Link style={{ textDecoration: 'none' }} to="/driver">
-                            <div className='parked' onClick={() => setActive("driver")}>
+                        <Link style={{ textDecoration: 'none' }} to="/DriverHistory">
+                            <div className='activeNav1' onClick={() => setActive("driver")}>
                                 <h4>Driver</h4>
                                 <p><FaUserSecret size="2rem"></FaUserSecret><b>100</b></p>
                             </div>
@@ -205,15 +205,15 @@ export default function () {
 
                     {/* --------------------- Alert Tables ------------------- */}
                     <div>
-                        {/* <div className='vehicle_search'>
+                        <div className='vehicle_search'>
                         <p title='search'>
                             <BsSearch className='icn' size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
                             <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
                             <button>Search</button>
                         </p>
-                    </div> */}
-                        <div className='alert_vehicle_tables' id='myTable'>
-                            <p>Off Road</p>
+                    </div>
+                        <div className='outer_vehicle_tables' id='myTable'>
+                            <p>Driver Alert History</p>
 
                             <table class="vehicle_table" id="myTable">
 

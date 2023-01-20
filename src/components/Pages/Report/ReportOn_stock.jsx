@@ -122,6 +122,36 @@ export default function () {
           })
   }, [])
 
+  const url3 = "http://198.199.67.201:9090/Api/Vehicle/Status/stocked";
+  const [dataSource3, setDataSource3] = useState([])
+  useEffect(() => {
+      setLoading(true);
+      fetch(url3, options)
+          .then(respnse => respnse.json())
+          .then(data => {
+              setDataSource3(data.stockedList)
+              console.log(dataSource3)
+              setLoading(false);
+
+          })
+  }, [])
+
+  const url4 = "http://198.199.67.201:9090/Api/Vehicle/Status/maintaining";
+  const [dataSource4, setDataSource4] = useState([])
+  useEffect(() => {
+      setLoading(true);
+      fetch(url4, options)
+          .then(respnse => respnse.json())
+          .then(data => {
+              setDataSource4(data.maintainingList)
+              console.log(dataSource4)
+              setLoading(false);
+
+          })
+  }, [])
+
+
+
 
     return (
 
@@ -207,20 +237,20 @@ export default function () {
                     <Link to="/ReportOn_stock">
                         <div className='activeNav' style={{ textDecoration: 'none' }}>
                             <h4>On Stock</h4>
-                            <p><FaParking size="2rem" ></FaParking><b>10</b></p>
+                            <p><FaParking size="2rem" ></FaParking><b>{dataSource3.length}</b></p>
                         </div>
                     </Link>
                     <Link style={{ textDecoration: 'none' }} to="/ReportMaintenance">
                         <div className='maintenance'>
                             <h4>Maintenance</h4>
-                            <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>10</b></p>
+                            <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{dataSource4.length}</b></p>
                         </div>
                     </Link>
                 </div>
 
                 {/* --------------- search --------------- */}
 
-                <div className='vehicle_search1'>
+                <div className='vehicle_search'>
                     <p title='search'>
                         <BsSearch className='icn' size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
                         <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
@@ -264,13 +294,13 @@ export default function () {
                             {parked[0].map(item => (
                                 <tr className='active_row'>
 
-                                    <td>{item.user}</td>
+                                    {/* <td>{item.user}</td>
                                     <td>{item.assignedDriver}</td>
                                     <td>{item.vehicleId}</td>
                                     <td>{item.vehicleType}</td>
                                     <td>{item.planeNumber}</td>
                                     <td><Link to={`/report_detail/${item.id}`}><button>Report</button></Link></td>
-                                    <td><Link to="/trip_history"><button>History</button></Link></td>
+                                    <td><Link to="/trip_history"><button>History</button></Link></td> */}
                                 </tr>
                             ))}
                         </tbody>

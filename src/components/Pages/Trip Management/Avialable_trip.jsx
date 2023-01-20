@@ -7,9 +7,13 @@ import { useForm } from 'react-hook-form';
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { total } from './data/data';
+import { IoMdArrowDropdownCircle } from "react-icons/io";
+import { IoMdArrowDropupCircle } from "react-icons/io";
+import { BsPlusLg } from "react-icons/bs";
+import { AiOutlineMinus } from "react-icons/ai";
+import SyncLoader from "react-spinners/SyncLoader";
 
 export default function () {
-
 
     const {
         register,
@@ -55,164 +59,153 @@ export default function () {
     //     })}
 
 
-        const [search, setSearch] = useState('');
-        // if (search === state) {
-        //   alert("success")
-        //  }
+    const [search, setSearch] = useState('');
+    // if (search === state) {
+    //   alert("success")
+    //  }
 
-       
-        const [popup1, setPop1] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [popup1, setPop1] = useState(true);
 
+    const url2 = "http://198.199.67.201:9090/Api/Vehicle/All";
 
+    const [dataSource2, setDataSource2] = useState([])
+    useEffect(() => {
+        setLoading(true);
+        fetch(url2, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource2(data.vehicles)
+                console.log(dataSource2)
+                setLoading(false);
 
-        return (
+            })
+    }, [])
 
-            <div className="dashboard_container">
-
-                {/*---------------navigation---------------*/}
-
-                <Navigation></Navigation>
-
-                {/* ---------------header--------------- */}
-
-                <Header title="Avialable Trip"></Header>
-
-
-                {/* ---------------contents--------------- */}
-
-                <section className='register'>
-
-                    <div className='company_individual_header'>
-                    <Link style={{ textDecoration: 'none' }} to="/avialable_trip"><p><h1 className='nmn'>Avialable Trip</h1></p></Link>
-                    <Link style={{ textDecoration: 'none' }} to="/trip_history"><p><h1 className='nmnn'>Trip History</h1></p></Link>
-                    </div>
-
-                    <form className='form' onSubmit={handleSubmit(onSubmit)}>
-                        <div className='allDiv'>
-
-                            <div className='trip_date'>
-                                <input onChange={(e) => setSearch(e.target.value)} placeholder='Search...' className='trip_date1' type="search" /><button>Search</button>
-                            </div>
-
-                            {popup1 ?
-
-                                <div className='setTrip' id='myInput'>
-                                    {/* <div className='result'>There is No Result</div> */}
-
-                                    {total[0]
-                                        .filter((item) => {
-                                            return search.toLowerCase() === ''
-                                                ? item
-                                                : item.assignedDriver.toLowerCase().includes(search);
-                                        })
-                                        .map(item => (
-                                            <>
-
-                                                <div className='avilabel_trips' >
-
-
-                                                    <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
-                                                    <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
-                                                    <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
-                                                    <p><lable>Current Location : <b>{item.location}</b></lable></p>
-                                                    </div>
-
-                                                    <div className='set_history'>
-                                                        <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
-                                                        {/* <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p> */}
-                                                    </div>
-
-                                                
-                                                <div className='borderBottom'></div>
-
-                                            </>
-                                        ))}
-
-                                </div> : ""}
-
-
-                            {/* <div className='setTrip'>
-                        <div className='avilabel_trips' >
-                                {total[0].map(item => (
-                                    <>
-                                        <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
-                                        <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
-                                        <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
-                                        <p><lable>Current Location : <b>{item.location}</b></lable></p>
-                                    </>
-                                ))}
-                            </div>
-                            <div className='set_history'>
-                                <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
-                                <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p>
-                            </div>
-                        </div>
-
-                        <div className='setTrip'>
-                        <div className='avilabel_trips' >
-                                {total[0].map(item => (
-                                    <>
-
-                                        <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
-                                        <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
-                                        <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
-                                        <p><lable>Current Location : <b>{item.location}</b></lable></p>
-                                    </>
-                                ))}
-                            </div>
-                            <div className='set_history'>
-                                <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
-                                <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p>
-                            </div>
-                        </div>
-
-                        <div className='setTrip'>
-                        <div className='avilabel_trips' >
-                                {total[0].map(item => (
-                                    <>
-
-                                        <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
-                                        <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
-                                        <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
-                                        <p><lable>Current Location : <b>{item.location}</b></lable></p>
-                                    </>
-                                ))}
-                            </div>
-                            <div className='set_history'>
-                                <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
-                                <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p>
-                            </div>
-                        </div>
-
-                        <div className='setTrip'>
-                           <div className='avilabel_trips' >
-                                {total[0].map(item => (
-                                    <>
-
-                                        <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
-                                        <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
-                                        <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
-                                        <p><lable>Current Location : <b>{item.location}</b></lable></p>
-                                    </>
-                                ))}
-                            </div>
-                            <div className='set_history'>
-                                <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
-                                <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p>
-                            </div>
-                        </div> */}
-                            {/* <div className='company_button'>
-                            <button className='add'>Add</button>
-                        </div> */}
-                        </div>
-                    </form>
-                </section>
-
-
-                {/* ---------------end contents--------------- */}
-
-
-            </div>
-
-        )
+    const [visiblelist, setvisiblelist] = useState(false);
+    const [visible, setVisible] = useState(false);
+    const displaylist = () => {
+        setVisible(!visible);
     }
+
+
+    return (
+
+        <div className="dashboard_container">
+
+            {/*---------------navigation---------------*/}
+
+            <Navigation></Navigation>
+
+            {/* ---------------header--------------- */}
+
+            <Header title="Avialable Trip"></Header>
+
+
+            {/* ---------------contents--------------- */}
+
+            <section className='register'>
+
+                <div className='company_individual_header'>
+                    <Link style={{ textDecoration: 'none' }} to="/avialable_trip"><p><h1 className='nmn'>Avialable Vehicles</h1></p></Link>
+                    <Link style={{ textDecoration: 'none' }} to="/trip_history"><p><h1 className='nmnn'>Vehicles History</h1></p></Link>
+                </div>
+
+                <form className='form' onSubmit={handleSubmit(onSubmit)}>
+                    <div className='allDiv'>
+
+                        <div className='trip_date'>
+                            <input onChange={(e) => setSearch(e.target.value)} placeholder='Search...' className='trip_date1' type="search" /><button>Search</button>
+                        </div>
+                        <div>
+                            <h1 className='greentrip'>List of Company</h1>
+                            {total[0].map(item => (
+                                <>
+                                    <div className='companyList' onClick={() => {
+                                        displaylist()
+                                        setvisiblelist(item.id)
+                                    }} >
+                                        <p>Company Name : <b className='green'>{item.id}</b></p>
+                                        <p>Company Name : <b className='green'>Bazra</b></p>
+                                        <p className='dropdownVehicle'>{visible && item.id == visiblelist ? <AiOutlineMinus top="10px" size="1rem" color='White' onClick={displaylist}></AiOutlineMinus> :
+                                            <BsPlusLg size="1rem" color='White' onClick={() => {
+                                                displaylist()
+                                                setvisiblelist(item.id)
+                                            }} ></BsPlusLg>}</p>
+                                    </div>
+
+                                    {visible && item.id == visiblelist ?
+                                        <>
+                                        
+                                            <div className='trip_date'>
+                                                <input onChange={(e) => setSearch(e.target.value)} placeholder='Search...' className='trip_date1' type="search" /><button>Search</button>
+                                            </div>
+
+                                            {
+                                                loading ?
+                                                    <p className='loading'><SyncLoader
+                                                        // color={color}
+                                                        // Left={margin}
+                                                        loading={loading}
+                                                        // cssOverride={override}
+                                                        size={10}
+                                                        // margin= "100px 0px 0px 0px"
+                                                        // padding= "200px"
+                                                        aria-label="Loading Spinner"
+                                                        data-testid="loader"
+                                                    /></p>
+                                                    :
+                                            
+                                            <div className='outer_vehicle_tables' id='myTable'>
+                                                <p>Avaliable Vehicles for Trip</p>
+
+                                                <table class="vehicle_table" id="myTable">
+
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Vehicle Name</th>
+                                                            <th>Assigned Driver</th>
+                                                            <th>Current Location</th>
+                                                            <th>Vehicle Type</th>
+                                                            <th>Plate Number</th>
+                                                            <th>Set Trip</th>
+                                                            {/* <th>History</th> */}
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {dataSource2.map(item => (
+                                                            <tr className='active_row'>
+
+                                                                <td>{item.vehicleName}</td>
+                                                                <td>{item.driver}</td>
+                                                                <td>{ }</td>
+                                                                <td>{item.vehicleCatagory.catagory}</td>
+                                                                <td>{item.plateNumber}</td>
+                                                                <td><Link to={`/set_trip`}><button>Set Trip</button></Link></td>
+                                                                {/* <td><Link to="/trip_history"><button>History</button></Link></td> */}
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+
+                                            </div> 
+                                            }
+
+                                            </> : ""}
+                                </>
+                            ))}
+
+                        </div>
+
+                    </div>
+                </form>
+            </section>
+
+
+            {/* ---------------end contents--------------- */}
+
+
+        </div>
+
+    )
+}

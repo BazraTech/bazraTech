@@ -8,7 +8,7 @@ export const Accident = [
         "Driver": "Anduamlak Alehegne",
         "Plate_number": "ET A1117272",
         "Alert_location": "Addis Ababa",
-        "Alert_type": "Accident",  
+        "Alert_type": "Off road",  
         "Owner": "Bazra Moters",
         
     },
@@ -28,7 +28,7 @@ export const Accident = [
         "Driver": "Anduamlak Alehegne",
         "Plate_number": "ET A1117272",
         "Alert_location": "Addis Ababa",
-        "Alert_type": "Accident",
+        "Alert_type": "Driver",
         "Owner": "Bazra Moters",
       
     },
@@ -48,7 +48,7 @@ export const Accident = [
         "Driver": "Anduamlak Alehegne",
         "Plate_number": "ET A1117272",
         "Alert_location": "Addis Ababa",
-        "Alert_type": "Accident",
+        "Alert_type": "Off road",
         "Owner": "Bazra Moters",
       
     },

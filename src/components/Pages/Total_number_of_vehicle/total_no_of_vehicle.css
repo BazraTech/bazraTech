@@ -86,18 +86,34 @@
     top: 75px;
 }
 
-.vehicle_contents {
+.vehicle_contents0 {
     margin-top: 40px;
     display: grid;
-    grid-template-columns: 10px 10px 10px 10px;
+    grid-template-columns: 10px 10px 10px 10px 10px;
     justify-content: space-between;
-    width: 70%;
+    width: 74%;
     margin-left: 5%;
     position: absolute;
 }
 
 /* ------------------ Total_vehicle ------------------- */
 .activeNav {
+    width: 200px;
+    background-color: rgb(71, 71, 71);
+    height: 90px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+    text-align: center;
+    transition: 0.3s;
+    padding: 10%;
+    box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
+.activeNav1 {
     width: 240px;
     background-color: rgb(71, 71, 71);
     height: 100px;
@@ -111,6 +127,28 @@
     display: inline-block;
     text-decoration: none;
     color: rgb(255, 255, 255);
+}
+.activeNav1 .active{
+    background-color: rgb(255, 0, 0);
+}
+
+.activeNav1 h4 {
+    padding: 10px;
+}
+
+.activeNav1 p {
+    display: grid;
+    grid-template-columns: 50px 50px;
+    justify-content: center;
+}
+
+.activeNav1 p b {
+    margin-top: 5px;
+    font-size: 1.5rem;
+}
+
+.activeNav1:hover {
+    transform: scale(1.09);
 }
 .activeNav .active{
     background-color: rgb(255, 0, 0);
@@ -174,10 +212,10 @@
 }
 
 /* ------------------ On-Route ------------------- */
-.on_route {
-    width: 240px;
+.on_route1 {
+    width: 200px;
     background-color: rgb(255, 255, 255);
-    height: 100px;
+    height: 90px;
     margin-bottom: 50px;
     border-radius: 10px;
     text-align: center;
@@ -188,35 +226,35 @@
     display: inline-block;
     color: #000;
 }
-.on_route.active{
+.on_route1.active{
     background-color: rgb(255, 0, 0);
     color: var(--white);
 }
 
-.on_route h4 {
+.on_route1 h4 {
     padding: 10px;
 }
 
-.on_route p {
+.on_route1 p {
     display: grid;
     grid-template-columns: 50px 50px;
     justify-content: center;
 }
 
-.on_route p b {
+.on_route1 p b {
     margin-top: 5px;
     font-size: 1.5rem;
 }
 
-.on_route:hover {
+.on_route1:hover {
     transform: scale(1.09);
 }
 
 /* ------------------ Parked ------------------- */
-.parked {
-    width: 240px;
+.parked1 {
+    width: 200px;
     background-color: rgb(255, 255, 255);
-    height: 100px;
+    height: 90px;
     margin-bottom: 50px;
     border-radius: 10px;
     text-align: center;
@@ -227,30 +265,30 @@
     color: #000;
 }
 
-.parked h4 {
+.parked1 h4 {
     padding: 10px;
 }
 
-.parked p {
+.parked1 p {
     display: grid;
     grid-template-columns: 50px 50px;
     justify-content: center;
 }
 
-.parked p b {
+.parked1 p b {
     margin-top: 5px;
     font-size: 1.5rem;
 }
 
-.parked:hover {
+.parked1:hover {
     transform: scale(1.09);
 }
 
 /* ------------------ Maintenance ------------------- */
-.maintenance {
-    width: 240px;
+.maintenance1 {
+    width: 200px;
     background-color: rgb(255, 255, 255);
-    height: 100px;
+    height: 90px;
     margin-bottom: 50px;
     border-radius: 10px;
     text-align: center;
@@ -261,22 +299,22 @@
     color: #000;
 }
 
-.maintenance h4 {
+.maintenance1 h4 {
     padding: 10px;
 }
 
-.maintenance p {
+.maintenance1 p {
     display: grid;
     grid-template-columns: 50px 50px;
     justify-content: center;
 }
 
-.maintenance p b {
+.maintenance1 p b {
     margin-top: 5px;
     font-size: 1.5rem;
 }
 
-.maintenance:hover {
+.maintenance1:hover {
     transform: scale(1.09);
 }
 

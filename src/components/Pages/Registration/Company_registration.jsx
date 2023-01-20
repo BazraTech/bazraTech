@@ -234,7 +234,7 @@ export default function Company_registration() {
 
     {/*---------------- handle submit values ----------------- */ }
     // const onSubmit = data => console.log(data);
-
+ 
     return (
         <div className="company_container">
 
@@ -567,6 +567,7 @@ export default function Company_registration() {
                                         onChange={(e) => setmanufactureDate(e.target.value)} ></input>
                                     {manufactureDate <= 0 && errors.manufactureDate && <span className='validate_text'>{errors.manufactureDate.message}</span>}
                                 </div>
+                        
                                 <div>
                                     <p>Device ID <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input name='deviceID' type="text"
@@ -575,6 +576,24 @@ export default function Company_registration() {
                                         onChange={(e) => setdeviceId(e.target.value)} ></input>
                                     {deviceID <= 0 && errors.deviceID && <span className='validate_text'>{errors.deviceID.message}</span>}
                                 </div>
+
+                                {/* <div>
+                                    <p>Deriver Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                    <input name='deviceID' type="text"
+                                        {...register("deviceID", { required: '*Device ID is required' })}
+                                        placeholder='Enter Device ID'
+                                        onChange={(e) => setdeviceId(e.target.value)} ></input>
+                                    {deviceID <= 0 && errors.deviceID && <span className='validate_text'>{errors.deviceID.message}</span>}
+                                </div>
+                                <div>
+                                    <p>Deriver Licence <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                    <input name='deviceID' type="text"
+                                        {...register("deviceID", { required: '*Device ID is required' })}
+                                        placeholder='Enter Device ID'
+                                        onChange={(e) => setdeviceId(e.target.value)} ></input>
+                                    {deviceID <= 0 && errors.deviceID && <span className='validate_text'>{errors.deviceID.message}</span>}
+                                </div> */}
+                               
                             </div>
                         </div>
                         <div className='company_button'>

@@ -36,29 +36,6 @@ export const total = [
         "date": "2023-01-27",
         
     },
-    {
-        "id": 4,
-        "user": "Abebe",
-        "assignedDriver": "kebede Alemu",
-        "vehicleId": "BA 000021",
-        "vehicleName": "Tractor",
-        "planeNumber": "ET 1212121",
-        "location": "Addis Ababa",
-        "date": "2023-01-27",
-        
-    },
-    {
-        "id": 5,
-        "user": "Abebe",
-        "assignedDriver": "Abebe Alemu",
-        "vehicleId": "BA 000021",
-        "vehicleName": "Van",
-        "planeNumber": "ET 1212121",
-        "location": "Addis Ababa",
-        "date": "2023-01-21",
-        
-    },
-
    
 ],
 

@@ -207,20 +207,20 @@ export default function () {
                     <Link to="/ReportOn_stock" style={{ textDecoration: 'none' }}>
                         <div className='parked' >
                             <h4>On Stock</h4>
-                            <p><FaParking size="2rem"></FaParking><b>10</b></p>
+                            <p><FaParking size="2rem"></FaParking><b></b></p>
                         </div>
                     </Link>
                     <Link style={{ textDecoration: 'none' }} to="/ReportMaintenance">
                         <div className='activeNav'>
                             <h4>Maintenance</h4>
-                            <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>10</b></p>
+                            <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b></b></p>
                         </div>
                     </Link>
                 </div>
 
                 {/* --------------- search --------------- */}
 
-                <div className='vehicle_search1'>
+                <div className='vehicle_search'>
                     <p title='search'>
                         <BsSearch className='icn' size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
                         <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
@@ -264,13 +264,13 @@ export default function () {
                             {maintenance[0].map(item => (
                                 <tr className='active_row'>
 
-                                    <td>{item.user}</td>
+                                    {/* <td>{item.user}</td>
                                     <td>{item.assignedDriver}</td>
                                     <td>{item.vehicleId}</td>
                                     <td>{item.vehicleType}</td>
                                     <td>{item.planeNumber}</td>
                                     <td><Link to={`/report_detail/${item.id}`}><button>Report</button></Link></td>
-                                    <td><Link to="/trip_history"><button>History</button></Link></td>
+                                    <td><Link to="/trip_history"><button>History</button></Link></td> */}
                                 </tr>
                             ))}
                         </tbody>

@@ -204,13 +204,13 @@ export default function () {
           <Link style={{ textDecoration: 'none' }} to="/ReportOn_stock">
             <div className='parked'>
               <h4>On Stock</h4>
-              <p><FaParking size="2rem" ></FaParking><b>10</b></p>
+              <p><FaParking size="2rem" ></FaParking><b></b></p>
             </div>
           </Link>
           <Link style={{ textDecoration: 'none' }} to="/ReportMaintenance">
             <div className='maintenance'>
               <h4>Maintenance</h4>
-              <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>10</b></p>
+              <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b></b></p>
             </div>
           </Link>
         </div>

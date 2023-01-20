@@ -149,3 +149,39 @@
     margin-left: 10px;
     margin-top: 20px;
 }
+
+.companyList{
+    background-color: rgb(52, 52, 52);
+    margin-top: 20px;
+    padding: 1%;
+    border-radius: 4px;
+    color: rgb(255, 255, 255);
+    display: grid;
+    grid-template-columns: 35% 35% 10%;
+    gap: 10%;
+    padding-left: 80px;
+    left: 0;
+
+}
+
+.companyList2{
+    background-color: rgb(52, 52, 52);
+    margin-top: 20px;
+    padding: 1%;
+    border-radius: 4px;
+    color: rgb(255, 255, 255);
+    display: grid;
+    grid-template-columns: 35% 35% 30%;
+    gap: 10%;
+    padding-left: 80px;
+    left: 0;
+
+}
+.companyList .dropdownVehicle{
+    padding-left: 60px;
+    /* background-color: red; */
+}
+.greentrip{
+    margin-top: 5px;
+    color: green;
+}

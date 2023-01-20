@@ -29,16 +29,16 @@ export default function Dashboard() {
         },
     };
 
-    const url = "http://198.199.67.201:9090/Api/SignIn/Admin/";
-    const [dataSource, setDataSource] = useState([])
-    useEffect(() => {
-        fetch(url, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource(data.user)
-                console.log(dataSource)
-            })
-    }, [])
+    // const url = "http://198.199.67.201:9090/Api/SignIn/Admin";
+    // const [dataSource, setDataSource] = useState([])
+    // useEffect(() => {
+    //     fetch(url, options)
+    //         .then(respnse => respnse.json())
+    //         .then(data => {
+    //             setDataSource(data.user)
+    //             console.log(dataSource)
+    //         })
+    // }, [])
 
 
     const [popup, setPop] = useState(false);
@@ -75,54 +75,54 @@ export default function Dashboard() {
 
             <div className='main_content' onClick={handleClickopen1}>
                 <div className='dashboard_contents'>
-                    <p><Link to="/Total_number_of_vehicle" >
+                    <div><Link to="/Total_number_of_vehicle" >
                         <div className='vehicle'>
                             <h4>Total Number of Vehicles</h4>
                             <AiFillCar size="2.8rem" color="#006666"></AiFillCar>
                         </div>
-                    </Link> </p>
-                    <p><Link to="/message_overview">
+                    </Link> </div>
+                    <div><Link to="/message_overview">
                         <div className='comunication'>
                             <h4>Comunication</h4>
                             <BsFillChatDotsFill size="3rem" color='#b35900'></BsFillChatDotsFill>
                         </div>
-                    </Link></p>
-                    <p><Link to="/users">
+                    </Link></div>
+                    <div><Link to="/users">
                         <div className='users'>
                             <h4>List of users</h4>
                             <FaUsers size="3rem" color='#002e4d'></FaUsers>
                         </div>
-                    </Link> </p>
-                    <p><Link to="/Company_registration">
+                    </Link> </div>
+                    <div><Link to="/Company_registration">
                         <div className='registration'>
                             <h4>Registration</h4>
                             <FaRegIdCard size="3rem" color='#00802b'></FaRegIdCard>
                         </div>
-                    </Link> </p>
-                    <p><Link to="/avialable_trip">
+                    </Link> </div>
+                    <div><Link to="/avialable_trip">
                         <div className='monitor_vehicle'>
                             <h4>Trip Management</h4>
                             <BiTrip size="3rem" color='#009999'></BiTrip>
                         </div>
-                    </Link> </p>
-                    <p><Link to="/report">
+                    </Link> </div>
+                    <div><Link to="/report">
                         <div className='report'>
                             <h4>Report</h4>
                             <HiDocumentReport size="3rem" color='#005c99'></HiDocumentReport> 
                         </div>
-                    </Link> </p>
-                    <p><Link to="/accident">
+                    </Link> </div>
+                    <div><Link to="/accident">
                         <div className='alert'>
                             <h4>Alert</h4>
                             <HiBellAlert size="3rem" color='#F80404'></HiBellAlert> 
                         </div>
-                    </Link></p>
-                    <p><Link to="/tracking">
+                    </Link></div>
+                    <div><Link to="/tracking">
                         <div className='tracking'>
                             <h4>Real Time Tracking</h4>
                             <RiGpsFill size="3rem" color='#404040'></RiGpsFill> 
                         </div>
-                    </Link></p>
+                    </Link></div>
                 </div>
             </div>
 

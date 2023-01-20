@@ -24,10 +24,10 @@ export default function Navigation() {
     }
 
     const location = useLocation();
-    console.log(location.pathname);
+    // console.log(location.pathname);
 
     const getColor = (curr) => {
-        if (location.pathname === curr) {
+        if (location.pathname === curr ) {
             return '#00cc44'
         }
 

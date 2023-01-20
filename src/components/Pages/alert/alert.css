@@ -80,6 +80,44 @@
 
 /* --------------- Alert Main --------------- */
 
+.allDivalert {
+    background-color: rgb(253, 253, 253);
+    width: 90%;
+    padding: 1%;
+    padding-right: 1%;
+    border-radius: 10px 10px 10px 10px;
+    z-index: 1;
+    margin-left: 5%;
+  }
+
+  .currentHistory{
+    display: grid;
+    grid-template-columns: 20% 20%;
+    column-gap: 40%;
+    padding-left: 20%;
+    padding-top: 4%;
+}
+.currentHistory .sd{
+    background-color: rgb(255, 255, 255);
+    color: rgb(20, 132, 0);
+    text-align: center;
+    padding: 7%;
+    border-radius: 7px;
+    cursor: pointer;
+    margin-bottom: -25px;
+    border: 8px solid rgb(244, 244, 244);
+    font-size: 22px;
+    font-weight: 700;
+    margin-right: 50px;
+    margin-left: -70px;
+}
+
+.currentHistory .sdd{
+    color: black;
+    font-size: 20px;
+    font-weight: 600;
+}
+
 .alert_main {
     position: absolute;
     width: calc(100% - 100px);
@@ -108,7 +146,7 @@
     grid-template-columns: 100px 100px 100px;
     justify-content: space-between;
     width: 70%;
-    margin-left: 150px;
+    margin-left: 40px;
     position: absolute;
     margin-bottom: 30%;
 }

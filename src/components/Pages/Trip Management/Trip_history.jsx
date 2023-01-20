@@ -1,6 +1,14 @@
 import React from 'react'
+import './available.css';
+import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { FaHome } from 'react-icons/fa';
-import { AiFillCar } from "react-icons/ai";
+import { AiFillCar } from "react-icons/ai"; 
+import { FaRoute } from "react-icons/fa";
+import { BsSearch } from "react-icons/bs";
+import { AiFillFilter } from "react-icons/ai";
+import { FaParking } from "react-icons/fa";
+import { GrSettingsOption } from "react-icons/gr";
 import { RiGpsFill } from "react-icons/ri";
 import { MdMonitor } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
@@ -10,20 +18,20 @@ import { FaRegIdCard } from 'react-icons/fa';
 import { BsFillChatDotsFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
-import { FiLogOut } from "react-icons/fi";
-import { HiMenuAlt1 } from "react-icons/hi";
-import { BiTrip } from "react-icons/bi";
-import './available.css';
-import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import { SiTripdotcom } from "react-icons/si";
 import { SiGoogletagmanager } from "react-icons/si";
-import { FaStarOfLife } from 'react-icons/fa';
+import { BiTrip } from "react-icons/bi";
+import { FiLogOut } from "react-icons/fi";
+import { IoSettingsOutline } from "react-icons/io5";
 import { useForm } from 'react-hook-form';
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { total } from './data/data';
-import swal from "sweetalert";
+import { IoMdArrowDropdownCircle } from "react-icons/io";
+import { IoMdArrowDropupCircle } from "react-icons/io";
+import { BsPlusLg } from "react-icons/bs";
+import { AiOutlineMinus } from "react-icons/ai";
+
 
 export default function () {
 
@@ -61,36 +69,47 @@ export default function () {
 
 
     const [popup, setPop] = useState(false);
+    const [state, setState] = useState("");
     const handleClickopen = () => {
         setPop(!popup);
     }
+    // {
+    //     total[0]
+    //     .map((item) => {
+    //         setState(item.assignedDriver.toLowerCase().includes(search))
+    //     })}
+
+
     const [search, setSearch] = useState('');
-    const [result, setResult] = useState('');
-    console.log(search)
+    // if (search === state) {
+    //   alert("success")
+    //  }
 
-    console.log(result)
+    const [loading, setLoading] = useState(false);
+    const [popup1, setPop1] = useState(true);
 
-    const nandu = () => {
-        if (search === result) {
-            // swal("error", "Ther Is no Such File", "error", {
-            //     buttons: false,
-            //     timer: 2000,
-            //   })
-        }
-        else {
-            swal("error", "Ther Is no Such File", "error", {
-                // buttons: false,
-                // timer: 2000,
+    const url2 = "http://198.199.67.201:9090/Api/Vehicle/All";
+
+    const [dataSource2, setDataSource2] = useState([])
+    useEffect(() => {
+        setLoading(true);
+        fetch(url2, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource2(data.vehicles)
+                console.log(dataSource2) 
+                setLoading(false); 
+
             })
+    }, [])
 
-
-        }
+    const [visiblelist, setvisiblelist] = useState(false);
+    const [visible, setVisible] = useState(false);
+    const displaylist = () => {
+        setVisible(!visible);
     }
 
-    const [trip, setTrip] = useState("nandu"); 
-    const [popup1, setPop1] = useState(true);
-    const [loading, setLoading] = useState(false); 
- 
+
     return (
 
         <div className="dashboard_container">
@@ -116,7 +135,7 @@ export default function () {
                     </li>
                     <li>
                         <Link to="/avialable_trip">
-                            <p className="hovertext" data-hover="Trip Management"><BiTrip color='#00cc44' size="2rem" ></BiTrip></p>
+                            <p className="hovertext" data-hover="Trip Management"><BiTrip color='00cc44' size="2rem" ></BiTrip></p>
                         </Link>
                     </li>
                     <li>
@@ -165,132 +184,76 @@ export default function () {
             <section className='register'>
 
                 <div className='company_individual_header'>
-                    <Link style={{ textDecoration: 'none' }} to="/avialable_trip"><p><h1 className='nmnn'>Avialable Trip</h1></p></Link>
-                    <Link style={{ textDecoration: 'none' }} to="/trip_history"><p><h1 className='nmn'>Trip History</h1></p></Link>
+                    <Link style={{ textDecoration: 'none' }} to="/avialable_trip"><p><h1 className='nmnn'>Avialable Vehicles</h1></p></Link>
+                    <Link style={{ textDecoration: 'none' }} to="/trip_history"><p><h1 className='nmn'>Vehicles History</h1></p></Link>
                 </div>
 
                 <form className='form' onSubmit={handleSubmit(onSubmit)}>
                     <div className='allDiv'>
+
                         <div className='trip_date'>
-
-                            <>
-                                <input onChange={(e) => {
-                                    setSearch(e.target.value)
-                                    // nandu()
-
-                                }} placeholder='Search...' className='trip_date1' type="date" /><button>Search</button>
-                            </>
-
+                            <input onChange={(e) => setSearch(e.target.value)} placeholder='Search...' className='trip_date1' type="search" /><button>Search</button>
                         </div>
-                        {loading ? 
-                        <p>jjjj</p>
-                      
-                        : <div className='setTrip' id='myInput'>
-                                 
-                                {
-                                total[0]
-                                
-                                
-                                    .filter((item) => {
-                                        return search.toLowerCase() === ''
-                                            ? item
-                                            : item.date.toLowerCase().includes(search);
-                                         
-                                    }) 
-                                    .map(item => (
+                        <div>
+                           <h1 className='greentrip'>List of Company</h1>
+                            {total[0].map(item => (
+                                <>
+                                    <div className='companyList' onClick={() => {
+                                                displaylist()
+                                                setvisiblelist(item.id)
+                                            }} >
+                                        <p>Company Name : <b className='green'>{item.id}</b></p>
+                                        <p>Company Name : <b className='green'>Bazra</b></p>
+                                        <p className='dropdownVehicle'>{visible && item.id == visiblelist ? <AiOutlineMinus top="10px" size="1rem" color='White' onClick={displaylist}></AiOutlineMinus> :
+                                            <BsPlusLg size="1rem" color='White' onClick={() => {
+                                                displaylist()
+                                                setvisiblelist(item.id)
+                                            }} ></BsPlusLg>}</p>
+                                    </div>
+
+                                    {visible && item.id == visiblelist ?
                                         <>
-                                            <div className='avilabel_trips' >
-
-                                                <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
-                                                <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
-                                                <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
-                                                <p><lable>Current Location : <b>{item.date} </b></lable></p>
-                                                {/* { setResult(item.id)} */}
-
+                                            <div className='trip_date'>
+                                                <input onChange={(e) => setSearch(e.target.value)} placeholder='Search...' className='trip_date1' type="date" /><button>Search</button>
                                             </div>
-                                            <div className='borderBottom'></div>
+                                            <div className='outer_vehicle_tables' id='myTable'>
+                                                <p>Avaliable Vehicles for Trip</p>
 
-                                        </>
+                                                <table class="vehicle_table" id="myTable">
 
-                                    ))}
+                                                    <thead>
+                                                        <tr >
+                                                            <th>Vehicle Name</th>
+                                                            <th>Assigned Driver</th>
+                                                            <th>Current Location</th>
+                                                            <th>Vehicle Type</th>
+                                                            <th>Plate Number</th>
+                                                            <th>Set Trip</th>
+                                                            {/* <th>History</th> */}
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {dataSource2.map(item => (
+                                                            <tr className='active_row'>
 
-                            </div> 
-                             }
+                                                                <td>{item.vehicleName}</td>
+                                                                <td>{item.date}</td>
+                                                                <td>{item.id}</td>
+                                                                <td>{item.vehicleCatagory.catagory}</td>
+                                                                <td>{item.plateNumber}</td>
+                                                                <td><Link to={`/report_detail/${item.vehicleName}/${item.plateNumber}`}><button>Report</button></Link></td>
+                                                                {/* <td><Link to="/trip_history"><button>History</button></Link></td> */}
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
 
+                                            </div></> : ""}
+                                </>
+                            ))}
 
-                        {/* <div className='setTrip'>
-                        <div className='avilabel_trips' >
-                                {total[0].map(item => (
-                                    <>
-                                        <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
-                                        <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
-                                        <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
-                                        <p><lable>Current Location : <b>{item.location}</b></lable></p>
-                                    </>
-                                ))}
-                            </div>
-                            <div className='set_history'>
-                                <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
-                                <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p>
-                            </div>
                         </div>
 
-                        <div className='setTrip'>
-                        <div className='avilabel_trips' >
-                                {total[0].map(item => (
-                                    <>
-
-                                        <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
-                                        <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
-                                        <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
-                                        <p><lable>Current Location : <b>{item.location}</b></lable></p>
-                                    </>
-                                ))}
-                            </div>
-                            <div className='set_history'>
-                                <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
-                                <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p>
-                            </div>
-                        </div>
-
-                        <div className='setTrip'>
-                        <div className='avilabel_trips' >
-                                {total[0].map(item => (
-                                    <>
-
-                                        <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
-                                        <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
-                                        <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
-                                        <p><lable>Current Location : <b>{item.location}</b></lable></p>
-                                    </>
-                                ))}
-                            </div>
-                            <div className='set_history'>
-                                <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
-                                <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p>
-                            </div>
-                        </div>
-
-                        <div className='setTrip'>
-                           <div className='avilabel_trips' >
-                                {total[0].map(item => (
-                                    <>
-
-                                        <p><lable>Plate Number : <b>{item.planeNumber}</b></lable></p>
-                                        <p><lable>Assigned Driver : <b>{item.assignedDriver}</b></lable></p>
-                                        <p><lable>Vehicle Name : <b>{item.vehicleName}</b></lable></p>
-                                        <p><lable>Current Location : <b>{item.location}</b></lable></p>
-                                    </>
-                                ))}
-                            </div>
-                            <div className='set_history'>
-                                <p> <Link to="/set_trip" style={{ textDecoration: 'none' }}><button>Set Trip</button></Link></p>
-                                <p> <Link to="/trip_history" style={{ textDecoration: 'none' }}><button>Trip History</button></Link></p>
-                            </div>
-                        </div> */}
-                        {/* <div className='company_button'>
-                            <button className='add'>Add</button>
-                        </div> */}
                     </div>
                 </form>
             </section>

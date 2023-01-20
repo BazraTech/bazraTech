@@ -114,24 +114,6 @@ export default function SignIn() {
 			}
 		}
 
-		// Calling Admin login API
-
-		// if (loading) {
-		// 	return <Loading />
-		// }
-
-
-		// const [name, setName] = useState("")
-		// const [pass, setPasword] = useState("")
-		// const { watch, formState} = useForm();
-
-		// const onSubmit = () => {
-
-		// 	if (name && password) {
-		// 		window.location.href = "/dashboard"
-		// 	}
-		// 	else window.location.href = "/"
-		// }
 		return (
 			<>
 
@@ -144,11 +126,11 @@ export default function SignIn() {
 						<div className="signup_right">
 							<form className="signup_right" onSubmit={validation}>
 								<h2>Welcome To Bazra</h2>
-								<lable><b>User Name</b></lable>
+								<label><b>User Name</b></label>
 								<input type="username" className="signup_input_field" placeholder="Username" onChange={e => setUsername(e.target.value)} name="username"></input>
 								{error&&username.length<=0 ? <span className='validateText' >please enter your username</span> :""}
 
-								<lable><p><b>Password</b></p></lable>
+								<label><p><b>Password</b></p></label>
 								<input type="password" className="signup_input_field"  placeholder="Password" onChange={e => setPassword(e.target.value)} name="password"></input>
 								{error&&password.length<=0 ? <span className='validateText' >please enter your password</span> :""}
 								<div className='for'>

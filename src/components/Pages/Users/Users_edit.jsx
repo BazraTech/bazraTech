@@ -85,7 +85,7 @@ export default function Users_edit() {
     const [dataSource4, setDataSource4] = useState([])
 
     const [Loading, setLoading] = useState([]);
-    const { id, companyId } = useParams();
+    const { id, companyId } = useParams(); 
 
     const url = `http://198.199.67.201:9090/Api/Admin/All/VehicleOwner/${id}`;
     useEffect(() => {
@@ -199,7 +199,7 @@ export default function Users_edit() {
 
                     <div className='company_individual_header'>
                         <p ><h1 className='nmn'>Company Detail</h1></p>
-                        <p ><h4 className='vehicleDetail'>Name : Abebe Alemu <br /> User ID : BA 00001</h4></p>
+                        <p ><h4 className='vehicleDetail'>Name : {dataSource2.name} <br /> User ID : {dataSource2.id}</h4></p>
                     </div>
                     <form className='form'>
                         {/* {dataSource.map(item => { */}

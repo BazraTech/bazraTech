@@ -154,9 +154,9 @@ export default function () {
                 </div> 
 
                 {/* <div className='filter'>
-                    <p>
+                    <p> 
                         <AiFillFilter className='fil' size="0.8rem" color='rgb(63, 63, 63)'></AiFillFilter>
-                        <h6>Filter</h6>
+                        <h6>Filter</h6> 
                     </p>
                 </div> */}
 

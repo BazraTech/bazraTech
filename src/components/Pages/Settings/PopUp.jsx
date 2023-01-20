@@ -36,7 +36,7 @@ export default function PopUp(props) {
         if (title === 'Add_company_type') {
             Add_company_type();
         }
-        if (title === 'Add_company_type') {
+        if (title === 'Add_Service_Needed') {
             Add_Service_Needed();
         }
 
@@ -45,9 +45,9 @@ export default function PopUp(props) {
     const notification = notifications;
     const vehicleConditon = notifications;
     const vehicleCatagory = notifications;
-    const companysector = notifications;
-    const companyTypes = notifications;
-    const service = notifications;
+    const companysector = notifications; 
+    const companyType = notifications;
+    const serviceNeeded = notifications;
     // const handleClick = (e) => {
     //     signupxx();
     // };
@@ -56,11 +56,11 @@ export default function PopUp(props) {
         let item =
         {
             companysector,
-        };
+        }; 
         const options = {
-            method: "POST",
+            method: "POST", 
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json', 
                 "Accept": "application/json",
                 "Authorization": `Bearer ${jwt}`
             },
@@ -205,7 +205,7 @@ export default function PopUp(props) {
     async function Add_company_type() {
         let item =
         {
-            companyTypes,
+            companyType,
         };
         const options = {
             method: "POST",
@@ -216,9 +216,9 @@ export default function PopUp(props) {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Admin/CreateCompanyType";
+        const url1 = "http://198.199.67.201:9090/Api/Admin/CreateCompanyType";
         try {
-            const response = await fetch(url, options);
+            const response = await fetch(url1, options);
             const result = await response.json();
             console.log(result);
             localStorage.setItem("message", JSON.stringify(result["message"]));
@@ -242,7 +242,7 @@ export default function PopUp(props) {
     async function Add_Service_Needed() {
         let item =
         {
-            service,
+            serviceNeeded,
         };
         const options = {
             method: "POST",
@@ -253,7 +253,7 @@ export default function PopUp(props) {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Admin/CreateCompanyType";
+        const url = "http://198.199.67.201:9090/Api/Admin/CreateServiceNeeded";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -283,35 +283,7 @@ export default function PopUp(props) {
             <div>
                 <div className='add_notification' onClick={handleClickopen}>{title}</div>
             </div>
-            {/* <div>
-                {popup ?
-                    <div className='popup_modal'>
-                        <div className='popup_close_button'>
-                            <button className='x-press-report' onClick={closePopup}>X</button>
-                        </div>
-
-                        <div className="item-report">
-                            <div className="report-status-popup">
-                                <div class="popup_main" >
-                                    <h2>{title}</h2>
-                                    <form className='form'  onSubmit={handleSubmit(onSubmit)}>
-                                    <input  value={notifications}  placeholder={title}  onChange={(e) => setNotification(e.target.value)}></input>
-                                  
-                                    <div className='send_button'>
-                                        <button className='popup_add'>Add</button>
-                                        <button onClick={closePopup} className='popup_cancle'>Cancle</button>
-                                    </div>
-                                    </form>
-                                </div>
-
-                            </div>
-                        </div>
-
-
-
-                    </div> : ""}
-
-            </div> */}
+                
             <div>
                 {popup ?
                     <div>

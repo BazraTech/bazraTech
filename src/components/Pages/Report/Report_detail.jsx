@@ -83,7 +83,7 @@ export default function () {
                     </li>
                     <li>
                         <Link to="/avialable_trip">
-                            <p className="hovertext" data-hover="Trip Management"><BiTrip color='white' size="2rem" ></BiTrip></p>
+                            <p className="hovertext" data-hover="Trip Management"><BiTrip color='00cc44' size="2rem" ></BiTrip></p>
                         </Link>
                     </li>
                     <li>
@@ -98,7 +98,7 @@ export default function () {
                     </li>
                     <li>
                         <Link to="/report">
-                            <p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='#00cc44'></HiDocumentReport></p>
+                            <p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p>
                         </Link>
                     </li>
                     <li>

@@ -166,7 +166,7 @@ export default function Users_edit() {
 
                     <div className='company_individual_header'>
                         <p ><h1 className='nmn'>Vehicle Detail</h1></p>
-                        <p ><h4 className='vehicleDetail'>Name : Abebe Alemu <br /> User ID : BA 00001</h4></p>
+                        <p ><h4 className='vehicleDetail'>Name : {dataSource.companyInfo} <br /> User ID : {dataSource.plateNumber}</h4></p>
                     </div>
                     <form className='form'>
 
@@ -188,7 +188,7 @@ export default function Users_edit() {
 
                                     <div>
                                         <p>Vehicle Name </p>
-                                        <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.vehicleName} type="text" placeholder='Lada' disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.vehicleName} type="text"  disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Vehicle Condition </p>
@@ -200,7 +200,7 @@ export default function Users_edit() {
                                     </div>
                                     <div>
                                         <p>Plate Number </p>
-                                        <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.plateNumber} type="text" placeholder='Lada' disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.plateNumber} type="text"  disabled={diabled}></input>
                                     </div>
 
                                     <div>
