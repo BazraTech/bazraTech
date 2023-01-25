@@ -67,8 +67,7 @@ export default function () {
     const [loading, setLoading] = useState(false);
     const [popup1, setPop1] = useState(true);
 
-    const url2 = "http://198.199.67.201:9090/Api/Vehicle/All";
-
+    const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -136,7 +135,7 @@ export default function () {
 
                                     {visible && item.id == visiblelist ?
                                         <>
-                                        
+
                                             <div className='trip_date'>
                                                 <input onChange={(e) => setSearch(e.target.value)} placeholder='Search...' className='trip_date1' type="search" /><button>Search</button>
                                             </div>
@@ -155,43 +154,43 @@ export default function () {
                                                         data-testid="loader"
                                                     /></p>
                                                     :
-                                            
-                                            <div className='outer_vehicle_tables' id='myTable'>
-                                                <p>Avaliable Vehicles for Trip</p>
 
-                                                <table class="vehicle_table" id="myTable">
+                                                    <div className='outer_vehicle_tables' id='myTable'>
+                                                        <p>Avaliable Vehicles for Trip</p>
 
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Vehicle Name</th>
-                                                            <th>Assigned Driver</th>
-                                                            <th>Current Location</th>
-                                                            <th>Vehicle Type</th>
-                                                            <th>Plate Number</th>
-                                                            <th>Set Trip</th>
-                                                            {/* <th>History</th> */}
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {dataSource2.map(item => (
-                                                            <tr className='active_row'>
+                                                        <table class="vehicle_table" id="myTable">
 
-                                                                <td>{item.vehicleName}</td>
-                                                                <td>{item.driver}</td>
-                                                                <td>{ }</td>
-                                                                <td>{item.vehicleCatagory.catagory}</td>
-                                                                <td>{item.plateNumber}</td>
-                                                                <td><Link to={`/set_trip`}><button>Set Trip</button></Link></td>
-                                                                {/* <td><Link to="/trip_history"><button>History</button></Link></td> */}
-                                                            </tr>
-                                                        ))}
-                                                    </tbody>
-                                                </table>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Vehicle Name</th>
+                                                                    <th>Assigned Driver</th>
+                                                                    <th>Current Location</th>
+                                                                    <th>Vehicle Type</th>
+                                                                    <th>Plate Number</th>
+                                                                    <th>Set Trip</th>
+                                                                    {/* <th>History</th> */}
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {dataSource2.map(item => (
+                                                                    <tr className='active_row'>
 
-                                            </div> 
+                                                                        <td>{item.vehicleName}</td>
+                                                                        <td>{item.driver.driverName}</td>
+                                                                        <td>{item.id}</td>
+                                                                        <td>{item.vehicleCatagory.catagory}</td>
+                                                                        <td>{item.plateNumber}</td>
+                                                                        <td><Link to={`/set_trip`}><button>Set Trip</button></Link></td>
+                                                                        {/* <td><Link to="/tracking"><button>Tracking</button></Link></td> */}
+                                                                    </tr>
+                                                                ))}
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
                                             }
 
-                                            </> : ""}
+                                        </> : ""}
                                 </>
                             ))}
 

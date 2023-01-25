@@ -50,7 +50,7 @@ class App extends Component{
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/users" element={<Users />}></Route>
         <Route path="/vehicle_detail/:id" element={<Vehicle_detail></Vehicle_detail>}></Route> 
-        <Route path="/User_edit/:id/:companyId" element={<Users_edit />}></Route>
+        <Route path="/User_edit/:role/:id" element={<Users_edit />}></Route>
         <Route path="/Company_registration" element={<Company_registration />}></Route>
         <Route path="/individual" element={<Individual_registration />}></Route>
         <Route path="/Total_number_of_vehicle" element={<Total_number_of_vehile />}></Route>

@@ -58,7 +58,7 @@ export default function Users_edit() {
 
     };
     const { id } = useParams()
-    const url2 = `http://198.199.67.201:9090/Api/Vehicle/All/${id}`;
+    const url2 = `http://198.199.67.201:9090/Api/Admin/All/Vehicles/${id}`;
 
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
@@ -69,7 +69,6 @@ export default function Users_edit() {
                 setDataSource(data)
                 console.log(dataSource)
                 // setLoading(false);
-
             })
     }, [])
 
@@ -79,8 +78,6 @@ export default function Users_edit() {
         setSelectTag(!selecttag);
         setinputTag(!inputtag);
     }
-
-
 
     return (
         <div>
@@ -166,7 +163,7 @@ export default function Users_edit() {
 
                     <div className='company_individual_header'>
                         <p ><h1 className='nmn'>Vehicle Detail</h1></p>
-                        <p ><h4 className='vehicleDetail'>Name : {dataSource.companyInfo} <br /> User ID : {dataSource.plateNumber}</h4></p>
+                        <p ><h4 className='vehicleDetail'>Name : {dataSource.vehicleOwner} <br /> User ID : {dataSource.plateNumber}</h4></p>
                     </div>
                     <form className='form'>
 

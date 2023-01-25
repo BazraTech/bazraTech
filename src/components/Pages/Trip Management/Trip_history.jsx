@@ -208,7 +208,7 @@ export default function () {
                                             <BsPlusLg size="1rem" color='White' onClick={() => {
                                                 displaylist()
                                                 setvisiblelist(item.id)
-                                            }} ></BsPlusLg>}</p>
+                                            }} ></BsPlusLg>}</p> 
                                     </div>
 
                                     {visible && item.id == visiblelist ?
@@ -217,12 +217,12 @@ export default function () {
                                                 <input onChange={(e) => setSearch(e.target.value)} placeholder='Search...' className='trip_date1' type="date" /><button>Search</button>
                                             </div>
                                             <div className='outer_vehicle_tables' id='myTable'>
-                                                <p>Avaliable Vehicles for Trip</p>
+                                                <p>Trip History</p>
 
                                                 <table class="vehicle_table" id="myTable">
 
                                                     <thead>
-                                                        <tr >
+                                                        <tr > 
                                                             <th>Vehicle Name</th>
                                                             <th>Assigned Driver</th>
                                                             <th>Current Location</th>

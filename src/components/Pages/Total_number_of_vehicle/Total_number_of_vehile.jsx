@@ -81,7 +81,7 @@ export default function () {
                 // console.log(dataSource)
                 setLoading(false);
 
-            })
+            }) 
     }, [])
 
   
@@ -233,11 +233,11 @@ export default function () {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {currentPage.map(item => (
+                                    {dataSource2.map(item => (
                                         <tr className='active_row'>
 
                                             <td>{item.vehicleName}</td>
-                                            <td>{item.driver}</td>
+                                            <td>{item.driver.driverName}</td>
                                             <td>{item.id}</td>
                                             <td>{item.vehicleCatagory.catagory}</td>
                                             <td>{item.plateNumber}</td>

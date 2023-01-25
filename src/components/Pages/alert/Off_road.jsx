@@ -161,11 +161,12 @@ export default function () {
                         <Link to="/settings">
                             <p class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='white'></AiFillSetting></p>
                         </Link>
-                    </li>
-                </ul>
+                    </li> 
+                </ul> 
             </div>
 
             {/* --------------- Alert --------------- */}
+            <Header title="Alert"></Header>
 
             <div className='alert_main'>
                 <div className='currentHistory'>

@@ -112,18 +112,18 @@ export default function Cards({ title, data }) {
   }, [])
 
   const url1 = "http://198.199.67.201:9090/Api/Admin/Company/All";
-    const [dataSource1, setDataSource1] = useState([])
-    useEffect(() => {
-        setLoading(true);
-        fetch(url1, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource1(data.companies)
-                // console.log(dataSource2)
-                setLoading(false);
+  const [dataSource1, setDataSource1] = useState([])
+  useEffect(() => {
+    setLoading(true);
+    fetch(url1, options)
+      .then(respnse => respnse.json())
+      .then(data => {
+        setDataSource1(data.companies)
+        // console.log(dataSource2)
+        setLoading(false);
 
-            })
-    }, [])
+      })
+  }, [])
 
 
   const [list, setList] = useState([dataSource]);
@@ -142,7 +142,7 @@ export default function Cards({ title, data }) {
 
   const indexOfLastPage = page + postPerPage;
   const indexOfFirstPage = indexOfLastPage - postPerPage;
-  const currentPage = dataSource1.slice(indexOfFirstPage, indexOfLastPage);
+  // const currentPage = dataSource1.slice(indexOfFirstPage, indexOfLastPage);
   const [vehicleName, setvehicleName] = useState("");
   const [catagory, setVehicleCategory] = useState("");
   const [conditionName, setVehicleCondition] = useState("");
@@ -213,20 +213,24 @@ export default function Cards({ title, data }) {
                 </tr>
               </thead>
               <tbody>
-                {currentPage.map(item => ( 
-                  <tr className='active_row'> 
-                    {/* <td>{item.name}</td>
+                {dataSource.map(item => (
+                  <tr className='active_row'>
+                    {/* <td></td> */}
                     <td>{item.id}</td>
-                    <td>{item.sector.sectorName}</td> */}
+                    <td>{item.phoneNumber}</td>
+                    <td>{item.firstName}</td>
+                    <td>{item.lastName}</td>
+                    <td>{item.role.rolename}</td>
+                    <td></td>
                     {/* <td>{item.companyInfo.id}</td>
                     <td>{item.companyInfo.name}</td>
                     <td>{item.number_of_vehicle}</td>
                     <td>{item.number_of_driver}</td>
-                    <td>{item.number_of_driver}</td>
-                    <td><Link to={`/user_edit/${item.id}/${item.companyInfo.id}`}>
-                      <button>Detail</button></Link></td> */}
-                    {/* <td><Link to="#"><button onClick={() => { handleClickopen() }}>Vehicle</button></Link></td>
-                    <td><Link to="#"><button onClick={() => { handleClickopen1() }}>Driver</button></Link></td> */}
+                    <td>{item.number_of_driver}</td> */}
+                    <td><Link to={`/user_edit/${item.id}/${item.id}`}>
+                      <button>Detail</button></Link></td>
+                    <td><Link to="#"><button onClick={() => { handleClickopen() }}>Vehicle</button></Link></td>
+                    <td><Link to="#"><button onClick={() => { handleClickopen1() }}>Driver</button></Link></td>
                   </tr>
                 ))}
               </tbody>
@@ -328,7 +332,7 @@ export default function Cards({ title, data }) {
                               {/* <button>Back</button> */}
                             </div>
                             <div className='asdy'>
-                              <button onClick={validation}>Submit </button> 
+                              <button onClick={validation}>Submit </button>
                             </div>
                             <div className='asdy'>
                               {/* <button onClick={() => { handleClickopen2() }}>Add Vehicle</button> */}
@@ -338,85 +342,85 @@ export default function Cards({ title, data }) {
                         </div>
                       </div>
                     </div>
-                  </div> : ""} 
+                  </div> : ""}
               </form>
               {popup1 ?
-                  <div>
-                    <div className='popup3'>
-                      <div className='popup-inner'>
-                        <lable className="zxc">Add Driver</lable>
-                        <div className='ewq'>
-                          <div className='qwe'>
-                            <div className='asd'>
-                              <button className='close-btn' onClick={closePopup5}>X</button>
-                              <lable>First Name</lable>
-                              <input name='vehicleName' type="text"
-                                // value={vehicleName}
-                                {...register("vehicleName", { required: true })}
-                                placeholder='Enter Vehicle Name'
-                                onChange={(e) => setvehicleName(e.target.value)} ></input>
-                              {vehicleName <= 0 && error ? <span className='validate_text'>*please enter vehicle name</span> : ""}
-                            </div>
+                <div>
+                  <div className='popup3'>
+                    <div className='popup-inner'>
+                      <lable className="zxc">Add Driver</lable>
+                      <div className='ewq'>
+                        <div className='qwe'>
+                          <div className='asd'>
+                            <button className='close-btn' onClick={closePopup5}>X</button>
+                            <lable>First Name</lable>
+                            <input name='vehicleName' type="text"
+                              // value={vehicleName}
+                              {...register("vehicleName", { required: true })}
+                              placeholder='Enter Vehicle Name'
+                              onChange={(e) => setvehicleName(e.target.value)} ></input>
+                            {vehicleName <= 0 && error ? <span className='validate_text'>*please enter vehicle name</span> : ""}
+                          </div>
 
-                            <div className='asd'>
-                              <lable>Last Name</lable>
-                              <input name='vehicleName' type="text"
-                                // value={vehicleName}
-                                {...register("vehicleName", { required: true })}
-                                placeholder='Enter Vehicle Name'
-                                onChange={(e) => setvehicleName(e.target.value)} ></input>
-                              {vehicleName <= 0 && error ? <span className='validate_text'>*please enter vehicle name</span> : ""}
-                            </div>
+                          <div className='asd'>
+                            <lable>Last Name</lable>
+                            <input name='vehicleName' type="text"
+                              // value={vehicleName}
+                              {...register("vehicleName", { required: true })}
+                              placeholder='Enter Vehicle Name'
+                              onChange={(e) => setvehicleName(e.target.value)} ></input>
+                            {vehicleName <= 0 && error ? <span className='validate_text'>*please enter vehicle name</span> : ""}
+                          </div>
 
-                            <div className='asd'>
-                              <lable>Driver Licence </lable>
-                              <input placeholder='Please Enter Plate Number' name='conditionName'
-                                // value={plateNumber} 
-                                {...register("plateNumber", { required: '*please choose service needed' })}
-                                onChange={(e) => setPlateNumber(e.target.value)} >
-                              </input>
-                              {plateNumber <= 0 && error ? <span className='validate_text'>*please enter vehicle name</span> : ""}
-                            </div>
+                          <div className='asd'>
+                            <lable>Driver Licence </lable>
+                            <input placeholder='Please Enter Plate Number' name='conditionName'
+                              // value={plateNumber} 
+                              {...register("plateNumber", { required: '*please choose service needed' })}
+                              onChange={(e) => setPlateNumber(e.target.value)} >
+                            </input>
+                            {plateNumber <= 0 && error ? <span className='validate_text'>*please enter vehicle name</span> : ""}
+                          </div>
 
-                            <div className='asd'>
-                              <lable> Phone Number</lable>
-                              <input name='manufacture_date' type="text"
-                                // value={manufactureDate}
-                                {...register("manufactureDate", { required: '*Manufacture date is required' })}
-                                placeholder='Enter Manufactureing Date'
-                                onChange={(e) => setmanufactureDate(e.target.value)} ></input>
-                              {manufactureDate <= 0 && error ? <span className='validate_text'>*please enter vehicle name</span> : ""}
-                            </div>
+                          <div className='asd'>
+                            <lable> Phone Number</lable>
+                            <input name='manufacture_date' type="text"
+                              // value={manufactureDate}
+                              {...register("manufactureDate", { required: '*Manufacture date is required' })}
+                              placeholder='Enter Manufactureing Date'
+                              onChange={(e) => setmanufactureDate(e.target.value)} ></input>
+                            {manufactureDate <= 0 && error ? <span className='validate_text'>*please enter vehicle name</span> : ""}
+                          </div>
 
-                            <div className='asd'>
-                              <lable>Email</lable>
-                              <input name='deviceID' type="text"
-                                // value={deviceID}
-                                {...register("deviceID", { required: '*Device ID is required' })}
-                                placeholder='Enter Device ID'
-                                onChange={(e) => setdeviceId(e.target.value)} ></input>
-                              {deviceID <= 0 && error ? <span className='validate_text'>*please enter vehicle name</span> : ""}
-                            </div>
+                          <div className='asd'>
+                            <lable>Email</lable>
+                            <input name='deviceID' type="text"
+                              // value={deviceID}
+                              {...register("deviceID", { required: '*Device ID is required' })}
+                              placeholder='Enter Device ID'
+                              onChange={(e) => setdeviceId(e.target.value)} ></input>
+                            {deviceID <= 0 && error ? <span className='validate_text'>*please enter vehicle name</span> : ""}
+                          </div>
 
-                            <div className='asd'>
-                              
-                            </div>
+                          <div className='asd'>
 
-                            <div className='asdy'>
-                              {/* <button>Back</button> */}
-                            </div>
-                            <div className='asdy'>
-                              <button onClick={validation1}>Submit </button> 
-                            </div>
-                            <div className='asdy'>
-                              {/* <button onClick={() => { handleClickopen2() }}>Add Vehicle</button> */}
-                              <button type='reset'>Clear</button>
-                            </div>
+                          </div>
+
+                          <div className='asdy'>
+                            {/* <button>Back</button> */}
+                          </div>
+                          <div className='asdy'>
+                            <button onClick={validation1}>Submit </button>
+                          </div>
+                          <div className='asdy'>
+                            {/* <button onClick={() => { handleClickopen2() }}>Add Vehicle</button> */}
+                            <button type='reset'>Clear</button>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div> : ""} 
+                  </div>
+                </div> : ""}
 
             </div>
           </div>

@@ -139,7 +139,7 @@ export default function() {
                                     <select className='select' {...register("plateNumber", { required: '*plate number is required' })}>
                                         <option value=''>AD</option>
                                         <option>ET</option>
-                                        <option>ORO</option>
+                                        <option>ORO</option> 
                                         <option>AM</option>
                                         <option>TG</option>
                                     </select>

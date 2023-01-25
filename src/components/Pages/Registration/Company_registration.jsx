@@ -43,16 +43,13 @@ export default function Company_registration() {
     const [catagory, setVehicleCategory] = useState("");
     const [conditionName, setVehicleCondition] = useState("");
     const [plateNumber, setPlateNumber] = useState("");
-    // const [plate_number2, setPlateNumber2] = useState("");
-    // const [plate_number3, setPlateNumber3] = useState("");
     const [manufactureDate, setmanufactureDate] = useState("");
     const [deviceID, setdeviceId] = useState("");
 
     const handleClick = (e) => {
-
         registerCompany();
- 
     };
+
     useEffect(() => {
     }, []);
 
@@ -87,11 +84,13 @@ export default function Company_registration() {
 
                     plateNumber,
                     manufactureDate,
+                    deviceID,
                 },
 
             ]
 
         };
+        console.log(manufactureDate)
 
         const options = {
             method: "POST",
@@ -116,8 +115,8 @@ export default function Company_registration() {
                     buttons: false,
                     timer: 2000,
                 });
-                companyName = ''
-
+                // companyName = ''
+ 
             } else {
                 console.log("failed");
                 swal(`Failed To Register ${mess}`, "Error", "error");
@@ -384,7 +383,7 @@ export default function Company_registration() {
                                     <p>House Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input name='houseNumber' type="text" 
                                     // value={houseNumber}
-                                        {...register("houseNumber", {
+                                        {...register("houseNumber", { 
                                             required: "*please fill your house number",
                                             pattern: { value: /^[0-9]+[0-9]*$/, message: 'please enter a vaild number' }
                                         })}

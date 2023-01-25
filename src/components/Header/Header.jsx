@@ -61,11 +61,11 @@ export default function Header({ title }) {
                         toggle()
                     }}>{state ? <IoMdArrowDropupCircle size="1.2rem" color='green'></IoMdArrowDropupCircle> :
                         <IoMdArrowDropdownCircle size="1.2rem" color='green'></IoMdArrowDropdownCircle>}</p>
-                    <p onClick={() => {
+                    {/* <p onClick={() => {
                         handleClickopen3()
                         toggle1()
                     }}>{state1 ? <IoMdArrowDropupCircle size="1.2rem" color='green'></IoMdArrowDropupCircle> :
-                        <IoMdArrowDropdownCircle size="1.2rem" color='green'></IoMdArrowDropdownCircle>}</p>
+                        <IoMdArrowDropdownCircle size="1.2rem" color='green'></IoMdArrowDropdownCircle>}</p> */}
 
                     {logout ?
                         <div className='user_logout'>

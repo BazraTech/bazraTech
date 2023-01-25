@@ -26,7 +26,7 @@ import { on_route } from './Data/Data';
 import { parked } from './Data/Data';
 
 export default function Users_edit() {
- 
+
 
     const [state, setState] = useState(false);
     //const [companyType, setCompantType] = useState("");
@@ -85,19 +85,26 @@ export default function Users_edit() {
     const [dataSource4, setDataSource4] = useState([])
 
     const [Loading, setLoading] = useState([]);
-    const { id, companyId } = useParams(); 
+    const { id, role, phonenumber } = useParams();
 
-    const url = `http://198.199.67.201:9090/Api/Admin/All/VehicleOwner/${id}`;
+    let url;
+
+    if (role === "OWNER") {
+        url = `http://198.199.67.201:9090/Api/Admin/All/CompanyVehicleOwner/${id}`;
+    }
+    if (role === "INDIVIDUAL") {
+        url = `http://198.199.67.201:9090/Api/Admin/All/IndividualVehicleOwner/${id}`;
+    }
+
     useEffect(() => {
         setLoading(true)
         fetch(url, options)
             .then((response) => response.json())
             .then((json) => {
                 setDataSource(json)
-                setDataSource2(json.companyInfo)
-                setDataSource3(json.companyInfo.sector)
-                setDataSource4(json.companyAddressINF)
-
+                // setDataSource2(json.companyInfo)
+                // setDataSource3(json.companyInfo.sector)
+                // setDataSource4(json.companyAddressINF)
                 console.log(json)
                 setLoading(false)
             });
@@ -199,7 +206,7 @@ export default function Users_edit() {
 
                     <div className='company_individual_header'>
                         <p ><h1 className='nmn'>Company Detail</h1></p>
-                        <p ><h4 className='vehicleDetail'>Name : {dataSource2.name} <br /> User ID : {dataSource2.id}</h4></p>
+                        <p ><h4 className='vehicleDetail'>Name : {dataSource.role} <br /> User ID : {dataSource.id}</h4></p>
                     </div>
                     <form className='form'>
                         {/* {dataSource.map(item => { */}
@@ -207,60 +214,60 @@ export default function Users_edit() {
                         <div className='allDiv'>
                             {/* {dataSource.id=1 ? */}
                             {/* {dataSource.id ==39?  */}
-                            <div className='first_div'>
-                                <h1>Company Information</h1>
-                                <div className='company_button'>
-                                {/* <p className='addd' onClick={() => {
+                            {role === "INDIVIDUAL" ? "" :
+                                <div className='first_div'>
+                                    <h1>Company Information</h1>
+                                    <div className='company_button'>
+                                        {/* <p className='addd' onClick={() => {
                                     handleChange()
                                     toggle()
                                     select()
                                 }}>{state ? "Cancle" : "Edit"}</p>
                                 <br /> */}
 
-                            </div>
-                                <div className='company_information1'>
-                                    
-                                    <div>
-                                        <p>Company Name </p>
-                                        <input onChange={(e) => setDataSource(e.target.value)} value={dataSource2.name} type="text" disabled={diabled}></input>
-
                                     </div>
-                                    <div>
-                                        <p>Company type</p>
-                                        {inputtag ? <input onChange={(e) => setDataSource(e.target.value)} value={dataSource2.companyType} className='select' disabled={diabled}></input> : ""}
-                                        {selecttag ? <select  className='select' disabled={diabled}>
-                                            <option value='plc'>Set Company Type</option>
-                                            <option value='plc'>Public Llimited Company</option>
-                                            <option value='plc'>Public Llimited Company</option>
-                                        </select> : ""}
-                                        {/* <input onChange={(e) => setDataSource(e.target.value)} value={dataSource2.companyType} type="text" disabled={diabled}></input> */}
-                                    </div>
-                                    <div>
-                                        <p>Company Sector </p>
+                                    <div className='company_information1'>
 
-                                        {inputtag ? <input Value={dataSource3.sectorName} className='select' disabled={diabled}></input> : ""}
-                                        {selecttag ? <select  className='select' disabled={diabled}>
-                                            <option value='plc'>Selecet Company Sector</option>
-                                            <option value='plc'>Government</option>
-                                            <option value='plc'>Public Llimited Company</option>
-                                            <option value='plc'>Public Llimited Company</option>
-                                        </select> : ""}
-                                        {/* <select disabled={diabled} >
+                                        <div>
+                                            <p>Company Name </p>
+                                            <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.id} type="text" disabled={diabled}></input>
+
+                                        </div>
+                                        <div>
+                                            <p>Company type</p>
+                                            {inputtag ? <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.id} className='select' disabled={diabled}></input> : ""}
+                                            {selecttag ? <select className='select' disabled={diabled}>
+                                                <option value='plc'>Set Company Type</option>
+                                                <option value='plc'>Public Llimited Company</option>
+                                                <option value='plc'>Public Llimited Company</option>
+                                            </select> : ""}
+                                            {/* <input onChange={(e) => setDataSource(e.target.value)} value={dataSource2.companyType} type="text" disabled={diabled}></input> */}
+                                        </div>
+                                        <div>
+                                            <p>Company Sector </p>
+
+                                            {inputtag ? <input Value={dataSource.id} className='select' disabled={diabled}></input> : ""}
+                                            {selecttag ? <select className='select' disabled={diabled}>
+                                                <option value='plc'>Selecet Company Sector</option>
+                                                <option value='plc'>Government</option>
+                                                <option value='plc'>Public Llimited Company</option>
+                                                <option value='plc'>Public Llimited Company</option>
+                                            </select> : ""}
+                                            {/* <select disabled={diabled} >
                                             <option value=''>Transport</option>
                                             <option value='plc'>Public Llimited Company</option>
                                             <option value='plc'>Government</option>
                                             <option value='plc'>Public Llimited Company</option>
                                             <option value='plc'>Public Llimited Company</option>
                                         </select> */}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
                             {/* :""} */}
 
-
-
                             <div className='second_div'>
-                                <h1>Company Address</h1>
+                            {role === "INDIVIDUAL" ? <h1>Owner Address</h1> : <h1>Company Address</h1>}
                                 <div className='company_Address1'>
                                     <div>
                                         <p>Region </p>
@@ -268,11 +275,11 @@ export default function Users_edit() {
                                     </div>
                                     <div>
                                         <p>Sub City </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.subcity}  disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.subcity} disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Specfic Location </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.specificLocation}  type="text" disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.specificLocation} type="text" disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>City </p>
@@ -280,11 +287,11 @@ export default function Users_edit() {
                                     </div>
                                     <div>
                                         <p>Woreda </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.woreda}  type="text" disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.woreda} type="text" disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>House Number </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.houseNum}  type="text" disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.houseNum} type="text" disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Phone Number </p>

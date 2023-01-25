@@ -95,7 +95,6 @@ export default function Individual_registration() {
             email,
             notificationmedia,
             serviceRequired,
-
             vehicles: [
                 {
                     vehicleName,
@@ -107,10 +106,10 @@ export default function Individual_registration() {
                     },
 
                     plateNumber,
+                    manufactureDate,
+                    deviceID,
                 },
-
             ]
-
         };
 
         const options = {
@@ -122,7 +121,7 @@ export default function Individual_registration() {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Company/CreateCompany";
+        const url = "http://198.199.67.201:9090/Api/Individual/CreateIndividual";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -205,6 +204,17 @@ export default function Individual_registration() {
             })
     }, [])
 
+    const urlFive = "http://198.199.67.201:9090/Api/Admin/All/Services";
+    const [dataSource5, setDataSource5] = useState([])
+    useEffect(() => {
+        fetch(urlFive, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource5(data.service)
+                console.log(dataSource4)
+            })
+    }, [])
+
     const [popup, setPop] = useState(false);
     const handleClickopen = () => {
         setPop(!popup);
@@ -281,7 +291,7 @@ export default function Individual_registration() {
                             <p class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='white'></AiFillSetting></p>
                         </Link>
                     </li>
-                </ul>
+                </ul> 
             </div>
 
 
@@ -415,6 +425,17 @@ export default function Individual_registration() {
                                     {houseNumber <= 0 && errors.houseNumber && <span className='validate_text'>{errors.houseNumber.message}</span>}
                                 </div>
 
+                                <div>
+                                    <p>Phone Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                    <input name='phoneNumber' type="text" 
+                                    // value={phoneNumber}
+                                        {...register("phoneNumber", { required: "*please fill your company number" })}
+                                        placeholder='Enter Phone Number'
+                                        onChange={(e) => setPhonenumber(e.target.value)}>
+                                    </input>
+                                    {phoneNumber <= 0 && errors.phoneNumber && <span className='validate_text'>{errors.phoneNumber.message}</span>}
+                                </div>
+
                             </div>
                         </div>
 
@@ -444,13 +465,18 @@ export default function Individual_registration() {
                                 <div>
                                     <p>Service Neded <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select
-                                        value={serviceRequired}
-                                        name='serviceRequired'
+                                        // value={serviceRequired}
+                                        name='serviceRequired'  value={serviceRequired}
                                         {...register("serviceRequired", { required: '*please choose service needed' })}
                                         onChange={(e) => setServiceNeeded(e.target.value)} >
-                                        <option selected disabled value="j">Select Service Needed</option>
-                                        <option>Trucking</option>
-                                        <option>Trucking and Marketing</option>
+                                        <option selected disabled value="">Select Service Needed</option>
+                                        {
+                                            dataSource5.map(item => {
+                                                return <>
+                                                    <option>{item.service}</option>
+                                                </>
+                                            })
+                                        }
                                     </select>
                                     {serviceRequired <= 0 && errors.serviceRequired && <span className='validate_text'>{errors.serviceRequired.message}</span>}
                                 </div>

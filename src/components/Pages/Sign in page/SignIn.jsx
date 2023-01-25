@@ -90,7 +90,7 @@ export default function SignIn() {
 						localStorage.getItem("user");
 						localStorage.setItem("jwt", JSON.stringify(result["jwt"]));
 						localStorage.getItem("jwt");
-						window.location.href = "/dashboard"; 
+						window.location.href = "/dashboard";
 					
 						
 					}).finally(() => {
