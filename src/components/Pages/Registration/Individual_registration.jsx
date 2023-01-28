@@ -131,11 +131,12 @@ export default function Individual_registration() {
             console.log(mess);
             if (response.ok) {
                 console.log("Signup successful");
-                swal("Successful", "Individual Regigisterd Successfuly", "success", {
-                    buttons: false,
-                    timer: 2000,
+                swal("Successful", `${mess}`, "success", {
+                    button: true,
+                    // timer: 60000,
                 });
-
+                // companyName = ''
+ 
             } else {
                 console.log("failed");
                 swal(`Failed To Register ${mess}`, "Error", "error");

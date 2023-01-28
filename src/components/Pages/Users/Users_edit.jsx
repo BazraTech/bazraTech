@@ -72,20 +72,13 @@ export default function Users_edit() {
     // const [Loading, setLoading] = useState(false)
     const [totalPages, setTotalPage] = useState(1);
     const [cc, setCc] = useState([]);
-    const [dataSource, setDataSource] = useState({
-        "id": '',
-        "phoneNumber": "",
-        "firstName": "",
-        "lastName": "",
-        "email": "",
-        "role": ""
-    })
+    const [dataSource, setDataSource] = useState([])
     const [dataSource2, setDataSource2] = useState([])
     const [dataSource3, setDataSource3] = useState([])
-    const [dataSource4, setDataSource4] = useState([])
+    const [dataSource5, setDataSource5] = useState([])
 
     const [Loading, setLoading] = useState([]);
-    const { id, role, phonenumber } = useParams();
+    const { id, role, companyID } = useParams();
 
     let url;
 
@@ -102,9 +95,27 @@ export default function Users_edit() {
             .then((response) => response.json())
             .then((json) => {
                 setDataSource(json)
-                // setDataSource2(json.companyInfo)
-                // setDataSource3(json.companyInfo.sector)
-                // setDataSource4(json.companyAddressINF)
+                setDataSource2(json.companyAddressINF)
+                setDataSource3(json.drivers)
+                setDataSource5(json.vehicles)
+                console.log(json)
+                setLoading(false)
+            });
+    }, [])
+
+    
+
+        
+
+
+    const [dataSource4, setDataSource4] = useState([])
+    const url2 = `http://198.199.67.201:9090/Api/Admin/Company/Vehicles/All/${companyID}`;
+    useEffect(() => {
+        setLoading(true)
+        fetch(url2, options)
+            .then((response) => response.json())
+            .then((json) => {
+                setDataSource4(json.vehicles)
                 console.log(json)
                 setLoading(false)
             });
@@ -230,7 +241,7 @@ export default function Users_edit() {
 
                                         <div>
                                             <p>Company Name </p>
-                                            <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.id} type="text" disabled={diabled}></input>
+                                            <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.companyName} type="text" disabled={diabled}></input>
 
                                         </div>
                                         <div>
@@ -271,35 +282,35 @@ export default function Users_edit() {
                                 <div className='company_Address1'>
                                     <div>
                                         <p>Region </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.region} disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource2.region} disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Sub City </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.subcity} disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource2.subcity} disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Specfic Location </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.specificLocation} type="text" disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource2.specificLocation} type="text" disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>City </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.city} disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource2.city} disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Woreda </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.woreda} type="text" disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource2.woreda} type="text" disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>House Number </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.houseNum} type="text" disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource2.houseNum} type="text" disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Phone Number </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource4.phone} disabled type="text" ></input>
+                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource2.phone} disabled type="text" ></input>
                                     </div>
                                 </div>
-                            </div>
-
+                            </div> 
+ 
                             <div className='Third_div'>
                                 <h1>Owner Information</h1>
                                 <div className='owner_information1'>
@@ -328,24 +339,24 @@ export default function Users_edit() {
                                 <div className='additional_information1'>
                                     <div>
                                         <p>Notification Pereference</p>
-                                        <select className='select' disabled>
-                                            <option value=''>SMS</option>
+                                        <input className='select' value={dataSource.notificationMedium} disabled>
+                                            {/* <option value=''>SMS</option>
                                             <option value='plc'>Select Notification Preference</option>
                                             <option value='plc'>Select Notification Preference</option>
                                             <option>Select Notification Preference</option>
-                                            <option>Select Notification Preference</option>
-                                        </select>
+                                            <option>Select Notification Preference</option> */}
+                                        </input>
 
                                     </div>
                                     <div>
-                                        <p>Service Neded</p>
-                                        <select className='select' disabled>
-                                            <option value=''>Tracking</option>
+                                        <p>Service Neded </p>
+                                        <input value={dataSource.serviceNeeded} className='select' disabled>
+                                            {/* <option value=''>Tracking</option>
                                             <option value='plc'>Select Service Neded</option>
                                             <option value='plc'>Select Service Neded</option>
                                             <option>Select Service Neded</option>
-                                            <option>Select Service Neded</option>
-                                        </select>
+                                            <option>Select Service Neded</option> */}
+                                        </input>
                                     </div>
 
                                 </div>
@@ -372,7 +383,7 @@ export default function Users_edit() {
 
                             <div className='outer_vehicle_tables0' id='myTable'>
                                 <div className='second_div'>
-                                    <div className='registerd_vehicle_no'> <div className='Vehicle_number'><h1>Registerd Vehicle</h1><h1 className='number' >10</h1></div></div>
+                                    <div className='registerd_vehicle_no'> <div className='Vehicle_number'><h1>Registerd Vehicle</h1><h1 className='number' >{dataSource5.length}</h1></div></div>
                                 </div>
                                 <p>Registerd Vehicles</p>
 
@@ -390,16 +401,16 @@ export default function Users_edit() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {total[0]
-                                            .map(item => (
+                                        {dataSource4.map(item => (
                                                 <tr className='active_row'>
 
-                                                    <td>{item.user}</td>
-                                                    <td>{item.assignedDriver}</td>
-                                                    <td>{item.vehicleId}</td>
-                                                    <td>{item.vehicleType}</td>
-                                                    <td>{item.planeNumber}</td>
-                                                    <td><Link to="/vehicle_detail"><button>Detail</button></Link></td>
+                                                    <td>{item.vehicleName}</td>
+                                                    {/* <td>{item.driver == null ? "unassignd" :`${dataSource3.map(item2 =>( item2.driverName ))}`}</td> */}
+                                                    <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td>
+                                                    <td>{item.id}</td>
+                                                    <td>{item.vehicleCatagory.catagory}</td>
+                                                    <td>{item.plateNumber}</td>
+                                                    <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
                                                     <td><Link to="/tracking"><button>Tracking</button></Link></td>
                                                 </tr>
                                             ))}

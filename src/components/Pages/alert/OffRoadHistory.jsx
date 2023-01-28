@@ -167,12 +167,12 @@ export default function () {
 
             {/* --------------- Alert --------------- */}
 
-            <div className='alert_main'>
+            <div className='alert_main2'>
                 <div className='currentHistory'>
                     <Link style={{ textDecoration: 'none' }} to="/accident">
-                        <p className='sdd'>Current</p></Link>
+                        <p className='sdd'>Current Alerts</p></Link>
                     <Link style={{ textDecoration: 'none' }} to="/AccidentHistory">
-                        <p className='sd'>Hisrory</p></Link>
+                        <p className='sd'>Alert History</p></Link>
                 </div>
                 <div className='allDivalert'>
 

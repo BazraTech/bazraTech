@@ -88,6 +88,7 @@
     border-radius: 10px 10px 10px 10px;
     z-index: 1;
     margin-left: 5%;
+    margin-bottom: 40px;
   }
 
   .currentHistory{
@@ -105,7 +106,7 @@
     border-radius: 7px;
     cursor: pointer;
     margin-bottom: -25px;
-    border: 8px solid rgb(244, 244, 244);
+    border: 8px solid rgb(233, 233, 233);
     font-size: 22px;
     font-weight: 700;
     margin-right: 50px;
@@ -118,12 +119,12 @@
     font-weight: 600;
 }
 
-.alert_main {
+.alert_main2 {
     position: absolute;
     width: calc(100% - 100px);
     left: 100px;
     min-height: 88vh;
-    background-color: rgb(244, 244, 244);
+    background-color: rgb(233, 233, 233);
     color: var(--black1);
     top: 75px;
 }

@@ -83,7 +83,7 @@ export default function () {
   const [list, setList] = useState(dataSource2);
   const [total, setTotal] = useState(dataSource2.length);
   const [page, setCurentPage] = useState(1);
-  const [postPerPage, setpostPerPage] = useState(3);
+  const [postPerPage, setpostPerPage] = useState(5);
 
   const onShowSizeChange = (current, pageSize) => {
       setpostPerPage(pageSize);
@@ -155,7 +155,7 @@ export default function () {
                                         <tr className='active_row'>
 
                                             {/* <td>{item.vehicleName}</td> */}
-                                            <td>{item.driver.driverName}</td>
+                                            <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td>
                                             {/* <td>{item.id}</td> */}
                                             {/* <td>{item.vehicleCatagory.catagory}</td> */}
                                             <td>{item.plateNumber}</td>

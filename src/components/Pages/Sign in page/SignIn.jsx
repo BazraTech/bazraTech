@@ -66,13 +66,9 @@ export default function SignIn() {
 			try {
 				const response = await fetch(url, options);
 				const result = await response.json();
-
 				localStorage.setItem("user", JSON.stringify(result["user"]));
 
 				const user = localStorage.getItem("user"); 
-				
-			
-
 				localStorage.setItem("user", JSON.stringify(users));
 
 				if (response.ok) {
@@ -85,14 +81,11 @@ export default function SignIn() {
 						buttons: false,
 						timer: 2000,
 					}).then((value) => { 
-
 						localStorage.setItem("user", JSON.stringify(result["user"]));
 						localStorage.getItem("user");
 						localStorage.setItem("jwt", JSON.stringify(result["jwt"]));
 						localStorage.getItem("jwt");
 						window.location.href = "/dashboard";
-					
-						
 					}).finally(() => {
 						// setLoading(false) 
 					});
@@ -106,9 +99,7 @@ export default function SignIn() {
 				swal({
 					title: "Something Went Wrong?",
 					text: `net::ERR_INTERNET_DISCONNECTED `,
-
 					icon: "warning",
-
 					dangerMode: true,
 				})
 			}

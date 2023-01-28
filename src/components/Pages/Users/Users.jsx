@@ -44,7 +44,7 @@ export default function () {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     {/*---------------- handle submit values ----------------- */ }
-    
+
     function tableSearch() {
 
         let input, filter, table, tr, td, txtValue, errors;
@@ -121,7 +121,7 @@ export default function () {
         fetch(url2, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource2(data.vehicleOwners)
+                setDataSource2(data.totalusers)
                 setTotalPage(data.totalPages)
                 setLoading(false)
             })
@@ -135,7 +135,7 @@ export default function () {
         fetch(url3, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource3(data.vehicleOwners)
+                setDataSource3(data.totalusers)
                 setTotalPage(data.totalPages)
                 setLoading(false)
             })
@@ -181,7 +181,7 @@ export default function () {
     const [licenseNumber, setLicenseNumber] = useState("");
     const [licensePic, setLicensePic] = useState("");
     // console.log(licensePic)
-    const [driverPic, setDriverPic] = useState("");
+    const [driverPic, setDriverPic] = useState();
     const [ownerPhone, setOwnerPhone] = useState();
     const [error, setError] = useState(false);
     const [error1, setError1] = useState(false);
@@ -210,7 +210,7 @@ export default function () {
             setError1(true);
         }
         if (vehicleCatagory && vehicleName && vehicleCondition && plateNumber && manufactureDate && deviceID) {
-            handleClick();
+            AddDriver();
         }
     }
     const onShowSizeChange = (current, pageSize) => {
@@ -249,6 +249,7 @@ export default function () {
         console.log(data);
         handleClick();
     };
+
 
     const handleClick = (e) => {
         Addvehicle();
@@ -302,6 +303,77 @@ export default function () {
             console.error(error);
         }
     }
+    const [file2, setFile2] = useState()
+    const onFileChange = (e) => {
+        console.log(e.target.files[0])
+        setFile2(e.target.files[0])
+        console.log(file)
+    };
+
+    const [file, setFile] = useState()
+    const onFileChange2 = (e) => {
+        console.log(e.target.files[0])
+        setFile(e.target.files[0])
+        console.log(file)
+    };
+    const onSubmit2 = (data) => {
+        console.log(data);
+        AddDriver();
+    };
+    async function AddDriver() {
+
+        const formData = new FormData()
+        formData.append('file', file)
+        console.log(formData)
+        setDriverPic(formData);
+
+        const formData2 = new FormData()
+        formData2.append('file', file2)
+        console.log(formData2)
+        setLicensePic(formData2);
+        
+        let item =
+        {
+            driverName,
+            licenseNumber,
+            licensePic,
+            driverPic,
+            ownerPhone,
+        };
+
+        const options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
+            body: JSON.stringify(item),
+        };
+        const url = "http://198.199.67.201:9090/Api/Driver/AddDriver";
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            console.log(result);
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            console.log(mess);
+            if (response.ok) {
+                console.log("Signup successful");
+                swal("Successful", "Company Registered Successfuly", "success", {
+                    buttons: false,
+                    timer: 2000,
+                });
+                // companyName = ''
+
+            } else {
+                console.log("failed");
+                swal(`Failed To Register ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     return (
 
@@ -328,13 +400,13 @@ export default function () {
                     <Link style={{ textDecoration: 'none' }} to="/company">
                         <div className='company' onClick={() => setActive("company")}>
                             <h4>Company</h4>
-                            <p><FaWarehouse size="2.2rem" color='black'></FaWarehouse><b>{dataSource2.length}</b></p>
-                        </div>
+                            <p><FaWarehouse size="2.2rem" color='black'></FaWarehouse><b>{dataSource2}</b></p>
+                        </div> 
                     </Link>
                     <Link style={{ textDecoration: 'none' }} to="/register_individual">
                         <div className='individual' onClick={() => setActive("individual")}>
                             <h4>Individual</h4>
-                            <p><FaUserAlt size="2rem"></FaUserAlt><b>{dataSource3.length}</b></p>
+                            <p><FaUserAlt size="2rem"></FaUserAlt><b>{dataSource3}</b></p>
                         </div>
                     </Link>
                 </div>
@@ -381,8 +453,8 @@ export default function () {
                                                 <th>UserName</th>
                                                 {/* <th>Company ID</th> */}
                                                 <th>Role</th>
-                                                <th>Number Of Vehicle</th>
-                                                <th>Number Of Driver</th>
+                                                <th>Total Vehicle</th>
+                                                <th>Total Driver</th>
                                                 <th>Status</th>
                                                 <th>Detail</th>
                                                 <th>Add Vehicle</th>
@@ -399,14 +471,17 @@ export default function () {
                                                     <td>{item.totalVehicles}</td>
                                                     <td>{item.totalDrivers}</td>
                                                     <td></td>
-                                                    <td><Link to={`/user_edit/${item.role}/${item.id}`}>
+                                                    <td><Link to={`/user_edit/${item.role}/${item.id}/${item.companyId}`}>
                                                         <button>Detail</button></Link></td>
                                                     <td><Link to="#">
                                                         <button onClick={() => {
                                                             handleClickopen()
                                                             setOwnerPhone(item.phoneNumber)
                                                         }}>Vehicle</button></Link></td>
-                                                    <td><Link to="#"><button onClick={() => { handleClickopen1() }}>Driver</button></Link></td>
+                                                    <td><Link to="#"><button onClick={() => { 
+                                                        handleClickopen1() 
+                                                        setOwnerPhone(item.phoneNumber)
+                                                        }}>Driver</button></Link></td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -457,7 +532,7 @@ export default function () {
                                                                             {...register("vehicleName", { required: true })}
                                                                             placeholder='Enter Vehicle Name'
                                                                             onChange={(e) => setvehicleName(e.target.value)} ></input>
-                                                                       {vehicleName <= 0 && errors.vehicleName?.type === "required" && <span className='validate_text'>*please enter vehicle name</span>}
+                                                                        {vehicleName <= 0 && errors.vehicleName?.type === "required" && <span className='validate_text'>*please enter vehicle name</span>}
                                                                     </div>
 
                                                                     <div className='asd'>
@@ -493,7 +568,7 @@ export default function () {
                                                                             {...register("manufactureDate", { required: '*Manufacture date is required' })}
                                                                             placeholder='Enter Manufactureing Date'
                                                                             onChange={(e) => setmanufactureDate(e.target.value)} ></input>
-                                                                         {manufactureDate <= 0 && errors.manufactureDate && <span className='validate_text'>{errors.manufactureDate.message}</span>}
+                                                                        {manufactureDate <= 0 && errors.manufactureDate && <span className='validate_text'>{errors.manufactureDate.message}</span>}
                                                                     </div>
 
                                                                     <div className='asd'>
@@ -503,7 +578,7 @@ export default function () {
                                                                             {...register("deviceID", { required: '*Device ID is required' })}
                                                                             placeholder='Enter Device ID'
                                                                             onChange={(e) => setdeviceId(e.target.value)} ></input>
-                                                                         {deviceID <= 0 && errors.deviceID && <span className='validate_text'>{errors.deviceID.message}</span>}
+                                                                        {deviceID <= 0 && errors.deviceID && <span className='validate_text'>{errors.deviceID.message}</span>}
                                                                     </div>
                                                                     <div className='asdy'>
                                                                         {/* <button>Back</button> */}
@@ -521,83 +596,85 @@ export default function () {
                                                     </div>
                                                 </div> : ""}
                                         </form>
-                                        {popup1 ?
-                                            <div>
-                                                <div className='popup3'>
-                                                    <div className='popup-inner'>
-                                                        <lable className="zxc">Add Driver</lable>
-                                                        <div className='ewq'>
-                                                            <div className='qwe'>
-                                                                <div className='asd'>
-                                                                    <button className='close-btn' onClick={closePopup5}>X</button>
-                                                                    <lable>First Name</lable>
-                                                                    <input name='driverName' type="text"
-                                                                        value={driverName}
-                                                                        {...register("driverName", { required: true })}
-                                                                        placeholder='Enter Vehicle Name'
-                                                                        onChange={(e) => setDriverName(e.target.value)} ></input>
-                                                                    {driverName <= 0 && error1 ? <span className='validate_text'>*please enter vehicle name</span> : ""}
-                                                                </div>
 
-                                                                <div className='asd'>
-                                                                    <lable>License Number</lable>
-                                                                    <input name='licenseNumber' type="text"
-                                                                        value={licenseNumber}
-                                                                        {...register("licenseNumber", { required: true })}
-                                                                        placeholder='Enter Vehicle Name'
-                                                                        onChange={(e) => setLicenseNumber(e.target.value)} ></input>
-                                                                    {licenseNumber <= 0 && error1 ? <span className='validate_text'>*please enter vehicle name</span> : ""}
-                                                                </div>
+                                        <form onSubmit={handleSubmit(onSubmit2)}>
+                                            {popup1 ?
+                                                <div>
+                                                    <div className='popup3'>
+                                                        <div className='popup-inner'>
+                                                            <lable className="zxc">Add Driver</lable>
+                                                            <div className='ewq'>
+                                                                <div className='qwe'>
+                                                                    <div className='asd'>
+                                                                        <button className='close-btn' onClick={closePopup5}>X</button>
+                                                                        <lable>Full Name</lable>
+                                                                        <input name='driverName' type="text"
+                                                                            value={driverName}
+                                                                            {...register("driverName", { required: '*Driver Name is required' })}
+                                                                            placeholder='Enter Vehicle Name'
+                                                                            onChange={(e) => setDriverName(e.target.value)} ></input>
+                                                                        {driverName <= 0 && errors.driverName && <span className='validate_text'>{errors.driverName.message}</span>}
+                                                                    </div>
 
-                                                                <div className='asd'>
-                                                                    <lable>Driver Licence </lable>
-                                                                    <input type="file" placeholder='Please Enter Plate Number' name='licensePic'
-                                                                        value={licensePic}
-                                                                        {...register("licensePic", { required: '*please choose service needed' })}
-                                                                        onChange={handlechange} >
-                                                                    </input>
-                                                                    {licensePic <= 0 && error1 ? <span className='validate_text'>*please enter vehicle name</span> : ""}
-                                                                </div>
+                                                                    <div className='asd'>
+                                                                        <lable>License Number</lable>
+                                                                        <input name='licenseNumber' type="text"
+                                                                            value={licenseNumber}
+                                                                            {...register("licenseNumber", { required: '*License Number is required' })}
+                                                                            placeholder='Enter Vehicle Name'
+                                                                            onChange={(e) => setLicenseNumber(e.target.value)} ></input>
+                                                                        {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>}
+                                                                    </div>
 
-                                                                <div className='asd'>
-                                                                    <lable> Phone Number</lable>
-                                                                    <input name='driverPic' type="file"
-                                                                        value={driverPic}
-                                                                        {...register("driverPic", { required: '*Manufacture date is required' })}
-                                                                        placeholder='Enter Manufactureing Date'
-                                                                        onChange={(e) => setDriverPic(e.target.value)} ></input>
-                                                                    {driverPic <= 0 && error1 ? <span className='validate_text'>*please enter vehicle name</span> : ""}
-                                                                </div>
+                                                                    <div className='asd'>
+                                                                        <lable>Driver Licence Picture</lable>
+                                                                        <input name='licensePic' type="file"
+                                                                            value={licensePic}
+                                                                            {...register("licensePic", { required: '*License Picture is required' })}
+                                                                            placeholder='Enter License Picture'
+                                                                            onChange={onFileChange} ></input>
+                                                                        {licensePic <= 0 && errors.licensePic && <span className='validate_text'>{errors.licensePic.message}</span>}
+                                                                    </div>
 
-                                                                {/* <div className='asd'>
-                                                                    <lable>Email</lable>
-                                                                    <input name='deviceID' type="text"
-                                                                        // value={deviceID}
-                                                                        {...register("deviceID", { required: '*Device ID is required' })}
-                                                                        placeholder='Enter Device ID'
-                                                                        onChange={(e) => setdeviceId(e.target.value)} ></input>
-                                                                    {deviceID <= 0 && error ? <span className='validate_text'>*please enter vehicle name</span> : ""}
-                                                                </div> */}
+                                                                    {/* <div className='asd'>
+                                                                        <lable>Driver Licence Picture</lable>
+                                                                        <input type="text" placeholder='Please Enter License Picture' name='licensePic'
+                                                                            value={licensePic}
+                                                                            {...register("licensePic", { required: '*License Picture is required' })}
+                                                                            onChange={(e) => setLicensePic(e.target.value)} ></input>
+                                                                        {licensePic <= 0 && errors.licensePic && <span className='validate_text'>{errors.licenslicensePiceNumber.message}</span>}
+                                                                    </div> */}
 
-                                                                <div className='asd'>
+                                                                    <div className='asd'>
+                                                                        <lable>Driver Picture</lable>
+                                                                        <input name='driverPic' type="file"
+                                                                            // value={driverPic}
+                                                                            {...register("driverPic", { required: '*Driver Picture is required' })}
+                                                                            placeholder='Please Enter Driver Picture'
+                                                                            onChange={onFileChange2} ></input>
+                                                                         {driverPic <= 0 && errors.driverPic && <span className='validate_text'>{errors.driverPic.message}</span>}
+                                                                    </div>
 
-                                                                </div>
+                                                                    <div className='asd'>
 
-                                                                <div className='asdy'>
-                                                                    {/* <button>Back</button> */}
-                                                                </div>
-                                                                <div className='asdy'>
-                                                                    <button onClick={validation1}>Submit </button>
-                                                                </div>
-                                                                <div className='asdy'>
-                                                                    {/* <button onClick={() => { handleClickopen2() }}>Add Vehicle</button> */}
-                                                                    <button type='reset'>Clear</button>
+                                                                    </div>
+
+                                                                    <div className='asdy'>
+                                                                        {/* <button>Back</button> */}
+                                                                    </div>
+                                                                    <div className='asdy'>
+                                                                        <button>Add</button>
+                                                                    </div>
+                                                                    <div className='asdy'>
+                                                                        {/* <button onClick={() => { handleClickopen2() }}>Add Vehicle</button> */}
+                                                                        <button type='reset'>Clear</button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div> : ""}
+                                                </div> : ""}
+                                        </form>
                                     </div>
                                 </div>
 

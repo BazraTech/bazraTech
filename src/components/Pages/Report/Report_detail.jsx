@@ -158,7 +158,7 @@ export default function () {
                                         <td><b>Current Status</b></td>
                                         <td className='colors-report'><b>On route</b></td>
                                     </tr>
-                                </tbody>
+                                </tbody> 
                             </table>
                         </div>
                         <div className='report-date'>

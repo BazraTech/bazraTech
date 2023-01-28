@@ -44,7 +44,7 @@ export default function () {
 
     {/*---------------- handle submit values ----------------- */ }
     const onSubmit = data => {
-      validation();
+        validation();
     }
 
     function tableSearch() {
@@ -81,7 +81,7 @@ export default function () {
     const closePopup5 = () => {
         setPop1(false);
         setPop(false);
-      }
+    }
 
 
     const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
@@ -122,7 +122,7 @@ export default function () {
         fetch(url2, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource2(data.vehicleOwners)
+                setDataSource2(data.vehicleOwnerINF)
                 setTotalPage(data.totalPages)
                 setLoading(false)
             })
@@ -136,7 +136,7 @@ export default function () {
         fetch(url3, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource3(data.vehicleOwners)
+                setDataSource3(data.vehicleOwnerINF)
                 setTotalPage(data.totalPages)
                 setLoading(false)
             })
@@ -148,21 +148,21 @@ export default function () {
     const handleClickopen = () => {
         setPop(!popup);
         if (popup === true) {
-          document.body.classList.add("active_modal")
+            document.body.classList.add("active_modal")
         }
         else {
-          document.body.classList.remove("active_modal")
+            document.body.classList.remove("active_modal")
         }
-      }
-      const handleClickopen1 = () => {
+    }
+    const handleClickopen1 = () => {
         setPop1(!popup1);
         if (popup === true) {
-          document.body.classList.add("active_modal")
+            document.body.classList.add("active_modal")
         }
         else {
-          document.body.classList.remove("active_modal")
+            document.body.classList.remove("active_modal")
         }
-      }
+    }
     const [list, setList] = useState([dataSource]);
     const [total, setTotal] = useState(dataSource.length);
     const [page, setCurentPage] = useState(1);
@@ -196,18 +196,18 @@ export default function () {
     const validation1 = (e) => {
         e.preventDefault();
         if (catagory.length == 0 || vehicleName.length == 0 || conditionName.length == 0 || plateNumber.length == 0 || manufactureDate.length == 0 || deviceID.length == 0) {
-          setError1(true);
+            setError1(true);
         }
         if (catagory && vehicleName && conditionName && plateNumber && manufactureDate && deviceID) {
-          swal("Successful", "Successful Added", "success", {
-            buttons: false,
-            timer: 2000,
-          })
+            swal("Successful", "Successful Added", "success", {
+                buttons: false,
+                timer: 2000,
+            })
         }
-      }
+    }
     const onShowSizeChange = (current, pageSize) => {
         setpostPerPage(pageSize);
-      }
+    }
 
 
 
@@ -286,11 +286,11 @@ export default function () {
                                     <table class="vehicle_table" id="myTable">
                                         <thead>
                                             <tr>
-                                                <th>User</th>
-                                                <th>Company ID</th>
-                                                <th>Company Name</th>
-                                                <th>Number Of Vehicle</th>
-                                                <th>Number Of Driver</th>
+                                                <th>UserName</th>
+                                                {/* <th>Company ID</th> */}
+                                                <th>Role</th>
+                                                <th>Total Vehicle</th>
+                                                <th>Total Driver</th>
                                                 <th>Status</th>
                                                 <th>Detail</th>
                                                 <th>Add Vehicle</th>
@@ -301,16 +301,23 @@ export default function () {
                                             {dataSource3.map(item => (
                                                 <tr className='active_row'>
                                                     {/* <td></td> */}
-                                                    <td>{item.id}</td>
-                                                    <td>{item.phoneNumber}</td>
                                                     <td>{item.firstName}</td>
-                                                    <td>{item.lastName}</td>
-                                                    <td>{item.role.rolename}</td>
+                                                    <td>{item.role}</td>
+                                                    {/* <td>{item.companyName}</td> */}
+                                                    <td>{item.totalVehicles}</td>
+                                                    <td>{item.totalDrivers}</td>
                                                     <td></td>
-                                                    <td><Link to={`/user_edit/${item.role.rolename}/${item.id}`}>
+                                                    <td><Link to={`/user_edit/${item.role}/${item.id}/${item.companyId}`}>
                                                         <button>Detail</button></Link></td>
-                                                    <td><Link to="#"><button onClick={() => { handleClickopen() }}>Vehicle</button></Link></td>
-                                                    <td><Link to="#"><button onClick={() => { handleClickopen1() }}>Driver</button></Link></td>
+                                                    <td><Link to="#">
+                                                        <button onClick={() => {
+                                                            handleClickopen()
+                                                            // setOwnerPhone(item.phoneNumber)
+                                                        }}>Vehicle</button></Link></td>
+                                                    <td><Link to="#"><button onClick={() => {
+                                                        handleClickopen1()
+                                                        // setOwnerPhone(item.phoneNumber)
+                                                    }}>Driver</button></Link></td>
                                                 </tr>
                                             ))}
                                         </tbody>

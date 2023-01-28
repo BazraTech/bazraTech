@@ -79,6 +79,28 @@ export default function Users_edit() {
         setinputTag(!inputtag);
     }
 
+    const urlthree = "http://198.199.67.201:9090/Api/Admin/All/VehicleCatagory";
+    const [dataSource5, setDataSource5] = useState([])
+    useEffect(() => {
+        fetch(urlthree, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource5(data.vehicleCatagories)
+                // console.log(dataSource3)
+            })
+    }, [])
+
+    const urlFour = "http://198.199.67.201:9090/Api/Admin/All/VehicleCondition";
+    const [dataSource4, setDataSource4] = useState([])
+    useEffect(() => {
+        fetch(urlFour, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource4(data.vehicleConditions)
+                console.log(dataSource4)
+            })
+    }, [])
+
     return (
         <div>
             <div className="company_container">
@@ -163,7 +185,7 @@ export default function Users_edit() {
 
                     <div className='company_individual_header'>
                         <p ><h1 className='nmn'>Vehicle Detail</h1></p>
-                        <p ><h4 className='vehicleDetail'>Name : {dataSource.vehicleOwner} <br /> User ID : {dataSource.plateNumber}</h4></p>
+                        <p ><h4 className='vehicleDetail'>Driver Name : {dataSource.driver} <br /> User ID : {dataSource.plateNumber}</h4></p>
                     </div>
                     <form className='form'>
 
@@ -177,27 +199,48 @@ export default function Users_edit() {
                                     <div>
                                         <p>Vehicle Catagory </p>
                                         {inputtag ? <input Value={dataSource.vehicleCatagory} className='select' disabled={diabled}></input> : ""}
-                                        {selecttag ? <select Value={dataSource.vehicleCatagory} className='select' disabled={diabled}>
-                                            <option>Select Vehicle Category</option>
-                                            <option>qqqqqqqqqqq</option>
-                                        </select> : ""}
+                                        {selecttag ?
+                                            <select className='select' placeholder='Select Vecicle Catagory'
+                                                // {...register("vehicleCatagory", { required: '*Vehicle catagoty  is required' })}
+                                                name="vehicleCatagory"
+                                            // value={vehicleCatagory}
+                                            // onChange={(e) => setVehicleCategory(e.target.value)} 
+                                            >
+                                                <option value="" >Select Vecicle Catagory</option>
+                                                {
+                                                    dataSource5.map(item => {
+                                                        return <option >{item.catagory}</option>
+                                                    })
+                                                }
+                                            </select>
+
+                                            : ""}
                                     </div>
 
                                     <div>
                                         <p>Vehicle Name </p>
-                                        <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.vehicleName} type="text"  disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.vehicleName} type="text" disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Vehicle Condition </p>
                                         {inputtag ? <input Value={dataSource.vehicleCondition} className='select' disabled={diabled}></input> : ""}
-                                        {selecttag ? <select className='select' disabled={diabled}>
-                                            <option>Select Vehicle Condition</option>
-                                            <option>qqqqqqqqqqq</option>
-                                        </select> : ""}
+                                        {selecttag ?
+                                            <select className='select' name='conditionName'
+                                                // value={vehicleCondition}
+                                                // {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
+                                                // onChange={(e) => setVehicleCondition(e.target.value)} 
+                                                >
+                                                <option value="">Select Vecicle Condition</option>
+                                                {
+                                                    dataSource4.map(item => {
+                                                        return <option>{item.conditionName}</option>
+                                                    })
+                                                }
+                                            </select> : ""}
                                     </div>
                                     <div>
                                         <p>Plate Number </p>
-                                        <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.plateNumber} type="text"  disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.plateNumber} type="text" disabled={diabled}></input>
                                     </div>
 
                                     <div>
@@ -206,7 +249,7 @@ export default function Users_edit() {
                                     </div>
                                     <div>
                                         <p>Device ID</p>
-                                        <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.manufactureDate} type="text" disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.deviceID} type="text" disabled={diabled}></input>
                                     </div>
                                 </div>
                             </div>

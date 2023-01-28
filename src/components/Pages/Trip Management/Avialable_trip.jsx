@@ -87,6 +87,22 @@ export default function () {
         setVisible(!visible);
     }
 
+    const [dataSource, setDataSource] = useState([])
+    // const [Loading, setLoading] = useState([])
+    const url = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners/";
+    useEffect(() => {
+        setLoading(true)
+        fetch(url, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource(data.vehicleOwnerINF)
+                // setTotalPage(data.totalPages)
+
+                console.log(dataSource)
+                setLoading(false)
+            })
+    }, [])
+
 
     return (
 
@@ -113,24 +129,25 @@ export default function () {
                 <form className='form' onSubmit={handleSubmit(onSubmit)}>
                     <div className='allDiv'>
 
-                        <div className='trip_date'>
+                        <div className='trip_date'> 
                             <input onChange={(e) => setSearch(e.target.value)} placeholder='Search...' className='trip_date1' type="search" /><button>Search</button>
                         </div>
                         <div>
-                            <h1 className='greentrip'>List of Company</h1>
-                            {total[0].map(item => (
+                            <h1 className='greentrip'>List of Company</h1> 
+                            {dataSource.map(item => (
                                 <>
-                                    <div className='companyList' onClick={() => {
+                                    <div className='companyList' onClick={() => { 
                                         displaylist()
                                         setvisiblelist(item.id)
                                     }} >
-                                        <p>Company Name : <b className='green'>{item.id}</b></p>
-                                        <p>Company Name : <b className='green'>Bazra</b></p>
+                                        <p>Company id : <b className='green'>{item.id}</b></p>
+                                        <p>Company Name : <b className='green'>{item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}`}</b></p>
                                         <p className='dropdownVehicle'>{visible && item.id == visiblelist ? <AiOutlineMinus top="10px" size="1rem" color='White' onClick={displaylist}></AiOutlineMinus> :
                                             <BsPlusLg size="1rem" color='White' onClick={() => {
                                                 displaylist()
                                                 setvisiblelist(item.id)
                                             }} ></BsPlusLg>}</p>
+                                             {/* <td></td> */}
                                     </div>
 
                                     {visible && item.id == visiblelist ?
@@ -176,7 +193,7 @@ export default function () {
                                                                     <tr className='active_row'>
 
                                                                         <td>{item.vehicleName}</td>
-                                                                        <td>{item.driver.driverName}</td>
+                                                                        <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td>
                                                                         <td>{item.id}</td>
                                                                         <td>{item.vehicleCatagory.catagory}</td>
                                                                         <td>{item.plateNumber}</td>

@@ -46,6 +46,7 @@ export default function Company_registration() {
     const [manufactureDate, setmanufactureDate] = useState("");
     const [deviceID, setdeviceId] = useState("");
 
+    const [mess, setMEesaa] = useState("");
     const handleClick = (e) => {
         registerCompany();
     };
@@ -103,17 +104,17 @@ export default function Company_registration() {
         };
         const url = "http://198.199.67.201:9090/Api/Company/CreateCompany";
         try {
-            const response = await fetch(url, options);
-            const result = await response.json();
+            const response = await fetch(url, options); 
+            const result = await response.json(); 
             console.log(result);
             localStorage.setItem("message", JSON.stringify(result["message"]));
             const mess = localStorage.getItem("message");
             console.log(mess);
             if (response.ok) {
                 console.log("Signup successful");
-                swal("Successful", "Company Registered Successfuly", "success", {
-                    buttons: false,
-                    timer: 2000,
+                swal("Successful", `${mess}`, "success", {
+                    button: true,
+                    // timer: 60000,
                 });
                 // companyName = ''
  

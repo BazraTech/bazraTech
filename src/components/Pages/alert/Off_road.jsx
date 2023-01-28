@@ -168,12 +168,12 @@ export default function () {
             {/* --------------- Alert --------------- */}
             <Header title="Alert"></Header>
 
-            <div className='alert_main'>
+            <div className='alert_main2'>
                 <div className='currentHistory'>
                     <Link style={{ textDecoration: 'none' }} to="/accident">
-                        <p className='sd'>Current</p></Link>
+                        <p className='sd'>Current Alerts</p></Link>
                     <Link style={{ textDecoration: 'none' }} to="/AccidentHistory">
-                        <p className='sdd'>Hisrory</p></Link>
+                        <p className='sdd'> Alert History</p></Link>
                 </div>
                 <div className='allDivalert'>
 
@@ -214,7 +214,7 @@ export default function () {
                         </p>
                     </div> */}
                         <div className='alert_vehicle_tables' id='myTable'>
-                            <p>Off Road</p>
+                            <p>Off Road Alert</p>
 
                             <table class="vehicle_table" id="myTable">
 

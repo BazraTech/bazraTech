@@ -178,7 +178,7 @@ export default function () {
                         <div className='parked1'>
                             <h4>On Stock</h4>
                             <p><FaParking size="2rem" ></FaParking><b>{dataSource3.length}</b></p>
-                        </div>
+                        </div> 
                     </Link>
 
                     <Link style={{ textDecoration: 'none' }} to="/parked">
@@ -217,7 +217,7 @@ export default function () {
 
                     <>
                         <div className='outer_vehicle_tables' id='myTable'>
-                            <p>Total Vehicle</p>
+                            <p>Total Vehicle</p> 
 
                             <table className="vehicle_table" id="myTable">
 
@@ -234,10 +234,11 @@ export default function () {
                                 </thead>
                                 <tbody>
                                     {dataSource2.map(item => (
-                                        <tr className='active_row'>
+                                        <tr className='active_row'> 
 
                                             <td>{item.vehicleName}</td>
-                                            <td>{item.driver.driverName}</td>
+                                            <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td>
+                                            {/* <td>{item.driver.driverName}</td> */} 
                                             <td>{item.id}</td>
                                             <td>{item.vehicleCatagory.catagory}</td>
                                             <td>{item.plateNumber}</td>
