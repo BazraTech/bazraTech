@@ -103,7 +103,7 @@ export default function () {
         <div className="alert_container">
 
             {/*---------------navigation---------------*/}
-            <Navigation></Navigation>
+            <Navigation path="/accident"></Navigation>
 
             {/* --------------- Alert header --------------- */}
 

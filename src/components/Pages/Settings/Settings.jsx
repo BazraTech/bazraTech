@@ -18,7 +18,7 @@ export default function () {
     const [active, setTitle] = useState("");
     const handleClickEdit = () => {
         setPop(!popup);
-    }
+    } 
     const closePopup = () => {
         setPop(false);
     }
@@ -117,7 +117,7 @@ export default function () {
     return (
         <div className="alert_container">
             {/*---------------navigation---------------*/}
-            <Navigation></Navigation>
+            <Navigation path="/settings"></Navigation>
             {/* --------------- Settings header --------------- */}
             <Header title="Settings"></Header>
             <div className='alert_main'>
@@ -144,7 +144,7 @@ export default function () {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {dataSource2.map(item => {
+                                    {dataSource2.map(item => { 
                                         return <tr className='active_row'>
 
                                             <td>{item.id}</td>
@@ -217,7 +217,7 @@ export default function () {
 
                 </div>
 
-                <div className='outer_setting'>
+                {/* <div className='outer_setting'>
                     <div className='setting_header'>Truck Status</div>
                     <PopUp title="Add Truck Status " />
                     <div>
@@ -263,7 +263,7 @@ export default function () {
                             </table>
                         }
                     </div>
-                </div>
+                </div> */}
 
                 <div className='outer_setting'>
                     <div className='setting_header'>Service Needed</div>
@@ -312,7 +312,7 @@ export default function () {
                     </div>
                 </div>
 
-                <div className='outer_setting'>
+                {/* <div className='outer_setting'>
                     <div className='setting_header'>User Category</div>
                     <PopUp title="Add_user_category" />
                     <div>
@@ -357,7 +357,7 @@ export default function () {
                             </table>
                         }
                     </div>
-                </div>
+                </div> */}
 
                 <div className='outer_setting'>
                     <div className='setting_header'>Vehicle Category</div>

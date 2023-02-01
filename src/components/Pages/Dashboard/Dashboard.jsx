@@ -9,6 +9,7 @@ import { HiDocumentReport } from "react-icons/hi";
 import { FaRegIdCard } from 'react-icons/fa';
 import { BiTrip } from "react-icons/bi";
 import { BsFillChatDotsFill } from "react-icons/bs";
+import { ImUserTie } from "react-icons/im";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './dashboard.css';
@@ -29,17 +30,6 @@ export default function Dashboard() {
         },
     };
 
-    // const url = "http://198.199.67.201:9090/Api/SignIn/Admin";
-    // const [dataSource, setDataSource] = useState([])
-    // useEffect(() => {
-    //     fetch(url, options)
-    //         .then(respnse => respnse.json())
-    //         .then(data => {
-    //             setDataSource(data.user)
-    //             console.log(dataSource)
-    //         })
-    // }, [])
-
 
     const [popup, setPop] = useState(false);
     const handleClickopen = () => {
@@ -49,24 +39,51 @@ export default function Dashboard() {
     const handleClickopen1 = () => {
         setPop1(!popup1);
     }
-   
 
-    // const [data, setdata] = useState("");  
-    // const zz = localStorage.getItem("tuser");
-    // const [username, setUsername] = useState(""); 
-    // data = zz;
-
+    const url1 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
+    const [dataSource1, setDataSource1] = useState([])
     useEffect(() => {
-        if (!localStorage.getItem("jwt")) {
-            window.location.href = "/";
-        }
+        // setLoading(true);
+        fetch(url2, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource1(data.vehicles)
+
+                // console.log(dataSource2)
+                // setLoading(false);
+
+            })
     }, [])
 
-   
+    const url2 = "http://198.199.67.201:9090/Api/Admin/All/Drivers";
+    const [dataSource2, setDataSource2] = useState([])
+    useEffect(() => {
+        fetch(url2, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource2(data.drivers)
+
+            })
+    }, [])
+
+    const url = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners/";
+    const [dataSource3, setDataSource3] = useState([])
+    useEffect(() => {
+        // setLoading(true)
+        fetch(url, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource3(data.vehicleOwnerINF)
+                // setTotalPage(data.totalusers)
+
+            })
+    }, [])
+
+
     return (
         <div>
 
-            <Navigation></Navigation>
+            <Navigation path="/dashboard"></Navigation>
 
             {/* ---------------header--------------- */}
             <Header title="Dashboard"></Header>
@@ -75,60 +92,84 @@ export default function Dashboard() {
 
             <div className='main_content' onClick={handleClickopen1}>
                 <div className='dashboard_contents'>
+
                     <div><Link to="/Total_number_of_vehicle" >
                         <div className='vehicle'>
-                            <h4>Total Number of Vehicles</h4>
-                            <AiFillCar size="2.8rem" color="#006666"></AiFillCar>
+                            <h4>Total Vehicles </h4>
+                            <div className='vehicleTotal'>
+                                <AiFillCar size="2.8rem" color="#006666"></AiFillCar>
+                                <p>{dataSource2.length}</p>
+                            </div>
                         </div>
                     </Link> </div>
+
+                    <div><Link to="/Total_Drivers" >
+                        <div className='vehicle'>
+                            <h4>Total Drivers</h4>
+                            <div className='vehicleTotal'>
+                            <ImUserTie size="2.8rem" color="#006666"></ImUserTie>
+                            <p>{dataSource2.length}</p>
+                            </div>
+                        </div>
+                    </Link> </div>
+
                     <div><Link to="/message_overview">
                         <div className='comunication'>
                             <h4>Comunication</h4>
-                            <BsFillChatDotsFill size="3rem" color='#b35900'></BsFillChatDotsFill>
+                            <BsFillChatDotsFill size="2.7rem" color='#b35900'></BsFillChatDotsFill>
                         </div>
                     </Link></div>
+
                     <div><Link to="/users">
                         <div className='users'>
                             <h4>List of users</h4>
+                            <div className='vehicleTotal'>
                             <FaUsers size="3rem" color='#002e4d'></FaUsers>
+                            <p style={{ color: "#002e4d" }}>{dataSource3.length}</p>
+                            </div>
                         </div>
                     </Link> </div>
+
                     <div><Link to="/Company_registration">
                         <div className='registration'>
                             <h4>Registration</h4>
                             <FaRegIdCard size="3rem" color='#00802b'></FaRegIdCard>
                         </div>
                     </Link> </div>
+
                     <div><Link to="/avialable_trip">
                         <div className='monitor_vehicle'>
                             <h4>Trip Management</h4>
                             <BiTrip size="3rem" color='#009999'></BiTrip>
                         </div>
                     </Link> </div>
+
                     <div><Link to="/report">
                         <div className='report'>
                             <h4>Report</h4>
-                            <HiDocumentReport size="3rem" color='#005c99'></HiDocumentReport> 
+                            <HiDocumentReport size="3rem" color='#005c99'></HiDocumentReport>
                         </div>
                     </Link> </div>
+
                     <div><Link to="/accident">
                         <div className='alert'>
                             <h4>Alert</h4>
-                            <HiBellAlert size="3rem" color='#F80404'></HiBellAlert> 
+                            <HiBellAlert size="3rem" color='#F80404'></HiBellAlert>
                         </div>
                     </Link></div>
+
                     <div><Link to="/tracking">
                         <div className='tracking'>
                             <h4>Real Time Tracking</h4>
-                            <RiGpsFill size="3rem" color='#404040'></RiGpsFill> 
+                            <RiGpsFill size="3rem" color='#404040'></RiGpsFill>
                         </div>
                     </Link></div>
                 </div>
             </div>
- 
+
             {/* ---------------end contents--------------- */}
 
-           
+
 
         </div>
 

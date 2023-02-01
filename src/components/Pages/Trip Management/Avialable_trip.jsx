@@ -12,6 +12,8 @@ import { IoMdArrowDropupCircle } from "react-icons/io";
 import { BsPlusLg } from "react-icons/bs";
 import { AiOutlineMinus } from "react-icons/ai";
 import SyncLoader from "react-spinners/SyncLoader";
+import { Pagination } from 'antd';
+import Table from './Table';
 
 export default function () {
 
@@ -46,27 +48,50 @@ export default function () {
             })
     }, [])
 
-
     const [popup, setPop] = useState(false);
     const [state, setState] = useState("");
     const handleClickopen = () => {
         setPop(!popup);
     }
-    // {
-    //     total[0]
-    //     .map((item) => {
-    //         setState(item.assignedDriver.toLowerCase().includes(search))
-    //     })}
 
 
     const [search, setSearch] = useState('');
-    // if (search === state) {
-    //   alert("success")
-    //  }
-
     const [loading, setLoading] = useState(false);
     const [popup1, setPop1] = useState(true);
 
+    const [totalPages, setTotalPage] = useState(1);
+
+    // const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
+    // const [dataSource2, setDataSource2] = useState([])
+    // useEffect(() => {
+    //     setLoading(true);
+    //     fetch(url2, options)
+    //         .then(respnse => respnse.json())
+    //         .then(data => {
+    //             setDataSource2(data.vehicles)
+    //             setTotalPage(data.totalVehicles);
+    //             // console.log(dataSource2)
+    //             setLoading(false);
+
+    //         })
+    // }, [])
+
+    const [id, setId] = useState("");
+    const [role, setRole] = useState("");
+
+    const [visiblelist, setvisiblelist] = useState(false);
+    const [visible, setVisible] = useState(false);
+
+    // let url2;
+
+    const displaylist = () => {
+        setVisible2(); 
+    }
+    const setVisible2 = () => {
+        console.log(role)
+        setVisible(!visible);
+    }
+   
     const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
@@ -75,17 +100,14 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource2(data.vehicles)
-                console.log(dataSource2)
+                setTotalPage(data.totalVehicles);
+                // console.log(dataSource2)
                 setLoading(false);
 
             })
     }, [])
 
-    const [visiblelist, setvisiblelist] = useState(false);
-    const [visible, setVisible] = useState(false);
-    const displaylist = () => {
-        setVisible(!visible);
-    }
+   
 
     const [dataSource, setDataSource] = useState([])
     // const [Loading, setLoading] = useState([])
@@ -103,6 +125,19 @@ export default function () {
             })
     }, [])
 
+    const [list, setList] = useState([dataSource]);
+    const [total, setTotal] = useState(dataSource.length);
+    const [page, setCurentPage] = useState(1);
+    const [postPerPage, setpostPerPage] = useState(5);
+
+    const indexOfLastPage = page * postPerPage;
+    const indexOfFirstPage = indexOfLastPage - postPerPage;
+    const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
+
+    const onShowSizeChange = (current, pageSize) => {
+        setpostPerPage(pageSize);
+    }
+    let [active, setActive] = useState("");
 
     return (
 
@@ -110,7 +145,7 @@ export default function () {
 
             {/*---------------navigation---------------*/}
 
-            <Navigation></Navigation>
+            <Navigation path="/avialable_trip"></Navigation>
 
             {/* ---------------header--------------- */}
 
@@ -129,87 +164,55 @@ export default function () {
                 <form className='form' onSubmit={handleSubmit(onSubmit)}>
                     <div className='allDiv'>
 
-                        <div className='trip_date'> 
+                        <div className='trip_date'>
                             <input onChange={(e) => setSearch(e.target.value)} placeholder='Search...' className='trip_date1' type="search" /><button>Search</button>
                         </div>
                         <div>
-                            <h1 className='greentrip'>List of Company</h1> 
-                            {dataSource.map(item => (
-                                <>
-                                    <div className='companyList' onClick={() => { 
-                                        displaylist()
-                                        setvisiblelist(item.id)
-                                    }} >
-                                        <p>Company id : <b className='green'>{item.id}</b></p>
-                                        <p>Company Name : <b className='green'>{item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}`}</b></p>
-                                        <p className='dropdownVehicle'>{visible && item.id == visiblelist ? <AiOutlineMinus top="10px" size="1rem" color='White' onClick={displaylist}></AiOutlineMinus> :
-                                            <BsPlusLg size="1rem" color='White' onClick={() => {
-                                                displaylist()
-                                                setvisiblelist(item.id)
-                                            }} ></BsPlusLg>}</p>
-                                             {/* <td></td> */}
-                                    </div>
+                            <h1 className='greentrip'>List Of Companys</h1>
+                            {
 
-                                    {visible && item.id == visiblelist ?
-                                        <>
-
-                                            <div className='trip_date'>
-                                                <input onChange={(e) => setSearch(e.target.value)} placeholder='Search...' className='trip_date1' type="search" /><button>Search</button>
-                                            </div>
-
-                                            {
-                                                loading ?
-                                                    <p className='loading'><SyncLoader
-                                                        // color={color}
-                                                        // Left={margin}
-                                                        loading={loading}
-                                                        // cssOverride={override}
-                                                        size={10}
-                                                        // margin= "100px 0px 0px 0px"
-                                                        // padding= "200px"
-                                                        aria-label="Loading Spinner"
-                                                        data-testid="loader"
-                                                    /></p>
-                                                    :
-
-                                                    <div className='outer_vehicle_tables' id='myTable'>
-                                                        <p>Avaliable Vehicles for Trip</p>
-
-                                                        <table class="vehicle_table" id="myTable">
-
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Vehicle Name</th>
-                                                                    <th>Assigned Driver</th>
-                                                                    <th>Current Location</th>
-                                                                    <th>Vehicle Type</th>
-                                                                    <th>Plate Number</th>
-                                                                    <th>Set Trip</th>
-                                                                    {/* <th>History</th> */}
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {dataSource2.map(item => (
-                                                                    <tr className='active_row'>
-
-                                                                        <td>{item.vehicleName}</td>
-                                                                        <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td>
-                                                                        <td>{item.id}</td>
-                                                                        <td>{item.vehicleCatagory.catagory}</td>
-                                                                        <td>{item.plateNumber}</td>
-                                                                        <td><Link to={`/set_trip`}><button>Set Trip</button></Link></td>
-                                                                        {/* <td><Link to="/tracking"><button>Tracking</button></Link></td> */}
-                                                                    </tr>
-                                                                ))}
-                                                            </tbody>
-                                                        </table>
-
+                                loading ?
+                                    <p className='loading'><SyncLoader
+                                        // color={color}
+                                        // Left={margin}
+                                        loading={loading}
+                                        // cssOverride={override}
+                                        size={10}
+                                        // margin= "100px 0px 0px 0px"
+                                        // padding= "200px"
+                                        aria-label="Loading Spinner"
+                                        data-testid="loader"
+                                    /></p>
+                                    :
+                                    <>
+                                        {
+                                            dataSource.map(item => (
+                                                <>
+                                                    <div className='companyList' onClick={() => {
+                                                        displaylist()
+                                                        setvisiblelist(item.id)
+                                                        setId(item.id)
+                                                        setRole(item.role)
+                                                    }} >
+                                                        <p>Company id : <b className='green'>{item.id}</b></p>
+                                                        <p>Available Vehicle : <b className='green'>{item.totalVehicles}</b></p>
+                                                        <p className='dropdownVehicle'>{visible && item.id == visiblelist ? <AiOutlineMinus top="10px" size="1rem" color='White' onChange={displaylist}></AiOutlineMinus> :
+                                                            <BsPlusLg size="1rem" color='White' onClick={() => {
+                                                                displaylist()
+                                                                setId(item.id)
+                                                                setRole(item.role)
+                                                                setvisiblelist(item.id)
+                                                            }}></BsPlusLg>}</p>
+                                                        {/* <td></td> */}
                                                     </div>
-                                            }
+                                                    {visible && item.id == visiblelist && <Table style={{transition: "0.5s"}}  role={role} id={id} name={item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`} />}
+                                                     {/* <Table style={{transition: "0.5s"}}  role={role} id={id} name={item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`} /> */}
 
-                                        </> : ""}
-                                </>
-                            ))}
+                                                </>
+                                            ))
+                                        }
+                                    </>
+                            }
 
                         </div>
 

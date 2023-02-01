@@ -37,6 +37,7 @@ import SyncLoader from "react-spinners/SyncLoader";
 import { useForm } from 'react-hook-form';
 import swal from "sweetalert";
 import { Pagination } from 'antd';
+import axios from "axios";
 
 
 export default function () {
@@ -55,7 +56,7 @@ export default function () {
         tr = table.getElementsByTagName("tr");
 
         for (let i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
+            td = tr[i].getElementsByTagName("td")[0];
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -105,7 +106,7 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource(data.vehicleOwnerINF)
-                setTotalPage(data.totalPages)
+                setTotalPage(data.totalusers)
 
                 console.log(dataSource)
                 setLoading(false)
@@ -122,7 +123,7 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource2(data.totalusers)
-                setTotalPage(data.totalPages)
+                // setTotalPage(data.totalusers)
                 setLoading(false)
             })
     }, [])
@@ -136,7 +137,7 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource3(data.totalusers)
-                setTotalPage(data.totalPages)
+                // setTotalPage(data.totalPages)
                 setLoading(false)
             })
     }, [])
@@ -146,43 +147,26 @@ export default function () {
     const [popup1, setPop1] = useState(false);
     const handleClickopen = () => {
         setPop(!popup);
-        if (popup === true) {
-            document.body.classList.add("active_modal")
-        }
-        else {
-            document.body.classList.remove("active_modal")
-        }
     }
     const handleClickopen1 = () => {
         setPop1(!popup1);
-        if (popup === true) {
-            document.body.classList.add("active_modal")
-        }
-        else {
-            document.body.classList.remove("active_modal")
-        }
     }
     const [list, setList] = useState([dataSource]);
     const [total, setTotal] = useState(dataSource.length);
     const [page, setCurentPage] = useState(1);
-    const [postPerPage, setpostPerPage] = useState(10);
-
-    const indexOfLastPage = page + postPerPage;
+    const [postPerPage, setpostPerPage] = useState(5);
+    const indexOfLastPage = page * postPerPage;
     const indexOfFirstPage = indexOfLastPage - postPerPage;
-    // const currentPage = dataSource1.slice(indexOfFirstPage, indexOfLastPage);
+    const currentPage = dataSource.slice(indexOfFirstPage, indexOfLastPage);
+
     const [vehicleName, setvehicleName] = useState("");
     const [vehicleCatagory, setVehicleCategory] = useState("");
     const [vehicleCondition, setVehicleCondition] = useState("");
     const [plateNumber, setPlateNumber] = useState("");
     const [manufactureDate, setmanufactureDate] = useState("");
     const [deviceID, setdeviceId] = useState("");
-
-    const [driverName, setDriverName] = useState("");
-    const [licenseNumber, setLicenseNumber] = useState("");
-    const [licensePic, setLicensePic] = useState("");
-    // console.log(licensePic)
-    const [driverPic, setDriverPic] = useState();
     const [ownerPhone, setOwnerPhone] = useState();
+
     const [error, setError] = useState(false);
     const [error1, setError1] = useState(false);
     console.log(ownerPhone);
@@ -191,28 +175,6 @@ export default function () {
         console.log(e.target.files)
     }
 
-    // const validation = (e) => {
-    //     e.preventDefault();
-    //     if (vehicleCatagory.length == 0 || vehicleName.length == 0 || vehicleCondition.length == 0 || plateNumber.length == 0 || manufactureDate.length == 0 || deviceID.length == 0) {
-    //         setError(true);
-    //     }
-    //     if (vehicleCatagory && vehicleName && vehicleCondition && plateNumber && manufactureDate && deviceID) {
-    //         swal("Successful", "Successful Added", "success", {
-    //             buttons: false,
-    //             timer: 2000,
-    //         })
-    //     }
-    // }
-
-    const validation1 = (e) => {
-        e.preventDefault();
-        if (vehicleCatagory.length == 0 || vehicleName.length == 0 || vehicleCondition.length == 0 || plateNumber.length == 0 || manufactureDate.length == 0 || deviceID.length == 0) {
-            setError1(true);
-        }
-        if (vehicleCatagory && vehicleName && vehicleCondition && plateNumber && manufactureDate && deviceID) {
-            AddDriver();
-        }
-    }
     const onShowSizeChange = (current, pageSize) => {
         setpostPerPage(pageSize);
     }
@@ -289,7 +251,7 @@ export default function () {
             console.log(mess);
             if (response.ok) {
                 console.log("Signup successful");
-                swal("Successful", "Company Registered Successfuly", "success", {
+                swal("Successful", `${mess}`, "success", {
                     buttons: false,
                     timer: 2000,
                 });
@@ -303,84 +265,103 @@ export default function () {
             console.error(error);
         }
     }
-    const [file2, setFile2] = useState()
-    const onFileChange = (e) => {
-        console.log(e.target.files[0])
-        setFile2(e.target.files[0])
-        console.log(file)
-    };
 
-    const [file, setFile] = useState()
-    const onFileChange2 = (e) => {
-        console.log(e.target.files[0])
-        setFile(e.target.files[0])
-        console.log(file)
-    };
     const onSubmit2 = (data) => {
         console.log(data);
         AddDriver();
     };
+
+    const [driverName, setDriverName] = useState(""); 
+    const [licenseNumber, setLicenseNumber] = useState("");
+    const [licensePic, SetTinCertificate] = useState("");
+    const [driverPic, setTreadCertificate] = useState();
+    const [imgData, setImgData] = useState(null);
+    const [selectedFile, setSelectedFile] = useState();
+
     async function AddDriver() {
-
-        const formData = new FormData()
-        formData.append('file', file)
+        const formData = new FormData();
+        formData.append("driverName ", driverName)
+        formData.append("licenseNumber", licenseNumber);
+        formData.append("licensePic", licensePic);
+        formData.append("driverPic", driverPic);
+        formData.append("ownerPhone", ownerPhone)
+        formData.append("file", selectedFile);
         console.log(formData)
-        setDriverPic(formData);
 
-        const formData2 = new FormData()
-        formData2.append('file', file2)
-        console.log(formData2)
-        setLicensePic(formData2);
-        
-        let item =
-        {
-            driverName,
-            licenseNumber,
-            licensePic,
-            driverPic,
-            ownerPhone,
-        };
+        axios.post("http://198.199.67.201:9090/Api/Driver/AddDriver", formData, {
+                headers: {
+                    'Content-Type': 'Auto',
+                    "Authorization": `Bearer ${jwt}`,
+                }
+            })
+            .then((res) => {
+                localStorage.setItem("message", JSON.stringify(res["message"]));
+                const mess = localStorage.getItem("message");
+                console.log(res);
+                swal("Error","Driver Successfuliy Registerd", "success", {
+                    button: true,
+                    
+                })
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    // Request made and server responded
+                    localStorage.setItem('message', JSON.stringify(error.response.data['message']))
+                    const messx = localStorage.getItem('message')
+                    console.log('message', messx)
+                    console.log(error.response.data);
+                    swal("Error", `${messx}`, "error", {
+                        button: true,
+                        
+                    })
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    console.log(error.request);
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.log('Error', error.message);
+                }
 
-        const options = {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                "Accept": "application/json",
-                "Authorization": `Bearer ${jwt}`
-            },
-            body: JSON.stringify(item),
-        };
-        const url = "http://198.199.67.201:9090/Api/Driver/AddDriver";
-        try {
-            const response = await fetch(url, options);
-            const result = await response.json();
-            console.log(result);
-            localStorage.setItem("message", JSON.stringify(result["message"]));
-            const mess = localStorage.getItem("message");
-            console.log(mess);
-            if (response.ok) {
-                console.log("Signup successful");
-                swal("Successful", "Company Registered Successfuly", "success", {
-                    buttons: false,
-                    timer: 2000,
-                });
-                // companyName = ''
+            })
+    };
 
-            } else {
-                console.log("failed");
-                swal(`Failed To Register ${mess}`, "Error", "error");
-            }
-        } catch (error) {
-            console.error(error);
+    const FileUploadTinCertificate = (e) => {
+        if (e.target.files[0]) {
+            console.log("fileImage: ", e.target.files);
+            SetTinCertificate(e.target.files[0]);
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+                setImgData(reader.result);
+            });
+            reader.readAsDataURL(e.target.files[0]);
         }
-    }
+        if (e.target.files.length > 0) {
+            setSelectedFile(e.target.files[0]);
+        }
+    };
+    const FileUploadTreadCertificate = (e) => {
+        if (e.target.files[0]) {
+            console.log("fileID: ", e.target.files);
+            setTreadCertificate(e.target.files[0]);
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+                setImgData(reader.result);
+            });
+            reader.readAsDataURL(e.target.files[0]);
+        }
+        if (e.target.files.length > 0) {
+            setSelectedFile(e.target.files[0]);
+        }
+    };
 
     return (
 
         <div className="containerr">
 
             {/*---------------navigation---------------*/}
-            <Navigation></Navigation>
+            <Navigation path="/users"></Navigation>
 
             {/* --------------- header --------------- */}
 
@@ -401,7 +382,7 @@ export default function () {
                         <div className='company' onClick={() => setActive("company")}>
                             <h4>Company</h4>
                             <p><FaWarehouse size="2.2rem" color='black'></FaWarehouse><b>{dataSource2}</b></p>
-                        </div> 
+                        </div>
                     </Link>
                     <Link style={{ textDecoration: 'none' }} to="/register_individual">
                         <div className='individual' onClick={() => setActive("individual")}>
@@ -462,26 +443,25 @@ export default function () {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {dataSource.map(item => (
+                                            {currentPage.map(item => (
                                                 <tr className='active_row'>
                                                     {/* <td></td> */}
-                                                    <td>{item.firstName}</td>
+                                                    <td>{item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`}</td>
                                                     <td>{item.role}</td>
-                                                    {/* <td>{item.companyName}</td> */}
                                                     <td>{item.totalVehicles}</td>
                                                     <td>{item.totalDrivers}</td>
-                                                    <td></td>
+                                                    <td>{item.serviceNeeded}</td>
                                                     <td><Link to={`/user_edit/${item.role}/${item.id}/${item.companyId}`}>
                                                         <button>Detail</button></Link></td>
                                                     <td><Link to="#">
                                                         <button onClick={() => {
                                                             handleClickopen()
                                                             setOwnerPhone(item.phoneNumber)
-                                                        }}>Vehicle</button></Link></td>
-                                                    <td><Link to="#"><button onClick={() => { 
-                                                        handleClickopen1() 
+                                                        }}>Add</button></Link></td>
+                                                    <td><Link to="#"><button onClick={() => {
+                                                        handleClickopen1()
                                                         setOwnerPhone(item.phoneNumber)
-                                                        }}>Driver</button></Link></td>
+                                                    }}>Add</button></Link></td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -493,7 +473,7 @@ export default function () {
                                             onChange={(page) => setCurentPage(page)}
                                             pageSize={postPerPage}
                                             current={page}
-                                            total={total}
+                                            total={totalPages}
                                             showQuickJumper
                                             showSizeChanger
                                             onShowSizeChange={onShowSizeChange}
@@ -604,7 +584,7 @@ export default function () {
                                                         <div className='popup-inner'>
                                                             <lable className="zxc">Add Driver</lable>
                                                             <div className='ewq'>
-                                                                <div className='qwe'>
+                                                                <div className='qwe2'>
                                                                     <div className='asd'>
                                                                         <button className='close-btn' onClick={closePopup5}>X</button>
                                                                         <lable>Full Name</lable>
@@ -614,6 +594,20 @@ export default function () {
                                                                             placeholder='Enter Vehicle Name'
                                                                             onChange={(e) => setDriverName(e.target.value)} ></input>
                                                                         {driverName <= 0 && errors.driverName && <span className='validate_text'>{errors.driverName.message}</span>}
+                                                                    </div>
+
+                                                                    <div className='asd'>
+                                                                        <lable>Gender</lable>
+                                                                        <select className='select' name='gender'
+                                                                            // value={vehicleCondition}
+                                                                            {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
+                                                                            // onChange={(e) => setVehicleCondition(e.target.value)} 
+                                                                            >
+                                                                            <option value="">Select Gender</option>
+                                                                            <option value="male">Male</option>
+                                                                            <option value="femail">Femaile</option>
+                                                                        </select>
+                                                                        {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>}
                                                                     </div>
 
                                                                     <div className='asd'>
@@ -629,21 +623,12 @@ export default function () {
                                                                     <div className='asd'>
                                                                         <lable>Driver Licence Picture</lable>
                                                                         <input name='licensePic' type="file"
-                                                                            value={licensePic}
+                                                                            // value={licensePic}
                                                                             {...register("licensePic", { required: '*License Picture is required' })}
                                                                             placeholder='Enter License Picture'
-                                                                            onChange={onFileChange} ></input>
+                                                                            onChange={FileUploadTinCertificate} ></input>
                                                                         {licensePic <= 0 && errors.licensePic && <span className='validate_text'>{errors.licensePic.message}</span>}
                                                                     </div>
-
-                                                                    {/* <div className='asd'>
-                                                                        <lable>Driver Licence Picture</lable>
-                                                                        <input type="text" placeholder='Please Enter License Picture' name='licensePic'
-                                                                            value={licensePic}
-                                                                            {...register("licensePic", { required: '*License Picture is required' })}
-                                                                            onChange={(e) => setLicensePic(e.target.value)} ></input>
-                                                                        {licensePic <= 0 && errors.licensePic && <span className='validate_text'>{errors.licenslicensePiceNumber.message}</span>}
-                                                                    </div> */}
 
                                                                     <div className='asd'>
                                                                         <lable>Driver Picture</lable>
@@ -651,19 +636,90 @@ export default function () {
                                                                             // value={driverPic}
                                                                             {...register("driverPic", { required: '*Driver Picture is required' })}
                                                                             placeholder='Please Enter Driver Picture'
-                                                                            onChange={onFileChange2} ></input>
-                                                                         {driverPic <= 0 && errors.driverPic && <span className='validate_text'>{errors.driverPic.message}</span>}
+                                                                            onChange={FileUploadTreadCertificate} ></input>
+                                                                        {driverPic <= 0 && errors.driverPic && <span className='validate_text'>{errors.driverPic.message}</span>}
                                                                     </div>
 
                                                                     <div className='asd'>
-
+                                                                        <lable>Date Of Birth</lable>
+                                                                        <input name='birtDate' type="Date"
+                                                                            // value={licenseNumber}
+                                                                            {...register("licenseNumber", { required: '*License Number is required' })}
+                                                                            placeholder='Enter Date Of Birth'
+                                                                            // onChange={(e) => setLicenseNumber(e.target.value)} 
+                                                                            ></input>
+                                                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
                                                                     </div>
 
-                                                                    <div className='asdy'>
-                                                                        {/* <button>Back</button> */}
+
+                                                                    <div className='asd'>
+                                                                        <lable>Phone Number</lable>
+                                                                        <input name='phoneNumber' type="text"
+                                                                            // value={licenseNumber}
+                                                                            {...register("licenseNumber", { required: '*License Number is required' })}
+                                                                            placeholder='Enter Phone Number'
+                                                                            // onChange={(e) => setLicenseNumber(e.target.value)} 
+                                                                            ></input>
+                                                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
                                                                     </div>
+
+                                                                    <div className='asd'>
+                                                                        <lable>Exeperiance</lable>
+                                                                        <input name='Exeperiance' type="text"
+                                                                            // value={licenseNumber}
+                                                                            {...register("licenseNumber", { required: '*License Number is required' })}
+                                                                            placeholder='Enter Exeperiance '
+                                                                            // onChange={(e) => setLicenseNumber(e.target.value)} 
+                                                                            ></input>
+                                                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
+                                                                    </div> 
+
+                                                                     <div className='asd'>
+                                                                        <lable>License Grade</lable>
+                                                                        <input name='License Grade' type="text"
+                                                                            // value={licenseNumber}
+                                                                            {...register("licenseNumber", { required: '*License Number is required' })}
+                                                                            placeholder='Enter License Grade '
+                                                                            // onChange={(e) => setLicenseNumber(e.target.value)} 
+                                                                            ></input>
+                                                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
+                                                                    </div>   
+
+                                                                     <div className='asd'>
+                                                                        <lable>Status</lable>
+                                                                        <input name='License Grade' type="text"
+                                                                            // value={licenseNumber}
+                                                                            {...register("licenseNumber", { required: '*License Number is required' })}
+                                                                            placeholder='Enter License Grade'
+                                                                            // onChange={(e) => setLicenseNumber(e.target.value)} 
+                                                                            ></input>
+                                                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
+                                                                    </div>    
+
+                                                                     <div className='asd'>
+                                                                        <lable>Issue Date</lable>
+                                                                        <input name='Issue Date' type="date"
+                                                                            // value={licenseNumber}
+                                                                            {...register("licenseNumber", { required: '*License Number is required' })}
+                                                                            placeholder='Enter Issue Date'
+                                                                            // onChange={(e) => setLicenseNumber(e.target.value)} 
+                                                                            ></input>
+                                                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
+                                                                    </div>   
+
+                                                                     <div className='asd'>
+                                                                        <lable>Expire Date</lable>
+                                                                        <input name='Expire Date' type="date"
+                                                                            // value={licenseNumber}
+                                                                            {...register("licenseNumber", { required: '*License Number is required' })}
+                                                                            placeholder='Enter Expire Date'
+                                                                            // onChange={(e) => setLicenseNumber(e.target.value)} 
+                                                                            ></input>
+                                                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
+                                                                    </div>                                                                     
+
                                                                     <div className='asdy'>
-                                                                        <button>Add</button>
+                                                                        <button>Register</button>
                                                                     </div>
                                                                     <div className='asdy'>
                                                                         {/* <button onClick={() => { handleClickopen2() }}>Add Vehicle</button> */}

@@ -27,7 +27,7 @@ export default function PopUp(props) {
         if (title === 'Add_Vehicle_Condition') {
             Add_Vehicle_Condition();
         }
-        if (title === 'Add_vehicle_category') {
+        if (title === 'Add_vehicle_category') { 
             Add_vehicle_category();
         }
         if (title === 'Add_company_sector') {
@@ -76,10 +76,11 @@ export default function PopUp(props) {
             console.log(mess);
             if (response.ok) {
                 console.log("Signup successful");
-                swal("Successful", "Notification Preference Registerd Successfuly", "success", {
+                swal("Successful",  `${mess}`, "success", {
                     buttons: false,
                     timer: 2000,
                 });
+                setPop(false);
             } else {
                 console.log("failed");
                 swal(`Failed To Register ${mess}`, "Error", "error");
@@ -113,10 +114,11 @@ export default function PopUp(props) {
             console.log(mess);
             if (response.ok) {
                 console.log("Signup successful");
-                swal("Successful", "Notification Preference Registerd Successfuly", "success", {
+                swal("Successful",  `${mess}`, "success", {
                     buttons: false,
                     timer: 2000,
                 });
+                setPop(false);
             } else {
                 console.log("failed");
                 swal(`Failed To Register ${mess}`, "Error", "error");
@@ -151,10 +153,11 @@ export default function PopUp(props) {
             console.log(mess);
             if (response.ok) {
                 console.log("Signup successful");
-                swal("Successful", "Vehicle Condition Registered Successfuly", "success", {
+                swal("Successful",  `${mess}`, "success", {
                     buttons: false,
                     timer: 2000,
                 });
+                setPop(false);
             } else {
                 console.log("failed");
                 swal(`Failed To Register ${mess}`, "Error", "error");
@@ -189,10 +192,11 @@ export default function PopUp(props) {
             console.log(mess);
             if (response.ok) {
                 console.log("Signup successful");
-                swal("Successful", "Vehicle Category Registered Successfuly", "success", {
+                swal("Successful",  `${mess}`, "success", {
                     buttons: false,
                     timer: 2000,
                 });
+                setPop(false);
             } else {
                 console.log("failed");
                 swal(`Failed To Register ${mess}`, "Error", "error");
@@ -226,10 +230,11 @@ export default function PopUp(props) {
             console.log(mess);
             if (response.ok) {
                 console.log("Signup successful");
-                swal("Successful", "Notification Preference Registerd Successfuly", "success", {
+                swal("Successful",  `${mess}`, "success", {
                     buttons: false,
                     timer: 2000,
                 });
+                setPop(false);
             } else {
                 console.log("failed");
                 swal(`Failed To Register ${mess}`, "Error", "error");
@@ -263,10 +268,11 @@ export default function PopUp(props) {
             console.log(mess);
             if (response.ok) {
                 console.log("Signup successful");
-                swal("Successful", "Notification Preference Registerd Successfuly", "success", {
+                swal("Successful",  `${mess}`, "success", {
                     buttons: false,
                     timer: 2000,
                 });
+                setPop(false);
             } else {
                 console.log("failed");
                 swal(`Failed To Register ${mess}`, "Error", "error");

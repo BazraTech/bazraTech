@@ -240,7 +240,7 @@ export default function Company_registration() {
 
             {/*--------------- Company Container ---------------*/}
 
-            <Navigation></Navigation>
+            <Navigation path="/Company_registration"></Navigation>
 
 
             {/* --------------- Company header --------------- */}

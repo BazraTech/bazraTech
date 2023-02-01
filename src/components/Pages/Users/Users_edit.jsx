@@ -24,6 +24,7 @@ import Header from '../../Header/Header';
 import { total } from './Data/jsonData';
 import { on_route } from './Data/Data';
 import { parked } from './Data/Data';
+import Navigation from '../Navigation/Navigation';
 
 export default function Users_edit() {
 
@@ -108,18 +109,18 @@ export default function Users_edit() {
         
 
 
-    const [dataSource4, setDataSource4] = useState([])
-    const url2 = `http://198.199.67.201:9090/Api/Admin/Company/Vehicles/All/${companyID}`;
-    useEffect(() => {
-        setLoading(true)
-        fetch(url2, options)
-            .then((response) => response.json())
-            .then((json) => {
-                setDataSource4(json.vehicles)
-                console.log(json)
-                setLoading(false)
-            });
-    }, [])
+    // const [dataSource4, setDataSource4] = useState([])
+    // const url2 = `http://198.199.67.201:9090/Api/Admin/Company/Vehicles/All/${companyID}`;
+    // useEffect(() => {
+    //     setLoading(true)
+    //     fetch(url2, options)
+    //         .then((response) => response.json())
+    //         .then((json) => {
+    //             setDataSource4(json.vehicles)
+    //             console.log(json)
+    //             setLoading(false)
+    //         });
+    // }, [])
 
     // if (dataSource.firstName === dataSource.lastName) {
     //     setIndividual(false);
@@ -134,71 +135,15 @@ export default function Users_edit() {
         setinputTag(!inputtag);
     }
 
-
+ 
     return (
         <div>
             <div className="users_edit_container">
 
                 {/*---------------navigation---------------*/}
 
-                <div className="dashboard_navigation">
-                    <ul>
-                        <li>
-                            <Link to="/dashboard">
-                                <p class="hovertext" data-hover="Home"><FaHome size="2rem" color='white'></FaHome><p></p></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/Total_number_of_vehicle">
-                                <p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='white'></AiFillCar></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/tracking">
-                                <p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/avialable_trip">
-                                <p className="hovertext" data-hover="Trip Management"><BiTrip color='white' size="2rem" ></BiTrip></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/users">
-                                <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='#00cc44'></FaUsers></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/accident">
-                                <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/report">
-                                <p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/Company_registration">
-                                <p class="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" color='white'></FaRegIdCard></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/message_overview">
-                                <p class="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
-                        </li>
-                        <li>
-                            <Link to="/settings">
-                                <p class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='white'></AiFillSetting></p>
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
-
+                <Navigation path="/users"></Navigation>
+                
                 {/* ---------------header--------------- */}
 
                 <Header title="Users/Edit"></Header>
@@ -228,25 +173,14 @@ export default function Users_edit() {
                             {role === "INDIVIDUAL" ? "" :
                                 <div className='first_div'>
                                     <h1>Company Information</h1>
-                                    <div className='company_button'>
-                                        {/* <p className='addd' onClick={() => {
-                                    handleChange()
-                                    toggle()
-                                    select()
-                                }}>{state ? "Cancle" : "Edit"}</p>
-                                <br /> */}
-
-                                    </div>
                                     <div className='company_information1'>
-
                                         <div>
                                             <p>Company Name </p>
                                             <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.companyName} type="text" disabled={diabled}></input>
-
                                         </div>
                                         <div>
                                             <p>Company type</p>
-                                            {inputtag ? <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.id} className='select' disabled={diabled}></input> : ""}
+                                            {inputtag ? <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.companyType} className='select' disabled={diabled}></input> : ""}
                                             {selecttag ? <select className='select' disabled={diabled}>
                                                 <option value='plc'>Set Company Type</option>
                                                 <option value='plc'>Public Llimited Company</option>
@@ -257,7 +191,7 @@ export default function Users_edit() {
                                         <div>
                                             <p>Company Sector </p>
 
-                                            {inputtag ? <input Value={dataSource.id} className='select' disabled={diabled}></input> : ""}
+                                            {inputtag ? <input Value={dataSource.companySector} className='select' disabled={diabled}></input> : ""}
                                             {selecttag ? <select className='select' disabled={diabled}>
                                                 <option value='plc'>Selecet Company Sector</option>
                                                 <option value='plc'>Government</option>
@@ -282,31 +216,31 @@ export default function Users_edit() {
                                 <div className='company_Address1'>
                                     <div>
                                         <p>Region </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource2.region} disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource2(e.target.value)} value={dataSource2.region} disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Sub City </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource2.subcity} disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource2(e.target.value)} value={dataSource2.subcity} disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Specfic Location </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource2.specificLocation} type="text" disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource2(e.target.value)} value={dataSource2.specificLocation} type="text" disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>City </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource2.city} disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource2(e.target.value)} value={dataSource2.city} disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Woreda </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource2.woreda} type="text" disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource2(e.target.value)} value={dataSource2.woreda} type="text" disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>House Number </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource2.houseNum} type="text" disabled={diabled}></input>
+                                        <input onChange={(e) => setDataSource2(e.target.value)} value={dataSource2.houseNum} type="text" disabled={diabled}></input>
                                     </div>
                                     <div>
                                         <p>Phone Number </p>
-                                        <input onChange={(e) => setDataSource4(e.target.value)} value={dataSource2.phone} disabled type="text" ></input>
+                                        <input onChange={(e) => setDataSource2(e.target.value)} value={dataSource2.phone} disabled type="text" ></input>
                                     </div>
                                 </div>
                             </div> 
@@ -346,7 +280,6 @@ export default function Users_edit() {
                                             <option>Select Notification Preference</option>
                                             <option>Select Notification Preference</option> */}
                                         </input>
-
                                     </div>
                                     <div>
                                         <p>Service Neded </p>
@@ -358,10 +291,8 @@ export default function Users_edit() {
                                             <option>Select Service Neded</option> */}
                                         </input>
                                     </div>
-
                                 </div>
                             </div>
-
                             <div className='company_button'>
                                 <p className='addd' onClick={() => {
                                     handleChange()
@@ -372,18 +303,10 @@ export default function Users_edit() {
                                 <button className='ad' disabled={diabled}>Update</button>
 
                             </div>
-                            {/* <div className='outer_vehicle_tables' id='myTable'> */}
-
-                            {/* {total[0].map(item => (
-                                <>
-                                    <p>{item.id}</p>
-                                    <p>{item.firstname}</p>
-                                </>
-                            ))} */}
 
                             <div className='outer_vehicle_tables0' id='myTable'>
                                 <div className='second_div'>
-                                    <div className='registerd_vehicle_no'> <div className='Vehicle_number'><h1>Registerd Vehicle</h1><h1 className='number' >{dataSource5.length}</h1></div></div>
+                                    <div className='registerd_vehicle_no'> <div className='Vehicle_number'><h1>Total Number Of Vehicle</h1><h1 className='number' >{dataSource5.length}</h1></div></div>
                                 </div>
                                 <p>Registerd Vehicles</p>
 
@@ -401,14 +324,14 @@ export default function Users_edit() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {dataSource4.map(item => (
+                                        {dataSource5.map(item => (
                                                 <tr className='active_row'>
 
                                                     <td>{item.vehicleName}</td>
                                                     {/* <td>{item.driver == null ? "unassignd" :`${dataSource3.map(item2 =>( item2.driverName ))}`}</td> */}
-                                                    <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td>
+                                                    <td>{item.driver == "null" ? "unassignd" : `${item.driver}`}</td>
                                                     <td>{item.id}</td>
-                                                    <td>{item.vehicleCatagory.catagory}</td>
+                                                    <td>{item.vehicleCatagory}</td>
                                                     <td>{item.plateNumber}</td>
                                                     <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
                                                     <td><Link to="/tracking"><button>Tracking</button></Link></td>
@@ -432,18 +355,49 @@ export default function Users_edit() {
 
                                     /> */}
                             </div>
+
+                            <div className='outer_vehicle_tables0' id='myTable'>
+                                <div className='second_div'>
+                                    <div className='registerd_vehicle_no'> <div className='Vehicle_number'><h1>Total Number Of Drivers</h1><h1 className='number' >{dataSource3.length}</h1></div></div>
+                                </div>
+                                <p>Registerd Drivers</p>
+
+                                <table class="vehicle_table" id="myTable">
+
+                                    <thead>
+                                        <tr>
+                                            <th>Driver ID</th>
+                                            <th>Driver Name</th>
+                                            <th>License Number</th>
+                                            <th>Detail</th>
+                                            <th>Tracking</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {dataSource3.map(item => (
+                                                <tr className='active_row'>
+
+                                                    <td>{item.id}</td>
+                                                    {/* <td>{item.driver == null ? "unassignd" :`${dataSource3.map(item2 =>( item2.driverName ))}`}</td> */}
+                                                    {/* <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td> */}
+                                                    <td>{item.driverName}</td>
+                                                    <td>{item.licenseNumber}</td>
+                                                    {/* <td>{item.plateNumber}</td> */}
+                                                    <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
+                                                    <td><Link to="/tracking"><button>Tracking</button></Link></td>
+                                                </tr>
+                                            ))}
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </div>
-
-
 
                         {/* })}  */}
 
                     </form>
 
                 </section>
-
-
-
 
                 {/* ---------------end Registaration--------------- */}
             </div>

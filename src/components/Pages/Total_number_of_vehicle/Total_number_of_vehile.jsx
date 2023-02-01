@@ -35,7 +35,7 @@ export default function () {
         tr = table.getElementsByTagName("tr");
 
         for (let i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
+            td = tr[i].getElementsByTagName("td")[4];
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -81,10 +81,10 @@ export default function () {
                 // console.log(dataSource)
                 setLoading(false);
 
-            }) 
+            })
     }, [])
 
-  
+    const [totalPages, setTotalPage] = useState(1);
     const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
@@ -93,6 +93,7 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource2(data.vehicles)
+                setTotalPage(data.totalVehicles);
                 // console.log(dataSource2)
                 setLoading(false);
 
@@ -127,22 +128,26 @@ export default function () {
             })
     }, [])
 
-    const [list, setList] = useState(dataSource2);
-    const [total, setTotal] = useState(dataSource2.length);
+    const [list, setList] = useState([dataSource]);
+    const [total, setTotal] = useState(dataSource.length);
     const [page, setCurentPage] = useState(1);
-    const [postPerPage, setpostPerPage] = useState(10);
+    const [postPerPage, setpostPerPage] = useState(5);
+
+    const indexOfLastPage = page * postPerPage;
+    const indexOfFirstPage = indexOfLastPage - postPerPage;
+    const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
 
     const onShowSizeChange = (current, pageSize) => {
         setpostPerPage(pageSize);
     }
 
-    useEffect(() => {
-        setTotal([dataSource2.length])
-    }, []);
+    // useEffect(() => {
+    //     setTotal([dataSource2.length])
+    // }, []);
 
-    const indexOfLastPage = page + postPerPage;
-    const indexOfFirstPage = indexOfLastPage - postPerPage;
-    const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
+    // const indexOfLastPage = page * postPerPage;
+    // const indexOfFirstPage = indexOfLastPage - postPerPage;
+    // const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
     const [color, setColor] = useState("green");
     const [margin, setMargin] = useState("");
 
@@ -153,7 +158,7 @@ export default function () {
 
             {/*---------------navigation---------------*/}
 
-            <Navigation></Navigation>
+            <Navigation path="/Total_number_of_vehicle"></Navigation>
 
             {/* --------------- header --------------- */}
 
@@ -172,13 +177,13 @@ export default function () {
                     <Link style={{ textDecoration: 'none' }} to="/on_route"><div className='on_route1'>
                         <h4>On Route</h4>
                         <p><FaRoute size="2rem" ></FaRoute><b>{dataSource.length}</b></p>
-                    </div></Link>
+                    </div></Link> 
 
                     <Link style={{ textDecoration: 'none' }} to="/on_stock">
                         <div className='parked1'>
                             <h4>On Stock</h4>
                             <p><FaParking size="2rem" ></FaParking><b>{dataSource3.length}</b></p>
-                        </div> 
+                        </div>
                     </Link>
 
                     <Link style={{ textDecoration: 'none' }} to="/parked">
@@ -217,7 +222,7 @@ export default function () {
 
                     <>
                         <div className='outer_vehicle_tables' id='myTable'>
-                            <p>Total Vehicle</p> 
+                            <p>Total Vehicle</p>
 
                             <table className="vehicle_table" id="myTable">
 
@@ -228,20 +233,22 @@ export default function () {
                                         <th>Vehicle ID</th>
                                         <th>Vehicle Type</th>
                                         <th>Plate Number</th>
+                                        <th>Status</th>
                                         <th>Detail</th>
                                         <th>Tracking</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {dataSource2.map(item => (
-                                        <tr className='active_row'> 
+                                    {currentPage.map(item => (
+                                        <tr className='active_row'>
 
                                             <td>{item.vehicleName}</td>
                                             <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td>
-                                            {/* <td>{item.driver.driverName}</td> */} 
+                                            {/* <td>{item.driver.driverName}</td> */}
                                             <td>{item.id}</td>
                                             <td>{item.vehicleCatagory.catagory}</td>
                                             <td>{item.plateNumber}</td>
+                                            <td>{item.status}</td>
                                             <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
                                             <td><Link to="/tracking"><button>Tracking</button></Link></td>
                                         </tr>
@@ -250,24 +257,24 @@ export default function () {
                             </table>
                         </div>
                         <div className='page'>
-                            <Pagination
-                                onChange={(page) => setCurentPage(page)}
-                                pageSize={postPerPage}
-                                current={page}
-                                total={total}
-                                showQuickJumper
-                                showSizeChanger
-                                onShowSizeChange={onShowSizeChange}
-                            />
+                        <Pagination
+                            onChange={(page) => setCurentPage(page)}
+                            pageSize={postPerPage}
+                            current={page}
+                            total={totalPages}
+                            showQuickJumper
+                            showSizeChanger
+                            onShowSizeChange={onShowSizeChange}
+                        />
                         </div>
-                        </>
+                    </>
 
                 }
-                       
 
-                    
 
-                
+
+
+
             </div>
 
         </div >

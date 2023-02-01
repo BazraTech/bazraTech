@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1; 
+    z-index: 3; 
 }
 .popup{
     position: fixed;
@@ -84,6 +84,20 @@
     margin-top: -13px;
     
 }
+
+.qwe2{
+    display: grid;
+    grid-template-columns: 30.6% 30.6% 30.6%;
+    gap: 4%;
+    row-gap: 15px;
+    background-color: rgb(255, 255, 255);
+    padding: 5%;
+    border-radius: 8px;
+    padding-top: 70px;
+    padding-bottom: 1.5%;
+    margin-top: -13px;
+    
+}
 .ewq{
     /* background-color: red; */
     padding: 2%;
@@ -104,6 +118,11 @@
     color: green;
     font-size: 22px;
     font-weight: 700;
+    z-index: 4;
+}
+.zxc2{
+    background-color: black;
+    margin-bottom: -20px;
 }
 .asd input{
     background-color: rgb(230, 230, 230);

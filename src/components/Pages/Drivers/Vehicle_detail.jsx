@@ -56,7 +56,7 @@ export default function Users_edit() {
             "Authorization": `Bearer ${jwt}`
         },
 
-    }; 
+    };
     const { id } = useParams()
     const url2 = `http://198.199.67.201:9090/Api/Admin/All/Vehicles/${id}`;
 

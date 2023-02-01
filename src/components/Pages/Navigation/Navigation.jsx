@@ -10,13 +10,14 @@ import { BsFillChatDotsFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
 import { BiTrip } from "react-icons/bi";
+import { ImUserTie } from "react-icons/im";
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { SiTripdotcom } from "react-icons/si";
 import { SiGoogletagmanager } from "react-icons/si";
 import './navigation.css';
 
-export default function Navigation() {
+export default function Navigation({ path }) {
 
     const [popup, setPop] = useState(false);
     const handleClickopen = () => {
@@ -26,81 +27,83 @@ export default function Navigation() {
     const location = useLocation();
     // console.log(location.pathname);
 
-    const getColor = (curr) => {
-        if (location.pathname === curr ) {
-            return '#00cc44'
-        }
-
-        else {
-            return 'white'
-        }
+    const getColor = () => {
+        return '#00cc44'
+    }
+    const getColor2 = () => {
+        return 'white'
     }
     return (
         <div>
-            <div className="All_navigation">
+            <div className="All_navigation"> 
 
-                {/* <Link to="/dashboard" style={{ color: getColor('/dashboard') }}>
-                    <p className="hovertext" data-hover="Home"><FaHome size="2rem" ></FaHome></p>
-                </Link> */}
+
+                {/* <p className="headerBazraName" data-hover="Home">B</p><hr className='hrHeader'></hr> */}
+
                 <ul>
 
                     {/* <br></br> */}
                     <li>
-                        <Link to="/dashboard" style={{ color: getColor('/dashboard') }}>
-                            <p className="hovertext" data-hover="Home"><FaHome size="2rem" ></FaHome></p>
+                        <Link to="/dashboard" style={path == "/dashboard" ? { color: getColor() } : { color: getColor2() }}>
+                            <p className="hovertext" data-hover="Home"><FaHome size="1.8rem" ></FaHome></p>
                         </Link>
                     </li>
                     <li>
-                        <Link to="/Total_number_of_vehicle" style={{ color: getColor('/Total_number_of_vehicle') }}>
-                            <p className="hovertext" data-hover="Vehicle"><AiFillCar size="2rem"></AiFillCar></p>
+                        <Link to="/Total_number_of_vehicle" style={path == "/Total_number_of_vehicle" ? { color: getColor() } : { color: getColor2(path) }}>
+                            <p className="hovertext" data-hover="Vehicle"><AiFillCar size="1.8rem"></AiFillCar></p>
                         </Link>
                     </li>
                     <li>
-                        <Link to="/tracking" style={{ color: getColor('/tracking') }}>
-                            <p className="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" ></RiGpsFill></p>
+                        <Link to="/Total_Drivers" style={path == "/Total_Drivers" ? { color: getColor() } : { color: getColor2() }}>
+                            <p className="hovertext" data-hover="Driver"><ImUserTie size="1.8rem"></ImUserTie></p>
                         </Link>
                     </li>
                     <li>
-                        <Link to="/avialable_trip" style={{ color: getColor('/avialable_trip') }}>
-                            <p onClick={handleClickopen} className="hovertext" data-hover="Trip Management"><BiTrip size="2rem" ></BiTrip></p>
+                        <Link to="/tracking" style={path == "/tracking" ? { color: getColor() } : { color: getColor2() }}>
+                            <p className="hovertext" data-hover="Tracking"><RiGpsFill size="1.8rem" ></RiGpsFill></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/avialable_trip" style={path == "/avialable_trip" ? { color: getColor() } : { color: getColor2() }}>
+                            <p onClick={handleClickopen} className="hovertext" data-hover="Trip Management"><BiTrip size="1.8rem" ></BiTrip></p>
                         </Link>
 
                     </li>
                     <li>
-                        <Link to="/users" style={{ color: getColor('/users') }}>
-                            <p className="hovertext" data-hover="Users"><FaUsers size="2rem" ></FaUsers></p>
+                        <Link to="/users" style={path == "/users" ? { color: getColor() } : { color: getColor2() }}>
+                            <p className="hovertext" data-hover="Users"><FaUsers size="1.8rem" ></FaUsers></p>
                         </Link>
                     </li>
                     <li>
-                        <Link to="/accident" style={{ color: getColor('/accident') }}>
-                            <p className="hovertext" data-hover="Alert"><HiBellAlert size="2rem" ></HiBellAlert></p>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/report" style={{ color: getColor('/report') }}>
-                            <p className="hovertext" data-hover="Report"><HiDocumentReport size="2rem" ></HiDocumentReport>
-                            </p>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/Company_registration" style={{ color: getColor('/Company_registration') }}>
-                            <p className="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" ></FaRegIdCard></p>
+                        <Link to="/Company_registration" style={path == "/Company_registration" ? { color: getColor() } : { color: getColor2() }}>
+                            <p className="hovertext" data-hover="Registration"><FaRegIdCard size="1.7rem" ></FaRegIdCard></p>
                         </Link>
                         {/* <Link to="/individual"  style={{ color: getColor('/individual') }}><p>gg</p></Link> */}
                     </li>
                     <li>
-                        <Link to="/message_overview" style={{ color: getColor('/message_overview') }}>
-                            <p className="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" ></BsFillChatDotsFill></p>
+                        <Link to="/accident" style={path == "/accident" ? { color: getColor() } : { color: getColor2() }}>
+                            <p className="hovertext" data-hover="Alert"><HiBellAlert size="1.8rem" ></HiBellAlert></p>
                         </Link>
                     </li>
                     <li>
-                        <Link to="#">
-                            <p className="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
+                        <Link to="/report" style={path == "/report" ? { color: getColor() } : { color: getColor2() }}>
+                            <p className="hovertext" data-hover="Report"><HiDocumentReport size="1.8rem" ></HiDocumentReport>
+                            </p>
                         </Link>
                     </li>
                     <li>
-                        <Link to="/settings" style={{ color: getColor('/settings') }}>
-                            <p className="hovertext" data-hover="Setting"><AiFillSetting size="2rem" ></AiFillSetting></p>
+                        <Link to="/message_overview" style={path == "/message_overview" ? { color: getColor() } : { color: getColor2() }}>
+                            <p className="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.6rem" ></BsFillChatDotsFill></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/Manage_profile" style={path == "/Manage_profile" ? { color: getColor() } : { color: getColor2() }}>
+                            <p className="hovertext" data-hover="Manage profile"><FaUserAlt size="1.7rem"></FaUserAlt></p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/settings" style={path == "/settings" ? { color: getColor() } : { color: getColor2() }}>
+                            <p className="hovertext" data-hover="Setting"><AiFillSetting size="1.8rem" ></AiFillSetting></p>
                         </Link>
                     </li>
                 </ul>

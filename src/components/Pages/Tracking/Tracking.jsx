@@ -37,17 +37,17 @@ export default function () {
     tr = table.getElementsByTagName("tr");
 
     for (let i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1];
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
         }
+      }
     }
-}
+  }
 
   const [popup, setPop1] = useState(false);
   const handleClickopen = () => {
@@ -58,44 +58,42 @@ export default function () {
 
   const options = {
 
-      headers: {
-          'Content-Type': 'application/json',
-          "Accept": "application/json",
-          "Authorization": `Bearer ${jwt}`
-      },
+    headers: {
+      'Content-Type': 'application/json',
+      "Accept": "application/json",
+      "Authorization": `Bearer ${jwt}`
+    },
 
   };
-
+  const [Loading, setLoading] = useState([])
+  const [totalPages, setTotalPage] = useState(1);
   const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
   const [dataSource2, setDataSource2] = useState([])
   useEffect(() => {
-      // setLoading(true);
-      fetch(url2, options)
-          .then(respnse => respnse.json())
-          .then(data => {
-              setDataSource2(data.vehicles)
-              // console.log(dataSource2)
-              // setLoading(false);
+    setLoading(true);
+    fetch(url2, options)
+      .then(respnse => respnse.json())
+      .then(data => {
+        setDataSource2(data.vehicles)
+        setTotalPage(data.totalVehicles);
+        // console.log(dataSource2)
+        setLoading(false);
 
-          })
+      })
   }, [])
 
-  const [list, setList] = useState(dataSource2);
-  const [total, setTotal] = useState(dataSource2.length);
+  // const [list, setList] = useState([dataSource]);
+  // const [total, setTotal] = useState(dataSource.length);
   const [page, setCurentPage] = useState(1);
   const [postPerPage, setpostPerPage] = useState(5);
 
-  const onShowSizeChange = (current, pageSize) => {
-      setpostPerPage(pageSize);
-  }
-
-  useEffect(() => {
-      setTotal([dataSource2.length])
-  }, []);
-
-  const indexOfLastPage = page + postPerPage;
+  const indexOfLastPage = page * postPerPage;
   const indexOfFirstPage = indexOfLastPage - postPerPage;
   const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
+
+  const onShowSizeChange = (current, pageSize) => {
+    setpostPerPage(pageSize);
+  }
   const [color, setColor] = useState("green");
   const [margin, setMargin] = useState("");
 
@@ -105,7 +103,7 @@ export default function () {
 
       {/*---------------navigation---------------*/}
 
-      <Navigation></Navigation>
+      <Navigation path="/tracking"></Navigation>
 
       {/* --------------- tracking header --------------- */}
 
@@ -133,50 +131,50 @@ export default function () {
             <iframe width="100%" height="100%" id="gmap_canvas" src="https://maps.google.com/maps?q=ethio&t=&z=11&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
           </div>
           <div className='vehiclesOnMap'>
-              <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search . . ."></input>
-              <div className='outer_vehicle_tables' id='myTable'>
-                            <p>Total Vehicle</p>
+            <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search . . ."></input>
+            <div className='outer_vehicle_tables' id='myTable'>
+              <p>Total Vehicle</p>
 
-                            <table className="vehicle_table" id="myTable">
+              <table className="vehicle_table" id="myTable">
 
-                                <thead>
-                                    <tr>
-                                        {/* <th>Profile</th> */}
-                                        <th>Assigned Driver</th>
-                                        {/* <th>Vehicle ID</th> */}
-                                        {/* <th>Vehicle Type</th> */}
-                                        <th>Plate Number</th>
-                                        <th>Detail</th>
-                                        {/* <th>Tracking</th> */}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {currentPage.map(item => (
-                                        <tr className='active_row'>
+                <thead>
+                  <tr>
+                    {/* <th>Profile</th> */}
+                    <th>Assigned Driver</th>
+                    {/* <th>Vehicle ID</th> */}
+                    {/* <th>Vehicle Type</th> */}
+                    <th>Plate Number</th>
+                    <th>Detail</th>
+                    {/* <th>Tracking</th> */}
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentPage.map(item => (
+                    <tr className='active_row'>
 
-                                            {/* <td>{item.vehicleName}</td> */}
-                                            <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td>
-                                            {/* <td>{item.id}</td> */}
-                                            {/* <td>{item.vehicleCatagory.catagory}</td> */}
-                                            <td>{item.plateNumber}</td>
-                                            <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
-                                            {/* <td><Link to="/tracking"><button>Tracking</button></Link></td> */}
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className='page'>
-                            <Pagination
-                                onChange={(page) => setCurentPage(page)}
-                                pageSize={postPerPage}
-                                current={page}
-                                total={total}
-                                showQuickJumper
-                                showSizeChanger
-                                onShowSizeChange={onShowSizeChange}
-                            />
-                        </div>
+                      {/* <td>{item.vehicleName}</td> */}
+                      <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td>
+                      {/* <td>{item.id}</td> */}
+                      {/* <td>{item.vehicleCatagory.catagory}</td> */}
+                      <td>{item.plateNumber}</td>
+                      <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
+                      {/* <td><Link to="/tracking"><button>Tracking</button></Link></td> */}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className='page'>
+              <Pagination
+                onChange={(page) => setCurentPage(page)}
+                pageSize={postPerPage}
+                current={page}
+                total={totalPages}
+                // showQuickJumper
+                // showSizeChanger
+                // onShowSizeChange={onShowSizeChange}
+              />
+            </div>
+            </div>
 
           </div>
         </div>

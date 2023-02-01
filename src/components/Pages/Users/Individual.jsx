@@ -12,20 +12,11 @@ import { FaUserAlt } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import { FaWarehouse } from "react-icons/fa";
+import { ImUserTie } from "react-icons/im";
 import { BsSearch } from "react-icons/bs";
-import { AiFillFilter } from "react-icons/ai";
-import { AiFillCaretDown } from "react-icons/ai";
-import { GrFormNext } from "react-icons/gr";
-import { GrFormPrevious } from "react-icons/gr";
-import { HiMenuAlt1 } from "react-icons/hi";
 import './users.css';
 // import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { total } from './Data/Data';
-import { on_route } from './Data/Data';
-import { parked } from './Data/Data';
-import { maintenance } from './Data/Data';
-import Tables from './Tables';
 import { useState, useEffect } from 'react';
 import { SiTripdotcom } from "react-icons/si";
 import { SiGoogletagmanager } from "react-icons/si";
@@ -216,7 +207,8 @@ export default function () {
         <div className="containerr">
 
             {/*---------------navigation---------------*/}
-            <Navigation></Navigation>
+
+            <Navigation path="/users"></Navigation>
 
             {/* --------------- header --------------- */}
 
@@ -301,7 +293,7 @@ export default function () {
                                             {dataSource3.map(item => (
                                                 <tr className='active_row'>
                                                     {/* <td></td> */}
-                                                    <td>{item.firstName}</td>
+                                                    <td>{item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}`+" " +`${item.lastName}`}</td>
                                                     <td>{item.role}</td>
                                                     {/* <td>{item.companyName}</td> */}
                                                     <td>{item.totalVehicles}</td>

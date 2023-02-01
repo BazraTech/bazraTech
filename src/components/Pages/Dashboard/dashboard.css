@@ -14,7 +14,7 @@
 
 
 .dashboard_contents {
-   margin-top: 40px;
+   margin-top: 60px;
    display: grid;
    grid-template-columns: 100px 100px 100px;
    justify-content: space-between;
@@ -48,6 +48,18 @@
 
 .vehicle:hover {
    transform: scale(1.09);
+}
+
+.vehicleTotal{
+   display: grid;
+   grid-template-columns: 60px 20px;
+   justify-content: center;
+}
+.vehicleTotal p{
+   font-size: 25px;
+   font-weight: 700;
+   color: #006666;
+   margin-top: 5px;
 }
 
 /* ----------------- Comunication ----------------- */

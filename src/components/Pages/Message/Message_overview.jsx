@@ -17,6 +17,35 @@ import CKEditor - to make a custom message when the popup appear (bold, italic)
 -----------*/}
 export default function () {
 
+    const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
+
+    const options = {
+
+        headers: {
+            'Content-Type': 'application/json',
+            "Accept": "application/json",
+            "Authorization": `Bearer ${jwt}`
+        },
+
+    };
+
+    const [totalPages, setTotalPage] = useState(1);
+    const [dataSource, setDataSource] = useState([])
+    const [Loading, setLoading] = useState([])
+    const url = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners/";
+    useEffect(() => {
+        setLoading(true)
+        fetch(url, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource(data.vehicleOwnerINF)
+                setTotalPage(data.totalPages)
+
+                console.log(dataSource)
+                setLoading(false)
+            })
+    }, [])
+
 
 
     {/*---------------Initializing variable ----------------*/ }
@@ -34,12 +63,12 @@ export default function () {
     {/*---------------Selecting item from the table ----------------*/ }
     const handleCheck = (id) => {
         if (id == 'selectall') {
-            list.map(item => !allChecked ? item.checked = true : item.checked = false);
+            dataSource.map(item => !allChecked ? item.checked = true : item.checked = false);
             setAllChecked(!allChecked);
         } else {
-            list.map(item => item.id == id ? item.checked = !item.checked : null);
-            setList([...list]);
-            list.filter(item => item.checked).length == list.length ? setAllChecked(true) : setAllChecked(false)
+            dataSource.map(item => item.id == id ? item.checked = !item.checked : null);
+            setList([...dataSource]);
+            dataSource.filter(item => item.checked).length == dataSource.length ? setAllChecked(true) : setAllChecked(false)
         }
     }
 
@@ -72,8 +101,8 @@ export default function () {
 
             {/*---------------navigation---------------*/}
 
-           <Navigation></Navigation>
-                 
+            <Navigation path="/message_overview"></Navigation>
+
 
             {/* ---------------header--------------- */}
             <Header title="Message"></Header>
@@ -89,11 +118,10 @@ export default function () {
                     </p>
                 </div>
 
-                <div className='message-table'>
+                <div className='outer_vehicle_tables' id='myTable'>
+                    <p>Message</p>
 
-                    {/*-------------- ClassName for the whole-table ---------------*/}
-
-                    <table class="table">
+                    <table className="vehicle_table" id="myTable">
                         <thead>
                             <tr>
                                 <th>Select All
@@ -112,7 +140,7 @@ export default function () {
                         <tbody>
                             {
 
-                                list.map(item => {
+                                dataSource.map(item => {
                                     return <tr>
 
                                         <td><Checkbox
@@ -120,9 +148,9 @@ export default function () {
                                             checked={item.checked}
                                             handleCheck={handleCheck}
                                         /></td>
-                                        <td>{item.user}</td>
-                                        <td>{item.ownerName}</td>
-                                        <td>{item.userCatagory}</td>
+                                        <td>{item.firstName}</td>
+                                        <td>{item.firstName}</td>
+                                        <td>{item.role}</td>
 
                                     </tr>
                                 })

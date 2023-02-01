@@ -38,6 +38,12 @@ import Parked from './components/Pages/Total_number_of_vehicle/Parked';
 import AccidentHistory from './components/Pages/alert/AccidentHistory';
 import DriverHistory from './components/Pages/alert/DriverHistory';
 import OffRoadHistory from './components/Pages/alert/OffRoadHistory';
+import Total_Drivers from './components/Pages/Drivers/Total_Drivers';
+import Manage_profile from './components/Pages/Manage_Profile/Manage_profile';
+import Driver_OnRoute from './components/Pages/Drivers/Driver_OnRoute';
+import Assigned_Driver from './components/Pages/Drivers/Assigned_Driver';
+import UnAssigned_Driver from './components/Pages/Drivers/UnAssigned_Driver';
+import Permit from './components/Pages/Drivers/Permit';
 
 class App extends Component{
   render(){
@@ -63,7 +69,7 @@ class App extends Component{
         <Route path="/report_detail/:id/:platenumber" element={<Report_detail />}></Route>
         <Route path="/popup" element={<PopUp />}></Route>
         <Route path="/Add_vehicle" element={<Add_vehicle />}></Route>
-        <Route path="/set_trip" element={<Set_Trip />}></Route>
+        <Route path="/set_trip/:plateNumber/:driver" element={<Set_Trip />}></Route>
         <Route path="/trip_history" element={<Trip_history />}></Route> 
         <Route path="/avialable_trip" element={<Avialable_trip />}></Route>
         <Route path="/on_route" element={<On_route />}></Route>
@@ -80,6 +86,12 @@ class App extends Component{
         <Route path="/AccidentHistory" element={<AccidentHistory />}></Route> 
         <Route path="/DriverHistory" element={<DriverHistory />}></Route> 
         <Route path="/OffRoadHistory" element={<OffRoadHistory />}></Route> 
+        <Route path="/Total_Drivers" element={<Total_Drivers />}></Route> 
+        <Route path="/Manage_profile" element={<Manage_profile />}></Route>
+        <Route path="/Driver_OnRoute" element={<Driver_OnRoute />}></Route> 
+        <Route path="/Assigned_Driver" element={<Assigned_Driver />}></Route> 
+        <Route path="/UnAssigned_Driver" element={<UnAssigned_Driver />}></Route> 
+        <Route path="/Permit" element={<Permit />}></Route> 
       </Routes>
 
     </div>
