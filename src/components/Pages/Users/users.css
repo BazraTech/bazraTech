@@ -1,0 +1,521 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+/* ---------------navigation--------------- */
+.company_navigation {
+  position: fixed;
+  width: 100px;
+  height: 100%;
+  transition: 0.5s;
+  background-color: rgb(54, 54, 54);
+  padding: 2px 28px;
+  text-decoration: none;
+  margin-top: 0px;
+  z-index: 1;
+}
+
+.company_navigation ul li {
+  text-decoration: none;
+  margin-top: 10px;
+  transition: 0.5s;
+  list-style: none;
+  border-bottom: solid 2px rgb(109, 109, 109);
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 7px;
+  padding-left: 5px;
+}
+
+.company_navigation ul li p {
+  transition: 0.5s;
+}
+
+.company_navigation ul li p:hover {
+  transform: scale(1.2);
+  transition: 0.5s;
+}
+
+/* ---------------header--------------- */
+.company_header {
+  position: absolute;
+  width: calc(100% - 100px);
+  left: 100px;
+  min-height: 1vh;
+  box-shadow: 0 5px 7px -4px rgba(0, 0, 0, 0.4);
+  padding: 20px 0px 0 30px;
+  justify-content: space-between;
+  z-index: 1;
+  display: flex;
+}
+
+.validate_text {
+  color: red;
+}
+
+.company_header h3 {
+  text-align: center;
+  color: rgb(36, 114, 43);
+  padding-left: 500px;
+  padding-top: 4px;
+}
+
+.company_header h3 input {
+  text-align: left;
+  padding: 5px 10px 5px 20px;
+  border: none;
+  border-bottom: solid 1px rgb(0, 0, 0);
+  margin-right: 100px;
+}
+
+.company_header h2 {
+  text-align: left;
+}
+
+.company_header p {
+  padding-right: 30px;
+  padding-bottom: 10px;
+  transition: 0.5s;
+}
+
+.company_header p:hover {
+  transform: scale(1.2);
+}
+
+
+/* --------------- Forms --------------- */
+
+.company_individual_header {
+  display: grid;
+  grid-template-columns: 40% 40%;
+  justify-content: space-around;
+  column-gap: 30%;
+  /* row-gap: 30%; */
+  margin-left: 10%;
+  text-decoration: none;
+  /* background-color: red; */ 
+  color: var(--white);
+}
+
+.allDiv {
+  background-color: rgb(255, 255, 255);
+  width: 105%;
+  padding: 5%;
+  padding-right: 10%;
+  border-radius: 10px 0px 10px 10px;
+  z-index: 1;
+}
+
+.company_individual_header p h1 {
+  color: rgb(0, 0, 0);
+  display: inline-block;
+  padding: 1%;
+  padding-left: 8%;
+  padding-right: 8%;
+  border-radius: 8px;
+  border: none;
+}
+
+.company_individual_header .nmn {
+  background-color: rgb(255, 255, 255);
+  color: rgb(20, 132, 0);
+  padding-bottom: 25px;
+  margin-bottom: -50px;
+  padding-top: 30px;
+  border: 8px solid rgb(238, 238, 238);
+  z-index: -1;
+  /* text-decoration: underline; */
+  /* border-radius: 10px; */
+  text-transform: none;
+}
+ 
+.company_individual_header .vehicleDetail {
+  background-color: rgb(255, 255, 255);
+  color: rgb(20, 132, 0);
+  text-align: center;
+  border: 8px solid rgb(238, 238, 238);
+  border-radius: 17px 17px 0px 17px;
+  padding: 4%;
+  margin-top: 20px;
+  margin-right: -3.5%;
+  display: grid;
+  row-gap: 10px;
+}
+
+.register {
+  position: relative;
+  width: calc(100% - 100px);
+  left: 100px;
+  min-height: 88vh;
+  background-color: rgb(238, 238, 238);
+  color: var(--black1);
+  top: 75px;
+  padding: 10%;
+  padding-left: 6%;
+  padding-top: 2px;
+  padding-bottom: 3%;
+
+}
+
+
+/* -------------------- company_information -------------------- */
+.company_information1 {
+  display: grid;
+  grid-template-columns: 48% 48%;
+  gap: 10%;
+  text-transform: uppercase;
+} 
+
+
+h1 {
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
+
+.company_information1 input {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  outline: none;
+  border-radius: 6px;
+  padding: 0 15px;
+  background-color: rgb(242, 242, 242);
+  border: 1px solid rgb(202, 202, 202);
+}
+
+.company_information1 input:focus {
+  box-shadow: 0px 0px 2px 1px rgba(21, 113, 146, 0.4);
+  border: 1px solid rgba(21, 113, 146, 0.4);
+
+}
+
+.company_information1 select {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  outline: none;
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 6px;
+  padding: 0 15px;
+  background-color: rgb(242, 242, 242);
+}
+
+/* -------------------- company_Address -------------------- */
+.company_Address1 {
+  display: grid;
+  grid-template-columns: 32% 32% 32%;
+  gap: 5%;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin-top: 50px;
+  color: rgb(55, 55, 55);
+  /* text-decoration: underline; */
+  text-transform: uppercase;
+  font-size: 22px;
+}
+
+.company_Address1 input {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  outline: none;
+  background-color: rgb(242, 242, 242);
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 6px;
+  padding: 0 15px;
+}
+
+.company_Address1 select {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  border: 1px solid rgb(202, 202, 202);
+  border: 1px solid rgb(129, 129, 129);
+  border-radius: 6px;
+  padding: 0 15px;
+  background-color: rgb(242, 242, 242);
+}
+
+.company_Address1 input:focus {
+  box-shadow: 0px 0px 2px 1px rgba(21, 113, 146, 0.4);
+  border: 1px solid rgba(21, 113, 146, 0.4);
+
+}
+
+/* -------------------- owner_information -------------------- */
+.owner_information1 {
+  display: grid;
+  grid-template-columns: 48% 48%;
+  gap: 10%;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin-top: 50px;
+}
+
+.owner_information1 input {
+  position: relative;
+  height: 40px;
+  width: 100%;
+ outline: none;
+  background-color: rgb(242, 242, 242);
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 6px;
+  padding: 0 15px;
+}
+ 
+.owner_information1 select {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  outline: none;
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 6px;
+  padding: 0 15px; 
+  background-color: rgb(242, 242, 242);
+}
+
+.owner_information1 input:focus {
+  box-shadow: 0px 0px 2px 1px rgba(21, 113, 146, 0.4);
+  border: 1px solid rgba(21, 113, 146, 0.4);
+
+}
+
+
+/* -------------------- additional_information -------------------- */
+.additional_information1 {
+  display: grid;
+  grid-template-columns: 48% 48%;
+  gap: 10%;
+  text-transform: uppercase;
+}
+
+.Third_div h1 {
+  margin-top: 80px;
+}
+
+h1 {
+  margin-top: 50px;
+}
+
+.additional_information1 input {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  outline: none;
+  background-color: rgb(242, 242, 242);
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 6px;
+  padding: 0 15px;
+}
+
+.additional_information1 select {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  outline: none;
+  background-color: rgb(242, 242, 242);
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 6px;
+  padding: 0 15px;
+}
+
+/* -------------------- vehicle_information -------------------- */
+.vehicle_information1 {
+  display: grid;
+  grid-template-columns: 32% 32% 32%;
+  gap: 5%;
+  row-gap: 10%;
+  text-transform: uppercase;
+
+}
+
+.vehicle_information {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  row-gap: 15%;
+  text-transform: uppercase;
+}
+
+.vehicle_information input {
+  position: relative;
+  height: 40px;
+  width: 80%;
+  outline: none;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 6px;
+  padding: 0 15px;
+}
+
+.vehicle_information select {
+  position: relative;
+  height: 40px;
+  width: 80%;
+  outline: none;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 6px;
+  padding: 0 15px;
+}
+
+.set_trip {
+  margin-left: 10%;
+}
+
+h1 {
+  margin-top: 50px;
+}
+
+.registerd_vehicle {
+  display: flex;
+  row-gap: 100px;
+  justify-content: space-between;
+}
+
+.Vehicle_number {
+  display: flex;
+
+}
+
+.Vehicle_number .number {
+  background-color: rgb(66, 66, 66);
+  margin-left: 10px;
+  border-radius: 8px;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: #fff;
+}
+
+.vehicle_information1 input {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  outline: none;
+  background-color: rgb(242, 242, 242);
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 6px;
+  padding: 0 15px;
+}
+
+.plate_number {
+  display: grid;
+  grid-template-columns: 32% 22% 36%;
+  gap: 5%;
+
+}
+
+.vehicle_information1 select {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  outline: none;
+  background-color: rgb(242, 242, 242);
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 6px;
+  padding: 0 15px; 
+}
+
+.vehicle_information1 input:focus {
+  box-shadow: 0px 0px 2px 1px rgba(21, 113, 146, 0.4);
+  border: 1px solid rgba(21, 113, 146, 0.4);
+
+}
+
+
+/* -------------------- Buttons -------------------- */
+.company_button {
+  margin-top: 8%;
+  display: flex;
+  justify-content: center;
+}
+
+.add {
+  padding: 1%;
+  padding-left: 10%;
+  padding-right: 10%;
+  text-align: center;
+  background-color: #272727;
+  border: none;
+  border-radius: 8px;
+  color: var(--white);
+}
+.loading{
+    margin-left: 45%;
+    margin-top: 100px;
+    padding: 10px;
+    color: green;
+}
+
+
+@media screen and (max-width: 1000px) {
+  .company_Address1 {
+    display: grid;
+    grid-template-columns: 48% 48%;
+    gap: 10%;
+  }
+
+  .vehicle_information1 {
+    display: grid;
+    grid-template-columns: 48% 48%;
+    gap: 10%;
+  }
+
+}
+
+@media screen and (max-width: 800px) {
+  .company_information1 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .company_Address1 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .owner_information1 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .additional_information1 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .vehicle_information1 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+  }
+
+  .menu_controler {
+    display: contents;
+  }
+
+  .company_header .header_title {
+    display: none;
+  }
+
+  .company_individual_header {
+    display: grid;
+    grid-template-columns: 50%;
+    margin-left: 1%;
+  }
+
+  .company_individual_header .nmn {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    padding-bottom: 10px;
+    margin-bottom: -80px;
+    padding-top: 20px;
+  }
+
+}
