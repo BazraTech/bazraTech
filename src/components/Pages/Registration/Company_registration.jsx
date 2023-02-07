@@ -95,7 +95,7 @@ export default function Company_registration() {
 
         const options = {
             method: "POST",
-            headers: {
+            headers: { 
                 'Content-Type': 'application/json',
                 "Accept": "application/json",
                 "Authorization": `Bearer ${jwt}`
@@ -104,8 +104,8 @@ export default function Company_registration() {
         };
         const url = "http://198.199.67.201:9090/Api/Company/CreateCompany";
         try {
-            const response = await fetch(url, options); 
-            const result = await response.json(); 
+            const response = await fetch(url, options);
+            const result = await response.json();
             console.log(result);
             localStorage.setItem("message", JSON.stringify(result["message"]));
             const mess = localStorage.getItem("message");
@@ -116,8 +116,29 @@ export default function Company_registration() {
                     button: true,
                     // timer: 60000,
                 });
-                // companyName = ''
- 
+                setCompanyName("");
+                setCompantType("");
+                setCompanySector("");
+                setRegion("");
+                setCity("");
+                setSubCity("");
+                setWoreda("");
+                setSpecficLocation("");
+                setHouseNumber("");
+                setPhonenumber("");
+                setFirstName("");
+                setLastname("");
+                setPhoneNumber2("");
+                setEmail("");
+                setNotificationPreference("");
+                setServiceNeeded("");
+                setvehicleName("");
+                setVehicleCategory("");
+                setVehicleCondition("");
+                setPlateNumber("");
+                setmanufactureDate("");
+                setdeviceId("");
+
             } else {
                 console.log("failed");
                 swal(`Failed To Register ${mess}`, "Error", "error");
@@ -225,16 +246,6 @@ export default function Company_registration() {
     }, [])
 
 
-
-
-    {/*------------------ Validation for company registration ----------------- */ }
-
-    {/*---------------- handle events ----------------- */ }
-    // const { register, handleSubmit, watch, formState: { errors } } = useForm();
-
-    {/*---------------- handle submit values ----------------- */ }
-    // const onSubmit = data => console.log(data);
- 
     return (
         <div className="company_container">
 
@@ -269,7 +280,7 @@ export default function Company_registration() {
                                     <p>Company Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input
                                         name='companyName'
-                                        // value={companyName}
+                                        value={companyName}
                                         type="text"
                                         {...register("organizationName", { required: true })}
                                         placeholder='Enter organization name'
@@ -281,7 +292,7 @@ export default function Company_registration() {
                                 <div>
                                     <p>Company Type <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select
-                                        // value={companyType}
+                                        value={companyType}
                                         name='serviceRequired'
                                         {...register("companyType", { required: '*please choose company type' })}
                                         onChange={(e) => setCompantType(e.target.value)} >
@@ -302,7 +313,7 @@ export default function Company_registration() {
                                     {/* <h5>{companySector}</h5> */}
                                     <select
                                         {...register("companySector", { required: '*Company sector is required' })} name='companySector'
-                                        // value={companySector} 
+                                        value={companySector} 
                                         onChange={(e) => setCompanySector(e.target.value)}>
                                         <option selected disabled value="">Please Select Company Sector Type</option>
                                         {
@@ -324,8 +335,8 @@ export default function Company_registration() {
                             <div className='company_Address1'>
                                 <div>
                                     <p>Region <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='region' 
-                                    // value={region}
+                                    <input name='region'
+                                        value={region}
                                         {...register("region", { required: '*please fill your Region' })}
                                         placeholder="Please enter your Region"
                                         onChange={(e) => setRegion(e.target.value)}>
@@ -335,8 +346,8 @@ export default function Company_registration() {
 
                                 <div>
                                     <p>Sub City <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='subCity' 
-                                    // value={subCity}
+                                    <input name='subCity'
+                                        value={subCity}
                                         {...register("subCity", { required: '*please fill your Sub-city' })}
                                         placeholder="Please enter your Sub-city"
                                         onChange={(e) => setSubCity(e.target.value)}>
@@ -346,8 +357,8 @@ export default function Company_registration() {
 
                                 <div>
                                     <p>Specfic Location <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='specificLocation' 
-                                    // value={specificLocation}
+                                    <input name='specificLocation'
+                                        value={specificLocation}
                                         {...register("specificLocation", { required: '*please fill your Specfic Location' })}
                                         placeholder="Please enter your Specfic Location"
                                         onChange={(e) => setSpecficLocation(e.target.value)}>
@@ -357,8 +368,8 @@ export default function Company_registration() {
 
                                 <div>
                                     <p>City <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='city' 
-                                    // value={city}
+                                    <input name='city'
+                                        value={city}
                                         {...register("city", { required: '*please fill your City' })}
                                         placeholder="Please enter your City"
                                         onChange={(e) => setCity(e.target.value)}>
@@ -368,8 +379,8 @@ export default function Company_registration() {
 
                                 <div>
                                     <p>Woreda <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='woreda' type="text" 
-                                    // value={woreda}
+                                    <input name='woreda' type="text"
+                                        value={woreda}
                                         {...register("woreda", {
                                             required: "*please fill your Woreda",
                                             pattern: { value: /^[0-9]+[0-9]*$/, message: 'please enter a vaild number' }
@@ -382,9 +393,9 @@ export default function Company_registration() {
 
                                 <div>
                                     <p>House Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='houseNumber' type="text" 
-                                    // value={houseNumber}
-                                        {...register("houseNumber", { 
+                                    <input name='houseNumber' type="text"
+                                        value={houseNumber}
+                                        {...register("houseNumber", {
                                             required: "*please fill your house number",
                                             pattern: { value: /^[0-9]+[0-9]*$/, message: 'please enter a vaild number' }
                                         })}
@@ -396,8 +407,8 @@ export default function Company_registration() {
 
                                 <div>
                                     <p>Phone Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='phoneNumber' type="text" 
-                                    // value={phoneNumber}
+                                    <input name='phoneNumber' type="text"
+                                        value={phoneNumber}
                                         {...register("phoneNumber", { required: "*please fill your company number" })}
                                         placeholder='Enter Phone Number'
                                         onChange={(e) => setPhonenumber(e.target.value)}>
@@ -414,8 +425,8 @@ export default function Company_registration() {
                             <div className='owner_information1'>
                                 <div>
                                     <p>First Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='firstName' type="text" 
-                                    // value={firstName}
+                                    <input name='firstName' type="text"
+                                        value={firstName}
                                         {...register("firstName", { required: true })}
                                         placeholder='Enter Your first name'
                                         onChange={(e) => setFirstName(e.target.value)}>
@@ -424,8 +435,8 @@ export default function Company_registration() {
                                 </div>
                                 <div>
                                     <p>Last Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='lastName' type="text" 
-                                    // value={lastName}
+                                    <input name='lastName' type="text"
+                                        value={lastName}
                                         {...register("lastName", { required: true })}
                                         placeholder='Enter Your last name'
                                         onChange={(e) => setLastname(e.target.value)}>
@@ -434,8 +445,8 @@ export default function Company_registration() {
                                 </div>
                                 <div>
                                     <p>Phone Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='ownerPhoneNumber' type="text" 
-                                    // value={ownerPhoneNumber}
+                                    <input name='ownerPhoneNumber' type="text"
+                                        value={ownerPhoneNumber}
                                         {...register("ownerPhoneNumber", { required: "*please fill your mobile nuber" })}
                                         placeholder='Enter Phone Number'
                                         onChange={(e) => setPhoneNumber2(e.target.value)}>
@@ -444,8 +455,8 @@ export default function Company_registration() {
                                 </div>
                                 <div>
                                     <p>Email <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='email' type="email" 
-                                    // value={email}
+                                    <input name='email' type="email"
+                                        value={email}
                                         {...register("email", {
                                             required: "*please enter your email address",
                                             pattern: { value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/, message: 'Please fill a valid Email' }
@@ -465,7 +476,7 @@ export default function Company_registration() {
                                     <p>Notification Pereference <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select
                                         name='notificationmedia'
-                                        // value={notificationmedia}
+                                        value={notificationmedia}
                                         {...register("notificationmedia", { required: '*please choose your notification preference' })}
                                         onChange={(e) => setNotificationPreference(e.target.value)}>
                                         <option selected disabled value="">Please Notification preference</option>
@@ -481,7 +492,7 @@ export default function Company_registration() {
                                 <div>
                                     <p>Service Neded <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select
-                                        // value={serviceRequired}
+                                        value={serviceRequired}
                                         name='serviceRequired'
                                         {...register("serviceRequired", { required: '*please choose service needed' })}
                                         onChange={(e) => setServiceNeeded(e.target.value)} >
@@ -507,7 +518,7 @@ export default function Company_registration() {
                                     <select
                                         {...register("catagory", { required: '*Vehicle catagoty  is required' })}
                                         name="catagory"
-                                        // value={catagory}
+                                        value={catagory}
                                         onChange={(e) => setVehicleCategory(e.target.value)} >
                                         <option selected disabled value="">Select Vecicle Catagory</option>
                                         {
@@ -521,8 +532,8 @@ export default function Company_registration() {
 
                                 <div>
                                     <p>Vehicle Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='vehicleName' type="text" 
-                                    // value={vehicleName}
+                                    <input name='vehicleName' type="text"
+                                        value={vehicleName}
                                         {...register("vehicleName", { required: true })}
                                         placeholder='Enter Vehicle Name'
                                         onChange={(e) => setvehicleName(e.target.value)} ></input>
@@ -532,7 +543,7 @@ export default function Company_registration() {
                                 <div>
                                     <p>Vehicle Condition <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select className='select' name='conditionName'
-                                        // value={conditionName}
+                                        value={conditionName}
                                         {...register("conditionName", { required: '*Vecicle Condition is required' })}
                                         onChange={(e) => setVehicleCondition(e.target.value)} >
                                         <option value="">Select Vecicle Condition</option>
@@ -549,7 +560,7 @@ export default function Company_registration() {
                                     <p>Plate Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <div className='plate_numbera'>
                                         <input placeholder='Please Enter Plate Number' name='conditionName'
-                                            // value={plateNumber} 
+                                            value={plateNumber} 
                                             {...register("plateNumber", { required: '*please choose service needed' })}
                                             onChange={(e) => setPlateNumber(e.target.value)} >
                                         </input>
@@ -561,13 +572,13 @@ export default function Company_registration() {
                                 <div>
                                     <p>Manufacture Date <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input name='manufacture_date' type="date"
-                                        // value={manufactureDate}
+                                        value={manufactureDate}
                                         {...register("manufactureDate", { required: '*Manufacture date is required' })}
                                         placeholder='Enter Manufactureing Date'
                                         onChange={(e) => setmanufactureDate(e.target.value)} ></input>
                                     {manufactureDate <= 0 && errors.manufactureDate && <span className='validate_text'>{errors.manufactureDate.message}</span>}
                                 </div>
-                        
+
                                 <div>
                                     <p>Device ID <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input name='deviceID' type="text"
@@ -576,24 +587,7 @@ export default function Company_registration() {
                                         onChange={(e) => setdeviceId(e.target.value)} ></input>
                                     {deviceID <= 0 && errors.deviceID && <span className='validate_text'>{errors.deviceID.message}</span>}
                                 </div>
-
-                                {/* <div>
-                                    <p>Deriver Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='deviceID' type="text"
-                                        {...register("deviceID", { required: '*Device ID is required' })}
-                                        placeholder='Enter Device ID'
-                                        onChange={(e) => setdeviceId(e.target.value)} ></input>
-                                    {deviceID <= 0 && errors.deviceID && <span className='validate_text'>{errors.deviceID.message}</span>}
-                                </div>
-                                <div>
-                                    <p>Deriver Licence <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='deviceID' type="text"
-                                        {...register("deviceID", { required: '*Device ID is required' })}
-                                        placeholder='Enter Device ID'
-                                        onChange={(e) => setdeviceId(e.target.value)} ></input>
-                                    {deviceID <= 0 && errors.deviceID && <span className='validate_text'>{errors.deviceID.message}</span>}
-                                </div> */}
-                               
+                                
                             </div>
                         </div>
                         <div className='company_button'>
@@ -606,7 +600,6 @@ export default function Company_registration() {
                 </form>
 
             </section>
-
 
             {/* ---------------end Registaration--------------- */}
         </div>

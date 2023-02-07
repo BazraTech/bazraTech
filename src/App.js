@@ -44,6 +44,7 @@ import Driver_OnRoute from './components/Pages/Drivers/Driver_OnRoute';
 import Assigned_Driver from './components/Pages/Drivers/Assigned_Driver';
 import UnAssigned_Driver from './components/Pages/Drivers/UnAssigned_Driver';
 import Permit from './components/Pages/Drivers/Permit';
+import SignIn2 from './components/Pages/Sign in page/SignIn2';
 
 class App extends Component{
   render(){
@@ -51,7 +52,7 @@ class App extends Component{
     <div className="App">
       
       <Routes>
-        <Route path='/' element={<SignIn />}></Route>
+        <Route path='/' element={<SignIn2 />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/users" element={<Users />}></Route>
         <Route path="/vehicle_detail/:id" element={<Vehicle_detail></Vehicle_detail>}></Route> 

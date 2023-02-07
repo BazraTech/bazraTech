@@ -17,6 +17,7 @@ import { useForm } from 'react-hook-form';
 import { Link, NavLink } from 'react-router-dom';
 import { BiTrip } from "react-icons/bi";
 import { useState, useEffect } from 'react';
+import Navigation from '../Navigation/Navigation';
 
 import swal from "sweetalert";
 import Header from '../../Header/Header';
@@ -133,8 +134,26 @@ export default function Individual_registration() {
                     button: true,
                     // timer: 60000,
                 });
-                // companyName = ''
- 
+                setRegion("");
+                setCity("");
+                setSubCity("");
+                setWoreda("");
+                setSpecficLocation("");
+                setHouseNumber("");
+                setPhonenumber("");
+                setFirstName("");
+                setLastname("");
+                setPhoneNumber2("");
+                setEmail("");
+                setNotificationPreference("");
+                setServiceNeeded("");
+                setvehicleName("");
+                setVehicleCategory("");
+                setVehicleCondition("");
+                setPlateNumber("");
+                setmanufactureDate("");
+                setdeviceId("");
+
             } else {
                 console.log("failed");
                 swal(`Failed To Register ${mess}`, "Error", "error");
@@ -193,7 +212,7 @@ export default function Individual_registration() {
     }, [])
 
     const urlFour = "http://198.199.67.201:9090/Api/Admin/All/VehicleCondition";
-    const [dataSource4, setDataSource4] = useState([]) 
+    const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         fetch(urlFour, options)
             .then(respnse => respnse.json())
@@ -260,7 +279,7 @@ export default function Individual_registration() {
                         <div className='first_div'>
                             <h1>Owuner Information</h1>
                             <div className='company_Address1'>
-                            <div>
+                                <div>
                                     <p>First Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input name='firstName' type="text" value={firstName}
                                         {...register("firstName", { required: true })}
@@ -369,8 +388,8 @@ export default function Individual_registration() {
 
                                 <div>
                                     <p>Phone Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='phoneNumber' type="text" 
-                                    // value={phoneNumber}
+                                    <input name='phoneNumber' type="text"
+                                        value={phoneNumber}
                                         {...register("phoneNumber", { required: "*please fill your company number" })}
                                         placeholder='Enter Phone Number'
                                         onChange={(e) => setPhonenumber(e.target.value)}>
@@ -382,7 +401,6 @@ export default function Individual_registration() {
                         </div>
 
                         {/* --------------- Owner information- -------------- */}
-
 
                         <div className='Third_div'>
                             <h1>Additional Information</h1>
@@ -408,7 +426,7 @@ export default function Individual_registration() {
                                     <p>Service Neded <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select
                                         // value={serviceRequired}
-                                        name='serviceRequired'  value={serviceRequired}
+                                        name='serviceRequired' value={serviceRequired}
                                         {...register("serviceRequired", { required: '*please choose service needed' })}
                                         onChange={(e) => setServiceNeeded(e.target.value)} >
                                         <option selected disabled value="">Select Service Needed</option>

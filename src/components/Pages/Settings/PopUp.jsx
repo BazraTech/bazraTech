@@ -21,6 +21,9 @@ export default function PopUp(props) {
     } = useForm();
     const onSubmit = (data) => {
         console.log(data);
+        if (title === 'Create_Role') {
+            Create_Role();
+        }
         if (title === 'Add_Notification') {
             Add_Notification();
         }
@@ -48,9 +51,46 @@ export default function PopUp(props) {
     const companysector = notifications; 
     const companyType = notifications;
     const serviceNeeded = notifications;
-    // const handleClick = (e) => {
-    //     signupxx();
-    // };
+    const rolename = notifications;
+    
+    
+    async function Create_Role() {
+        let item =
+        {
+            rolename,
+        };
+        const options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
+            body: JSON.stringify(item),
+        };
+        const url = "http://198.199.67.201:9090/Api/Admin/CreateRole";
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            console.log(result);
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            console.log(mess);
+            if (response.ok) {
+                console.log("Signup successful");
+                swal("Successful",  `${mess}`, "success", {
+                    buttons: false,
+                    timer: 2000,
+                });
+                setPop(false);
+            } else {
+                console.log("failed");
+                swal(`Failed To Register ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     async function Add_company_sector() {
         let item =

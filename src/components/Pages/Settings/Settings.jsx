@@ -18,7 +18,7 @@ export default function () {
     const [active, setTitle] = useState("");
     const handleClickEdit = () => {
         setPop(!popup);
-    } 
+    }
     const closePopup = () => {
         setPop(false);
     }
@@ -52,7 +52,7 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource2(data.notificationMedias)
-                console.log(dataSource2)
+                // console.log(dataSource2)
                 setLoading(false)
             })
     }, [])
@@ -64,7 +64,7 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource3(data.vehicleCatagories)
-                console.log(dataSource3)
+                // console.log(dataSource3)
                 setLoading(false)
             })
     }, [])
@@ -76,7 +76,7 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource4(data.vehicleConditions)
-                console.log(dataSource4)
+                // console.log(dataSource4)
                 setLoading(false)
             })
     }, [])
@@ -87,7 +87,7 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource(data.companySectors)
-                console.log(dataSource)
+                // console.log(dataSource)
             })
     }, [])
     const url5 = "http://198.199.67.201:9090/Api/Admin/All/CompanyType/";
@@ -97,7 +97,7 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource5(data.companyTypes)
-                console.log(dataSource)
+                // console.log(dataSource)
             })
     }, [])
     const url6 = "http://198.199.67.201:9090/Api/Admin/All/Services";
@@ -107,9 +107,23 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource6(data.service)
-                console.log(dataSource4)
+                // console.log(dataSource4)
             })
     }, [])
+
+    const url7 = "http://198.199.67.201:9090/Api/Admin/All";
+    const [dataSource7, setDataSource7] = useState([])
+    useEffect(() => {
+        setLoading(true)
+        fetch(url7, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource7(data.roles)
+                // console.log(dataSource4)
+                setLoading(false)
+            })
+    }, [])
+
     const [Loading, setLoading] = useState([])
     let [color, setColor] = useState("green");
     let [margin, setMargin] = useState("");
@@ -121,6 +135,55 @@ export default function () {
             {/* --------------- Settings header --------------- */}
             <Header title="Settings"></Header>
             <div className='alert_main'>
+                <div className='outer_setting'>
+                    <div className='setting_header'>Roles</div>
+                    <PopUp title="Create_Role" />
+                    {Loading ?
+                        <p className='loading'><SyncLoader
+                            color={color}
+                            Left={margin}
+                            loading={Loading}
+                            size={10}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                        />
+                        </p>
+                        : <div>
+                            <table class="vehicle_table" id="myTable">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Role</th>
+                                        <th>Created Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {dataSource7.map(item => {
+                                        return <tr className='active_row'>
+
+                                            <td>{item.id}</td>
+                                            <td>{item.rolename}</td>
+                                            <td>{item.createdDate}</td>
+                                            <td>
+                                                <p className='notification_actions'>
+                                                    <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
+                                                        onClick={() => {
+                                                            handleClickEdit()
+                                                            setTitle("Edit Notification Preference")
+                                                            setVehicleValue(item.rolename)
+                                                        }}></FaEdit>
+                                                    <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+
                 <div className='outer_setting'>
                     <div className='setting_header'>Notification Preference</div>
                     <PopUp title="Add_Notification" />
@@ -144,7 +207,7 @@ export default function () {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {dataSource2.map(item => { 
+                                    {dataSource2.map(item => {
                                         return <tr className='active_row'>
 
                                             <td>{item.id}</td>
@@ -171,7 +234,7 @@ export default function () {
 
                 <div className='outer_setting'>
                     <div className='setting_header'>Vehicle Condition</div>
-                    <PopUp title="Add_Vehicle_Condition" nandu={edit}/>
+                    <PopUp title="Add_Vehicle_Condition" nandu={edit} />
                     <div>
                         {Loading ?
                             <p className='loading'><SyncLoader
@@ -509,7 +572,7 @@ export default function () {
                                     <div onClick={closePopup} className='close'>X</div>
                                     <div className='fgf'>
                                         <h2 className='mnm'>{active}</h2>
-                                        <input value={edit}  onChange={(e) => setEdit(e.target.value)}></input>
+                                        <input value={edit} onChange={(e) => setEdit(e.target.value)}></input>
                                         <div className='send_button'>
                                             <button className='popup_add'>Save</button>
                                             <button onClick={closePopup} className='popup_cancle'>Cancle</button>
@@ -519,7 +582,7 @@ export default function () {
                                 </div>
                             </div>
                         </div> : ""}
-                </div> 
+                </div>
 
                 <div>
                     {popup1 ?
@@ -535,7 +598,7 @@ export default function () {
                                         <h2 className='mnmn'>Are You Sure You want to delete this Item</h2>
                                         {/* <input placeholder={edit}></input> */}
                                         <div className='send_button'>
-                                            <button className='popup_add'>Save</button>
+                                            <button className='popup_add'>Ok</button>
                                             <button onClick={closePopup1} className='popup_cancle'>Cancle</button>
                                         </div>
                                     </div>

@@ -128,7 +128,7 @@ export default function () {
 
             {/*---------------navigation---------------*/}
 
-            <Navigation path="/Manage_Profile"></Navigation>
+            <Navigation path="/Manage_profile"></Navigation>
 
             {/* --------------- header --------------- */}
 

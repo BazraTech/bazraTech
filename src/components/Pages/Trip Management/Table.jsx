@@ -107,7 +107,7 @@ export default function ({ id, role, name }) {
                 // setDataSource(json)
                 // setDataSource2(json.companyAddressINF)
                 // setDataSource3(json.drivers)
-                setDataSource(json.vehicles)
+                setDataSource(json.ownerINF.vehicles)
                 console.log(json)
                 setLoading(false)
             });
@@ -155,7 +155,7 @@ export default function ({ id, role, name }) {
             <div className='' >
                 {visible ?
                     <>
-
+ 
                         <div className='trip_date'>
                             <input onChange={(e) => setSearch(e.target.value)} placeholder='Search...' className='trip_date1' type="search" /><button>Search</button>
                         </div>
@@ -197,7 +197,7 @@ export default function ({ id, role, name }) {
                                                     <tr className='active_row'>
 
                                                         <td>{item.vehicleName}</td>
-                                                        <td>{item.driver == "null" ? "unassignd" : `${item.driver}`}</td>
+                                                        <td>{item.driverName == "null" ? "unassignd" : `${item.driverName}`}</td>
                                                         <td>{item.id}</td>
                                                         <td>{item.vehicleCatagory}</td>
                                                         <td>{item.plateNumber}</td>

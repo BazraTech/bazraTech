@@ -22,7 +22,7 @@
    margin-left: 90px; 
    position: absolute;
 }
-
+ 
 
 /* ----------------- Vehicle ----------------- */
 .vehicle {
@@ -37,10 +37,12 @@
    border-right: 8px solid #006666;
    box-shadow: 1px 5px 5px -4px rgb(0, 0, 0);
    display: inline-block;
+   color: #006666;
+
 }
 
 .vehicle h4 {
-   color: #006666;
+   /* color: #006666; */
    padding: 15px;
    border: none;
    text-decoration: none;
@@ -48,6 +50,8 @@
 
 .vehicle:hover {
    transform: scale(1.09);
+   background-color: rgb(30, 30, 30);
+   color: #ffffff;
 }
 
 .vehicleTotal{
@@ -58,7 +62,7 @@
 .vehicleTotal p{
    font-size: 25px;
    font-weight: 700;
-   color: #006666;
+   /* color: #006666; */
    margin-top: 5px;
 }
 
@@ -75,15 +79,18 @@
    border-right: 8px solid #b35900;
    box-shadow: 1px 5px 5px -4px rgb(0, 0, 0);
    display: inline-block;
+   color: #b35900;
 }
 
 .comunication h4 {
-   color: #b35900;
+   /* color: #b35900; */
    padding: 10px;
 }
 
 .comunication:hover {
    transform: scale(1.09);
+   background-color: rgb(30, 30, 30);
+   color: #ffffff;
 }
 
 /* ----------------- Users ----------------- */
@@ -99,15 +106,17 @@
    border-right: 8px solid #002e4d;
    box-shadow: 1px 5px 5px -4px rgb(0, 0, 0);
    display: inline-block;
+   color: #002e4d;
 }
 
 .users h4 {
-   color: #002e4d;
    padding: 10px;
 }
 
 .users:hover {
    transform: scale(1.09);
+   background-color: rgb(30, 30, 30);
+   color: #ffffff;
 }
 
 /* ----------------- Registration ----------------- */
@@ -123,15 +132,17 @@
    border-right: 8px solid #00802b;
    box-shadow: 1px 5px 5px -4px rgb(0, 0, 0);
    display: inline-block;
+   color: #00802b;
 }
 
 .registration h4 {
-   color: #00802b;
    padding: 10px;
 }
 
 .registration:hover {
    transform: scale(1.09);
+   background-color: rgb(30, 30, 30);
+   color: #ffffff;
 }
 
 /* ----------------- Monitor_vehicle ----------------- */
@@ -147,15 +158,17 @@
    border-right: 8px solid #009999;
    box-shadow: 1px 5px 5px -4px rgb(0, 0, 0);
    display: inline-block;
+   color: #009999;
 }
 
 .monitor_vehicle h4 {
-   color: #009999;
    padding: 10px;
 }
 
 .monitor_vehicle:hover {
    transform: scale(1.09);
+   background-color: rgb(30, 30, 30);
+   color: #ffffff;
 }
 
 /* ----------------- Report ----------------- */
@@ -171,15 +184,17 @@
    border-right: 8px solid #005c99;
    box-shadow: 1px 5px 5px -4px rgb(0, 0, 0);
    display: inline-block;
+   color: #005c99;
 }
 
 .report h4 {
-   color: #005c99;
    padding: 10px;
 }
 
 .report:hover {
    transform: scale(1.09);
+   background-color: rgb(30, 30, 30);
+   color: #ffffff;
 }
 
 /* ----------------- alert ----------------- */
@@ -195,15 +210,17 @@
    border-right: 8px solid #ff0000;
    box-shadow: 1px 5px 5px -4px rgb(0, 0, 0);
    display: inline-block;
+   color: #ff0000;
 }
 
 .alert h4 {
-   color: #ff0000;
    padding: 10px;
 }
 
 .alert:hover {
    transform: scale(1.09);
+   background-color: rgb(30, 30, 30);
+   color: #ffffff;
 }
 
 /* ----------------- tracking ----------------- */
@@ -219,15 +236,17 @@
    border-right: 8px solid #404040;
    box-shadow: 1px 5px 5px -4px rgb(0, 0, 0);
    display: inline-block;
+   color: #404040;
 }
 
 .tracking h4 {
-   color: #404040;
    padding: 10px;
 }
 
 .tracking:hover {
    transform: scale(1.09);
+   background-color: rgb(30, 30, 30);
+   color: #ffffff;
 }
 
 

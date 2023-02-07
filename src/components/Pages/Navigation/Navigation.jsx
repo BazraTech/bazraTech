@@ -74,12 +74,12 @@ export default function Navigation({ path }) {
                             <p className="hovertext" data-hover="Users"><FaUsers size="1.8rem" ></FaUsers></p>
                         </Link>
                     </li>
-                    <li>
+                    <li> 
                         <Link to="/Company_registration" style={path == "/Company_registration" ? { color: getColor() } : { color: getColor2() }}>
                             <p className="hovertext" data-hover="Registration"><FaRegIdCard size="1.7rem" ></FaRegIdCard></p>
                         </Link>
                         {/* <Link to="/individual"  style={{ color: getColor('/individual') }}><p>gg</p></Link> */}
-                    </li>
+                    </li> 
                     <li>
                         <Link to="/accident" style={path == "/accident" ? { color: getColor() } : { color: getColor2() }}>
                             <p className="hovertext" data-hover="Alert"><HiBellAlert size="1.8rem" ></HiBellAlert></p>

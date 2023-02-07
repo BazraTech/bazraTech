@@ -312,9 +312,11 @@
     border-radius: 5px; 
     width: 70px;
     font-size: 0.8rem;
+    cursor: pointer;
 }
 .user_table .edit_button{
     background-color: #006666;
+    cursor: pointer;
 }
 
 .user_table th,
@@ -425,8 +427,6 @@
     padding: 10px;
   }
   
-
-
 
 @media screen and (max-width: 1130px) {
 

@@ -69,21 +69,7 @@ export default function () {
 
     };
 
-    const url = "http://198.199.67.201:9090/Api/Vehicle/Status/inroute";
-    const [dataSource, setDataSource] = useState([])
     const [Loading, setLoading] = useState([])
-    useEffect(() => {
-        setLoading(true);
-        fetch(url, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource(data.inRoutelist)
-                // console.log(dataSource)
-                setLoading(false);
-
-            })
-    }, [])
-
     const [totalPages, setTotalPage] = useState(1);
     const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
     const [dataSource2, setDataSource2] = useState([])
@@ -100,21 +86,49 @@ export default function () {
             })
     }, [])
 
-    const url3 = "http://198.199.67.201:9090/Api/Vehicle/Status/stocked";
+    const url = "http://198.199.67.201:9090/Api/Admin/All/Vehicles/Status/ONROUTE";
+    const [dataSource, setDataSource] = useState([])
+    useEffect(() => {
+        setLoading(true);
+        fetch(url, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource(data.inRoutelist)
+                // console.log(dataSource)
+                setLoading(false);
+
+            })
+    }, [])
+
+    const url3 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles/Status/INSTOCK";
     const [dataSource3, setDataSource3] = useState([])
     useEffect(() => {
         setLoading(true);
         fetch(url3, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource3(data.stockedList)
+                setDataSource3(data.stockedVehicles)
                 console.log(dataSource3)
                 setLoading(false);
 
             })
     }, [])
 
-    const url4 = "http://198.199.67.201:9090/Api/Vehicle/Status/maintaining";
+    const url5 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles/Status/PARKED";
+    const [dataSource5, setDataSource5] = useState([])
+    useEffect(() => {
+        setLoading(true);
+        fetch(url5, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource5(data.parkedList)
+                console.log(dataSource4)
+                setLoading(false);
+
+            })
+    }, [])
+
+    const url4 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles/Status/MAINTAINING";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -127,6 +141,8 @@ export default function () {
 
             })
     }, [])
+
+
 
     const [list, setList] = useState([dataSource]);
     const [total, setTotal] = useState(dataSource.length);
@@ -182,14 +198,14 @@ export default function () {
                     <Link style={{ textDecoration: 'none' }} to="/on_stock">
                         <div className='parked1'>
                             <h4>On Stock</h4>
-                            <p><FaParking size="2rem" ></FaParking><b>{dataSource3.length}</b></p>
+                            <p><FaParking size="2rem" ></FaParking><b>{dataSource3}</b></p>
                         </div>
                     </Link>
 
                     <Link style={{ textDecoration: 'none' }} to="/parked">
                         <div className='maintenance1'>
                             <h4>Parked</h4>
-                            <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{dataSource4.length}</b></p>
+                            <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{dataSource5.length}</b></p>
                         </div>
                     </Link>
                     <Link style={{ textDecoration: 'none' }} to="/maintenance">
@@ -201,6 +217,7 @@ export default function () {
                 </div>
 
                 {/* --------------- search --------------- */}
+                
 
                 <div className='vehicle_search'>
                     <p title='search'>
@@ -228,11 +245,11 @@ export default function () {
 
                                 <thead>
                                     <tr>
-                                        <th>Profile</th>
-                                        <th>Assigned Driver</th>
-                                        <th>Vehicle ID</th>
-                                        <th>Vehicle Type</th>
-                                        <th>Plate Number</th>
+                                        <th>Profile</th> 
+                                        <th>Assigned Driver</th> 
+                                        <th>Vehicle ID</th> 
+                                        <th>Vehicle Type</th> 
+                                        <th>Plate Number</th> 
                                         <th>Status</th>
                                         <th>Detail</th>
                                         <th>Tracking</th>

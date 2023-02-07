@@ -128,12 +128,12 @@ export default function () {
         <div className='mapAndSearch'>
           <div className="m-mapclone">
             {/* <p>anduamlak</p> */}
-            <iframe width="100%" height="100%" id="gmap_canvas" src="https://maps.google.com/maps?q=ethio&t=&z=11&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+            <iframe width="100%" height="100%" id="gmap_canvas" src="https://maps.google.com/maps?q=bole friendship  business &t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
           </div>
           <div className='vehiclesOnMap'>
             <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search . . ."></input>
             <div className='outer_vehicle_tables' id='myTable'>
-              <p>Total Vehicle</p>
+              <lable>Total Vehicle</lable>
 
               <table className="vehicle_table" id="myTable">
 

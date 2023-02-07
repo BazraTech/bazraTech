@@ -14,13 +14,14 @@ import { FiLogOut } from "react-icons/fi";
 import { FaStarOfLife } from 'react-icons/fa';
 import './vehicle_detail.css';
 import { useForm } from 'react-hook-form';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate  } from 'react-router-dom';
 import { total } from './data/jsonData';
 import { useState, useEffect } from 'react';
 import { SiTripdotcom } from "react-icons/si";
 import { SiGoogletagmanager } from "react-icons/si";
 import { BiTrip } from "react-icons/bi";
 import Header from '../../Header/Header';
+import Navigation from '../Navigation/Navigation';
 
 export default function Users_edit() {
 
@@ -56,7 +57,7 @@ export default function Users_edit() {
             "Authorization": `Bearer ${jwt}`
         },
 
-    }; 
+    };
     const { id } = useParams()
     const url2 = `http://198.199.67.201:9090/Api/Admin/All/Vehicles/${id}`;
 
@@ -101,70 +102,18 @@ export default function Users_edit() {
             })
     }, [])
 
+    const navigate = useNavigate();
+	const goBack = () => {
+		navigate(-1);
+	}
+
     return (
         <div>
             <div className="company_container">
 
                 {/*---------------navigation---------------*/}
 
-                <div className="dashboard_navigation">
-                    <ul>
-                        <li>
-                            <Link to="/dashboard">
-                                <p class="hovertext" data-hover="Home"><FaHome size="2rem" color='white'></FaHome><p></p></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/Total_number_of_vehicle">
-                                <p class="hovertext" data-hover="Vehicle"><AiFillCar className='sty' size="2rem" color='#00cc44'></AiFillCar></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/tracking">
-                                <p class="hovertext" data-hover="Tracking"><RiGpsFill size="2rem" color='white'></RiGpsFill></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/avialable_trip">
-                                <p className="hovertext" data-hover="Trip Management"><BiTrip color='white' size="2rem" ></BiTrip></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/users">
-                                <p class="hovertext" data-hover="Users"><FaUsers size="2rem" color='white'></FaUsers></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/accident">
-                                <p class="hovertext" data-hover="Alert"><HiBellAlert size="2rem" color='white'></HiBellAlert></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/report">
-                                <p class="hovertext" data-hover="Report"><HiDocumentReport size="2rem" color='white'></HiDocumentReport></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/Company_registration">
-                                <p class="hovertext" data-hover="Registration"><FaRegIdCard size="1.8rem" color='white'></FaRegIdCard></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/message_overview">
-                                <p class="hovertext" data-hover="Communication"><BsFillChatDotsFill size="1.8rem" color='white'></BsFillChatDotsFill></p>
-                            </Link>
-                        </li>
-                        <li>
-                            <p class="hovertext" data-hover="Profile"><FaUserAlt size="1.8rem" color='white'></FaUserAlt></p>
-                        </li>
-                        <li>
-                            <Link to="/settings">
-                                <p class="hovertext" data-hover="Setting"><AiFillSetting size="2rem" color='white'></AiFillSetting></p>
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
-
+                <Navigation path="/Total_number_of_vehicle"></Navigation>
 
                 {/* --------------- Vehicle header --------------- */}
 
@@ -183,9 +132,11 @@ export default function Users_edit() {
                         <p>Abebe</p>
                     </div> */}
 
-                    <div className='company_individual_header'>
-                        <p ><h1 className='nmn'>Vehicle Detail</h1></p>
-                        <p ><h4 className='vehicleDetail'>Driver Name : {dataSource.driver} <br /> User ID : {dataSource.plateNumber}</h4></p>
+                    <button className='navigateBack' onClick={goBack}>Back</button>
+
+                    <div className='company_individual_header'> 
+                        <p ><h1 className='nmn'>Vehicle Detail</h1></p> 
+                        <p ><h4 className='vehicleDetail'>Driver Name : {dataSource.driver == null ? "Unassigned": dataSource.driver} <br /> User ID : {dataSource.plateNumber}</h4></p>
                     </div>
                     <form className='form'>
 
@@ -226,10 +177,10 @@ export default function Users_edit() {
                                         {inputtag ? <input Value={dataSource.vehicleCondition} className='select' disabled={diabled}></input> : ""}
                                         {selecttag ?
                                             <select className='select' name='conditionName'
-                                                // value={vehicleCondition}
-                                                // {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
-                                                // onChange={(e) => setVehicleCondition(e.target.value)} 
-                                                >
+                                            // value={vehicleCondition}
+                                            // {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
+                                            // onChange={(e) => setVehicleCondition(e.target.value)} 
+                                            >
                                                 <option value="">Select Vecicle Condition</option>
                                                 {
                                                     dataSource4.map(item => {

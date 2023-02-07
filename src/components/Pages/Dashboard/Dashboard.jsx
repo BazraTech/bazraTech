@@ -44,10 +44,10 @@ export default function Dashboard() {
     const [dataSource1, setDataSource1] = useState([])
     useEffect(() => {
         // setLoading(true);
-        fetch(url2, options)
+        fetch(url1, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource1(data.vehicles)
+                setDataSource1(data.totalVehicles)
 
                 // console.log(dataSource2)
                 // setLoading(false);
@@ -61,7 +61,7 @@ export default function Dashboard() {
         fetch(url2, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource2(data.drivers)
+                setDataSource2(data.totalDrivers)
 
             })
     }, [])
@@ -97,8 +97,8 @@ export default function Dashboard() {
                         <div className='vehicle'>
                             <h4>Total Vehicles </h4>
                             <div className='vehicleTotal'>
-                                <AiFillCar size="2.8rem" color="#006666"></AiFillCar>
-                                <p>{dataSource2.length}</p>
+                                <AiFillCar size="2.8rem" ></AiFillCar>
+                                <p>{dataSource1}</p>
                             </div>
                         </div>
                     </Link> </div>
@@ -107,8 +107,8 @@ export default function Dashboard() {
                         <div className='vehicle'>
                             <h4>Total Drivers</h4>
                             <div className='vehicleTotal'>
-                            <ImUserTie size="2.8rem" color="#006666"></ImUserTie>
-                            <p>{dataSource2.length}</p>
+                            <ImUserTie size="2.8rem"></ImUserTie>
+                            <p>{dataSource2}</p>
                             </div>
                         </div>
                     </Link> </div>
@@ -116,7 +116,7 @@ export default function Dashboard() {
                     <div><Link to="/message_overview">
                         <div className='comunication'>
                             <h4>Comunication</h4>
-                            <BsFillChatDotsFill size="2.7rem" color='#b35900'></BsFillChatDotsFill>
+                            <BsFillChatDotsFill size="2.7rem" ></BsFillChatDotsFill>
                         </div>
                     </Link></div>
 
@@ -124,8 +124,8 @@ export default function Dashboard() {
                         <div className='users'>
                             <h4>List of users</h4>
                             <div className='vehicleTotal'>
-                            <FaUsers size="3rem" color='#002e4d'></FaUsers>
-                            <p style={{ color: "#002e4d" }}>{dataSource3.length}</p>
+                            <FaUsers size="3rem"></FaUsers>
+                            <p>{dataSource3.length}</p>
                             </div>
                         </div>
                     </Link> </div>
@@ -133,35 +133,38 @@ export default function Dashboard() {
                     <div><Link to="/Company_registration">
                         <div className='registration'>
                             <h4>Registration</h4>
-                            <FaRegIdCard size="3rem" color='#00802b'></FaRegIdCard>
+                            <FaRegIdCard size="3rem" ></FaRegIdCard>
                         </div>
                     </Link> </div>
 
                     <div><Link to="/avialable_trip">
                         <div className='monitor_vehicle'>
                             <h4>Trip Management</h4>
-                            <BiTrip size="3rem" color='#009999'></BiTrip>
+                            <BiTrip size="3rem" ></BiTrip>
                         </div>
                     </Link> </div>
 
                     <div><Link to="/report">
                         <div className='report'>
                             <h4>Report</h4>
-                            <HiDocumentReport size="3rem" color='#005c99'></HiDocumentReport>
+                            <HiDocumentReport size="3rem" ></HiDocumentReport>
                         </div>
                     </Link> </div>
 
                     <div><Link to="/accident">
                         <div className='alert'>
                             <h4>Alert</h4>
-                            <HiBellAlert size="3rem" color='#F80404'></HiBellAlert>
+                            <div className='vehicleTotal'>
+                            <HiBellAlert size="3rem" ></HiBellAlert>
+                            <p>{dataSource3.length}</p>
+                            </div>
                         </div>
                     </Link></div>
 
                     <div><Link to="/tracking">
                         <div className='tracking'>
                             <h4>Real Time Tracking</h4>
-                            <RiGpsFill size="3rem" color='#404040'></RiGpsFill>
+                            <RiGpsFill size="3rem" ></RiGpsFill>
                         </div>
                     </Link></div>
                 </div>

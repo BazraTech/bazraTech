@@ -95,10 +95,10 @@ export default function Users_edit() {
         fetch(url, options)
             .then((response) => response.json())
             .then((json) => {
-                setDataSource(json)
-                setDataSource2(json.companyAddressINF)
-                setDataSource3(json.drivers)
-                setDataSource5(json.vehicles)
+                setDataSource(json.ownerINF)
+                setDataSource2(json.ownerINF.companyAddressINF)
+                setDataSource3(json.ownerINF.drivers)
+                setDataSource5(json.ownerINF.vehicles)
                 console.log(json)
                 setLoading(false)
             });
