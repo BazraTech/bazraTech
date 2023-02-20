@@ -123,113 +123,16 @@ export default function () {
 
             {/*---------------navigation---------------*/}
 
-            <Navigation path="/report"></Navigation>
+            <Navigation path="/report" title="Total Vehicles"></Navigation>
 
             {/* --------------- header --------------- */}
 
-            <Header title="Total Vehicles"></Header>
+            {/* <Header title="Total Vehicles"></Header> */}
 
             {/* --------------- users --------------- */}
 
             <div className='main_content'>
-                <div className='vehicle_contents'>
-                    <Link to="/report" style={{ textDecoration: 'none' }}> <div className='activeNav '>
-                        <h4>Total Vehicle</h4>
-                        <p><AiFillCar size="2.3rem"></AiFillCar><b>{dataSource2.length}</b></p>
 
-                    </div></Link>
-
-                    <Link style={{ textDecoration: 'none' }} to="/ReportOn_route"><div className='on_route'>
-                        <h4>On Route</h4>
-                        <p><FaRoute size="2.2rem" ></FaRoute><b>{dataSource.length}</b></p>
-                    </div></Link>
-
-                    <Link style={{ textDecoration: 'none' }} to="/ReportOn_stock">
-                        <div className='parked'>
-                            <h4>On Stock</h4>
-                            <p><FaParking size="2rem" ></FaParking><b></b></p>
-                        </div>
-                    </Link>
-
-                    <Link style={{ textDecoration: 'none' }} to="/ReportMaintenance">
-                        <div className='maintenance'>
-                            <h4>Maintenance</h4>
-                            <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b></b></p>
-                        </div>
-                    </Link>
-                </div>
-
-                {/* --------------- search --------------- */}
-
-                <div className='vehicle_search'>
-                    <p title='search'>
-                        <BsSearch className='icn' size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                        <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
-                        <button>Search</button>
-                    </p>
-                </div>
-
-                {/* <div className='vehicle_filter'>
-                    <p>
-                        <AiFillFilter className='fil' size="0.8rem" color='rgb(63, 63, 63)'></AiFillFilter>
-                        <h6>Filter</h6>
-                    </p>
-                </div> */}
-
-                {/* --------------------- Table ------------------- */}
-
-                <div>
-                    {/* {active === "total_vehicle" && <Tables datas={total} title=" Total Vehicle" />}
-                    {active === "on_route" && <Tables datas={on_route} title=" On Route" />}
-                    {active === "parked" && <Tables datas={parked} title=" Parked" />}
-                    {active === "maintenance" && <Tables datas={maintenance} title=" Maintenance" />} */}
-                </div>
-
-                <div className='outer_vehicle_tables' id='myTable'>
-                    <p>Total Vehicle</p>
-
-                    <table class="vehicle_table" id="myTable">
-
-                        <thead>
-                            <tr>
-                                <th>Profile</th>
-                                <th>Assigned Driver</th> 
-                                <th>Vehicle ID</th>
-                                <th>Vehicle Type</th>
-                                <th>Plate Number</th>
-                                <th>Report</th>
-                                <th>History</th>
-                            </tr>
-                        </thead>
-                        <tbody> 
-                            {currentPage.map(item => (
-                                <tr className='active_row'>
-
-                                    <td>{item.vehicleName}</td>
-                                    <td>{item.driver}</td>
-                                    <td>{item.id}</td>
-                                    <td>{item.vehicleCatagory.catagory}</td>
-                                    <td>{item.plateNumber}</td>
-                                    <td><Link to={`/report_detail/${item.vehicleName}/${item.plateNumber}`}><button>Report</button></Link></td>
-                                    <td><Link to="/trip_history"><button>History</button></Link></td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-
-                <div className='page'>
-        <Pagination
-          onChange={(page) => setCurentPage(page)}
-          pageSize={postPerPage}
-          current={page}
-          total={total}
-          showQuickJumper
-          showSizeChanger
-          onShowSizeChange={onShowSizeChange}
-
-        />
-      </div>
 
             </div>
         </div >

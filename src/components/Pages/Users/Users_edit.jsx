@@ -1,18 +1,5 @@
 import React, { Component } from 'react'
-import { FaHome } from 'react-icons/fa';
-import { AiFillCar } from "react-icons/ai";
-import { RiGpsFill } from "react-icons/ri";
-import { MdMonitor } from "react-icons/md";
-import { FaUsers } from "react-icons/fa";
-import { HiBellAlert } from "react-icons/hi2";
-import { HiDocumentReport } from "react-icons/hi";
-import { FaRegIdCard } from 'react-icons/fa';
-import { BsFillChatDotsFill } from "react-icons/bs";
-import { FaUserAlt } from "react-icons/fa";
-import { AiFillSetting } from "react-icons/ai";
-import { FiLogOut } from "react-icons/fi";
-import { FaStarOfLife } from 'react-icons/fa';
-import './users_edit.css';
+import styles from './users_edit.module.css';
 import { useForm } from 'react-hook-form';
 import { Link, useParams } from 'react-router-dom';
 import { HiMenuAlt1 } from "react-icons/hi";
@@ -28,14 +15,7 @@ import Navigation from '../Navigation/Navigation';
 
 export default function Users_edit() {
 
-
     const [state, setState] = useState(false);
-    //const [companyType, setCompantType] = useState("");
-
-    // state = {
-    //     diabled: true
-    // }
-
 
     const toggle = () => {
         setState(!state);
@@ -104,9 +84,9 @@ export default function Users_edit() {
             });
     }, [])
 
-    
 
-        
+
+
 
 
     // const [dataSource4, setDataSource4] = useState([])
@@ -135,45 +115,35 @@ export default function Users_edit() {
         setinputTag(!inputtag);
     }
 
- 
+
     return (
         <div>
             <div className="users_edit_container">
 
                 {/*---------------navigation---------------*/}
 
-                <Navigation path="/users"></Navigation>
-                
+                <Navigation path="/users" title="Users/Edit"></Navigation>
+
                 {/* ---------------header--------------- */}
 
-                <Header title="Users/Edit"></Header>
+                {/* <Header title="Users/Edit"></Header> */}
 
                 {/* ---------------Registration--------------- */}
 
-                <section className='register'>
-                    {/* <div className='user_header'>
-                        <p>User ID</p>
-                        <p>BA 00001</p>
-                        <p>Name</p>
-                        <p>Abebe</p>
-                    </div> */}
+                <section className={styles.main_content}>
 
-
-
-                    <div className='company_individual_header'>
-                        <p ><h1 className='nmn'>Company Detail</h1></p>
-                        <p ><h4 className='vehicleDetail'>Name : {dataSource.role} <br /> User ID : {dataSource.id}</h4></p>
+                    <div className={styles.company_individual_header}>
+                        <p ><h1 className={styles.companyHeader}>Company Detail</h1></p>
+                        <p ><h4 className={styles.vehicleDetail}>Name : {dataSource.role} <br /> User ID : {dataSource.id}</h4></p>
                     </div>
                     <form className='form'>
                         {/* {dataSource.map(item => { */}
 
-                        <div className='allDiv'>
-                            {/* {dataSource.id=1 ? */}
-                            {/* {dataSource.id ==39?  */}
+                        <div className={styles.allDiv}>
                             {role === "INDIVIDUAL" ? "" :
                                 <div className='first_div'>
                                     <h1>Company Information</h1>
-                                    <div className='company_information1'>
+                                    <div className={styles.company_information}>
                                         <div>
                                             <p>Company Name </p>
                                             <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.companyName} type="text" disabled={diabled}></input>
@@ -212,8 +182,8 @@ export default function Users_edit() {
                             {/* :""} */}
 
                             <div className='second_div'>
-                            {role === "INDIVIDUAL" ? <h1>Owner Address</h1> : <h1>Company Address</h1>}
-                                <div className='company_Address1'>
+                                {role === "INDIVIDUAL" ? <h1>Owner Address</h1> : <h1>Company Address</h1>}
+                                <div className={styles.company_Address}>
                                     <div>
                                         <p>Region </p>
                                         <input onChange={(e) => setDataSource2(e.target.value)} value={dataSource2.region} disabled={diabled}></input>
@@ -243,11 +213,11 @@ export default function Users_edit() {
                                         <input onChange={(e) => setDataSource2(e.target.value)} value={dataSource2.phone} disabled type="text" ></input>
                                     </div>
                                 </div>
-                            </div> 
- 
+                            </div>
+
                             <div className='Third_div'>
                                 <h1>Owner Information</h1>
-                                <div className='owner_information1'>
+                                <div className={styles.owner_information}>
                                     <div>
                                         <p>First Name</p>
                                         <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.firstName} type="text" disabled={diabled}></input>
@@ -270,7 +240,7 @@ export default function Users_edit() {
 
                             <div className='Third_div'>
                                 <h1>Additional Information</h1>
-                                <div className='additional_information1'>
+                                <div className={styles.additional_information}>
                                     <div>
                                         <p>Notification Pereference</p>
                                         <input className='select' value={dataSource.notificationMedium} disabled>
@@ -293,21 +263,26 @@ export default function Users_edit() {
                                     </div>
                                 </div>
                             </div>
-                            <div className='company_button'>
-                                <p className='addd' onClick={() => {
+                            <div className={styles.company_button}>
+                                <p className={styles.addd} onClick={() => {
                                     handleChange()
                                     toggle()
                                     select()
                                 }}>{state ? "Cancle" : "Edit"}</p>
                                 <br />
-                                <button className='ad' disabled={diabled}>Update</button>
+                                <button className={styles.ad} disabled={diabled}>Update</button>
 
                             </div>
 
                             <div className='outer_vehicle_tables0' id='myTable'>
-                                <div className='second_div'>
-                                    <div className='registerd_vehicle_no'> <div className='Vehicle_number'><h1>Total Number Of Vehicle</h1><h1 className='number' >{dataSource5.length}</h1></div></div>
+
+                                <div className={styles.second_div}>
+                                    <div className={styles.Vehicle_number}>
+                                        <label>Total Number Of Vehicle</label>
+                                        <p className={styles.number} >{dataSource5.length}</p>
+                                    </div>
                                 </div>
+
                                 <p>Registerd Vehicles</p>
 
                                 <table class="vehicle_table" id="myTable">
@@ -325,18 +300,18 @@ export default function Users_edit() {
                                     </thead>
                                     <tbody>
                                         {dataSource5.map(item => (
-                                                <tr className='active_row'>
+                                            <tr className='active_row'>
 
-                                                    <td>{item.vehicleName}</td>
-                                                    {/* <td>{item.driver == null ? "unassignd" :`${dataSource3.map(item2 =>( item2.driverName ))}`}</td> */}
-                                                    <td>{item.driver == "null" ? "unassignd" : `${item.driver}`}</td>
-                                                    <td>{item.id}</td>
-                                                    <td>{item.vehicleCatagory}</td>
-                                                    <td>{item.plateNumber}</td>
-                                                    <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
-                                                    <td><Link to="/tracking"><button>Tracking</button></Link></td>
-                                                </tr>
-                                            ))}
+                                                <td>{item.vehicleName}</td>
+                                                {/* <td>{item.driver == null ? "unassignd" :`${dataSource3.map(item2 =>( item2.driverName ))}`}</td> */}
+                                                <td>{item.driverName == "null" ? "unassignd" : `${item.driverName}`}</td>
+                                                <td>{item.id}</td>
+                                                <td>{item.vehicleCatagory}</td>
+                                                <td>{item.plateNumber}</td>
+                                                <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
+                                                <td><Link to="/tracking"><button>Tracking</button></Link></td>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </table>
                             </div>
@@ -357,9 +332,14 @@ export default function Users_edit() {
                             </div>
 
                             <div className='outer_vehicle_tables0' id='myTable'>
-                                <div className='second_div'>
-                                    <div className='registerd_vehicle_no'> <div className='Vehicle_number'><h1>Total Number Of Drivers</h1><h1 className='number' >{dataSource3.length}</h1></div></div>
+
+                                <div className={styles.second_div}>
+                                    <div className={styles.Vehicle_number}>
+                                        <label>Total Number Of Driver</label>
+                                        <p className={styles.number} >{dataSource3.length}</p>
+                                    </div>
                                 </div>
+
                                 <p>Registerd Drivers</p>
 
                                 <table class="vehicle_table" id="myTable">
@@ -374,19 +354,19 @@ export default function Users_edit() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {dataSource3.map(item => (
-                                                <tr className='active_row'>
+                                        {dataSource3.map(item => (
+                                            <tr className='active_row'>
 
-                                                    <td>{item.id}</td>
-                                                    {/* <td>{item.driver == null ? "unassignd" :`${dataSource3.map(item2 =>( item2.driverName ))}`}</td> */}
-                                                    {/* <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td> */}
-                                                    <td>{item.driverName}</td>
-                                                    <td>{item.licenseNumber}</td>
-                                                    {/* <td>{item.plateNumber}</td> */}
-                                                    <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
-                                                    <td><Link to="/tracking"><button>Tracking</button></Link></td>
-                                                </tr>
-                                            ))}
+                                                <td>{item.id}</td>
+                                                {/* <td>{item.driver == null ? "unassignd" :`${dataSource3.map(item2 =>( item2.driverName ))}`}</td> */}
+                                                {/* <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td> */}
+                                                <td>{item.driverName}</td>
+                                                <td>{item.licenseNumber}</td>
+                                                {/* <td>{item.plateNumber}</td> */}
+                                                <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
+                                                <td><Link to="/tracking"><button>Tracking</button></Link></td>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </table>
                             </div>

@@ -1,5 +1,6 @@
 import React from 'react'
-import './available.css';
+// import './available.css';
+import styles from './available.module.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { SiTripdotcom } from "react-icons/si";
@@ -13,9 +14,33 @@ import { BsPlusLg } from "react-icons/bs";
 import { AiOutlineMinus } from "react-icons/ai";
 import SyncLoader from "react-spinners/SyncLoader";
 import { Pagination } from 'antd';
+import { BsSearch } from "react-icons/bs";
 import Table from './Table';
 
 export default function () {
+
+    function tableSearch() {
+
+        let input, filter, table, tr, td, txtValue, errors;
+
+        //Intialising Variables for search bar
+        input = document.getElementById("myInputs");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTables");
+        tr = table.getElementsByTagName("trs");
+
+        for (let i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[4];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
 
     const {
         register,
@@ -85,13 +110,13 @@ export default function () {
     // let url2;
 
     const displaylist = () => {
-        setVisible2(); 
+        setVisible2();
     }
     const setVisible2 = () => {
         console.log(role)
         setVisible(!visible);
     }
-   
+
     const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
@@ -107,8 +132,6 @@ export default function () {
             })
     }, [])
 
-   
-
     const [dataSource, setDataSource] = useState([])
     // const [Loading, setLoading] = useState([])
     const url = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners/";
@@ -119,17 +142,13 @@ export default function () {
             .then(data => {
                 setDataSource(data.vehicleOwnerINF)
                 // setTotalPage(data.totalPages)
-
                 console.log(dataSource)
                 setLoading(false)
             })
     }, [])
 
-    const [list, setList] = useState([dataSource]);
-    const [total, setTotal] = useState(dataSource.length);
     const [page, setCurentPage] = useState(1);
     const [postPerPage, setpostPerPage] = useState(5);
-
     const indexOfLastPage = page * postPerPage;
     const indexOfFirstPage = indexOfLastPage - postPerPage;
     const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
@@ -141,45 +160,43 @@ export default function () {
 
     return (
 
-        <div className="dashboard_container">
+        <div className="">
 
             {/*---------------navigation---------------*/}
 
-            <Navigation path="/avialable_trip"></Navigation>
+            <Navigation path="/avialable_trip" title="Avialable Trip"></Navigation>
 
             {/* ---------------header--------------- */}
 
-            <Header title="Avialable Trip"></Header>
+            {/* <Header title="Avialable Trip"></Header> */}
 
 
             {/* ---------------contents--------------- */}
 
-            <section className='register'>
+            <section className={styles.main_content}>
 
-                <div className='company_individual_header'>
-                    <Link style={{ textDecoration: 'none' }} to="/avialable_trip"><p><h1 className='nmn'>Avialable Vehicles</h1></p></Link>
-                    <Link style={{ textDecoration: 'none' }} to="/trip_history"><p><h1 className='nmnn'>Vehicles History</h1></p></Link>
+                <div className={styles.tripHeader}>
+                    <Link style={{ textDecoration: 'none' }} to="/avialable_trip"><p><h1 className={styles.avaliableVehicles}>Avialable Vehicles</h1></p></Link>
+                    <Link style={{ textDecoration: 'none' }} to="/trip_history"><p><h1>Vehicles History</h1></p></Link>
                 </div>
 
                 <form className='form' onSubmit={handleSubmit(onSubmit)}>
-                    <div className='allDiv'>
-
-                        <div className='trip_date'>
-                            <input onChange={(e) => setSearch(e.target.value)} placeholder='Search...' className='trip_date1' type="search" /><button>Search</button>
-                        </div>
+                    <div className={styles.allDiv}>
                         <div>
-                            <h1 className='greentrip'>List Of Companys</h1>
+                        <div className={styles.vehicle_search}>
+                            <p title='search'>
+                                <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
+                                <input type="text" id="myInputa" placeholder="Search"></input>
+                                <button>Search</button>
+                            </p>
+                        </div>
+                            <h1 className={styles.greentrip}>List Of Owuners</h1>
                             {
 
                                 loading ?
-                                    <p className='loading'><SyncLoader
-                                        // color={color}
-                                        // Left={margin}
+                                    <p className={styles.loading} ><SyncLoader
                                         loading={loading}
-                                        // cssOverride={override}
                                         size={10}
-                                        // margin= "100px 0px 0px 0px"
-                                        // padding= "200px"
                                         aria-label="Loading Spinner"
                                         data-testid="loader"
                                     /></p>
@@ -188,28 +205,27 @@ export default function () {
                                         {
                                             dataSource.map(item => (
                                                 <>
-                                                    <div className='companyList' onClick={() => {
-                                                        displaylist()
-                                                        setvisiblelist(item.id)
-                                                        setId(item.id)
-                                                        setRole(item.role)
-                                                    }} >
+                                                    <div className={styles.companyList}
+                                                        onClick={() => {
+                                                            displaylist()
+                                                            setvisiblelist(item.id)
+                                                            setId(item.id)
+                                                            setRole(item.role)
+                                                        }} >
                                                         <p>Company id : <b className='green'>{item.id}</b></p>
-                                                        <p>Available Vehicle : <b className='green'>{item.totalVehicles}</b></p>
-                                                        <p className='dropdownVehicle'>{visible && item.id == visiblelist ? <AiOutlineMinus top="10px" size="1rem" color='White' onChange={displaylist}></AiOutlineMinus> :
+                                                        <label>Available Vehicle : <b className='green'>{item.totalVehicles}</b></label>
+                                                        <p className={styles.dropdownVehicle}>{visible && item.id == visiblelist ? <AiOutlineMinus top="10px" size="1rem" color='White' onChange={displaylist}></AiOutlineMinus> :
                                                             <BsPlusLg size="1rem" color='White' onClick={() => {
                                                                 displaylist()
                                                                 setId(item.id)
                                                                 setRole(item.role)
                                                                 setvisiblelist(item.id)
                                                             }}></BsPlusLg>}</p>
-                                                        {/* <td></td> */}
                                                     </div>
-                                                    {visible && item.id == visiblelist && <Table style={{transition: "0.5s"}}  role={role} id={id} name={item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`} />}
-                                                     {/* <Table style={{transition: "0.5s"}}  role={role} id={id} name={item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`} /> */}
+                                                    {visible && item.id == visiblelist && <Table style={{ transition: "0.5s" }} role={role} id={id} name={item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`} from={"availavleCars"} />}
 
                                                 </>
-                                            ))
+                                            )) 
                                         }
                                     </>
                             }

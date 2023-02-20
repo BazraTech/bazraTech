@@ -1,146 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-
-/* ---------------navigation--------------- */
-.company_navigation {
-  position: fixed;
-  width: 100px;
-  height: 100%;
-  transition: 0.5s;
-  background-color: rgb(54, 54, 54);
-  padding: 2px 28px;
-  text-decoration: none;
-  margin-top: 0px;
-  z-index: 1;
-}
-
-.company_navigation ul li {
-  text-decoration: none;
-  margin-top: 10px;
-  transition: 0.5s;
-  list-style: none;
-  border-bottom: solid 2px rgb(109, 109, 109);
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 7px;
-  padding-left: 5px;
-}
-
-.company_navigation ul li p {
-  transition: 0.5s;
-}
-
-.company_navigation ul li p:hover {
-  transform: scale(1.2);
-  transition: 0.5s;
-}
-
-/* ---------------header--------------- */
-.company_header {
-  position: absolute;
-  width: calc(100% - 100px);
-  left: 100px;
-  min-height: 1vh;
-  box-shadow: 0 5px 7px -4px rgba(0, 0, 0, 0.4);
-  padding: 20px 0px 0 30px;
-  justify-content: space-between;
-  z-index: 1;
-  display: flex;
-}
-
-.validate_text {
-  color: red;
-}
-
-.company_header h3 {
-  text-align: center;
-  color: rgb(36, 114, 43);
-  padding-left: 500px;
-  padding-top: 4px;
-}
-
-.company_header h3 input {
-  text-align: left;
-  padding: 5px 10px 5px 20px;
-  border: none;
-  border-bottom: solid 1px rgb(0, 0, 0);
-  margin-right: 100px;
-}
-
-.company_header h2 {
-  text-align: left;
-}
-
-.company_header p {
-  padding-right: 30px;
-  padding-bottom: 10px;
-  transition: 0.5s;
-}
-
-.company_header p:hover {
-  transform: scale(1.2);
-}
 
 
-/* --------------- Forms --------------- */
+/* --------------- registration --------------- */
 
-.company_individual_header {
-  display: grid;
-  grid-template-columns: 40% 40%;
-  justify-content: space-around;
-  column-gap: 30%;
-  /* row-gap: 30%; */
-  margin-left: 10%;
-  text-decoration: none;
-  /* background-color: red; */ 
-  color: var(--white);
-}
-
-.allDiv {
-  background-color: rgb(255, 255, 255);
-  width: 105%;
-  padding: 5%;
-  padding-right: 10%;
-  border-radius: 10px 0px 10px 10px;
-  z-index: 1;
-}
-
-.company_individual_header p h1 {
-  color: rgb(0, 0, 0);
-  display: inline-block;
-  padding: 1%;
-  padding-left: 8%;
-  padding-right: 8%;
-  border-radius: 8px;
-  border: none;
-}
-
-.company_individual_header .nmn {
-  background-color: rgb(255, 255, 255);
-  color: rgb(20, 132, 0);
-  padding-bottom: 25px;
-  margin-bottom: -50px;
-  padding-top: 30px;
-  border: 8px solid rgb(238, 238, 238);
-  z-index: -1;
-  /* text-decoration: underline; */
-  /* border-radius: 10px; */
-  text-transform: none;
-}
- 
-.company_individual_header .vehicleDetail {
-  background-color: rgb(255, 255, 255);
-  color: rgb(20, 132, 0);
-  text-align: center;
-  border: 8px solid rgb(238, 238, 238);
-  border-radius: 17px 17px 0px 17px;
-  padding: 4%;
-  margin-top: 20px;
-  margin-right: -3.5%;
-  display: grid;
-  row-gap: 10px;
-}
-
-.register {
+.main_content {
   position: relative;
   width: calc(100% - 100px);
   left: 100px;
@@ -148,29 +10,79 @@
   background-color: rgb(238, 238, 238);
   color: var(--black1);
   top: 75px;
-  padding: 10%;
-  padding-left: 6%;
+  padding: 5%;
   padding-top: 2px;
   padding-bottom: 3%;
 
+} 
+
+.allDiv {
+  background-color: rgb(255, 255, 255);
+  padding: 5%;
+  border-radius: 10px 0px 10px 10px;
+  z-index: 1;
+}
+
+.company_individual_header {
+  display: grid;
+  grid-template-columns: 40% 40%;
+  gap: 20%;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  text-decoration: none;
+  color: var(--white);
+  margin-left: 5%;
+  margin-top: 20px;
+}
+
+.company_individual_header .companyHeader {
+  background-color: rgb(255, 255, 255);
+  color: rgb(20, 132, 0);
+  margin-bottom: -40px;
+  border: 8px solid rgb(238, 238, 238);
+  z-index: -1;
+  text-transform: none;
+  padding: 25px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.company_individual_header p h1 {
+  color: rgb(0, 0, 0);
+  display: inline-block;
+  border-radius: 8px;
+  border: none;
+  font-size: 1.6vw;
+}
+ 
+.company_individual_header .vehicleDetail {
+  background-color: rgb(255, 255, 255);
+  color: rgb(20, 132, 0);
+  text-align: center;
+  border: 8px solid rgb(238, 238, 238);
+  border-radius: 17px 17px 0px 0px;
+  padding: 25px; 
+  padding-left: 50px;
+  padding-right: 50px;
+  margin-right: -53%;
 }
 
 
 /* -------------------- company_information -------------------- */
-.company_information1 {
+.company_information {
   display: grid;
-  grid-template-columns: 48% 48%;
+  grid-template-columns: 45% 45%;
   gap: 10%;
   text-transform: uppercase;
 } 
-
 
 h1 {
   margin-top: 50px;
   margin-bottom: 10px;
 }
 
-.company_information1 input {
+.company_information input {
   position: relative;
   height: 40px;
   width: 100%;
@@ -181,13 +93,13 @@ h1 {
   border: 1px solid rgb(202, 202, 202);
 }
 
-.company_information1 input:focus {
+.company_information input:focus {
   box-shadow: 0px 0px 2px 1px rgba(21, 113, 146, 0.4);
   border: 1px solid rgba(21, 113, 146, 0.4);
 
 }
 
-.company_information1 select {
+.company_information select {
   position: relative;
   height: 40px;
   width: 100%;
@@ -199,9 +111,9 @@ h1 {
 }
 
 /* -------------------- company_Address -------------------- */
-.company_Address1 {
+.company_Address {
   display: grid;
-  grid-template-columns: 32% 32% 32%;
+  grid-template-columns: 30% 30% 30%;
   gap: 5%;
   text-transform: uppercase;
 }
@@ -209,12 +121,11 @@ h1 {
 h1 {
   margin-top: 50px;
   color: rgb(55, 55, 55);
-  /* text-decoration: underline; */
   text-transform: uppercase;
   font-size: 22px;
 }
 
-.company_Address1 input {
+.company_Address input {
   position: relative;
   height: 40px;
   width: 100%;
@@ -225,7 +136,7 @@ h1 {
   padding: 0 15px;
 }
 
-.company_Address1 select {
+.company_Address select {
   position: relative;
   height: 40px;
   width: 100%;
@@ -236,16 +147,16 @@ h1 {
   background-color: rgb(242, 242, 242);
 }
 
-.company_Address1 input:focus {
+.company_Address input:focus {
   box-shadow: 0px 0px 2px 1px rgba(21, 113, 146, 0.4);
   border: 1px solid rgba(21, 113, 146, 0.4);
 
 }
 
 /* -------------------- owner_information -------------------- */
-.owner_information1 {
+.owner_information {
   display: grid;
-  grid-template-columns: 48% 48%;
+  grid-template-columns: 45% 45%;
   gap: 10%;
   text-transform: uppercase;
 }
@@ -254,18 +165,18 @@ h1 {
   margin-top: 50px;
 }
 
-.owner_information1 input {
+.owner_information input {
   position: relative;
   height: 40px;
   width: 100%;
- outline: none;
+  outline: none;
   background-color: rgb(242, 242, 242);
   border: 1px solid rgb(202, 202, 202);
   border-radius: 6px;
   padding: 0 15px;
 }
  
-.owner_information1 select {
+.owner_information select {
   position: relative;
   height: 40px;
   width: 100%;
@@ -276,7 +187,7 @@ h1 {
   background-color: rgb(242, 242, 242);
 }
 
-.owner_information1 input:focus {
+.owner_information input:focus {
   box-shadow: 0px 0px 2px 1px rgba(21, 113, 146, 0.4);
   border: 1px solid rgba(21, 113, 146, 0.4);
 
@@ -284,9 +195,9 @@ h1 {
 
 
 /* -------------------- additional_information -------------------- */
-.additional_information1 {
+.additional_information {
   display: grid;
-  grid-template-columns: 48% 48%;
+  grid-template-columns: 45% 45%;
   gap: 10%;
   text-transform: uppercase;
 }
@@ -299,7 +210,7 @@ h1 {
   margin-top: 50px;
 }
 
-.additional_information1 input {
+.additional_information input {
   position: relative;
   height: 40px;
   width: 100%;
@@ -310,7 +221,7 @@ h1 {
   padding: 0 15px;
 }
 
-.additional_information1 select {
+.additional_information select {
   position: relative;
   height: 40px;
   width: 100%;
@@ -322,73 +233,15 @@ h1 {
 }
 
 /* -------------------- vehicle_information -------------------- */
-.vehicle_information1 {
-  display: grid;
-  grid-template-columns: 32% 32% 32%;
-  gap: 5%;
-  row-gap: 10%;
-  text-transform: uppercase;
-
-}
 
 .vehicle_information {
   display: grid;
   grid-template-columns: 30% 30% 30%;
-  row-gap: 15%;
+  gap: 5%;
   text-transform: uppercase;
 }
 
 .vehicle_information input {
-  position: relative;
-  height: 40px;
-  width: 80%;
-  outline: none;
-  background-color: rgb(255, 255, 255);
-  border: 1px solid rgb(202, 202, 202);
-  border-radius: 6px;
-  padding: 0 15px;
-}
-
-.vehicle_information select {
-  position: relative;
-  height: 40px;
-  width: 80%;
-  outline: none;
-  background-color: rgb(255, 255, 255);
-  border: 1px solid rgb(202, 202, 202);
-  border-radius: 6px;
-  padding: 0 15px;
-}
-
-.set_trip {
-  margin-left: 10%;
-}
-
-h1 {
-  margin-top: 50px;
-}
-
-.registerd_vehicle {
-  display: flex;
-  row-gap: 100px;
-  justify-content: space-between;
-}
-
-.Vehicle_number {
-  display: flex;
-
-}
-
-.Vehicle_number .number {
-  background-color: rgb(66, 66, 66);
-  margin-left: 10px;
-  border-radius: 8px;
-  padding-left: 20px;
-  padding-right: 20px;
-  color: #fff;
-}
-
-.vehicle_information1 input {
   position: relative;
   height: 40px;
   width: 100%;
@@ -398,15 +251,11 @@ h1 {
   border-radius: 6px;
   padding: 0 15px;
 }
-
-.plate_number {
-  display: grid;
-  grid-template-columns: 32% 22% 36%;
-  gap: 5%;
-
+h1 {
+  margin-top: 50px;
 }
 
-.vehicle_information1 select {
+.vehicle_information select {
   position: relative;
   height: 40px;
   width: 100%;
@@ -417,21 +266,26 @@ h1 {
   padding: 0 15px; 
 }
 
+.set_trip {
+  margin-left: 10%;
+}
+
 .vehicle_information1 input:focus {
   box-shadow: 0px 0px 2px 1px rgba(21, 113, 146, 0.4);
   border: 1px solid rgba(21, 113, 146, 0.4);
 
 }
 
-
 /* -------------------- Buttons -------------------- */
-.company_button {
-  margin-top: 8%;
-  display: flex;
-  justify-content: center;
-}
+.company_button{
+  margin-top: 5%;
+  display: flex; 
+  justify-content: space-around;
+  cursor: pointer;
+  margin-bottom: 50px;
 
-.add {
+}
+.company_button .addd{ 
   padding: 1%;
   padding-left: 10%;
   padding-right: 10%;
@@ -440,50 +294,99 @@ h1 {
   border: none;
   border-radius: 8px;
   color: var(--white);
+  cursor: pointer;
+
+    
 }
+.company_button .ad{
+  padding: 1%;
+  padding-left: 10%;
+  padding-right: 10%;
+  text-align: center;
+  background-color: #272727;
+  border: none;
+  border-radius: 8px;
+  color: var(--white);
+  cursor: pointer;
+    
+}
+.ad:disabled{
+    padding: 1%;
+    padding-left: 10%;
+    padding-right: 10%;
+    text-align: center;
+    background-color: #c0c0c0;
+    border: none;
+    border-radius: 8px;
+    color: var(--white);
+      
+  }
+
+  .Vehicle_number{
+    display: grid;
+    grid-template-columns: 30% 5%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .Vehicle_number label{
+    font-size: 1.5vw;
+    font-weight: 700;
+  }
+
+  .number{
+    background-color: rgb(68, 68, 68);
+    text-align: center;
+    color: white;
+    font-size: 1.4vw;
+    border-radius: 5px;
+    font-weight: 700;
+  }
+
+  
 
 
 @media screen and (max-width: 1000px) {
-  .company_Address1 {
+  .company_Address {
     display: grid;
-    grid-template-columns: 48% 48%;
-    gap: 10%;
+    grid-template-columns: 45% 45%;
+    gap: 5%;
   }
 
-  .vehicle_information1 {
+  .vehicle_information {
     display: grid;
-    grid-template-columns: 48% 48%;
-    gap: 10%;
+    grid-template-columns: 45% 45%;
+    gap: 5%;
   }
 
 }
 
 @media screen and (max-width: 800px) {
-  .company_information1 {
+  
+  .company_information {
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
 
-  .company_Address1 {
+  .company_Address {
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
 
-  .owner_information1 {
+  .owner_information {
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
 
-  .additional_information1 {
+  .additional_information {
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
 
-  .vehicle_information1 {
+  .vehicle_information {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -498,18 +401,63 @@ h1 {
     display: none;
   }
 
-  .company_individual_header {
+  /* .company_individual_header {
     display: grid;
     grid-template-columns: 50%;
     margin-left: 1%;
-  }
+  } */
 
-  .company_individual_header .nmn {
+  /* .company_individual_header .nmn {
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
     padding-bottom: 10px;
     margin-bottom: -80px;
     padding-top: 20px;
-  }
+  } */
 
+}
+
+@media screen and (max-width: 500px) {
+  .main_content {
+    position: absolute;
+    width: calc(100%); 
+    left: 0px;
+    /* min-height: 100px; */
+    max-height: 100vh;
+    opacity: var(--black2);
+    color: var(--black1);
+    top: 75px;
+    background-color: rgb(242, 242, 242);
+    z-index: -1;  
+}
+
+.company_individual_header {
+  display: grid;
+  grid-template-columns: 40% 40%;
+  gap: 5%;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  text-decoration: none;
+  color: var(--white);
+}
+
+.company_individual_header .companyHeader {
+  color: rgb(20, 132, 0);
+  margin-bottom: -40px;
+  border: 8px solid rgb(238, 238, 238);
+  z-index: -1;
+  text-transform: none;
+  padding: 19x;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.company_individual_header p h1 {
+  color: rgb(0, 0, 0);
+  display: inline-block;
+  border-radius: 8px;
+  border: none;
+  font-size: 3vw;
+}
 }

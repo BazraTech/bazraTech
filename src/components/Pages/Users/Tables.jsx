@@ -1,5 +1,5 @@
 import React from 'react'
-import './users.css';
+import styles from './users.module.css';
 import { Link } from 'react-router-dom';
 import { Table } from "antd";
 import "antd/dist/antd"

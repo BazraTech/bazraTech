@@ -24,6 +24,15 @@ export default function PopUp(props) {
         if (title === 'Create_Role') {
             Create_Role();
         }
+        if (title === 'Create_Driver_Status') {
+            Create_Driver_Status();
+        }
+        if (title === 'Create_Alert_Type') {
+            Create_Alert_Type();
+        }
+        if (title === 'Create_Trip_Type') {
+            Create_Trip_Type();
+        }
         if (title === 'Add_Notification') {
             Add_Notification();
         }
@@ -44,6 +53,7 @@ export default function PopUp(props) {
         }
 
     };
+    
     const [notifications, setNotification] = useState("");
     const notification = notifications;
     const vehicleConditon = notifications;
@@ -52,8 +62,11 @@ export default function PopUp(props) {
     const companyType = notifications;
     const serviceNeeded = notifications;
     const rolename = notifications;
+    const status = notifications;
+    const alertType = notifications;
+    const tripType = notifications;
     
-    
+
     async function Create_Role() {
         let item =
         {
@@ -91,6 +104,122 @@ export default function PopUp(props) {
             console.error(error);
         }
     }
+
+    async function Create_Driver_Status() {
+        let item =
+        {
+            status,
+        };
+        const options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
+            body: JSON.stringify(item),
+        };
+        const url = "http://198.199.67.201:9090/Api/Admin/CreateDriverStatus";
+        try {
+            const response = await fetch(url, options); 
+            const result = await response.json();
+            console.log(result);
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            console.log(mess);
+            if (response.ok) {
+                console.log("Signup successful");
+                swal("Successful",  `${mess}`, "success", {
+                    buttons: false,
+                    timer: 2000,
+                });
+                setNotification("");
+                setPop(false);
+            } else {
+                console.log("failed");
+                swal(`Failed To Register ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function Create_Alert_Type() {
+        let item =
+        {
+            alertType,
+        };
+        const options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
+            body: JSON.stringify(item),
+        };
+        const url = "http://198.199.67.201:9090/Api/Admin/CreateAlertType";
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            console.log(result);
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            console.log(mess);
+            if (response.ok) {
+                console.log("Signup successful");
+                swal("Successful",  `${mess}`, "success", {
+                    buttons: false,
+                    timer: 2000,
+                });
+                setPop(false);
+            } else {
+                console.log("failed");
+                swal(`Failed To Register ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function Create_Trip_Type() {
+        let item =
+        {
+            tripType,
+        };
+        const options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
+            body: JSON.stringify(item),
+        };
+        const url = "http://198.199.67.201:9090/Api/Admin/CreateTripType";
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            console.log(result);
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            console.log(mess);
+            if (response.ok) {
+                console.log("Signup successful");
+                swal("Successful",  `${mess}`, "success", {
+                    buttons: false,
+                    timer: 2000,
+                });
+                setPop(false);
+            } else {
+                console.log("failed");
+                swal(`Failed To Register ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
 
     async function Add_company_sector() {
         let item =

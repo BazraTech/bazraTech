@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { FaHome } from 'react-icons/fa';
 import { AiFillCar } from "react-icons/ai";
 import { RiGpsFill } from "react-icons/ri";
@@ -8,29 +8,29 @@ import { HiBellAlert } from "react-icons/hi2";
 import { HiDocumentReport } from "react-icons/hi";
 import { FaRegIdCard } from 'react-icons/fa';
 import { BsFillChatDotsFill } from "react-icons/bs";
-import { FaUserAlt } from "react-icons/fa"; 
+import { FaUserAlt } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import { HiMenuAlt1 } from "react-icons/hi";
 import './Report_detail.css';
-import { Link , useParams} from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Report_Data } from "./data/jsonData"
 import { SiTripdotcom } from "react-icons/si";
 import { SiGoogletagmanager } from "react-icons/si";
 import { BiTrip } from "react-icons/bi";
 import Navigation from '../Navigation/Navigation';
-
 import DonutChart from "./donutChart"
 import ChartLine from "./lineChart";
 import Header from '../../Header/Header';
-
+import { useReactToPrint } from 'react-to-print';
+import swal from "sweetalert";
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 
 export default function () {
 
-
-
     {/*-------------- For the popup message part  ----------------*/ }
+
     const [popup, setPop] = useState(false);
     const [popup1, setPop1] = useState(false);
 
@@ -43,6 +43,7 @@ export default function () {
 
     const closePopup = () => {
         setPop(false);
+        setPop1(false);
     }
     const closePopup1 = () => {
         setPop1(false);
@@ -57,7 +58,17 @@ export default function () {
     }
     const [search, setSearch] = useState('');
 
-    const { id , platenumber} = useParams();
+    const { id, platenumber } = useParams();
+
+    const pageStyle = `{ width:"10%" }`;
+
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        documentTitle: 'Bazra Report',
+        onafterprint: () => swal("Successful", `Printed Sucessfully`, "success", { button: true, }),
+    });
+
 
 
     return (
@@ -65,11 +76,11 @@ export default function () {
 
             {/*---------------navigation---------------*/}
 
-            <Navigation path="/report"></Navigation>
+            <Navigation path="/report" title="Report Detail"></Navigation>
 
             {/* ---------------header--------------- */}
 
-            <Header title="Report Detail"></Header>
+            {/* <Header title="Report Detail"></Header> */}
 
             <div className='main_content2'>
                 <div className="Report-main">
@@ -103,7 +114,7 @@ export default function () {
                                         <td><b>Current Status</b></td>
                                         <td className='colors-report'><b>On route</b></td>
                                     </tr>
-                                </tbody> 
+                                </tbody>
                             </table>
                         </div>
                         <div className='report-date'>
@@ -114,10 +125,14 @@ export default function () {
                             }} type="date" placeholder='Select date'></input></p>
                         </div>
                     </div>
+                    <div className='excel'>
+
+                    </div>
+
 
                     <div className='trip-tables' >
                         <div className='t-table'>
-                            <table class="vehicle-trip-table">
+                            <table class="vehicle-trip-table" ref={componentRef} id="table-to-xls">
                                 <thead>
                                     <tr>
                                         <th>Trip</th>
@@ -131,41 +146,43 @@ export default function () {
 
                                 <tbody>
                                     {
-                                    Report_Data
-                                    .filter((item) => {
-                                            return search.toLowerCase() === ''
-                                                ? item
-                                                : item.start_date.toLowerCase().includes(search);
-                                        })
-                                    .map(item => {
-                                        return <tr className='active_row'>
+                                        Report_Data
+                                            .filter((item) => {
+                                                return search.toLowerCase() === ''
+                                                    ? item
+                                                    : item.start_date.toLowerCase().includes(search);
+                                            })
+                                            .map(item => {
+                                                return <tr className='active_row'>
 
-                                        <td>{item.trip}</td>
-                                        <td>{item.total_travel_time}</td>
-                                        <td>{item.average_speed}</td>
-                                        <td>{item.start_date}</td>
-                                        <td>{item.end_date}</td>
-                                        <td>
-                                            <h4 className='notification_actions0'>
-                                                <button onClick={() => {
-                                                    handleClickopen()
-                                                    AvargeSpeed(item.average_speed)
-                                                }}>Detail</button>
+                                                    <td>{item.trip}</td>
+                                                    <td>{item.total_travel_time}</td>
+                                                    <td>{item.average_speed}</td>
+                                                    <td>{item.start_date}</td>
+                                                    <td>{item.end_date}</td>
+                                                    <td>
+                                                        <h4 className='notification_actions0'>
+                                                            <button onClick={() => {
+                                                                handleClickopen()
+                                                                AvargeSpeed(item.average_speed)
+                                                            }}>Detail</button>
 
-                                            </h4>
-                                        </td>
-                                    </tr>
+                                                        </h4>
+                                                    </td>
+                                                </tr>
 
-                                    })
-                                }
+                                            })
+                                    }
                                 </tbody>
-
                             </table>
+                        </div>
+                        <div className='page22'>
+                            <button className='print' onClick={handleClickopen1}>Export</button>
                         </div>
                     </div>
 
                     {popup ?
-                        <div>
+                        <div ref={componentRef} style={{ width: "100%", height: window.innerHeight }}>
                             <div className='popup'>
                                 <div className='popup-inner0'>
                                     <button className='close-btn' onClick={closePopup}>X</button>
@@ -182,14 +199,41 @@ export default function () {
                                             Average Speed : <b className='green'>{Avarage_speed}/hr</b>
                                             <ChartLine></ChartLine>
                                         </div>
+                                        <button className='print2' onClick={handleClickopen1}>print</button>
                                     </div>
 
                                 </div>
                             </div>
                         </div> : ""}
 
+                    {popup1 ?
+                        <div>
+                            <div className='popupp'>
+                                <div className='popup-innerr'>
+                                    <button className='close-btn' onClick={closePopup}>X</button>
+                                    <div className='pdfandexcelouter'>
+                                    <div className='selectAction'> Select the Action You Want</div>
+                                    <div className='pdfandexcel'>
+                                        <button  onClick={() =>{
+                                            handlePrint();
+                                            handleClickopen1();
+                                            }}>Print or Save As PDF</button>
+                                        <button onClick={closePopup}><ReactHTMLTableToExcel
+                                            id="test-table-xls-button"
+                                            className="printexel"
+                                            table="table-to-xls"
+                                            filename="tablexls"
+                                            sheet="tablexls"
+                                            buttonText="Download as XLS" /></button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> : ""}
+
                 </div>
             </div>
+
 
 
         </div>

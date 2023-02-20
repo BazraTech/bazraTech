@@ -7,7 +7,7 @@ import Company_registration from './components/Pages/Registration/Company_regist
 import Users from './components/Pages/Users/Users';
 import Dashboard from './components/Pages/Dashboard/Dashboard';
 import Total_number_of_vehile from './components/Pages/Total_number_of_vehicle/Total_number_of_vehile';
-import Tracking_history from './components/Pages/Tracking/Tracking_history';
+// import Tracking_history from './components/Pages/Tracking/Tracking_history';
 import Tracking from './components/Pages/Tracking/Tracking';
 import Alert from './components/Pages/alert/Off_road';
 import Users_edit from './components/Pages/Users/Users_edit';
@@ -60,7 +60,7 @@ class App extends Component{
         <Route path="/Company_registration" element={<Company_registration />}></Route>
         <Route path="/individual" element={<Individual_registration />}></Route>
         <Route path="/Total_number_of_vehicle" element={<Total_number_of_vehile />}></Route>
-        <Route path="/tracking_hitory" element={<Tracking_history />}></Route>
+        {/* <Route path="/tracking_hitory" element={<Tracking_history />}></Route> */}
         <Route path="/tracking" element={<Tracking />}></Route>
         <Route path="/off_road" element={<Off_road />}></Route>
         <Route path="/vehicle_detail" element={<Vehicle_detail />}></Route>
@@ -70,7 +70,7 @@ class App extends Component{
         <Route path="/report_detail/:id/:platenumber" element={<Report_detail />}></Route>
         <Route path="/popup" element={<PopUp />}></Route>
         <Route path="/Add_vehicle" element={<Add_vehicle />}></Route>
-        <Route path="/set_trip/:plateNumber/:driver" element={<Set_Trip />}></Route>
+        <Route path="/set_trip/:vehicle/:driver" element={<Set_Trip />}></Route>
         <Route path="/trip_history" element={<Trip_history />}></Route> 
         <Route path="/avialable_trip" element={<Avialable_trip />}></Route>
         <Route path="/on_route" element={<On_route />}></Route>

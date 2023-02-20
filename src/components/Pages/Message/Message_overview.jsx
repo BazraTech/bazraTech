@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import './Message_overview.css';
-
+import styles from './message.module.css';
+import './height.css';
 import { users } from './data/data';
 import Checkbox from './checkbox';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
+import { BsSearch } from "react-icons/bs";
 
 {/*---------
 
@@ -96,32 +97,54 @@ export default function () {
         }
     }, [])
 
+    function tableSearch() {
+
+        let input, filter, table, tr, td, txtValue, errors;
+
+        //Intialising Variables for search bar
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (let i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[4];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
     return (
         <div className="messageOverview_container">
 
             {/*---------------navigation---------------*/}
 
-            <Navigation path="/message_overview"></Navigation>
+            <Navigation path="/message_overview" title="Message"></Navigation>
 
 
             {/* ---------------header--------------- */}
-            <Header title="Message"></Header>
+            {/* <Header title="Message"></Header> */}
 
-            <div className='main_content' >
+            <div className={styles.main_content} >
 
-                <div className="messageOverview-search">
-                    {/* --------- Class for the search bar from the table   ------------ */}
-                    <p>
-                        <input type="text" id="nameInput" placeholder="Search" onChange={(e) => {
-                            setsearchTerm(e.target.value);
-                        }} />
+                <div className={styles.vehicle_search}>
+                    <p title='search'>
+                        <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
+                        <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                        <button>Search</button>
                     </p>
                 </div>
 
-                <div className='outer_vehicle_tables' id='myTable'>
+                <div className={styles.outer_vehicle_table} id='myTable'>
                     <p>Message</p>
 
-                    <table className="vehicle_table" id="myTable">
+                    <table className={styles.vehicle_table} id="myTable">
                         <thead>
                             <tr>
                                 <th>Select All
@@ -163,29 +186,29 @@ export default function () {
 
 
                 {/*----------className- messageOverview-button is a button which redirect to the popup menu---------*/}
-                <div className='messageOverview-button'>
+                <div className={styles.messageOverviewbBtton}>
 
-                    <button onClick={handleClickopen} className='messageOverview-text'>Text</button></div>
+                    <button onClick={handleClickopen} className={styles.messageOverviewText}>Text</button></div>
                 <div>
 
                     {popup ?
-                        <div className='main-popup'>
+                        <div className={styles.mainPopup}>
                             {/*------- className - main-popup - a class for the popup display part----------*/}
-                            <div className="holding-for-message">
-                                <div className='x-button'>
+                            <div className={styles.holdingForMssage}>
+                                <div className={styles.xButton}>
                                     {/*------ className - x-button - a button to close the popup page----------*/}
-                                    <button className='x-press' onClick={closePopup}>X</button>
+                                    <button className={styles.xPress} onClick={closePopup}>X</button>
                                 </div>
-                                <div className="message-boxs">
+                                <div className={styles.messageBoxs}>
                                     {/*------ className - message-boxs------- a message writing part--------*/}
                                     <CKEditor
                                         editor={ClassicEditor}
-                                        className="CKcustom"
+                                        className={styles.CKcustom}
                                     />
                                 </div>
 
-                                <div className='send-button'>
-                                    <button className='edit-send'>Send</button>
+                                <div className={styles.sendButton}>
+                                    <button className={styles.editSend}>Send</button>
                                 </div>
                             </div>
                         </div> : ""}

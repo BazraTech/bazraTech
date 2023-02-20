@@ -19,8 +19,8 @@ import { GrFormNext } from "react-icons/gr";
 import { GrFormPrevious } from "react-icons/gr";
 import { HiMenuAlt1 } from "react-icons/hi";
 import { FaStarOfLife } from 'react-icons/fa';
-import './users.css';
 // import { useState } from 'react';
+import styles from './users.module.css';
 import { Link, NavLink } from 'react-router-dom';
 import { total } from './Data/Data';
 import { on_route } from './Data/Data';
@@ -63,10 +63,6 @@ export default function () {
                     tr[i].style.display = "";
                 } else {
                     tr[i].style.display = "none";
-                    // swal("Successful", "Successful Added", "error", {
-                    //     buttons: false,
-                    //     timer: 2000,
-                    //   })
                 }
             }
         }
@@ -74,14 +70,11 @@ export default function () {
 
     let [active, setActive] = useState("total_users");
     let [state, setState] = useState("false");
-    const color = () => {
-        setState(state);
-    }
+
     const closePopup5 = () => {
         setPop1(false);
         setPop(false);
     }
-
 
     const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
 
@@ -92,9 +85,7 @@ export default function () {
             "Accept": "application/json",
             "Authorization": `Bearer ${jwt}`
         },
-
     };
-
 
     const [totalPages, setTotalPage] = useState(1);
     const [dataSource, setDataSource] = useState([])
@@ -106,8 +97,6 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource(data.vehicleOwnerINF)
-                setTotalPage(data.totalusers)
-
                 console.log(dataSource)
                 setLoading(false)
             })
@@ -115,7 +104,6 @@ export default function () {
 
 
     const [dataSource2, setDataSource2] = useState([])
-    const [dataSource02, setDataSource02] = useState([])
     // const [Loading, setLoading] = useState([])
     const url2 = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners/Role/owner";
     useEffect(() => {
@@ -123,9 +111,7 @@ export default function () {
         fetch(url2, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource2(data.vehicleOwnerINF)
-                setDataSource02(data.totalusers)
-                // setTotalPage(data.totalusers)
+                setDataSource2(data.totalusers)
                 setLoading(false)
             })
     }, [])
@@ -140,7 +126,7 @@ export default function () {
             .then(data => {
                 setDataSource3(data.vehicleOwnerINF)
                 setDataSource03(data.totalusers)
-                // setTotalPage(data.totalPages)
+                setTotalPage(data.totalusers)
                 setLoading(false)
             })
     }, [])
@@ -154,8 +140,6 @@ export default function () {
     const handleClickopen1 = () => {
         setPop1(!popup1);
     }
-    const [list, setList] = useState([dataSource]);
-    const [total, setTotal] = useState(dataSource.length);
     const [page, setCurentPage] = useState(1);
     const [postPerPage, setpostPerPage] = useState(5);
     const indexOfLastPage = page * postPerPage;
@@ -208,11 +192,6 @@ export default function () {
         console.log(data);
         Addvehicle();
     };
-
-
-    // const handleClick = (e) => {
-    //     Addvehicle();
-    // };
 
     useEffect(() => {
     }, []);
@@ -277,7 +256,14 @@ export default function () {
     const [driverName, setDriverName] = useState("");
     const [licenseNumber, setLicenseNumber] = useState("");
     const [licensePic, SetTinCertificate] = useState("");
-    const [driverPic, setTreadCertificate] = useState();
+    const [driverPic, setTreadCertificate] = useState("");
+    const [gender, setGender] = useState("");
+    const [birthDate, setBirthDate] = useState("");
+    const [driverPhone, setDriverPhone] = useState("");
+    const [experience, setExperience] = useState("");
+    const [licenseGrade, setLicenseGrade] = useState("");
+    const [licenseIssueDate, setLicenseIssueDate] = useState("");
+    const [licenseExpireDate, setLicenseExpireDate] = useState("");
     const [imgData, setImgData] = useState(null);
     const [selectedFile, setSelectedFile] = useState();
 
@@ -287,7 +273,14 @@ export default function () {
         formData.append("licenseNumber", licenseNumber);
         formData.append("licensePic", licensePic);
         formData.append("driverPic", driverPic);
-        formData.append("ownerPhone", ownerPhone)
+        formData.append("ownerPhone", ownerPhone);
+        formData.append("gender", gender);
+        formData.append("birthDate", birthDate)
+        formData.append("driverPhone", driverPhone)
+        formData.append("experience", experience)
+        formData.append("licenseGrade", licenseGrade)
+        formData.append("licenseIssueDate", licenseIssueDate)
+        formData.append("licenseExpireDate", licenseExpireDate)
         formData.append("file", selectedFile);
         console.log(formData)
 
@@ -298,18 +291,24 @@ export default function () {
             }
         })
             .then((res) => {
-                localStorage.setItem("message", JSON.stringify(res["message"]));
+                localStorage.setItem("message", JSON.stringify(res.data["message"]));
                 const mess = localStorage.getItem("message");
                 console.log(res);
-                swal("Error", "Driver Successfuliy Registerd", "success", {
+                swal("Successfully Registerd", `${mess}`, "success", {
                     button: true,
-
                 })
 
                 setDriverName("");
                 setLicenseNumber("");
                 SetTinCertificate("");
                 setTreadCertificate();
+                setGender("");
+                setBirthDate("");
+                setDriverPhone("");
+                setLicenseGrade("");
+                setLicenseIssueDate("");
+                setLicenseExpireDate("");
+                setSelectedFile("");
                 setImgData(null);
                 setSelectedFile();
             })
@@ -365,140 +364,136 @@ export default function () {
             setSelectedFile(e.target.files[0]);
         }
     };
+    const [color, setColor] = useState("green");
 
     return (
 
         <div className="containerr">
 
             {/*---------------navigation---------------*/}
-            <Navigation path="/users"></Navigation>
+            <Navigation path="/users" title="Users"></Navigation>
 
             {/* --------------- header --------------- */}
 
-            <Header title="Users"></Header>
+            {/* <Header title="Users"></Header> */}
 
             {/* --------------- users --------------- */}
 
-            <div className='user'>
-                <div className='contents'>
-                    <Link style={{ textDecoration: 'none' }} to="/users">
-                        <div className='individual' onClick={() => setActive("total_users")}>
-                            <h4>Total Users</h4>
-                            <p><FaUsers size="2.2rem"></FaUsers><b>{dataSource.length}</b></p>
-                        </div>
-                    </Link>
+            <div className={styles.main_content} >
 
-                    <Link style={{ textDecoration: 'none' }} to="/company">
-                        <div className='individual' onClick={() => setActive("company")}>
-                            <h4>Company</h4>
-                            <p><FaWarehouse size="2.2rem" ></FaWarehouse><b>{dataSource02}</b></p>
-                        </div>
-                    </Link>
-                    <Link style={{ textDecoration: 'none' }} to="/register_individual">
-                        <div className='activeNav2' onClick={() => setActive("individual")}>
-                            <h4>Individual</h4>
-                            <p><FaUserAlt size="2rem"></FaUserAlt><b>{dataSource03}</b></p>
-                        </div>
-                    </Link>
+                <div className={styles.allcards}>
+                    <div className={styles.vehicle}>
+                        <Link style={{ textDecoration: 'none' }} to="/users">
+                            <div className={styles.innerContents}>
+                                <h4>Total Users</h4>
+                                <div>
+                                    <p><FaUsers size="2.2rem"></FaUsers><b>{dataSource.length}</b></p>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+                    <div className={styles.vehicle}>
+                        <Link style={{ textDecoration: 'none' }} to="/company">
+                            <div className={styles.innerContents}>
+                                <h4>Company</h4>
+                                <div>
+                                    <p><FaWarehouse size="2.2rem"></FaWarehouse><b>{dataSource2}</b></p>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+                    <div className={styles.activeCard}>
+                        <Link style={{ textDecoration: 'none' }} to="/register_individual">
+                            <div className={styles.innerContents1}>
+                                <h4>Individual</h4>
+                                <div>
+                                    <p><FaUserAlt size="2rem"></FaUserAlt><b>{dataSource03}</b></p>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
                 </div>
 
                 {/* --------------- search --------------- */}
-                <div className='users_search'>
-                    <p>
-                        <BsSearch className='icn' size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
+
+
+                <div className={styles.vehicle_search}>
+                    <p title='search'>
+                        <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
                         <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
                         <button>Search</button>
                     </p>
                 </div>
-
-                {/* <div className='filter'>
-                    <p> 
-                        <AiFillFilter className='fil' size="0.8rem" color='rgb(63, 63, 63)'></AiFillFilter>
-                        <h6>Filter</h6> 
-                    </p>
-                </div> */}
 
                 {/* --------------------- Table ------------------- */}
                 <div>
                     <>
                         {
                             Loading ?
-                                <p className='loading'><SyncLoader
-                                    // color={color}
-                                    // Left={margin}
-                                    loading={Loading}
-                                    // cssOverride={override}
-                                    size={10}
-                                    // margin= "100px 0px 0px 0px"
-                                    // padding= "200px"
-                                    aria-label="Loading Spinner"
-                                    data-testid="loader"
-                                /></p>
+                                <p className={styles.loading} >
+                                    <SyncLoader
+                                        loading={Loading}
+                                        color={color}
+                                        size={10}
+                                        aria-label="Loading Spinner"
+                                        data-testid="loader"
+                                    /></p>
                                 :
-                                <div className='outer_vehicle_tables' id='myTable'>
-                                    <p>Total</p>
+                                <>
+                                    <div className={styles.outer_vehicle_table} id='myTable'>
+                                        <p>TOTAL OWNERS</p>
 
-                                    <table class="vehicle_table" id="myTable">
-                                        <thead>
-                                            <tr>
-                                                <th>UserName</th>
-                                                {/* <th>Company ID</th> */}
-                                                <th>Role</th>
-                                                <th>Total Vehicle</th>
-                                                <th>Total Driver</th>
-                                                <th>Status</th>
-                                                <th>Detail</th>
-                                                <th>Add Vehicle</th>
-                                                <th>Add Driver</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {currentPage.map(item => (
-                                                <tr className='active_row'>
-                                                    {/* <td></td> */}
-                                                    <td>{item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`}</td>
-                                                    <td>{item.role}</td>
-                                                    <td>{item.totalVehicles}</td>
-                                                    <td>{item.totalDrivers}</td>
-                                                    <td>{item.serviceNeeded}</td>
-                                                    <td><Link to={`/user_edit/${item.role}/${item.id}/${item.companyId}`}>
-                                                        <button>Detail</button></Link></td>
-                                                    <td><Link to="#">
-                                                        <button onClick={() => {
-                                                            handleClickopen()
+                                        <table className={styles.vehicle_table} id="myTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>UserName</th>
+                                                    <th>Role</th>
+                                                    <th>Total Vehicle</th>
+                                                    <th>Total Driver</th>
+                                                    <th>Status</th>
+                                                    <th>Detail</th>
+                                                    <th>Add Vehicle</th>
+                                                    <th>Add Driver</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {currentPage.map(item => (
+                                                    <tr className={styles.active_row}>
+                                                        <td>{item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`}</td>
+                                                        <td>{item.role}</td>
+                                                        <td>{item.totalVehicles}</td>
+                                                        <td>{item.totalDrivers}</td>
+                                                        <td>{item.serviceNeeded}</td>
+                                                        <td><Link to={`/user_edit/${item.role}/${item.id}/${item.companyId}`}>
+                                                            <button>Detail</button></Link></td>
+                                                        <td><Link to="#">
+                                                            <button onClick={() => {
+                                                                handleClickopen()
+                                                                setOwnerPhone(item.phoneNumber)
+                                                            }}>Add</button></Link></td>
+                                                        <td><Link to="#"><button onClick={() => {
+                                                            handleClickopen1()
                                                             setOwnerPhone(item.phoneNumber)
                                                         }}>Add</button></Link></td>
-                                                    <td><Link to="#"><button onClick={() => {
-                                                        handleClickopen1()
-                                                        setOwnerPhone(item.phoneNumber)
-                                                    }}>Add</button></Link></td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-
-                                    <div className='page'>
-
-                                        <Pagination
-                                            onChange={(page) => setCurentPage(page)}
-                                            pageSize={postPerPage}
-                                            current={page}
-                                            total={totalPages}
-                                            showQuickJumper
-                                            showSizeChanger
-                                            onShowSizeChange={onShowSizeChange}
-                                        />
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
 
                                         <form onSubmit={handleSubmit(onSubmit)}>
                                             {popup ?
                                                 <div>
-                                                    <div className='popup3'>
-                                                        <div className='popup-inner'>
-                                                            <lable className="zxc">Add Vehicle</lable>
-                                                            <div className='ewq'>
-                                                                <div className='qwe'>
-                                                                    <div className='asd'>
-                                                                        <button className='close-btn' onClick={closePopup5}>X</button>
+                                                    <div className={styles.popup}>
+                                                        <div className={styles.popupInner}>
+
+                                                            <div className={styles.allForms1}>
+
+                                                                <button className={styles.closeBtn} onClick={closePopup5}>X</button>
+                                                                <lable className={styles.addHeader}>Add Vehicle</lable>
+
+                                                                <div className={styles.formDiv1}>
+
+                                                                    <div className={styles.input}>
                                                                         <lable>Vehicle Catagory <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></lable>
                                                                         <select className='select' placeholder='Select Vecicle Catagory'
                                                                             {...register("vehicleCatagory", { required: '*Vehicle catagoty  is required' })}
@@ -515,7 +510,7 @@ export default function () {
                                                                         {vehicleCatagory <= 0 && errors.vehicleCatagory && <span className='validate_text'>{errors.vehicleCatagory.message}</span>}
                                                                     </div>
 
-                                                                    <div className='asd'>
+                                                                    <div className={styles.input}>
                                                                         <lable>Vehicle Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></lable>
                                                                         <input name='vehicleName' type="text"
                                                                             value={vehicleName}
@@ -525,7 +520,7 @@ export default function () {
                                                                         {vehicleName <= 0 && errors.vehicleName?.type === "required" && <span className='validate_text'>*please enter vehicle name</span>}
                                                                     </div>
 
-                                                                    <div className='asd'>
+                                                                    <div className={styles.input}>
                                                                         <lable>Vehicle Condition <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></lable>
                                                                         <select className='select' name='conditionName'
                                                                             value={vehicleCondition}
@@ -541,7 +536,7 @@ export default function () {
                                                                         {vehicleCondition <= 0 && errors.vehicleCondition && <span className='validate_text'>{errors.vehicleCondition.message}</span>}
                                                                     </div>
 
-                                                                    <div className='asd'>
+                                                                    <div className={styles.input}>
                                                                         <lable>Plate Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></lable>
                                                                         <input placeholder='Please Enter Plate Number' name='conditionName'
                                                                             value={plateNumber}
@@ -551,7 +546,7 @@ export default function () {
                                                                         {plateNumber <= 0 && errors.plateNumber && <span className='validate_text'>{errors.plateNumber.message}</span>}
                                                                     </div>
 
-                                                                    <div className='asd'>
+                                                                    <div className={styles.input}>
                                                                         <lable>Manufacture Date <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></lable>
                                                                         <input name='manufacture_date' type="date"
                                                                             value={manufactureDate}
@@ -561,8 +556,8 @@ export default function () {
                                                                         {manufactureDate <= 0 && errors.manufactureDate && <span className='validate_text'>{errors.manufactureDate.message}</span>}
                                                                     </div>
 
-                                                                    <div className='asd'>
-                                                                        <lable>Device ID <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></lable>
+                                                                    <div className={styles.input}>
+                                                                        <lable>Plate Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></lable>
                                                                         <input name='deviceID' type="text"
                                                                             value={deviceID}
                                                                             {...register("deviceID", { required: '*Device ID is required' })}
@@ -570,33 +565,34 @@ export default function () {
                                                                             onChange={(e) => setdeviceId(e.target.value)} ></input>
                                                                         {deviceID <= 0 && errors.deviceID && <span className='validate_text'>{errors.deviceID.message}</span>}
                                                                     </div>
-                                                                    <div className='asdy'>
-                                                                        {/* <button>Back</button> */}
-                                                                    </div>
-                                                                    <div className='asdy'>
-                                                                        <button>Submit </button>
-                                                                    </div>
-                                                                    <div className='asdy'>
-                                                                        {/* <button onClick={() => { handleClickopen2() }}>Add Vehicle</button> */}
-                                                                        <button type='reset'>Clear</button>
-                                                                    </div>
+
                                                                 </div>
+                                                                <div className={styles.addButton}>
+                                                                    <button>Submit </button>
+                                                                </div>
+
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div> : ""}
                                         </form>
 
                                         <form onSubmit={handleSubmit(onSubmit2)}>
+
                                             {popup1 ?
                                                 <div>
-                                                    <div className='popup3'>
-                                                        <div className='popup-inner'>
-                                                            <lable className="zxc">Add Driver</lable>
-                                                            <div className='ewq'>
-                                                                <div className='qwe2'>
-                                                                    <div className='asd'>
-                                                                        <button className='close-btn' onClick={closePopup5}>X</button>
+                                                    <div className={styles.popup}>
+                                                        <div className={styles.popupInner}>
+
+                                                            <div className={styles.allForms1}>
+
+                                                                <button className={styles.closeBtn} onClick={closePopup5}>X</button>
+                                                                <lable className={styles.addHeader}>Add Driver</lable>
+
+                                                                <div className={styles.formDiv1}>
+
+                                                                    <div className={styles.input}>
                                                                         <lable>Full Name</lable>
                                                                         <input name='driverName' type="text"
                                                                             value={driverName}
@@ -606,21 +602,20 @@ export default function () {
                                                                         {driverName <= 0 && errors.driverName && <span className='validate_text'>{errors.driverName.message}</span>}
                                                                     </div>
 
-                                                                    <div className='asd'>
+                                                                    <div className={styles.input}>
                                                                         <lable>Gender</lable>
                                                                         <select className='select' name='gender'
-                                                                            // value={vehicleCondition}
-                                                                            {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
-                                                                        // onChange={(e) => setVehicleCondition(e.target.value)} 
-                                                                        >
+                                                                            value={gender}
+                                                                            {...register("gender", { required: '*gender is required' })}
+                                                                            onChange={(e) => setGender(e.target.value)} >
                                                                             <option value="">Select Gender</option>
-                                                                            <option value="male">Male</option>
-                                                                            <option value="femail">Femaile</option>
+                                                                            <option value="MALE">Male</option>
+                                                                            <option value="FEMAIL">Femaile</option>
                                                                         </select>
-                                                                        {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>}
+                                                                        {gender <= 0 && errors.gender && <span className='validate_text'>{errors.gender.message}</span>}
                                                                     </div>
 
-                                                                    <div className='asd'>
+                                                                    <div className={styles.input}>
                                                                         <lable>License Number</lable>
                                                                         <input name='licenseNumber' type="text"
                                                                             value={licenseNumber}
@@ -630,7 +625,7 @@ export default function () {
                                                                         {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>}
                                                                     </div>
 
-                                                                    <div className='asd'>
+                                                                    <div className={styles.input}>
                                                                         <lable>Driver Licence Picture</lable>
                                                                         <input name='licensePic' type="file"
                                                                             // value={licensePic}
@@ -640,7 +635,7 @@ export default function () {
                                                                         {licensePic <= 0 && errors.licensePic && <span className='validate_text'>{errors.licensePic.message}</span>}
                                                                     </div>
 
-                                                                    <div className='asd'>
+                                                                    <div className={styles.input}>
                                                                         <lable>Driver Picture</lable>
                                                                         <input name='driverPic' type="file"
                                                                             // value={driverPic}
@@ -650,91 +645,76 @@ export default function () {
                                                                         {driverPic <= 0 && errors.driverPic && <span className='validate_text'>{errors.driverPic.message}</span>}
                                                                     </div>
 
-                                                                    <div className='asd'>
+                                                                    <div className={styles.input}>
                                                                         <lable>Date Of Birth</lable>
-                                                                        <input name='birtDate' type="Date"
-                                                                            // value={licenseNumber}
-                                                                            {...register("licenseNumber", { required: '*License Number is required' })}
-                                                                            placeholder='Enter Date Of Birth'
-                                                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
-                                                                        ></input>
-                                                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
+                                                                        <input name='birthDate' type="date"
+                                                                            value={birthDate}
+                                                                            {...register("birthDate", { required: '*Gender is required' })}
+                                                                            placeholder='Enter Vehicle Name'
+                                                                            onChange={(e) => setBirthDate(e.target.value)} ></input>
+                                                                        {birthDate <= 0 && errors.birthDate && <span className='validate_text'>{errors.birthDate.message}</span>}
                                                                     </div>
 
-
-                                                                    <div className='asd'>
+                                                                    <div className={styles.input}>
                                                                         <lable>Phone Number</lable>
-                                                                        <input name='phoneNumber' type="text"
-                                                                            // value={licenseNumber}
-                                                                            {...register("licenseNumber", { required: '*License Number is required' })}
+                                                                        <input name='driverPhone' type="text"
+                                                                            value={driverPhone}
+                                                                            {...register("driverPhone", { required: '*driver Phone is required' })}
                                                                             placeholder='Enter Phone Number'
-                                                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
+                                                                            onChange={(e) => setDriverPhone(e.target.value)}
                                                                         ></input>
-                                                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
+                                                                        {driverPhone <= 0 && errors.driverPhone && <span className='validate_text'>{errors.driverPhone.message}</span>}
                                                                     </div>
 
-                                                                    <div className='asd'>
+                                                                    <div className={styles.input}>
                                                                         <lable>Exeperiance</lable>
-                                                                        <input name='Exeperiance' type="text"
-                                                                            // value={licenseNumber}
-                                                                            {...register("licenseNumber", { required: '*License Number is required' })}
+                                                                        <input name='experience' type="text"
+                                                                            value={experience}
+                                                                            {...register("experience", { required: '*experience is required' })}
                                                                             placeholder='Enter Exeperiance '
-                                                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
+                                                                            onChange={(e) => setExperience(e.target.value)}
                                                                         ></input>
-                                                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
+                                                                        {experience <= 0 && errors.experience && <span className='validate_text'>{errors.experience.message}</span>}
                                                                     </div>
 
-                                                                    <div className='asd'>
+                                                                    <div className={styles.input}>
                                                                         <lable>License Grade</lable>
-                                                                        <input name='License Grade' type="text"
-                                                                            // value={licenseNumber}
-                                                                            {...register("licenseNumber", { required: '*License Number is required' })}
+                                                                        <input name='licenseGrade' type="text"
+                                                                            value={licenseGrade}
+                                                                            {...register("licenseGrade", { required: '*license Grade is required' })}
                                                                             placeholder='Enter License Grade '
-                                                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
+                                                                            onChange={(e) => setLicenseGrade(e.target.value)}
                                                                         ></input>
-                                                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
+                                                                        {licenseGrade <= 0 && errors.licenseGrade && <span className='validate_text'>{errors.licenseGrade.message}</span>}
                                                                     </div>
 
-                                                                    <div className='asd'>
-                                                                        <lable>Status</lable>
-                                                                        <input name='License Grade' type="text"
-                                                                            // value={licenseNumber}
-                                                                            {...register("licenseNumber", { required: '*License Number is required' })}
-                                                                            placeholder='Enter License Grade'
-                                                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
-                                                                        ></input>
-                                                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
-                                                                    </div>
+                                                                    {/*  */}
 
-                                                                    <div className='asd'>
+                                                                    <div className={styles.input}>
                                                                         <lable>Issue Date</lable>
                                                                         <input name='Issue Date' type="date"
-                                                                            // value={licenseNumber}
-                                                                            {...register("licenseNumber", { required: '*License Number is required' })}
+                                                                            value={licenseIssueDate}
+                                                                            {...register("licenseIssueDate", { required: '*license IssueDate is required' })}
                                                                             placeholder='Enter Issue Date'
-                                                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
+                                                                            onChange={(e) => setLicenseIssueDate(e.target.value)}
                                                                         ></input>
-                                                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
+                                                                        {licenseIssueDate <= 0 && errors.licenseIssueDate && <span className='validate_text'>{errors.licenseIssueDate.message}</span>}
                                                                     </div>
 
-                                                                    <div className='asd'>
+                                                                    <div className={styles.input}>
                                                                         <lable>Expire Date</lable>
                                                                         <input name='Expire Date' type="date"
-                                                                            // value={licenseNumber}
-                                                                            {...register("licenseNumber", { required: '*License Number is required' })}
+                                                                            value={licenseExpireDate}
+                                                                            {...register("licenseExpireDate", { required: '*license ExpireDate is required' })}
                                                                             placeholder='Enter Expire Date'
-                                                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
+                                                                            onChange={(e) => setLicenseExpireDate(e.target.value)}
                                                                         ></input>
-                                                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
+                                                                        {licenseExpireDate <= 0 && errors.licenseExpireDate && <span className='validate_text'>{errors.licenseExpireDate.message}</span>}
                                                                     </div>
 
-                                                                    <div className='asdy'>
-                                                                        <button>Register</button>
-                                                                    </div>
-                                                                    <div className='asdy'>
-                                                                        {/* <button onClick={() => { handleClickopen2() }}>Add Vehicle</button> */}
-                                                                        <button type='reset'>Clear</button>
-                                                                    </div>
+                                                                </div>
+                                                                <div className={styles.addButton}>
+                                                                    <button>Submit </button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -742,7 +722,18 @@ export default function () {
                                                 </div> : ""}
                                         </form>
                                     </div>
-                                </div>
+                                    <div className={styles.page}>
+                                        <Pagination
+                                            onChange={(page) => setCurentPage(page)}
+                                            pageSize={postPerPage}
+                                            current={page}
+                                            total={totalPages}
+                                            showQuickJumper
+                                            showSizeChanger
+                                            onShowSizeChange={onShowSizeChange}
+                                        />
+                                    </div>
+                                </>
 
                         }
 

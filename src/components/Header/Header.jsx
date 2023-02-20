@@ -6,7 +6,7 @@ import { IoMdArrowDropupCircle } from "react-icons/io";
 import "./header.css"
 
 export default function Header({ title }) {
- 
+
     const user = JSON.parse(localStorage.getItem("user"));
     const [logout, setLogout] = useState(false);
     const handleLogout = () => {
@@ -44,29 +44,30 @@ export default function Header({ title }) {
         setState1(!state1);
     };
 
+    const [toggles, setToggle] = useState(false);
+    const showMenu = () =>{
+        toggles(!toggles);
+    }
+
     return (
         <div>
-            <div className="dashboard_headers">
+            {/* ----------------- all content ------------------- */}
+            <div className="dashboard_headers"> 
+
                 <div className='dashboardTitle'>
                     <h2>Bazra Motors /</h2>
+                    <p onClick={showMenu} className='toggle'><FaUserAlt className='FaUserAlt' size="1.6rem" color='green'></FaUserAlt></p>
+                    {/* -------------- props ------------- */}
                     <h5>{title}</h5>
                 </div>
                 <div className='user_dashboard'>
-                    <p className='displayUser'><FaUserAlt size="1.6rem" color='green'></FaUserAlt></p>
-                    <p className='displayUser'>{user.role}</p>
-                    {/* <p onClick={handleLogout} ><IoIosArrowDropdownCircle size="1rem" color='green'></IoIosArrowDropdownCircle></p>
-                    <p onClick={handleClickopen2}><IoMdArrowDropupCircle size="1rem" color='green'></IoMdArrowDropupCircle></p> */}
+                    <p className='displayUser'><FaUserAlt className='FaUserAlt' size="1.6rem" color='green'></FaUserAlt></p>
+                    <p className='displayUser role'>{user.role}</p>
                     <p onClick={() => {
                         handleLogout()
                         toggle()
                     }}>{state ? <IoMdArrowDropupCircle size="1.2rem" color='green'></IoMdArrowDropupCircle> :
                         <IoMdArrowDropdownCircle size="1.2rem" color='green'></IoMdArrowDropdownCircle>}</p>
-                    {/* <p onClick={() => {
-                        handleClickopen3()
-                        toggle1()
-                    }}>{state1 ? <IoMdArrowDropupCircle size="1.2rem" color='green'></IoMdArrowDropupCircle> :
-                        <IoMdArrowDropdownCircle size="1.2rem" color='green'></IoMdArrowDropdownCircle>}</p> */}
-
                     {logout ?
                         <div className='user_logout'>
                             <div>
@@ -92,13 +93,9 @@ export default function Header({ title }) {
                         <div className='popup0'>
                             <div className='popup-innerq'>
                                 <div onClick={handleClickopen2} className='close'>X</div>
-                                {/* <div className='fgf1'>
-                                        <h2>{active}</h2>
-                                    </div> */}
-                                {/* <button className='close-btn' onClick={handleClickopen2}>X</button> */}
+
                                 <div className='fgf'>
                                     <h2 className='mnmn'>Are You Sure You want to want Log out</h2>
-                                    {/* <input placeholder={edit}></input> */}
                                     <div className='send_button'>
                                         <button onClick={() => {
                                             remove()

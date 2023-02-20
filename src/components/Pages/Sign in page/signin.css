@@ -54,7 +54,7 @@ h2 {
 	background-color: rgb(255, 255, 255);
 	padding: 0.6rem 1rem;
 	font-size: 1.1rem;
-	margin-bottom: 10px;
+	margin-bottom: 10px; 
 	transition: .3s;
 	border-bottom: solid 1px #10783b;
 	align-content: center;
@@ -74,8 +74,6 @@ h2 {
 .validateText {
 	color: rgb(255, 0, 0);
 	font-size: 12px;
-	margin-top: -30px;
-	padding-top: -30px;
 }
 .validate_text {
 	color: rgb(255, 0, 0);

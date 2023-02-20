@@ -1,47 +1,21 @@
 import React from 'react'
-import { FaHome } from 'react-icons/fa';
-import { AiFillCar } from "react-icons/ai";
-import { RiGpsFill } from "react-icons/ri";
-import { MdMonitor } from "react-icons/md";
-import { FaUsers } from "react-icons/fa";
-import { HiBellAlert } from "react-icons/hi2";
-import { HiDocumentReport } from "react-icons/hi";
-import { FaRegIdCard } from 'react-icons/fa';
-import { BsFillChatDotsFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import { FaCarCrash } from "react-icons/fa";
 import { TbTriangleOff } from "react-icons/tb";
 import { FaUserSecret } from "react-icons/fa";
-import { HiMenuAlt1 } from "react-icons/hi";
-import { SiTripdotcom } from "react-icons/si";
-import { SiGoogletagmanager } from "react-icons/si";
-import { BiTrip } from "react-icons/bi";
-import './alert.css';
+import styles from './alert.module.css';
 import { Link, NavLink } from 'react-router-dom';
 import { BsSearch } from "react-icons/bs";
 import { useState, useEffect } from 'react';
-import { Accident } from './Data/Data';
-import { off_road } from './Data/Data';
-import { driver } from './Data/Data';
-import Tables from './Tables';
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
+import SyncLoader from "react-spinners/SyncLoader";
 
 export default function () {
-
-    {/*--------------- Declaring variables for calling active table ---------------*/ }
-
-
-
-    let [active, setActive] = useState("accident");
-    let [state, setState] = useState("false");
-    const color = () => {
-        setState(state);
-    }
 
     const [popup, setPop] = useState(false);
     const handleClickopen = () => {
@@ -57,24 +31,6 @@ export default function () {
             window.location.href = "/";
         }
     }, [])
-
-    const [list, setList] = useState([Accident[0]]);
-    const [total, setTotal] = useState(Accident[0].length);
-    const [page, setCurentPage] = useState(1);
-    const [postPerPage, setpostPerPage] = useState(10);
-
-    const onShowSizeChange = (current, pageSize) => {
-        setpostPerPage(pageSize);
-    }
-
-    useEffect(() => {
-        setTotal([Accident[0].length])
-    }, []);
-
-
-    const indexOfLastPage = page + postPerPage;
-    const indexOfFirstPage = indexOfLastPage - postPerPage;
-    const currentPage = list[0].slice(indexOfFirstPage, indexOfLastPage);
 
     function tableSearch() {
 
@@ -99,111 +55,188 @@ export default function () {
         }
     }
 
+    const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
+    const options = {
+        headers: {
+            'Content-Type': 'application/json',
+            "Accept": "application/json",
+            "Authorization": `Bearer ${jwt}`
+        },
+    };
+
+    const [Loading, setLoading] = useState([])
+    const [totalPages, setTotalPage] = useState(1);
+    const [dataSource, setDataSource] = useState([])
+
+    const url = "http://198.199.67.201:9090/Api/Admin/Alerts/ACCIDENT";
+    useEffect(() => {
+        setLoading(true)
+        fetch(url, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource(data.alerts)
+                setLoading(false)
+            })
+    }, [])
+
+    const [dataSource2, setDataSource2] = useState([])
+    const url2 = "http://198.199.67.201:9090/Api/Admin/Alerts/OFFROAD";
+    useEffect(() => {
+        setLoading(true)
+        fetch(url2, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource2(data.alerts)
+                setTotalPage(data.alerts.length)
+                setLoading(false)
+            })
+    }, [])
+
+    const [dataSource3, setDataSource3] = useState([])
+    const url3 = "http://198.199.67.201:9090/Api/Admin/Alerts/DRIVER";
+    useEffect(() => {
+        setLoading(true)
+        fetch(url3, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource3(data.alerts)
+                // console.log(dataSource4)
+                setLoading(false)
+            })
+    }, [])
+
+    const onShowSizeChange = (current, pageSize) => {
+        setpostPerPage(pageSize);
+    }
+    const [page, setCurentPage] = useState(1);
+    const [postPerPage, setpostPerPage] = useState(5);
+    const indexOfLastPage = page * postPerPage;
+    const indexOfFirstPage = indexOfLastPage - postPerPage;
+    const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
+
+    const [color, setColor] = useState("green");
+
     return (
+
         <div className="alert_container">
 
             {/*---------------navigation---------------*/}
-            <Navigation></Navigation>
+            {/* <Navigation path="/accident"></Navigation> */}
+            <Navigation path="/accident" title="Alerts"></Navigation>
 
             {/* --------------- Alert header --------------- */}
-
-            <Navigation path="/accident"></Navigation>
+            {/* <Header title="Alerts"></Header> */}
 
             {/* --------------- Alert --------------- */}
-            <Header title="Alert"></Header>
 
-            <div className='alert_main2'>
-                <div className='currentHistory'>
-                    <Link style={{ textDecoration: 'none' }} to="/accident">
-                        <p className='sd'>Current Alerts</p></Link>
-                    <Link style={{ textDecoration: 'none' }} to="/AccidentHistory">
-                        <p className='sdd'> Alert History</p></Link>
+            <div className={styles.main_content}>
+
+                <div className={styles.headers}>
+                    <p ><Link style={{ textDecoration: 'none' }} to="/accident"><h1 className={styles.sd}>Current Alerts</h1></Link></p>
+                    <p><Link style={{ textDecoration: 'none' }} to="/AccidentHistory"><h1>Alert History</h1></Link></p>
                 </div>
-                <div className='allDivalert'>
 
-                    <div className='alert_contents'>
+                <div className={styles.allDivalert}>
 
+                    <div className={styles.allcards}>
 
-                        <Link style={{ textDecoration: 'none' }} to="/accident">
-                            <div className='parked' onClick={() => setActive("accident")}>
-                                <h4>Accident</h4>
-                                <p>< FaCarCrash size="2.2rem" ></ FaCarCrash><b>100</b></p>
-                            </div>
-                        </Link>
+                        <div className={styles.alerts}>
+                            <Link style={{ textDecoration: 'none' }} to="/accident">
+                                <div className={styles.innerContents}>
+                                    <h4>Accident</h4>
+                                    <div>
+                                        <p>< FaCarCrash size="2.2rem" ></ FaCarCrash><b>{dataSource.length}</b></p>
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
 
-                        <Link style={{ textDecoration: 'none' }} to="/off_road">
-                            <div className='activeNav1' onClick={() => setActive("off_road")}>
-                                <h4>Off Road</h4>
-                                <p><TbTriangleOff size="2.2rem" ></TbTriangleOff><b>100</b></p>
-                            </div>
-                        </Link>
+                        <div className={styles.activeCard}>
+                            <Link style={{ textDecoration: 'none' }} to="/off_road">
+                                <div className={styles.innerContents1}>
+                                    <h4>Off Road</h4>
+                                    <div>
+                                        <p><TbTriangleOff size="2.2rem" ></TbTriangleOff><b>{dataSource2.length}</b></p>
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
 
-                        <Link style={{ textDecoration: 'none' }} to="/driver">
-                            <div className='parked' onClick={() => setActive("driver")}>
-                                <h4>Driver</h4>
-                                <p><FaUserSecret size="2rem"></FaUserSecret><b>100</b></p>
-                            </div>
-                        </Link>
+                        <div className={styles.alerts}>
+                            <Link style={{ textDecoration: 'none' }} to="/driver">
+                                <div className={styles.innerContents}>
+                                    <h4>Driver</h4>
+                                    <div>
+                                        <p><FaUserSecret size="2rem"></FaUserSecret><b>{dataSource3.length}</b></p>
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
 
                     </div>
-
 
                     {/* --------------------- Alert Tables ------------------- */}
-                    <div>
-                        {/* <div className='vehicle_search'>
-                        <p title='search'>
-                            <BsSearch className='icn' size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                            <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
-                            <button>Search</button>
-                        </p>
-                    </div> */}
-                        <div className='alert_vehicle_tables' id='myTable'>
-                            <p>Off Road Alert</p>
 
-                            <table class="vehicle_table" id="myTable">
+                    {Loading ?
+                        <p className={styles.loading} >
+                            <SyncLoader
+                                color={color}
+                                // Left={margin}
+                                loading={Loading}
+                                size={10}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            /></p>
+                        :
 
-                                <thead>
-                                    <tr>
-                                        <th>Profile</th>
-                                        <th>Driver</th>
-                                        <th>Plate Number</th>
-                                        <th>Alert Location</th>
-                                        <th>Alert Type</th>
-                                        <th>Owner</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {currentPage.map(item => (
-                                        <tr className='active_row'>
+                        <>
+                            <div className={styles.outer_vehicle_table} id='myTable'>
+                                <p>OFF-ROAD</p>
 
-                                            <td><FaUserAlt className='next' size="1.5rem" color='rgb(63, 63, 63)'></FaUserAlt></td>
-                                            <td>{item.Driver}</td>
-                                            <td>{item.Plate_number}</td>
-                                            <td>{item.Alert_location}</td>
-                                            <td>{item.Alert_type}</td>
-                                            <td>{item.Owner}</td>
+                                <table className={styles.vehicle_table} id="myTable">
+
+                                    <thead>
+                                        <tr>
+                                            <th>Profile</th>
+                                            <th>Driver</th>
+                                            <th>Plate Number</th>
+                                            <th>Alert Location</th>
+                                            <th>Alert Type</th>
+                                            <th>Owner</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className='page'>
-                            <Pagination
-                                onChange={(page) => setCurentPage(page)}
-                                pageSize={postPerPage}
-                                current={page}
-                                total={total}
-                                showQuickJumper
-                                showSizeChanger
-                                onShowSizeChange={onShowSizeChange}
+                                    </thead>
 
-                            />
-                        </div>
-                        {/* {active === "accident" && <Tables datas={Accident} title="Accident" />} */}
-                        {/* {active === "off_road" && <Tables datas={off_road} title=" Off Road" />}
-                    {active === "driver" && <Tables datas={driver} title=" Driver" />} */}
+                                    <tbody>
+                                        {currentPage.map(item => (
+                                            <tr className='active_row'>
 
-                    </div>
+                                                <td><FaUserAlt className='next' size="1.5rem" color='rgb(63, 63, 63)'></FaUserAlt></td>
+                                                <td>{item.driver}</td>
+                                                <td>{item.plateNumber}</td>
+                                                <td>{item.alertocation}</td>
+                                                <td>{item.alertType}</td>
+                                                <td>{item.owner}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div className={styles.page}>
+                                <Pagination
+                                    onChange={(page) => setCurentPage(page)}
+                                    pageSize={postPerPage}
+                                    current={page}
+                                    total={totalPages}
+                                    showQuickJumper
+                                    showSizeChanger
+                                    onShowSizeChange={onShowSizeChange}
+                                />
+                            </div>
+                        </>
+
+                    }
+
 
                 </div>
             </div>

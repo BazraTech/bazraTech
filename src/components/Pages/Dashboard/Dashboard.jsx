@@ -12,7 +12,7 @@ import { BsFillChatDotsFill } from "react-icons/bs";
 import { ImUserTie } from "react-icons/im";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import './dashboard.css';
+import styles from './dashboard.module.css';
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 
@@ -66,107 +66,120 @@ export default function Dashboard() {
             })
     }, [])
 
-    const url = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners/";
-    const [dataSource3, setDataSource3] = useState([])
-    useEffect(() => {
-        // setLoading(true)
-        fetch(url, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource3(data.vehicleOwnerINF)
-                // setTotalPage(data.totalusers)
-
+    const url = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners/"; 
+    const [dataSource3, setDataSource3] = useState([]) 
+    useEffect(() => { 
+        // setLoading(true) 
+        fetch(url, options) 
+            .then(respnse => respnse.json()) 
+            .then(data => { 
+                setDataSource3(data.vehicleOwnerINF) 
+                // setTotalPage(data.totalusers) 
             })
     }, [])
 
-
     return (
+
         <div>
 
-            <Navigation path="/dashboard"></Navigation>
+            <Navigation path="/dashboard" title="Dashboard"></Navigation>
 
             {/* ---------------header--------------- */}
-            <Header title="Dashboard"></Header>
+            {/* <Header title="Dashboard"></Header> */}
 
             {/* ---------------contents--------------- */}
 
-            <div className='main_content' onClick={handleClickopen1}>
-                <div className='dashboard_contents'>
+            <div className={styles.main_content} onClick={handleClickopen1}>
 
-                    <div><Link to="/Total_number_of_vehicle" >
-                        <div className='vehicle'>
+                <div className={styles.dashboardContents}>
+
+                    <div className={styles.totalVehicles}>
+                        <Link to="/Total_number_of_vehicle" style={{ textDecoration: 'none' }} >
                             <h4>Total Vehicles </h4>
-                            <div className='vehicleTotal'>
+                            <div className={styles.innerCard}>
                                 <AiFillCar size="2.8rem" ></AiFillCar>
                                 <p>{dataSource1}</p>
                             </div>
-                        </div>
-                    </Link> </div>
+                        </Link>
+                    </div>
 
-                    <div><Link to="/Total_Drivers" >
-                        <div className='vehicle'>
-                            <h4>Total Drivers</h4>
-                            <div className='vehicleTotal'>
-                            <ImUserTie size="2.8rem"></ImUserTie>
-                            <p>{dataSource2}</p>
+                    <div className={styles.totalVehicles}>
+                        <Link to="/Total_Drivers" style={{ textDecoration: 'none' }} >
+                            <h4>Total Driver </h4>
+                            <div className={styles.innerCard}>
+                                <ImUserTie size="2.4rem"></ImUserTie>
+                                <p>{dataSource1}</p>
                             </div>
-                        </div>
-                    </Link> </div>
+                        </Link>
+                    </div>
 
-                    <div><Link to="/message_overview">
-                        <div className='comunication'>
-                            <h4>Comunication</h4>
-                            <BsFillChatDotsFill size="2.7rem" ></BsFillChatDotsFill>
-                        </div>
-                    </Link></div>
 
-                    <div><Link to="/users">
-                        <div className='users'>
-                            <h4>List of users</h4>
-                            <div className='vehicleTotal'>
-                            <FaUsers size="3rem"></FaUsers>
-                            <p>{dataSource3.length}</p>
+                    <div className={styles.message}>
+                        <Link to="/message_overview" style={{ textDecoration: 'none' }} >
+                            <h4>Communication </h4>
+                            <div className={styles.innerCard2}>
+                                <BsFillChatDotsFill size="2.4rem" ></BsFillChatDotsFill>
+                                {/* <p>{dataSource1}</p> */}
                             </div>
-                        </div>
-                    </Link> </div>
+                        </Link> 
+                    </div>
 
-                    <div><Link to="/Company_registration">
-                        <div className='registration'>
-                            <h4>Registration</h4>
-                            <FaRegIdCard size="3rem" ></FaRegIdCard>
-                        </div>
-                    </Link> </div>
-
-                    <div><Link to="/avialable_trip">
-                        <div className='monitor_vehicle'>
-                            <h4>Trip Management</h4>
-                            <BiTrip size="3rem" ></BiTrip>
-                        </div>
-                    </Link> </div>
-
-                    <div><Link to="/report">
-                        <div className='report'>
-                            <h4>Report</h4>
-                            <HiDocumentReport size="3rem" ></HiDocumentReport>
-                        </div>
-                    </Link> </div>
-
-                    <div><Link to="/accident">
-                        <div className='alert'>
-                            <h4>Alert</h4>
-                            <div className='vehicleTotal'>
-                            <HiBellAlert size="3rem" ></HiBellAlert>
-                            <p>{dataSource3.length}</p>
+                    <div className={styles.users}>
+                        <Link to="/users" style={{ textDecoration: 'none' }} >
+                            <h4>Total Users</h4>
+                            <div className={styles.innerCard3}>
+                                <AiFillCar size="2.8rem" ></AiFillCar>
+                                <p>{dataSource1}</p>
                             </div>
-                        </div>
-                    </Link></div>
+                        </Link>
+                    </div>
 
-                    <div><Link to="/tracking">
-                        <div className='tracking'>
-                            <h4>Real Time Tracking</h4>
-                            <RiGpsFill size="3rem" ></RiGpsFill>
-                        </div>
-                    </Link></div>
+                    <div className={styles.registration}>
+                        <Link to="/Company_registration" style={{ textDecoration: 'none' }} >
+                            <h4>Registration </h4>
+                            <div className={styles.innerCard4}>
+                                <AiFillCar size="2.8rem" ></AiFillCar>
+                            </div>
+                        </Link>
+                    </div>
+
+                    <div className={styles.trip}>
+                        <Link to="/avialable_trip" style={{ textDecoration: 'none' }} >
+                            <h4>Trip Management </h4>
+                            <div className={styles.innerCard5}>
+                                <AiFillCar size="2.8rem" ></AiFillCar>
+                            </div>
+                        </Link>
+                    </div>
+
+                    <div className={styles.report}>
+                        <Link to="/report" style={{ textDecoration: 'none' }} >
+                            <h4>Report </h4>
+                            <div className={styles.innerCard6}>
+                                <AiFillCar size="2.8rem" ></AiFillCar>
+                            </div>
+                        </Link>
+                    </div>
+
+                    <div className={styles.alert}>
+                        <Link to="/accident" style={{ textDecoration: 'none' }} >
+                            <h4>Alerts </h4>
+                            <div className={styles.innerCard7}>
+                                <AiFillCar size="2.8rem" ></AiFillCar>
+                                <p>{dataSource1}</p>
+                            </div>
+                        </Link>
+                    </div>
+
+                    <div className={styles.tracking}>
+                        <Link to="/tracking" style={{ textDecoration: 'none' }} >
+                            <h4>Tracking </h4>
+                            <div className={styles.innerCard8}>
+                                <AiFillCar size="2.8rem" ></AiFillCar>
+                            </div>
+                        </Link>
+                    </div>
+
                 </div>
             </div>
 

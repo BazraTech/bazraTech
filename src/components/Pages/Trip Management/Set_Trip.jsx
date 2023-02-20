@@ -23,19 +23,17 @@ import { FaStarOfLife } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
+import swal from "sweetalert";
 
 export default function () {
 
-    const { plateNumber, driver, companyID } = useParams();
+    const { vehicle, driver, companyID } = useParams();
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors },
     } = useForm();
-    const onSubmit = (data) => {
-        console.log(data);
-    };
 
     const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
     const options = {
@@ -46,6 +44,7 @@ export default function () {
             "Authorization": `Bearer ${jwt}`
         },
     };
+    
 
     const urlFour = "http://198.199.67.201:9090/Api/SignIn/Admin";
     const [dataSource4, setDataSource4] = useState([])
@@ -64,16 +63,89 @@ export default function () {
         setPop(!popup);
     }
 
+    const[tripType, setTripType]=useState("");
+    const[startLocation, setStartLocation]=useState("");
+    const[destination, setDestination]=useState("");
+    const[startDate, setStartDate]=useState("");
+
+    const [loading, setLoading] = useState(false)
+    const url10 = "http://198.199.67.201:9090/Api/Admin/TripType/All";
+    const [dataSource, setDataSource] = useState([])
+    useEffect(() => {
+        setLoading(true)
+        fetch(url10, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource(data.triptypes)
+                // console.log(dataSource4)
+                setLoading(false)
+            })
+    }, [])
+
+    const onSubmit = (data) => {
+        console.log(data);
+        setTrip()
+    };
+
+    async function setTrip() {
+        let item =
+        {
+            vehicle,
+            startLocation,
+            destination,
+            startDate,
+            tripType,
+        };
+        const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
+        const options = {
+            method: "POST",
+            headers: { 
+                'Content-Type': 'application/json',
+                "Accept": "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
+            body: JSON.stringify(item),
+        };
+
+        const url = "http://198.199.67.201:9090/Api/Admin/CreateTrip";
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            console.log(result);
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            console.log(mess);
+            if (response.ok) {
+                console.log("Signup successful");
+                swal("Successful", `${mess}`, "success", {
+                    button: true,
+                    // timer: 60000,
+                });
+                setTripType("");
+                setStartLocation("");
+                setDestination("");
+                setStartDate("");
+
+            } else {
+                console.log("failed");
+                swal(`Failed To Register ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
     return (
         <div className="dashboard_container">
 
             {/*---------------navigation---------------*/}
 
-            <Navigation path="/avialable_trip"></Navigation>
+            <Navigation path="/avialable_trip" title="Set Trip"></Navigation>
 
             {/* ---------------header--------------- */}
 
-            <Header title="Set Trip"></Header>
+            {/* <Header title="Set Trip"></Header> */}
 
             {/* ---------------contents--------------- */}
 
@@ -88,15 +160,21 @@ export default function () {
                         <div className='vehicle_information0'>
                             <div>
                                 <p>Trip Type <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                <select name="catagory"
-                                    {...register("vehicleCatagory", { required: '*Trip type  is required' })}
-                                >
-                                    <option value="">Select Trip Type</option>
-                                    <option value="w">Select Trip Type</option>
-                                    <option value="w">Select Trip Type</option>
-                                    <option value="w">Select Trip Type</option>
+                                <select name="tripType"
+                                    value={tripType}
+                                    {...register("tripType", { required: '*Trip type  is required' })}
+                                    onChange={(e) => setTripType(e.target.value)} 
+                                    >
+                                    <option selected disabled value="">Select Trip Type</option>
+                                    {
+                                        dataSource.map(item => {
+                                            return <>
+                                                <option>{item.tripType}</option>
+                                            </>
+                                        })
+                                    }
                                 </select>
-                                {errors.vehicleCatagory && <span className='validate_text'>{errors.vehicleCatagory.message}</span>}
+                                {tripType <= 0  && errors.tripType && <span className='validate_text'>{errors.tripType.message}</span>}
                             </div>
 
                             <div>
@@ -104,9 +182,9 @@ export default function () {
                                 <input name='vehicleName' type="text"
                                     {...register("vehicleName", { required: true })}
                                     placeholder='Enter Vehicle Plate Number'
-                                    value={plateNumber}
+                                    value={vehicle}
                                 ></input>
-                                {errors.vehicleName?.type === "required" && <span className='validate_text'>*please enter vehicle plate number</span>}
+                                  {vehicle <= 0  && errors.vehicleName?.type === "required" && <span className='validate_text'>*please enter vehicle plate number</span>}
                             </div>
 
                             <div>
@@ -116,37 +194,50 @@ export default function () {
                                     placeholder='Enter Deriver Name'
                                     value={driver}
                                 ></input>
-                                {errors.driver?.type === "required" && <span className='validate_text'>*Deriver Is required </span>}
+                                 {driver <= 0  && errors.driver?.type === "required" && <span className='validate_text'>*Deriver Is required </span>}
                             </div>
 
                             <div>
                                 <p>Start Location <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                 <div className='plate_numbera'>
-                                    <input placeholder='Please Enter Plate Number'
-                                        name='conditionName'
-                                        {...register("serviceNeeded", { required: '*please choose service needed' })}
+                                    <input placeholder='Please insert Start Location'
+                                        name='startLocation'
+                                        value={startLocation}
+                                        {...register("startLocation", { required: '*please choose service needed' })}
+                                        onChange={(e) => setStartLocation(e.target.value)} 
                                     >
                                     </input>
-                                    {errors.serviceNeeded && <span className='validate_text'>{errors.serviceNeeded.message}</span>}
+                                    {startLocation <= 0  && errors.startLocation && <span className='validate_text'>{errors.startLocation.message}</span>}
                                 </div>
 
                             </div>
 
                             <div>
-                                <p>End Location <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                <input name='manufacture_date' type="text"
-                                    {...register("manufactureDate", { required: '*Manufacture date is required' })}
-                                    placeholder='Enter Manufactureing Date'
-                                ></input>
-                                {errors.manufactureDate && <span className='validate_text'>{errors.manufactureDate.message}</span>}
+                                <p>Destination<FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                <div className='plate_numbera'>
+                                    <input placeholder='Please insert Sestination' type="text"
+                                        name='destination'
+                                        value={destination}
+                                        {...register("destination", { required: '*please choose service needed' })}
+                                        onChange={(e) => setDestination(e.target.value)} 
+                                    >
+                                    </input>
+                                    {destination <= 0  &&errors.destination && <span className='validate_text'>{errors.destination.message}</span>}
+                                </div>
                             </div>
+
                             <div>
-                                <p>Start Date <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                <input name='device_id' type="date"
-                                    {...register("deviceID", { required: '*Device ID is required' })}
-                                    placeholder='Enter Device ID'
-                                ></input>
-                                {errors.deviceID && <span className='validate_text'>{errors.deviceID.message}</span>}
+                                <p>Start Date<FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                <div className='plate_numbera'>
+                                    <input placeholder='Please insert Sestination'  type="date"
+                                        name='startDate'
+                                        value={startDate}
+                                        {...register("startDate", { required: '*please choose service needed' })}
+                                        onChange={(e) => setStartDate(e.target.value)} 
+                                    >
+                                    </input>
+                                    {startDate <= 0  && errors.startDate && <span className='validate_text'>{errors.startDate.message}</span>}
+                                </div>
                             </div>
                         </div>
                         <div className='company_button'>

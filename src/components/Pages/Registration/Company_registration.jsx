@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaStarOfLife } from 'react-icons/fa';
-import './company_registration.css';
+import styles from './company_registration.module.css';
 import { useForm } from 'react-hook-form';
 import { Link, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -15,7 +15,7 @@ export default function Company_registration() {
     const {
         register,
         handleSubmit,
-        watch,
+        watch, 
         formState: { errors },
     } = useForm();
     const onSubmit = (data) => {
@@ -112,7 +112,7 @@ export default function Company_registration() {
             console.log(mess);
             if (response.ok) {
                 console.log("Signup successful");
-                swal("Successful", `${mess}`, "success", {
+                swal("Successfully Registerd", `${mess}`, "success", {
                     button: true,
                     // timer: 60000,
                 });
@@ -251,36 +251,36 @@ export default function Company_registration() {
 
             {/*--------------- Company Container ---------------*/}
 
-            <Navigation path="/Company_registration"></Navigation>
+            <Navigation path="/Company_registration" title="Registation"></Navigation>
 
 
             {/* --------------- Company header --------------- */}
 
-            <Header title="Registation"></Header>
+            {/* <Header title="Registation"></Header> */}
 
 
             {/* --------------- Registration- -------------- */}
 
-            <section className='register'>
+            <section className={styles.main_content}>
 
-                <div className='company_individual_header'>
-                    <p ><NavLink to="/Company_registration"><h1 className='nmn'>Company</h1></NavLink></p>
-                    <p><NavLink to="/individual"><h1>Individual</h1></NavLink></p>
+                <div className={styles.company_individual_header}>
+                    <p ><Link style={{ textDecoration: 'none' }} to="/Company_registration"><h1 className={styles.companyHeader}>Company</h1></Link></p>
+                    <p><Link style={{ textDecoration: 'none' }} to="/individual"><h1>Individual</h1></Link></p>
                 </div>
 
-                <form className='form' onSubmit={handleSubmit(onSubmit)}>
+                <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 
                     {/* --------------- Company information- -------------- */}
-                    <div className='allDiv'>
-                        <div className='first_div'>
+                    <div className={styles.allDiv}>
+                        <div className={styles.first_div}>
                             <h1>Company Information</h1>
-                            <div className='company_information1'>
+                            <div className={styles.company_information}>
 
                                 <div>
                                     <p>Company Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input
                                         name='companyName'
-                                        value={companyName}
+                                        value={companyName} 
                                         type="text"
                                         {...register("organizationName", { required: true })}
                                         placeholder='Enter organization name'
@@ -332,7 +332,7 @@ export default function Company_registration() {
                         {/* --------------- Company Address- -------------- */}
                         <div className='second_div'>
                             <h1>Company Address</h1>
-                            <div className='company_Address1'>
+                            <div className={styles.company_Address}>
                                 <div>
                                     <p>Region <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input name='region'
@@ -422,7 +422,7 @@ export default function Company_registration() {
                         {/* --------------- Owner information- -------------- */}
                         <div className='Third_div'>
                             <h1>Owner Information</h1>
-                            <div className='owner_information1'>
+                            <div className={styles.owner_information}>
                                 <div>
                                     <p>First Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input name='firstName' type="text"
@@ -471,7 +471,7 @@ export default function Company_registration() {
 
                         <div className='Third_div'>
                             <h1>Additional Information</h1>
-                            <div className='additional_information1'>
+                            <div className={styles.additional_information}>
                                 <div>
                                     <p>Notification Pereference <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select
@@ -511,8 +511,8 @@ export default function Company_registration() {
                         </div>
 
                         <div className='second_div'>
-                            <div className='registerd_vehiclel'><h1>Vehicle Information</h1></div>
-                            <div className='vehicle_information1'>
+                            <h1>Vehicle Information</h1>
+                            <div className={styles.vehicle_information}>
                                 <div>
                                     <p>Vehicle Catagory <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select
@@ -578,7 +578,7 @@ export default function Company_registration() {
                                         onChange={(e) => setmanufactureDate(e.target.value)} ></input>
                                     {manufactureDate <= 0 && errors.manufactureDate && <span className='validate_text'>{errors.manufactureDate.message}</span>}
                                 </div>
-
+ 
                                 <div>
                                     <p>Device ID <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input name='deviceID' type="text"
@@ -590,9 +590,9 @@ export default function Company_registration() {
                                 
                             </div>
                         </div>
-                        <div className='company_button'>
-                            <button className='add'>Register</button>
-                            <button type='reset' className='add'>Clear</button>
+                        <div className={styles.company_button}>
+                            <button className={styles.add}>Register</button>
+                            {/* <button type='reset' className='add'>Clear</button> */}
                         </div>
 
                     </div>

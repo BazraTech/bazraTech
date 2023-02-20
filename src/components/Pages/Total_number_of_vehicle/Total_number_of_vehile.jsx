@@ -7,19 +7,14 @@ import { AiFillFilter } from "react-icons/ai";
 import { FaParking } from "react-icons/fa";
 import { GrSettingsOption } from "react-icons/gr";
 import { IoSettingsOutline } from "react-icons/io5";
-import './total_no_of_vehicle.css';
+import styles from './total_vehicle.module.css';
 import { Link, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { total } from './data/jsonData';
-import { on_route } from './data/jsonData';
-import { parked } from './data/jsonData';
-import { maintenance } from './data/jsonData';
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
 import SyncLoader from "react-spinners/SyncLoader";
-
 
 
 export default function () {
@@ -28,7 +23,7 @@ export default function () {
 
         let input, filter, table, tr, td, txtValue, errors;
 
-        //Intialising Variables
+        //Intialising Variables for search bar
         input = document.getElementById("myInput");
         filter = input.value.toUpperCase();
         table = document.getElementById("myTable");
@@ -49,9 +44,6 @@ export default function () {
 
     let [active, setActive] = useState("total_vehicle");
     let [state, setState] = useState("false");
-    // const color = () => {
-    //     setState(state);
-    // }
     const [popup, setPop] = useState(false);
     const handleClickopen = () => {
         setPop(!popup);
@@ -174,94 +166,116 @@ export default function () {
 
             {/*---------------navigation---------------*/}
 
-            <Navigation path="/Total_number_of_vehicle"></Navigation>
+            {/* <Navigation path="/Total_number_of_vehicle"></Navigation> */}
+            <Navigation path="/Total_number_of_vehicle" title="Total Vehicles"></Navigation>
 
             {/* --------------- header --------------- */}
 
-            <Header title="Total Vehicles"></Header>
+            {/* <Header title="Total Vehicles"></Header> */}
 
             {/* --------------- users --------------- */}
 
-            <div className='main_content'>
-                <div className='vehicle_contents0'>
-                    <Link to="/Total_number_of_vehicle" style={{ textDecoration: 'none' }}> <div className='activeNav '>
-                        <h4>Total Vehicle</h4>
-                        <p><AiFillCar size="2.2rem"></AiFillCar><b>{dataSource2.length}</b></p>
+            <div className={styles.main_content}>
 
-                    </div></Link>
+                <div className={styles.allcards}>
+                    
+                    <div className={styles.activeCard}>
+                        <Link to="/Total_number_of_vehicle" style={{ textDecoration: 'none' }}>
+                            <div className={styles.innerContents1}>
+                                <h4>Total Vehicle</h4>
+                                <div className={styles.icon}>
+                                    <p><AiFillCar size="2.2rem"></AiFillCar><b>{dataSource2.length}</b></p>
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
 
-                    <Link style={{ textDecoration: 'none' }} to="/on_route"><div className='on_route1'>
-                        <h4>On Route</h4>
-                        <p><FaRoute size="2rem" ></FaRoute><b>{dataSource.length}</b></p>
-                    </div></Link> 
+                    <div className={styles.vehicle}>
+                        <Link to="/on_route" style={{ textDecoration: 'none' }}>
+                            <div className={styles.innerContents}>
+                                <h4>On Route</h4>
+                                <p><FaRoute size="2rem" ></FaRoute><b>{dataSource.length}</b></p>
+                            </div>
+                        </Link>
+                    </div>
 
-                    <Link style={{ textDecoration: 'none' }} to="/on_stock">
-                        <div className='parked1'>
-                            <h4>On Stock</h4>
-                            <p><FaParking size="2rem" ></FaParking><b>{dataSource3}</b></p>
-                        </div>
-                    </Link>
+                    <div className={styles.vehicle}>
+                        <Link to="/on_stock" style={{ textDecoration: 'none' }}>
+                            <div className={styles.innerContents}>
+                                <h4>On Stock</h4>
+                                <p><FaParking size="2rem" ></FaParking><b>{dataSource3}</b></p>
+                            </div>
+                        </Link>
+                    </div>
 
-                    <Link style={{ textDecoration: 'none' }} to="/parked">
-                        <div className='maintenance1'>
-                            <h4>Parked</h4>
-                            <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{dataSource5.length}</b></p>
-                        </div>
-                    </Link>
-                    <Link style={{ textDecoration: 'none' }} to="/maintenance">
-                        <div className='maintenance1'>
-                            <h4>Maintenance</h4>
-                            <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{dataSource4.length}</b></p>
-                        </div>
-                    </Link>
+                    <div className={styles.vehicle}>
+                        <Link to="/parked" style={{ textDecoration: 'none' }}>
+                            <div className={styles.innerContents}>
+                                <h4>Parked</h4>
+                                <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{dataSource5.length}</b></p>
+                            </div>
+                        </Link>
+                    </div>
+
+                    <div className={styles.vehicle}>
+                        <Link to="/maintenance" style={{ textDecoration: 'none' }}>
+                            <div className={styles.innerContents}>
+                                <h4>Maintenance</h4>
+                                <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{dataSource4.length}</b></p>
+                            </div>
+                        </Link>
+                    </div>
+
                 </div>
 
                 {/* --------------- search --------------- */}
-                
 
-                <div className='vehicle_search'>
+
+                <div className={styles.vehicle_search}>
                     <p title='search'>
-                        <BsSearch className='icn' size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
+                        <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
                         <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
                         <button>Search</button>
                     </p>
                 </div>
-                {Loading ?
-                    <p className='loading'><SyncLoader
-                        color={color}
-                        Left={margin}
-                        loading={Loading}
-                        size={10}
-                        aria-label="Loading Spinner"
-                        data-testid="loader"
-                    /></p>
+
+                {Loading ? 
+                    <p className={styles.loading} >
+                        <SyncLoader
+                            color={color}
+                            Left={margin}
+                            loading={Loading}
+                            size={10}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                        /></p>
                     :
 
                     <>
-                        <div className='outer_vehicle_tables' id='myTable'>
+                        <div className={styles.outer_vehicle_table} id='myTable'>
                             <p>Total Vehicle</p>
 
-                            <table className="vehicle_table" id="myTable">
+                            <table className={styles.vehicle_table} id="myTable">
 
                                 <thead>
                                     <tr>
-                                        <th>Profile</th> 
-                                        <th>Assigned Driver</th> 
-                                        <th>Vehicle ID</th> 
-                                        <th>Vehicle Type</th> 
-                                        <th>Plate Number</th> 
+                                        <th>Profile</th>
+                                        <th>Assigned Driver</th>
+                                        <th>Vehicle ID</th>
+                                        <th>Vehicle Type</th>
+                                        <th>Plate Number</th>
                                         <th>Status</th>
                                         <th>Detail</th>
                                         <th>Tracking</th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
                                     {currentPage.map(item => (
-                                        <tr className='active_row'>
+                                        <tr className={styles.active_row}>
 
                                             <td>{item.vehicleName}</td>
                                             <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td>
-                                            {/* <td>{item.driver.driverName}</td> */}
                                             <td>{item.id}</td>
                                             <td>{item.vehicleCatagory.catagory}</td>
                                             <td>{item.plateNumber}</td>
@@ -273,24 +287,21 @@ export default function () {
                                 </tbody>
                             </table>
                         </div>
-                        <div className='page'>
-                        <Pagination
-                            onChange={(page) => setCurentPage(page)}
-                            pageSize={postPerPage}
-                            current={page}
-                            total={totalPages}
-                            showQuickJumper
-                            showSizeChanger
-                            onShowSizeChange={onShowSizeChange}
-                        />
+
+                        <div className={styles.page}>
+                            <Pagination
+                                onChange={(page) => setCurentPage(page)}
+                                pageSize={postPerPage}
+                                current={page}
+                                total={totalPages}
+                                showQuickJumper
+                                showSizeChanger
+                                onShowSizeChange={onShowSizeChange}
+                            />
                         </div>
                     </>
 
                 }
-
-
-
-
 
             </div>
 

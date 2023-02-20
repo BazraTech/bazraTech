@@ -3,7 +3,7 @@
 .dashboard_container {
     position: relative;
     width: 100%;
-    text-decoration: none; 
+    text-decoration: none;
 }
 
 /* ----------------- navigation --------------- */
@@ -74,7 +74,7 @@
     width: 90%;
     box-shadow: none;
     margin-bottom: 0%;
-    
+
 }
 
 .row-two {
@@ -82,7 +82,7 @@
     align-content: center;
     grid-template-columns: 25% 25%;
     margin-left: 7%;
-    
+
 }
 
 .report-status {
@@ -122,6 +122,7 @@
     border: 1px solid rgba(21, 113, 146, 0.4);
 
 }
+
 /* .Report-main{
     background-color: #000000;
 } */
@@ -243,7 +244,7 @@
 /*-----------Chart place-------------------*/
 
 .Status-report {
-  
+
     display: grid;
     grid-template-columns: 30% 30%;
     column-gap: 10%;
@@ -252,7 +253,7 @@
     /* background-color: #ffffff; */
     /* padding: %; */
     padding-left: 20px;
- 
+
 
 }
 
@@ -325,8 +326,8 @@
 .pop_input2 input:focus {
     box-shadow: 0px 0px 2px 1px rgba(21, 113, 146, 0.4);
     border: 1px solid rgba(21, 113, 146, 0.4);
-  
-  }
+
+}
 
 .inline {
     display: grid;
@@ -359,6 +360,7 @@
     padding-top: 30px;
 
 }
+
 .popup_box_one_first {
     background-color: #f7f7f7;
     display: grid;
@@ -403,7 +405,7 @@
     /* background-color: red */
 }
 
-.popup{
+.popup {
     position: fixed;
     top: 0;
     left: 0;
@@ -413,9 +415,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2; 
+    z-index: 2;
 }
-.popup-inner0{
+
+.popup-inner0 {
     position: relative;
     padding: 5%;
     padding-top: 5%;
@@ -428,9 +431,9 @@
     border-radius: 5px;
 }
 
-.popup-inner0 .close-btn{
+.popup-inner0 .close-btn {
     position: absolute;
-    top: 20px ;
+    top: 20px;
     right: 26px;
     background-color: red;
     padding: 2px;
@@ -439,10 +442,10 @@
     border: none;
     color: white;
     border-radius: 5px;
-    
+
 }
 
-.startEndPoint{
+.startEndPoint {
     display: grid;
     grid-template-columns: 32% 32% 32%;
     background-color: white;
@@ -452,16 +455,17 @@
     border-radius: 8px;
     box-shadow: 2px 2px 5px 0px;
 }
-.chart-donat{
+
+.chart-donat {
     display: grid;
     grid-template-columns: 35% 65%;
     column-gap: 30px;
     margin-left: -30px;
-    
-    
+
+
 }
 
-.travelTime{
+.travelTime {
     background-color: white;
     padding-top: 20px;
     padding-left: 15px;
@@ -469,7 +473,7 @@
     box-shadow: 2px 2px 5px 0px;
 }
 
-.speedHistory{
+.speedHistory {
     background-color: white;
     padding-top: 20px;
     padding-left: 40px;
@@ -477,7 +481,74 @@
     box-shadow: 2px 2px 5px 0px;
 }
 
-.reportDetail{
+.reportDetail {
     background-color: #2c2c2c;
     margin-top: 5px;
+}
+
+.pdfandexcelouter{
+    background-color: white;
+    padding: 50px;
+    margin-left: 60px;
+    margin-right: 60px;
+    border-radius: 5px;
+}
+
+.pdfandexcel {
+    background-color: white;
+    display: grid;
+    row-gap: 30%;
+    grid-template-columns: 50%;
+    justify-content: center;
+    margin-top: 30px;
+    /* padding: 50px;
+    margin-left: 60px;
+    margin-right: 60px;
+    border-radius: 5px; */
+}
+
+.pdfandexcel button {
+    background-color: #1c8a25;
+    border: none;
+    height: 40px;
+    color: #ffffff;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.print {
+    background-color: rgb(34, 34, 34);
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: #ffffff;
+    border-radius: 6px;
+    border: none;
+}
+
+.page22 {
+    display: flex;
+    justify-content: right;
+    padding: 5%;
+    padding-right: 12%;
+}
+
+.printexel {
+    border: none;
+}
+.selectAction{
+    text-align: center;
+    background-color: white;
+    border: 8px solid rgb(230, 230, 230);
+    margin-top: -90px;
+    /* margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: -10px; */
+    margin-left: 15%;
+    margin-right: 15%;
+    padding: 2%;
+    color: green;
+    font-size: 23px;
+    font-weight: 700;
 }

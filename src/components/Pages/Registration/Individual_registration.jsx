@@ -1,18 +1,7 @@
 import React from 'react'
-import { FaHome } from 'react-icons/fa';
-import { AiFillCar } from "react-icons/ai";
-import { RiGpsFill } from "react-icons/ri";
-import { FaUsers } from "react-icons/fa";
-import { HiBellAlert } from "react-icons/hi2";
-import { HiDocumentReport } from "react-icons/hi";
-import { FaRegIdCard } from 'react-icons/fa';
-import { BsFillChatDotsFill } from "react-icons/bs";
-import { FaUserAlt } from "react-icons/fa";
-import { AiFillSetting } from "react-icons/ai";
-import { FiLogOut } from "react-icons/fi";
 import { FaStarOfLife } from 'react-icons/fa';
 import { ImUserTie } from "react-icons/im";
-import './company_registration.css';
+import styles from './company_registration.module.css';
 import { useForm } from 'react-hook-form';
 import { Link, NavLink } from 'react-router-dom';
 import { BiTrip } from "react-icons/bi";
@@ -132,7 +121,7 @@ export default function Individual_registration() {
                 console.log("Signup successful");
                 swal("Successful", `${mess}`, "success", {
                     button: true,
-                    // timer: 60000,
+                    // timer: 60000, 
                 });
                 setRegion("");
                 setCity("");
@@ -254,31 +243,31 @@ export default function Individual_registration() {
 
             {/*--------------- Company Container ---------------*/}
 
-            <Navigation path="/Company_registration"></Navigation>
+            <Navigation path="/Company_registration" title="Registation"></Navigation>
 
             {/* --------------- Company header --------------- */}
 
-            <Header title="Registation"></Header>
+            {/* <Header title="Registation"></Header> */}
 
 
             {/* --------------- Registration- -------------- */}
 
-            <section className='register'>
+            <section className={styles.main_content}>
 
-                <div className='company_individual_header'>
-                    <p className='llll'><NavLink to="/Company_registration"><h1>Company</h1></NavLink></p>
-                    <p><NavLink to="/individual"><h1 className='nmn'>Individual</h1></NavLink></p>
+                <div className={styles.company_individual_header}>
+                    <p ><Link style={{ textDecoration: 'none' }} to="/Company_registration"><h1 >Company</h1></Link></p>
+                    <p><Link style={{ textDecoration: 'none' }} to="/individual"><h1 className={styles.companyHeader}>Individual</h1></Link></p>
                 </div>
 
-                <form className='form' onSubmit={handleSubmit(onSubmit)}>
+                <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 
                     {/* --------------- Company information- -------------- */}
 
                     {/* --------------- Company Address- -------------- */}
-                    <div className='allDiv'>
+                    <div className={styles.allDiv}>
                         <div className='first_div'>
                             <h1>Owuner Information</h1>
-                            <div className='company_Address1'>
+                            <div className={styles.company_Address}>
                                 <div>
                                     <p>First Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input name='firstName' type="text" value={firstName}
@@ -404,7 +393,7 @@ export default function Individual_registration() {
 
                         <div className='Third_div'>
                             <h1>Additional Information</h1>
-                            <div className='additional_information1'>
+                            <div className={styles.additional_information}>
                                 <div>
                                     <p>Notification Pereference <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select
@@ -444,8 +433,8 @@ export default function Individual_registration() {
                         </div>
 
                         <div className='second_div'>
-                            <div className='registerd_vehiclel'><h1>Vehicle Information</h1></div>
-                            <div className='vehicle_information1'>
+                            <h1>Vehicle Information</h1>
+                            <div className={styles.vehicle_information}>
                                 <div>
                                     <p>Vehicle Catagory <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select
@@ -519,8 +508,9 @@ export default function Individual_registration() {
                                 </div>
                             </div>
                         </div>
-                        <div className='company_button'>
-                            <button className='add'>Register</button>
+                        <div className={styles.company_button}>
+                            <button className={styles.add}>Register</button>
+                            {/* <button type='reset' className='add'>Clear</button> */}
                         </div>
                     </div>
 

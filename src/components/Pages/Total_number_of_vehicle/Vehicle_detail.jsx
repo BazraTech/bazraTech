@@ -15,13 +15,13 @@ import { FaStarOfLife } from 'react-icons/fa';
 import './vehicle_detail.css';
 import { useForm } from 'react-hook-form';
 import { Link, useParams, useNavigate  } from 'react-router-dom';
-import { total } from './data/jsonData';
+// import { total } from './data/jsonData';
 import { useState, useEffect } from 'react';
 import { SiTripdotcom } from "react-icons/si";
 import { SiGoogletagmanager } from "react-icons/si";
 import { BiTrip } from "react-icons/bi";
 import Header from '../../Header/Header';
-import Navigation from '../Navigation/Navigation';
+import Navigation from '../Navigation/Navigation'; 
 
 export default function Users_edit() {
 
@@ -113,18 +113,18 @@ export default function Users_edit() {
 
                 {/*---------------navigation---------------*/}
 
-                <Navigation path="/Total_number_of_vehicle"></Navigation>
+                <Navigation path="/Total_number_of_vehicle" title="Vehicles Detail"></Navigation>
 
                 {/* --------------- Vehicle header --------------- */}
 
-                <Header title="Vehicles Detail"></Header>
+                {/* <Header title="Vehicles Detail"></Header> */}
 
 
                 {/* ---------------Registration--------------- */}
+ 
 
 
-
-                <section className='vehicle_register'>
+                <section className='main_content'>
                     {/* <div className='user_header'>
                         <p>User ID</p>
                         <p>BA 00001</p>
@@ -132,7 +132,7 @@ export default function Users_edit() {
                         <p>Abebe</p>
                     </div> */}
 
-                    <button className='navigateBack' onClick={goBack}>Back</button>
+                    {/* <button className='navigateBack' onClick={goBack}>Back</button> */}
 
                     <div className='company_individual_header'> 
                         <p ><h1 className='nmn'>Vehicle Detail</h1></p> 
@@ -190,7 +190,7 @@ export default function Users_edit() {
                                             </select> : ""}
                                     </div>
                                     <div>
-                                        <p>Plate Number </p>
+                                        <p>Plate Number </p> 
                                         <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.plateNumber} type="text" disabled={diabled}></input>
                                     </div>
 

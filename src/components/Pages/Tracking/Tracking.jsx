@@ -1,20 +1,6 @@
 import React from 'react'
 import { FaHome } from 'react-icons/fa';
-import { AiFillCar } from "react-icons/ai";
-import { RiGpsFill } from "react-icons/ri";
-import { MdMonitor } from "react-icons/md";
-import { FaUsers } from "react-icons/fa";
-import { HiBellAlert } from "react-icons/hi2";
-import { HiDocumentReport } from "react-icons/hi";
-import { FaRegIdCard } from 'react-icons/fa';
-import { BsFillChatDotsFill } from "react-icons/bs";
-import { FaUserAlt } from "react-icons/fa";
-import { AiFillSetting } from "react-icons/ai";
-import { FiLogOut } from "react-icons/fi";
-import { FaStarOfLife } from 'react-icons/fa';
-import { BsSearch } from "react-icons/bs";
-import { HiMenuAlt1 } from "react-icons/hi";
-import './tracking.css';
+import styles from './tracking.module.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SiTripdotcom } from "react-icons/si";
@@ -76,16 +62,13 @@ export default function () {
       .then(data => {
         setDataSource2(data.vehicles)
         setTotalPage(data.totalVehicles);
-        // console.log(dataSource2)
         setLoading(false);
 
       })
   }, [])
 
-  // const [list, setList] = useState([dataSource]);
-  // const [total, setTotal] = useState(dataSource.length);
   const [page, setCurentPage] = useState(1);
-  const [postPerPage, setpostPerPage] = useState(5);
+  const [postPerPage, setpostPerPage] = useState(7);
 
   const indexOfLastPage = page * postPerPage;
   const indexOfFirstPage = indexOfLastPage - postPerPage;
@@ -99,89 +82,73 @@ export default function () {
 
 
   return (
-    <div className="tacking_container">
+
+    <div className="tacking_container" title="Tracking">
 
       {/*---------------navigation---------------*/}
 
-      <Navigation path="/tracking"></Navigation>
+      <Navigation path="/tracking" title="Tracking"></Navigation>
 
       {/* --------------- tracking header --------------- */}
 
-      <Header title="Tracking"></Header>
+      {/* <Header title="Tracking"></Header> */}
 
-      <div className='main_content'>
-
-
-        {/*-----------------Search bar-------------- */}
-
-        {/*-----------------Search bar rename-------------- */}
-
-        {/* <div className='map_search'>
-          <p>
-            <BsSearch className='icn' size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-            <input type="text"  placeholder="Search"></input>
-            <button>Search</button>
-          </p>
-        </div> */}
+      <div className={styles.main_content}>
 
         {/*---------------- map clone ------------------- */}
-        <div className='mapAndSearch'>
-          <div className="m-mapclone">
-            {/* <p>anduamlak</p> */}
+        <div className={styles.mapAndSearch}>
+
+          <div className={styles.map} >
             <iframe width="100%" height="100%" id="gmap_canvas" src="https://maps.google.com/maps?q=bole friendship  business &t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
           </div>
-          <div className='vehiclesOnMap'>
-            <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search . . ."></input>
-            <div className='outer_vehicle_tables' id='myTable'>
-              <lable>Total Vehicle</lable>
 
-              <table className="vehicle_table" id="myTable">
+          {/*---------------- search bar ------------------- */}
+          <div className={styles.vehiclesOnMap}>
+            <div className={styles.search}>
+              <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search . . ."></input>
+              <button>Search</button>
+            </div>
+
+            {/*---------------- table ------------------- */}
+
+            <div className={styles.outer_vehicle_table} id='myTable'>
+              <p>Total Vehicle</p>
+
+              <table className={styles.vehicle_table} id="myTable">
 
                 <thead>
                   <tr>
-                    {/* <th>Profile</th> */}
                     <th>Assigned Driver</th>
-                    {/* <th>Vehicle ID</th> */}
-                    {/* <th>Vehicle Type</th> */}
                     <th>Plate Number</th>
                     <th>Detail</th>
-                    {/* <th>Tracking</th> */}
                   </tr>
                 </thead>
                 <tbody>
                   {currentPage.map(item => (
-                    <tr className='active_row'>
+                    <tr className={styles.active_row}>
 
-                      {/* <td>{item.vehicleName}</td> */}
                       <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td>
-                      {/* <td>{item.id}</td> */}
-                      {/* <td>{item.vehicleCatagory.catagory}</td> */}
                       <td>{item.plateNumber}</td>
                       <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
-                      {/* <td><Link to="/tracking"><button>Tracking</button></Link></td> */}
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <div className='page'>
+            </div>
+            <div className={styles.page}>
               <Pagination
                 onChange={(page) => setCurentPage(page)}
                 pageSize={postPerPage}
                 current={page}
                 total={totalPages}
-                // showQuickJumper
-                // showSizeChanger
-                // onShowSizeChange={onShowSizeChange}
+              // showQuickJumper
+              // showSizeChanger
+              // onShowSizeChange={onShowSizeChange}
               />
-            </div>
             </div>
 
           </div>
         </div>
-
-        {/* <div>
-          <Link to="/tracking_hitory"><button className='track_history'>Show Full History</button></Link>
-        </div> */}
 
       </div>
     </div>

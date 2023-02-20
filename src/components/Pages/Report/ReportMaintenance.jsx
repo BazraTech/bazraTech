@@ -129,7 +129,7 @@ export default function () {
 
             {/*---------------navigation---------------*/}
 
-            <Navigation path="/report"></Navigation>
+            <Navigation path="/report" title="Maintenance"></Navigation>
 
             {/* --------------- header --------------- */}
 

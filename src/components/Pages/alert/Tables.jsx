@@ -1,5 +1,5 @@
 import React from 'react'
-import './alert.css';
+import styles from './alert.module.css';
 import { FaUserAlt } from "react-icons/fa";
 import "antd/dist/antd"
 import { useState, useEffect } from 'react';

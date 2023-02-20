@@ -7,14 +7,10 @@ import { AiFillFilter } from "react-icons/ai";
 import { FaParking } from "react-icons/fa";
 import { GrSettingsOption } from "react-icons/gr";
 import { IoSettingsOutline } from "react-icons/io5";
-import './total_no_of_vehicle.css';
+// import './total_no_of_vehicle.css';
 import { Link, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { total } from './data/jsonData';
-import { on_route } from './data/jsonData';
-import { parked } from './data/jsonData';
-import { maintenance } from './data/jsonData';
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
@@ -90,16 +86,17 @@ export default function ({data, display, changeName}) {
 
                                     <div className='asd'>
                                         <lable>Gender</lable>
-                                        <select className='select' name='gender'
-                                        // value={vehicleCondition}
-                                        // {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
-                                        // onChange={(e) => setVehicleCondition(e.target.value)} 
-                                        >
-                                            <option value="">Select Gender</option>
+                                        <input value={dataSource.gender}></input>
+                                        {/* <select className='select' name='gender' 
+                                        
+                                         {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
+                                         onChange={(e) => setVehicleCondition(e.target.value)} 
+                                        > 
+                                             <option value="">Select Gender</option>
                                             <option value="male">Male</option>
-                                            <option value="femail">Femaile</option>
-                                        </select>
-                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
+                                            <option value="femail">Femaile</option> 
+                                         </select> 
+                                        {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
                                     </div>
 
                                     <div className='asd'>
@@ -138,7 +135,7 @@ export default function ({data, display, changeName}) {
                                     <div className='asd'>
                                         <lable>Date Of Birth</lable>
                                         <input name='birtDate' type="Date"
-                                        // value={licenseNumber}
+                                        value={dataSource.birthDate}
                                         // {...register("licenseNumber", { required: '*License Number is required' })}
                                         // placeholder='Enter Date Of Birth'
                                         // onChange={(e) => setLicenseNumber(e.target.value)} 
@@ -150,7 +147,7 @@ export default function ({data, display, changeName}) {
                                     <div className='asd'>
                                         <lable>Phone Number</lable>
                                         <input name='phoneNumber' type="text"
-                                            // value={licenseNumber}
+                                            value={dataSource.phoneNumber}
                                             // {...register("licenseNumber", { required: '*License Number is required' })}
                                             placeholder='Enter Phone Number'
                                         // onChange={(e) => setLicenseNumber(e.target.value)} 
@@ -161,7 +158,7 @@ export default function ({data, display, changeName}) {
                                     <div className='asd'>
                                         <lable>Exeperiance</lable>
                                         <input name='Exeperiance' type="text"
-                                            // value={licenseNumber}
+                                             value={dataSource.experience}
                                             // {...register("licenseNumber", { required: '*License Number is required' })}
                                             placeholder='Enter Exeperiance '
                                         // onChange={(e) => setLicenseNumber(e.target.value)} 
@@ -172,7 +169,7 @@ export default function ({data, display, changeName}) {
                                     <div className='asd'>
                                         <lable>License Grade</lable>
                                         <input name='License Grade' type="text"
-                                            // value={licenseNumber}
+                                             value={dataSource.licenseGrade}
                                             // {...register("licenseNumber", { required: '*License Number is required' })}
                                             placeholder='Enter License Grade '
                                         // onChange={(e) => setLicenseNumber(e.target.value)} 
@@ -181,20 +178,9 @@ export default function ({data, display, changeName}) {
                                     </div>
 
                                     <div className='asd'>
-                                        <lable>Status</lable>
-                                        <input name='License Grade' type="text"
-                                            // value={licenseNumber}
-                                            // {...register("licenseNumber", { required: '*License Number is required' })}
-                                            placeholder='Enter License Grade'
-                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
-                                        ></input>
-                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
-                                    </div>
-
-                                    <div className='asd'>
                                         <lable>Issue Date</lable>
                                         <input name='Issue Date' type="date"
-                                            // value={licenseNumber}
+                                            value={dataSource.licenseIssueDate}
                                             // {...register("licenseNumber", { required: '*License Number is required' })}
                                             placeholder='Enter Issue Date'
                                         // onChange={(e) => setLicenseNumber(e.target.value)} 
@@ -205,13 +191,36 @@ export default function ({data, display, changeName}) {
                                     <div className='asd'>
                                         <lable>Expire Date</lable>
                                         <input name='Expire Date' type="date"
-                                            // value={licenseNumber}
+                                           value={dataSource.licenseExpireDate}
                                             // {...register("licenseNumber", { required: '*License Number is required' })}
                                             placeholder='Enter Expire Date'
                                         // onChange={(e) => setLicenseNumber(e.target.value)} 
                                         ></input>
                                         {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
                                     </div>
+
+                                    <div className='asd'>
+                                        <lable>Status</lable>
+                                        <input name='Expire Date' type="text"
+                                           value={dataSource.status}
+                                            // {...register("licenseNumber", { required: '*License Number is required' })}
+                                            placeholder='Enter Expire Date'
+                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
+                                        ></input>
+                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
+                                    </div>
+
+                                    <div className='asd'>
+                                        <lable>Vehicle Owner</lable>
+                                        <input name='Expire Date' type="text"
+                                           value={dataSource.vehicleOwner}
+                                            // {...register("licenseNumber", { required: '*License Number is required' })}
+                                            placeholder='Enter Expire Date'
+                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
+                                        ></input>
+                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
+                                    </div>
+
 
                                     {/* <div className='asdy'>
                                         <button>Register</button>

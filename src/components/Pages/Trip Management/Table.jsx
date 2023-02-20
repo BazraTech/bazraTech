@@ -1,5 +1,6 @@
 import React from 'react'
-import './available.css';
+// import './available.css';
+import styles from './available.module.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { SiTripdotcom } from "react-icons/si";
@@ -12,10 +13,34 @@ import { IoMdArrowDropupCircle } from "react-icons/io";
 import { BsPlusLg } from "react-icons/bs";
 import { AiOutlineMinus } from "react-icons/ai";
 import SyncLoader from "react-spinners/SyncLoader";
+import { BsSearch } from "react-icons/bs";
 import { Pagination } from 'antd';
 import { getRoles } from '@testing-library/react';
 
-export default function ({ id, role, name }) {
+export default function ({ id, role, name, from }) {
+
+    function tableSearch() {
+
+        let input, filter, table, tr, td, txtValue, errors;
+
+        //Intialising Variables for search bar
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (let i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[4];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
 
     const {
         register,
@@ -54,32 +79,17 @@ export default function ({ id, role, name }) {
     const handleClickopen = () => {
         setPop(!popup);
     }
-    // {
-    //     total[0]
-    //     .map((item) => {
-    //         setState(item.assignedDriver.toLowerCase().includes(search))
-    //     })}
-
 
     const [search, setSearch] = useState('');
-    // if (search === state) {
-    //   alert("success")
-    //  }
 
     const [loading, setLoading] = useState(false);
     const [popup1, setPop1] = useState(true);
 
     const [totalPages, setTotalPage] = useState(1);
-    // const [id, setId] = useState()
-    // id="13";
     const [dataSource01, setDataSource501] = useState([])
     // const [dataSource2, setDataSource2] = useState([])
     const [dataSource3, setDataSource3] = useState([])
     const [dataSource5, setDataSource5] = useState([])
-
-
-    // const [id, setId] = useState()
-    // const [role, setRole] = useState()
 
     const [visiblelist, setvisiblelist] = useState(true);
     const [visible, setVisible] = useState(true);
@@ -88,7 +98,6 @@ export default function ({ id, role, name }) {
         console.log(id);
         console.log(role);
     }
-
 
     let url2;
 
@@ -145,38 +154,88 @@ export default function ({ id, role, name }) {
         setpostPerPage(pageSize);
     }
 
-
-
     return (
-
-
 
         <form className='form' onSubmit={handleSubmit(onSubmit)}>
             <div className='' >
                 {visible ?
                     <>
- 
-                        <div className='trip_date'>
-                            <input onChange={(e) => setSearch(e.target.value)} placeholder='Search...' className='trip_date1' type="search" /><button>Search</button>
-                        </div>
+                        {from == "availavleCars" ?
+                            <div className={styles.vehicle_search}>
+                                <p title='search'>
+                                    <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
+                                    <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                                    <button>Search</button>
+                                </p>
+                            </div> :
+                            <div className={styles.vehicle_search}>
+                                <p title='search'>
+                                    <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
+                                    <input type="date" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                                    {/* <button>Search</button> */}
+                                </p>
+                            </div>}
 
                         {
-
                             loading ?
-                                <p className='loading'><SyncLoader
-                                    // color={color}
-                                    // Left={margin}
-                                    loading={loading}
-                                    // cssOverride={override}
+                                <p className={styles.loading}><SyncLoader
+                                    // loading={loading}
                                     size={10}
-                                    // margin= "100px 0px 0px 0px"
-                                    // padding= "200px"
                                     aria-label="Loading Spinner"
                                     data-testid="loader"
                                 /></p>
                                 :
                                 <>
-                                    <div className='outer_vehicle_tables' id='myTable'>
+
+                                    <div className={styles.outer_vehicle_table} id='myTable'>
+                                        <p>{name}</p>
+
+                                        <table className={styles.vehicle_table} id="myTable">
+
+                                            <thead>
+                                                <tr>
+                                                    <th>Vehicle Name</th>
+                                                    <th>Assigned Driver</th>
+                                                    <th>Current Location</th>
+                                                    <th>Vehicle Type</th>
+                                                    <th>Plate Number</th>
+                                                    <th>Set Trip</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {currentPage.map(item => (
+                                                    <tr className={styles.active_row}>
+
+                                                        <td>{item.vehicleName}</td>
+                                                        <td>{item.driverName == "null" ? "unassignd" : `${item.driverName}`}</td>
+                                                        <td>{item.id}</td>
+                                                        <td>{item.vehicleCatagory}</td>
+                                                        <td>{item.plateNumber}</td>
+                                                        {from == "availavleCars" ?
+                                                        <td><Link to={`/set_trip/${item.plateNumber}/${item.driverName == "null" ? "unassignd" : `${item.driverName}`}`}><button>Set Trip</button></Link></td>
+                                                        :
+                                                        <td><Link to={`/report_detail/${item.vehicleName}/${item.plateNumber}`}><button>Report</button></Link></td>
+                                                    }
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div className={styles.page}>
+                                        <Pagination
+                                            onChange={(page) => setCurentPage(page)}
+                                            pageSize={postPerPage}
+                                            current={page}
+                                            total={totalPages}
+                                            showQuickJumper
+                                            showSizeChanger
+                                            onShowSizeChange={onShowSizeChange}
+                                        />
+                                    </div>
+
+                                    {/* <div className='outer_vehicle_tables' id='myTable'>
                                         <p>{name}</p>
 
                                         <table class="vehicle_table" id="myTable">
@@ -189,7 +248,6 @@ export default function ({ id, role, name }) {
                                                     <th>Vehicle Type</th>
                                                     <th>Plate Number</th>
                                                     <th>Set Trip</th>
-                                                    {/* <th>History</th> */}
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -201,9 +259,9 @@ export default function ({ id, role, name }) {
                                                         <td>{item.id}</td>
                                                         <td>{item.vehicleCatagory}</td>
                                                         <td>{item.plateNumber}</td>
-                                                        {/* <td><Link to={`/set_trip`}><button>Set Trip</button></Link></td> */}
-                                                        <td><Link to={`/set_trip/${item.plateNumber}/${item.driver == "null" ? "unassignd" : `${item.driver}`}`}><button>Set Trip</button></Link></td>
-                                                        {/* <td><Link to="/tracking"><button>Tracking</button></Link></td> */}
+                                                        
+                                                        <td><Link to={`/set_trip/${item.plateNumber}/${item.driverName == "null" ? "unassignd" : `${item.driverName}`}`}><button>Set Trip</button></Link></td>
+                                        
                                                     </tr>
                                                 ))}
                                             </tbody>
@@ -220,7 +278,7 @@ export default function ({ id, role, name }) {
                                             />
                                         </div>
 
-                                    </div>
+                                    </div> */}
 
                                 </>
                         }

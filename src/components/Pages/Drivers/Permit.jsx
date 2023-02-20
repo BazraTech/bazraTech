@@ -7,32 +7,18 @@ import { AiFillFilter } from "react-icons/ai";
 import { FaParking } from "react-icons/fa";
 import { GrSettingsOption } from "react-icons/gr";
 import { IoSettingsOutline } from "react-icons/io5";
-import './total_no_of_vehicle.css';
+import styles from './total_driver.module.css';
 import { Link, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { RiGpsFill } from "react-icons/ri";
-import { MdMonitor } from "react-icons/md";
-import { FaUsers } from "react-icons/fa";
-import { HiBellAlert } from "react-icons/hi2";
-import { HiDocumentReport } from "react-icons/hi";
-import { FaRegIdCard } from 'react-icons/fa';
-import { BsFillChatDotsFill } from "react-icons/bs";
-import { FaUserAlt } from "react-icons/fa";
-import { AiFillSetting } from "react-icons/ai";
-import { ImUserTie } from "react-icons/im";
-import { SiTripdotcom } from "react-icons/si";
-import { SiGoogletagmanager } from "react-icons/si";
-import { BiTrip } from "react-icons/bi";
 import { useLocation } from 'react-router-dom';
-import { total } from './data/jsonData';
-import { on_route } from './data/jsonData';
-import { parked } from './data/jsonData';
-import { maintenance } from './data/jsonData';
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
 import SyncLoader from "react-spinners/SyncLoader";
-
+import { FaUserSecret } from "react-icons/fa";
+import { FaUserCheck } from "react-icons/fa";
+import { FaUserTimes } from "react-icons/fa";
+import { FaUserMinus } from "react-icons/fa";
 
 
 export default function () {
@@ -82,79 +68,91 @@ export default function () {
 
     };
 
-    const url = "http://198.199.67.201:9090/Api/Vehicle/Status/inroute";
-    const [dataSource, setDataSource] = useState([])
-    const [Loading, setLoading] = useState([])
-    useEffect(() => {
-        setLoading(true);
-        fetch(url, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource(data.inRoutelist)
-                // console.log(dataSource)
-                setLoading(false);
 
-            })
-    }, [])
+    const [Loading, setLoading] = useState([]);
+    // const url = "http://198.199.67.201:9090/Api/Admin/All/Vehicles/Status/ONROUTE";
+    // const [dataSource, setDataSource] = useState([])
+    // useEffect(() => {
+    //     setLoading(true);
+    //     fetch(url, options)
+    //         .then(respnse => respnse.json())
+    //         .then(data => {
+    //             setDataSource(data.inRoutelist)
+    //             // console.log(dataSource)
+    //             setLoading(false);
 
-    const url2 = "http://198.199.67.201:9090/Api/Vehicle/All";
+    //         })
+    // }, [])
+
+    const [totalPages, setTotalPage] = useState(1);
+    const url2 = "http://198.199.67.201:9090/Api/Admin/Drivers/ONROUTE";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         setLoading(true);
         fetch(url2, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource2(data.vehicles)
-                // console.log(dataSource2)
+                setDataSource2(data.drivers);
                 setLoading(false);
 
             })
     }, [])
 
-    const url3 = "http://198.199.67.201:9090/Api/Vehicle/Status/stocked";
+
+    const url3 = "http://198.199.67.201:9090/Api/Admin/Drivers/ASSIGNED";
     const [dataSource3, setDataSource3] = useState([])
     useEffect(() => {
         setLoading(true);
         fetch(url3, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource3(data.stockedList)
-                console.log(dataSource3)
+                setDataSource3(data.drivers);
                 setLoading(false);
 
             })
     }, [])
 
-    const url4 = "http://198.199.67.201:9090/Api/Vehicle/Status/maintaining";
+    const url4 = "http://198.199.67.201:9090/Api/Admin/Drivers/UNASSIGNED";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         setLoading(true);
         fetch(url4, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource4(data.maintainingList)
-                console.log(dataSource4)
+                setDataSource4(data.drivers)
+                setLoading(false);
+            })
+    }, [])
+
+    const url5 = "http://198.199.67.201:9090/Api/Admin/Drivers/PERMIT";
+    const [dataSource5, setDataSource5] = useState([])
+    useEffect(() => {
+        setLoading(true);
+        fetch(url5, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource5(data.drivers)
+                setTotalPage(data.totalDrivers);
                 setLoading(false);
 
             })
     }, [])
 
-    const [list, setList] = useState(dataSource2);
-    const [total, setTotal] = useState(dataSource2.length);
+
+
+    // const [list, setList] = useState([dataSource2]);
+    // const [total, setTotal] = useState(dataSource2.length);
     const [page, setCurentPage] = useState(1);
-    const [postPerPage, setpostPerPage] = useState(10);
+    const [postPerPage, setpostPerPage] = useState(5);
+
+    const indexOfLastPage = page * postPerPage;
+    const indexOfFirstPage = indexOfLastPage - postPerPage;
+    const currentPage = dataSource5.slice(indexOfFirstPage, indexOfLastPage);
 
     const onShowSizeChange = (current, pageSize) => {
         setpostPerPage(pageSize);
     }
 
-    useEffect(() => {
-        setTotal([dataSource2.length])
-    }, []);
-
-    const indexOfLastPage = page + postPerPage;
-    const indexOfFirstPage = indexOfLastPage - postPerPage;
-    const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
     const [color, setColor] = useState("green");
     const [margin, setMargin] = useState("");
 
@@ -164,124 +162,143 @@ export default function () {
         <div className="vehicle_container">
 
             {/*---------------navigation---------------*/}
+
+            <Navigation path="/Total_Drivers" title="On Route Drivers"></Navigation>
+
             
-            <Navigation path="/Total_Drivers"></Navigation>
 
             {/* --------------- header --------------- */}
 
-            <Header title="Permit"></Header>
+            {/* <Header title="On Route Drivers"></Header> */}
 
             {/* --------------- users --------------- */}
 
-            <div className='main_content'>
-                <div className='vehicle_contents0'>
-                    <Link to="/Total_Drivers" style={{ textDecoration: 'none' }}> <div className='on_route1 '>
-                        <h4>Total Vehicle</h4>
-                        <p><AiFillCar size="2.2rem"></AiFillCar><b>{dataSource2.length}</b></p>
+            <div className={styles.main_content}>
+                <div className={styles.allcards}>
+                    <div className={styles.vehicle}>
+                        <Link to="/Total_Drivers" style={{ textDecoration: 'none' }}>
+                            <div className={styles.innerContents}>
+                                <h4>Total Drivers</h4>
+                                <p><FaUserSecret size="2.2rem"></FaUserSecret><b>0</b></p>
+                            </div>
+                        </Link>
+                    </div>
 
-                    </div></Link>
+                    <div className={styles.vehicle}>
+                        <Link to="/Driver_OnRoute" style={{ textDecoration: 'none' }}>
+                            <div className={styles.innerContents}>
+                                <h4>On Route</h4>
+                                <p><FaRoute size="2rem" ></FaRoute><b>{dataSource2.length}</b></p>
+                            </div>
+                        </Link>
+                    </div>
 
-                    <Link style={{ textDecoration: 'none' }} to="/Driver_OnRoute"><div className='on_route1'>
-                        <h4>On Route</h4>
-                        <p><FaRoute size="2rem" ></FaRoute><b>{dataSource.length}</b></p>
-                    </div></Link>
+                    <div className={styles.vehicle}>
+                        <Link to="/Assigned_Driver" style={{ textDecoration: 'none' }}>
+                            <div className={styles.innerContents}>
+                                <h4>Assigned</h4>
+                                <p><FaUserCheck size="2rem" ></FaUserCheck><b>{dataSource3.length}</b></p>
+                            </div>
+                        </Link>
+                    </div>
 
-                    <Link style={{ textDecoration: 'none' }} to="/Assigned_Driver">
-                        <div className='parked1'>
-                            <h4>Assigned</h4>
-                            <p><FaParking size="2rem" ></FaParking><b>{dataSource3.length}</b></p>
-                        </div>
-                    </Link>
+                    <div className={styles.vehicle}>
+                        <Link to="/UnAssigned_Driver" style={{ textDecoration: 'none' }}>
+                            <div className={styles.innerContents}>
+                                <h4>Un Assigned</h4>
+                                <p><FaUserTimes size="2rem" ></FaUserTimes><b>{dataSource4.length}</b></p>
+                            </div>
+                        </Link>
+                    </div>
 
-                    <Link style={{ textDecoration: 'none' }} to="/UnAssigned_Driver">
-                        <div className='parked1'>
-                            <h4>Un Assigned</h4>
-                            <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{dataSource4.length}</b></p>
-                        </div>
-                    </Link>
-                    <Link style={{ textDecoration: 'none' }} to="/Permit">
-                        <div className='activeNav'>
-                            <h4>Permit</h4>
-                            <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{dataSource4.length}</b></p>
-                        </div>
-                    </Link>
+                    <div className={styles.activeCard}>
+                        <Link to="/Permit" style={{ textDecoration: 'none' }}>
+                            <div className={styles.innerContents1}>
+                                <h4>Permit</h4>
+                                <p><FaUserMinus size="2rem" ></FaUserMinus><b>{dataSource5.length}</b></p>
+                            </div>
+                        </Link>
+                    </div>
+
                 </div>
 
                 {/* --------------- search --------------- */}
 
-                <div className='vehicle_search'>
+                <div className={styles.vehicle_search}>
                     <p title='search'>
-                        <BsSearch className='icn' size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
+                        <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
                         <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
                         <button>Search</button>
                     </p>
                 </div>
+
                 {Loading ?
-                    <p className='loading'><SyncLoader
-                        color={color}
-                        Left={margin}
-                        loading={Loading}
-                        size={10}
-                        aria-label="Loading Spinner"
-                        data-testid="loader"
-                    /></p>
+                    <p className={styles.loading}>
+                        <SyncLoader
+                            color={color}
+                            Left={margin}
+                            loading={Loading}
+                            size={10}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                        /></p>
                     :
+
                     <>
+                        <div className={styles.outer_vehicle_table} id='myTable'>
+                            <p>PERMITED DRIVERS</p>
 
-                        <div className='outer_vehicle_tables' id='myTable'>
-                            <p>Permited Derivers</p>
-
-                            <table className="vehicle_table" id="myTable">
+                            <table className={styles.vehicle_table} id="myTable">
 
                                 <thead>
                                     <tr>
-                                        <th>Profile</th>
-                                        <th>Assigned Driver</th>
-                                        <th>Vehicle ID</th>
-                                        <th>Vehicle Type</th>
-                                        <th>Plate Number</th>
+                                        <th>Driver Name</th>
+                                        <th>License Number</th>
+                                        <th>Experience</th>
+                                        <th>LicenseGrade</th>
+                                        <th>Gender</th>
+                                        <th>VehicleOwner</th>
                                         <th>Detail</th>
                                         <th>Tracking</th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
                                     {currentPage.map(item => (
-                                        <tr className='active_row'>
+                                        <tr className={styles.active_row}>
 
-                                            <td>{item.vehicleName}</td>
-                                            <td>{item.driver}</td>
-                                            <td>{item.id}</td>
-                                            <td>{item.vehicleCatagory.catagory}</td>
-                                            <td>{item.plateNumber}</td>
+                                            <td>{item.driverName}</td>
+                                            <td>{item.licenseNumber}</td>
+                                            <td>{item.experience}</td>
+                                            <td>{item.licenseGrade}</td>
+                                            <td>{item.gender}</td>
+                                            <td>{item.vehicleOwner}</td>
                                             <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
                                             <td><Link to="/tracking"><button>Tracking</button></Link></td>
                                         </tr>
                                     ))}
                                 </tbody>
+
                             </table>
                         </div>
-                        <div className='page'>
+
+                        <div className={styles.page}>
                             <Pagination
                                 onChange={(page) => setCurentPage(page)}
                                 pageSize={postPerPage}
                                 current={page}
-                                total={total}
+                                total={totalPages}
                                 showQuickJumper
                                 showSizeChanger
                                 onShowSizeChange={onShowSizeChange}
                             />
                         </div>
                     </>
+
                 }
 
-                <div className='page'>
-
-
-
-                </div>
-
-
             </div>
+
         </div >
     )
 }

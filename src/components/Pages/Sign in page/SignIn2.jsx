@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { useForm } from 'react-hook-form';
 import { Routes, Route, Link, Navigate, Router } from "react-router-dom";
-import styles from './signin2.css';
-import Dashboard from '../Dashboard/Dashboard';
+import styles from './signin2.module.css';
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
@@ -93,24 +92,48 @@ export default function () {
 
             {/*-------------- Login page Form ---------------*/}
 
-            <div className='signin'>
-                <div className='left_login'></div>
-                <div className='right_login'>
-                    <div>
-                        <form className="signup_right" onSubmit={validation}>
-                            <div className='signForm'>
-                                <p className='loginHeader'>Welcome To Bazra</p>
-                                <label>User Name</label>
-                                <input type="username"  placeholder="Username" onChange={e => setUsername(e.target.value)} name="username"></input>
-                                <label>Password</label>
-                                <input type="password"  placeholder="Password" onChange={e => setPassword(e.target.value)} name="password"></input>
-                                <p>Forget Password?</p>
-                                <button className=''>Sign In</button>
-                            </div>
-                        </form>
+            <div className={styles.signin}>
 
+                {/*-------------- Left side ---------------*/}
 
-                    </div>
+                <div className={styles.left_login}>
+                    {/* <img src="./img/location" alt="John" />
+                    <img src="./img/loction.png" alt="" /> */}
+                </div>
+
+                {/*-------------- Right side ---------------*/}
+                <div className={styles.right_login}>
+                    <form className={styles.signup_right} onSubmit={validation}>
+                        <div className={styles.signForm}>
+                            <p className={styles.loginHeader}>Welcome To Bazra</p>
+                            <label>User Name</label>
+                            <input type="username" placeholder="Username" onChange={e => setUsername(e.target.value)} name="username"></input>
+                            {error && username.length <= 0 ? <span className={styles.validateText}>please enter your username</span> : ""}
+                            <label>Password</label>
+                            <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} name="password"></input>
+                            {error && password.length <= 0 ? <span className={styles.validateText}>please enter your password</span> : ""}
+                            <p>Forget Password?</p>
+                            <button className=''>Sign In</button>
+                        </div>
+                    </form>
+
+                    {/* <form className="signup_right" onSubmit={validation}>
+								<h2>Welcome To Bazra</h2>
+								<label><b>User Name</b></label>
+								<input type="username" className="signup_input_field" placeholder="Username" onChange={e => setUsername(e.target.value)} name="username"></input>
+								{error&&username.length<=0 ? <span className='validateText' >please enter your username</span> :""}
+
+								<label><p><b>Password</b></p></label>
+								<input type="password" className="signup_input_field"  placeholder="Password" onChange={e => setPassword(e.target.value)} name="password"></input>
+								{error&&password.length<=0 ? <span className='validateText' >please enter your password</span> :""}
+								<div className='for'>
+									<b><a href='#' className='signup_forget'>Forget Password?</a></b>
+								</div>
+								<nav>
+									<button className="signup_button">Sign In</button>
+								</nav>
+							</form> */}
+
 
                 </div>
             </div>

@@ -124,20 +124,115 @@ export default function () {
             })
     }, [])
 
+    const url8 = "http://198.199.67.201:9090/Api/Admin/DriverStatus/All";
+    const [dataSource8, setDataSource8] = useState([])
+    useEffect(() => {
+        setLoading(true)
+        fetch(url8, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource8(data.driverStatus)
+                // console.log(dataSource4)
+                setLoading(false)
+            })
+    }, [])
+
+    const url9 = "http://198.199.67.201:9090/Api/Admin/AlertType/All/";
+    const [dataSource9, setDataSource9] = useState([])
+    useEffect(() => {
+        setLoading(true)
+        fetch(url9, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource9(data.alertTypes)
+                // console.log(dataSource4)
+                setLoading(false)
+            })
+    }, [])
+
+    const url10 = "http://198.199.67.201:9090/Api/Admin/TripType/All";
+    const [dataSource10, setDataSource10] = useState([])
+    useEffect(() => {
+        setLoading(true)
+        fetch(url10, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource10(data.triptypes)
+                // console.log(dataSource4)
+                setLoading(false)
+            })
+    }, [])
+
     const [Loading, setLoading] = useState([])
     let [color, setColor] = useState("green");
     let [margin, setMargin] = useState("");
 
     return (
         <div className="alert_container">
+
             {/*---------------navigation---------------*/}
-            <Navigation path="/settings"></Navigation>
+            <Navigation path="/settings" title="Settings"></Navigation>
+
             {/* --------------- Settings header --------------- */}
-            <Header title="Settings"></Header>
+            {/* <Header title="Settings"></Header> */}
+
             <div className='alert_main'>
+
                 <div className='outer_setting'>
                     <div className='setting_header'>Roles</div>
                     <PopUp title="Create_Role" />
+                    {Loading ?
+                       <p className="loading" >
+                            <SyncLoader
+                            color={color}
+                            Left={margin}
+                            loading={Loading}
+                            size={10}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                        />
+                        </p>
+                        : <div>
+                            <div className="outer_vehicle_table7" id='myTable'>
+                                <table class="vehicle_table7" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Role</th>
+                                            <th>Created Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {dataSource7.map(item => {
+                                            return <tr className='active_row'>
+
+                                                <td>{item.id}</td>
+                                                <td>{item.rolename}</td>
+                                                <td>{item.createdDate}</td>
+                                                <td>
+                                                    <p className='notification_actions'>
+                                                        <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
+                                                            onClick={() => {
+                                                                handleClickEdit()
+                                                                setTitle("Edit Notification Preference")
+                                                                setVehicleValue(item.rolename)
+                                                            }}></FaEdit>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div className='outer_setting'>
+                    <div className='setting_header'>Driver Status</div>
+                    <PopUp title="Create_Driver_Status" />
                     {Loading ?
                         <p className='loading'><SyncLoader
                             color={color}
@@ -149,37 +244,141 @@ export default function () {
                         />
                         </p>
                         : <div>
-                            <table class="vehicle_table" id="myTable">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Role</th>
-                                        <th>Created Date</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {dataSource7.map(item => {
-                                        return <tr className='active_row'>
-
-                                            <td>{item.id}</td>
-                                            <td>{item.rolename}</td>
-                                            <td>{item.createdDate}</td>
-                                            <td>
-                                                <p className='notification_actions'>
-                                                    <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
-                                                        onClick={() => {
-                                                            handleClickEdit()
-                                                            setTitle("Edit Notification Preference")
-                                                            setVehicleValue(item.rolename)
-                                                        }}></FaEdit>
-                                                    <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
-                                                </p>
-                                            </td>
+                            <div className="outer_vehicle_table7" id='myTable'>
+                                <table class="vehicle_table7" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Driver Status</th>
+                                            <th>Created Date</th>
+                                            <th>Action</th>
                                         </tr>
-                                    })}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {dataSource8.map(item => {
+                                            return <tr className='active_row'>
+
+                                                <td>{item.id}</td>
+                                                <td>{item.driverStatus}</td>
+                                                <td></td>
+                                                <td>
+                                                    <p className='notification_actions'>
+                                                        <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
+                                                            onClick={() => {
+                                                                handleClickEdit()
+                                                                setTitle("Edit Notification Preference")
+                                                                setVehicleValue(item.driverStatus)
+                                                            }}></FaEdit>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div className='outer_setting'>
+                    <div className='setting_header'>Alert Types</div>
+                    <PopUp title="Create_Alert_Type" />
+                    {Loading ?
+                        <p className='loading'><SyncLoader
+                            color={color}
+                            Left={margin}
+                            loading={Loading}
+                            size={10}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                        />
+                        </p>
+                        : <div>
+                            <div className="outer_vehicle_table7" id='myTable'>
+                                <table class="vehicle_table7" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Alert Type</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {dataSource9.map(item => {
+                                            return <tr className='active_row'>
+
+                                                <td>{item.id}</td>
+                                                <td>{item.alertType}</td>
+                                                <td>{item.createdDate}</td>
+                                                <td>
+                                                    <p className='notification_actions'>
+                                                        <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
+                                                            onClick={() => {
+                                                                handleClickEdit()
+                                                                setTitle("Edit Notification Preference")
+                                                                setVehicleValue(item.alertType)
+                                                            }}></FaEdit>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div className='outer_setting'>
+                    <div className='setting_header'>Trip Management</div>
+                    <PopUp title="Create_Trip_Type" />
+                    {Loading ?
+                        <p className='loading'><SyncLoader
+                            color={color}
+                            Left={margin}
+                            loading={Loading}
+                            size={10}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                        />
+                        </p>
+                        : <div>
+                            <div className="outer_vehicle_table7" id='myTable'>
+                                <table class="vehicle_table7" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Trip Type</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {dataSource10.map(item => {
+                                            return <tr className='active_row'>
+
+                                                <td>{item.id}</td>
+                                                <td>{item.tripType}</td>
+                                                <td>{item.createdDate}</td>
+                                                <td>
+                                                    <p className='notification_actions'>
+                                                        <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
+                                                            onClick={() => {
+                                                                handleClickEdit()
+                                                                setTitle("Edit Notification Preference")
+                                                                setVehicleValue(item.tripType)
+                                                            }}></FaEdit>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     }
                 </div>
@@ -197,37 +396,39 @@ export default function () {
                             data-testid="loader"
                         /></p>
                         : <div>
-                            <table class="vehicle_table" id="myTable">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Notification Preference</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {dataSource2.map(item => {
-                                        return <tr className='active_row'>
-
-                                            <td>{item.id}</td>
-                                            <td>{item.medium}</td>
-                                            <td>{item.status}</td>
-                                            <td>
-                                                <p className='notification_actions'>
-                                                    <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
-                                                        onClick={() => {
-                                                            handleClickEdit()
-                                                            setTitle("Edit Notification Preference")
-                                                            setVehicleValue(item.medium)
-                                                        }}></FaEdit>
-                                                    <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
-                                                </p>
-                                            </td>
+                            <div className="outer_vehicle_table7" id='myTable'>
+                                <table class="vehicle_table7" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Notification Preference</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
-                                    })}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {dataSource2.map(item => {
+                                            return <tr className='active_row'>
+
+                                                <td>{item.id}</td>
+                                                <td>{item.medium}</td>
+                                                <td>{item.status}</td>
+                                                <td>
+                                                    <p className='notification_actions'>
+                                                        <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
+                                                            onClick={() => {
+                                                                handleClickEdit()
+                                                                setTitle("Edit Notification Preference")
+                                                                setVehicleValue(item.medium)
+                                                            }}></FaEdit>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     }
                 </div>
@@ -245,88 +446,42 @@ export default function () {
                                 aria-label="Loading Spinner"
                                 data-testid="loader"
                             /></p> :
-                            <table class="vehicle_table" id="myTable">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Vehicle Condition</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {dataSource4.map(item => {
-                                        return <tr className='active_row'>
-                                            <td>{item.id}</td>
-                                            <td>{item.conditionName}</td>
-                                            <td>{item.status}</td>
-                                            <td>
-                                                <p className='notification_actions'>
-                                                    <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
-                                                        onClick={() => {
-                                                            handleClickEdit()
-                                                            setTitle("Edit Vehicle Condition")
-                                                            setVehicleValue(item.conditionName)
-                                                        }}></FaEdit>
-                                                    <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
-                                                </p>
-                                            </td>
+                            <div className="outer_vehicle_table7" id='myTable'>
+                                <table class="vehicle_table7" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Vehicle Condition</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
-                                    })}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {dataSource4.map(item => {
+                                            return <tr className='active_row'>
+                                                <td>{item.id}</td>
+                                                <td>{item.conditionName}</td>
+                                                <td>{item.status}</td>
+                                                <td>
+                                                    <p className='notification_actions'>
+                                                        <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
+                                                            onClick={() => {
+                                                                handleClickEdit()
+                                                                setTitle("Edit Vehicle Condition")
+                                                                setVehicleValue(item.conditionName)
+                                                            }}></FaEdit>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
                         }
                     </div>
 
                 </div>
-
-                {/* <div className='outer_setting'>
-                    <div className='setting_header'>Truck Status</div>
-                    <PopUp title="Add Truck Status " />
-                    <div>
-                        {Loading ?
-                            <p className='loading'><SyncLoader
-                                color={color}
-                                Left={margin}
-                                loading={Loading}
-                                size={10}
-                                aria-label="Loading Spinner"
-                                data-testid="loader"
-                            /></p> :
-                            <table class="vehicle_table" id="myTable">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Truck Status</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {Truck_status.map(item => {
-                                        return <tr className='active_row'>
-                                            <td>{item.id}</td>
-                                            <td>{item.truck_status}</td>
-                                            <td>{item.status}</td>
-                                            <td>
-                                                <p className='notification_actions'>
-                                                    <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
-                                                        onClick={() => {
-                                                            handleClickEdit()
-                                                            setTitle("Edit Truck Status")
-                                                            setVehicleValue(item.truck_status)
-                                                        }}></FaEdit>
-                                                    <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    })}
-                                </tbody>
-
-                            </table>
-                        }
-                    </div>
-                </div> */}
 
                 <div className='outer_setting'>
                     <div className='setting_header'>Service Needed</div>
@@ -341,7 +496,9 @@ export default function () {
                                 aria-label="Loading Spinner"
                                 data-testid="loader"
                             /></p>
-                            : <table class="vehicle_table" id="myTable">
+                            : 
+                            <div className="outer_vehicle_table7" id='myTable'>
+                            <table class="vehicle_table7" id="myTable">
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -371,56 +528,10 @@ export default function () {
                                     })}
                                 </tbody>
                             </table>
+                            </div>
                         }
                     </div>
                 </div>
-
-                {/* <div className='outer_setting'>
-                    <div className='setting_header'>User Category</div>
-                    <PopUp title="Add_user_category" />
-                    <div>
-                        {Loading ?
-                            <p className='loading'><SyncLoader
-                                color={color}
-                                Left={margin}
-                                loading={Loading}
-                                size={10}
-                                aria-label="Loading Spinner"
-                                data-testid="loader"
-                            /></p>
-                            : <table class="vehicle_table" id="myTable">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>User Category</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {user_catagory.map(item => {
-                                        return <tr className='active_row'>
-                                            <td>{item.id}</td>
-                                            <td>{item.catagory}</td>
-                                            <td>{item.status}</td>
-                                            <td>
-                                                <p className='notification_actions'>
-                                                    <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
-                                                        onClick={() => {
-                                                            handleClickEdit()
-                                                            setTitle("Edit User Category")
-                                                            setVehicleValue(item.notification_preference)
-                                                        }}></FaEdit>
-                                                    <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    })}
-                                </tbody>
-                            </table>
-                        }
-                    </div>
-                </div> */}
 
                 <div className='outer_setting'>
                     <div className='setting_header'>Vehicle Category</div>
@@ -435,7 +546,9 @@ export default function () {
                                 aria-label="Loading Spinner"
                                 data-testid="loader"
                             /></p>
-                            : <table class="vehicle_table" id="myTable">
+                            : 
+                            <div className="outer_vehicle_table7" id='myTable'>
+                            <table class="vehicle_table7" id="myTable">
 
                                 <thead>
                                     <tr>
@@ -466,6 +579,7 @@ export default function () {
                                     })}
                                 </tbody>
                             </table>
+                            </div>
                         }
                     </div>
                 </div>
@@ -483,7 +597,9 @@ export default function () {
                                 aria-label="Loading Spinner"
                                 data-testid="loader"
                             /></p>
-                            : <table class="vehicle_table" id="myTable">
+                            : 
+                            <div className="outer_vehicle_table7" id='myTable'>
+                            <table class="vehicle_table7" id="myTable">
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -513,6 +629,7 @@ export default function () {
                                     })}
                                 </tbody>
                             </table>
+                            </div>
                         }
                     </div>
                 </div>
@@ -530,7 +647,9 @@ export default function () {
                                 aria-label="Loading Spinner"
                                 data-testid="loader"
                             /></p>
-                            : <table class="vehicle_table" id="myTable">
+                            : 
+                            <div className="outer_vehicle_table7" id='myTable'>
+                                <table class="vehicle_table7" id="myTable">
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -560,6 +679,7 @@ export default function () {
                                     })}
                                 </tbody>
                             </table>
+                            </div>
                         }
                     </div>
                 </div>

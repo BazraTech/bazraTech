@@ -128,11 +128,12 @@ export default function () {
 
             {/*---------------navigation---------------*/}
 
-            <Navigation path="/Manage_profile"></Navigation>
+            <Navigation path="/Manage_profile"  title="Manage Profile"></Navigation>
+            
 
             {/* --------------- header --------------- */}
 
-            <Header title="Manage Profile"></Header>
+            {/* <Header title="Manage Profile"></Header> */}
 
             {/* --------------- users --------------- */}
             <div className='main_content'>

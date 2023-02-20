@@ -165,22 +165,22 @@
 } 
 
 @media screen and (max-width: 500px) {
-
    .dashboard_headers {
       position: absolute;
-      width: 100%;
+      width: calc(100%);
       left: 0px;
       height: 75px;
       box-shadow: 0 5px 7px -4px rgba(0, 0, 0, 0.4);
-      z-index: -1;
+      z-index: 1;
       display: flex;
       justify-content: space-between;
       padding-right: 2%;
    }
 
-   .toggle{
+   .toggle{ 
        display: block;
-       margin-right: -20px;
+       margin-top: 26px;
+       margin-left: -30px;
     }
 
    .dashboardTitle{
@@ -196,18 +196,13 @@
    }
    
    .user_dashboard{
-      /* width: 20%; */
-      background-color: rgb(239, 239, 239);
-      text-align: center;
-      align-items: center;
+      background-color: rgb(255, 255, 255);
       margin-top: 15px;
       margin-bottom: 15px;
       display: flex;
-      padding-left: 3%;
-      padding-top: 15px;
       border-radius: 8px;
       color: green;
-   }
+   } 
    .user_dashboard .FaUserAlt{
        display: none;
    }
@@ -220,20 +215,6 @@
 
 @media screen and (max-width: 400px) {
    
-   .user_dashboard{
-      /* width: 20%; */
-      background-color: rgb(239, 239, 239);
-      text-align: center;
-      align-items: center;
-      margin-top: 15px;
-      margin-bottom: 15px;
-      display: flex;
-      padding-left: 3%;
-      padding-top: 15px;
-      border-radius: 8px;
-      color: green;
-      z-index: -1;
-   }
    .user_dashboard .FaUserAlt{
        display: none;
    }

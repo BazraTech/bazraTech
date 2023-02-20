@@ -159,11 +159,11 @@ export default function () {
 
             {/*---------------navigation---------------*/}
 
-            <Navigation path="/report"></Navigation>
+            <Navigation path="/report" title="On Stock"></Navigation>
             
             {/* --------------- header --------------- */}
 
-            <Header title="On Stock"></Header>
+            {/* <Header title="On Stock" ></Header> */}
 
             {/* --------------- users --------------- */}
 

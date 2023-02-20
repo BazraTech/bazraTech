@@ -126,11 +126,11 @@ export default function () {
 
     <div className="vehicle_container">
 
-      <Navigation path="/report"></Navigation>
+      <Navigation path="/report" title="On Route"></Navigation>
 
       {/* --------------- header --------------- */}
 
-      <Header title="On Route"></Header>
+      {/* <Header title="On Route"></Header> */}
 
       {/* --------------- users --------------- */}
 

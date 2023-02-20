@@ -1,87 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
 
-/* ---------------navigation--------------- */
-
-.navigation {
-    position: fixed;
-    width: 100px;
-    height: 100%;
-    transition: 0.5s;
-    background-color: rgb(54, 54, 54);
-    padding: 2px 28px;
-    text-decoration: none;
-    margin-top: 0px;
-    z-index: 1;
-}
-
-.navigation ul li {
-    text-decoration: none;
-    margin-top: 10px;
-    transition: 0.5s;
-    list-style: none;
-    border-bottom: solid 2px rgb(109, 109, 109);
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 7px;
-    padding-left: 5px;
-}
-
-.navigation ul li p {
-    transition: 0.5s;
-}
-
-.navigation ul li p:hover {
-    transform: scale(1.2);
-    transition: 0.5s;
-}
-
-/* ---------------header--------------- */
-.header {
+/* --------------- vehicle-main --------------- */
+.main_content{
     position: absolute;
-    width: calc(100% - 100px);
-    left: 100px;
-    min-height: 1vh;
-    box-shadow: 0 5px 7px -4px rgba(0, 0, 0, 0.4);
-    padding: 20px 0px 0 30px;
-    justify-content: space-between;
-    z-index: 1;
-    display: flex;
-}
-
-.header h3 {
-    text-align: center;
-    color: rgb(36, 114, 43);
-    padding-left: 500px;
-    padding-top: 4px;
-}
-
-.header h3 input {
-    text-align: left;
-    padding: 5px 10px 5px 20px;
-    border: none;
-    border-bottom: solid 1px rgb(0, 0, 0);
-    margin-right: 100px;
-}
-
-.header h2 {
-    text-align: left;
-}
-
-.header p {
-    padding-right: 30px;
-    padding-bottom: 10px;
-    transition: 0.5s;
-}
-
-.header p:hover {
-    transform: scale(1.2);
-}
-
-
-/* --------------- users --------------- */
-
-.user {
+     width: calc(100% - 100px); 
+     left: 100px;
+     /* min-height: 100px; */
+     height: 100vh;
+     opacity: var(--black2);
+     color: var(--black1);
+     top: 75px;
+     background-color: rgb(247, 247, 247);
+     z-index: -1;  
+ }
+ 
+.vehicle_outer {
     position: absolute;
     width: calc(100% - 100px);
     left: 100px;
@@ -91,217 +25,207 @@
     top: 75px;
 }
 
-.vehicle_information3{
-    width: 800px;
-    display: grid;
-    grid-template-columns: 30% 30% 30%;
-    gap: 10%;
-}
-
-.user .contents {
+.vehicle_contents0 {
     margin-top: 40px;
     display: grid;
-    grid-template-columns: 100px 100px 100px;
+    grid-template-columns: 10px 10px 10px 10px 10px;
     justify-content: space-between;
-    width: 70%;
-    margin-left: 8%;
-    position: absolute;
+    width: 74%;
+    margin-left: 5%;
+    /* position: absolute; */
 }
 
-.activeNav2 {
-    width: 300px;
-    background-color: rgb(75, 75, 75);
-    height: 120px;
+/* ------------------ Total_vehicle ------------------- */
+
+.allcards{
+    display: grid; 
+    grid-template-columns: 18% 18% 18% 18% 18%; 
+    row-gap: 1px;
+    justify-content: center; 
+    justify-items: center; 
+    align-items: center; 
+    margin-top: 50px;
+    /* margin-bottom: 120px; */
+    /* gap: 6%;  */
+
+}
+/* -----------------active card ------------------- */
+.activeCard{
+    width: 80%;
+    background-color: rgb(83, 83, 83);
+    height: 90px;
     margin-bottom: 50px;
     border-radius: 10px;
     text-align: center;
     transition: 0.3s;
-    padding: 10%;
+    padding: 16px;
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
-    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: inline-block;
+    color: #ffffff;
 }
 
-.activeNav2 h4 {
-    padding: 12px;
+.innerContents1{
+    color: #ffffff;
 }
-
-.activeNav2 p {
+.activeCard p {
     display: grid;
-    grid-template-columns: 50px 50px;
+    grid-template-columns: 45px 45px;
     justify-content: center;
+    margin-top: 6px;
 }
 
-.activeNav2 p b {
-    margin-top: 5px;
+.activeCard p b {
+    margin-top: 2px;
     font-size: 1.5rem;
 }
-
-.activeNav2:hover {
+.activeCard:hover {
     transform: scale(1.09);
-}
+ }
 
-.company {
-    width: 300px;
+/* -----------------other cards ------------------- */
+.vehicle{
+    color: #006666;
+    width: 80%;
     background-color: rgb(255, 255, 255);
-    height: 120px;
+    height: 90px;
     margin-bottom: 50px;
     border-radius: 10px;
     text-align: center;
     transition: 0.3s;
-    padding: 10%;
+    padding: 16px;
     box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+    cursor: pointer;
+    display: inline-block;
     color: #000;
 }
 
-
-.company h4 {
-    color: var(--black1);
-    padding: 10px;
-}
-
-.company p {
-    display: grid;
-    grid-template-columns: 50px 50px;
-    justify-content: center;
-}
-
-.company p b {
-    margin-top: 5px;
-    font-size: 1.5rem;
-}
-
-.company:hover {
-    transform: scale(1.09);
-}
-
-.individual {
-    width: 300px;
-    background-color: rgb(255, 255, 255);
-    height: 120px;
-    margin-bottom: 50px;
-    border-radius: 10px;
-    text-align: center;
-    transition: 0.3s;
-    padding: 10%;
-    box-shadow: 0px 4px 4px -4px rgb(0, 0, 0);
+.innerContents{
     color: #000;
 }
-
-.individual h4 {
-    color: var(--black1);
-    padding: 10px;
+.icon{
+    display: flex;
+    justify-content: space-around;
+    gap: 3%;
 }
-
-.individual p {
+.vehicle p {
     display: grid;
-    grid-template-columns: 50px 50px;
+    grid-template-columns: 45px 45px;
     justify-content: center;
+    margin-top: 6px;
 }
 
-.individual p b {
-    margin-top: 5px;
+.vehicle p b {
+    margin-top: 2px;
     font-size: 1.5rem;
 }
-
-.individual:hover {
+.vehicle:hover {
     transform: scale(1.09);
+ }
+
+
+/* ------------------ Vehicle-search ------------------- */
+
+.vehicle_search {
+   display: flex;
+   justify-content: right;
+   padding-right: 10%;
 }
 
-/* ------------------ search ------------------- */
-
-.users_search {
-    margin-top: 230px;
-    margin-left: 55%;
-}
 .hide {
     display: none;
 }
 
-.users_search p {
+.vehicle_search p {
     display: flex;
 }
-
-.users_search p .icn {
+.vehicle_search .icn{
     margin-top: 8px;
-    padding-left: -30px;
+    /* padding-left: -40px; */
     margin-right: -42px;
-    z-index: 1;
+    margin-left: 20px;
+    z-index: 2;
+    /* background-color: red; */
 }
 
-.users_search input {
-    width: 61%;
+.vehicle_search input {
+    /* width: 61%; */
     height: 38px;
     padding-left: 50px;
     border-radius: 6px 0px 0px 6px;
+    background-color: #ffffff;
     outline: none;
-    border: 1px solid rgb(0, 0, 0);
+    border: 1px solid rgb(145, 145, 145);
     margin-left: 10px;
+    z-index: 1;
 }
 
-.users_search p button {
-    width: 15%;
+.vehicle_search p button {
+    width: 80px;
     background-color: #222;
     color: var(--white);
     border-radius: 0px 7px 7px 0px;
     border: none;
 }
 
-.users_search p button:hover {
+.vehicle_search p button:hover {
     background-color: rgb(67, 67, 67);
     border: none;
 }
 
 
-/* ------------------ filter ------------------- */
-
-.filter p {
-    margin-top: 5px;
+/* ------------------ Vehicle-filter ------------------- */
+.vehicle_filter p {
+    margin-top: 50px;
     margin-left: 80%;
     color: rgb(63, 63, 63);
     display: flex;
 }
 
-.filter p .fil {
+.vehicle_filter p .fil {
     margin-top: 1px;
 }
 
-.filter p h6 {
+.vehicle_filter p h6 {
     padding-left: 5px;
     font-size: 0.8rem;
-    padding-bottom: 10px;
-}
+} 
 
-/* ------------------ table ------------------- */
+/* ------------------ Vehicle-table ------------------- */
 
-.tables {
+.outer_vehicle_table {
     overflow-x: scroll;
-    padding: 1%;
+    margin: 3%;
 }
-.t_table{
-    padding: 1%;
-    width: 100%;
+
+.outer_vehicle_table p {
+    color: #009879;
+    font-size: 23px;
+    margin-left: 45px;
+    font-weight: 600;
+    margin-bottom: 10px;
 }
-.user_table {
+
+.vehicle_table {
     margin-left: 4%;
-    margin-top: 4px;
     border-collapse: collapse;
     width: 90%;
-    margin-bottom: 15px;
     border-radius: 5px 5px 0px 0px;
     overflow: hidden;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 
-.user_table thead  {
-    background-color: #4a4a4a;
+.vehicle_table thead {
+    background-color: #0e7b48;
     color: var(--white);
     text-align: left;
     padding: 2%;
     margin-top: 2%;
+    height: 50px;
 }
 
-.user_table button{
-    background-color:  #404040;
+.vehicle_table button {
+    background-color: #404040;
     color: var(--white);
     padding: 3%;
     padding-top: 5px;
@@ -309,185 +233,193 @@
     padding-left: 15px;
     padding-right: 15px;
     border: none;
-    border-radius: 5px; 
-    width: 70px;
+    border-radius: 5px;
+    width: 80px;
     font-size: 0.8rem;
-    cursor: pointer;
 }
-.user_table .edit_button{
+
+.vehicle_table .edit_button {
     background-color: #006666;
-    cursor: pointer;
 }
 
-.user_table th,
-.user_table td {
-    padding: 8px 15px;
+.vehicle_table th,
+.vehicle_table td {
+    padding: 5px 15px;
 }
 
-.user_table tbody tr {
-    border-bottom: 1px solid #bfbfbf;
+.vehicle_table tbody tr {
+    border-bottom: 1px solid #afafaf;
 }
 
-.user_table tbody tr:nth-of-type(even) {
-    background-color: #ffffff;
+.vehicle_table tbody tr:nth-of-type(even) {
+    background-color: #e4e4e4;
 }
 
-.user_table tbody tr:last-of-type {
-    border-bottom: 4px solid  #4a4a4a;
+.vehicle_table tbody tr:last-of-type {
+    border-bottom: 4px solid #4a4a4a;
 }
 
-.user_table tbody .active_row {
-    color: #009879;
+.vehicle_table tbody .active_row {
+    color: #005d4a;
 }
 
-/* ------------------ page ------------------- */
-.page{
-    align-content: center;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 50px;
+
+/* ------------------ pagination ------------------- */
+.page {
+    padding: 10px;
     display: flex;
     justify-content: center;
 }
-.num{
+
+.num {
     padding: 20px 10px 20px 20px;
 }
-.page .sel{
-   margin-right: 50px;
+
+.page .sel {
+    margin-right: 50px;
 }
-.page .next{
+
+.page .next {
     margin-top: 8px;
     margin-left: 10px;
- }
- .users_menu{
+}
+
+.vehicle_menu {
     display: none;
- }
+}
 
- .lds-ellipsis {
-    display: inline-block;
-    position: relative;
-    width: 80px;
-    height: 80px;
-  }
-  .lds-ellipsis div {
-    position: absolute;
-    bottom: -100px;
-    margin-left: 500px;
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
-    background: rgb(0, 0, 0);
-    animation-timing-function: cubic-bezier(0, 1, 1, 0);
-    z-index: 1;
-  }
-  .lds-ellipsis div:nth-child(1) {
-    left: 8px;
-    animation: lds-ellipsis1 0.6s infinite;
-  }
-  .lds-ellipsis div:nth-child(2) {
-    left: 8px;
-    animation: lds-ellipsis2 0.6s infinite;
-  }
-  .lds-ellipsis div:nth-child(3) {
-    left: 32px;
-    animation: lds-ellipsis2 0.6s infinite;
-  }
-  .lds-ellipsis div:nth-child(4) {
-    left: 56px;
-    animation: lds-ellipsis3 0.6s infinite;
-  }
-  @keyframes lds-ellipsis1 {
-    0% {
-      transform: scale(0);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-  @keyframes lds-ellipsis3 {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0);
-    }
-  }
-  @keyframes lds-ellipsis2 {
-    0% {
-      transform: translate(0, 0);
-    }
-    100% {
-      transform: translate(24px, 0);
-    }
-  }
-
-  .loading{
+.loading {
     margin-left: 45%;
     margin-top: 100px;
     padding: 10px;
-  }
-  
+}
 
-@media screen and (max-width: 1130px) {
+
+/* ------------------ Responsivness ------------------- */
+
+@media screen and (max-width: 1120px) {
+
+    .allcards{
+        display: grid; 
+        grid-template-columns: 30% 30% 30%; 
+    }
+
+ }
+
+ @media screen and (max-width: 710px) {
+
+    .allcards{
+        display: grid; 
+        grid-template-columns: 45% 45%; 
+    }
+
+ }
+
+ @media screen and (max-width: 420px) {
+
+    .allcards{
+        display: grid; 
+        grid-template-columns: 90%; 
+    }
+    .activeCard{
+        height: 100px;
+    }
+    .vehicle{
+        height: 100px;
+    }
+
+ }
+
+ @media screen and (max-width: 500px) {
+
+    .main_content{
+       position: absolute;
+       width: calc(100%); 
+       left: 0px;
+       /* min-height: 100px; */
+       max-height: 100vh;
+       opacity: var(--black2);
+       color: var(--black1);
+       top: 75px;
+       background-color: rgb(242, 242, 242);
+       z-index: -1;  
+   
+   }
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 1180px) {
 
     .header h3 {
         display: none;
     }
 
-    .user .contents {
+    .vehicle_contents {
         display: grid;
         grid-template-columns: 100px 100px;
         justify-content: space-around;
         width: 70%;
-        margin-left: 30px;
+        margin-left: 7%;
         column-gap: 180px;
-        padding-right: 50px;
+        
     }
-}
-
-@media screen and (max-width: 1000px) {
-    .user .contents {
-        margin-top: 40px;
-        display: grid;
-        grid-template-columns: 100px 100px;
-        justify-content: space-between;
-        width: 70%;
-        margin-left: 30px;
-        position: absolute;
-        padding-left: 5%;
-    }
-
-    .users_search {
+    .vehicle_search1 {
         margin-top: 400px;
         margin-right: 10%;
         margin-left: 150px;
-        width:
-         60%;
+        width:60%;
     }
-    .filter p {
+}
+
+
+@media screen and (max-width: 1000px) {
+    .vehicle_contents {
+        display: grid;
+        grid-template-columns: 100px 100px;
+        justify-content: space-around;
+        width: 70%;
+        margin-left: 7%;
+        column-gap: 180px;
+        
+    }
+
+    .vehicle_search1 {
+        margin-top: 400px;
+        margin-right: 10%;
+        margin-left: 150px;
+        width:60%;
+    }
+
+    .vehicle_filter p {
         margin-top: 40px;
-        margin-left: 50%;
+        margin-left: 70%;
     }
-    
-    .t_table{
+
+    .t_table {
         padding: 2%;
         width: 98%;
     }
-    .user_table {
-        margin-left: 3%;
-        margin-top: 4px;
-        border-collapse: collapse;
-        width: 80%;
-        margin-bottom: 15px;
-        border-radius: 5px 5px 0px 0px;
-        overflow: hidden;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-    }
-
 
 }
+
+
 @media screen and (max-width: 930px) {
-    .user .contents {
+    .vehicle_contents {
         margin-top: 40px;
         display: grid;
         grid-template-columns: 100px 100px;
@@ -498,20 +430,22 @@
         padding-left: 5%;
     }
 
-    .users_search {
+    .vehicle_search1 {
         margin-top: 400px;
         margin-right: 0%;
         margin-left: 150px;
         width: 60%;
     }
-    .t_table{
+
+    .t_table {
         padding: 2%;
         width: 97%;
         overflow-x: scroll;
     }
-    .user_table {
+
+    .vehicle_table {
         margin-left: 1%;
-        margin-top: 4px;
+        margin-top: 40px;
         border-collapse: collapse;
         width: 85%;
         margin-bottom: 15px;
@@ -519,12 +453,11 @@
         overflow: hidden;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     }
-  
 
 }
 
 @media screen and (max-width: 700px) {
-    .user .contents {
+    .vehicle_contents {
         margin-top: 40px;
         display: grid;
         grid-template-columns: 100px;
@@ -535,7 +468,7 @@
         padding-left: 20%;
     }
 
-    .user {
+    .vehicle_outer {
         position: absolute;
         width: 100%;
         left: 100px;
@@ -545,32 +478,29 @@
         top: 75px;
     }
 
-    .users_search {
-        margin-top: 550px;
-        margin-right: 10%;
-        margin-left: 150px;
-        width: 60%;
-    }
-    .filter{
+    .vehicle_filter {
         margin-top: 5px;
         margin-left: -50%;
         color: rgb(63, 63, 63);
         display: flex;
     }
-    .users_search {
-        margin-top: 550px;
+
+    .vehicle_search1 {
+        margin-top: 640px;
         margin-right: 10%;
         margin-left: 150px;
         width: 60%;
     }
-    .t_table{
+
+    .t_table {
         padding: 2%;
         width: 85%;
         overflow-x: scroll;
     }
-    .user_table {
+
+    .vehicle_table {
         margin-left: 2%;
-        margin-top: 4px;
+        margin-top: 40px;
         border-collapse: collapse;
         width: 80%;
         margin-bottom: 15px;
@@ -578,11 +508,11 @@
         overflow: hidden;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     }
-
 }
 
+
 @media screen and (max-width: 600px) {
-    .user .contents {
+    .vehicle_contents {
         margin-top: 40px;
         display: grid;
         grid-template-columns: 100px;
@@ -593,45 +523,50 @@
         padding-left: 17%;
     }
 
-    .users_search {
-        margin-top: 550px;
+    .vehicle_search1 {
+        margin-top: 640px;
         margin-right: 10%;
         margin-left: 50px;
         width: 70%;
     }
+
     .users_search {
         margin-top: 550px;
         margin-right: 10%;
         margin-left: 150px;
         width: 60%;
     }
-    .t_table{
+
+    .t_table {
         padding: 2%;
         width: 80%;
         overflow-x: scroll;
     }
-    .user_table {
-        margin-left: 1%;
-        margin-top: 4px;
+    .vehicle_table {
+        margin-left: 2%;
+        margin-top: 40px;
         border-collapse: collapse;
-        width: 85%;
+        width: 80%;
         margin-bottom: 15px;
         border-radius: 5px 5px 0px 0px;
         overflow: hidden;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     }
-    .users_menu {
+
+    .vehicle_menu {
         display: contents;
     }
 
-    .header .header_title {
+    .vehicle_header .header_title {
         display: none;
     }
+   
 }
+
 
 @media screen and (max-width: 500px) {
 
-    .user .contents {
+    .vehicle_contents {
         margin-top: 40px;
         display: grid;
         grid-template-columns: 100px;
@@ -641,26 +576,30 @@
         position: absolute;
         padding-left: 8%;
     }
-    .users_search {
-        margin-top: 550px;
+
+    .vehicle_search1 {
+        margin-top: 640px;
         margin-right: 10%;
         margin-left: 50px;
         width: 70%;
     }
+
     .users_search {
         margin-top: 550px;
         margin-right: 10%;
         margin-left: 150px;
         width: 60%;
     }
-    .t_table{
+
+    .t_table {
         padding: 2%;
         width: 80%;
         overflow-x: scroll;
     }
-    .user_table {
+
+    .vehicle_table {
         margin-left: 1%;
-        margin-top: 4px;
+        margin-top: 40px;
         border-collapse: collapse;
         width: 75%;
         margin-bottom: 15px;
@@ -668,27 +607,31 @@
         overflow: hidden;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
     }
+
 }
 
+
 @media screen and (max-width: 400px) {
-    .user .contents {
+    .vehicle_contents {
         padding-left: 10px;
     }
-    .users_search {
-        margin-top: 500px;
+    .vehicle_search1 {
+        margin-top: 640px;
         margin-right: 10%;
         margin-left: 150px;
         width: 60%;
     }
-    .t_table{
+
+    .t_table {
         padding: 2%;
         background-color: rgb(0, 0, 0);
         width: 70%;
         overflow-x: scroll;
     }
-    .user_table {
+
+    .vehicle_table {
         margin-left: 1%;
-        margin-top: 4px;
+        margin-top: 40px;
         border-collapse: collapse;
         width: 85%;
         margin-bottom: 15px;
@@ -698,31 +641,36 @@
     }
 }
 
+
 @media screen and (max-width: 360px) {
-    .user .contents {
+    .vehicle_contents {
         padding-left: -100px;
         margin-right: 200px;
     }
-    .users_search {
+
+    .vehicle_search1 {
         margin-top: 520px;
         margin-right: 10%;
         margin-left: 110px;
         width: 60%;
     }
-    .filter{
+
+    .filter {
         margin-top: 5px;
         margin-left: -100%;
         color: rgb(63, 63, 63);
         display: flex;
     }
-    .t_table{
+
+    .t_table {
         padding: 8%;
         width: 80%;
         overflow-x: scroll;
     }
-    .user_table {
+
+    .vehicle_table {
         margin-left: 1%;
-        margin-top: 4px;
+        margin-top: 40px;
         border-collapse: collapse;
         width: 88%;
         margin-bottom: 15px;
