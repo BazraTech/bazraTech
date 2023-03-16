@@ -15,6 +15,7 @@ import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
 import SyncLoader from "react-spinners/SyncLoader";
+import Driver_detail from './Driver_detail';
 import { FaUserSecret } from "react-icons/fa";
 import { FaUserCheck } from "react-icons/fa";
 import { FaUserTimes } from "react-icons/fa";
@@ -46,7 +47,7 @@ export default function () {
         }
     }
 
-    let [active, setActive] = useState("total_vehicle");
+    // let [active, setActive] = useState("total_vehicle");
     let [state, setState] = useState("false");
     // const color = () => {
     //     setState(state);
@@ -68,21 +69,19 @@ export default function () {
 
     };
 
-
     const [Loading, setLoading] = useState([]);
-    // const url = "http://198.199.67.201:9090/Api/Admin/All/Vehicles/Status/ONROUTE";
-    // const [dataSource, setDataSource] = useState([])
-    // useEffect(() => {
-    //     setLoading(true);
-    //     fetch(url, options)
-    //         .then(respnse => respnse.json())
-    //         .then(data => {
-    //             setDataSource(data.inRoutelist)
-    //             // console.log(dataSource)
-    //             setLoading(false);
+    const url = "http://198.199.67.201:9090/Api/Admin/All/Drivers";
+    const [dataSource, setDataSource] = useState([])
+    useEffect(() => {
+        setLoading(true);
+        fetch(url, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource(data.drivers)
+                setLoading(false);
 
-    //         })
-    // }, [])
+            })
+    }, [])
 
     const [totalPages, setTotalPage] = useState(1);
     const url2 = "http://198.199.67.201:9090/Api/Admin/Drivers/ONROUTE";
@@ -139,6 +138,9 @@ export default function () {
     }, [])
 
 
+
+    // const [list, setList] = useState([dataSource2]);
+    // const [total, setTotal] = useState(dataSource2.length);
     const [page, setCurentPage] = useState(1);
     const [postPerPage, setpostPerPage] = useState(5);
 
@@ -153,6 +155,18 @@ export default function () {
     const [color, setColor] = useState("green");
     const [margin, setMargin] = useState("");
 
+    const [id, setId] = useState();
+    console.log(id)
+
+
+    const [edit, setEdit] = useState("");
+    let [active, setActive] = useState(false);
+    let [name, setName] = useState("false");
+
+    function changeName(name) {
+        setName(name);
+    }
+
 
     return (
 
@@ -161,11 +175,12 @@ export default function () {
             {/*---------------navigation---------------*/}
 
             {/* <Navigation path="/Total_Drivers"></Navigation> */}
-            <Navigation path="/Total_Drivers" title="Assigned Drivers"></Navigation>
+            <Navigation path="/Total_Drivers" title="Un Assigned Drivers"></Navigation>
+
 
             {/* --------------- header --------------- */}
 
-            {/* <Header title="Assigned Drivers"></Header> */}
+            {/* <Header title="Un Assigned Drivers"></Header> */}
 
             {/* --------------- users --------------- */}
 
@@ -175,7 +190,7 @@ export default function () {
                         <Link to="/Total_Drivers" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents}>
                                 <h4>Total Drivers</h4>
-                                <p><FaUserSecret size="2.2rem"></FaUserSecret><b>0</b></p>
+                                <p><FaUserSecret size="2.2rem"></FaUserSecret><b>{dataSource.length}</b></p>
                             </div>
                         </Link>
                     </div>
@@ -220,39 +235,40 @@ export default function () {
 
                 {/* --------------- search --------------- */}
 
-                <div className={styles.vehicle_search}>
-                    <p title='search'>
-                        <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                        <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
-                        <button>Search</button>
-                    </p>
-                </div>
-
                 {Loading ?
-                   <p className={styles.loading}>
-                    <SyncLoader
-                        color={color}
-                        Left={margin}
-                        loading={Loading}
-                        size={10}
-                        aria-label="Loading Spinner"
-                        data-testid="loader"
-                    /></p>
+                    <p className={styles.loading}>
+                        <SyncLoader
+                            color={color}
+                            Left={margin}
+                            loading={Loading}
+                            size={10}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                        /></p>
                     :
 
                     <>
-                        <div className={styles.outer_vehicle_table} id='myTable'>
-                            <p>ASSIGNED DRIVERS</p>
+                        <div className={styles.outer_table} id='myTable'>
+
+                            <div className={styles.vehicle_search}>
+                                <p title='search'>
+                                    <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
+                                    <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                                    <button>Search</button>
+                                </p>
+                            </div>
+
+                            <p>UN ASSIGNED DRIVERS</p>
 
                             <table className={styles.vehicle_table} id="myTable">
 
-                            <thead>
+                                <thead>
                                     <tr>
                                         <th>Driver Name</th>
                                         <th>License Number</th>
                                         <th>Experience</th>
                                         <th>LicenseGrade</th>
-                                        <th>Gender</th>
+                                        <th>Status</th>
                                         <th>VehicleOwner</th>
                                         <th>Detail</th>
                                         <th>Tracking</th>
@@ -267,10 +283,13 @@ export default function () {
                                             <td>{item.licenseNumber}</td>
                                             <td>{item.experience}</td>
                                             <td>{item.licenseGrade}</td>
-                                            <td>{item.gender}</td>
+                                            <td>{item.status}</td>
                                             <td>{item.vehicleOwner}</td>
-                                            <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
-                                            <td><Link to="/tracking"><button>Tracking</button></Link></td>
+                                            <td><button onClick={() => {
+                                                setEdit(item.id)
+                                                setName("true")
+                                            }}>Detail</button></td>
+                                            <td><button>Manage</button></td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -292,6 +311,7 @@ export default function () {
                     </>
 
                 }
+                {name === "true" && <Driver_detail data={edit} changeName={changeName} />}
 
             </div>
 

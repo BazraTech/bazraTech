@@ -7,8 +7,8 @@ import { Link, NavLink } from 'react-router-dom';
 import { BiTrip } from "react-icons/bi";
 import { useState, useEffect } from 'react';
 import Navigation from '../Navigation/Navigation';
-
 import swal from "sweetalert";
+import Swal from 'sweetalert2'
 import Header from '../../Header/Header';
 
 export default function Individual_registration() {
@@ -144,14 +144,23 @@ export default function Individual_registration() {
                 setdeviceId("");
 
             } else {
-                console.log("failed");
-                swal(`Failed To Register ${mess}`, "Error", "error");
+                // swal(`Failed To Register ${mess}`, "", "error");
+                Swal.fire({
+                    text: `Failed To Register ${mess}`,
+                    icon: 'error',
+                    showDenyButton: true,
+                    denyButtonText: 'Cancle',
+                    showConfirmButton: false,
+                    // showCloseButton: true,
+                    showClass: {
+                        popup: 'animate__animated animate__shakeX'
+                    },
+                })
             }
         } catch (error) {
             console.error(error);
         }
     }
-
 
 
     // const user = JSON.parse(   localStorage.getItem('user'));
@@ -227,17 +236,6 @@ export default function Individual_registration() {
         setPop(!popup);
     }
 
-
-
-
-    {/*------------------ Validation for company registration ----------------- */ }
-
-    {/*---------------- handle events ----------------- */ }
-    // const { register, handleSubmit, watch, formState: { errors } } = useForm();
-
-    {/*---------------- handle submit values ----------------- */ }
-    // const onSubmit = data => console.log(data);
-
     return (
         <div className="company_container">
 
@@ -275,7 +273,7 @@ export default function Individual_registration() {
                                         placeholder='Enter Your first name'
                                         onChange={(e) => setFirstName(e.target.value)}>
                                     </input>
-                                    {firstName <= 0 && errors.firstName?.type === "required" && <span className='validate_text'>*please enter your name</span>}
+                                    {firstName <= 0 && errors.firstName?.type === "required" && <span className={styles.validate_text}>*please enter your name</span>}
                                 </div>
                                 <div>
                                     <p>Last Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
@@ -284,7 +282,7 @@ export default function Individual_registration() {
                                         placeholder='Enter Your last name'
                                         onChange={(e) => setLastname(e.target.value)}>
                                     </input>
-                                    {lastName <= 0 && errors.lastName?.type === "required" && <span className='validate_text'>*please enter your last name</span>}
+                                    {lastName <= 0 && errors.lastName?.type === "required" && <span className={styles.validate_text}>*please enter your last name</span>}
                                 </div>
                                 <div>
                                     <p>Phone Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
@@ -293,7 +291,7 @@ export default function Individual_registration() {
                                         placeholder='Enter Phone Number'
                                         onChange={(e) => setPhoneNumber2(e.target.value)}>
                                     </input>
-                                    {ownerPhoneNumber <= 0 && errors.ownerPhoneNumber && <span className='validate_text'>{errors.ownerPhoneNumber.message}</span>}
+                                    {ownerPhoneNumber <= 0 && errors.ownerPhoneNumber && <span className={styles.validate_text}>{errors.ownerPhoneNumber.message}</span>}
                                 </div>
                                 <div>
                                     <p>Email <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
@@ -305,7 +303,7 @@ export default function Individual_registration() {
                                         placeholder='Enter your Email'
                                         onChange={(e) => setEmail(e.target.value)}>
                                     </input>
-                                    {email <= 0 && errors.email && <span className='validate_text'>{errors.email.message}</span>}
+                                    {email <= 0 && errors.email && <span className={styles.validate_text}>{errors.email.message}</span>}
                                 </div>
 
                                 <div>
@@ -315,7 +313,7 @@ export default function Individual_registration() {
                                         placeholder="Please enter your Region"
                                         onChange={(e) => setRegion(e.target.value)}>
                                     </input>
-                                    {region <= 0 && errors.region && <span className='validate_text'>{errors.region.message}</span>}
+                                    {region <= 0 && errors.region && <span className={styles.validate_text}>{errors.region.message}</span>}
                                 </div>
 
                                 <div>
@@ -325,7 +323,7 @@ export default function Individual_registration() {
                                         placeholder="Please enter your Sub-city"
                                         onChange={(e) => setSubCity(e.target.value)}>
                                     </input>
-                                    {subCity <= 0 && errors.subCity && <span className='validate_text'>{errors.subCity.message}</span>}
+                                    {subCity <= 0 && errors.subCity && <span className={styles.validate_text}>{errors.subCity.message}</span>}
                                 </div>
 
 
@@ -336,7 +334,7 @@ export default function Individual_registration() {
                                         placeholder="Please enter your Specfic Location"
                                         onChange={(e) => setSpecficLocation(e.target.value)}>
                                     </input>
-                                    {specificLocation <= 0 && errors.specificLocation && <span className='validate_text'>{errors.specificLocation.message}</span>}
+                                    {specificLocation <= 0 && errors.specificLocation && <span className={styles.validate_text}>{errors.specificLocation.message}</span>}
                                 </div>
 
                                 <div>
@@ -346,7 +344,7 @@ export default function Individual_registration() {
                                         placeholder="Please enter your City"
                                         onChange={(e) => setCity(e.target.value)}>
                                     </input>
-                                    {city <= 0 && errors.city && <span className='validate_text'>{errors.city.message}</span>}
+                                    {city <= 0 && errors.city && <span className={styles.validate_text}>{errors.city.message}</span>}
                                 </div>
 
                                 <div>
@@ -359,7 +357,7 @@ export default function Individual_registration() {
                                         placeholder='Enter Your Woreda'
                                         onChange={(e) => setWoreda(e.target.value)}>
                                     </input>
-                                    {woreda <= 0 && errors.woreda && <span className='validate_text'>{errors.woreda.message}</span>}
+                                    {woreda <= 0 && errors.woreda && <span className={styles.validate_text}>{errors.woreda.message}</span>}
                                 </div>
 
                                 <div>
@@ -372,7 +370,7 @@ export default function Individual_registration() {
                                         placeholder='Enter House Number'
                                         onChange={(e) => setHouseNumber(e.target.value)}>
                                     </input>
-                                    {houseNumber <= 0 && errors.houseNumber && <span className='validate_text'>{errors.houseNumber.message}</span>}
+                                    {houseNumber <= 0 && errors.houseNumber && <span className={styles.validate_text}>{errors.houseNumber.message}</span>}
                                 </div>
 
                                 <div>
@@ -383,7 +381,7 @@ export default function Individual_registration() {
                                         placeholder='Enter Phone Number'
                                         onChange={(e) => setPhonenumber(e.target.value)}>
                                     </input>
-                                    {phoneNumber <= 0 && errors.phoneNumber && <span className='validate_text'>{errors.phoneNumber.message}</span>}
+                                    {phoneNumber <= 0 && errors.phoneNumber && <span className={styles.validate_text}>{errors.phoneNumber.message}</span>}
                                 </div>
 
                             </div>
@@ -408,7 +406,7 @@ export default function Individual_registration() {
                                             })
                                         }
                                     </select>
-                                    {notificationmedia <= 0 && errors.notificationmedia && <span className='validate_text'>{errors.notificationmedia.message}</span>}
+                                    {notificationmedia <= 0 && errors.notificationmedia && <span className={styles.validate_text}>{errors.notificationmedia.message}</span>}
                                 </div>
 
                                 <div>
@@ -427,7 +425,7 @@ export default function Individual_registration() {
                                             })
                                         }
                                     </select>
-                                    {serviceRequired <= 0 && errors.serviceRequired && <span className='validate_text'>{errors.serviceRequired.message}</span>}
+                                    {serviceRequired <= 0 && errors.serviceRequired && <span className={styles.validate_text}>{errors.serviceRequired.message}</span>}
                                 </div>
                             </div>
                         </div>
@@ -449,7 +447,7 @@ export default function Individual_registration() {
                                             })
                                         }
                                     </select>
-                                    {catagory <= 0 && errors.catagory && <span className='validate_text'>{errors.catagory.message}</span>}
+                                    {catagory <= 0 && errors.catagory && <span className={styles.validate_text}>{errors.catagory.message}</span>}
                                 </div>
 
                                 <div>
@@ -458,7 +456,7 @@ export default function Individual_registration() {
                                         {...register("vehicleName", { required: true })}
                                         placeholder='Enter Vehicle Name'
                                         onChange={(e) => setvehicleName(e.target.value)} ></input>
-                                    {vehicleName <= 0 && errors.vehicleName?.type === "required" && <span className='validate_text'>*please enter vehicle name</span>}
+                                    {vehicleName <= 0 && errors.vehicleName?.type === "required" && <span className={styles.validate_text}>*please enter vehicle name</span>}
                                 </div>
 
                                 <div>
@@ -474,7 +472,7 @@ export default function Individual_registration() {
                                             })
                                         }
                                     </select>
-                                    {conditionName <= 0 && errors.conditionName && <span className='validate_text'>{errors.conditionName.message}</span>}
+                                    {conditionName <= 0 && errors.conditionName && <span className={styles.validate_text}>{errors.conditionName.message}</span>}
                                 </div>
 
                                 <div>
@@ -485,7 +483,7 @@ export default function Individual_registration() {
                                             {...register("plateNumber", { required: '*please choose service needed' })}
                                             onChange={(e) => setPlateNumber(e.target.value)} >
                                         </input>
-                                        {plateNumber <= 0 && errors.plateNumber && <span className='validate_text'>{errors.plateNumber.message}</span>}
+                                        {plateNumber <= 0 && errors.plateNumber && <span className={styles.validate_text}>{errors.plateNumber.message}</span>}
                                     </div>
 
                                 </div>
@@ -496,7 +494,7 @@ export default function Individual_registration() {
                                         {...register("manufactureDate", { required: '*Manufacture date is required' })}
                                         placeholder='Enter Manufactureing Date'
                                         onChange={(e) => setmanufactureDate(e.target.value)} ></input>
-                                    {manufactureDate <= 0 && errors.manufactureDate && <span className='validate_text'>{errors.manufactureDate.message}</span>}
+                                    {manufactureDate <= 0 && errors.manufactureDate && <span className={styles.validate_text}>{errors.manufactureDate.message}</span>}
                                 </div>
                                 <div>
                                     <p>Device ID <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
@@ -504,7 +502,7 @@ export default function Individual_registration() {
                                         {...register("deviceID", { required: '*Device ID is required' })}
                                         placeholder='Enter Device ID'
                                         onChange={(e) => setdeviceId(e.target.value)} ></input>
-                                    {deviceID <= 0 && errors.deviceID && <span className='validate_text'>{errors.deviceID.message}</span>}
+                                    {deviceID <= 0 && errors.deviceID && <span className={styles.validate_text}>{errors.deviceID.message}</span>}
                                 </div>
                             </div>
                         </div>

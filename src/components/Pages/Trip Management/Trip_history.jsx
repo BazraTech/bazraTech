@@ -16,9 +16,10 @@ import SyncLoader from "react-spinners/SyncLoader";
 import { Pagination } from 'antd';
 import { BsSearch } from "react-icons/bs";
 import Table from './Table';
+import TripHistoryTable from './TripHistoryTable';
 
 export default function () {
-
+ 
     function tableSearch() {
 
         let input, filter, table, tr, td, txtValue, errors;
@@ -86,21 +87,6 @@ export default function () {
 
     const [totalPages, setTotalPage] = useState(1);
 
-    // const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
-    // const [dataSource2, setDataSource2] = useState([])
-    // useEffect(() => {
-    //     setLoading(true);
-    //     fetch(url2, options)
-    //         .then(respnse => respnse.json())
-    //         .then(data => {
-    //             setDataSource2(data.vehicles)
-    //             setTotalPage(data.totalVehicles);
-    //             // console.log(dataSource2)
-    //             setLoading(false);
-
-    //         })
-    // }, [])
-
     const [id, setId] = useState("");
     const [role, setRole] = useState("");
 
@@ -117,20 +103,20 @@ export default function () {
         setVisible(!visible);
     }
 
-    const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
-    const [dataSource2, setDataSource2] = useState([])
-    useEffect(() => {
-        setLoading(true);
-        fetch(url2, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource2(data.vehicles)
-                setTotalPage(data.totalVehicles);
-                // console.log(dataSource2)
-                setLoading(false);
+    // const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
+    // const [dataSource2, setDataSource2] = useState([])
+    // useEffect(() => {
+    //     setLoading(true);
+    //     fetch(url2, options)
+    //         .then(respnse => respnse.json())
+    //         .then(data => {
+    //             setDataSource2(data.vehicles)
+    //             setTotalPage(data.totalVehicles);
+    //             // console.log(dataSource2)
+    //             setLoading(false);
 
-            })
-    }, [])
+    //         })
+    // }, [])
 
     const [dataSource, setDataSource] = useState([])
     // const [Loading, setLoading] = useState([])
@@ -151,7 +137,7 @@ export default function () {
     const [postPerPage, setpostPerPage] = useState(5);
     const indexOfLastPage = page * postPerPage;
     const indexOfFirstPage = indexOfLastPage - postPerPage;
-    const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
+    // const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
 
     const onShowSizeChange = (current, pageSize) => {
         setpostPerPage(pageSize);
@@ -171,7 +157,7 @@ export default function () {
             {/* <Header title="Trip History"></Header> */}
 
 
-            {/* ---------------contents--------------- */}
+            {/* ---------------contents--------------- */} 
 
             <section className={styles.main_content}>
 
@@ -222,11 +208,12 @@ export default function () {
                                                                 setvisiblelist(item.id)
                                                             }}></BsPlusLg>}</p>
                                                     </div>
-                                                    {visible && item.id == visiblelist && <Table style={{ transition: "0.5s" }} role={role} id={id} name={item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`} from={"tripHistory"}/>}
+                                                    {visible && item.id == visiblelist && <TripHistoryTable style={{ transition: "0.5s" }} role={role} id={id} name={item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`} from={"tripHistory"}/>}  
 
                                                 </>
                                             ))
                                         }
+                                         {/* <TripHistoryTable style={{ transition: "0.5s" }} /> */}
                                     </>
                             }
 

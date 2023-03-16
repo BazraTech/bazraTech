@@ -2,7 +2,6 @@ import React , {Component} from 'react'
 import {Routes, Route, Link, useNavigate, Navigate, Router} from "react-router-dom";
 import {FaHome} from 'react-icons/fa';
 import { IconName } from "react-icons/ai";
-import SignIn from './components/Pages/Sign in page/SignIn';
 import Company_registration from './components/Pages/Registration/Company_registration';
 import Users from './components/Pages/Users/Users';
 import Dashboard from './components/Pages/Dashboard/Dashboard';
@@ -15,14 +14,12 @@ import Vehicle_detail from './components/Pages/Total_number_of_vehicle/Vehicle_d
 import Message_overview from './components/Pages/Message/Message_overview';
 import Settings from './components/Pages/Settings/Settings';
 import Report from './components/Pages/Report/Report';
-import Report_detail from './components/Pages/Report/Report_detail';
+import Report_detail from './components/Pages/Report/Report_detail'; 
 import PopUp from './components/Pages/Settings/PopUp';
-import Add_vehicle from "./components/Pages/Users/Add_vehicle"
 import Individual_registration from './components/Pages/Registration/Individual_registration';
 import Set_Trip from './components/Pages/Trip Management/Set_Trip';
 import Trip_history from './components/Pages/Trip Management/Trip_history';
 import Avialable_trip from './components/Pages/Trip Management/Avialable_trip';
-import Table from './components/Pages/Report/Tables';
 import On_route from './components/Pages/Total_number_of_vehicle/On_route';
 import On_stock from './components/Pages/Total_number_of_vehicle/On_stock';
 import Maintenance from './components/Pages/Total_number_of_vehicle/Maintenance';
@@ -44,7 +41,8 @@ import Driver_OnRoute from './components/Pages/Drivers/Driver_OnRoute';
 import Assigned_Driver from './components/Pages/Drivers/Assigned_Driver';
 import UnAssigned_Driver from './components/Pages/Drivers/UnAssigned_Driver';
 import Permit from './components/Pages/Drivers/Permit';
-import SignIn2 from './components/Pages/Sign in page/SignIn2';
+import SignIn from './components/Pages/Sign in page/SignIn';
+import AssigneDriver from './components/Pages/Total_number_of_vehicle/AssigneDriver';
 
 class App extends Component{
   render(){
@@ -52,7 +50,7 @@ class App extends Component{
     <div className="App">
       
       <Routes>
-        <Route path='/' element={<SignIn2 />}></Route>
+        <Route path='/' element={<SignIn />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/users" element={<Users />}></Route>
         <Route path="/vehicle_detail/:id" element={<Vehicle_detail></Vehicle_detail>}></Route> 
@@ -69,7 +67,6 @@ class App extends Component{
         <Route path="/report" element={<Report />}></Route>
         <Route path="/report_detail/:id/:platenumber" element={<Report_detail />}></Route>
         <Route path="/popup" element={<PopUp />}></Route>
-        <Route path="/Add_vehicle" element={<Add_vehicle />}></Route>
         <Route path="/set_trip/:vehicle/:driver" element={<Set_Trip />}></Route>
         <Route path="/trip_history" element={<Trip_history />}></Route> 
         <Route path="/avialable_trip" element={<Avialable_trip />}></Route>
@@ -92,7 +89,8 @@ class App extends Component{
         <Route path="/Driver_OnRoute" element={<Driver_OnRoute />}></Route> 
         <Route path="/Assigned_Driver" element={<Assigned_Driver />}></Route> 
         <Route path="/UnAssigned_Driver" element={<UnAssigned_Driver />}></Route> 
-        <Route path="/Permit" element={<Permit />}></Route> 
+        <Route path="/Permit" element={<Permit />}></Route>
+        <Route path="/AssignDriver/:plateNumber" element={<AssigneDriver />}></Route> 
       </Routes>
 
     </div>

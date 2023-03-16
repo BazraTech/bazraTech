@@ -12,6 +12,8 @@ import { total } from './Data/jsonData';
 import { on_route } from './Data/Data';
 import { parked } from './Data/Data';
 import Navigation from '../Navigation/Navigation';
+import { Pagination } from 'antd';
+import Driver_detail from '../Drivers/Driver_detail';
 
 export default function Users_edit() {
 
@@ -31,12 +33,6 @@ export default function Users_edit() {
         setPop1(!popup1);
     }
 
-    let [active, setActive] = useState("total_users");
-    let [state2, setState2] = useState("false");
-    const color = () => {
-        setState(state);
-    }
-
     const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
 
     const options = {
@@ -49,10 +45,9 @@ export default function Users_edit() {
 
     };
 
-
     // const [Loading, setLoading] = useState(false)
     const [totalPages, setTotalPage] = useState(1);
-    const [cc, setCc] = useState([]);
+    const [totalPages2, setTotalPage2] = useState(1);
     const [dataSource, setDataSource] = useState([])
     const [dataSource2, setDataSource2] = useState([])
     const [dataSource3, setDataSource3] = useState([])
@@ -79,35 +74,13 @@ export default function Users_edit() {
                 setDataSource2(json.ownerINF.companyAddressINF)
                 setDataSource3(json.ownerINF.drivers)
                 setDataSource5(json.ownerINF.vehicles)
-                console.log(json)
+                setTotalPage(json.ownerINF.vehicles.length);
+                setTotalPage2(json.ownerINF.drivers.length);
                 setLoading(false)
             });
     }, [])
 
 
-
-
-
-
-    // const [dataSource4, setDataSource4] = useState([])
-    // const url2 = `http://198.199.67.201:9090/Api/Admin/Company/Vehicles/All/${companyID}`;
-    // useEffect(() => {
-    //     setLoading(true)
-    //     fetch(url2, options)
-    //         .then((response) => response.json())
-    //         .then((json) => {
-    //             setDataSource4(json.vehicles)
-    //             console.log(json)
-    //             setLoading(false)
-    //         });
-    // }, [])
-
-    // if (dataSource.firstName === dataSource.lastName) {
-    //     setIndividual(false);
-    // }
-    // else{
-    //     setIndividual(true);
-    // }
     const [selecttag, setSelectTag] = useState(false)
     const [inputtag, setinputTag] = useState(true)
     const select = () => {
@@ -115,6 +88,40 @@ export default function Users_edit() {
         setinputTag(!inputtag);
     }
 
+    const [page, setCurentPage] = useState(1);
+    const [postPerPage, setpostPerPage] = useState(5);
+    const indexOfLastPage = page * postPerPage;
+    const indexOfFirstPage = indexOfLastPage - postPerPage;
+    const currentPage = dataSource5.slice(indexOfFirstPage, indexOfLastPage);
+    // const currentPage2 = dataSource3.slice(indexOfFirstPage, indexOfLastPage);
+
+    const onShowSizeChange = (current, pageSize) => {
+        setpostPerPage(pageSize);
+    }
+
+    const [page2, setCurentPage2] = useState(1);
+    const [postPerPage2, setpostPerPage2] = useState(5);
+    const indexOfLastPage2 = page2 * postPerPage2;
+    const indexOfFirstPage2 = indexOfLastPage2 - postPerPage2;
+    // const currentPage = dataSource5.slice(indexOfFirstPage2, indexOfLastPage2);
+    const currentPage2 = dataSource3.slice(indexOfFirstPage2, indexOfLastPage2);
+
+
+    const onShowSizeChange2 = (current, pageSize2) => {
+        setpostPerPage2(pageSize2);
+    }
+
+
+    const [color, setColor] = useState("green");
+    const [margin, setMargin] = useState("");
+
+    const [edit, setEdit] = useState("");
+    let [active, setActive] = useState(false);
+    let [name, setName] = useState("false");
+
+    function changeName(name) {
+        setName(name);
+    }
 
     return (
         <div>
@@ -134,10 +141,10 @@ export default function Users_edit() {
 
                     <div className={styles.company_individual_header}>
                         <p ><h1 className={styles.companyHeader}>Company Detail</h1></p>
-                        <p ><h4 className={styles.vehicleDetail}>Name : {dataSource.role} <br /> User ID : {dataSource.id}</h4></p>
+                        z<p ><h4 className={styles.vehicleDetail}>Name : {dataSource.role} <br /> User ID : {dataSource.id}</h4></p>
                     </div>
                     <form className='form'>
-                        {/* {dataSource.map(item => { */}
+                        {/* {dataSource.map(item => { */} 
 
                         <div className={styles.allDiv}>
                             {role === "INDIVIDUAL" ? "" :
@@ -168,13 +175,6 @@ export default function Users_edit() {
                                                 <option value='plc'>Public Llimited Company</option>
                                                 <option value='plc'>Public Llimited Company</option>
                                             </select> : ""}
-                                            {/* <select disabled={diabled} >
-                                            <option value=''>Transport</option>
-                                            <option value='plc'>Public Llimited Company</option>
-                                            <option value='plc'>Government</option>
-                                            <option value='plc'>Public Llimited Company</option>
-                                            <option value='plc'>Public Llimited Company</option>
-                                        </select> */}
                                         </div>
                                     </div>
                                 </div>
@@ -273,109 +273,116 @@ export default function Users_edit() {
                                 <button className={styles.ad} disabled={diabled}>Update</button>
 
                             </div>
-
-                            <div className='outer_vehicle_tables0' id='myTable'>
-
-                                <div className={styles.second_div}>
-                                    <div className={styles.Vehicle_number}>
-                                        <label>Total Number Of Vehicle</label>
-                                        <p className={styles.number} >{dataSource5.length}</p>
-                                    </div>
-                                </div>
-
-                                <p>Registerd Vehicles</p>
-
-                                <table class="vehicle_table" id="myTable">
-
-                                    <thead>
-                                        <tr>
-                                            <th>Profile</th>
-                                            <th>Assigned Driver</th>
-                                            <th>Vehicle ID</th>
-                                            <th>Vehicle Type</th>
-                                            <th>Plate Number</th>
-                                            <th>Detail</th>
-                                            <th>Tracking</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {dataSource5.map(item => (
-                                            <tr className='active_row'>
-
-                                                <td>{item.vehicleName}</td>
-                                                {/* <td>{item.driver == null ? "unassignd" :`${dataSource3.map(item2 =>( item2.driverName ))}`}</td> */}
-                                                <td>{item.driverName == "null" ? "unassignd" : `${item.driverName}`}</td>
-                                                <td>{item.id}</td>
-                                                <td>{item.vehicleCatagory}</td>
-                                                <td>{item.plateNumber}</td>
-                                                <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
-                                                <td><Link to="/tracking"><button>Tracking</button></Link></td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div className='page'>
-
-
-                                {/* <Pagination
-                                        onChange={(page) => setCurentPage(page)}
-                                        pageSize={postPerPage}
-                                        current={page}
-                                        total={total}
-                                        showQuickJumper
-                                        showSizeChanger
-                                        onShowSizeChange={onShowSizeChange}
-
-                                    /> */}
-                            </div>
-
-                            <div className='outer_vehicle_tables0' id='myTable'>
-
-                                <div className={styles.second_div}>
-                                    <div className={styles.Vehicle_number}>
-                                        <label>Total Number Of Driver</label>
-                                        <p className={styles.number} >{dataSource3.length}</p>
-                                    </div>
-                                </div>
-
-                                <p>Registerd Drivers</p>
-
-                                <table class="vehicle_table" id="myTable">
-
-                                    <thead>
-                                        <tr>
-                                            <th>Driver ID</th>
-                                            <th>Driver Name</th>
-                                            <th>License Number</th>
-                                            <th>Detail</th>
-                                            <th>Tracking</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {dataSource3.map(item => (
-                                            <tr className='active_row'>
-
-                                                <td>{item.id}</td>
-                                                {/* <td>{item.driver == null ? "unassignd" :`${dataSource3.map(item2 =>( item2.driverName ))}`}</td> */}
-                                                {/* <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td> */}
-                                                <td>{item.driverName}</td>
-                                                <td>{item.licenseNumber}</td>
-                                                {/* <td>{item.plateNumber}</td> */}
-                                                <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
-                                                <td><Link to="/tracking"><button>Tracking</button></Link></td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-
                         </div>
 
-                        {/* })}  */}
-
                     </form>
+
+                    <div className={styles.outer_vehicle_table} id='myTable'>
+
+                        <div className={styles.second_div}>
+                            <div className={styles.Vehicle_number}>
+                                <p>Total Number Of Vehicle</p>
+                                <p className={styles.number} >{dataSource5.length}</p>
+                            </div>
+                        </div>
+
+                        <label>Registerd Vehicles</label>
+
+                        <table class={styles.vehicle_table} id="myTable">
+
+                            <thead>
+                                <tr>
+                                    <th>Vehicle Name</th>
+                                    <th>Assigned Driver</th>
+                                    <th>Vehicle ID</th>
+                                    <th>Vehicle Type</th>
+                                    <th>Plate Number</th>
+                                    <th>Status</th>
+                                    <th>Detail</th>
+                                    <th>Tracking</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {currentPage.map(item => (
+                                    <tr className={styles.active_row}>
+
+                                        <td>{item.vehicleName}</td>
+                                        <td>{item.driverName == "null" ? "unassignd" : `${item.driverName}`}</td>
+                                        <td>{item.id}</td>
+                                        <td>{item.vehicleCatagory}</td>
+                                        <td>{item.plateNumber}</td>
+                                        <td>{item.status}</td>
+                                        <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
+                                        <td><Link to="/tracking"><button>Tracking</button></Link></td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className={styles.page}>
+                        <Pagination
+                            onChange={(page) => setCurentPage(page)}
+                            pageSize={postPerPage}
+                            current={page}
+                            total={totalPages}
+                            showQuickJumper
+                            showSizeChanger
+                            onShowSizeChange={onShowSizeChange}
+                        />
+                    </div>
+
+                    <div className={styles.outer_vehicle_table} id='myTable'>
+
+                        <div className={styles.second_div}>
+                            <div className={styles.Vehicle_number}>
+                                <p>Total Number Of Drivers</p>
+                                <p className={styles.number} >{dataSource3.length}</p>
+                            </div>
+                        </div>
+
+                        <label>Registerd Drivers</label>
+
+                        <table class={styles.vehicle_table} id="myTable">
+
+                            <thead>
+                                <tr>
+                                    <th>Driver ID</th>
+                                    <th>Driver Name</th>
+                                    <th>License Number</th>
+                                    <th>Detail</th>
+                                    <th>Tracking</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {currentPage2.map(item => (
+                                    <tr className={styles.active_row}>
+
+                                        <td>{item.id}</td>
+                                        <td>{item.driverName}</td>
+                                        <td>{item.licenseNumber}</td>
+                                        <td><button onClick={() => {
+                                            setEdit(item.id)
+                                            setName("true")
+                                        }}>Detail</button></td>
+                                        <td><Link to="/tracking"><button>Tracking</button></Link></td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className={styles.page}>
+                        <Pagination
+                            onChange={(page2) => setCurentPage2(page2)}
+                            pageSize={postPerPage2}
+                            current={page2}
+                            total={totalPages2}
+                            showQuickJumper
+                            showSizeChanger
+                            onShowSizeChange={onShowSizeChange2}
+                        />
+                    </div>
+                    {name === "true" && <Driver_detail data={edit} changeName={changeName} />}
 
                 </section>
 

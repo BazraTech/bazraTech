@@ -4,46 +4,375 @@ import { MdDeleteForever } from "react-icons/md";
 import './settings.css';
 import { Link, NavLink } from 'react-router-dom';
 import PopUp from './PopUp';
-import { Truck_status } from "./data/Data"
-import { service_needed } from "./data/Data"
-import { user_catagory } from "./data/Data"
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import SyncLoader from "react-spinners/SyncLoader";
+import swal from "sweetalert";
+import Swal from 'sweetalert2'
 
 export default function () {
 
     const [popup, setPop] = useState(false);
-    const [popup1, setPop1] = useState(false);
-    const [active, setTitle] = useState("");
+    const [title, setTitle] = useState("");
     const handleClickEdit = () => {
         setPop(!popup);
     }
-    const closePopup = () => {
-        setPop(false);
+    const handleClickEdit21 = (id, value, data, title) => {
+        Swal.fire({
+            title: title,
+            width: "580px",
+            html: `<div> <input type="text" id="login" class="swallpop" value =${value}></div>`,
+            confirmButtonText: 'Update',
+            showCloseButton: true,
+            confirmButtonColor: '#00cc44',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp' 
+            },
+            preConfirm: () => {
+                const login = Swal.getPopup().querySelector('#login').value
+                if (!login) {
+                    Swal.showValidationMessage(`Please enter data`)
+                }
+                return { login: login }
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Delete(id, result.value.login, data)
+            }
+        })
+
+        // .then((result) => {
+        //     if (result.isConfirmed) { 
+        //         Swal.fire({ icon: 'success', text: 'Updatesd Successfully', showConfirmButton: false, timer: 2000 })
+        //     }
+        // })
     }
-    const [popupx, setPopx] = useState(false);
-    const handleClickopenx = () => {
-        setPopx(!popupx);
+    const handleClickDelete = (id, data) => {
+        Swal.fire({
+            text: `Are you sure You Want to Delete This ${data}`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#00cc44',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ok!',
+            showCloseButton: true,
+            showClass: {
+                popup: 'animate__animated animate__shakeX'
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Delete(id, data)
+            }
+        })
     }
-    const handleClickEdit1 = () => {
-        setPop1(!popup1);
+
+    const Delete = (id, value, data) => {
+        if (data == "Update_Role") {
+            Update_Role(id, value);
+        }
+        // if (data == 'Driver_Status') {
+        //     Update_Driver_Status(id, value);
+        // }
+        if (data == 'Update_Alert') {
+            Update_Alert(id, value);
+        }
+        if (data == 'Update_Trip_Type') {
+            Update_Trip_Type(id, value);
+        }
+        if (data == "Update_Notification") {
+            Update_Notification(id, value);
+        }
+        if (data === 'Update_VehicleCondition') {
+            Update_VehicleCondition(id, value);
+        }
+        if (data === 'Service_Needed') {
+            Service_Needed(id, value);
+        }
+        if (data === 'Update_VehicleCatagory') {
+            Update_VehicleCatagory(id, value);
+        }
+        if (data === 'Update_CompanyType') {
+            Update_CompanyType(id, value);
+        }
+        if (data == 'Update_CompanySector') {
+            Update_CompanySector(id, value);
+        }
+    };
+
+    async function Update_Role(id, rolename) {
+
+        let item =
+        {
+            rolename, 
+        };
+        const options = {
+            method: "PUT",
+            headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
+            body: JSON.stringify(item),
+        };
+        const url = `http://198.199.67.201:8090/Api/Admin/Role/${id}`;
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            if (response.ok) {
+                swal("Successful", `${mess}`, "success", { buttons: false, timer: 2000, });
+                setPop(false);
+            } else {
+                swal(`Failed To Register ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
     }
-    const closePopup1 = () => {
-        setPop1(false);
+
+    async function Update_Trip_Type(id, tripType) {
+
+        let item =
+        {
+            tripType, 
+        };
+        const options = {
+            method: "PUT",
+            headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
+            body: JSON.stringify(item),
+        };
+        const url = `http://198.199.67.201:9090/Api/Admin/TripType/All/${id}`;
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            if (response.ok) {
+                swal("Successful", `${mess}`, "success", { buttons: false, timer: 2000, });
+                setPop(false);
+            } else {
+                swal(`Failed To Register ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
     }
+
+    async function Service_Needed(id, serviceNeeded) {
+
+        let item =
+        {
+            serviceNeeded, 
+        };
+        const options = {
+            method: "PUT",
+            headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
+            body: JSON.stringify(item),
+        };
+        const url = `http://198.199.67.201:9090/Api/Admin/Services/Update/${id}`;
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            if (response.ok) {
+                swal("Successful", `${mess}`, "success", { buttons: false, timer: 2000, });
+                setPop(false);
+            } else {
+                swal(`Failed To Register ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+
+
+    async function Update_Alert(id, alertType) {
+
+        let item =
+        {
+            alertType, 
+        };
+        const options = {
+            method: "PUT",
+            headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
+            body: JSON.stringify(item),
+        };
+        const url = `http://198.199.67.201:9090/Api/Admin/AlertType/Update/${id}`;
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            if (response.ok) {
+                swal("Successful", `${mess}`, "success", { buttons: false, timer: 2000, });
+                setPop(false);
+            } else {
+                swal(`Failed To Register ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function Update_Notification(id, notification) {
+
+        let item =
+        {
+            notification, 
+        };
+        const options = {
+            method: "PUT",
+            headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
+            body: JSON.stringify(item),
+        };
+        const url = `http://198.199.67.201:9090/Api/Admin/NotificationMedium/Update/${id}`;
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            if (response.ok) {
+                swal("Successful", `${mess}`, "success", { buttons: false, timer: 2000, });
+                setPop(false);
+            } else {
+                swal(`Failed To Register ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function Update_VehicleCondition(id, vehicleConditon) {
+
+        let item =
+        {
+            vehicleConditon, 
+        };
+        const options = {
+            method: "PUT",
+            headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
+            body: JSON.stringify(item),
+        };
+        const url = `http://198.199.67.201:9090/Api/Admin/VehicleCondition/Update/${id}`;
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            if (response.ok) {
+                swal("Successful", `${mess}`, "success", { buttons: false, timer: 2000, });
+                setPop(false);
+            } else {
+                swal(`Failed To Register ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function Update_VehicleCatagory(id, vehicleCatagory) {
+
+        let item =
+        {
+            vehicleCatagory, 
+        };
+        const options = {
+            method: "PUT",
+            headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
+            body: JSON.stringify(item),
+        };
+        const url = `http://198.199.67.201:9090/Api/Admin/VehicleCatagory/Update/${id}`;
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            if (response.ok) {
+                swal("Successful", `${mess}`, "success", { buttons: false, timer: 2000, });
+                setPop(false);
+            } else {
+                swal(`Failed To Register ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+
+    async function Update_CompanyType(id, companyType) {
+
+        let item =
+        {
+            companyType, 
+        };
+        const options = {
+            method: "PUT",
+            headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
+            body: JSON.stringify(item),
+        };
+        const url = `http://198.199.67.201:9090/Api/Admin/CompanyType/Update/${id}`;
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            if (response.ok) {
+                swal("Successful", `${mess}`, "success", { buttons: false, timer: 2000, });
+                setPop(false);
+            } else {
+                swal(`Failed To Register ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+    async function Update_CompanySector(id, companysector) {
+
+        let item =
+        {
+            companysector, 
+        };
+        const options = {
+            method: "PUT",
+            headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
+            body: JSON.stringify(item),
+        };
+        const url = `http://198.199.67.201:9090/Api/Admin/CompanySector/Update/${id}`;
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            if (response.ok) {
+                swal("Successful", `${mess}`, "success", { buttons: false, timer: 2000, });
+                setPop(false);
+            } else {
+                swal(`Failed To Register ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    
+    
+
     const [edit, setEdit] = useState("");
-    const setVehicleValue = (variable) => {
+    const setValue = (variable) => {
         setEdit(`${variable}`)
     }
     const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
     const options = {
-        headers: {
-            'Content-Type': 'application/json',
-            "Accept": "application/json",
-            "Authorization": `Bearer ${jwt}`
-        },
+        method: "GET",
+        headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
     };
+
     const urlTwo = " http://198.199.67.201:9090/Api/Admin/All/NotificationMedium";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
@@ -52,7 +381,6 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource2(data.notificationMedias)
-                // console.log(dataSource2)
                 setLoading(false)
             })
     }, [])
@@ -64,7 +392,6 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource3(data.vehicleCatagories)
-                // console.log(dataSource3)
                 setLoading(false)
             })
     }, [])
@@ -76,7 +403,6 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource4(data.vehicleConditions)
-                // console.log(dataSource4)
                 setLoading(false)
             })
     }, [])
@@ -87,7 +413,6 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource(data.companySectors)
-                // console.log(dataSource)
             })
     }, [])
     const url5 = "http://198.199.67.201:9090/Api/Admin/All/CompanyType/";
@@ -97,7 +422,6 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource5(data.companyTypes)
-                // console.log(dataSource)
             })
     }, [])
     const url6 = "http://198.199.67.201:9090/Api/Admin/All/Services";
@@ -107,22 +431,24 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource6(data.service)
-                // console.log(dataSource4)
             })
     }, [])
 
+    useEffect(() => {
+        FethData()
+    }, [])
     const url7 = "http://198.199.67.201:9090/Api/Admin/All";
     const [dataSource7, setDataSource7] = useState([])
-    useEffect(() => {
+    const FethData = () => {
         setLoading(true)
         fetch(url7, options)
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource7(data.roles)
-                // console.log(dataSource4)
                 setLoading(false)
             })
-    }, [])
+    }
+
 
     const url8 = "http://198.199.67.201:9090/Api/Admin/DriverStatus/All";
     const [dataSource8, setDataSource8] = useState([])
@@ -132,7 +458,6 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource8(data.driverStatus)
-                // console.log(dataSource4)
                 setLoading(false)
             })
     }, [])
@@ -145,7 +470,6 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource9(data.alertTypes)
-                // console.log(dataSource4)
                 setLoading(false)
             })
     }, [])
@@ -158,11 +482,9 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource10(data.triptypes)
-                // console.log(dataSource4)
                 setLoading(false)
             })
     }, [])
-
     const [Loading, setLoading] = useState([])
     let [color, setColor] = useState("green");
     let [margin, setMargin] = useState("");
@@ -182,22 +504,22 @@ export default function () {
                     <div className='setting_header'>Roles</div>
                     <PopUp title="Create_Role" />
                     {Loading ?
-                       <p className="loading" >
+                        <p className="loading" >
                             <SyncLoader
-                            color={color}
-                            Left={margin}
-                            loading={Loading}
-                            size={10}
-                            aria-label="Loading Spinner"
-                            data-testid="loader"
-                        />
+                                color={color}
+                                Left={margin}
+                                loading={Loading}
+                                size={10}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            />
                         </p>
                         : <div>
                             <div className="outer_vehicle_table7" id='myTable'>
                                 <table class="vehicle_table7" id="myTable">
                                     <thead>
                                         <tr>
-                                            <th></th>
+                                            <th>ID</th>
                                             <th>Role</th>
                                             <th>Created Date</th>
                                             <th>Action</th>
@@ -206,19 +528,16 @@ export default function () {
                                     <tbody>
                                         {dataSource7.map(item => {
                                             return <tr className='active_row'>
-
                                                 <td>{item.id}</td>
-                                                <td>{item.rolename}</td>
+                                                <td>{item.name}</td>
                                                 <td>{item.createdDate}</td>
                                                 <td>
                                                     <p className='notification_actions'>
                                                         <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
                                                             onClick={() => {
-                                                                handleClickEdit()
-                                                                setTitle("Edit Notification Preference")
-                                                                setVehicleValue(item.rolename)
+                                                                handleClickEdit21(item.id, item.name, "Update_Role", "Edit Role")
                                                             }}></FaEdit>
-                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={() => {handleClickDelete(item.id, "Role")}}></MdDeleteForever>
                                                     </p>
                                                 </td>
                                             </tr>
@@ -248,7 +567,7 @@ export default function () {
                                 <table class="vehicle_table7" id="myTable">
                                     <thead>
                                         <tr>
-                                            <th></th>
+                                            <th>ID</th>
                                             <th>Driver Status</th>
                                             <th>Created Date</th>
                                             <th>Action</th>
@@ -266,10 +585,10 @@ export default function () {
                                                         <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
                                                             onClick={() => {
                                                                 handleClickEdit()
-                                                                setTitle("Edit Notification Preference")
-                                                                setVehicleValue(item.driverStatus)
+                                                                setTitle("Edit Driver Status")
+                                                                // setValue(item.driverStatus)
                                                             }}></FaEdit>
-                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={() => {handleClickDelete(item.id, "Driver_Status")}}></MdDeleteForever>
                                                     </p>
                                                 </td>
                                             </tr>
@@ -316,11 +635,9 @@ export default function () {
                                                     <p className='notification_actions'>
                                                         <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
                                                             onClick={() => {
-                                                                handleClickEdit()
-                                                                setTitle("Edit Notification Preference")
-                                                                setVehicleValue(item.alertType)
+                                                                handleClickEdit21(item.id, item.alertType, "Update_Alert", "Edit Alert Type")
                                                             }}></FaEdit>
-                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={() => {handleClickDelete(item.id, "Alert_Type")}}></MdDeleteForever>
                                                     </p>
                                                 </td>
                                             </tr>
@@ -367,11 +684,9 @@ export default function () {
                                                     <p className='notification_actions'>
                                                         <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
                                                             onClick={() => {
-                                                                handleClickEdit()
-                                                                setTitle("Edit Notification Preference")
-                                                                setVehicleValue(item.tripType)
+                                                                handleClickEdit21(item.id, item.tripType, "Update_Trip_Type", "Edit Trip Type")
                                                             }}></FaEdit>
-                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red'onClick={() => {handleClickDelete(item.id, "Trip_Type")}}></MdDeleteForever>
                                                     </p>
                                                 </td>
                                             </tr>
@@ -400,7 +715,7 @@ export default function () {
                                 <table class="vehicle_table7" id="myTable">
                                     <thead>
                                         <tr>
-                                            <th></th>
+                                            <th>ID</th>
                                             <th>Notification Preference</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -417,11 +732,11 @@ export default function () {
                                                     <p className='notification_actions'>
                                                         <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
                                                             onClick={() => {
-                                                                handleClickEdit()
+                                                                handleClickEdit21(item.id, item.medium, "Update_Notification", "Edit Notification Preference")
                                                                 setTitle("Edit Notification Preference")
-                                                                setVehicleValue(item.medium)
+                                                                // setValue(item.medium)
                                                             }}></FaEdit>
-                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={() => {handleClickDelete(item.id, "Notification_Preference")}}></MdDeleteForever>
                                                     </p>
                                                 </td>
                                             </tr>
@@ -450,7 +765,7 @@ export default function () {
                                 <table class="vehicle_table7" id="myTable">
                                     <thead>
                                         <tr>
-                                            <th></th>
+                                            <th>ID</th>
                                             <th>Vehicle Condition</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -466,11 +781,9 @@ export default function () {
                                                     <p className='notification_actions'>
                                                         <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
                                                             onClick={() => {
-                                                                handleClickEdit()
-                                                                setTitle("Edit Vehicle Condition")
-                                                                setVehicleValue(item.conditionName)
+                                                                handleClickEdit21(item.id, item.conditionName, "Update_VehicleCondition", "Edit Vehicle Condition")
                                                             }}></FaEdit>
-                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={() => {handleClickDelete(item.id, "Vehicle_Condition")}}></MdDeleteForever>
                                                     </p>
                                                 </td>
                                             </tr>
@@ -496,38 +809,36 @@ export default function () {
                                 aria-label="Loading Spinner"
                                 data-testid="loader"
                             /></p>
-                            : 
+                            :
                             <div className="outer_vehicle_table7" id='myTable'>
-                            <table class="vehicle_table7" id="myTable">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Service Needed</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {datasource6.map(item => {
-                                        return <tr className='active_row'>
-                                            <td>{item.id}</td>
-                                            <td>{item.service}</td>
-                                            <td>{item.status}</td>
-                                            <td>
-                                                <p className='notification_actions'>
-                                                    <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
-                                                        onClick={() => {
-                                                            handleClickEdit()
-                                                            setTitle("Edit Service Needed")
-                                                            setVehicleValue(item.service_neended)
-                                                        }}></FaEdit>
-                                                    <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
-                                                </p>
-                                            </td>
+                                <table class="vehicle_table7" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Service Needed</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
-                                    })}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {datasource6.map(item => {
+                                            return <tr className='active_row'>
+                                                <td>{item.id}</td>
+                                                <td>{item.service}</td>
+                                                <td>{item.status}</td>
+                                                <td>
+                                                    <p className='notification_actions'>
+                                                        <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
+                                                            onClick={() => {
+                                                                handleClickEdit21(item.id, item.service, "Service_Needed", "Edit Service Needed")
+                                                            }}></FaEdit>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={() => {handleClickDelete(item.id, "Service")}}></MdDeleteForever>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
                             </div>
                         }
                     </div>
@@ -546,39 +857,37 @@ export default function () {
                                 aria-label="Loading Spinner"
                                 data-testid="loader"
                             /></p>
-                            : 
+                            :
                             <div className="outer_vehicle_table7" id='myTable'>
-                            <table class="vehicle_table7" id="myTable">
+                                <table class="vehicle_table7" id="myTable">
 
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Vehicle Category</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {dataSource3.map(item => {
-                                        return <tr className='active_row'>
-                                            <td>{item.id}</td>
-                                            <td>{item.catagory}</td>
-                                            <td>{item.status}</td>
-                                            <td>
-                                                <p className='notification_actions'>
-                                                    <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
-                                                        onClick={() => {
-                                                            handleClickEdit()
-                                                            setTitle("Edit Vehicle Category")
-                                                            setVehicleValue(item.catagory)
-                                                        }}></FaEdit>
-                                                    <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
-                                                </p>
-                                            </td>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Vehicle Category</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
-                                    })}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {dataSource3.map(item => {
+                                            return <tr className='active_row'>
+                                                <td>{item.id}</td>
+                                                <td>{item.catagory}</td>
+                                                <td>{item.status}</td>
+                                                <td>
+                                                    <p className='notification_actions'>
+                                                        <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
+                                                            onClick={() => {
+                                                                handleClickEdit21(item.id, item.catagory, "Update_VehicleCatagory", "Edit Vehicle Category")
+                                                            }}></FaEdit>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={() => {handleClickDelete(item.id, "Vehicle_Category")}}></MdDeleteForever>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
                             </div>
                         }
                     </div>
@@ -597,38 +906,36 @@ export default function () {
                                 aria-label="Loading Spinner"
                                 data-testid="loader"
                             /></p>
-                            : 
+                            :
                             <div className="outer_vehicle_table7" id='myTable'>
-                            <table class="vehicle_table7" id="myTable">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Company Type</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {dataSourc5.map(item => {
-                                        return <tr className='active_row'>
-                                            <td>{item.id}</td>
-                                            <td>{item.companyType}</td>
-                                            <td>{item.status}</td>
-                                            <td>
-                                                <p className='notification_actions'>
-                                                    <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
-                                                        onClick={() => {
-                                                            handleClickEdit()
-                                                            setTitle("Edit Company Sector")
-                                                            setVehicleValue(item.sectorName)
-                                                        }}></FaEdit>
-                                                    <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
-                                                </p>
-                                            </td>
+                                <table class="vehicle_table7" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Company Type</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
-                                    })}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {dataSourc5.map(item => {
+                                            return <tr className='active_row'>
+                                                <td>{item.id}</td>
+                                                <td>{item.companyType}</td>
+                                                <td>{item.status}</td>
+                                                <td>
+                                                    <p className='notification_actions'>
+                                                        <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
+                                                            onClick={() => {
+                                                                handleClickEdit21(item.id, item.companyType, "Update_CompanyType", "Edit Company Type")
+                                                            }}></FaEdit>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={() => {handleClickDelete(item.id, "Company_Type")}}></MdDeleteForever>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
                             </div>
                         }
                     </div>
@@ -647,106 +954,45 @@ export default function () {
                                 aria-label="Loading Spinner"
                                 data-testid="loader"
                             /></p>
-                            : 
+                            :
                             <div className="outer_vehicle_table7" id='myTable'>
                                 <table class="vehicle_table7" id="myTable">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Company Sector</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {dataSource.map(item => {
-                                        return <tr className='active_row'>
-                                            <td title='Company Id'>{item.id}</td>
-                                            <td title='Sector Name'>{item.sectorName}</td>
-                                            <td title='Status'>{item.status}</td>
-                                            <td>
-                                                <p className='notification_actions'>
-                                                    <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
-                                                        onClick={() => {
-                                                            handleClickEdit()
-                                                            setTitle("Edit Company Sector")
-                                                            setVehicleValue(item.sectorName)
-                                                        }}></FaEdit>
-                                                    <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={handleClickEdit1}></MdDeleteForever>
-                                                </p>
-                                            </td>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Company Sector</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
-                                    })}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {dataSource.map(item => {
+                                            return <tr className='active_row'>
+                                                <td title='Company Id'>{item.id}</td>
+                                                <td title='Sector Name'>{item.sectorName}</td>
+                                                <td title='Status'>{item.status}</td>
+                                                <td>
+                                                    <p className='notification_actions'>
+                                                        <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
+                                                            onClick={() => {
+                                                                handleClickEdit21(item.id, item.sectorName, "Update_CompanySector", "Edit Company Sector")
+                                                            }}></FaEdit>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={() => {handleClickDelete(item.id, "Company_Sector")}}></MdDeleteForever>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
                             </div>
                         }
                     </div>
-                </div>
+                </div> 
 
                 <div>
-                    {popup ?
-                        <div>
-                            <div className='popup0'>
-                                <div className='popup-innerq'>
-                                    <div onClick={closePopup} className='close'>X</div>
-                                    <div className='fgf'>
-                                        <h2 className='mnm'>{active}</h2>
-                                        <input value={edit} onChange={(e) => setEdit(e.target.value)}></input>
-                                        <div className='send_button'>
-                                            <button className='popup_add'>Save</button>
-                                            <button onClick={closePopup} className='popup_cancle'>Cancle</button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div> : ""}
+                    {/* {popup ?
+                        <div>{editSetting()}</div> : ""} */}
                 </div>
-
-                <div>
-                    {popup1 ?
-                        <div>
-                            <div className='popup0'>
-                                <div className='popup-innerq'>
-                                    <div onClick={closePopup1} className='close'>X</div>
-                                    {/* <div className='fgf1'>
-                                        <h2>{active}</h2>
-                                    </div> */}
-                                    {/* <button className='close-btn' onClick={closePopup}>X</button> */}
-                                    <div className='fgf'>
-                                        <h2 className='mnmn'>Are You Sure You want to delete this Item</h2>
-                                        {/* <input placeholder={edit}></input> */}
-                                        <div className='send_button'>
-                                            <button className='popup_add'>Ok</button>
-                                            <button onClick={closePopup1} className='popup_cancle'>Cancle</button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div> : ""}
-                </div>
-
-                {/* <div>
-                    {popup1 ?
-                        <div className='popup_modal_delete'>
-                            <div className='popup_close_button'>
-                                <button className='x-press-report' onClick={closePopup1}>X</button>
-                            </div>
-                            <div className="item-report">
-                                <div className="report-status-popup">
-                                    <div class="popup_main_delete" >
-                                        <h3>Are you sure you want to delete ?</h3>
-                                        <div className='send_button'>
-                                            <button className='popup_add'>Ok</button>
-                                            <button onClick={closePopup1} className='popup_cancle'>Cancle</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> : ""}
-                </div> */}
             </div>
         </div>
     )

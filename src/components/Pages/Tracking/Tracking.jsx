@@ -60,8 +60,8 @@ export default function () {
     fetch(url2, options)
       .then(respnse => respnse.json())
       .then(data => {
-        setDataSource2(data.vehicles)
-        setTotalPage(data.totalVehicles);
+        setDataSource2(data.vehiclesINF)
+        setTotalPage(data.totalVehicles); 
         setLoading(false);
 
       })
@@ -83,13 +83,13 @@ export default function () {
 
   return (
 
-    <div className="tacking_container" title="Tracking">
+    <div className="tacking_container">
 
       {/*---------------navigation---------------*/}
 
       <Navigation path="/tracking" title="Tracking"></Navigation>
 
-      {/* --------------- tracking header --------------- */}
+      {/* --------------- tracking header --------------- */} 
 
       {/* <Header title="Tracking"></Header> */}
 
@@ -127,7 +127,7 @@ export default function () {
                   {currentPage.map(item => (
                     <tr className={styles.active_row}>
 
-                      <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td>
+                      <td>{item.driverName == "null" ? "unassignd" : `${item.driverName}`}</td>
                       <td>{item.plateNumber}</td>
                       <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
                     </tr>

@@ -10,7 +10,7 @@
     align-items: center; 
     z-index: 31; 
 }
-.popup{
+.popup{ 
     position: fixed;
     top: 0;
     left: 0;
@@ -22,7 +22,7 @@
     align-items: center;
     z-index: 1; 
 }
-.popup2{
+.popup2{ 
     position: fixed;
     top: 0;
     left: 0;

@@ -6,16 +6,15 @@
     position: absolute;
     width: calc(100% - 100px);
     left: 100px;
-    /* min-height: 100px; */
-    height: 100vh;
+    min-height: calc(88vh);
     opacity: var(--black2);
     color: var(--black1);
     top: 75px;
     background-color: rgb(247, 247, 247);
-    z-index: -1;
-}
+    /* z-index: -1; */
+} 
 
-.vehicle_outer {
+.vehicle_outer { 
     position: absolute;
     width: calc(100% - 100px);
     left: 100px;
@@ -23,7 +22,7 @@
     background-color: rgb(244, 244, 244);
     color: var(--black1);
     top: 75px;
-}
+} 
 
 .vehicle_contents0 {
     margin-top: 40px;
@@ -32,10 +31,10 @@
     justify-content: space-between;
     width: 74%;
     margin-left: 5%;
-    /* position: absolute; */
+    /* position: absolute; */ 
 }
 
-/* ------------------ Total_vehicle ------------------- */
+/* ------------------ Total_vehicle ------------------- */ 
 
 .allcards {
     display: grid;
@@ -135,9 +134,8 @@
 .vehicle_search {
     display: flex;
     justify-content: right;
-    padding-right: 10%;
 }
-
+ 
 .hide {
     display: none;
 }
@@ -148,15 +146,12 @@
 
 .vehicle_search .icn {
     margin-top: 8px;
-    /* padding-left: -40px; */
     margin-right: -42px;
     margin-left: 20px;
     z-index: 2;
-    /* background-color: red; */
 }
 
 .vehicle_search input {
-    /* width: 61%; */
     height: 38px;
     padding-left: 50px;
     border-radius: 6px 0px 0px 6px;
@@ -202,22 +197,24 @@
 
 .outer_vehicle_table {
     overflow-x: scroll;
-    margin: 3%;
+    margin: 7%;
+    padding-bottom: 20px;
     margin-bottom: 10px;
+    margin-top: 30px;
+    /* background-color: rgb(255, 255, 255); */
 }
 
 .outer_vehicle_table p {
     color: #009879;
     font-size: 23px;
-    margin-left: 45px;
+    margin-left: 5px;
     font-weight: 600;
     margin-bottom: 10px;
 }
 
 .vehicle_table {
-    margin-left: 4%;
     border-collapse: collapse;
-    width: 90%;
+    width: 100%;
     border-radius: 5px 5px 0px 0px;
     overflow: hidden;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
@@ -277,6 +274,7 @@
     /* padding: 10px; */
     display: flex;
     justify-content: center;
+    padding-bottom: 0px;
 }
 
 .num {
@@ -300,6 +298,97 @@
     margin-left: 45%;
     margin-top: 100px;
     padding: 10px;
+}
+
+/* ---------------------- popup --------------------- */
+
+.popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2; 
+}
+
+.popupInner{
+    position: relative;
+    padding: 2px;
+    padding-top: 5%;
+    padding-bottom: 20px;
+    width: 100%;
+    max-width: 700px;
+    background-color: rgb(230, 230, 230);
+    border-radius: 4px;
+}
+.popupInner .closeBtn{
+    position: absolute;
+    top: 20px ;
+    right: 26px;
+    background-color: red;
+    padding: 2px;
+    padding-left: 2%;
+    padding-right: 2%;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    
+}
+
+.assignetDiver{
+    display: grid;
+    gap: 10px;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: -20px;
+    /* margin-bottom: 20px; */
+    padding-bottom: 40px;
+    background-color: white;
+    padding-left: 100px;
+    padding-right: 100px;
+    border-radius: 6px;
+}
+.assignetDiver .lable{
+    background-color: rgb(255, 255, 255);
+    border: 8px solid rgb(231, 231, 231);
+    border-radius: 6px;
+    text-align: center;
+    margin-top: -40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 24px;
+    color: green;
+    margin-bottom: 30px;
+    font-weight: 700;
+} 
+.assignetDiver input{
+    height: 40px;
+    outline: none;
+    border-radius: 6px;
+    padding: 0 15px;
+    background-color: rgb(242, 242, 242);
+    border: 1px solid rgb(202, 202, 202);
+    text-align: center;
+}
+
+.assignetDiver button{
+    height: 40px;
+    outline: none;
+    border-radius: 6px;
+    background-color: rgb(46, 46, 46);
+    border: 1px solid rgb(202, 202, 202);
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    font-size: 15px;
+    width: 50%;
+    margin-left: 24%;
+    margin-top: 10px;
+    margin-bottom: -30px;
+    
 }
 
 
@@ -346,8 +435,7 @@
         position: absolute;
         width: calc(100%);
         left: 0px;
-        /* min-height: 100px; */
-        max-height: 100vh;
+        /* min-height: calc(100% -75px); */
         opacity: var(--black2);
         color: var(--black1);
         top: 75px;

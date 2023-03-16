@@ -15,6 +15,9 @@ import { Link, useLocation } from 'react-router-dom';
 import { IoMdArrowDropdownCircle } from "react-icons/io";
 import { IoMdArrowDropupCircle } from "react-icons/io";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import swal from "sweetalert";
+import Swal from 'sweetalert2' 
+import 'animate.css';
 import "./header.css"
 import './navigation.css';
 
@@ -35,12 +38,34 @@ export default function Navigation({ path, title }) {
     }
 
     const user = JSON.parse(localStorage.getItem("user"));
+    const roles = user.role;
+    const username = user.username;
+    const id = user.id;
+    // console.log(phoneNumber)
+
+    const toggle = () => {
+
+        Swal.fire({
+            position: 'top-end',
+            html: `<p><img class="popImg" src="https://unsplash.it/400/200"> </p>
+                   <p style="color: #f09053; "">ID  : ${id}</p>
+                   <p style="color: #f09053; ""> ${roles}</p>
+                   <p style="color: #f09053; padding-bottom: 5px;"">${username}</p>`,
+            showConfirmButton: false,
+            showDenyButton: true,
+            width: "300px",
+            denyButtonText: 'Logout',
+            imageClass: 'img-responsive', 
+            imageAlt: 'Custom image',
+        }).then((result) => {
+            if (result.isDenied) {
+                handleClickopen2()
+            }
+        })
+    };
+
     const [logout, setLogout] = useState(false);
-    const handleLogout = () => {
-        setLogout(!logout);
-        setPop3(false);
-        setState1(false);
-    }
+
     useEffect(() => {
         if (!localStorage.getItem("jwt")) {
             window.location.href = "/";
@@ -49,7 +74,23 @@ export default function Navigation({ path, title }) {
 
     const [popup2, setPop2] = useState(false);
     const handleClickopen2 = () => {
-        setPop2(!popup2);
+        Swal.fire({
+            text: "Are you sure You Want to Logout",
+            icon: 'warning', 
+            showCancelButton: true, 
+            confirmButtonColor: '#00cc44',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ok!',
+            showCloseButton: true,
+            showClass: {
+                popup: 'animate__animated animate__shakeX'
+            },
+
+        }).then((result) => {
+            if (result.isConfirmed) {
+                remove()
+            }
+        })
     }
     const [popup3, setPop3] = useState(false);
     const handleClickopen3 = () => {
@@ -61,16 +102,7 @@ export default function Navigation({ path, title }) {
         localStorage.removeItem("jwt");
         window.location.href = "/";
     }
-
     const [state, setState] = useState(false);
-    const [state1, setState1] = useState(false);
-    const toggle = () => {
-        setState(!state);
-    };
-    const toggle1 = () => {
-        setState1(!state1);
-    };
-
     const [action, setAction] = useState(true);
 
     const [toggles, setToggle] = useState("All_navigation");
@@ -83,14 +115,11 @@ export default function Navigation({ path, title }) {
         setAction(!action)
     }
 
-
     return (
         <>
             <div>
                 <div className={toggles}>
-
                     <ul>
-
                         <li>
                             <Link to="/dashboard" style={path == "/dashboard" ? { color: getColor() } : { color: getColor2() }}>
                                 <p className="hovertext" data-hover="Home"><FaHome size="1.8rem" ></FaHome></p>
@@ -165,62 +194,26 @@ export default function Navigation({ path, title }) {
 
                     <div className='dashboardTitle'>
                         <h2>Bazra Motors /</h2>
-                        {/* -------------- props ------------- */}
+           {/* -------------- props ------------- */}
                         <h5>{title}</h5>
                     </div>
                     <div className='user_dashboard'>
                         <p className='displayUser'><FaUserAlt className='FaUserAlt' size="1.6rem" color='green'></FaUserAlt></p>
                         <p className='displayUser role'>{user.role}</p>
                         <p onClick={() => {
-                            handleLogout()
                             toggle()
                         }}>{state ? <IoMdArrowDropupCircle size="1.2rem" color='green'></IoMdArrowDropupCircle> :
                             <IoMdArrowDropdownCircle size="1.2rem" color='green'></IoMdArrowDropdownCircle>}</p>
-
-                        {logout ?
-                            <div className='user_logout'>
-                                <div>
-                                    <Link to="#" style={{ textDecoration: 'none', color: 'white' }}><p className='logicon1'>{user.role}</p><hr className='hrr' /></Link>
-                                    <Link to="#" style={{ textDecoration: 'none', color: 'white' }}><p className='logicon1'>{user.username}</p><hr className='hrr' /></Link>
-                                    <p onClick={handleClickopen2}>Log Out</p>
-                                </div>
-                            </div> : ""}
-
-                        {popup3 ?
-                            <div className='user_logout'>
-                                <div>
-                                    <Link to="#" style={{ textDecoration: 'none', color: 'white' }}><p className='logicon1'></p><hr className='hrr' /></Link>
-                                    <Link to="#" style={{ textDecoration: 'none', color: 'white' }}><p className='logicon1'></p><hr className='hrr' /></Link>
-                                    <p onClick={handleClickopen2}>Log Out</p>
-                                </div>
-                            </div> : ""}
                     </div>
-                    <p onClick={action ? showMenu : hideMenu} className='toggle'><BsThreeDotsVertical className='FaUserAlt' size="1.6rem" color='green'></BsThreeDotsVertical></p>
+                    <p className='toggle'>
+                      <label  onClick={action ? showMenu : hideMenu}><BsThreeDotsVertical className='FaUserAlt' size="1.6rem" color='green'></BsThreeDotsVertical></label>
+                      <label onClick={() => {
+                            toggle()
+                        }}>{state ? <FaUserAlt size="1.2rem" color='green'></FaUserAlt> :
+                            <FaUserAlt size="1.2rem" color='green'></FaUserAlt>}</label>
+                    </p>
 
                 </div>
-
-                <div>
-                    {popup2 ?
-                        <div>
-                            <div className='popup0'>
-                                <div className='popup-innerq'>
-                                    <div onClick={handleClickopen2} className='close'>X</div>
-
-                                    <div className='fgf'>
-                                        <h2 className='mnmn'>Are You Sure You want to want Log out</h2>
-                                        <div className='send_button'>
-                                            <button onClick={() => {
-                                                remove()
-                                            }} className='popup_add'>Ok</button>
-                                            <button onClick={handleClickopen2} className='popup_cancle'>Cancle</button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div> : ""}
-                </div>
-
 
             </div>
         </>

@@ -43,7 +43,7 @@ export default function () {
         tr = table.getElementsByTagName("tr");
 
         for (let i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
+            td = tr[i].getElementsByTagName("td")[2];
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -93,14 +93,14 @@ export default function () {
     }, [])
 
     const [dataSource3, setDataSource3] = useState([])
-    const url3 = "http://198.199.67.201:9090/Api/Admin/Alerts/DRIVER";
+    const url3 = "http://198.199.67.201:9090/Api/Admin/AlertsHistory/DRIVER";
     useEffect(() => {
         setLoading(true)
         fetch(url3, options)
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource3(data.alerts)
-                // console.log(dataSource4)
+                // setTotalPage(data.alerts.length)
                 setLoading(false)
             })
     }, [])
@@ -187,6 +187,15 @@ export default function () {
 
                         <>
                             <div className={styles.outer_vehicle_table} id='myTable'>
+
+                                <div className={styles.vehicle_search}>
+                                    <p title='search'>
+                                        <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
+                                        <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                                        <button>Search</button>
+                                    </p>
+                                </div>
+
                                 <p>Off-Road Alerts History</p>
 
                                 <table className={styles.vehicle_table} id="myTable">

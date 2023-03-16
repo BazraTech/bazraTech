@@ -307,7 +307,6 @@
       position: absolute;
       width: calc(100%); 
       left: 0px;
-      min-height: calc(100vh -75px);
       opacity: var(--black2);
       color: var(--black1);
       top: 75px;

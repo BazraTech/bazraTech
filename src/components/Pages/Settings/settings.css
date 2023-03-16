@@ -1,6 +1,25 @@
 
 /* --------------- Alert Main --------------- */
 
+.swallpop{
+    position: relative;
+    height: 40px;
+    width: 80%;
+    outline: none;
+    background-color: rgb(242, 242, 242);
+    border: 1px solid rgb(202, 202, 202);
+    border-radius: 6px;
+    padding: 0 15px;
+    margin: 1%;
+}
+
+.popupLable{
+    display: flex;
+    justify-content: left;
+    padding-left: 5px;
+    width: 80%;
+}
+
 .alert_main {
     position: absolute;
     width: calc(100% - 100px);

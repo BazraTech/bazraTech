@@ -78,8 +78,7 @@ export default function () {
         fetch(url2, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource2(data.vehicles)
-                // console.log(dataSource2)
+                setDataSource2(data.vehiclesINF)
                 setLoading(false);
 
             })
@@ -94,7 +93,6 @@ export default function () {
             .then(data => {
                 setDataSource(data.inRoutelist)
                 setLoading(false);
-
             })
     }, [])
 
@@ -108,7 +106,6 @@ export default function () {
                 setDataSource3(data.stockedList)
                 setTotalPage(data.stockedVehicles);
                 setLoading(false);
-
             })
     }, [])
 
@@ -120,9 +117,7 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource5(data.parkedList)
-                console.log(dataSource4)
                 setLoading(false);
-
             })
     }, [])
 
@@ -134,7 +129,6 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource4(data.maintainingList)
-                console.log(dataSource4)
                 setLoading(false);
 
             })
@@ -155,13 +149,6 @@ export default function () {
         setpostPerPage(pageSize);
     }
 
-    // useEffect(() => {
-    //     setTotal([dataSource2.length])
-    // }, []);
-
-    // const indexOfLastPage = page * postPerPage;
-    // const indexOfFirstPage = indexOfLastPage - postPerPage;
-    // const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
     const [color, setColor] = useState("green");
     const [margin, setMargin] = useState("");
 
@@ -233,14 +220,6 @@ export default function () {
 
                 {/* --------------- search --------------- */}
 
-
-                <div className={styles.vehicle_search}>
-                    <p title='search'>
-                        <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                        <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
-                        <button>Search</button>
-                    </p>
-                </div>
                 {Loading ?
                     <p className={styles.loading} >
                         <SyncLoader
@@ -255,15 +234,23 @@ export default function () {
 
                     <>
                         <div className={styles.outer_vehicle_table} id='myTable'>
+
+                            <div className={styles.vehicle_search}>
+                                <p title='search'>
+                                    <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
+                                    <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                                    <button>Search</button>
+                                </p>
+                            </div>
                             <p>ON STOCK</p>
 
                             <table className={styles.vehicle_table} id="myTable">
 
                                 <thead>
-                                    <tr>
-                                        <th>Profile</th>
+                                    <tr> 
+                                        <th>Vehicle Owner</th>
+                                        <th>Vehicle Name</th>
                                         <th>Assigned Driver</th>
-                                        <th>Vehicle ID</th>
                                         <th>Vehicle Type</th>
                                         <th>Plate Number</th>
                                         <th>Status</th>
@@ -275,10 +262,9 @@ export default function () {
                                 <tbody>
                                     {currentPage.map(item => (
                                         <tr className={styles.active_row}>
-
+                                             <td>{item.companyName}</td>
                                             <td>{item.vehicleName}</td>
                                             <td>{item.driverName == "null" ? "unassignd" : `${item.driverName}`}</td>
-                                            <td>{item.id}</td>
                                             <td>{item.vehicleCatagory}</td>
                                             <td>{item.plateNumber}</td>
                                             <td>{item.status}</td>

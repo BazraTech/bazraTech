@@ -117,31 +117,29 @@ export default function () {
         setVisible(!visible);
     }
 
-    const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
-    const [dataSource2, setDataSource2] = useState([])
-    useEffect(() => {
-        setLoading(true);
-        fetch(url2, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource2(data.vehicles)
-                setTotalPage(data.totalVehicles);
-                // console.log(dataSource2)
-                setLoading(false);
+    // const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
+    // const [dataSource2, setDataSource2] = useState([])
+    // useEffect(() => {
+    //     setLoading(true);
+    //     fetch(url2, options)
+    //         .then(respnse => respnse.json())
+    //         .then(data => {
+    //             setDataSource2(data.vehicles)
+    //             setTotalPage(data.totalVehicles);
+    //             setLoading(false);
 
-            })
-    }, [])
+    //         })
+    // }, [])
 
     const [dataSource, setDataSource] = useState([])
     // const [Loading, setLoading] = useState([])
-    const url = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners/";
+    const url = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners";
     useEffect(() => {
         setLoading(true)
         fetch(url, options)
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource(data.vehicleOwnerINF)
-                // setTotalPage(data.totalPages)
                 console.log(dataSource)
                 setLoading(false)
             })
@@ -151,12 +149,14 @@ export default function () {
     const [postPerPage, setpostPerPage] = useState(5);
     const indexOfLastPage = page * postPerPage;
     const indexOfFirstPage = indexOfLastPage - postPerPage;
-    const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
+    // const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
 
     const onShowSizeChange = (current, pageSize) => {
         setpostPerPage(pageSize);
     }
     let [active, setActive] = useState("");
+    const [color, setColor] = useState("green");
+    const [margin, setMargin] = useState("");
 
     return (
 
@@ -183,27 +183,29 @@ export default function () {
                 <form className='form' onSubmit={handleSubmit(onSubmit)}>
                     <div className={styles.allDiv}>
                         <div>
-                        <div className={styles.vehicle_search}>
-                            <p title='search'>
-                                <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                                <input type="text" id="myInputa" placeholder="Search"></input>
-                                <button>Search</button>
-                            </p>
-                        </div>
+                            <div className={styles.vehicle_search}>
+                                <p title='search'>
+                                    <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
+                                    <input type="text" id="myInputa" placeholder="Search"></input>
+                                    <button>Search</button>
+                                </p>
+                            </div>
                             <h1 className={styles.greentrip}>List Of Owuners</h1>
                             {
 
                                 loading ?
-                                    <p className={styles.loading} ><SyncLoader
-                                        loading={loading}
-                                        size={10}
-                                        aria-label="Loading Spinner"
-                                        data-testid="loader"
-                                    /></p>
+                                    <p className={styles.loading} >
+                                        <SyncLoader
+                                            color={color}
+                                            loading={loading}
+                                            size={10}
+                                            aria-label="Loading Spinner"
+                                            data-testid="loader"
+                                        /></p>
                                     :
                                     <>
                                         {
-                                            dataSource.map(item => (
+                                            dataSource.map(item => ( 
                                                 <>
                                                     <div className={styles.companyList}
                                                         onClick={() => {
@@ -225,7 +227,7 @@ export default function () {
                                                     {visible && item.id == visiblelist && <Table style={{ transition: "0.5s" }} role={role} id={id} name={item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`} from={"availavleCars"} />}
 
                                                 </>
-                                            )) 
+                                            ))
                                         }
                                     </>
                             }

@@ -9,7 +9,7 @@ import { GrSettingsOption } from "react-icons/gr";
 import { IoSettingsOutline } from "react-icons/io5";
 import styles from './total_vehicle.module.css';
 import { Link, NavLink } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'; 
 import { useLocation } from 'react-router-dom';
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
@@ -66,13 +66,12 @@ export default function () {
     const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
-        setLoading(true);
+        setLoading(true); 
         fetch(url2, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource2(data.vehicles)
+                setDataSource2(data.vehiclesINF)
                 setTotalPage(data.totalVehicles);
-                // console.log(dataSource2)
                 setLoading(false);
 
             })
@@ -86,9 +85,7 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource(data.inRoutelist)
-                // console.log(dataSource)
                 setLoading(false);
-
             })
     }, [])
 
@@ -99,10 +96,8 @@ export default function () {
         fetch(url3, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource3(data.stockedVehicles)
-                console.log(dataSource3)
+                setDataSource3(data.stockedList)
                 setLoading(false);
-
             })
     }, [])
 
@@ -114,9 +109,7 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource5(data.parkedList)
-                console.log(dataSource4)
                 setLoading(false);
-
             })
     }, [])
 
@@ -128,19 +121,12 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource4(data.maintainingList)
-                console.log(dataSource4)
                 setLoading(false);
-
             })
     }, [])
 
-
-
-    const [list, setList] = useState([dataSource]);
-    const [total, setTotal] = useState(dataSource.length);
     const [page, setCurentPage] = useState(1);
     const [postPerPage, setpostPerPage] = useState(5);
-
     const indexOfLastPage = page * postPerPage;
     const indexOfFirstPage = indexOfLastPage - postPerPage;
     const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
@@ -149,13 +135,6 @@ export default function () {
         setpostPerPage(pageSize);
     }
 
-    // useEffect(() => {
-    //     setTotal([dataSource2.length])
-    // }, []);
-
-    // const indexOfLastPage = page * postPerPage;
-    // const indexOfFirstPage = indexOfLastPage - postPerPage;
-    // const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
     const [color, setColor] = useState("green");
     const [margin, setMargin] = useState("");
 
@@ -178,7 +157,7 @@ export default function () {
             <div className={styles.main_content}>
 
                 <div className={styles.allcards}>
-                    
+
                     <div className={styles.activeCard}>
                         <Link to="/Total_number_of_vehicle" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents1}>
@@ -203,7 +182,7 @@ export default function () {
                         <Link to="/on_stock" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents}>
                                 <h4>On Stock</h4>
-                                <p><FaParking size="2rem" ></FaParking><b>{dataSource3}</b></p>
+                                <p><FaParking size="2rem" ></FaParking><b>{dataSource3.length}</b></p>
                             </div>
                         </Link>
                     </div>
@@ -230,16 +209,7 @@ export default function () {
 
                 {/* --------------- search --------------- */}
 
-
-                <div className={styles.vehicle_search}>
-                    <p title='search'>
-                        <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                        <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
-                        <button>Search</button>
-                    </p>
-                </div>
-
-                {Loading ? 
+                {Loading ?
                     <p className={styles.loading} >
                         <SyncLoader
                             color={color}
@@ -250,38 +220,46 @@ export default function () {
                             data-testid="loader"
                         /></p>
                     :
-
                     <>
                         <div className={styles.outer_vehicle_table} id='myTable'>
+
+                            <div className={styles.vehicle_search}>
+                                <p title='search'>
+                                    <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
+                                    <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                                    <button>Search</button>
+                                </p>
+                            </div>
                             <p>Total Vehicle</p>
 
                             <table className={styles.vehicle_table} id="myTable">
 
                                 <thead>
                                     <tr>
-                                        <th>Profile</th>
+                                        <th>Vehicle Owner</th>
+                                        <th>Vehicle Name</th>
                                         <th>Assigned Driver</th>
-                                        <th>Vehicle ID</th>
-                                        <th>Vehicle Type</th>
+                                        {/* <th>Vehicle Type</th> */}
                                         <th>Plate Number</th>
                                         <th>Status</th>
                                         <th>Detail</th>
                                         <th>Tracking</th>
-                                    </tr>
+                                        <th>Assign Driver</th>
+                                    </tr> 
                                 </thead>
 
                                 <tbody>
                                     {currentPage.map(item => (
                                         <tr className={styles.active_row}>
-
+                                             <td>{item.companyName}</td>
                                             <td>{item.vehicleName}</td>
-                                            <td>{item.driver == null ? "unassignd" : `${item.driver.driverName}`}</td>
-                                            <td>{item.id}</td>
-                                            <td>{item.vehicleCatagory.catagory}</td>
+                                            <td>{item.driverName == "null" ? "unassignd" : `${item.driverName}`}</td>
+                                            {/* <td>{item.vehicleCatagory}</td> */}
                                             <td>{item.plateNumber}</td>
                                             <td>{item.status}</td>
                                             <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
                                             <td><Link to="/tracking"><button>Tracking</button></Link></td>
+                                            <td><Link to={`/AssignDriver/${item.plateNumber}`}><button>Assaign</button></Link></td>
                                         </tr>
                                     ))}
                                 </tbody>

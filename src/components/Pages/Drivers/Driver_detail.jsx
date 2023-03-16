@@ -1,24 +1,9 @@
 import React from 'react'
-import { FaHome } from 'react-icons/fa';
-import { AiFillCar } from "react-icons/ai";
-import { FaRoute } from "react-icons/fa";
-import { BsSearch } from "react-icons/bs";
-import { AiFillFilter } from "react-icons/ai";
-import { FaParking } from "react-icons/fa";
-import { GrSettingsOption } from "react-icons/gr";
-import { IoSettingsOutline } from "react-icons/io5";
-// import './total_no_of_vehicle.css';
+import styles from './driver_detail.module.css';
 import { Link, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import Header from '../../Header/Header';
-import Navigation from '../Navigation/Navigation';
-import { Pagination } from 'antd';
-import SyncLoader from "react-spinners/SyncLoader";
 
-
-
-export default function ({data, display, changeName}) {
+export default function ({ data, display, changeName }) {
 
 
     let [active, setActive] = useState("total_vehicle");
@@ -62,178 +47,125 @@ export default function ({data, display, changeName}) {
             })
     }, [])
 
+    const closePopup5 = () => {
+        setPop1(false);
+        // setPop(false);
+    }
+
     return (
 
-        <form >
+        <form>
             {popup1 ?
                 <div>
-                    <div className='popup3'>
-                        <div className='popup-inner'>
-                            <lable className="zxcc">Driver Detail </lable>
-                            <div className='ewq'>
-                                <div className='qwe2'>
-                                    <div className='asd'>
-                                        <p className='close-btn' onClick={()=> changeName("false")}>X</p>
-                                        <lable>First Name</lable>
-                                        <input name='driverName' type="text"
-                                            value={dataSource.driverName}
-                                            // {...register("driverName", { required: '*Driver Name is required' })}
-                                            placeholder='Enter Vehicle Name'
-                                        // onChange={(e) => setDriverName(e.target.value)} 
-                                        ></input>
-                                        {/* {driverName <= 0 && errors.driverName && <span className='validate_text'>{errors.driverName.message}</span>} */}
+                    <div className={styles.popup}>
+                        <div className='animate__animated animate__slideInDown'>
+                            <div className={styles.popupInner}>
+
+                                <div className={styles.allForms1}>
+
+                                    <button className={styles.closeBtn} onClick={() => changeName("false")}>X</button>
+                                    <lable className={styles.addHeader}>Driver Detail</lable>
+
+                                    <div className={styles.formDiv1}>
+
+                                        <div className={styles.input}>
+                                            <lable>First Name</lable>
+                                            <input name='driverName' type="text"
+                                                value={dataSource.driverName}
+                                            ></input>
+                                        </div>
+
+                                        <div className={styles.input}>
+                                            <lable>Gender</lable>
+                                            <input value={dataSource.gender}></input>
+                                        </div>
+
+                                        <div className={styles.input}>
+                                            <lable>License Number</lable>
+                                            <input name='licenseNumber' type="text"
+                                                value={dataSource.licenseNumber}
+                                            ></input>
+                                        </div>
+
+                                        <div className={styles.input}>
+                                            <lable>Driver Licence Picture</lable>
+                                            <input name='licensePic' type="text"
+                                            ></input>
+                                        </div>
+
+                                        <div className={styles.input}>
+                                            <lable>Driver Picture</lable>
+                                            <input name='driverPic' type="text"
+                                            ></input>
+                                        </div>
+
+                                        <div className={styles.input}>
+                                            <lable>Date Of Birth</lable>
+                                            <input name='birtDate' type="Date"
+                                                value={dataSource.birthDate}
+                                            ></input>
+                                        </div>
+
+
+                                        <div className={styles.input}>
+                                            <lable>Phone Number</lable>
+                                            <input name='phoneNumber' type="text"
+                                                value={dataSource.phoneNumber}
+                                            ></input>
+                                        </div>
+
+                                        <div className={styles.input}>
+                                            <lable>Exeperiance</lable>
+                                            <input name='Exeperiance' type="text"
+                                                value={dataSource.experience}
+                                            ></input>
+                                        </div>
+
+                                        <div className={styles.input}>
+                                            <lable>License Grade</lable>
+                                            <input name='License Grade' type="text"
+                                                value={dataSource.licenseGrade}
+                                            ></input>
+                                        </div>
+
+                                        <div className={styles.input}>
+                                            <lable>Issue Date</lable>
+                                            <input name='Issue Date' type="date"
+                                                value={dataSource.licenseIssueDate}
+                                            ></input>
+                                        </div>
+
+                                        <div className={styles.input}>
+                                            <lable>Expire Date</lable>
+                                            <input name='Expire Date' type="date"
+                                                value={dataSource.licenseExpireDate}
+                                            ></input>
+                                        </div>
+
+                                        <div className={styles.input}>
+                                            <lable>Status</lable>
+                                            <input name='Expire Date' type="text"
+                                                value={dataSource.status}
+                                            ></input>
+                                        </div>
+
+                                        <div className={styles.input}>
+                                            <lable>Vehicle Owner</lable>
+                                            <input name='Expire Date' type="text"
+                                                value={dataSource.vehicleOwner}
+                                            ></input>
+
+                                        </div>
+
                                     </div>
-
-                                    <div className='asd'>
-                                        <lable>Gender</lable>
-                                        <input value={dataSource.gender}></input>
-                                        {/* <select className='select' name='gender' 
-                                        
-                                         {...register("vehicleCondition", { required: '*Vecicle Condition is required' })}
-                                         onChange={(e) => setVehicleCondition(e.target.value)} 
-                                        > 
-                                             <option value="">Select Gender</option>
-                                            <option value="male">Male</option>
-                                            <option value="femail">Femaile</option> 
-                                         </select> 
-                                        {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
-                                    </div>
-
-                                    <div className='asd'>
-                                        <lable>License Number</lable>
-                                        <input name='licenseNumber' type="text"
-                                              value={dataSource.licenseNumber}
-                                            // {...register("licenseNumber", { required: '*License Number is required' })}
-                                            placeholder='Enter Vehicle Name'
-                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
-                                        ></input>
-                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
-                                    </div>
-
-                                    <div className='asd'>
-                                        <lable>Driver Licence Picture</lable>
-                                        <input name='licensePic' type="text"
-                                            // value={licensePic}
-                                            // {...register("licensePic", { required: '*License Picture is required' })}
-                                            placeholder='Enter License Picture'
-                                        // onChange={FileUploadTinCertificate} 
-                                        ></input>
-                                        {/* {licensePic <= 0 && errors.licensePic && <span className='validate_text'>{errors.licensePic.message}</span>} */}
-                                    </div>
-
-                                    <div className='asd'>
-                                        <lable>Driver Picture</lable>
-                                        <input name='driverPic' type="text"
-                                            // value={driverPic}
-                                            // {...register("driverPic", { required: '*Driver Picture is required' })}
-                                            placeholder='Please Enter Driver Picture'
-                                        // onChange={FileUploadTreadCertificate} 
-                                        ></input>
-                                        {/* {driverPic <= 0 && errors.driverPic && <span className='validate_text'>{errors.driverPic.message}</span>} */}
-                                    </div>
-
-                                    <div className='asd'>
-                                        <lable>Date Of Birth</lable>
-                                        <input name='birtDate' type="Date"
-                                        value={dataSource.birthDate}
-                                        // {...register("licenseNumber", { required: '*License Number is required' })}
-                                        // placeholder='Enter Date Of Birth'
-                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
-                                        ></input>
-                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
-                                    </div>
-
-
-                                    <div className='asd'>
-                                        <lable>Phone Number</lable>
-                                        <input name='phoneNumber' type="text"
-                                            value={dataSource.phoneNumber}
-                                            // {...register("licenseNumber", { required: '*License Number is required' })}
-                                            placeholder='Enter Phone Number'
-                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
-                                        ></input>
-                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
-                                    </div>
-
-                                    <div className='asd'>
-                                        <lable>Exeperiance</lable>
-                                        <input name='Exeperiance' type="text"
-                                             value={dataSource.experience}
-                                            // {...register("licenseNumber", { required: '*License Number is required' })}
-                                            placeholder='Enter Exeperiance '
-                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
-                                        ></input>
-                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
-                                    </div>
-
-                                    <div className='asd'>
-                                        <lable>License Grade</lable>
-                                        <input name='License Grade' type="text"
-                                             value={dataSource.licenseGrade}
-                                            // {...register("licenseNumber", { required: '*License Number is required' })}
-                                            placeholder='Enter License Grade '
-                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
-                                        ></input>
-                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
-                                    </div>
-
-                                    <div className='asd'>
-                                        <lable>Issue Date</lable>
-                                        <input name='Issue Date' type="date"
-                                            value={dataSource.licenseIssueDate}
-                                            // {...register("licenseNumber", { required: '*License Number is required' })}
-                                            placeholder='Enter Issue Date'
-                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
-                                        ></input>
-                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
-                                    </div>
-
-                                    <div className='asd'>
-                                        <lable>Expire Date</lable>
-                                        <input name='Expire Date' type="date"
-                                           value={dataSource.licenseExpireDate}
-                                            // {...register("licenseNumber", { required: '*License Number is required' })}
-                                            placeholder='Enter Expire Date'
-                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
-                                        ></input>
-                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
-                                    </div>
-
-                                    <div className='asd'>
-                                        <lable>Status</lable>
-                                        <input name='Expire Date' type="text"
-                                           value={dataSource.status}
-                                            // {...register("licenseNumber", { required: '*License Number is required' })}
-                                            placeholder='Enter Expire Date'
-                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
-                                        ></input>
-                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
-                                    </div>
-
-                                    <div className='asd'>
-                                        <lable>Vehicle Owner</lable>
-                                        <input name='Expire Date' type="text"
-                                           value={dataSource.vehicleOwner}
-                                            // {...register("licenseNumber", { required: '*License Number is required' })}
-                                            placeholder='Enter Expire Date'
-                                        // onChange={(e) => setLicenseNumber(e.target.value)} 
-                                        ></input>
-                                        {/* {licenseNumber <= 0 && errors.licenseNumber && <span className='validate_text'>{errors.licenseNumber.message}</span>} */}
-                                    </div>
-
-
-                                    {/* <div className='asdy'>
-                                        <button>Register</button>
-                                    </div>
-                                    <div className='asdy'>
-                                        <button type='reset'>Clear</button>
-                                    </div> */}
+                                    {/* <div className={styles.addButton}>
+                                                                        <button>Submit </button>
+                                                                    </div> */}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div> : ""}
-            </form> 
+                </div> : ""}        </form>
 
 
 
@@ -241,5 +173,5 @@ export default function ({data, display, changeName}) {
 
 
 
-            )
+    )
 }

@@ -3,13 +3,12 @@
     position: absolute;
      width: calc(100% - 100px); 
      left: 100px; 
-     /* min-height: 100px; */
-     height: 100vh;
+     min-height: calc(100vh -75px);
      opacity: var(--black2);
      color: var(--black1);
      top: 75px;
      background-color: rgb(247, 247, 247);
-     z-index: -1;  
+     /* z-index: -1;   */
  }
 
 /* -------------------Place for map --------------------- */
@@ -157,8 +156,7 @@
         position: absolute;
         width: calc(100%); 
         left: 0px;
-        /* min-height: 100px; */
-        max-height: 100vh;
+        min-height: calc(100vh -75px);
         opacity: var(--black2);
         color: var(--black1);
         top: 75px;

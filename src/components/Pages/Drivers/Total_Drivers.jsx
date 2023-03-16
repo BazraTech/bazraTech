@@ -69,20 +69,20 @@ export default function () {
     };
 
 
-     const [Loading, setLoading] = useState([]);
-    // const url = "http://198.199.67.201:9090/Api/Admin/All/Vehicles/Status/ONROUTE";
-    // const [dataSource, setDataSource] = useState([])
-    // useEffect(() => {
-    //     setLoading(true);
-    //     fetch(url, options)
-    //         .then(respnse => respnse.json())
-    //         .then(data => {
-    //             setDataSource(data.inRoutelist)
-    //             // console.log(dataSource)
-    //             setLoading(false);
+    const [Loading, setLoading] = useState([]);
+    const url = "http://198.199.67.201:9090/Api/Admin/All/Drivers";
+    const [dataSource, setDataSource] = useState([])
+    useEffect(() => {
+        setLoading(true);
+        fetch(url, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource(data.drivers)
+                setTotalPage(data.totalDrivers);
+                setLoading(false);
 
-    //         })
-    // }, [])
+            })
+    }, [])
 
     const [totalPages, setTotalPage] = useState(1);
     const url2 = "http://198.199.67.201:9090/Api/Admin/Drivers/ONROUTE";
@@ -93,7 +93,6 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource2(data.drivers);
-                // setTotalPage(data.totalVehicles);
                 setLoading(false);
 
             })
@@ -147,7 +146,7 @@ export default function () {
 
     const indexOfLastPage = page * postPerPage;
     const indexOfFirstPage = indexOfLastPage - postPerPage;
-    const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
+    const currentPage = dataSource.slice(indexOfFirstPage, indexOfLastPage);
 
     const onShowSizeChange = (current, pageSize) => {
         setpostPerPage(pageSize);
@@ -166,7 +165,7 @@ export default function () {
     let [active, setActive] = useState(false);
     let [name, setName] = useState("false");
 
-    function changeName(name){
+    function changeName(name) {
         setName(name);
     }
 
@@ -188,12 +187,12 @@ export default function () {
             {/* --------------- users --------------- */}
 
             <div className={styles.main_content}>
-                <div className={styles.allcards}>
+                <div className={styles.allcards}> 
                     <div className={styles.activeCard}>
                         <Link to="/Total_Drivers" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents1}>
                                 <h4>Total Drivers</h4>
-                                <p><FaUserSecret size="2.2rem"></FaUserSecret><b>0</b></p>
+                                <p><FaUserSecret size="2.2rem"></FaUserSecret><b>{dataSource.length}</b></p>
                             </div>
                         </Link>
                     </div>
@@ -238,42 +237,42 @@ export default function () {
 
                 {/* --------------- search --------------- */}
 
-
-                <div className={styles.vehicle_search}>
-                    <p title='search'>
-                        <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                        <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
-                        <button>Search</button>
-                    </p>
-                </div>
                 {Loading ?
                     <p className={styles.loading}>
                         <SyncLoader
-                        color={color}
-                        Left={margin}
-                        loading={Loading}
-                        size={10}
-                        aria-label="Loading Spinner"
-                        data-testid="loader"
-                    /></p>
+                            color={color}
+                            Left={margin}
+                            loading={Loading}
+                            size={10}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                        /></p>
                     :
 
                     <>
-                        <div className={styles.outer_vehicle_table} id='myTable'>
+                        <div className={styles.outer_table} id='myTable'>
+
+                            <div className={styles.vehicle_search}>
+                                <p title='search'>
+                                    <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
+                                    <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                                    <button>Search</button>
+                                </p>
+                            </div>
                             <p>TOTAL DRIVERS</p>
 
                             <table className={styles.vehicle_table} id="myTable">
 
-                            <thead>
+                                <thead>
                                     <tr>
                                         <th>Driver Name</th>
                                         <th>License Number</th>
                                         <th>Experience</th>
                                         <th>LicenseGrade</th>
-                                        <th>Gender</th>
-                                        <th>VehicleOwner</th>
+                                        <th>Status</th>
+                                        <th>Company</th>
                                         <th>Detail</th>
-                                        <th>Tracking</th>
+                                        <th>Tracking</th> 
                                     </tr>
                                 </thead>
 
@@ -285,12 +284,12 @@ export default function () {
                                             <td>{item.licenseNumber}</td>
                                             <td>{item.experience}</td>
                                             <td>{item.licenseGrade}</td>
-                                            <td>{item.gender}</td>
+                                            <td>{item.status}</td>
                                             <td>{item.vehicleOwner}</td>
                                             <td><button onClick={() => {
-                                                    setEdit(item.id)
-                                                    setName("true")
-                                                }}>Detail</button></td>
+                                                setEdit(item.id) 
+                                                setName("true")
+                                            }}>Detail</button></td>
                                             <td><button>Manage</button></td>
                                         </tr>
                                     ))}
@@ -313,7 +312,7 @@ export default function () {
                     </>
 
                 }
-                {name === "true" && <Driver_detail data={edit}  changeName={changeName}   />}
+                {name === "true" && <Driver_detail data={edit} changeName={changeName} />}
 
             </div>
 

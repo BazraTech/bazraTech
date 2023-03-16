@@ -17,7 +17,7 @@ import { BsSearch } from "react-icons/bs";
 import { Pagination } from 'antd';
 import { getRoles } from '@testing-library/react';
 
-export default function ({ id, role, name, from }) {
+export default function ({ id, role, name}) {
 
     function tableSearch() {
 
@@ -86,11 +86,6 @@ export default function ({ id, role, name, from }) {
     const [popup1, setPop1] = useState(true);
 
     const [totalPages, setTotalPage] = useState(1);
-    const [dataSource01, setDataSource501] = useState([])
-    // const [dataSource2, setDataSource2] = useState([])
-    const [dataSource3, setDataSource3] = useState([])
-    const [dataSource5, setDataSource5] = useState([])
-
     const [visiblelist, setvisiblelist] = useState(true);
     const [visible, setVisible] = useState(true);
     const displaylist = () => {
@@ -99,40 +94,28 @@ export default function ({ id, role, name, from }) {
         console.log(role);
     }
 
-    let url2;
-
-    if (role === "OWNER") { 
-        url2 = `http://198.199.67.201:9090/Api/Admin/All/CompanyVehicleOwner/${id}`;
-    }
-    if (role === "INDIVIDUAL") {
-        url2 = `http://198.199.67.201:9090/Api/Admin/All/IndividualVehicleOwner/${id}`;
-    }
     const [dataSource, setDataSource] = useState([])
+    const url2 = `http://198.199.67.201:9090/Api/Admin/Trip/All/${id}`;
+    const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
-        setLoading(true)
         fetch(url2, options)
-            .then((response) => response.json())
-            .then((json) => {
-                setDataSource(json.ownerINF.vehicles)
-                setTotalPage(json.ownerINF.vehicles.length)
-                setLoading(false)
-            });
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource2(data.inactiveTrips)
+                setTotalPage(data.inactiveTrips.length)
+            })
     }, [])
 
-
-
-    const [list, setList] = useState([dataSource]);
-    const [total, setTotal] = useState(dataSource.length);
     const [page, setCurentPage] = useState(1);
     const [postPerPage, setpostPerPage] = useState(5);
 
     const indexOfLastPage = page * postPerPage;
     const indexOfFirstPage = indexOfLastPage - postPerPage;
-    const currentPage = dataSource.slice(indexOfFirstPage, indexOfLastPage);
+    const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
 
     const onShowSizeChange = (current, pageSize) => {
         setpostPerPage(pageSize);
-    } 
+    }
 
     const [color, setColor] = useState("green");
     const [margin, setMargin] = useState("");
@@ -146,7 +129,7 @@ export default function ({ id, role, name, from }) {
                         {
                             loading ?
                                 <p className={styles.loading}>
-                                    <SyncLoader
+                                    <SyncLoader 
                                         color={color}
                                         loading={loading}
                                         size={10}
@@ -158,21 +141,11 @@ export default function ({ id, role, name, from }) {
 
                                     <div className={styles.outer_vehicle_table} id='myTable'>
 
-                                        {from == "availavleCars" ?
-                                            <div className={styles.vehicle_search}>
-                                                <p title='search'>
-                                                    <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                                                    <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
-                                                    <button>Search</button>
-                                                </p>
-                                            </div> :
-                                            <div className={styles.vehicle_search}>
-                                                <p title='search'>
-                                                    {/* <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch> */}
-                                                    <input type="date" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
-                                                    {/* <button>Search</button> */}
-                                                </p>
-                                            </div>}
+                                        <div className={styles.vehicle_search}>
+                                            <p title='search'>
+                                                <input type="date" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                                            </p>
+                                        </div>
 
                                         <p>{name}</p>
 
@@ -180,29 +153,24 @@ export default function ({ id, role, name, from }) {
 
                                             <thead>
                                                 <tr>
+                                                    <th>Driver Name</th>
+                                                    <th>Platenumber</th>
                                                     <th>Vehicle Name</th>
-                                                    <th>Assigned Driver</th>
                                                     <th>Current Location</th>
                                                     <th>Vehicle Type</th>
-                                                    <th>Plate Number</th>
-                                                    <th>Set Trip</th>
+                                                    <th>Manage</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
                                                 {currentPage.map(item => (
                                                     <tr className={styles.active_row}>
-
-                                                        <td>{item.vehicleName}</td>
-                                                        <td>{item.driverName == "null" ? "unassignd" : `${item.driverName}`}</td>
-                                                        <td>{item.id}</td>
-                                                        <td>{item.vehicleCatagory}</td>
+                                                        <td>{item.driver == "NULL" ? "Unassigned" : `${item.driver}`}</td>
                                                         <td>{item.plateNumber}</td>
-                                                        {from == "availavleCars" ?
-                                                            <td><Link to={`/set_trip/${item.plateNumber}/${item.driverName == "null" ? "unassignd" : `${item.driverName}`}`}><button>Set Trip</button></Link></td>
-                                                            :
-                                                            <td><Link to={`/report_detail/${item.vehicleName}/${item.plateNumber}`}><button>Report</button></Link></td>
-                                                        }
+                                                        <td>{item.vehicleName}</td>
+                                                        <td>{item.currentLocation == "NULL" ? "Unassignd" : `${item.currentLocation}`}</td>
+                                                        <td>{item.vehicleType}</td>
+                                                        <td><Link to={`/report_detail/${item.vehicleName}/${item.plateNumber}`}><button>Report</button></Link></td>
                                                     </tr>
                                                 ))}
                                             </tbody>

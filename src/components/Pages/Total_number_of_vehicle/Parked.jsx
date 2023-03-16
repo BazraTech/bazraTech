@@ -12,10 +12,6 @@ import styles from './total_vehicle.module.css';
 import { Link, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-// import { total } from './data/jsonData';
-// import { on_route } from './data/jsonData';
-// import { parked } from './data/jsonData';
-// import { maintenance } from './data/jsonData';
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
@@ -78,8 +74,7 @@ export default function () {
         fetch(url2, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource2(data.vehicles)
-                // console.log(dataSource2)
+                setDataSource2(data.vehiclesINF)
                 setLoading(false);
 
             })
@@ -155,13 +150,6 @@ export default function () {
         setpostPerPage(pageSize);
     }
 
-    // useEffect(() => {
-    //     setTotal([dataSource2.length])
-    // }, []);
-
-    // const indexOfLastPage = page * postPerPage;
-    // const indexOfFirstPage = indexOfLastPage - postPerPage;
-    // const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
     const [color, setColor] = useState("green");
     const [margin, setMargin] = useState("");
 
@@ -172,7 +160,7 @@ export default function () {
 
             {/*---------------navigation---------------*/}
 
-            <Navigation path="/Total_number_of_vehicle"  title="Parked"></Navigation>
+            <Navigation path="/Total_number_of_vehicle" title="Parked"></Navigation>
 
             {/* --------------- header --------------- */}
 
@@ -233,14 +221,6 @@ export default function () {
 
                 {/* --------------- search --------------- */}
 
-
-                <div className={styles.vehicle_search}>
-                    <p title='search'>
-                        <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                        <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
-                        <button>Search</button>
-                    </p>
-                </div>
                 {Loading ?
                     <p className={styles.loading} >
                         <SyncLoader
@@ -255,15 +235,23 @@ export default function () {
 
                     <>
                         <div className={styles.outer_vehicle_table} id='myTable'>
+
+                            <div className={styles.vehicle_search}>
+                                <p title='search'>
+                                    <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
+                                    <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                                    <button>Search</button>
+                                </p>
+                            </div>
                             <p>PARKED</p>
 
                             <table className={styles.vehicle_table} id="myTable">
 
                                 <thead>
                                     <tr>
-                                        <th>Profile</th>
+                                        <th>Vehicle Owner</th>
+                                        <th>Vehicle Name</th>
                                         <th>Assigned Driver</th>
-                                        <th>Vehicle ID</th>
                                         <th>Vehicle Type</th>
                                         <th>Plate Number</th>
                                         <th>Status</th>
@@ -275,10 +263,9 @@ export default function () {
                                 <tbody>
                                     {currentPage.map(item => (
                                         <tr className={styles.active_row}>
-
+                                            <td>{item.companyName}</td>
                                             <td>{item.vehicleName}</td>
                                             <td>{item.driverName == "null" ? "unassignd" : `${item.driverName}`}</td>
-                                            <td>{item.id}</td>
                                             <td>{item.vehicleCatagory}</td>
                                             <td>{item.plateNumber}</td>
                                             <td>{item.status}</td>

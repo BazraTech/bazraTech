@@ -82,9 +82,10 @@ export default function () {
 
             {/* <Header title="Report Detail"></Header> */}
 
-            <div className='main_content2'>
+            <div className='main_content77'>
+
                 <div className="Report-main">
-                    <div className="vehicle-detail">
+                    {/* <div className="vehicle-detail">
                         <div className="vehicle-name">
                             <table class="table-report" >
                                 <tbody>
@@ -105,8 +106,8 @@ export default function () {
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div className="row-two">
+                    </div> */}
+                    {/* <div className="row-two">
                         <div className="report-status">
                             <table class="table-report-status" >
                                 <tbody>
@@ -117,6 +118,11 @@ export default function () {
                                 </tbody>
                             </table>
                         </div>
+                    </div> */}
+
+
+                    <div className='outer_vehicle_table' ref={componentRef}>
+
                         <div className='report-date'>
                             <p><input onChange={(e) => {
                                 setSearch(e.target.value)
@@ -124,62 +130,57 @@ export default function () {
 
                             }} type="date" placeholder='Select date'></input></p>
                         </div>
+                        <p>Trip History</p>
+
+                        <table class="vehicle_table" id="table-to-xls">
+                            <thead>
+                                <tr> 
+                                    <th>Trip</th>
+                                    <th>Total Travel Time</th>
+                                    <th>Average Speed</th>
+                                    <th>Start Date/Time</th>
+                                    <th>End Date/Time</th>
+                                    <th>Detail</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {
+                                    Report_Data
+                                        .filter((item) => {
+                                            return search.toLowerCase() === ''
+                                                ? item
+                                                : item.start_date.toLowerCase().includes(search);
+                                        })
+                                        .map(item => {
+                                            return <tr className='active_row'>
+
+                                                <td>{item.trip}</td>
+                                                <td>{item.total_travel_time}</td>
+                                                <td>{item.average_speed}</td>
+                                                <td>{item.start_date}</td>
+                                                <td>{item.end_date}</td>
+                                                <td>
+                                                    <h4 className='notification_actions0'>
+                                                        <button onClick={() => {
+                                                            handleClickopen()
+                                                            AvargeSpeed(item.average_speed)
+                                                        }}>Detail</button>
+
+                                                    </h4>
+                                                </td>
+                                            </tr>
+
+                                        })
+                                }
+                            </tbody>
+                        </table>
                     </div>
-                    <div className='excel'>
-
+                    {/* </div> */}
+                    <div className='page22'>
+                        <button className='print' onClick={handleClickopen1}>Export</button>
                     </div>
 
-
-                    <div className='trip-tables' >
-                        <div className='t-table'>
-                            <table class="vehicle-trip-table" ref={componentRef} id="table-to-xls">
-                                <thead>
-                                    <tr>
-                                        <th>Trip</th>
-                                        <th>Total Travel Time</th>
-                                        <th>Average Speed</th>
-                                        <th>Start Date/Time</th>
-                                        <th>End Date/Time</th>
-                                        <th>Detail</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {
-                                        Report_Data
-                                            .filter((item) => {
-                                                return search.toLowerCase() === ''
-                                                    ? item
-                                                    : item.start_date.toLowerCase().includes(search);
-                                            })
-                                            .map(item => {
-                                                return <tr className='active_row'>
-
-                                                    <td>{item.trip}</td>
-                                                    <td>{item.total_travel_time}</td>
-                                                    <td>{item.average_speed}</td>
-                                                    <td>{item.start_date}</td>
-                                                    <td>{item.end_date}</td>
-                                                    <td>
-                                                        <h4 className='notification_actions0'>
-                                                            <button onClick={() => {
-                                                                handleClickopen()
-                                                                AvargeSpeed(item.average_speed)
-                                                            }}>Detail</button>
-
-                                                        </h4>
-                                                    </td>
-                                                </tr>
-
-                                            })
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className='page22'>
-                            <button className='print' onClick={handleClickopen1}>Export</button>
-                        </div>
-                    </div>
 
                     {popup ?
                         <div ref={componentRef} style={{ width: "100%", height: window.innerHeight }}>
@@ -206,26 +207,26 @@ export default function () {
                             </div>
                         </div> : ""}
 
-                    {popup1 ?
+                    {popup1 ? 
                         <div>
-                            <div className='popupp'>
+                            <div className='popup3'>
                                 <div className='popup-innerr'>
                                     <button className='close-btn' onClick={closePopup}>X</button>
                                     <div className='pdfandexcelouter'>
-                                    <div className='selectAction'> Select the Action You Want</div>
-                                    <div className='pdfandexcel'>
-                                        <button  onClick={() =>{
-                                            handlePrint();
-                                            handleClickopen1();
+                                        <div className='selectAction'> Select the Action You Want</div>
+                                        <div className='pdfandexcel'>
+                                            <button onClick={() => {
+                                                handlePrint();
+                                                handleClickopen1();
                                             }}>Print or Save As PDF</button>
-                                        <button onClick={closePopup}><ReactHTMLTableToExcel
-                                            id="test-table-xls-button"
-                                            className="printexel"
-                                            table="table-to-xls"
-                                            filename="tablexls"
-                                            sheet="tablexls"
-                                            buttonText="Download as XLS" /></button>
-                                    </div>
+                                            <button onClick={closePopup}><ReactHTMLTableToExcel
+                                                id="test-table-xls-button"
+                                                className="printexel"
+                                                table="table-to-xls"
+                                                filename="tablexls"
+                                                sheet="tablexls"
+                                                buttonText="Download as XLS" /></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

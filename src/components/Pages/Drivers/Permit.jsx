@@ -70,19 +70,18 @@ export default function () {
 
 
     const [Loading, setLoading] = useState([]);
-    // const url = "http://198.199.67.201:9090/Api/Admin/All/Vehicles/Status/ONROUTE";
-    // const [dataSource, setDataSource] = useState([])
-    // useEffect(() => {
-    //     setLoading(true);
-    //     fetch(url, options)
-    //         .then(respnse => respnse.json())
-    //         .then(data => {
-    //             setDataSource(data.inRoutelist)
-    //             // console.log(dataSource)
-    //             setLoading(false);
+    const url = "http://198.199.67.201:9090/Api/Admin/All/Drivers";
+    const [dataSource, setDataSource] = useState([])
+    useEffect(() => {
+        setLoading(true);
+        fetch(url, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource(data.drivers)
+                setLoading(false);
 
-    //         })
-    // }, [])
+            })
+    }, [])
 
     const [totalPages, setTotalPage] = useState(1);
     const url2 = "http://198.199.67.201:9090/Api/Admin/Drivers/ONROUTE";
@@ -165,7 +164,7 @@ export default function () {
 
             <Navigation path="/Total_Drivers" title="On Route Drivers"></Navigation>
 
-            
+
 
             {/* --------------- header --------------- */}
 
@@ -179,7 +178,7 @@ export default function () {
                         <Link to="/Total_Drivers" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents}>
                                 <h4>Total Drivers</h4>
-                                <p><FaUserSecret size="2.2rem"></FaUserSecret><b>0</b></p>
+                                <p><FaUserSecret size="2.2rem"></FaUserSecret><b>{dataSource.length}</b></p>
                             </div>
                         </Link>
                     </div>
@@ -224,14 +223,6 @@ export default function () {
 
                 {/* --------------- search --------------- */}
 
-                <div className={styles.vehicle_search}>
-                    <p title='search'>
-                        <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                        <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
-                        <button>Search</button>
-                    </p>
-                </div>
-
                 {Loading ?
                     <p className={styles.loading}>
                         <SyncLoader
@@ -245,7 +236,15 @@ export default function () {
                     :
 
                     <>
-                        <div className={styles.outer_vehicle_table} id='myTable'>
+                        <div className={styles.outer_table} id='myTable'>
+
+                            <div className={styles.vehicle_search}>
+                                <p title='search'>
+                                    <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
+                                    <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                                    <button>Search</button>
+                                </p>
+                            </div>
                             <p>PERMITED DRIVERS</p>
 
                             <table className={styles.vehicle_table} id="myTable">
@@ -256,7 +255,7 @@ export default function () {
                                         <th>License Number</th>
                                         <th>Experience</th>
                                         <th>LicenseGrade</th>
-                                        <th>Gender</th>
+                                        <th>Status</th>
                                         <th>VehicleOwner</th>
                                         <th>Detail</th>
                                         <th>Tracking</th>
@@ -271,7 +270,7 @@ export default function () {
                                             <td>{item.licenseNumber}</td>
                                             <td>{item.experience}</td>
                                             <td>{item.licenseGrade}</td>
-                                            <td>{item.gender}</td>
+                                            <td>{item.status}</td>
                                             <td>{item.vehicleOwner}</td>
                                             <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
                                             <td><Link to="/tracking"><button>Tracking</button></Link></td>

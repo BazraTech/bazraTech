@@ -17,6 +17,7 @@ import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 
 export default function Dashboard() {
+
     const userlogin = localStorage.getItem("username");
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -43,38 +44,44 @@ export default function Dashboard() {
     const url1 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
     const [dataSource1, setDataSource1] = useState([])
     useEffect(() => {
-        // setLoading(true);
         fetch(url1, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource1(data.totalVehicles)
-
-                // console.log(dataSource2)
-                // setLoading(false);
-
+                setDataSource1(data.vehiclesINF)
             })
     }, [])
 
+    const [Loading, setLoading] = useState([]);
     const url2 = "http://198.199.67.201:9090/Api/Admin/All/Drivers";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
+        setLoading(true);
         fetch(url2, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource2(data.totalDrivers)
+                setDataSource2(data.drivers)
+                setLoading(false);
 
             })
     }, [])
 
-    const url = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners/"; 
-    const [dataSource3, setDataSource3] = useState([]) 
-    useEffect(() => { 
-        // setLoading(true) 
-        fetch(url, options) 
-            .then(respnse => respnse.json()) 
-            .then(data => { 
-                setDataSource3(data.vehicleOwnerINF) 
-                // setTotalPage(data.totalusers) 
+    const url = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners/";
+    const [dataSource3, setDataSource3] = useState([])
+    useEffect(() => {
+        fetch(url, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource3(data.vehicleOwnerINF)
+            })
+    }, [])
+
+    const url3 = "http://198.199.67.201:9090/Api/Admin/Alerts/ACTIVE";
+    const [dataSource, setDataSource] = useState([])
+    useEffect(() => {
+        fetch(url3, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource(data.alerts)
             })
     }, [])
 
@@ -97,8 +104,8 @@ export default function Dashboard() {
                         <Link to="/Total_number_of_vehicle" style={{ textDecoration: 'none' }} >
                             <h4>Total Vehicles </h4>
                             <div className={styles.innerCard}>
-                                <AiFillCar size="2.8rem" ></AiFillCar>
-                                <p>{dataSource1}</p>
+                                <AiFillCar size="2.6rem" ></AiFillCar>
+                                <p>{dataSource1.length}</p>
                             </div>
                         </Link>
                     </div>
@@ -108,7 +115,7 @@ export default function Dashboard() {
                             <h4>Total Driver </h4>
                             <div className={styles.innerCard}>
                                 <ImUserTie size="2.4rem"></ImUserTie>
-                                <p>{dataSource1}</p>
+                                <p>{dataSource2.length}</p>
                             </div>
                         </Link>
                     </div>
@@ -121,15 +128,15 @@ export default function Dashboard() {
                                 <BsFillChatDotsFill size="2.4rem" ></BsFillChatDotsFill>
                                 {/* <p>{dataSource1}</p> */}
                             </div>
-                        </Link> 
+                        </Link>
                     </div>
 
                     <div className={styles.users}>
                         <Link to="/users" style={{ textDecoration: 'none' }} >
                             <h4>Total Users</h4>
                             <div className={styles.innerCard3}>
-                                <AiFillCar size="2.8rem" ></AiFillCar>
-                                <p>{dataSource1}</p>
+                                <FaUsers size="2.5rem" color='#002e4d'></FaUsers>
+                                <p>{dataSource3.length}</p>
                             </div>
                         </Link>
                     </div>
@@ -138,7 +145,7 @@ export default function Dashboard() {
                         <Link to="/Company_registration" style={{ textDecoration: 'none' }} >
                             <h4>Registration </h4>
                             <div className={styles.innerCard4}>
-                                <AiFillCar size="2.8rem" ></AiFillCar>
+                                <FaRegIdCard size="2.5rem" color='#00802b'></FaRegIdCard>
                             </div>
                         </Link>
                     </div>
@@ -147,7 +154,7 @@ export default function Dashboard() {
                         <Link to="/avialable_trip" style={{ textDecoration: 'none' }} >
                             <h4>Trip Management </h4>
                             <div className={styles.innerCard5}>
-                                <AiFillCar size="2.8rem" ></AiFillCar>
+                                <BiTrip size="2.6rem" color='#009999'></BiTrip>
                             </div>
                         </Link>
                     </div>
@@ -156,7 +163,7 @@ export default function Dashboard() {
                         <Link to="/report" style={{ textDecoration: 'none' }} >
                             <h4>Report </h4>
                             <div className={styles.innerCard6}>
-                                <AiFillCar size="2.8rem" ></AiFillCar>
+                                <HiDocumentReport size="2.6rem" color='#005c99'></HiDocumentReport>
                             </div>
                         </Link>
                     </div>
@@ -165,8 +172,8 @@ export default function Dashboard() {
                         <Link to="/accident" style={{ textDecoration: 'none' }} >
                             <h4>Alerts </h4>
                             <div className={styles.innerCard7}>
-                                <AiFillCar size="2.8rem" ></AiFillCar>
-                                <p>{dataSource1}</p>
+                                <HiBellAlert size="2.6rem" color='#F80404'></HiBellAlert>
+                                <p>{dataSource.length}</p>
                             </div>
                         </Link>
                     </div>
@@ -175,7 +182,7 @@ export default function Dashboard() {
                         <Link to="/tracking" style={{ textDecoration: 'none' }} >
                             <h4>Tracking </h4>
                             <div className={styles.innerCard8}>
-                                <AiFillCar size="2.8rem" ></AiFillCar>
+                                <RiGpsFill size="2.6rem" color='#404040'></RiGpsFill>
                             </div>
                         </Link>
                     </div>

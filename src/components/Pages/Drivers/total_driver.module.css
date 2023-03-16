@@ -2,19 +2,18 @@
 
 
 /* --------------- vehicle-main --------------- */
-.main_content{
+.main_content {
     position: absolute;
-     width: calc(100% - 100px); 
-     left: 100px;
-     /* min-height: 100px; */
-     height: 100vh;
-     opacity: var(--black2);
-     color: var(--black1);
-     top: 75px;
-     background-color: rgb(247, 247, 247);
-     z-index: -1;  
- }
- 
+    width: calc(100% - 100px);
+    left: 100px;
+    min-height: calc(88vh);
+    opacity: var(--black2);
+    color: var(--black1);
+    top: 75px;
+    background-color: rgb(247, 247, 247);
+    /* z-index: 1; */
+}
+
 .vehicle_outer {
     position: absolute;
     width: calc(100% - 100px);
@@ -37,20 +36,21 @@
 
 /* ------------------ Total_vehicle ------------------- */
 
-.allcards{
-    display: grid; 
-    grid-template-columns: 18% 18% 18% 18% 18%; 
+.allcards {
+    display: grid;
+    grid-template-columns: 18% 18% 18% 18% 18%;
     row-gap: 1px;
-    justify-content: center; 
-    justify-items: center; 
-    align-items: center; 
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
     margin-top: 50px;
     /* margin-bottom: 120px; */
     /* gap: 6%;  */
 
 }
+
 /* -----------------active card ------------------- */
-.activeCard{
+.activeCard {
     width: 80%;
     background-color: rgb(83, 83, 83);
     height: 90px;
@@ -65,9 +65,10 @@
     color: #ffffff;
 }
 
-.innerContents1{
+.innerContents1 {
     color: #ffffff;
 }
+
 .activeCard p {
     display: grid;
     grid-template-columns: 45px 45px;
@@ -79,12 +80,13 @@
     margin-top: 2px;
     font-size: 1.5rem;
 }
+
 .activeCard:hover {
     transform: scale(1.09);
- }
+}
 
 /* -----------------other cards ------------------- */
-.vehicle{
+.vehicle {
     color: #006666;
     width: 80%;
     background-color: rgb(255, 255, 255);
@@ -100,14 +102,16 @@
     color: #000;
 }
 
-.innerContents{
+.innerContents {
     color: #000;
 }
-.icon{
+
+.icon {
     display: flex;
     justify-content: space-around;
     gap: 3%;
 }
+
 .vehicle p {
     display: grid;
     grid-template-columns: 45px 45px;
@@ -119,18 +123,19 @@
     margin-top: 2px;
     font-size: 1.5rem;
 }
+
 .vehicle:hover {
     transform: scale(1.09);
- }
+}
 
 
 /* ------------------ Vehicle-search ------------------- */
 
 .vehicle_search {
-   display: flex;
-   justify-content: right;
-   padding-right: 10%;
-}
+    display: flex;
+    justify-content: right;
+    /* padding-right: 10%; */
+} 
 
 .hide {
     display: none;
@@ -139,7 +144,8 @@
 .vehicle_search p {
     display: flex;
 }
-.vehicle_search .icn{
+
+.vehicle_search .icn {
     margin-top: 8px;
     /* padding-left: -40px; */
     margin-right: -42px;
@@ -189,27 +195,31 @@
 .vehicle_filter p h6 {
     padding-left: 5px;
     font-size: 0.8rem;
-} 
+}
 
 /* ------------------ Vehicle-table ------------------- */
 
-.outer_vehicle_table {
+.outer_table {
     overflow-x: scroll;
-    margin: 3%;
+    margin: 7%;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+    margin-top: 30px;
+    /* background-color: rgb(255, 255, 255); */
 }
 
-.outer_vehicle_table p {
+.outer_table p {
     color: #009879;
     font-size: 23px;
-    margin-left: 45px;
+    margin-left: 5px;
     font-weight: 600;
     margin-bottom: 10px;
 }
 
 .vehicle_table {
-    margin-left: 4%;
+    /* margin-left: 4%; */
     border-collapse: collapse;
-    width: 90%;
+    width: 100%;
     border-radius: 5px 5px 0px 0px;
     overflow: hidden;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
@@ -266,7 +276,7 @@
 
 /* ------------------ pagination ------------------- */
 .page {
-    padding: 10px;
+    padding-bottom: 20px;
     display: flex;
     justify-content: center;
 }
@@ -299,53 +309,54 @@
 
 @media screen and (max-width: 1120px) {
 
-    .allcards{
-        display: grid; 
-        grid-template-columns: 30% 30% 30%; 
+    .allcards {
+        display: grid;
+        grid-template-columns: 30% 30% 30%;
     }
 
- }
+}
 
- @media screen and (max-width: 710px) {
+@media screen and (max-width: 710px) {
 
-    .allcards{
-        display: grid; 
-        grid-template-columns: 45% 45%; 
+    .allcards {
+        display: grid;
+        grid-template-columns: 45% 45%;
     }
 
- }
+}
 
- @media screen and (max-width: 420px) {
+@media screen and (max-width: 420px) {
 
-    .allcards{
-        display: grid; 
-        grid-template-columns: 90%; 
+    .allcards {
+        display: grid;
+        grid-template-columns: 90%;
     }
-    .activeCard{
+
+    .activeCard {
         height: 100px;
     }
-    .vehicle{
+
+    .vehicle {
         height: 100px;
     }
 
- }
+}
 
- @media screen and (max-width: 500px) {
+@media screen and (max-width: 500px) {
 
-    .main_content{
-       position: absolute;
-       width: calc(100%); 
-       left: 0px;
-       /* min-height: 100px; */
-       max-height: 100vh;
-       opacity: var(--black2);
-       color: var(--black1);
-       top: 75px;
-       background-color: rgb(242, 242, 242);
-       z-index: -1;  
-   
-   }
- }
+    .main_content {
+        position: absolute;
+        width: calc(100%);
+        left: 0px;
+        min-height: calc(100vh);
+        opacity: var(--black2);
+        color: var(--black1);
+        top: 75px;
+        background-color: rgb(242, 242, 242);
+        /* z-index: -1; */
+
+    }
+}
 
 
 
@@ -376,13 +387,14 @@
         width: 70%;
         margin-left: 7%;
         column-gap: 180px;
-        
+
     }
+
     .vehicle_search1 {
         margin-top: 400px;
         margin-right: 10%;
         margin-left: 150px;
-        width:60%;
+        width: 60%;
     }
 }
 
@@ -395,14 +407,14 @@
         width: 70%;
         margin-left: 7%;
         column-gap: 180px;
-        
+
     }
 
     .vehicle_search1 {
         margin-top: 400px;
         margin-right: 10%;
         margin-left: 150px;
-        width:60%;
+        width: 60%;
     }
 
     .vehicle_filter p {
@@ -542,6 +554,7 @@
         width: 80%;
         overflow-x: scroll;
     }
+
     .vehicle_table {
         margin-left: 2%;
         margin-top: 40px;
@@ -560,7 +573,7 @@
     .vehicle_header .header_title {
         display: none;
     }
-   
+
 }
 
 
@@ -615,6 +628,7 @@
     .vehicle_contents {
         padding-left: 10px;
     }
+
     .vehicle_search1 {
         margin-top: 640px;
         margin-right: 10%;
