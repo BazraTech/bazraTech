@@ -198,7 +198,7 @@ export default function () {
                                                             setId(item.id)
                                                             setRole(item.role)
                                                         }} >
-                                                        <p>Company id : <b className='green'>{item.id}</b></p>
+                                                         <p>Company Name : <b className='green'>{item.roles == "OWNER" ? `${item.companyName}` : `${item.firstName}`}</b></p>
                                                         <label>Company Name : <b className='green'>{item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}`}</b></label>
                                                         <p className={styles.dropdownVehicle}>{visible && item.id == visiblelist ? <AiOutlineMinus top="10px" size="1rem" color='White' onChange={displaylist}></AiOutlineMinus> :
                                                             <BsPlusLg size="1rem" color='White' onClick={() => {

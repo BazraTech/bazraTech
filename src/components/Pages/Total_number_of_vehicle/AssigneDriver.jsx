@@ -166,7 +166,7 @@ export default function () {
 
             {/* --------------- header --------------- */}
 
-            <Header title="Total Vehicles"></Header>
+            {/* <Header title="Total Vehicles"></Header> */}
 
             {/* --------------- users --------------- */}
 

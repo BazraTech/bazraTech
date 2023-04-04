@@ -122,7 +122,7 @@ export default function () {
                 setLoading(false);
 
             })
-    }, []) 
+    }, [])
 
     const url4 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles/Status/MAINTAINING";
     const [dataSource4, setDataSource4] = useState([])
@@ -193,7 +193,7 @@ export default function () {
                     <div className={styles.vehicle}>
                         <Link to="/on_stock" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents}>
-                                <h4>On Stock</h4>
+                                <h4>In Stock</h4>
                                 <p><FaParking size="2rem" ></FaParking><b>{dataSource3.length}</b></p>
                             </div>
                         </Link>
@@ -254,7 +254,7 @@ export default function () {
                                         <th>Assigned Driver</th>
                                         <th>Vehicle Type</th>
                                         <th>Plate Number</th>
-                                        <th>Status</th> 
+                                        <th>Status</th>
                                         <th>Detail</th>
                                         <th>Tracking</th>
                                     </tr>

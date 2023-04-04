@@ -6,7 +6,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import swal from "sweetalert";
 import Header from '../../Header/Header';
-import Navigation from '../Navigation/Navigation';
+import Navigation from '../Navigation/Navigation'; 
 
 // import { TbChevronsUpLeft } from 'react-icons/tb';
 
@@ -15,8 +15,8 @@ export default function Company_registration() {
     const {
         register,
         handleSubmit,
-        watch,
-        formState: { errors },
+        watch, 
+        formState: { errors }, 
     } = useForm();
     const onSubmit = (data) => {
         console.log(data);

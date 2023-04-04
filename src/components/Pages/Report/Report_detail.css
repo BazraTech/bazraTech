@@ -13,15 +13,17 @@
 .vehicle-detail {
     display: grid;
     grid-template-columns: 34% 34%;
-    padding-top: 40px;
-    margin-left: 20%;
-    margin-bottom: 0px;
-    padding-bottom: 25px;
+    justify-content: center;
+    margin-top: 50px;
 }
 
 .vehicle-name {
     box-shadow: 2px 2px 4px 0px;
     background-color: white;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+    padding-bottom: 15px;
 }
 
 .plate-number {
@@ -555,5 +557,9 @@
         background-color: rgb(242, 242, 242);
         z-index: -1;
 
+    }
+    .vehicle-detail {
+        display: grid;
+        grid-template-columns: 80%;
     }
 }

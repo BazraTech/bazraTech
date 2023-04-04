@@ -193,7 +193,7 @@ export default function () {
                     <div className={styles.vehicle}>
                         <Link to="/on_stock" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents}>
-                                <h4>On Stock</h4>
+                                <h4>In Stock</h4>
                                 <p><FaParking size="2rem" ></FaParking><b>{dataSource3.length}</b></p>
                             </div>
                         </Link>

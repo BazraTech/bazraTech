@@ -192,7 +192,7 @@ export default function () {
                     <div className={styles.activeCard}>
                         <Link to="/on_stock" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents1}>
-                                <h4>On Stock</h4>
+                                <h4>In Stock</h4>
                                 <p><FaParking size="2rem" ></FaParking><b>{dataSource3.length}</b></p>
                             </div>
                         </Link>
@@ -247,7 +247,7 @@ export default function () {
                             <table className={styles.vehicle_table} id="myTable">
 
                                 <thead>
-                                    <tr> 
+                                    <tr>
                                         <th>Vehicle Owner</th>
                                         <th>Vehicle Name</th>
                                         <th>Assigned Driver</th>
@@ -262,7 +262,7 @@ export default function () {
                                 <tbody>
                                     {currentPage.map(item => (
                                         <tr className={styles.active_row}>
-                                             <td>{item.companyName}</td>
+                                            <td>{item.companyName}</td>
                                             <td>{item.vehicleName}</td>
                                             <td>{item.driverName == "null" ? "unassignd" : `${item.driverName}`}</td>
                                             <td>{item.vehicleCatagory}</td>

@@ -99,7 +99,7 @@ export default function PopUp(props) {
 
     // const notification = notifications;
     // const vehicleConditon = notifications;
-    // const vehicleCatagory = notifications;
+    // const vehicleCatagory = notifications; 
     // const companysector = notifications;
     // const companyType = notifications;
     // const serviceNeeded = notifications;

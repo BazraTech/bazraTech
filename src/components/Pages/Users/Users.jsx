@@ -279,7 +279,7 @@ export default function () {
                 setBirthDate("");
                 setDriverPhone("");
                 setLicenseGrade("");
-                setLicenseIssueDate("");
+                setLicenseIssueDate(""); 
                 setLicenseExpireDate("");
                 setSelectedFile("");
                 setImgData(null);
@@ -456,7 +456,8 @@ export default function () {
                                             {popup ?
                                                 <div>
                                                     <div className={styles.popup}>
-                                                        <div className='animate__animated animate__slideInDown'>                                                        <div className={styles.popupInner}>
+                                                        <div className='animate__animated animate__slideInDown'>                                                        
+                                                        <div className={styles.popupInner}>
 
                                                             <div className={styles.allForms1}>
 

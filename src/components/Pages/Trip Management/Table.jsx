@@ -73,7 +73,6 @@ export default function ({ id, role, name, from }) {
             })
     }, [])
 
-
     const [popup, setPop] = useState(false);
     const [state, setState] = useState("");
     const handleClickopen = () => {
@@ -158,21 +157,13 @@ export default function ({ id, role, name, from }) {
 
                                     <div className={styles.outer_vehicle_table} id='myTable'>
 
-                                        {from == "availavleCars" ?
                                             <div className={styles.vehicle_search}>
                                                 <p title='search'>
                                                     <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
                                                     <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
                                                     <button>Search</button>
                                                 </p>
-                                            </div> :
-                                            <div className={styles.vehicle_search}>
-                                                <p title='search'>
-                                                    {/* <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch> */}
-                                                    <input type="date" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
-                                                    {/* <button>Search</button> */}
-                                                </p>
-                                            </div>}
+                                            </div>
 
                                         <p>{name}</p>
 

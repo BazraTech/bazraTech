@@ -193,7 +193,7 @@ export default function () {
                             <div className={styles.innerContents1}>
                                 <h4>Total Drivers</h4>
                                 <p><FaUserSecret size="2.2rem"></FaUserSecret><b>{dataSource.length}</b></p>
-                            </div>
+                            </div> 
                         </Link>
                     </div>
 

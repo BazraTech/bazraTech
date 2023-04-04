@@ -118,7 +118,7 @@ export default function () {
     useEffect(() => {
         setLoading(true);
         fetch(url4, options)
-            .then(respnse => respnse.json())
+            .then(respnse => respnse.json()) 
             .then(data => {
                 setDataSource4(data.maintainingList)
                 setLoading(false);
@@ -157,7 +157,7 @@ export default function () {
             <div className={styles.main_content}>
 
                 <div className={styles.allcards}>
-
+                    
                     <div className={styles.activeCard}>
                         <Link to="/Total_number_of_vehicle" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents1}>
@@ -181,10 +181,10 @@ export default function () {
                     <div className={styles.vehicle}>
                         <Link to="/on_stock" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents}>
-                                <h4>On Stock</h4>
+                                <h4>In Stock</h4>
                                 <p><FaParking size="2rem" ></FaParking><b>{dataSource3.length}</b></p>
                             </div>
-                        </Link>
+                        </Link> 
                     </div>
 
                     <div className={styles.vehicle}>
@@ -278,11 +278,8 @@ export default function () {
                             />
                         </div>
                     </>
-
                 }
-
             </div>
-
         </div >
     )
 }

@@ -163,7 +163,7 @@ export default function () {
     let [active, setActive] = useState(false);
     let [name, setName] = useState("false");
 
-    function changeName(name) {
+    function changeName(name) { 
         setName(name);
     }
 

@@ -10,7 +10,6 @@ import 'animate.css';
 
 export default function () {
 
-    // const history = useNavigate(); 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [data, setdata] = useState("");
@@ -22,7 +21,6 @@ export default function () {
         if (username.length == 0 || password.length == 0) {
             setError(true);
         }
-
         if (username && password) {
             login();
         }
@@ -39,14 +37,9 @@ export default function () {
         let item = { username, password };
         const options = {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-                Authorization: `Bearer`,
-            },
+            headers: { "Content-Type": "application/json", Accept: "application/json", Authorization: `Bearer`, },
             body: JSON.stringify(item),
         };
-
         const url = "http://198.199.67.201:9090/Api/SignIn/Admin";
         try {
             const response = await fetch(url, options);
@@ -59,18 +52,14 @@ export default function () {
                 console.log("Login successful");
                 const zz = localStorage.getItem("tuser");
                 setdata(zz);
-                swal("Successful", "Welcome To Admin DashBoard", "success", {
-                    buttons: false,
-                    timer: 2000,
-                }).then((value) => {
-                    localStorage.setItem("user", JSON.stringify(result["user"]));
-                    localStorage.getItem("user");
-                    localStorage.setItem("jwt", JSON.stringify(result["jwt"]));
-                    localStorage.getItem("jwt");
-                    window.location.href = "/dashboard";
-                }).finally(() => {
-
-                });
+                swal("Successful", "Welcome To Admin DashBoard", "success", { buttons: false, timer: 2000, })
+                    .then((value) => {
+                        localStorage.setItem("user", JSON.stringify(result["user"]));
+                        localStorage.getItem("user");
+                        localStorage.setItem("jwt", JSON.stringify(result["jwt"]));
+                        localStorage.getItem("jwt");
+                        window.location.href = "/dashboard";
+                    })
             } else {
                 Swal.fire({
                     title: "Failed To Login?",
@@ -99,21 +88,20 @@ export default function () {
                     popup: 'animate__animated animate__shakeX'
                 },
             })
-            window.location.href = "/dashboard";
+            // window.location.href = "/dashboard";
         }
     }
 
-    return (
-        <>
+    return ( 
+        <> 
 
-            {/*-------------- Login page Form ---------------*/}
+            {/*-------------- Login page Form ---------------*/} 
 
             <div className={styles.signin}>
 
                 {/*-------------- Left side ---------------*/}
 
-                <div className={styles.left_login}>
-                </div>
+                <div className={styles.left_login}></div>
 
                 {/*-------------- Right side ---------------*/}
                 <div className={styles.right_login}>

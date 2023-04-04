@@ -16,7 +16,7 @@ import { IoMdArrowDropdownCircle } from "react-icons/io";
 import { IoMdArrowDropupCircle } from "react-icons/io";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import swal from "sweetalert";
-import Swal from 'sweetalert2' 
+import Swal from 'sweetalert2'
 import 'animate.css';
 import "./header.css"
 import './navigation.css';
@@ -41,7 +41,7 @@ export default function Navigation({ path, title }) {
     const roles = user.role;
     const username = user.username;
     const id = user.id;
-    // console.log(phoneNumber)
+    // console.log(phoneNumber) 
 
     const toggle = () => {
 
@@ -51,11 +51,11 @@ export default function Navigation({ path, title }) {
                    <p style="color: #f09053; "">ID  : ${id}</p>
                    <p style="color: #f09053; ""> ${roles}</p>
                    <p style="color: #f09053; padding-bottom: 5px;"">${username}</p>`,
-            showConfirmButton: false,
+            showConfirmButton: false, 
             showDenyButton: true,
             width: "300px",
             denyButtonText: 'Logout',
-            imageClass: 'img-responsive', 
+            imageClass: 'img-responsive',
             imageAlt: 'Custom image',
         }).then((result) => {
             if (result.isDenied) {
@@ -76,18 +76,18 @@ export default function Navigation({ path, title }) {
     const handleClickopen2 = () => {
         Swal.fire({
             text: "Are you sure You Want to Logout",
-            icon: 'warning', 
-            showCancelButton: true, 
+            icon: 'warning',
+            showCancelButton: true,
             confirmButtonColor: '#00cc44',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Ok!',
+            confirmButtonText: 'Ok!', 
             showCloseButton: true,
             showClass: {
                 popup: 'animate__animated animate__shakeX'
             },
 
-        }).then((result) => {
-            if (result.isConfirmed) {
+        }).then((result) => { 
+            if (result.isConfirmed) { 
                 remove()
             }
         })
@@ -98,7 +98,7 @@ export default function Navigation({ path, title }) {
         setLogout(false);
         setState(false);
     }
-    const remove = () => {
+    const remove = () => { 
         localStorage.removeItem("jwt");
         window.location.href = "/";
     }
@@ -114,6 +114,36 @@ export default function Navigation({ path, title }) {
         setToggle("All_navigation");
         setAction(!action)
     }
+
+    const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
+    const options = {
+
+        headers: {
+            'Content-Type': 'application/json',
+            "Accept": "application/json",
+            "Authorization": `Bearer ${jwt}`
+        },
+    };
+
+    const url3 = "http://198.199.67.201:9090/Api/Admin/Alerts/ACTIVE";
+    const [dataSource, setDataSource] = useState([])
+    useEffect(() => {
+        fetch(url3, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource(data.activeAlerts)
+            })
+    }, [])
+
+    const [dataSource2, setDataSource2] = useState([])
+    const url2 = "http://198.199.67.201:9090/Api/Message/All";
+    useEffect(() => {
+        fetch(url2, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource2(data.messages)
+            })
+    }, [])
 
     return (
         <>
@@ -192,25 +222,25 @@ export default function Navigation({ path, title }) {
 
                 <div className="dashboard_headers">
 
-                    <div className='dashboardTitle'>
+                    <div className='headerTitle'>
                         <h2>Bazra Motors /</h2>
-           {/* -------------- props ------------- */}
                         <h5>{title}</h5>
                     </div>
-                    <div className='user_dashboard'>
+                    <div className='headercontents'>
+                        <div className='headerIcon'>
+                            <p className='makeGrid'><p><HiBellAlert size="2.2rem" color='red' ></HiBellAlert></p><p className='count' style={{color:"red"}}>{dataSource.length}</p></p>
+                            <p className='makeGrid'><BsFillChatDotsFill size="1.9rem" color='green' ></BsFillChatDotsFill><p className='count' style={{color:"green"}}>{dataSource2.length}</p></p>
+                        </div>
+
+                    </div>
+                    <div className='dashbordProfile'>
                         <p className='displayUser'><FaUserAlt className='FaUserAlt' size="1.6rem" color='green'></FaUserAlt></p>
                         <p className='displayUser role'>{user.role}</p>
-                        <p onClick={() => {
-                            toggle()
-                        }}>{state ? <IoMdArrowDropupCircle size="1.2rem" color='green'></IoMdArrowDropupCircle> :
-                            <IoMdArrowDropdownCircle size="1.2rem" color='green'></IoMdArrowDropdownCircle>}</p>
+                        <p onClick={() => { toggle() }}><IoMdArrowDropdownCircle size="1.2rem" color='green'></IoMdArrowDropdownCircle></p>
                     </div>
                     <p className='toggle'>
-                      <label  onClick={action ? showMenu : hideMenu}><BsThreeDotsVertical className='FaUserAlt' size="1.6rem" color='green'></BsThreeDotsVertical></label>
-                      <label onClick={() => {
-                            toggle()
-                        }}>{state ? <FaUserAlt size="1.2rem" color='green'></FaUserAlt> :
-                            <FaUserAlt size="1.2rem" color='green'></FaUserAlt>}</label>
+                        <label onClick={action ? showMenu : hideMenu}><BsThreeDotsVertical className='FaUserAlt' size="1.6rem" color='green'></BsThreeDotsVertical></label>
+                        <label onClick={() => { toggle() }}>{state ? <FaUserAlt size="1.2rem" color='green'></FaUserAlt> : <FaUserAlt size="1.2rem" color='green'></FaUserAlt>}</label>
                     </p>
 
                 </div>

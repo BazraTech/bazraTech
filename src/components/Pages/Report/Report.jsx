@@ -65,7 +65,6 @@ export default function () {
             "Accept": "application/json",
             "Authorization": `Bearer ${jwt}`
         },
-
     };
 
     const url = "http://198.199.67.201:9090/Api/Vehicle/Status/inroute";

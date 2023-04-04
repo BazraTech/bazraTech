@@ -162,7 +162,7 @@ export default function () {
 
         <div className="">
 
-            {/*---------------navigation---------------*/}
+            {/*---------------navigation---------------*/} 
 
             <Navigation path="/avialable_trip" title="Avialable Trip"></Navigation>
 
@@ -212,15 +212,15 @@ export default function () {
                                                             displaylist()
                                                             setvisiblelist(item.id)
                                                             setId(item.id)
-                                                            setRole(item.role)
+                                                            setRole(item.roles)
                                                         }} >
-                                                        <p>Company id : <b className='green'>{item.id}</b></p>
+                                                        <p>Company Name : <b className='green'>{item.roles == "OWNER" ? `${item.companyName}` : `${item.firstName}`}</b></p>
                                                         <label>Available Vehicle : <b className='green'>{item.totalVehicles}</b></label>
                                                         <p className={styles.dropdownVehicle}>{visible && item.id == visiblelist ? <AiOutlineMinus top="10px" size="1rem" color='White' onChange={displaylist}></AiOutlineMinus> :
                                                             <BsPlusLg size="1rem" color='White' onClick={() => {
                                                                 displaylist()
                                                                 setId(item.id)
-                                                                setRole(item.role)
+                                                                setRole(item.roles)
                                                                 setvisiblelist(item.id)
                                                             }}></BsPlusLg>}</p>
                                                     </div>

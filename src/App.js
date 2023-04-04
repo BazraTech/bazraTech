@@ -28,9 +28,6 @@ import Individual from './components/Pages/Users/Individual';
 import Accident from './components/Pages/alert/Accident';
 import Driver from './components/Pages/alert/Driver';
 import Off_road from './components/Pages/alert/Off_road';
-import ReportOn_route from './components/Pages/Report/ReportOn_route';
-import ReportOn_stock from './components/Pages/Report/ReportOn_stock';
-import ReportMaintenance from './components/Pages/Report/ReportMaintenance';
 import Parked from './components/Pages/Total_number_of_vehicle/Parked';
 import AccidentHistory from './components/Pages/alert/AccidentHistory';
 import DriverHistory from './components/Pages/alert/DriverHistory';
@@ -43,6 +40,7 @@ import UnAssigned_Driver from './components/Pages/Drivers/UnAssigned_Driver';
 import Permit from './components/Pages/Drivers/Permit';
 import SignIn from './components/Pages/Sign in page/SignIn';
 import AssigneDriver from './components/Pages/Total_number_of_vehicle/AssigneDriver';
+import Vehicle_Detail from './components/Pages/Users/Vehicle_Table';
 
 class App extends Component{
   render(){
@@ -50,15 +48,14 @@ class App extends Component{
     <div className="App">
       
       <Routes>
-        <Route path='/' element={<SignIn />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route path='/' element={<SignIn />}></Route> 
+        <Route path="/dashboard" element={<Dashboard />}></Route> 
         <Route path="/users" element={<Users />}></Route>
         <Route path="/vehicle_detail/:id" element={<Vehicle_detail></Vehicle_detail>}></Route> 
         <Route path="/User_edit/:role/:id/:companyID" element={<Users_edit />}></Route>
         <Route path="/Company_registration" element={<Company_registration />}></Route>
         <Route path="/individual" element={<Individual_registration />}></Route>
         <Route path="/Total_number_of_vehicle" element={<Total_number_of_vehile />}></Route>
-        {/* <Route path="/tracking_hitory" element={<Tracking_history />}></Route> */}
         <Route path="/tracking" element={<Tracking />}></Route>
         <Route path="/off_road" element={<Off_road />}></Route>
         <Route path="/vehicle_detail" element={<Vehicle_detail />}></Route>
@@ -77,9 +74,6 @@ class App extends Component{
         <Route path="/register_individual" element={<Individual />}></Route>
         <Route path="/accident" element={<Accident />}></Route>
         <Route path="/driver" element={<Driver />}></Route> 
-        <Route path="/ReportOn_route" element={<ReportOn_route />}></Route> 
-        <Route path="/ReportOn_stock" element={<ReportOn_stock />}></Route> 
-        <Route path="/ReportMaintenance" element={<ReportMaintenance />}></Route> 
         <Route path="/parked" element={<Parked />}></Route> 
         <Route path="/AccidentHistory" element={<AccidentHistory />}></Route> 
         <Route path="/DriverHistory" element={<DriverHistory />}></Route> 
@@ -92,7 +86,6 @@ class App extends Component{
         <Route path="/Permit" element={<Permit />}></Route>
         <Route path="/AssignDriver/:plateNumber" element={<AssigneDriver />}></Route> 
       </Routes>
-
     </div>
     
   );

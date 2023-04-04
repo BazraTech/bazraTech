@@ -56,7 +56,7 @@ export default function Dashboard() {
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         setLoading(true);
-        fetch(url2, options)
+        fetch(url2, options) 
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource2(data.drivers)
@@ -116,7 +116,7 @@ export default function Dashboard() {
                             <div className={styles.innerCard}>
                                 <ImUserTie size="2.4rem"></ImUserTie>
                                 <p>{dataSource2.length}</p>
-                            </div>
+                            </div> 
                         </Link>
                     </div>
 
@@ -136,7 +136,7 @@ export default function Dashboard() {
                             <h4>Total Users</h4>
                             <div className={styles.innerCard3}>
                                 <FaUsers size="2.5rem" color='#002e4d'></FaUsers>
-                                <p>{dataSource3.length}</p>
+                                {/* <p>{dataSource3.length}</p> */}
                             </div>
                         </Link>
                     </div>
@@ -173,7 +173,7 @@ export default function Dashboard() {
                             <h4>Alerts </h4>
                             <div className={styles.innerCard7}>
                                 <HiBellAlert size="2.6rem" color='#F80404'></HiBellAlert>
-                                <p>{dataSource.length}</p>
+                                {/* <p>{dataSource.length}</p> */}
                             </div>
                         </Link>
                     </div>

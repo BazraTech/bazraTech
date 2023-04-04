@@ -134,9 +134,6 @@ export default function () {
     }
     const user = JSON.parse(localStorage.getItem("user"));
     const [logout, setLogout] = useState(false);
-    const handleLogout = () => {
-        setLogout(!logout);
-    }
     useEffect(() => {
         if (!localStorage.getItem("jwt")) {
             window.location.href = "/";
@@ -168,17 +165,13 @@ export default function () {
 
     const onSubmit = (data) => {
         console.log(data);
-        Addvehicle();
+        SendMessage();
     };
 
     useEffect(() => {
     }, []);
 
-    const handleCheck12 = () => {
-
-    };
-
-    async function Addvehicle() {
+    async function SendMessage() {
         let item =
         {
             message,
@@ -315,7 +308,6 @@ export default function () {
 
                                 currentPage.map(item => {
                                     return <tr>
-
                                         <td>{item.from}</td>
                                         <td>{item.to}</td>
                                         <td>{item.message}</td>
