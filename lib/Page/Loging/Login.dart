@@ -294,7 +294,6 @@ class _LoginState extends State<Login> {
                                                 alignment: Alignment.bottomLeft,
                                                 child: InkWell(
                                                   onTap: () {
-                                                    ResetPasswords();
                                                     Navigator.push(
                                                         context,
                                                         MaterialPageRoute(

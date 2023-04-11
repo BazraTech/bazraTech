@@ -51,10 +51,8 @@ class AppRoutes {
 
       singleReport: (context) => reportPage(),
       carhistory: (context) => CarHistory(),
-
+      set: (context) => Settrips(),
       chart: (context) => TripChart(),
-
-      mapTracking: (context) => displaycarlaction(),
 
       detialvehicle: (context) => vehicleDetial(),
     };

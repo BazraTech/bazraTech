@@ -12,7 +12,7 @@ import 'package:ionicons/ionicons.dart';
 import '../../../const/constant.dart';
 import 'package:ionicons/ionicons.dart';
 
-import '../../Loging/changePassword.dart';
+import '../../Loging/Changepassword.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});

@@ -71,9 +71,7 @@ class CountDrivers {
       print(totalAssigned);
 
       return results;
-    } else {
-      throw Exception('not loaded ');
-    }
+    } else {}
   }
   // fetch  parked car
 
@@ -135,7 +133,7 @@ class CountDrivers {
       // print(results);
 
       return results;
-    } 
+    }
   }
 
 // fetch car on maintaining
