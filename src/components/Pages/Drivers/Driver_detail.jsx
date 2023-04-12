@@ -156,7 +156,7 @@ export default function ({ data, display, changeName }) {
                                             ></input>
 
                                         </div>
-
+ 
                                     </div>
                                     {/* <div className={styles.addButton}>
                                                                         <button>Submit </button>

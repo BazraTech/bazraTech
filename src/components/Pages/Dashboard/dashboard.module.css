@@ -83,9 +83,17 @@
 }
 .innerCard2{
    display: grid;
+   grid-template-columns: 60px 20px;
    justify-content: center;
    margin-top: 3px;
    color: #b35900;
+}
+
+.innerCard2 p{
+   font-size: 23px;
+   font-weight: 700;
+   display: flex;
+   align-items: center; 
 }
 .message:hover {
    transform: scale(1.09);

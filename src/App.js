@@ -48,7 +48,7 @@ class App extends Component{
     <div className="App">
       
       <Routes>
-        <Route path='/' element={<SignIn />}></Route> 
+        <Route path='/' element={<SignIn />}></Route>  
         <Route path="/dashboard" element={<Dashboard />}></Route> 
         <Route path="/users" element={<Users />}></Route>
         <Route path="/vehicle_detail/:id" element={<Vehicle_detail></Vehicle_detail>}></Route> 

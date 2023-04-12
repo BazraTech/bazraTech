@@ -85,7 +85,7 @@ export default function () {
     useEffect(() => {
         setLoading(true)
         fetch(url2, options)
-            .then(respnse => respnse.json())
+            .then(respnse => respnse.json()) 
             .then(data => {
                 setDataSource2(data.alerts)
                 // console.log(dataSource4)

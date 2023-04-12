@@ -23,10 +23,10 @@
    text-decoration: none; 
 } 
 
-.popImg{
+.popImg{ 
    width: 144px; 
    height: 144px; 
-   border-radius: 100px; 
+   border-radius: 100px;  
 }
 
 /* ----------------- Navigation --------------- */

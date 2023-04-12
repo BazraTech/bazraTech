@@ -8,7 +8,7 @@ import ChartLine from "./lineChart";
 import Header from '../../Header/Header';
 import { useReactToPrint } from 'react-to-print';
 import swal from "sweetalert";
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel'; 
 import { Pagination } from 'antd';
 import { useEffect } from 'react'; 
 import { CSVLink, CSVDownload } from "react-csv"; 

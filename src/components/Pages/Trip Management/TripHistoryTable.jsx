@@ -80,17 +80,17 @@ export default function ({ id, role, name}) {
         setPop(!popup);
     }
 
-    const [search, setSearch] = useState('');
+    const [search, setSearch] = useState(''); 
 
-    const [loading, setLoading] = useState(false);
-    const [popup1, setPop1] = useState(true);
+    const [loading, setLoading] = useState(false); 
+    const [popup1, setPop1] = useState(true); 
 
-    const [totalPages, setTotalPage] = useState(1);
-    const [visiblelist, setvisiblelist] = useState(true);
-    const [visible, setVisible] = useState(true);
-    const displaylist = () => {
-        setVisible(!visible);
-        console.log(id);
+    const [totalPages, setTotalPage] = useState(1); 
+    const [visiblelist, setvisiblelist] = useState(true); 
+    const [visible, setVisible] = useState(true); 
+    const displaylist = () => { 
+        setVisible(!visible); 
+        console.log(id); 
         console.log(role);
     }
 
@@ -157,7 +157,7 @@ export default function ({ id, role, name}) {
                                                     <th>Platenumber</th>
                                                     <th>Vehicle Name</th>
                                                     <th>Current Location</th>
-                                                    <th>Vehicle Type</th>
+                                                    <th>Vehicle Type</th> 
                                                     <th>Manage</th>
                                                 </tr>
                                             </thead>

@@ -71,17 +71,27 @@ export default function Dashboard() {
         fetch(url, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource3(data.vehicleOwnerINF)
+                setDataSource3(data.vehicleOwnerINF) 
             })
     }, [])
 
-    const url3 = "http://198.199.67.201:9090/Api/Admin/Alerts/ACTIVE";
+    const url3 = "http://198.199.67.201:9090/Api/Admin/Alerts/OFFROAD";
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
         fetch(url3, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource(data.alerts)
+                setDataSource(data.activeAlerts)
+            })
+    }, [])
+
+    const url4 = "http://198.199.67.201:9090/Api/Message/All";
+    const [dataSource4, setDataSource4] = useState([])
+    useEffect(() => {
+        fetch(url4, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource4(data.messages)
             })
     }, [])
 
@@ -93,7 +103,7 @@ export default function Dashboard() {
 
             {/* ---------------header--------------- */}
             {/* <Header title="Dashboard"></Header> */}
-
+ 
             {/* ---------------contents--------------- */}
 
             <div className={styles.main_content} onClick={handleClickopen1}>
@@ -126,7 +136,7 @@ export default function Dashboard() {
                             <h4>Communication </h4>
                             <div className={styles.innerCard2}>
                                 <BsFillChatDotsFill size="2.4rem" ></BsFillChatDotsFill>
-                                {/* <p>{dataSource1}</p> */}
+                                <p>{dataSource4.length}</p>
                             </div>
                         </Link>
                     </div>
@@ -136,7 +146,7 @@ export default function Dashboard() {
                             <h4>Total Users</h4>
                             <div className={styles.innerCard3}>
                                 <FaUsers size="2.5rem" color='#002e4d'></FaUsers>
-                                {/* <p>{dataSource3.length}</p> */}
+                                <p>{dataSource3.length}</p>
                             </div>
                         </Link>
                     </div>
@@ -173,7 +183,7 @@ export default function Dashboard() {
                             <h4>Alerts </h4>
                             <div className={styles.innerCard7}>
                                 <HiBellAlert size="2.6rem" color='#F80404'></HiBellAlert>
-                                {/* <p>{dataSource.length}</p> */}
+                                <p>{dataSource.length}</p>
                             </div>
                         </Link>
                     </div>

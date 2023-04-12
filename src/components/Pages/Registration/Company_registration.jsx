@@ -107,7 +107,7 @@ export default function Company_registration() {
             const response = await fetch(url, options);
             const result = await response.json();
             console.log(result);
-            localStorage.setItem("message", JSON.stringify(result["message"]));
+            localStorage.setItem("message", JSON.stringify(result["message"])); 
             const mess = localStorage.getItem("message");
             console.log(mess);
             if (response.ok) {
@@ -329,7 +329,7 @@ export default function Company_registration() {
                         </div>
 
                         {/* --------------- Company Address- -------------- */}
-                        <div className='second_div'>
+                        <div className='second_div'> 
                             <h1>Company Address</h1>
                             <div className={styles.company_Address}>
                                 <div>

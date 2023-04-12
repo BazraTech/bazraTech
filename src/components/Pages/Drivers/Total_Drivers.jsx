@@ -212,7 +212,7 @@ export default function () {
                                 <h4>Assigned</h4>
                                 <p><FaUserCheck size="2rem" ></FaUserCheck><b>{dataSource3.length}</b></p>
                             </div>
-                        </Link>
+                        </Link> 
                     </div>
 
                     <div className={styles.vehicle}>
@@ -299,7 +299,7 @@ export default function () {
                         </div>
 
                         <div className={styles.page}>
-                            <Pagination
+                            <Pagination 
                                 onChange={(page) => setCurentPage(page)}
                                 pageSize={postPerPage}
                                 current={page}
@@ -312,7 +312,7 @@ export default function () {
                     </>
 
                 }
-                {name === "true" && <Driver_detail data={edit} changeName={changeName} />}
+                {name === "true" && <Driver_detail id={edit} changeName={changeName} />}
 
             </div>
 

@@ -80,7 +80,7 @@ export default function () {
                 title: "Something Went Wrong?",
                 text: `net::ERR_INTERNET_DISCONNECTED `,
                 icon: "warning",
-                dangerMode: true,
+                dangerMode: true, 
                 showConfirmButton: false,
                 showCancelButton: true,
                 cancelButtonColor: '#d33',
@@ -114,7 +114,7 @@ export default function () {
                             <label>Password</label>
                             <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} name="password"></input>
                             {error && password.length <= 0 ? <span className={styles.validateText}>please enter your password</span> : ""}
-                            <p>Forget Password?</p>
+                            <p>Forget Password?</p> 
                             <button className=''>Sign In</button>
                         </div>
                     </form>

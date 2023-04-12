@@ -47,7 +47,7 @@ export default function Navigation({ path, title }) {
 
         Swal.fire({
             position: 'top-end',
-            html: `<p><img class="popImg" src="https://unsplash.it/400/200"> </p>
+            html: `<p><img class="popImg" src="https://unsplash.it/400/200"></p>
                    <p style="color: #f09053; "">ID  : ${id}</p>
                    <p style="color: #f09053; ""> ${roles}</p>
                    <p style="color: #f09053; padding-bottom: 5px;"">${username}</p>`,
@@ -125,7 +125,7 @@ export default function Navigation({ path, title }) {
         },
     };
 
-    const url3 = "http://198.199.67.201:9090/Api/Admin/Alerts/ACTIVE";
+    const url3 = "http://198.199.67.201:9090/Api/Admin/Alerts/OFFROAD";
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
         fetch(url3, options)
