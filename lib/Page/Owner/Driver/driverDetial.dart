@@ -45,7 +45,6 @@ class _Driver_DetialState extends State<Driver_Detial> {
       }
     } catch (e) {
       print(e);
-      throw e;
     }
   }
 

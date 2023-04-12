@@ -3,7 +3,6 @@ import 'package:bazralogin/Page/Loging/Login.dart';
 
 import '../Bottom/Bottom.dart';
 
-import '../Page/Driver/driversRegistrationForm.dart';
 import '../Page/Owner/Tracking/carHistory.dart';
 import '../Page/Owner/Tracking/caronMap.dart';
 import '../Page/Owner/TripManagement/setTrip.dart';
@@ -45,7 +44,6 @@ class AppRoutes {
     return {
       authRegister: (context) => RegistrationForm(),
 
-      driverRegistration: (context) => DriversForm(),
       // vehicle: (context) => allVehicle(),
       report: (context) => Report(),
 

@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:bazralogin/Model/communication.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:bazralogin/Theme/customAppBar.dart';
 import 'package:bazralogin/const/color.dart';
@@ -31,14 +34,27 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
   List Result = [];
   late var timer;
   List totalVehicles = [];
-  Future UnassignedDrivers() async {
-    final Result = await UnAssignedDrivers.unassignedDrivers();
-    if (mounted) {
-      timer = Timer.periodic(
-          Duration(seconds: 5),
-          (Timer t) => setState(() {
-                this.Result = Result;
-              }));
+
+  unassignedDrivers() async {
+    var client = http.Client();
+    final storage = new FlutterSecureStorage();
+    var token = await storage.read(key: 'jwt');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var response = await http.get(
+        Uri.parse(
+            'http://198.199.67.201:9090/Api/Vehicle/Owner/Drivers/UNASSIGNED'),
+        headers: requestHeaders);
+    if (response.statusCode == 200) {
+      var mapResponse = json.decode(response.body) as Map<String, dynamic>;
+      List results = mapResponse['drivers'];
+      setState(() {
+        Result = results;
+      });
+      return Result;
     }
   }
 
@@ -62,13 +78,12 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
 
   void initState() {
     super.initState();
-    timer = Duration(seconds: 5);
     UnassignedDrivers();
+    timer = Duration(seconds: 5);
   }
 
   @override
   void dispose() {
-    timer.cancel();
     super.dispose();
   }
 

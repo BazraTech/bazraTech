@@ -26,8 +26,6 @@ class UnAssignedDrivers {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;
       List results = mapResponse['drivers'];
       return results;
-    } else {
-      throw Exception('not loaded ');
-    }
+    } else {}
   }
 }

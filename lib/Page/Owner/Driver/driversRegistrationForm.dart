@@ -122,7 +122,7 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
     formData.fields['OwnerPhone'] = ownerPhone.text;
     formData.fields['driverPhone'] = driverPhone.text;
     formData.fields['birthDate'] = dateBirth.text;
-    formData.fields["experience"] = Experience.text;
+    formData.fields["experience"] = '5';
     formData.fields["licenseGrade"] = LicenseGrade.text;
     formData.fields["gender"] = Gender.text;
     formData.fields["licenseIssueDate"] = dateIssue.text;

@@ -56,7 +56,7 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
 
       return vehicleStatusList;
     } else {
-      throw Exception('not loaded ');
+      
     }
   }
 

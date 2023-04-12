@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-class ListOfDrivers{
+class ListOfDrivers {
   final String status;
   final String driversName;
   final String licenseGrade;
-  String  experience;
+  String experience;
   final String image;
   final String vehicleName;
   ListOfDrivers({
@@ -15,7 +13,4 @@ class ListOfDrivers{
     required this.image,
     required this.vehicleName,
   });
-  
-
-
 }

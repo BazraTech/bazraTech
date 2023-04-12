@@ -23,8 +23,8 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
   static bool isPressed = true;
   Offset distance = isPressed ? Offset(10, 10) : Offset(28, 28);
   double blur = isPressed ? 5.0 : 30.0;
-  List<String> location = ['ASSIGNED', 'UNASSIGNED ', 'ONROUTE', 'PERMIT'];
-  String? selectedItem = 'ASSIGNED';
+  List<String> location = ["UNASSIGNED", "ASSIGNED", "ONROUTE", "PERMIT"];
+  String? selectedItem = "UNASSIGNED";
   TextEditingController statusController = TextEditingController();
   String? driverStatus;
 
