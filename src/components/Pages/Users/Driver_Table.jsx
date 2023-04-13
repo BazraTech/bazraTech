@@ -49,7 +49,7 @@ export default function Driver_Table({ id, role, title }) {
     // const { id, role, companyID } = useParams();
 
     let url;
-
+ 
     if (role === "OWNER") {
         url = `http://198.199.67.201:9090/Api/Admin/All/CompanyVehicleOwner/${id}`;
     }
@@ -63,7 +63,7 @@ export default function Driver_Table({ id, role, title }) {
             .then((response) => response.json())
             .then((json) => {
                 setDataSource(json.ownerINF)
-                setDataSource1(json.ownerINF.drivers)
+                setDataSource1(json.ownerINF.drivers) 
                 setDataSource2(json.ownerINF.onRouteDriverINFs)
                 setDataSource3(json.ownerINF.assignedDriverINFs)
                 setDataSource4(json.ownerINF.unassignedDriverINFs)

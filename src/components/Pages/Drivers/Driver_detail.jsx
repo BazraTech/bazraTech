@@ -3,7 +3,7 @@ import styles from './driver_detail.module.css';
 import { Link, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-export default function ({ data, display, changeName }) {
+export default function ({ id , changeName }) {
 
 
     let [active, setActive] = useState("total_vehicle");
@@ -29,7 +29,7 @@ export default function ({ data, display, changeName }) {
     };
 
 
-    const [popup1, setPop1] = useState(true);
+    const [popup1, setPop1] = useState(true); 
 
     const handleClickopen1 = () => {
         setPop1(!popup1);
@@ -37,24 +37,26 @@ export default function ({ data, display, changeName }) {
 
 
     const [dataSource, setDataSource] = useState([])
-    const url = `http://198.199.67.201:9090/Api/Admin/All/Drivers/${data}`;
+    const url = `http://198.199.67.201:9090/Api/Admin/All/Drivers/${id}`;
     useEffect(() => {
         fetch(url, options)
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource(data)
-
             })
     }, [])
 
+    // console.log(data)
+
     const closePopup5 = () => {
         setPop1(false);
-        // setPop(false);
     }
 
     return (
 
-        <form>
+        // <form>
+        <>
+       
             {popup1 ?
                 <div>
                     <div className={styles.popup}>
@@ -159,13 +161,16 @@ export default function ({ data, display, changeName }) {
  
                                     </div>
                                     {/* <div className={styles.addButton}>
-                                                                        <button>Submit </button>
-                                                                    </div> */}
+                                    <button>Submit </button>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div> : ""}        </form>
+                </div> : ""}  
+
+                 </>      
+                // </form>
 
 
 

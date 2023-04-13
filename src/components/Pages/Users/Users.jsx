@@ -530,7 +530,7 @@ export default function () {
                                                                     </div>
 
                                                                     <div className={styles.input}>
-                                                                        <lable>Plate Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></lable>
+                                                                        <lable>Device ID <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></lable>
                                                                         <input name='deviceID' type="text"
                                                                             value={deviceID}
                                                                             {...register("deviceID", { required: '*Device ID is required' })}
@@ -547,7 +547,7 @@ export default function () {
                                                             </div>
 
                                                         </div>
-                                                        </div>
+                                                        </div> 
                                                     </div>
                                                 </div> : ""}
                                         </form>

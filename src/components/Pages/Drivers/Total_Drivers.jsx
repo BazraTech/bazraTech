@@ -158,15 +158,14 @@ export default function () {
     const [popup1, setPop1] = useState(false);
 
     const [id, setId] = useState();
-    console.log(id)
 
 
     const [edit, setEdit] = useState("");
     let [active, setActive] = useState(false);
-    let [name, setName] = useState("false");
+    let [show, setShow] = useState("false");
 
-    function changeName(name) {
-        setName(name);
+    function changeName(show) {
+        setShow(show);
     }
 
 
@@ -177,6 +176,7 @@ export default function () {
             {/*---------------navigation---------------*/}
 
             {/* <Navigation path="/Total_Drivers"></Navigation> */}
+            
             <Navigation path="/Total_Drivers" title="Total Drivers"></Navigation>
 
 
@@ -189,7 +189,7 @@ export default function () {
             <div className={styles.main_content}>
                 <div className={styles.allcards}> 
                     <div className={styles.activeCard}>
-                        <Link to="/Total_Drivers" style={{ textDecoration: 'none' }}>
+                        <Link to="/Total_Drivers" style={{ textDecoration: 'none' }}> 
                             <div className={styles.innerContents1}>
                                 <h4>Total Drivers</h4>
                                 <p><FaUserSecret size="2.2rem"></FaUserSecret><b>{dataSource.length}</b></p>
@@ -287,8 +287,8 @@ export default function () {
                                             <td>{item.status}</td>
                                             <td>{item.vehicleOwner}</td>
                                             <td><button onClick={() => {
-                                                setEdit(item.id) 
-                                                setName("true")
+                                                setId(item.id) 
+                                                setShow("true")
                                             }}>Detail</button></td>
                                             <td><button>Manage</button></td>
                                         </tr>
@@ -312,7 +312,7 @@ export default function () {
                     </>
 
                 }
-                {name === "true" && <Driver_detail id={edit} changeName={changeName} />}
+                {show === "true" && <Driver_detail id={id} changeName={changeName} />}
 
             </div>
 

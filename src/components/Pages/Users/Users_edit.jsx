@@ -331,7 +331,7 @@ export default function Users_edit() {
                             <div className={styles.innerContents}>
                                 <h4>Assigned</h4>
                                 <p><FaUserCheck size="2rem" ></FaUserCheck><b>{dataSource10.length}</b></p>
-                            </div>
+                            </div> 
                         </div>
 
                         <div className={styles.vehicle} onClick={() => { setTableTitle2("Unassigned Drivers") }}>
