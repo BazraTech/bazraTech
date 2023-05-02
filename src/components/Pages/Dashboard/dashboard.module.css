@@ -33,7 +33,7 @@
    height: 110px;
    margin-bottom: 50px;
    border-radius: 10px 0px 0px 10px;
-   text-align: center; 
+   text-align: center;  
    transition: 0.3s;
    padding: 25px;
    border-right: 8px solid #006666;
@@ -187,7 +187,7 @@
    color: #009999;
 }
 .trip:hover {
-   transform: scale(1.09);
+   transform: scale(1.09); 
 }
 /* ----------------- report card----------------- */
 .report {
@@ -315,7 +315,7 @@
       position: absolute;
       width: calc(100%); 
       left: 0px;
-      opacity: var(--black2);
+      opacity: var(--black2); 
       color: var(--black1);
       top: 75px;
       background-color: rgb(242, 242, 242);

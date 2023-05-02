@@ -7,15 +7,10 @@ import { AiFillFilter } from "react-icons/ai";
 import { FaParking } from "react-icons/fa";
 import { GrSettingsOption } from "react-icons/gr";
 import { IoSettingsOutline } from "react-icons/io5";
-// import './total_no_of_vehicle.css';
 import styles from './total_vehicle.module.css';
 import { Link, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-// import { total } from './data/jsonData';
-// import { on_route } from './data/jsonData';
-// import { parked } from './data/jsonData';
-// import { maintenance } from './data/jsonData';
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
@@ -71,7 +66,7 @@ export default function () {
 
     const [Loading, setLoading] = useState([])
     const [totalPages, setTotalPage] = useState(1);
-    const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
+    const url2 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -84,7 +79,7 @@ export default function () {
             })
     }, [])
 
-    const url = "http://198.199.67.201:9090/Api/Admin/All/Vehicles/Status/ONROUTE";
+    const url = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/ONROUTE";
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -98,7 +93,7 @@ export default function () {
             })
     }, [])
 
-    const url3 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles/Status/INSTOCK";
+    const url3 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/INSTOCK";
     const [dataSource3, setDataSource3] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -111,7 +106,7 @@ export default function () {
             })
     }, [])
 
-    const url5 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles/Status/PARKED";
+    const url5 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/PARKED";
     const [dataSource5, setDataSource5] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -124,7 +119,7 @@ export default function () {
             })
     }, [])
 
-    const url4 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles/Status/MAINTAINING";
+    const url4 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/MAINTAINING";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -136,8 +131,6 @@ export default function () {
 
             })
     }, [])
-
-
 
     const [list, setList] = useState([dataSource]);
     const [total, setTotal] = useState(dataSource.length);

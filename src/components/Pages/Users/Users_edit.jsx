@@ -82,10 +82,10 @@ export default function Users_edit() {
     let url;
 
     if (role === "OWNER") {
-        url = `http://198.199.67.201:9090/Api/Admin/All/CompanyVehicleOwner/${id}`;
+        url = `http://64.226.104.50:9090/Api/Admin/All/CompanyVehicleOwner/${id}`;
     }
     if (role === "INDIVIDUAL") {
-        url = `http://198.199.67.201:9090/Api/Admin/All/IndividualVehicleOwner/${id}`;
+        url = `http://64.226.104.50:9090/Api/Admin/All/IndividualVehicleOwner/${id}`;
     }
 
     useEffect(() => {

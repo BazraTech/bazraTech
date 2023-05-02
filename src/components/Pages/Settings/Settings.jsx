@@ -10,7 +10,7 @@ import SyncLoader from "react-spinners/SyncLoader";
 import swal from "sweetalert";
 import Swal from 'sweetalert2'
 
-export default function () {
+export default function () { 
 
     const [popup, setPop] = useState(false);
     const [title, setTitle] = useState("");
@@ -44,11 +44,6 @@ export default function () {
             }
         })
 
-        // .then((result) => {
-        //     if (result.isConfirmed) { 
-        //         Swal.fire({ icon: 'success', text: 'Updatesd Successfully', showConfirmButton: false, timer: 2000 })
-        //     }
-        // })
     }
     const handleClickDelete = (id, data) => {
         Swal.fire({
@@ -113,7 +108,7 @@ export default function () {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://198.199.67.201:8090/Api/Admin/Role/${id}`;
+        const url = `http://64.226.104.50:8090/Api/Admin/Role/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -141,7 +136,7 @@ export default function () {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://198.199.67.201:9090/Api/Admin/TripType/All/${id}`;
+        const url = `http://64.226.104.50:9090/Api/Admin/TripType/All/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -169,7 +164,7 @@ export default function () {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://198.199.67.201:9090/Api/Admin/Services/Update/${id}`;
+        const url = `http://64.226.104.50:9090/Api/Admin/Services/Update/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -200,7 +195,7 @@ export default function () {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://198.199.67.201:9090/Api/Admin/AlertType/Update/${id}`;
+        const url = `http://64.226.104.50:9090/Api/Admin/AlertType/Update/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -228,7 +223,7 @@ export default function () {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://198.199.67.201:9090/Api/Admin/NotificationMedium/Update/${id}`;
+        const url = `http://64.226.104.50:9090/Api/Admin/NotificationMedium/Update/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -256,7 +251,7 @@ export default function () {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://198.199.67.201:9090/Api/Admin/VehicleCondition/Update/${id}`;
+        const url = `http://64.226.104.50:9090/Api/Admin/VehicleCondition/Update/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -284,7 +279,7 @@ export default function () {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://198.199.67.201:9090/Api/Admin/VehicleCatagory/Update/${id}`;
+        const url = `http://64.226.104.50:9090/Api/Admin/VehicleCatagory/Update/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -314,7 +309,7 @@ export default function () {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://198.199.67.201:9090/Api/Admin/CompanyType/Update/${id}`;
+        const url = `http://64.226.104.50:9090/Api/Admin/CompanyType/Update/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -343,7 +338,7 @@ export default function () {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://198.199.67.201:9090/Api/Admin/CompanySector/Update/${id}`;
+        const url = `http://64.226.104.50:9090/Api/Admin/CompanySector/Update/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -373,7 +368,7 @@ export default function () {
         headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
     };
 
-    const urlTwo = " http://198.199.67.201:9090/Api/Admin/All/NotificationMedium";
+    const urlTwo = " http://64.226.104.50:9090/Api/Admin/All/NotificationMedium";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -384,7 +379,7 @@ export default function () {
                 setLoading(false)
             })
     }, [])
-    const urlthree = "http://198.199.67.201:9090/Api/Admin/All/VehicleCatagory";
+    const urlthree = "http://64.226.104.50:9090/Api/Admin/All/VehicleCatagory";
     const [dataSource3, setDataSource3] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -395,7 +390,7 @@ export default function () {
                 setLoading(false)
             })
     }, [])
-    const urlFour = "http://198.199.67.201:9090/Api/Admin/All/VehicleCondition";
+    const urlFour = "http://64.226.104.50:9090/Api/Admin/All/VehicleCondition";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -406,7 +401,7 @@ export default function () {
                 setLoading(false)
             })
     }, [])
-    const url = "http://198.199.67.201:9090/Api/Admin/All/CompanySector/";
+    const url = "http://64.226.104.50:9090/Api/Admin/All/CompanySector/";
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
         fetch(url, options)
@@ -415,7 +410,7 @@ export default function () {
                 setDataSource(data.companySectors)
             })
     }, [])
-    const url5 = "http://198.199.67.201:9090/Api/Admin/All/CompanyType/";
+    const url5 = "http://64.226.104.50:9090/Api/Admin/All/CompanyType/";
     const [dataSourc5, setDataSource5] = useState([])
     useEffect(() => {
         fetch(url5, options)
@@ -424,7 +419,7 @@ export default function () {
                 setDataSource5(data.companyTypes)
             })
     }, [])
-    const url6 = "http://198.199.67.201:9090/Api/Admin/All/Services";
+    const url6 = "http://64.226.104.50:9090/Api/Admin/All/Services";
     const [datasource6, setDataSource6] = useState([])
     useEffect(() => {
         fetch(url6, options)
@@ -437,7 +432,7 @@ export default function () {
     useEffect(() => {
         FethData()
     }, [])
-    const url7 = "http://198.199.67.201:9090/Api/Admin/All";
+    const url7 = "http://64.226.104.50:9090/Api/Admin/All";
     const [dataSource7, setDataSource7] = useState([])
     const FethData = () => {
         setLoading(true)
@@ -450,7 +445,7 @@ export default function () {
     }
 
 
-    const url8 = "http://198.199.67.201:9090/Api/Admin/DriverStatus/All";
+    const url8 = "http://64.226.104.50:9090/Api/Admin/DriverStatus/All";
     const [dataSource8, setDataSource8] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -462,7 +457,7 @@ export default function () {
             })
     }, [])
 
-    const url9 = "http://198.199.67.201:9090/Api/Admin/AlertType/All/";
+    const url9 = "http://64.226.104.50:9090/Api/Admin/AlertType/All/";
     const [dataSource9, setDataSource9] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -474,7 +469,7 @@ export default function () {
             })
     }, [])
 
-    const url10 = "http://198.199.67.201:9090/Api/Admin/TripType/All";
+    const url10 = "http://64.226.104.50:9090/Api/Admin/TripType/All";
     const [dataSource10, setDataSource10] = useState([])
     useEffect(() => {
         setLoading(true)

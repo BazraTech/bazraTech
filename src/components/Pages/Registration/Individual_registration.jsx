@@ -27,10 +27,6 @@ export default function Individual_registration() {
         handleClick();
     };
 
-
-    // const [companyName, setCompanyName] = useState("");
-    // const [companyType, setCompantType] = useState("");
-    // const [companySector, setCompanySector] = useState("");
     const [region, setRegion] = useState("");
     const [city, setCity] = useState("");
     const [subCity, setSubCity] = useState("");
@@ -48,8 +44,6 @@ export default function Individual_registration() {
     const [catagory, setVehicleCategory] = useState("");
     const [conditionName, setVehicleCondition] = useState("");
     const [plateNumber, setPlateNumber] = useState("");
-    // const [plate_number2, setPlateNumber2] = useState("");
-    // const [plate_number3, setPlateNumber3] = useState("");
     const [manufactureDate, setmanufactureDate] = useState("");
     const [deviceID, setdeviceId] = useState("");
 
@@ -67,9 +61,6 @@ export default function Individual_registration() {
 
         let item =
         {
-            // companyName,
-            // companyType,
-            // companySector,
             region,
             city,
             subCity,
@@ -109,7 +100,7 @@ export default function Individual_registration() {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Individual/CreateIndividual";
+        const url = "http://64.226.104.50:9090/Api/Individual/CreateIndividual";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -162,9 +153,6 @@ export default function Individual_registration() {
         }
     }
 
-
-    // const user = JSON.parse(   localStorage.getItem('user'));
-
     const options = {
 
         headers: {
@@ -172,10 +160,9 @@ export default function Individual_registration() {
             "Accept": "application/json",
             "Authorization": `Bearer ${jwt}`
         },
-
     };
 
-    const url = "http://198.199.67.201:9090/Api/Admin/All/CompanySector/";
+    const url = "http://64.226.104.50:9090/Api/Admin/All/CompanySector/";
 
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
@@ -187,7 +174,7 @@ export default function Individual_registration() {
             })
     }, [])
 
-    const urlTwo = " http://198.199.67.201:9090/Api/Admin/All/NotificationMedium";
+    const urlTwo = " http://64.226.104.50:9090/Api/Admin/All/NotificationMedium";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         fetch(urlTwo, options)
@@ -198,7 +185,7 @@ export default function Individual_registration() {
             })
     }, [])
 
-    const urlthree = "http://198.199.67.201:9090/Api/Admin/All/VehicleCatagory";
+    const urlthree = "http://64.226.104.50:9090/Api/Admin/All/VehicleCatagory";
     const [dataSource3, setDataSource3] = useState([])
     useEffect(() => {
         fetch(urlthree, options)
@@ -209,7 +196,7 @@ export default function Individual_registration() {
             })
     }, [])
 
-    const urlFour = "http://198.199.67.201:9090/Api/Admin/All/VehicleCondition";
+    const urlFour = "http://64.226.104.50:9090/Api/Admin/All/VehicleCondition";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         fetch(urlFour, options)
@@ -220,7 +207,7 @@ export default function Individual_registration() {
             })
     }, [])
 
-    const urlFive = "http://198.199.67.201:9090/Api/Admin/All/Services";
+    const urlFive = "http://64.226.104.50:9090/Api/Admin/All/Services";
     const [dataSource5, setDataSource5] = useState([])
     useEffect(() => {
         fetch(urlFive, options)
@@ -428,24 +415,24 @@ export default function Individual_registration() {
                                     {serviceRequired <= 0 && errors.serviceRequired && <span className={styles.validate_text}>{errors.serviceRequired.message}</span>}
                                 </div>
                             </div>
-                        </div>
+                        </div> 
 
-                        <div className='second_div'>
-                            <h1>Vehicle Information</h1>
-                            <div className={styles.vehicle_information}>
-                                <div>
-                                    <p>Vehicle Catagory <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <select
+                        <div className='second_div'> 
+                            <h1>Vehicle Information</h1> 
+                            <div className={styles.vehicle_information}> 
+                                <div> 
+                                    <p>Vehicle Category <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                    <select 
                                         {...register("catagory", { required: '*Vehicle catagoty  is required' })}
-                                        name="catagory"
-                                        value={catagory}
+                                        name="catagory" 
+                                        value={catagory} 
                                         onChange={(e) => setVehicleCategory(e.target.value)} >
                                         <option selected disabled value="">Select Vecicle Catagory</option>
-                                        {
-                                            dataSource3.map(item => {
+                                        { 
+                                            dataSource3.map(item => {  
                                                 return <option >{item.catagory}</option>
-                                            })
-                                        }
+                                            })  
+                                        } 
                                     </select>
                                     {catagory <= 0 && errors.catagory && <span className={styles.validate_text}>{errors.catagory.message}</span>}
                                 </div>
@@ -457,7 +444,7 @@ export default function Individual_registration() {
                                         placeholder='Enter Vehicle Name'
                                         onChange={(e) => setvehicleName(e.target.value)} ></input>
                                     {vehicleName <= 0 && errors.vehicleName?.type === "required" && <span className={styles.validate_text}>*please enter vehicle name</span>}
-                                </div>
+                                </div> 
 
                                 <div>
                                     <p>Vehicle Condition <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
@@ -466,14 +453,14 @@ export default function Individual_registration() {
                                         {...register("conditionName", { required: '*Vecicle Condition is required' })}
                                         onChange={(e) => setVehicleCondition(e.target.value)} >
                                         <option selected disabled value="">Select Vecicle Condition</option>
-                                        {
-                                            dataSource4.map(item => {
+                                        { 
+                                            dataSource4.map(item => { 
                                                 return <option>{item.conditionName}</option>
-                                            })
-                                        }
+                                            }) 
+                                        } 
                                     </select>
                                     {conditionName <= 0 && errors.conditionName && <span className={styles.validate_text}>{errors.conditionName.message}</span>}
-                                </div>
+                                </div> 
 
                                 <div>
                                     <p>Plate Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
@@ -485,7 +472,6 @@ export default function Individual_registration() {
                                         </input>
                                         {plateNumber <= 0 && errors.plateNumber && <span className={styles.validate_text}>{errors.plateNumber.message}</span>}
                                     </div>
-
                                 </div>
 
                                 <div>
@@ -496,6 +482,7 @@ export default function Individual_registration() {
                                         onChange={(e) => setmanufactureDate(e.target.value)} ></input>
                                     {manufactureDate <= 0 && errors.manufactureDate && <span className={styles.validate_text}>{errors.manufactureDate.message}</span>}
                                 </div>
+
                                 <div>
                                     <p>Device ID <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input name='deviceID' type="text" value={deviceID}

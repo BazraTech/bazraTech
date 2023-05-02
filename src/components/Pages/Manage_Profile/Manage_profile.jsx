@@ -70,7 +70,7 @@ export default function () {
     const [totalPages, setTotalPage] = useState(1);
     const [dataSource, setDataSource] = useState([])
     const [Loading, setLoading] = useState([])
-    const url = `http://198.199.67.201:9090/Api/Admin/All/VehicleOwners/${phone}`;
+    const url = `http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/${phone}`;
     useEffect(() => {
         setLoading(true)
         fetch(url, options)
@@ -78,8 +78,6 @@ export default function () {
             .then(data => {
                 setDataSource(data)
                 // setTotalPage(data.totalPages)
-
-                console.log(dataSource)
                 setLoading(false)
             })
     }, [])
@@ -120,10 +118,6 @@ export default function () {
 
             <Navigation path="/Manage_profile" title="Manage Profile"></Navigation>
 
-
-            {/* --------------- header --------------- */}
-
-            {/* <Header title="Manage Profile"></Header> */}
 
             {/* --------------- users --------------- */}
             <div className='main_content'>

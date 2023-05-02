@@ -68,7 +68,7 @@ export default function () {
     const [totalPages, setTotalPage] = useState(1);
 
     const [dataSource, setDataSource] = useState([])
-    const url = "http://198.199.67.201:9090/Api/Admin/AlertsHistory/ACCIDENT";
+    const url = "http://64.226.104.50:9090/Api/Admin/AlertsHistory/ACCIDENT";
     useEffect(() => {
         setLoading(true)
         fetch(url, options)
@@ -81,7 +81,7 @@ export default function () {
     }, [])
 
     const [dataSource2, setDataSource2] = useState([])
-    const url2 = "http://198.199.67.201:9090/Api/Admin/AlertsHistory/OFFROAD";
+    const url2 = "http://64.226.104.50:9090/Api/Admin/AlertsHistory/OFFROAD";
     useEffect(() => {
         setLoading(true)
         fetch(url2, options)
@@ -94,14 +94,13 @@ export default function () {
     }, [])
 
     const [dataSource3, setDataSource3] = useState([])
-    const url3 = "http://198.199.67.201:9090/Api/Admin/AlertsHistory/DRIVER";
+    const url3 = "http://64.226.104.50:9090/Api/Admin/AlertsHistory/DRIVER";
     useEffect(() => {
         setLoading(true)
         fetch(url3, options)
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource3(data.alerts)
-                // setTotalPage(data.alerts.length)
                 setLoading(false)
             })
     }, [])
@@ -122,11 +121,8 @@ export default function () {
         <div className="alert_container">
 
             {/*---------------navigation---------------*/}
-            {/* <Navigation path="/accident"></Navigation> */}
-            <Navigation path="/accident" title="Alerts"></Navigation>
 
-            {/* --------------- Alert header --------------- */}
-            {/* <Header title="Alerts"></Header> */}
+            <Navigation path="/accident" title="Alerts"></Navigation>
 
             {/* --------------- Alert --------------- */}
 

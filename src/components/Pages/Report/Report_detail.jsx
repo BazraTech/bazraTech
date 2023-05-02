@@ -68,7 +68,7 @@ export default function () {
     };
     const [totalPages, setTotalPage] = useState(1);
     const [Loading, setLoading] = useState([])
-    const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
+    const url2 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -92,18 +92,12 @@ export default function () {
         setpostPerPage(pageSize);
     }
 
-
-
     return (
         <div className="dashboard_container">
 
             {/*---------------navigation---------------*/}
 
             <Navigation path="/report" title="Report Detail"></Navigation>
-
-            {/* ---------------header--------------- */}
-
-            {/* <Header title="Report Detail"></Header> */}
 
             <div className='main_content77'>
 

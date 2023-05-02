@@ -11,18 +11,12 @@ import swal from "sweetalert";
 export default function Users_edit() {
 
     const [state, setState] = useState(false);
-    //const [companyType, setCompantType] = useState("");
-
-    // state = {
-    //     diabled: true
-    // }
 
     const toggle = () => {
         setState(!state);
     };
 
     const [diabled, setPop] = useState(true);
-
     const handleChange = () => {
         setPop(!diabled);
     }
@@ -33,9 +27,7 @@ export default function Users_edit() {
     }
 
     const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
-
     const options = {
-
         headers: {
             'Content-Type': 'application/json',
             "Accept": "application/json",
@@ -44,7 +36,7 @@ export default function Users_edit() {
 
     };
     const { id } = useParams()
-    const url2 = `http://198.199.67.201:9090/Api/Admin/All/Vehicles/${id}`;
+    const url2 = `http://64.226.104.50:9090/Api/Admin/All/Vehicles/${id}`;
 
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
@@ -65,7 +57,7 @@ export default function Users_edit() {
         setinputTag(!inputtag);
     }
 
-    const urlthree = "http://198.199.67.201:9090/Api/Admin/All/VehicleCatagory";
+    const urlthree = "http://64.226.104.50:9090/Api/Admin/All/VehicleCatagory";
     const [dataSource5, setDataSource5] = useState([])
     useEffect(() => {
         fetch(urlthree, options)
@@ -76,7 +68,7 @@ export default function Users_edit() {
             })
     }, [])
 
-    const urlFour = "http://198.199.67.201:9090/Api/Admin/All/VehicleCondition";
+    const urlFour = "http://64.226.104.50:9090/Api/Admin/All/VehicleCondition";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         fetch(urlFour, options)
@@ -109,7 +101,7 @@ export default function Users_edit() {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Vehicle/SetStatus";
+        const url = "http://64.226.104.50:9090/Api/Vehicle/SetStatus";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -136,18 +128,7 @@ export default function Users_edit() {
 
         <div>
 
-            {/*---------------navigation---------------*/}
-
             <Navigation path="/Total_number_of_vehicle" title="Vehicles Detail"></Navigation>
-
-            {/* --------------- Vehicle header --------------- */}
-
-            {/* <Header title="Vehicles Detail"></Header> */}
-
-
-            {/* ---------------Registration--------------- */}
-
-
 
             <div className={styles.main_content}>
 

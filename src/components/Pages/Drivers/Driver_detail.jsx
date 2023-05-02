@@ -5,12 +5,8 @@ import { useState, useEffect } from 'react';
 
 export default function ({ id , changeName }) {
 
-
     let [active, setActive] = useState("total_vehicle");
     let [state, setState] = useState("false");
-    // const color = () => {
-    //     setState(state);
-    // }
     const [popup, setPop] = useState(false);
     const handleClickopen = () => {
         setPop(!popup);
@@ -25,19 +21,15 @@ export default function ({ id , changeName }) {
             "Accept": "application/json",
             "Authorization": `Bearer ${jwt}`
         },
-
     };
 
-
     const [popup1, setPop1] = useState(true); 
-
     const handleClickopen1 = () => {
         setPop1(!popup1);
     }
 
-
     const [dataSource, setDataSource] = useState([])
-    const url = `http://198.199.67.201:9090/Api/Admin/All/Drivers/${id}`;
+    const url = `http://64.226.104.50:9090/Api/Admin/All/Drivers/${id}`;
     useEffect(() => {
         fetch(url, options)
             .then(respnse => respnse.json())
@@ -45,8 +37,6 @@ export default function ({ id , changeName }) {
                 setDataSource(data)
             })
     }, [])
-
-    // console.log(data)
 
     const closePopup5 = () => {
         setPop1(false);

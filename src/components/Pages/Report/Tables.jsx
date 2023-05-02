@@ -39,7 +39,7 @@ export default function Table({ title, datas }) {
   };
 
 
-  const url = "http://198.199.67.201:9090/Api/Vehicle/Status/inroute";
+  const url = "http://64.226.104.50:9090/Api/Vehicle/Status/inroute";
 
   const [dataSource, setDataSource] = useState([])
   const [Loading, setLoading] = useState([])
@@ -55,7 +55,7 @@ export default function Table({ title, datas }) {
           })
   }, [])
 
-  const url2 = "http://198.199.67.201:9090/Api/Vehicle/All";
+  const url2 = "http://64.226.104.50:9090/Api/Vehicle/All";
 
   const [dataSource2, setDataSource2] = useState([])
   useEffect(() => {

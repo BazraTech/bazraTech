@@ -62,7 +62,7 @@ export default function ({ id, role, name, from }) {
         },
     };
 
-    const urlFour = "http://198.199.67.201:9090/Api/SignIn/Admin";
+    const urlFour = "http://64.226.104.50:9090/Api/SignIn/Admin";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         fetch(urlFour, options)
@@ -101,10 +101,10 @@ export default function ({ id, role, name, from }) {
     let url2;
 
     if (role === "OWNER") { 
-        url2 = `http://198.199.67.201:9090/Api/Admin/All/CompanyVehicleOwner/${id}`;
+        url2 = `http://64.226.104.50:9090/Api/Admin/All/CompanyVehicleOwner/${id}`;
     }
     if (role === "INDIVIDUAL") {
-        url2 = `http://198.199.67.201:9090/Api/Admin/All/IndividualVehicleOwner/${id}`;
+        url2 = `http://64.226.104.50:9090/Api/Admin/All/IndividualVehicleOwner/${id}`;
     }
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {

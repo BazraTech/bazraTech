@@ -40,7 +40,7 @@ export default function () {
             headers: { "Content-Type": "application/json", Accept: "application/json", Authorization: `Bearer`, },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/SignIn/Admin";
+        const url = "http://64.226.104.50:9090/Api/SignIn/Admin";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -88,7 +88,7 @@ export default function () {
                     popup: 'animate__animated animate__shakeX'
                 },
             })
-            // window.location.href = "/dashboard";
+            // window.location.href = "/dashboard"; 
         }
     }
 

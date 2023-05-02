@@ -66,7 +66,7 @@ export default function () {
     const [startDate, setStartDate] = useState("");
 
     const [loading, setLoading] = useState(false)
-    const url10 = "http://198.199.67.201:9090/Api/Admin/TripType/All";
+    const url10 = "http://64.226.104.50:9090/Api/Admin/TripType/All";
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -103,7 +103,7 @@ export default function () {
             body: JSON.stringify(item),
         };
 
-        const url = "http://198.199.67.201:9090/Api/Admin/CreateTrip";
+        const url = "http://64.226.104.50:9090/Api/Admin/CreateTrip";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -131,7 +131,7 @@ export default function () {
         }
     }
 
-    const url2 = "http://198.199.67.201:9090/Api/Admin/Trip/All";
+    const url2 = "http://64.226.104.50:9090/Api/Admin/Trip/All";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         fetch(url2, options)
@@ -164,12 +164,6 @@ export default function () {
             {/*---------------navigation---------------*/}
 
             <Navigation path="/avialable_trip" title="Set Trip"></Navigation>
-
-            {/* ---------------header--------------- */}
-
-            {/* <Header title="Set Trip"></Header> */}
-
-            {/* ---------------contents--------------- */}
 
             <section className={styles.main_content21}>
 

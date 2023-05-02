@@ -48,9 +48,6 @@ export default function () {
 
     let [active, setActive] = useState("total_vehicle");
     let [state, setState] = useState("false");
-    // const color = () => {
-    //     setState(state);
-    // }
     const [popup, setPop] = useState(false);
     const handleClickopen = () => {
         setPop(!popup);
@@ -59,17 +56,15 @@ export default function () {
     const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
 
     const options = {
-
         headers: {
             'Content-Type': 'application/json',
             "Accept": "application/json",
             "Authorization": `Bearer ${jwt}`
         },
-
     };
 
     const [Loading, setLoading] = useState([]);
-    const url = "http://198.199.67.201:9090/Api/Admin/All/Drivers";
+    const url = "http://64.226.104.50:9090/Api/Admin/All/Drivers";
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -83,7 +78,7 @@ export default function () {
     }, [])
 
     const [totalPages, setTotalPage] = useState(1);
-    const url2 = "http://198.199.67.201:9090/Api/Admin/Drivers/ONROUTE";
+    const url2 = "http://64.226.104.50:9090/Api/Admin/Drivers/ONROUTE";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -98,7 +93,7 @@ export default function () {
     }, [])
 
 
-    const url3 = "http://198.199.67.201:9090/Api/Admin/Drivers/ASSIGNED";
+    const url3 = "http://64.226.104.50:9090/Api/Admin/Drivers/ASSIGNED";
     const [dataSource3, setDataSource3] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -111,7 +106,7 @@ export default function () {
             })
     }, [])
 
-    const url4 = "http://198.199.67.201:9090/Api/Admin/Drivers/UNASSIGNED";
+    const url4 = "http://64.226.104.50:9090/Api/Admin/Drivers/UNASSIGNED";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -123,7 +118,7 @@ export default function () {
             })
     }, [])
 
-    const url5 = "http://198.199.67.201:9090/Api/Admin/Drivers/PERMIT";
+    const url5 = "http://64.226.104.50:9090/Api/Admin/Drivers/PERMIT";
     const [dataSource5, setDataSource5] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -136,10 +131,6 @@ export default function () {
             })
     }, [])
 
-
-
-    // const [list, setList] = useState([dataSource2]);
-    // const [total, setTotal] = useState(dataSource2.length);
     const [page, setCurentPage] = useState(1);
     const [postPerPage, setpostPerPage] = useState(5);
 
@@ -161,12 +152,7 @@ export default function () {
 
             {/*---------------navigation---------------*/}
 
-            {/* <Navigation path="/Total_Drivers"></Navigation> */}
             <Navigation path="/Total_Drivers" title="On Route Drivers"></Navigation>
-
-            {/* --------------- header --------------- */}
-
-            {/* <Header title="On Route Drivers"></Header> */}
 
             {/* --------------- users --------------- */}
 

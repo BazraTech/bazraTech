@@ -53,7 +53,7 @@ export default function () {
   };
   const [Loading, setLoading] = useState([])
   const [totalPages, setTotalPage] = useState(1);
-  const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
+  const url2 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles";
   const [dataSource2, setDataSource2] = useState([])
   useEffect(() => {
     setLoading(true);

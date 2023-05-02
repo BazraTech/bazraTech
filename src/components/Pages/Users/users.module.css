@@ -333,15 +333,15 @@
 }
  
 .popupInner {
-    position: relative;
-    padding: 2px;
+    position: relative; 
+    padding: 2px; 
     padding-top: 10px;
-    padding-bottom: 5px;
-    max-width: 1100px;
-    width: 100%;
-    background-color: rgb(230, 230, 230);
-    z-index: 3;
-    border-radius: 4px;
+    padding-bottom: 5px; 
+    max-width: 1100px; 
+    width: 100%; 
+    background-color: rgb(230, 230, 230); 
+    z-index: 3; 
+    border-radius: 4px; 
 }
 
 .popupInner .closeBtn {
@@ -440,7 +440,6 @@
 .validate_text {
     color: #ff0000;
     font-size: 13px;
-    
   }
 
 @media screen and (max-width: 750px) {

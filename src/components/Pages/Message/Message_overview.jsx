@@ -38,7 +38,7 @@ export default function () {
     const [totalPages, setTotalPage] = useState(1);
     const [dataSource, setDataSource] = useState([])
     const [Loading, setLoading] = useState([])
-    const url = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners/";
+    const url = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/";
     useEffect(() => {
         setLoading(true)
         fetch(url, options)
@@ -50,7 +50,7 @@ export default function () {
             })
     }, [])
     const [dataSource2, setDataSource2] = useState([])
-    const url2 = "http://198.199.67.201:9090/Api/Message/All";
+    const url2 = "http://64.226.104.50:9090/Api/Message/All";
     useEffect(() => {
         setLoading(true)
         fetch(url2, options)
@@ -100,10 +100,8 @@ export default function () {
             console.log(id);
             console.log(phoneNumbers);
             dataSource.map(item => item.id == id ? item.checked = !item.checked : null);
-            // dataSource.map(item => item.id == id ?setReceipientPhone(item.phoneNumber) : null);
             setList([...dataSource]);
             dataSource.filter(item => item.checked).length == dataSource.length ? setAllChecked(true) : setAllChecked(false);
-            // dataSource.filter(item => item.checked).length == dataSource.length ?  dataSource.map(item => setReceipientPhone(item.phoneNumber)) : setAllChecked(false)
             if (dataSource.filter(item => item.checked).length == dataSource.length) {
                 dataSource.map(item => setReceipientPhone([item.phoneNumber]))
             }

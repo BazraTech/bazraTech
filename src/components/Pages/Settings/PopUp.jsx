@@ -97,18 +97,6 @@ export default function PopUp(props) {
     const [notifications, setNotifications] = useState("");
 
 
-    // const notification = notifications;
-    // const vehicleConditon = notifications;
-    // const vehicleCatagory = notifications; 
-    // const companysector = notifications;
-    // const companyType = notifications;
-    // const serviceNeeded = notifications;
-    // const rolename = notifications;
-    // const status = notifications;
-    // const alertType = notifications;
-    // const tripType = notifications;
-
-
     async function Create_Role(rolename) {
         let item =
         {
@@ -123,7 +111,7 @@ export default function PopUp(props) {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Admin/CreateRole";
+        const url = "http://64.226.104.50:9090/Api/Admin/CreateRole";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -154,7 +142,7 @@ export default function PopUp(props) {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Admin/CreateDriverStatus";
+        const url = "http://64.226.104.50:9090/Api/Admin/CreateDriverStatus";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -183,7 +171,7 @@ export default function PopUp(props) {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Admin/CreateAlertType";
+        const url = "http://64.226.104.50:9090/Api/Admin/CreateAlertType";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -210,7 +198,7 @@ export default function PopUp(props) {
             headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Admin/CreateTripType";
+        const url = "http://64.226.104.50:9090/Api/Admin/CreateTripType";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -238,7 +226,7 @@ export default function PopUp(props) {
             headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Admin/CreateCompanySector";
+        const url = "http://64.226.104.50:9090/Api/Admin/CreateCompanySector";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -267,7 +255,7 @@ export default function PopUp(props) {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Admin/CreateNotificationMedium";
+        const url = "http://64.226.104.50:9090/Api/Admin/CreateNotificationMedium";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -294,7 +282,7 @@ export default function PopUp(props) {
             headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Admin/CreateVehicleCondition";
+        const url = "http://64.226.104.50:9090/Api/Admin/CreateVehicleCondition";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -321,7 +309,7 @@ export default function PopUp(props) {
             headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Admin/CreateVehicleCatagory";
+        const url = "http://64.226.104.50:9090/Api/Admin/CreateVehicleCatagory";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -353,7 +341,7 @@ export default function PopUp(props) {
             },
             body: JSON.stringify(item),
         };
-        const url1 = "http://198.199.67.201:9090/Api/Admin/CreateCompanyType";
+        const url1 = "http://64.226.104.50:9090/Api/Admin/CreateCompanyType";
         try {
             const response = await fetch(url1, options);
             const result = await response.json();
@@ -383,7 +371,7 @@ export default function PopUp(props) {
             headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Admin/CreateServiceNeeded";
+        const url = "http://64.226.104.50:9090/Api/Admin/CreateServiceNeeded";
         try {
             const response = await fetch(url, options);
             const result = await response.json();

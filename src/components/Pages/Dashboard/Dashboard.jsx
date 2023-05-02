@@ -41,7 +41,7 @@ export default function Dashboard() {
         setPop1(!popup1);
     }
 
-    const url1 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
+    const url1 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles";
     const [dataSource1, setDataSource1] = useState([])
     useEffect(() => {
         fetch(url1, options)
@@ -52,7 +52,7 @@ export default function Dashboard() {
     }, [])
 
     const [Loading, setLoading] = useState([]);
-    const url2 = "http://198.199.67.201:9090/Api/Admin/All/Drivers";
+    const url2 = "http://64.226.104.50:9090/Api/Admin/All/Drivers";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -65,7 +65,7 @@ export default function Dashboard() {
             })
     }, [])
 
-    const url = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners/";
+    const url = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/";
     const [dataSource3, setDataSource3] = useState([])
     useEffect(() => {
         fetch(url, options)
@@ -75,17 +75,17 @@ export default function Dashboard() {
             })
     }, [])
 
-    const url3 = "http://198.199.67.201:9090/Api/Admin/Alerts/OFFROAD";
+    const url3 = "http://64.226.104.50:9090/Api/Admin/Alerts/OFFROAD";
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
         fetch(url3, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource(data.activeAlerts)
+                setDataSource(data.activeAlerts) 
             })
     }, [])
 
-    const url4 = "http://198.199.67.201:9090/Api/Message/All";
+    const url4 = "http://64.226.104.50:9090/Api/Message/All";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         fetch(url4, options)

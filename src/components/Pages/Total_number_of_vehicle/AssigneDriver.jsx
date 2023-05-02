@@ -39,15 +39,11 @@ export default function () {
     }
 
     const closePopup5 = () => {
-        // setPop1(false);
         setPop(false);
     }
 
     let [active, setActive] = useState("total_vehicle");
     let [state, setState] = useState("false");
-    // const color = () => {
-    //     setState(state);
-    // }
     const [popup, setPop] = useState(false);
     const handleClickopen = () => {
         setPop(!popup);
@@ -77,7 +73,7 @@ export default function () {
         },
     };
 
-    const url = "http://198.199.67.201:9090/Api/Admin/Drivers/UNASSIGNED";
+    const url = "http://64.226.104.50:9090/Api/Admin/Drivers/UNASSIGNED";
     const [dataSource, setDataSource] = useState([])
     const [Loading, setLoading] = useState([])
     useEffect(() => {
@@ -121,7 +117,7 @@ export default function () {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Vehicle/AssignDriver";
+        const url = "http://64.226.104.50:9090/Api/Vehicle/AssignDriver";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -130,20 +126,16 @@ export default function () {
             const mess = localStorage.getItem("message");
             console.log(mess);
             if (response.ok) {
-                console.log("Signup successful");
                 swal("Successful", `${mess}`, "success", {
                     buttons: false,
                     timer: 3000,
                 }).then((value) => {
-                    // window.location.href = "/AssignDriver";
                     setPop(!popup);
                 }).finally(() => {
-                    // setLoading(false) 
                 });
             } else {
-                // setLoading(false)
                 console.log("failed");
-                swal("Failed", "Wrong Password or Email Address", "error");
+                swal("Failed", "Failnd To Assigne", "error");
             }
         } catch (error) {
             console.log(error + "error");
@@ -164,27 +156,16 @@ export default function () {
 
             <Navigation path="/Total_Drivers"></Navigation>
 
-            {/* --------------- header --------------- */}
-
-            {/* <Header title="Total Vehicles"></Header> */}
-
-            {/* --------------- users --------------- */}
-
             <div className={styles.main_content}> 
-
 
                 {/* --------------------- Table ------------------- */}
 
                 {
                     Loading ?
                         <p className='loading'><SyncLoader
-                            // color={color}
-                            // Left={margin}
                             loading={Loading}
                             // cssOverride={override}
                             size={10}
-                            // margin= "100px 0px 0px 0px"
-                            // padding= "200px" 
                             aria-label="Loading Spinner"
                             data-testid="loader"
                         /></p>

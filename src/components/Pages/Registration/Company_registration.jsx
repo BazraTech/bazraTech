@@ -102,7 +102,7 @@ export default function Company_registration() {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Company/CreateCompany"; 
+        const url = "http://64.226.104.50:9090/Api/Company/CreateCompany"; 
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -162,8 +162,7 @@ export default function Company_registration() {
 
     };
 
-    const url = "http://198.199.67.201:9090/Api/Admin/All/CompanySector/";
-
+    const url = "http://64.226.104.50:9090/Api/Admin/All/CompanySector/";
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
         fetch(url, options)
@@ -174,7 +173,7 @@ export default function Company_registration() {
             })
     }, [])
 
-    const urlTwo = " http://198.199.67.201:9090/Api/Admin/All/NotificationMedium";
+    const urlTwo = " http://64.226.104.50:9090/Api/Admin/All/NotificationMedium";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         fetch(urlTwo, options)
@@ -185,7 +184,7 @@ export default function Company_registration() {
             })
     }, [])
 
-    const urlthree = "http://198.199.67.201:9090/Api/Admin/All/VehicleCatagory";
+    const urlthree = "http://64.226.104.50:9090/Api/Admin/All/VehicleCatagory";
     const [dataSource3, setDataSource3] = useState([])
     useEffect(() => {
         fetch(urlthree, options)
@@ -196,7 +195,7 @@ export default function Company_registration() {
             })
     }, [])
 
-    const urlFour = "http://198.199.67.201:9090/Api/Admin/All/VehicleCondition";
+    const urlFour = "http://64.226.104.50:9090/Api/Admin/All/VehicleCondition";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         fetch(urlFour, options)
@@ -207,7 +206,7 @@ export default function Company_registration() {
             })
     }, [])
 
-    const urlFive = "http://198.199.67.201:9090/Api/Admin/All/Services";
+    const urlFive = "http://64.226.104.50:9090/Api/Admin/All/Services";
     const [dataSource5, setDataSource5] = useState([])
     useEffect(() => {
         fetch(urlFive, options)
@@ -218,7 +217,7 @@ export default function Company_registration() {
             })
     }, [])
 
-    const url5 = "http://198.199.67.201:9090/Api/Admin/All/CompanyType/";
+    const url5 = "http://64.226.104.50:9090/Api/Admin/All/CompanyType/";
     const [dataSourc6, setDataSource6] = useState([])
     useEffect(() => {
         fetch(url5, options)
@@ -252,12 +251,6 @@ export default function Company_registration() {
             {/*--------------- Company Container ---------------*/}
 
             <Navigation path="/Company_registration" title="Registation"></Navigation>
-
-
-            {/* --------------- Company header --------------- */}
-
-            {/* <Header title="Registation"></Header> */}
-
 
             {/* --------------- Registration- -------------- */}
 
@@ -519,7 +512,7 @@ export default function Company_registration() {
                             <h1>Vehicle Information</h1>
                             <div className={styles.vehicle_information}>
                                 <div>
-                                    <p>Vehicle Catagory <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                    <p>Vehicle Category  <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select
                                         {...register("catagory", { required: '*Vehicle catagoty  is required' })}
                                         name="catagory"

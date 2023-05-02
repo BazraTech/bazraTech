@@ -11,8 +11,8 @@ import { FaUserAlt } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
 import { BiTrip } from "react-icons/bi";
 import { ImUserTie } from "react-icons/im";
-import { Link, useLocation } from 'react-router-dom';
-import { IoMdArrowDropdownCircle } from "react-icons/io";
+import { Link, useLocation } from 'react-router-dom'; 
+import { IoMdArrowDropdownCircle } from "react-icons/io"; 
 import { IoMdArrowDropupCircle } from "react-icons/io";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import swal from "sweetalert";
@@ -41,8 +41,6 @@ export default function Navigation({ path, title }) {
     const roles = user.role;
     const username = user.username;
     const id = user.id;
-    // console.log(phoneNumber) 
-
     const toggle = () => {
 
         Swal.fire({
@@ -67,7 +65,7 @@ export default function Navigation({ path, title }) {
     const [logout, setLogout] = useState(false);
 
     useEffect(() => {
-        if (!localStorage.getItem("jwt")) {
+        if (!localStorage.getItem("jwt")) { 
             window.location.href = "/";
         }
     }, [])
@@ -79,9 +77,9 @@ export default function Navigation({ path, title }) {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#00cc44',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ok!', 
-            showCloseButton: true,
+            cancelButtonColor: '#d33', 
+            confirmButtonText: 'Ok!',  
+            showCloseButton: true, 
             showClass: {
                 popup: 'animate__animated animate__shakeX'
             },
@@ -99,7 +97,7 @@ export default function Navigation({ path, title }) {
         setState(false);
     }
     const remove = () => { 
-        localStorage.removeItem("jwt");
+        localStorage.removeItem("jwt"); 
         window.location.href = "/";
     }
     const [state, setState] = useState(false);
@@ -125,10 +123,10 @@ export default function Navigation({ path, title }) {
         },
     };
 
-    const url3 = "http://198.199.67.201:9090/Api/Admin/Alerts/OFFROAD";
+    const url3 = "http://64.226.104.50:9090/Api/Admin/Alerts/OFFROAD";
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
-        fetch(url3, options)
+        fetch(url3, options) 
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource(data.activeAlerts)
@@ -136,7 +134,7 @@ export default function Navigation({ path, title }) {
     }, [])
 
     const [dataSource2, setDataSource2] = useState([])
-    const url2 = "http://198.199.67.201:9090/Api/Message/All";
+    const url2 = "http://64.226.104.50:9090/Api/Message/All";
     useEffect(() => {
         fetch(url2, options)
             .then(respnse => respnse.json())
@@ -220,7 +218,7 @@ export default function Navigation({ path, title }) {
             <div>
                 {/* ----------------- all content ------------------- */}
 
-                <div className="dashboard_headers">
+                <div className="dashboard_headers"> 
 
                     <div className='headerTitle'>
                         <h2>Bazra Motors /</h2>
