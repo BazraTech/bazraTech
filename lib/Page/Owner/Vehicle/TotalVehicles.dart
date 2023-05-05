@@ -35,7 +35,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
       'Authorization': 'Bearer $token',
     };
     var response = await http.get(
-        Uri.parse('http://198.199.67.201:9090/Api/Vehicle/Owner/All'),
+        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/Owner/All'),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;
@@ -211,16 +211,16 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                 right: 10,
                               ),
                               child: InkWell(
-                                // onTap: (() {
-                                //   Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (BuildContext context) =>
-                                //             vehicleDetial(
-                                //               id: vehicle.id,
-                                //             )),
-                                //   );
-                                // }),
+                                onTap: (() {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            vehicleDetial(
+                                              id: vehicle['id'],
+                                            )),
+                                  );
+                                }),
                                 child: Card(
                                   elevation: 5,
                                   child: Container(

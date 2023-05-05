@@ -31,7 +31,7 @@ class APIService {
     };
     var response = await http.get(
         Uri.parse(
-            'http://198.199.67.201:9090/Api/Vehicle/Owner/Status/INSTOCK'),
+            'http://64.226.104.50:9090/Api/Vehicle/Owner/Status/INSTOCK'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {
@@ -63,7 +63,7 @@ class APIService {
       'Authorization': 'Bearer $token',
     };
     var response = await http.get(
-        Uri.parse('http://198.199.67.201:9090/Api/Vehicle/Owner/Status/PARKED'),
+        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/Owner/Status/PARKED'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {
@@ -96,7 +96,7 @@ class APIService {
     };
     var response = await http.get(
         Uri.parse(
-            'http://198.199.67.201:9090/Api/Vehicle/Owner/Status/ONROUTE'),
+            'http://64.226.104.50:9090/Api/Vehicle/Owner/Status/ONROUTE'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {
@@ -129,7 +129,7 @@ class APIService {
     };
     var response = await http.get(
         Uri.parse(
-            'http://198.199.67.201:9090/Api/Vehicle/Owner/Status/MAINTAINING'),
+            'http://64.226.104.50:9090/Api/Vehicle/Owner/Status/MAINTAINING'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {

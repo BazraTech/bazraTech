@@ -1,16 +1,13 @@
 import 'dart:ui';
-
+import 'package:bazralogin/Page/Driver/pages/reportStatus.dart';
 import 'package:bazralogin/Page/Loging/Login.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import '../../../../Theme/clippbox.dart';
 import '../../../../Theme/verticalDash.dart';
 import '../../../../const/constant.dart';
@@ -77,24 +74,46 @@ class _Driver_HompageState extends State<Driver_Hompage> {
     return Scaffold(
         backgroundColor: kPrimaryColor,
         appBar: AppBar(
-          toolbarHeight: 50,
+          toolbarHeight: 100,
           automaticallyImplyLeading: false,
           elevation: 0,
-          backgroundColor: kPrimaryColor,
+          backgroundColor: Color.fromRGBO(85, 164, 240, 1),
           title: Row(
             children: [
               Container(
-                margin: const EdgeInsets.only(left: 210, top: 3),
-                child: GestureDetector(
-                  onTap: (() {
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => AlertType()));
-                  }),
-                  child: const Icon(
-                    Icons.notifications,
-                    size: 40,
-                    color: Colors.white,
-                  ),
+                width: MediaQuery.of(context).size.width * 0.3,
+                margin: EdgeInsets.only(left: screenHeight * 0.13),
+                child: Row(
+                  children: [
+                    Container(
+                      height: screenHeight * 0.06,
+                      margin: EdgeInsets.only(
+                          top: screenHeight * 0.02, left: screenHeight * 0.02),
+                      width: screenWidth * 0.13,
+                      child: MaterialButton(
+                        onPressed: () async {
+                          navigator!.pop(context);
+                        },
+
+                        child: Material(
+                          color: Colors.transparent,
+                          child: Center(
+                            child: Icon(
+                              Ionicons.notifications,
+                              size: 23,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          side: BorderSide(color: Colors.white, width: 2),
+                        ),
+
+                        //use this class Circleborder() for circle shape.
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Row(
@@ -105,7 +124,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                       decoration: InputDecoration(
                           hintText: 'Where To?',
                           hintStyle: const TextStyle(
-                              color: Colors.white,
+                              color: Colors.grey,
                               fontWeight: FontWeight.w500,
                               fontSize: 10),
                           border: InputBorder.none),
@@ -164,8 +183,8 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                   borderRadius: BorderRadius.circular(20),
                   gradient: LinearGradient(
                     colors: [
-                      Colors.purple.shade100,
-                      Color.fromRGBO(114, 82, 246, 1),
+                      Colors.black26,
+                      Color.fromRGBO(2, 72, 249, 1),
                     ],
                     // stops: [0.4, 0.4],
                   ),
@@ -307,7 +326,9 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => CreateAlert()));
+                                    builder: (context) => CreateAlert(
+                                          title: '',
+                                        )));
                           }),
                           child: Ink(
                             child: Container(
@@ -342,7 +363,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                       child: Icon(
                                         Icons.calendar_month,
                                         size: 35,
-                                        color: Colors.green,
+                                        color: Colors.blue,
                                       ),
                                     ),
                                     Container(
@@ -351,7 +372,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                           TranslationUtil.text(
                                               "Available Market"),
                                           style: TextStyle(
-                                              color: Colors.green,
+                                              color: Colors.blue,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 13)),
                                     ),
@@ -367,7 +388,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => CreateAlert()));
+                                    builder: (context) => reportStatus()));
                           },
                           child: AnimatedContainer(
                               duration: Duration(milliseconds: 100),
@@ -397,16 +418,16 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                     // height: 70,
                                     width: MediaQuery.of(context).size.width,
                                     child: Icon(
-                                      Icons.av_timer,
+                                      Icons.work,
                                       size: 35,
-                                      color: Colors.yellow[500],
+                                      color: Colors.blue,
                                     ),
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(top: 6),
-                                    child: Text("Trip Delay",
+                                    child: Text("Active work",
                                         style: TextStyle(
-                                            color: Colors.yellow[500],
+                                            color: Colors.blue,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14)),
                                   ),
@@ -421,7 +442,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => CreateAlert()));
+                                    builder: (context) => reportStatus()));
                           },
                           child: AnimatedContainer(
                               //padding: EdgeInsets.only(bottom: _padding),
@@ -454,14 +475,14 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                     child: Icon(
                                       Icons.insert_drive_file_rounded,
                                       size: 35,
-                                      color: kPrimaryColor,
+                                      color: Colors.blue,
                                     ),
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(top: 8),
                                     child: Text(TranslationUtil.text("Report"),
                                         style: TextStyle(
-                                            color: kPrimaryColor,
+                                            color: Colors.blue,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14)),
                                   ),
@@ -476,7 +497,9 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => CreateAlert()));
+                                    builder: (context) => CreateAlert(
+                                          title: '',
+                                        )));
                           }),
                           child: AnimatedContainer(
                               //padding: EdgeInsets.only(bottom: _padding),
@@ -510,14 +533,14 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                     width: MediaQuery.of(context).size.width,
                                     child: Image.asset(
                                       "assets/images/available.png",
-                                      color: Colors.green,
+                                      color: Colors.blue,
                                     ),
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(top: 8),
                                     child: const Text("Available Market",
                                         style: TextStyle(
-                                            color: Colors.green,
+                                            color: Colors.blue,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 13)),
                                   ),
@@ -532,7 +555,9 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => CreateAlert()));
+                                    builder: (context) => CreateAlert(
+                                          title: '',
+                                        )));
                           }),
                           child: AnimatedContainer(
                               //padding: EdgeInsets.only(bottom: _padding),
@@ -565,7 +590,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                     child: Icon(
                                       Ionicons.alert,
                                       size: 35,
-                                      color: Colors.red[500],
+                                      color: Colors.blue,
                                     ),
                                   ),
                                   Container(
@@ -574,7 +599,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                         TranslationUtil.text("Create Alert"),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.red[500],
+                                            color: Colors.blue,
                                             fontSize: 13)),
                                   ),
                                 ],

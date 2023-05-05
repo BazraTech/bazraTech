@@ -86,7 +86,7 @@ class _reportPageState extends State<reportPage> {
       }
     } catch (e) {
       print(e);
-      throw e;
+      
     }
   }
 

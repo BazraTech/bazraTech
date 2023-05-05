@@ -3,6 +3,7 @@ import 'package:bazralogin/Page/Owner/Driver/driversRegistrationForm.dart';
 import 'package:bazralogin/Route/route.dart';
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 
 import 'DriverStatus.dart';
 import 'OwnersDriver.dart';
@@ -12,37 +13,51 @@ class communicate_screen extends StatelessWidget {
   const communicate_screen({super.key});
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 80,
-        elevation: 0,
-        leading: Container(
-          margin: EdgeInsets.only(top: 5),
-          child: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        backgroundColor: kPrimaryColor,
-        // ignore: prefer_const_constructors
-        title: Center(
-          child: Text(
-            TranslationUtil.text("Driver Page"),
-            style: TextStyle(
-              fontSize: 15,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
       body: Column(
         children: [
+          Container(
+            color: kPrimaryColor,
+            padding: EdgeInsets.zero,
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: screenHeight * 0.08,
+                    width: screenWidth * 0.14,
+                    margin: EdgeInsets.only(top: screenHeight * 0.04),
+                    child: MaterialButton(
+                      onPressed: () async {
+                        Navigator.pop(
+                          context,
+                        );
+                      },
+
+                      child: Material(
+                        color: Colors.transparent,
+                        child: Center(
+                          child: Icon(
+                            Ionicons.chevron_back,
+                            size: 23,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        side: BorderSide(color: Colors.white, width: 2),
+                      ),
+
+                      //use this class Circleborder() for circle shape.
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           Container(
             padding: const EdgeInsets.all(8.0),
             margin: const EdgeInsets.fromLTRB(30, 120, 30, 0),
@@ -111,7 +126,7 @@ class communicate_screen extends StatelessWidget {
                 Navigator.push(
                     context,
                     new MaterialPageRoute(
-                        builder: (context) => new UnassignedDrivers()));
+                        builder: (context) => UnassignedDrivers()));
               },
               child: Text(
                 TranslationUtil.text("Assign Driver"),

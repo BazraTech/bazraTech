@@ -134,10 +134,10 @@ class _SettripsState extends State<Settrips> {
 
       Map data = {
         "vehicle": "${widget.platenumber}",
-        "startLocation": "Jimma",
-        "destination": "Adama",
-        "startDate": '${dateStart.text}',
-        "tripType": "$selectedItem"
+        "startLocation": "11111",
+        "destination": "11",
+        "startDate": '2023-4-16',
+        "tripType": "SHORT"
       };
       var response = await http.post(
           Uri.parse('http://198.199.67.201:9090/Api/Admin/CreateTrip'),
@@ -168,8 +168,8 @@ class _SettripsState extends State<Settrips> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    String? selectedItem = 'Single Trip';
-    List<String> items = ['Single Trip', 'Round Trip'];
+    String? selectedItem = 'SHORT';
+    List<String> items = ['SHORT', 'LONG'];
     print('${dateStart.text}');
     return Scaffold(
         backgroundColor: Color.fromARGB(255, 229, 229, 229),

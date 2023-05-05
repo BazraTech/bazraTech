@@ -1,19 +1,22 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:http/http.dart' as http;
 
 import '../../../const/constant.dart';
 
 class CreateAlert extends StatefulWidget {
-  CreateAlert({this.title});
-
-  String? title;
-
+  CreateAlert({required this.title});
+  final String title;
   @override
   _CreateAlertState createState() => _CreateAlertState();
 }
 
 class _CreateAlertState extends State {
   TextEditingController _textEditingController = TextEditingController();
+  TextEditingController locations = TextEditingController();
   //List _toDoListAlert = [];
   final _formKey = GlobalKey<FormState>();
   List<String> _toDoListLocation = [];
@@ -24,10 +27,9 @@ class _CreateAlertState extends State {
     "OFFROAD",
     "CAR CRASH",
     "ROAD ACCIDENT",
-    "CAR TIRE FAILURE"
+    "CAR TIRE FAILURE",
+    "ACCIDENT"
   ];
-
-  get kBackgroundColor => null;
   @override
   void initState() {
     super.initState();
@@ -67,8 +69,36 @@ class _CreateAlertState extends State {
     prefs.setStringList('toDoList', _toDoListLocation.cast());
   }
 
+  void Create_Alert() async {
+    final storage = new FlutterSecureStorage();
+    var value = await storage.read(key: 'jwt');
+    Map data = {
+      "alertType": alertType,
+      "location": locations.text,
+    };
+    final url = Uri.parse("http://64.226.104.50:9090/Api/Driver/CreateAlert");
+    http.post(url, body: json.encode(data), headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": "Bearer $value",
+    }).then((response) {
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    }).catchError((error) {
+      print('Error: $error');
+    });
+  }
+
+  DateTime greeting() {
+    var hour = DateTime.now();
+
+    return hour;
+  }
+
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    var currentTime = new DateTime(now.day, now.hour);
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -97,7 +127,7 @@ class _CreateAlertState extends State {
           ListTile(
             title: Container(
               margin: EdgeInsets.only(
-                bottom: 80,
+                bottom: 70,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -107,7 +137,7 @@ class _CreateAlertState extends State {
                     child: const Text(
                       "Select Alert Type",
                       style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.black87),
                     ),
@@ -115,7 +145,7 @@ class _CreateAlertState extends State {
                   Container(
                       margin: EdgeInsets.only(top: 30, bottom: 20),
                       width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      height: MediaQuery.of(context).size.height * 0.07,
                       decoration: BoxDecoration(
                           color: Color.fromARGB(255, 255, 255, 255),
                           borderRadius: BorderRadius.circular(10),
@@ -138,46 +168,47 @@ class _CreateAlertState extends State {
                       child: Form(
                         key: _formKey,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SizedBox(
-                              height: screenHeight * 0.06,
-                              child: DropdownButton<String>(
-                                hint: const Text(
-                                  'Select a alert type ',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                value: alertType,
-                                iconSize: 24,
-                                elevation: 10,
-                                onChanged: (String? newValue) {
-                                  validator:
-                                  validator:
-                                  (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'please enter phone number';
-                                    } else {
-                                      return null;
-                                    }
-                                  };
-                                  setState(() {
-                                    alertType = newValue!;
-                                  });
-                                },
-                                items: type.map<DropdownMenuItem<String>>(
-                                    (String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
+                            DropdownButton<String>(
+                              hint: const Text(
+                                'Select a alert type ',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold),
                               ),
+                              value: alertType,
+                              iconSize: 24,
+                              elevation: 10,
+                              onChanged: (String? newValue) {
+                                validator:
+                                validator:
+                                (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'please enter phone number';
+                                  } else {
+                                    return null;
+                                  }
+                                };
+                                setState(() {
+                                  alertType = newValue!;
+                                });
+                              },
+                              items: type.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
                             ),
+                            // Note: Same code is applied for the TextFormField as well
                           ],
                         ),
                       )),
+                  // Note: Same code is applied for the TextFormField as well
+
                   Container(
                     margin: EdgeInsets.only(top: 20),
                     child: ElevatedButton(
@@ -200,14 +231,19 @@ class _CreateAlertState extends State {
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(6)))),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.725,
-                        height: MediaQuery.of(context).size.height * 0.06,
-                        child: const Center(
-                          child: Text(
-                            " ADD ALERT",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 18),
+                      child: GestureDetector(
+                        onTap: () {
+                          Create_Alert();
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.725,
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          child: const Center(
+                            child: Text(
+                              " ADD ALERT",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 18),
+                            ),
                           ),
                         ),
                       ),
@@ -232,26 +268,29 @@ class _CreateAlertState extends State {
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     tileColor: Colors.white,
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    title: Column(
                       children: [
+                        Container(
+                            margin: EdgeInsets.only(top: 10, bottom: 20),
+                            child: Text('$currentTime')),
                         Center(child: Text(_toDoListLocation[index])),
                       ],
                     ),
-                    trailing: Container(
-                      margin: EdgeInsets.symmetric(vertical: 10),
-                      height: screenHeight * 0.15,
-                      width: screenWidth * 0.1,
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: IconButton(
-                        color: Colors.white,
-                        icon: Icon(Icons.delete),
-                        onPressed: () => _deleteToDoItem(index),
-                      ),
-                    ),
+                    // trailing: Container(
+                    //   margin: EdgeInsets.symmetric(vertical: 10),
+                    //   height: screenHeight * 0.15,
+                    //   width: screenWidth * 0.1,
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.red,
+                    //     borderRadius: BorderRadius.circular(5),
+                    //   ),
+                    //   // child: IconButton(
+                    //   //   color: Colors.white,
+                    //   //   icon: Icon(Icons.delete),
+                    //   //   onPressed: () => _deleteToDoItem(index),
+                    //   // ),
+                    //   child: Text(_toDoListLocation[index]),
+                    // ),
                   ),
                 );
               },

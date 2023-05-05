@@ -146,7 +146,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
             Container(
               height: screenHeight * 0.07,
               margin: EdgeInsets.only(top: screenHeight * 0.055),
-              color: Colors.white,
+              // color: Colors.white,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -161,72 +161,74 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   "assets/images/R-removebg-preview.png"))),
                     ),
                   ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: MaterialButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          color: Colors.white,
+                  Container(
+                    width: screenWidth * 0.13,
+                    height: screenHeight * 0.06,
+                    margin: EdgeInsets.only(left: screenWidth * 0.26),
+                    child: MaterialButton(
+                      onPressed: () async {
+                        navigator!.pop(context);
+                      },
 
-                          child: Icon(
-                            Ionicons.notifications,
-                            size: 20,
-                          ),
-                          padding: EdgeInsets.all(11),
-                          minWidth: screenWidth * 0.004,
-                          //use this class Circleborder() for circle shape.
-                          shape: const CircleBorder(),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: Icon(
+                          Ionicons.notifications,
+                          size: 23,
+                          color: Colors.black,
                         ),
                       ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        child: DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                              hintText: 'Where To?',
-                              hintStyle: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 10),
-                              border: InputBorder.none),
-                          value: selectedItem,
-                          items: items
-                              .map((item) => DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(
-                                    item,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15),
-                                  )))
-                              .toList(),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please Enter  Plate Number';
-                            }
-                          },
-                          onChanged: (item) {
-                            setState(() {
-                              selectedItem = item;
-                              if (item == 'English') {
-                                locale = '${languge[0]}';
-                              } else if (item == 'Amaharic') {
-                                locale = '${languge[1]}';
-                              } else {
-                                locale = '${languge[2]}';
-                              }
-
-                              final translationController =
-                                  Get.put(TranslationController());
-                              translationController.loadTranslations(locale);
-                              Get.updateLocale(Locale(locale));
-                            });
-                          },
-                        ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        side: BorderSide(color: Colors.black, width: 2),
                       ),
-                    ],
+
+                      //use this class Circleborder() for circle shape.
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    child: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                          hintText: 'Where To?',
+                          hintStyle: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 10),
+                          border: InputBorder.none),
+                      value: selectedItem,
+                      items: items
+                          .map((item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 15),
+                              )))
+                          .toList(),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please Enter  Plate Number';
+                        }
+                      },
+                      onChanged: (item) {
+                        setState(() {
+                          selectedItem = item;
+                          if (item == 'English') {
+                            locale = '${languge[0]}';
+                          } else if (item == 'Amaharic') {
+                            locale = '${languge[1]}';
+                          } else {
+                            locale = '${languge[2]}';
+                          }
+
+                          final translationController =
+                              Get.put(TranslationController());
+                          translationController.loadTranslations(locale);
+                          Get.updateLocale(Locale(locale));
+                        });
+                      },
+                    ),
                   )
                 ],
               ),
@@ -239,8 +241,8 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
 
                     gradient: LinearGradient(
                       colors: [
-                        Colors.purple.shade100,
-                        Color.fromRGBO(114, 82, 246, 1),
+                        Colors.black26,
+                        Color.fromRGBO(2, 72, 249, 1),
                       ],
                       // stops: [0.4, 0.4],
                     ),
@@ -251,7 +253,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                     Row(
                       children: [
                         SizedBox(
-                          width: screenWidth * 0.4,
+                          width: screenWidth * 0.45,
                           child: Text(
                             " Good morning",
                             textAlign: TextAlign.start,
@@ -259,7 +261,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                             style: GoogleFonts.montserrat(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                              fontSize: 13,
                             ),
                           ),
                         ),
@@ -528,11 +530,14 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(top: 6),
-                                  child: Text(TranslationUtil.text("Vehicle"),
-                                      style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14)),
+                                  child: Text(
+                                    TranslationUtil.text("Vehicle"),
+                                    style: GoogleFonts.montserrat(
+                                      color: kPrimaryColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
+                                  ),
                                 ),
                               ],
                             )),
@@ -584,11 +589,14 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(top: 8),
-                                  child: Text(TranslationUtil.text("Report"),
-                                      style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14)),
+                                  child: Text(
+                                    TranslationUtil.text("Report"),
+                                    style: GoogleFonts.montserrat(
+                                      color: kPrimaryColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
+                                  ),
                                 ),
                               ],
                             )),
@@ -643,11 +651,13 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                 Container(
                                   margin: EdgeInsets.only(top: 8),
                                   child: Text(
-                                      TranslationUtil.text("Available Market"),
-                                      style: TextStyle(
-                                          color: kPrimaryColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13)),
+                                    TranslationUtil.text("Available Market"),
+                                    style: GoogleFonts.montserrat(
+                                      color: kPrimaryColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
+                                  ),
                                 ),
                               ],
                             )),
@@ -700,11 +710,13 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                 Container(
                                   margin: EdgeInsets.only(top: 8),
                                   child: Text(
-                                      TranslationUtil.text('Trip management'),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: kPrimaryColor,
-                                          fontSize: 13)),
+                                    TranslationUtil.text('Trip management'),
+                                    style: GoogleFonts.montserrat(
+                                      color: kPrimaryColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
+                                  ),
                                 ),
                               ],
                             )),

@@ -23,7 +23,7 @@ class Vehicles_withDrivers {
         headers: requestHeaders);
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;
-      List results = mapResponse['assigned'];
+      List results = mapResponse['available'];
 
       List assignedVehicle = [];
       assignedVehicle = results

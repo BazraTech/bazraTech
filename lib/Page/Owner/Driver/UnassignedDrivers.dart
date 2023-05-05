@@ -50,8 +50,9 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
         headers: requestHeaders);
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;
-      List results = mapResponse['drivers'];
+
       setState(() {
+        List results = mapResponse['drivers'];
         Result = results;
       });
       return Result;
@@ -92,6 +93,8 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     final double categoryHeight = screenHeight * 0.30;
+    print('yee');
+    print(Result);
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
