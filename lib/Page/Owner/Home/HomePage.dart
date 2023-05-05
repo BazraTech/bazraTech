@@ -319,7 +319,8 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                 ),
                 Positioned(
                   child: Container(
-                    margin: EdgeInsets.only(top: 120, left: 30, right: 30),
+                    margin: EdgeInsets.only(
+                        top: screenHeight * 0.14, left: 30, right: 30),
                     height: 100,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
