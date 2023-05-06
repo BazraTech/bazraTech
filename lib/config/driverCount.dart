@@ -41,7 +41,7 @@ class CountDrivers {
 
       return results;
     } else {
-      throw Exception('not loaded ');
+      // throw Exception('not loaded ');
     }
   }
 

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:bazralogin/config/APIService.dart';
 import 'package:bazralogin/domian/secure_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -30,8 +29,7 @@ class APIService {
       'Authorization': 'Bearer $token',
     };
     var response = await http.get(
-        Uri.parse(
-            'http://64.226.104.50:9090/Api/Vehicle/Owner/Status/INSTOCK'),
+        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/Owner/Status/INSTOCK'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {
@@ -47,9 +45,7 @@ class APIService {
       print(results);
 
       return results;
-    } else {
-      throw Exception('not loaded ');
-    }
+    } else {}
   }
   // fetch  parked car
 
@@ -80,7 +76,7 @@ class APIService {
 
       return results;
     } else {
-      throw Exception('not loaded ');
+      // throw Exception('not loaded ');
     }
   }
 
@@ -95,8 +91,7 @@ class APIService {
       'Authorization': 'Bearer $token',
     };
     var response = await http.get(
-        Uri.parse(
-            'http://64.226.104.50:9090/Api/Vehicle/Owner/Status/ONROUTE'),
+        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/Owner/Status/ONROUTE'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {
@@ -113,7 +108,7 @@ class APIService {
 
       return results;
     } else {
-      throw Exception('not loaded ');
+      // throw Exception('not loaded ');
     }
   }
 
@@ -146,7 +141,7 @@ class APIService {
 
       return results;
     } else {
-      throw Exception('not loaded ');
+      // throw Exception('not loaded ');
     }
   }
 
@@ -175,7 +170,7 @@ class APIService {
 
       return resultvehicle;
     } else {
-      throw Exception('not loaded ');
+      // throw Exception('not loaded ');
     }
   }
 
@@ -204,7 +199,7 @@ class APIService {
 
       return resultvehicl;
     } else {
-      throw Exception('not loaded ');
+      // throw Exception('not loaded ');
     }
   }
 
@@ -232,7 +227,7 @@ class APIService {
 
         return driverdata;
       } else {
-        throw Exception("not Loaded");
+        // throw Exception("not Loaded");
       }
     } catch (e) {
       print(e);

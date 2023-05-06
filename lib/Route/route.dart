@@ -1,18 +1,16 @@
 import 'package:bazralogin/Model/DropdownSearch.dart';
-import 'package:bazralogin/Page/Loging/Login.dart';
+import 'package:bazralogin/view/screen/Loging/Login.dart';
 
 import '../Bottom/Bottom.dart';
 
-import '../Page/Owner/Tracking/carHistory.dart';
-import '../Page/Owner/Tracking/caronMap.dart';
-import '../Page/Owner/TripManagement/setTrip.dart';
-import '../Page/Owner/Vehicle/vehicleDetial.dart';
-import '../Page/Owner/report/CarReport.dart';
-import '../Page/Owner/report/reportsWithGraph.dart';
-import '../Page/Owner/report/singleReport.dart';
-import '../Page/Register/Signup.dart';
-
 import 'package:flutter/cupertino.dart';
+
+import '../view/screen/Owner/Tracking/carHistory.dart';
+import '../view/screen/Owner/TripManagement/setTrip.dart';
+import '../view/screen/Owner/Vehicle/vehicleDetial.dart';
+import '../view/screen/Owner/report/CarReport.dart';
+import '../view/screen/Owner/report/reportsWithGraph.dart';
+import '../view/screen/Owner/report/singleReport.dart';
 
 class AppRoutes {
   AppRoutes._();
@@ -42,7 +40,7 @@ class AppRoutes {
   static const String permitAssign = '/d';
   static Map<String, WidgetBuilder> define() {
     return {
-      authRegister: (context) => RegistrationForm(),
+      // authRegister: (context) => RegistrationForm(),
 
       // vehicle: (context) => allVehicle(),
       report: (context) => Report(),

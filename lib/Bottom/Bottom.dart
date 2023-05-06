@@ -1,14 +1,13 @@
-import 'package:bazralogin/Page/Localization/Localization.dart';
-import 'package:bazralogin/Page/Owner/Communication/communicationPage.dart';
-import 'package:bazralogin/Page/Owner/Home/HomePage.dart';
+import 'package:bazralogin/controller/Localization.dart';
+
 import 'package:bazralogin/const/constant.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
-import '../Model/category.dart';
-import '../Page/Owner/Communication/Communication.dart';
-import '../Page/Owner/Profile/Profile.dart';
-import '../Page/Owner/Tracking/caronMap.dart';
+import '../view/screen/Owner/Communication/communicationPage.dart';
+import '../view/screen/Owner/Home/HomePage.dart';
+import '../view/screen/Owner/Profile/Profile.dart';
+import '../view/screen/Owner/Tracking/caronMap.dart';
 
 class BottomNav extends StatelessWidget {
   BottomNav({super.key});
