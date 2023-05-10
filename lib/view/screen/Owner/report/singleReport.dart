@@ -87,7 +87,6 @@ class _reportPageState extends State<reportPage> {
       }
     } catch (e) {
       print(e);
-      
     }
   }
 
@@ -402,7 +401,7 @@ class _reportPageState extends State<reportPage> {
                   child: Column(
                     children: [
                       Container(
-                        color: Color.fromRGBO(255, 201, 40, 1),
+                        color: Color.fromRGBO(85, 164, 240, 1),
                         child: ExpansionTile(
                           collapsedTextColor: Colors.white,
                           title: Center(

@@ -7,13 +7,12 @@ import 'package:bazralogin/const/color.dart';
 import 'package:bazralogin/const/constant.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+
 
 import '../../../../Model/ApiConfig.dart';
 import '../../../../Model/communicationList.dart';
 
-import '../../../../config/APIService.dart';
 import '../../../../controller/Localization.dart';
 import '../../Bottom/Bottom.dart';
 import '../Driver/assignDriver.dart';
@@ -34,8 +33,6 @@ class _CommunicationPageState extends State<CommunicationPage> {
   List<Communicationlist> find = [];
 
   List Result = [];
-  List findVehicle = [];
-
   String query = '';
   List listDriver = [];
 
@@ -47,7 +44,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Center(child: const Text('')),
+          title: Center(child: const Text('Success!!!')),
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
@@ -69,37 +66,14 @@ class _CommunicationPageState extends State<CommunicationPage> {
     );
   }
 
-  driverFetch() async {
-    try {
-      final storage = new FlutterSecureStorage();
-      var token = await storage.read(key: 'jwt');
-      var client = http.Client();
-      Map<String, String> requestHeaders = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      };
-      var url = Uri.http(ApIConfig.urlAPI, ApIConfig.driverApi);
-      var response = await client.get(url, headers: requestHeaders);
-
-      print(response.body);
-      if (response.statusCode == 200) {
-        var data = json.decode(response.body);
-        await storage.write(
-            key: "totalDrivers", value: data["totalDrivers"].toString());
-
-        Result = data['drivers'];
-        setState(() {
-          findVehicle = Result;
-        });
-
-        return Result;
-      } else {
-        // throw Exception("not Loaded");
-      }
-    } catch (e) {
-      print(e);
-      throw e;
+  Future vehicleFetch() async {
+    final Result = await APIService.driverFetch();
+    if (mounted) {
+      timer = Timer.periodic(
+          Duration(seconds: 5),
+          (Timer t) => setState(() {
+                this.Result = Result;
+              }));
     }
   }
 
@@ -107,17 +81,17 @@ class _CommunicationPageState extends State<CommunicationPage> {
     super.initState();
 
     timer = Duration(seconds: 3);
-    driverFetch();
+    vehicleFetch();
   }
 
   var len;
 
   @override
-  // void dispose() {
-  //   timer.cancel();
-  //   timer;
-  //   super.dispose();
-  // }
+  void dispose() {
+    timer.cancel();
+    timer;
+    super.dispose();
+  }
 
   final TextEditingController _controller = TextEditingController();
 
@@ -166,9 +140,10 @@ class _CommunicationPageState extends State<CommunicationPage> {
 
     return SingleChildScrollView(
       child: Container(
+        margin: EdgeInsets.only(left: 10, right: 10, top: 100),
         height: screenHeight,
         child: Scaffold(
-          backgroundColor: kBackgroundColor,
+          backgroundColor: Colors.white,
           body: SingleChildScrollView(
             child: Column(
               children: [
@@ -222,16 +197,15 @@ class _CommunicationPageState extends State<CommunicationPage> {
                                 )),
                           ],
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: screenWidth * 0.67),
-                          child: Row(
-                            children: [
-                              Container(
-                                height: 35,
-                                width: screenWidth * 0.25,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(top: 8),
+                              height: 35,
+                              width: screenWidth * 0.294,
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 7.0),
                                 child: ElevatedButton(
                                   onPressed: (() {
                                     sendMessage();
@@ -257,8 +231,8 @@ class _CommunicationPageState extends State<CommunicationPage> {
                                                   BorderRadius.circular(6)))),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ],
                     )),
@@ -269,20 +243,20 @@ class _CommunicationPageState extends State<CommunicationPage> {
                       width: screenWidth * 0.5,
                       decoration: const BoxDecoration(
                         boxShadow: [
-                          // BoxShadow(
-                          //   color: Colors.white,
-                          //   offset: Offset(4, 4),
-                          //   blurRadius: 10,
-                          //   spreadRadius: 1,
-                          // ),
-                          // BoxShadow(
-                          //   color: Colors.white,
-                          //   offset: Offset(-4, -4),
-                          //   blurRadius: 10,
-                          //   spreadRadius: 1,
-                          // ),
+                          BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(4, 4),
+                            blurRadius: 10,
+                            spreadRadius: 1,
+                          ),
+                          BoxShadow(
+                            color: Colors.white,
+                            offset: Offset(-4, -4),
+                            blurRadius: 10,
+                            spreadRadius: 1,
+                          ),
                         ],
-                        // color: Color.fromRGBO(255, 255, 255, 1),
+                        color: Color.fromRGBO(255, 255, 255, 1),
                       ),
                       child: Container(
                         height: screenHeight * 0.01,
@@ -358,88 +332,108 @@ class _CommunicationPageState extends State<CommunicationPage> {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(9.0),
-                  child: Column(
-                      children: findVehicle.map((driver) {
-                    return Card(
-                      shadowColor: Colors.black,
-                      color: Colors.white,
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 60,
-                            width: screenWidth - 27,
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  child: Row(children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        width: screenWidth * 0.35,
-                                        child: Text(
-                                          " " + driver['driverName'],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                              color: Colors.grey[500]),
+                Container(
+                  height: screenHeight,
+                  width: screenWidth - 20,
+                  child: ListView.builder(
+                    itemCount: Result.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        // color: Color.fromRGBO(162, 184, 212, 1),
+                        child: Card(
+                          elevation: 15,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.06,
+                              child: Column(
+                                children: <Widget>[
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width - 20,
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: SizedBox(
+                                            height: 20,
+                                            width: screenWidth * 0.3,
+                                            child: Text(
+                                              " " +
+                                                  Result[index]['driverName']
+                                                      .toString(),
+                                              style: const TextStyle(
+                                                  // fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                  color: Colors.black),
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: screenWidth * 0.27,
-                                      child: Text(
-                                        " " + driver['phoneNumber'].toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14,
-                                            color: Colors.grey[500]),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 8.0, top: 8),
-                                      child: SizedBox(
-                                        width: screenWidth * 0.17,
-                                        height: 10,
-                                        child: Transform.scale(
-                                          scale: 0.9,
-                                          child: GestureDetector(
-                                              onTap: () {},
-                                              child: Checkbox(
-                                                  activeColor: Colors.green,
-                                                  value: driver['statMessage'],
-                                                  onChanged: (value) {
-                                                    var item =
-                                                        driver['phoneNumber'];
-                                                    setState(() {
-                                                      driver['statMessage'] =
-                                                          value!;
-                                                      if (value == true) {
-                                                        listDriver.add(item);
-                                                      } else if (value ==
-                                                          false) {
-                                                        listDriver.removeWhere(
-                                                            (item) =>
-                                                                item ==
-                                                                driver[
-                                                                    'phoneNumber']);
-                                                      }
-                                                    });
-                                                  })),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: SizedBox(
+                                            height: 20,
+                                            width: screenWidth * 0.27,
+                                            child: Text(
+                                              " " +
+                                                  Result[index]['phoneNumber']
+                                                      .toString(),
+                                              style: const TextStyle(
+                                                  // fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                  color: Colors.black),
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 8.0, top: 8),
+                                          child: SizedBox(
+                                            width: screenWidth * 0.2,
+                                            height: 10,
+                                            child: Transform.scale(
+                                              scale: 0.9,
+                                              child: GestureDetector(
+                                                  onTap: () {},
+                                                  child: Checkbox(
+                                                      activeColor: Colors.green,
+                                                      value: Result[index]
+                                                          ['statMessage'],
+                                                      onChanged: (value) {
+                                                        var item = Result[index]
+                                                            ['phoneNumber'];
+                                                        setState(() {
+                                                          Result[index][
+                                                                  'statMessage'] =
+                                                              value!;
+                                                          if (value == true) {
+                                                            listDriver
+                                                                .add(item);
+                                                          } else if (value ==
+                                                              false) {
+                                                            listDriver.removeWhere(
+                                                                (item) =>
+                                                                    item ==
+                                                                    Result[index]
+                                                                        [
+                                                                        'phoneNumber']);
+                                                          }
+                                                        });
+                                                      })),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ]),
-                                ),
-                              ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          )
-                        ],
-                      ),
-                    );
-                  }).toList()),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
@@ -449,3 +443,4 @@ class _CommunicationPageState extends State<CommunicationPage> {
     );
   }
 }
+// new 

@@ -1,20 +1,19 @@
 import 'dart:async';
-
+import 'dart:convert';
 import 'package:bazralogin/Model/communication.dart';
-
 import 'package:bazralogin/Theme/customAppBar.dart';
 import 'package:bazralogin/const/color.dart';
+import 'package:bazralogin/view/screen/Owner/Driver/assignDriver.dart';
 import 'package:bazralogin/view/screen/Owner/TripManagement/setTrip.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_places_flutter/model/place_details.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
 import '../../../../../Model/communicationList.dart';
-
-import '../../../../config/vehicleWithdriver.dart';
 import '../../../../const/constant.dart';
 import '../Vehicle/vehicleDetial.dart';
 import '../Vehicle/vehicleStatus.dart';
+import 'package:http/http.dart' as http;
 
 class AvailableVehicle extends StatefulWidget {
   const AvailableVehicle({super.key});
@@ -29,24 +28,40 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
   double topContainer = 0;
   String query = '';
   List Result = [];
-  late var timer;
+  List assignedVehicle = [];
+  List findVehicle = [];
 
-  Future vehicleFetch() async {
-    final Result = await Vehicles_withDrivers.assignedDrivers();
-    if (mounted) {
-      timer = Timer.periodic(
-          Duration(seconds: 5),
-          (Timer t) => setState(() {
-                this.Result = Result;
-              }));
+  assignedDrivers() async {
+    var client = http.Client();
+    final storage = new FlutterSecureStorage();
+    var token = await storage.read(key: 'jwt');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var response = await http.get(
+        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/All/Driver'),
+        headers: requestHeaders);
+    if (response.statusCode == 200) {
+      var mapResponse = json.decode(response.body) as Map<String, dynamic>;
+      List results = mapResponse['available'];
+
+      setState(() {
+        assignedVehicle = results
+            .where((element) => element['status'].contains("INSTOCK"))
+            .toList();
+        findVehicle = assignedVehicle;
+      });
+      return assignedVehicle;
+    } else {
+      throw Exception('not loaded ');
     }
   }
 
   void vehiclesSearch(String enterKeyboard) {
-    setState(() {});
-    if (enterKeyboard.isEmpty) {
-    } else {
-      final findVehicle = Result.where((driver) {
+    setState(() {
+      findVehicle = assignedVehicle.where((driver) {
         final name = driver['vehicleName'].toLowerCase();
         final plateNumber = driver['plateNumber'].toLowerCase();
         final inputName = enterKeyboard.toLowerCase();
@@ -54,17 +69,17 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
         return name.contains(inputName) ||
             plateNumber.contains(inputPlateNumber);
       }).toList();
-      setState(() {
-        this.Result = findVehicle;
-      });
-    }
+    });
+
+    setState(() {
+      findVehicle = findVehicle;
+    });
   }
 
   void initState() {
     super.initState();
-    timer = Duration(seconds: 5);
 
-    vehicleFetch();
+    assignedDrivers();
     controller.addListener(() {
       double value = controller.offset / 119;
 
@@ -76,10 +91,10 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
   }
 
   @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
+  // void dispose() {
+  //   timer.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -122,11 +137,11 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
             ),
           ),
         ),
-        body: Result.isEmpty
+        body: findVehicle.isEmpty
             ? Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Column(
-                    children: Result.map((vehicle) {
+                    children: findVehicle.map((vehicle) {
                   return Container(
                     height: screenHeight * 0.08,
                     child: InkWell(

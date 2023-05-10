@@ -6,6 +6,7 @@ import 'package:bazralogin/config/APIService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:ionicons/ionicons.dart';
 
 import '../../../../const/constant.dart';
 import 'driverDetial.dart';
@@ -48,7 +49,6 @@ class _OwnersDriverState extends State<OwnersDriver> {
         var data = json.decode(response.body);
         await storage.write(
             key: "totalDrivers", value: data["totalDrivers"].toString());
-
         setState(() {
           Result = data['drivers'];
           findVehicle = Result;
@@ -66,15 +66,14 @@ class _OwnersDriverState extends State<OwnersDriver> {
   void initState() {
     super.initState();
     driverFetch();
-    timer = Duration(seconds: 5);
   }
 
   @override
-  void dispose() {
-    timer.cancel();
-    timer;
-    super.dispose();
-  }
+  // void dispose() {
+  //   timer.cancel();
+  //   timer;
+  //   super.dispose();
+  // }
 
   void driversSearch(String enterKeyboard) {
     setState(() {
@@ -208,7 +207,7 @@ class _OwnersDriverState extends State<OwnersDriver> {
                         Column(
                             children: findVehicle.map((driver) {
                           return Container(
-                              height: screenHeight * 0.2,
+                              height: screenHeight * 0.27,
                               padding: const EdgeInsets.only(
                                 left: 10,
                                 right: 10,
@@ -244,14 +243,64 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                   ? Container(
                                                       margin: EdgeInsets.only(
                                                           left: 10, top: 10),
-                                                      child: Text(
-                                                        driver['status'],
-                                                        style: const TextStyle(
-                                                            fontSize: 12,
-                                                            color: Colors.green,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            driver['status'],
+                                                            style: const TextStyle(
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .green,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          Container(
+                                                            margin: EdgeInsets.only(
+                                                                left:
+                                                                    screenWidth *
+                                                                        0.17),
+                                                            child:
+                                                                MaterialButton(
+                                                              onPressed: () {
+                                                                // action to perform when button is pressed
+                                                              },
+                                                              child: Icon(
+                                                                Ionicons.car,
+                                                                color:
+                                                                    Colors.red,
+                                                              ),
+                                                              color:
+                                                                  Colors.white,
+
+                                                              shape:
+                                                                  CircleBorder(), // set the shape of the button
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            margin: EdgeInsets.only(
+                                                                left:
+                                                                    screenWidth *
+                                                                        0.08),
+                                                            child: Column(
+                                                              children: [
+                                                                Container(
+                                                                    child: Text(
+                                                                  "PlateNumber",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .green),
+                                                                )),
+                                                                Container(
+                                                                    child: Text(driver['plateNumber'] ==
+                                                                            null
+                                                                        ? "__"
+                                                                        : driver[
+                                                                            'plateNumber'])),
+                                                              ],
+                                                            ),
+                                                          )
+                                                        ],
                                                       ),
                                                     )
                                                   : driver['status'] ==
@@ -280,17 +329,65 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                                           .only(
                                                                       left: 10,
                                                                       top: 10),
-                                                              child: Text(
-                                                                driver[
-                                                                    'status'],
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color:
-                                                                        kPrimaryColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
+                                                              child: Row(
+                                                                children: [
+                                                                  Text(
+                                                                    driver[
+                                                                        'status'],
+                                                                    style: const TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        color:
+                                                                            kPrimaryColor,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  ),
+                                                                  Container(
+                                                                    margin: EdgeInsets.only(
+                                                                        left: screenWidth *
+                                                                            0.17),
+                                                                    child:
+                                                                        MaterialButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        // action to perform when button is pressed
+                                                                      },
+                                                                      child:
+                                                                          Icon(
+                                                                        Ionicons
+                                                                            .car,
+                                                                        color: Colors
+                                                                            .red,
+                                                                      ),
+                                                                      color: Colors
+                                                                          .white,
+
+                                                                      shape:
+                                                                          CircleBorder(), // set the shape of the button
+                                                                    ),
+                                                                  ),
+                                                                  Container(
+                                                                    margin: EdgeInsets.only(
+                                                                        left: screenWidth *
+                                                                            0.08),
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        Container(
+                                                                            child:
+                                                                                Text(
+                                                                          "PlateNumber",
+                                                                          style:
+                                                                              TextStyle(color: Colors.green),
+                                                                        )),
+                                                                        Container(
+                                                                            child: Text(driver['plateNumber'] == null
+                                                                                ? "__"
+                                                                                : driver['plateNumber'])),
+                                                                      ],
+                                                                    ),
+                                                                  )
+                                                                ],
                                                               ),
                                                             )
                                                           : Container(
@@ -299,17 +396,65 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                                           .only(
                                                                       left: 10,
                                                                       top: 10),
-                                                              child: Text(
-                                                                driver[
-                                                                    'status'],
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                        .red,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
+                                                              child: Row(
+                                                                children: [
+                                                                  Text(
+                                                                    driver[
+                                                                        'status'],
+                                                                    style: const TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        color: Colors
+                                                                            .red,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  ),
+                                                                  Container(
+                                                                    margin: EdgeInsets.only(
+                                                                        left: screenWidth *
+                                                                            0.17),
+                                                                    child:
+                                                                        MaterialButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        // action to perform when button is pressed
+                                                                      },
+                                                                      child:
+                                                                          Icon(
+                                                                        Ionicons
+                                                                            .car,
+                                                                        color: Colors
+                                                                            .red,
+                                                                      ),
+                                                                      color: Colors
+                                                                          .white,
+
+                                                                      shape:
+                                                                          CircleBorder(), // set the shape of the button
+                                                                    ),
+                                                                  ),
+                                                                  Container(
+                                                                    margin: EdgeInsets.only(
+                                                                        left: screenWidth *
+                                                                            0.08),
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        Container(
+                                                                            child:
+                                                                                Text(
+                                                                          "PlateNumber",
+                                                                          style:
+                                                                              TextStyle(color: Colors.green),
+                                                                        )),
+                                                                        Container(
+                                                                            child: Text(driver['plateNumber'] == null
+                                                                                ? "__"
+                                                                                : driver['plateNumber'])),
+                                                                      ],
+                                                                    ),
+                                                                  )
+                                                                ],
                                                               )),
                                             ]),
                                         Container(
@@ -366,36 +511,75 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                             ],
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Container(
-                                            width: screenWidth,
-                                            color: Color.fromRGBO(
-                                                244, 244, 244, 0.8),
-                                            height: 37,
-                                            margin: EdgeInsets.only(
-                                                top: screenHeight * 0.02),
-                                            child: InkWell(
-                                              onTap: (() {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ModifyDriverStatus(
-                                                                driverLicense:
-                                                                    driver[
-                                                                        'licenseNumber'])));
-                                              }),
-                                              child: const Center(
-                                                child: Text("Update Status",
+                                        Visibility(
+                                          visible:
+                                              driver['status'] != "ONROUTE",
+                                          child: InkWell(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ModifyDriverStatus(
+                                                    driverLicense:
+                                                        driver['licenseNumber'],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: Container(
+                                                width: screenWidth,
+                                                color: Color.fromRGBO(
+                                                    244, 244, 244, 0.8),
+                                                height: 40,
+                                                margin:
+                                                    EdgeInsets.only(top: 20),
+                                                child: const Center(
+                                                  child: Text(
+                                                    "Update Status",
                                                     style: TextStyle(
                                                         fontSize: 15,
                                                         fontWeight:
-                                                            FontWeight.bold)),
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           ),
                                         )
+                                        // Padding(
+                                        //   padding: const EdgeInsets.all(10.0),
+                                        //   child: Container(
+                                        //     width: screenWidth,
+                                        //     color: Color.fromRGBO(
+                                        //         244, 244, 244, 0.8),
+                                        //     height: 37,
+                                        //     margin: EdgeInsets.only(
+                                        //         top: screenHeight * 0.02),
+                                        //     child: InkWell(
+                                        //       onTap: (() {
+                                        //         Navigator.push(
+                                        //             context,
+                                        //             MaterialPageRoute(
+                                        //                 builder: (context) =>
+                                        //                     ModifyDriverStatus(
+                                        //                         driverLicense:
+                                        //                             driver[
+                                        //                                 'licenseNumber'])));
+                                        //       }),
+                                        //       child: const Center(
+                                        //         child: Text("Update Status",
+                                        //             style: TextStyle(
+                                        //                 fontSize: 15,
+                                        //                 fontWeight:
+                                        //                     FontWeight.bold)),
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // )
                                       ],
                                     ),
                                   ),

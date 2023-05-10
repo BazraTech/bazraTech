@@ -8,8 +8,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ionicons/ionicons.dart';
 
-import '../../../Bottom/Bottom.dart';
+
 import '../../../Theme/TextInput.dart';
+import '../Bottom/Bottom.dart';
 
 class forgotPin extends StatefulWidget {
   String? phone;

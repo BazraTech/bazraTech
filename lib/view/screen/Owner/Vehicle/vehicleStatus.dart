@@ -2,7 +2,7 @@ import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
 
 
-import '../../../../config/ApiConfig.dart';
+import '../../../../Model/ApiConfig.dart';
 import '../Communication/communicationPage.dart';
 
 import '../Vehicle/TotalVehicles.dart';

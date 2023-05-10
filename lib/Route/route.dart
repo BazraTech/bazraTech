@@ -1,10 +1,6 @@
 import 'package:bazralogin/Model/DropdownSearch.dart';
 import 'package:bazralogin/view/screen/Loging/Login.dart';
-
-import '../Bottom/Bottom.dart';
-
 import 'package:flutter/cupertino.dart';
-
 import '../view/screen/Owner/Tracking/carHistory.dart';
 import '../view/screen/Owner/TripManagement/setTrip.dart';
 import '../view/screen/Owner/Vehicle/vehicleDetial.dart';

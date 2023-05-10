@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:http/http.dart' as http;
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +8,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ionicons/ionicons.dart';
 
-import '../../../Bottom/Bottom.dart';
+
 import '../../../Theme/TextInput.dart';
+import '../Bottom/Bottom.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
@@ -134,7 +134,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         "confirmNewPin": "${Confirmpass.text}"
       };
       var response = await http.post(
-          Uri.parse('http://198.199.67.201:9090/Api/User/ChangePassword'),
+          Uri.parse('http://64.226.104.50:9090/Api/User/ChangePassword'),
           body: jsonEncode(data) as String,
           headers: {
             "Content-Type": "application/json",

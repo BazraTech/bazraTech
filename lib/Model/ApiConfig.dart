@@ -4,9 +4,7 @@ import 'package:bazralogin/config/APIService.dart';
 import 'package:bazralogin/domian/secure_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-
-import '../Model/DriverResponse.dart';
-import '../Model/loginRequestModel.dart';
+import 'loginRequestModel.dart';
 
 class APIService {
   var client = http.Client();

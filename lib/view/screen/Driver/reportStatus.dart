@@ -39,9 +39,9 @@ class _reportStatusState extends State<reportStatus> {
       final storage = new FlutterSecureStorage();
       var value = await storage.read(key: 'jwt');
 
-      Map data = {"driverState": "load"};
-      var response = await http.post(
-          Uri.parse('http://64.226.104.50:9090/Api/Admin/CreateDriverState'),
+      Map data = {"driverState": load};
+      var response = await http.put(
+          Uri.parse('http://64.226.104.50:9090/Api/Driver/ChangeDriverState'),
           body: jsonEncode(data) as String,
           headers: {
             "Content-Type": "application/json",
@@ -214,17 +214,18 @@ class _reportStatusState extends State<reportStatus> {
                       child: Row(
                         children: [
                           Container(
-                            width: screenWidth * 0.4,
+                            width: screenWidth * 0.44,
                             height: screenHeight * 0.06,
                             child: ElevatedButton(
                               onPressed: () {
+                                Unloadandloadcar("LOAD");
                                 setActiveButton2(true);
                               },
                               child: Text("Load",
                                   style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
-                                    fontSize: 12,
+                                    fontSize: 11,
                                   )),
                               style: ButtonStyle(
                                 backgroundColor:
@@ -253,10 +254,11 @@ class _reportStatusState extends State<reportStatus> {
                           ),
                           Spacer(),
                           Container(
-                            width: screenWidth * 0.4,
+                            width: screenWidth * 0.44,
                             height: screenHeight * 0.06,
                             child: ElevatedButton(
                               onPressed: () {
+                                Unloadandloadcar("UNLOAD");
                                 setActiveButton2(false);
                               },
                               child: Text(
@@ -264,7 +266,7 @@ class _reportStatusState extends State<reportStatus> {
                                 style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
-                                  fontSize: 12,
+                                  fontSize: 11,
                                 ),
                               ),
                               style: ButtonStyle(
@@ -303,18 +305,19 @@ class _reportStatusState extends State<reportStatus> {
                       child: Row(
                         children: [
                           Container(
-                            width: screenWidth * 0.4,
+                            width: screenWidth * 0.44,
                             height: screenHeight * 0.06,
                             child: ElevatedButton(
                               onPressed: () {
+                                Unloadandloadcar('');
                                 setActiveButton(true);
                               },
                               child: Text(
-                                "DESTARRIVED",
+                                "DEPARTURE",
                                 style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
-                                  fontSize: 12,
+                                  fontSize: 11,
                                 ),
                               ),
                               style: ButtonStyle(
@@ -344,7 +347,7 @@ class _reportStatusState extends State<reportStatus> {
                           ),
                           Spacer(),
                           Container(
-                            width: screenWidth * 0.4,
+                            width: screenWidth * 0.44,
                             height: screenHeight * 0.06,
                             child: ElevatedButton(
                               onPressed: () {
@@ -374,11 +377,11 @@ class _reportStatusState extends State<reportStatus> {
                                 elevation: MaterialStateProperty.all<double>(0),
                               ),
                               child: Text(
-                                "DEPARRIVED",
+                                "DEPARTUREARRIVED",
                                 style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
-                                  fontSize: 12,
+                                  fontSize: 11,
                                 ),
                               ),
                             ),
@@ -386,10 +389,57 @@ class _reportStatusState extends State<reportStatus> {
                         ],
                       ),
                     ),
-                  )
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          width: screenWidth * 0.44,
+                          height: screenHeight * 0.06,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setActiveButton(false);
+                            },
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                                  if (!_isActivebutton) {
+                                    return Colors.grey;
+                                  } else {
+                                    return kPrimaryColor;
+                                  }
+                                },
+                              ),
+                              foregroundColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                                  if (!_isActivebutton) {
+                                    return Colors.white;
+                                  } else {
+                                    return Colors.black;
+                                  }
+                                },
+                              ),
+                              elevation: MaterialStateProperty.all<double>(0),
+                            ),
+                            child: Text(
+                              "DESTINATIONARRIVED",
+                              style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 11,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

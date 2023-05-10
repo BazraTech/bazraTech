@@ -10,9 +10,9 @@ import 'package:ionicons/ionicons.dart';
 
 import 'package:http/http.dart' as http;
 
-import '../../../../Bottom/Bottom.dart';
 import '../../../../Theme/TextInput.dart';
 import '../../../../config/APIService.dart';
+import '../../Bottom/Bottom.dart';
 
 class Settrips extends StatefulWidget {
   String? drivername;
@@ -50,6 +50,7 @@ class _SettripsState extends State<Settrips> {
   String? startPlace;
   String? endPlace;
   List Result = [];
+  String? trip;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Future<void> _showMyDialog1() async {
@@ -139,7 +140,7 @@ class _SettripsState extends State<Settrips> {
         "startLocation": "Addisa Ababa",
         "destination": "jimma",
         "startDate": "2023-05-08",
-        "tripType": "SHORT"
+        "tripType": "$trip"
       };
       var response = await http.post(
           Uri.parse('http://64.226.104.50:9090/Api/Admin/CreateTrip'),
@@ -172,7 +173,7 @@ class _SettripsState extends State<Settrips> {
     double screenWidth = MediaQuery.of(context).size.width;
     String? selectedItem = 'SHORT';
     List<String> items = ['SHORT', 'LONG'];
-    print('${dateStart.text}');
+    print('$trip ');
     return Scaffold(
         backgroundColor: Color.fromARGB(255, 229, 229, 229),
         appBar: AppBar(
@@ -281,6 +282,8 @@ class _SettripsState extends State<Settrips> {
                                     onChanged: (item) {
                                       setState(() {
                                         selectedItem = item;
+                                        tripType.text = selectedItem.toString();
+                                        trip = tripType.text;
                                       });
                                     },
                                   ),

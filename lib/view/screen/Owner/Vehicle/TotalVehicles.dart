@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
-
 import '../../../../const/constant.dart';
 import 'modifyVehicleStatus.dart';
 import 'vehicleDetial.dart';
@@ -19,6 +18,7 @@ class OwnersVehicle extends StatefulWidget {
 
 class _OwnersVehicleState extends State<OwnersVehicle> {
   TextEditingController _searchController = TextEditingController();
+  List findVehicle = [];
   bool valuefirst = false;
   String? plateNumber;
   String query = '';
@@ -42,13 +42,10 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
 
       vehicleStatusList = mapResponse['vehiclesINF'];
       print(vehicleStatusList);
-      if (mounted) {
-        timer = new Timer.periodic(
-            Duration(seconds: 5),
-            (Timer t) => setState(() {
-                  vehicleStatusList = vehicleStatusList;
-                }));
-      }
+      setState(() {
+        vehicleStatusList = vehicleStatusList;
+        findVehicle = vehicleStatusList;
+      });
       return vehicleStatusList;
     } else {
       throw Exception('not loaded ');
@@ -58,23 +55,12 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
   void initState() {
     super.initState();
     vehicleFetchbystatus();
-    timer = Duration(seconds: 5);
   }
 
   @override
-  void dispose() {
-    timer.cancel();
-    timer;
-    super.dispose();
-  }
-
   void driversSearch(String enterKeyboard) {
-    List findVehicle = [];
-    setState(() {});
-    if (enterKeyboard.isEmpty) {
-      vehicleStatusList = findVehicle;
-    } else {
-      final findVehicle = vehicleStatusList.where((driver) {
+    setState(() {
+      findVehicle = vehicleStatusList.where((driver) {
         final name = driver['vehicleName'].toLowerCase();
 
         final plateNumber = driver['plateNumber'].toLowerCase();
@@ -82,10 +68,10 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
         final inputLicense = enterKeyboard.toLowerCase();
         return name.contains(inputName) || plateNumber.contains(inputName);
       }).toList();
-      setState(() {
-        this.vehicleStatusList = findVehicle;
-      });
-    }
+    });
+    setState(() {
+      findVehicle = findVehicle;
+    });
   }
 
   static bool isPressed = true;
@@ -140,7 +126,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
             ),
           ),
           body: SingleChildScrollView(
-              child: vehicleStatusList.isEmpty
+              child: findVehicle.isEmpty
                   ? Container(
                       margin: EdgeInsets.only(top: 130),
                       child: Center(child: CircularProgressIndicator()))
@@ -203,9 +189,9 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                           ),
                         ),
                         Column(
-                            children: vehicleStatusList.map((vehicle) {
+                            children: findVehicle.map((vehicle) {
                           return Container(
-                              height: screenHeight * 0.2,
+                              height: screenHeight * 0.25,
                               padding: EdgeInsets.only(
                                 left: 10,
                                 right: 10,
@@ -359,46 +345,39 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                             ],
                                           ),
                                         ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          ModifyVehileStatus(
-                                                            plateNumber: vehicle[
-                                                                'plateNumber'],
-                                                          )),
-                                            );
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Container(
-                                              width: screenWidth,
-                                              color: Color.fromRGBO(
-                                                  244, 244, 244, 0.8),
-                                              height: 37,
-                                              margin: EdgeInsets.only(
-                                                  top: screenHeight * 0.02),
-                                              child: InkWell(
-                                                onTap: (() {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ModifyVehileStatus(
-                                                                plateNumber:
-                                                                    vehicle[
-                                                                        'plateNumber'],
-                                                              )));
-                                                }),
+                                        Visibility(
+                                          visible:
+                                              vehicle['status'] != "ONROUTE",
+                                          child: InkWell(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ModifyVehileStatus(
+                                                    plateNumber:
+                                                        vehicle['plateNumber'],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: Container(
+                                                width: screenWidth,
+                                                color: Colors.white,
+                                                height: 40,
+                                                margin:
+                                                    EdgeInsets.only(top: 20),
                                                 child: const Center(
-                                                  child: Text("Update Status",
-                                                      style: TextStyle(
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
+                                                  child: Text(
+                                                    "Update Status",
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
                                                 ),
                                               ),
                                             ),

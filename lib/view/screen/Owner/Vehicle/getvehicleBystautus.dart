@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
-
 import '../../../../const/constant.dart';
 import 'modifyVehicleStatus.dart';
 import 'vehicleDetial.dart';
@@ -26,6 +25,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
   String query = '';
   List books = [];
   List vehicleStatusList = [];
+  List findVehicle = [];
   late var timer;
   vehicleFetchbystatus() async {
     var client = http.Client();
@@ -38,20 +38,17 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
     };
     var response = await http.get(
         Uri.parse(
-            'http://198.199.67.201:9090/Api/Vehicle/Owner/Status/${widget.route}'),
+            'http://64.226.104.50:9090/Api/Vehicle/Owner/Status/${widget.route}'),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;
 
       vehicleStatusList = mapResponse['${widget.onroute}'];
       print(vehicleStatusList);
-      if (mounted) {
-        timer = new Timer.periodic(
-            Duration(seconds: 5),
-            (Timer t) => setState(() {
-                  vehicleStatusList = vehicleStatusList;
-                }));
-      }
+      setState(() {
+        vehicleStatusList = vehicleStatusList;
+        findVehicle = vehicleStatusList;
+      });
       return vehicleStatusList;
     } else {
       throw Exception('not loaded ');
@@ -61,23 +58,12 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
   void initState() {
     super.initState();
     vehicleFetchbystatus();
-    timer = Duration(seconds: 5);
   }
 
   @override
-  void dispose() {
-    timer.cancel();
-    timer;
-    super.dispose();
-  }
-
   void driversSearch(String enterKeyboard) {
-    List findVehicle = [];
-    setState(() {});
-    if (enterKeyboard.isEmpty) {
-      vehicleStatusList = findVehicle;
-    } else {
-      final findVehicle = vehicleStatusList.where((driver) {
+    setState(() {
+      findVehicle = vehicleStatusList.where((driver) {
         final name = driver['vehicleName'].toLowerCase();
 
         final plateNumber = driver['plateNumber'].toLowerCase();
@@ -85,10 +71,11 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
         final inputLicense = enterKeyboard.toLowerCase();
         return name.contains(inputName) || plateNumber.contains(inputName);
       }).toList();
-      setState(() {
-        this.vehicleStatusList = findVehicle;
-      });
-    }
+    });
+
+    setState(() {
+      findVehicle = findVehicle;
+    });
   }
 
   static bool isPressed = true;
@@ -143,7 +130,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
             ),
           ),
           body: SingleChildScrollView(
-              child: vehicleStatusList.isEmpty
+              child: findVehicle.isEmpty
                   ? Container(
                       margin: EdgeInsets.only(top: 130),
                       child: Center(child: CircularProgressIndicator()))
@@ -193,24 +180,25 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                           ),
                         ),
                         Column(
-                            children: vehicleStatusList.map((vehicle) {
+                            children: findVehicle.map((vehicle) {
                           return Container(
-                              height: screenHeight * 0.2,
+                              height: screenHeight * 0.25,
+                              color: Colors.white,
                               padding: EdgeInsets.only(
                                 left: 10,
                                 right: 10,
                               ),
                               child: InkWell(
-                                // onTap: (() {
-                                //   Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (BuildContext context) =>
-                                //             vehicleDetial(
-                                //               id: vehicle.id,
-                                //             )),
-                                //   );
-                                // }),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            vehicleDetial(
+                                              id: vehicle['id'],
+                                            )),
+                                  );
+                                },
                                 child: Card(
                                   elevation: 3,
                                   child: Container(
@@ -353,29 +341,62 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                           padding: const EdgeInsets.all(10.0),
                                           child: Container(
                                             width: screenWidth,
-                                            color: Color.fromRGBO(
-                                                244, 244, 244, 0.8),
+                                            // color: Color.fromRGBO(
+                                            //     244, 244, 244, 0.8),
                                             height: 40,
                                             margin: EdgeInsets.only(top: 20),
                                             child: InkWell(
-                                              onTap: (() {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ModifyVehileStatus(
-                                                              plateNumber: vehicle[
-                                                                  'plateNumber'],
-                                                            )));
-                                              }),
-                                              child: const Center(
-                                                child: Text("Update Status",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              ),
-                                            ),
+                                                onTap: (() {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ModifyVehileStatus(
+                                                                plateNumber:
+                                                                    vehicle[
+                                                                        'plateNumber'],
+                                                              )));
+                                                }),
+                                                child: Visibility(
+                                                  visible: vehicle['status'] !=
+                                                      "ONROUTE",
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ModifyVehileStatus(
+                                                            plateNumber: vehicle[
+                                                                'plateNumber'],
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10.0),
+                                                      child: Container(
+                                                        width: screenWidth,
+                                                        color: Colors.white,
+                                                        height: 40,
+                                                        margin: EdgeInsets.only(
+                                                            top: 20),
+                                                        child: const Center(
+                                                          child: Text(
+                                                            "Update Status",
+                                                            style: TextStyle(
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )),
                                           ),
                                         )
                                       ],

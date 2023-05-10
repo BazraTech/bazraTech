@@ -1,10 +1,7 @@
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
-
 import '../report/singleReport.dart';
 import 'activeTrip.dart';
-import 'allVehicelelist.dart';
-
 import 'availableVehicle.dart';
 
 class tripHistory extends StatelessWidget {

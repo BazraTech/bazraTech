@@ -2,9 +2,9 @@ import 'package:bazralogin/controller/Localization.dart';
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../config/ApiConfig.dart';
+import '../../../../Model/driverCount.dart';
+import '../../../../Model/ApiConfig.dart';
 
-import '../../../../config/driverCount.dart';
 import 'OwnersDriver.dart';
 import 'getDriverByStatus.dart';
 

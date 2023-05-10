@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:bazralogin/Model/DriverResponse.dart';
 import 'package:bazralogin/Theme/TextInput.dart';
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +7,8 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import '../../../../Bottom/Bottom.dart';
 import '../../../../config/APIService.dart';
+import '../../Bottom/Bottom.dart';
 
 class ModifyDriverStatus extends StatefulWidget {
   String? driverLicense;

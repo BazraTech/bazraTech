@@ -1,21 +1,19 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:bazralogin/Model/communication.dart';
-
 
 import 'package:bazralogin/Theme/customAppBar.dart';
 import 'package:bazralogin/const/color.dart';
 import 'package:bazralogin/view/screen/Owner/TripManagement/tripDetail.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_places_flutter/model/place_details.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
 import '../../../../../Model/communicationList.dart';
-
-
-import '../../../../config/activeTrip.dart';
 import '../../../../const/constant.dart';
 import '../Vehicle/vehicleDetial.dart';
 import '../Vehicle/vehicleStatus.dart';
+import 'package:http/http.dart' as http;
 
 class ActiveTrip extends StatefulWidget {
   const ActiveTrip({super.key});
@@ -30,40 +28,50 @@ class _ActiveTripState extends State<ActiveTrip> {
   double topContainer = 0;
   String query = '';
   List Result = [];
-  late var timer;
+  List findVehicle = [];
+  List results = [];
   List totalVehicles = [];
-  Future activeTrip() async {
-    final Result = await Active_Trip.activeTrip();
-    if (mounted) {
-      timer = Timer.periodic(
-          Duration(seconds: 5),
-          (Timer t) => setState(() {
-                this.Result = Result;
-              }));
+  activeTrip() async {
+    var client = http.Client();
+    final storage = new FlutterSecureStorage();
+    var token = await storage.read(key: 'jwt');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var response = await http.get(
+        Uri.parse('http://64.226.104.50:9090/Api/Admin/Trip/All'),
+        headers: requestHeaders);
+    if (response.statusCode == 200) {
+      var mapResponse = json.decode(response.body) as Map<String, dynamic>;
+      results = mapResponse['setTrips'];
+      setState(() {
+        findVehicle = results;
+      });
+      return results;
+    } else {
+      throw Exception('not loaded ');
     }
   }
 
   void vehiclesSearch(String enterKeyboard) {
-    setState(() {});
-    if (enterKeyboard.isEmpty) {
-    } else {
-      final findVehicle = Result.where((driver) {
-        final name = driver['vehicleName'].toLowerCase();
+    setState(() {
+      findVehicle = results.where((driver) {
         final plateNumber = driver['plateNumber'].toLowerCase();
         final inputName = enterKeyboard.toLowerCase();
         final inputPlateNumber = enterKeyboard.toLowerCase();
-        return name.contains(inputName) ||
-            plateNumber.contains(inputPlateNumber);
+        return plateNumber.contains(inputPlateNumber);
       }).toList();
-      setState(() {
-        this.Result = findVehicle;
-      });
-    }
+    });
+
+    setState(() {
+      findVehicle = findVehicle;
+    });
   }
 
   void initState() {
     super.initState();
-    timer = Duration(seconds: 5);
 
     activeTrip();
     controller.addListener(() {
@@ -77,10 +85,10 @@ class _ActiveTripState extends State<ActiveTrip> {
   }
 
   @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
+  // void dispose() {
+  //   timer.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -121,11 +129,11 @@ class _ActiveTripState extends State<ActiveTrip> {
             ),
           ),
         ),
-        body: Result.isEmpty
+        body: findVehicle.isEmpty
             ? Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Column(
-                    children: Result.map((trip) {
+                    children: findVehicle.map((trip) {
                   return Container(
                     height: screenHeight * 0.08,
                     child: InkWell(
@@ -145,7 +153,7 @@ class _ActiveTripState extends State<ActiveTrip> {
                               Container(
                                 margin: EdgeInsets.only(left: 15, right: 10),
                                 child: Text(
-                                  " " + trip['plateNumber'],
+                                  " " + trip['driverName'].toString(),
                                   style: const TextStyle(
                                       // fontWeight: FontWeight.bold,
                                       fontSize: 12,

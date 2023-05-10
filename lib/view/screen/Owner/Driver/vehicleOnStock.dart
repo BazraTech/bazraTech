@@ -1,17 +1,19 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:bazralogin/Model/communication.dart';
 
 import 'package:bazralogin/Theme/customAppBar.dart';
 import 'package:bazralogin/const/color.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_places_flutter/model/place_details.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../../../../../Model/communicationList.dart';
-import '../../../../config/ApiConfig.dart';
+import '../../../../Model/ApiConfig.dart';
 
-import '../../../../config/vehiclesWithoutDrivers.dart';
 import '../../../../const/constant.dart';
 import '../../../../widget/SearchPage.dart';
 import 'assignDriver.dart';
@@ -33,24 +35,38 @@ class _VehicleOnstockState extends State<VehicleOnstock> {
   double topContainer = 0;
   String query = '';
   List Result = [];
-  late var timer;
+  List findVehicle = [];
+  // late var timer;
   List totalVehicles = [];
-  Future vehicles_withUnassigned_Driver() async {
-    final Result = await Vehicles_withoutDrivers.unassignedDrivers();
-    if (mounted) {
-      timer = Timer.periodic(
-          Duration(seconds: 5),
-          (Timer t) => setState(() {
-                this.Result = Result;
-              }));
+  var client = http.Client();
+  final storage = new FlutterSecureStorage();
+// fetch car on maintaining
+  unassignedDrivers() async {
+    var token = await storage.read(key: 'jwt');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var response = await http.get(
+        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/All/Driver'),
+        headers: requestHeaders);
+    if (response.statusCode == 200) {
+      var mapResponse = json.decode(response.body) as Map<String, dynamic>;
+      List results = mapResponse['unassigned'];
+      setState(() {
+        Result = results;
+        findVehicle = Result;
+      });
+      return Result;
+    } else {
+      throw Exception('not loaded ');
     }
   }
 
   void vehiclesSearch(String enterKeyboard) {
-    setState(() {});
-    if (enterKeyboard.isEmpty) {
-    } else {
-      final findVehicle = Result.where((driver) {
+    setState(() {
+      findVehicle = Result.where((driver) {
         final name = driver['vehicleName'].toLowerCase();
         final plateNumber = driver['plateNumber'].toLowerCase();
         final inputName = enterKeyboard.toLowerCase();
@@ -58,16 +74,17 @@ class _VehicleOnstockState extends State<VehicleOnstock> {
         return name.contains(inputName) ||
             plateNumber.contains(inputPlateNumber);
       }).toList();
-      setState(() {
-        this.Result = findVehicle;
-      });
-    }
+    });
+
+    setState(() {
+      findVehicle = findVehicle;
+    });
   }
 
   void initState() {
     super.initState();
-    timer = Duration(seconds: 5);
-    vehicles_withUnassigned_Driver();
+    unassignedDrivers();
+
     controller.addListener(() {
       double value = controller.offset / 119;
       setState(() {
@@ -78,10 +95,10 @@ class _VehicleOnstockState extends State<VehicleOnstock> {
   }
 
   @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
+  // void dispose() {
+  //   timer.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -114,8 +131,9 @@ class _VehicleOnstockState extends State<VehicleOnstock> {
                 width: double.infinity,
                 height: 40,
                 color: Colors.white,
-                child: const Center(
+                child: Center(
                   child: TextField(
+                    onChanged: vehiclesSearch,
                     decoration: InputDecoration(
                       hintText: 'Driver Name or Plate No.',
                       border: InputBorder.none,
@@ -130,7 +148,7 @@ class _VehicleOnstockState extends State<VehicleOnstock> {
             ),
           ),
           backgroundColor: kBackgroundColor,
-          body: Result.isEmpty
+          body: findVehicle.isEmpty
               ? Center(child: CircularProgressIndicator())
               : SingleChildScrollView(
                   child: Column(
@@ -190,7 +208,7 @@ class _VehicleOnstockState extends State<VehicleOnstock> {
                         ),
                       ),
                       Column(
-                          children: Result.map((vehicle) {
+                          children: findVehicle.map((vehicle) {
                         return Container(
                           height: screenHeight * 0.08,
                           child: InkWell(

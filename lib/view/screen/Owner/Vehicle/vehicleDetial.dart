@@ -45,7 +45,7 @@ class _vehicleDetialState extends State<vehicleDetial> {
       }
     } catch (e) {
       print(e);
-      throw e;
+      
     }
   }
 

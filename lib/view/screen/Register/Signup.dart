@@ -1,11 +1,10 @@
 import 'dart:io';
 
-import 'package:bazralogin/view/Loging/Login.dart';
+import 'package:bazralogin/view/screen/Loging/Login.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../Bottom/Bottom.dart';
-import '../../Route/route.dart';
+import '../Bottom/Bottom.dart';
 
 class RegistrationForm extends StatefulWidget {
   const RegistrationForm({super.key});

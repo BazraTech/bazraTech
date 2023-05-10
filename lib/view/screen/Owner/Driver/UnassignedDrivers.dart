@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:google_places_flutter/model/place_details.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../../../../../Model/communicationList.dart';
-import '../../../../config/ApiConfig.dart';
-import '../../../../config/UnassignedDriver.dart';
+import '../../../../Model/ApiConfig.dart';
+
 import '../../../../const/constant.dart';
 import '../../../../widget/SearchPage.dart';
 import 'vehicleOnStock.dart';
@@ -29,6 +29,7 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
   double topContainer = 0;
   String query = '';
   List Result = [];
+  List findVehicle = [];
   late var timer;
   List totalVehicles = [];
 
@@ -51,27 +52,27 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
 
       setState(() {
         Result = results;
+        findVehicle = Result;
       });
       return Result;
     }
   }
 
-  void vehiclesSearch(String enterKeyboard) {
-    setState(() {});
-    if (enterKeyboard.isEmpty) {
-    } else {
-      final findVehicle = Result.where((driver) {
-        final name = driver['vehicleName'].toLowerCase();
-        final plateNumber = driver['plateNumber'].toLowerCase();
+  void driversSearch(String enterKeyboard) {
+    setState(() {
+      findVehicle = Result.where((driver) {
+        final name = driver['driverName'].toLowerCase();
+        final plateNumber = driver['phoneNumber'].toLowerCase();
         final inputName = enterKeyboard.toLowerCase();
         final inputPlateNumber = enterKeyboard.toLowerCase();
         return name.contains(inputName) ||
             plateNumber.contains(inputPlateNumber);
       }).toList();
-      setState(() {
-        this.Result = findVehicle;
-      });
-    }
+    });
+
+    setState(() {
+      findVehicle = findVehicle;
+    });
   }
 
   void initState() {
@@ -117,8 +118,9 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                 width: double.infinity,
                 height: 40,
                 color: Colors.white,
-                child: const Center(
+                child: Center(
                   child: TextField(
+                    onChanged: driversSearch,
                     decoration: InputDecoration(
                       hintText: 'Driver Name or Plate No.',
                       border: InputBorder.none,
@@ -133,7 +135,7 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
             ),
           ),
           backgroundColor: kBackgroundColor,
-          body: Result.isEmpty
+          body: findVehicle.isEmpty
               ? Center(child: CircularProgressIndicator())
               : SingleChildScrollView(
                   child: Column(
@@ -183,7 +185,7 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                         ),
                       ),
                       Column(
-                          children: Result.map((driver) {
+                          children: findVehicle.map((driver) {
                         return Container(
                           height: screenHeight * 0.08,
                           child: GestureDetector(

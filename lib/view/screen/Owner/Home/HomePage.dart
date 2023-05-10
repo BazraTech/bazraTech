@@ -2,18 +2,16 @@ import 'dart:ui';
 import 'package:bazralogin/controller/Localization.dart';
 import 'package:bazralogin/view/screen/Loging/Login.dart';
 import 'package:bazralogin/Theme/verticalDash.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../../config/ApiConfig.dart';
-import '../../../../config/driverCount.dart';
+import '../../../../Model/driverCount.dart';
+import '../../../../Model/ApiConfig.dart';
 import '../../../../const/constant.dart';
 import '../Driver/driversPage.dart';
 import '../TripManagement/setGuzo.dart';
@@ -163,75 +161,19 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   "assets/images/R-removebg-preview.png"))),
                     ),
                   ),
-                  Container(
-                    width: screenWidth * 0.13,
-                    height: screenHeight * 0.06,
-                    margin: EdgeInsets.only(left: screenWidth * 0.26),
-                    child: MaterialButton(
-                      onPressed: () async {
-                        navigator!.pop(context);
-                      },
-
-                      child: Material(
-                        color: Colors.transparent,
-                        child: Icon(
-                          Ionicons.notifications,
-                          size: 23,
-                          color: Colors.black,
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: screenWidth * 0.13,
+                      height: screenHeight * 0.08,
+                      margin: EdgeInsets.only(left: screenWidth * 0.26),
+                      child: Icon(
+                        Ionicons.notifications,
+                        size: 28,
+                        color: Color.fromRGBO(85, 164, 240, 1),
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        side: BorderSide(color: Colors.black, width: 2),
-                      ),
-
-                      //use this class Circleborder() for circle shape.
                     ),
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    child: DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                          hintText: 'Where To?',
-                          hintStyle: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 10),
-                          border: InputBorder.none),
-                      value: selectedItem,
-                      items: items
-                          .map((item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 15),
-                              )))
-                          .toList(),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please Enter  Plate Number';
-                        }
-                      },
-                      onChanged: (item) {
-                        setState(() {
-                          selectedItem = item;
-                          if (item == 'English') {
-                            locale = '${languge[0]}';
-                          } else if (item == 'Amaharic') {
-                            locale = '${languge[1]}';
-                          } else {
-                            locale = '${languge[2]}';
-                          }
-
-                          final translationController =
-                              Get.put(TranslationController());
-                          translationController.loadTranslations(locale);
-                          Get.updateLocale(Locale(locale));
-                        });
-                      },
-                    ),
-                  )
                 ],
               ),
             ),
@@ -310,7 +252,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                               margin: EdgeInsets.only(right: 27, top: 0),
                               height: screenHeight * 0.075,
                               child: Image.asset(
-                                "assets/images/driversProfile.png",
+                                "assets/images/profile.png",
                               ),
                             ),
                           ),
@@ -335,7 +277,8 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                           child: Row(
                             children: [
                               Container(
-                                width: screenWidth * 0.31,
+                                width: screenWidth * 0.35,
+                                margin: EdgeInsets.only(right: 30),
                                 child: Column(
                                   children: [
                                     MaterialButton(
@@ -373,7 +316,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                           child: Row(
                             children: [
                               SizedBox(
-                                width: screenWidth * 0.30,
+                                width: screenWidth * 0.35,
                                 child: Column(
                                   children: [
                                     MaterialButton(

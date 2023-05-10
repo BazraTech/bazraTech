@@ -4,10 +4,10 @@ import 'package:bazralogin/const/constant.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
-import '../view/screen/Owner/Communication/communicationPage.dart';
-import '../view/screen/Owner/Home/HomePage.dart';
-import '../view/screen/Owner/Profile/Profile.dart';
-import '../view/screen/Owner/Tracking/caronMap.dart';
+import '../Owner/Communication/communicationPage.dart';
+import '../Owner/Home/HomePage.dart';
+import '../Owner/Profile/Profile.dart';
+import '../Owner/Tracking/caronMap.dart';
 
 class BottomNav extends StatelessWidget {
   BottomNav({super.key});

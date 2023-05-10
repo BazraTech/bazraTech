@@ -22,7 +22,7 @@ class _TripDetailState extends State<TripDetail> {
     var value = await storage.read(key: 'jwt');
     try {
       var response = await http.get(
-          Uri.parse('http://198.199.67.201:9090/Api/Admin/Trip/${widget.id}'),
+          Uri.parse('http://64.226.104.50:9090/Api/Admin/Trip/${widget.id}'),
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",

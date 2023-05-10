@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:bazralogin/Bottom/Bottom.dart';
+import 'package:bazralogin/view/screen/Bottom/Bottom.dart';
 
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ import 'package:http/http.dart' as http;
 import 'package:ionicons/ionicons.dart';
 import '../../../../Theme/TextInput.dart';
 import '../../../../Theme/customAppBar.dart';
-import '../../../../config/ApiConfig.dart';
+import '../../../../Model/ApiConfig.dart';
 import '../../../../const/constant.dart';
 import 'assignDriver.dart';
 
@@ -31,73 +31,59 @@ FilePickerResult? license;
 var timer;
 
 final storage = new FlutterSecureStorage();
-TextEditingController driverName = TextEditingController();
-TextEditingController LicenseNumber = TextEditingController();
-TextEditingController licensePic = TextEditingController();
-TextEditingController driverPic = TextEditingController();
-TextEditingController ownerPhone = TextEditingController();
-TextEditingController driverPhone = TextEditingController();
-TextEditingController dateBirth = TextEditingController();
-TextEditingController Experience = TextEditingController();
-TextEditingController LicenseGrade = TextEditingController();
-TextEditingController Gender = TextEditingController();
-TextEditingController dateIssue = TextEditingController();
-TextEditingController dateExpire = TextEditingController();
 
 class _DriversFormOwnerState extends State<DriversFormOwner> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final driverName = TextEditingController();
+  final LicenseNumber = TextEditingController();
+  final licensePic = TextEditingController();
+  final driverPic = TextEditingController();
+  final ownerPhone = TextEditingController();
+  final driverPhone = TextEditingController();
+  final dateBirth = TextEditingController();
+  final Experience = TextEditingController();
+  final LicenseGrade = TextEditingController();
+  final Gender = TextEditingController();
+  final dateIssue = TextEditingController();
+  final dateExpire = TextEditingController();
+
   List Result = [];
-  Future<void> _showMyDialog1() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Success!!!'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('Register Successsful !'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Ok'),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BottomNav()));
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   Future<void> _showMyDialog() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Success!!!'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('Phone number already in use! !'),
-              ],
+        return Container(
+          child: AlertDialog(
+            titlePadding: EdgeInsets.all(0),
+            title: Container(
+              padding: EdgeInsets.all(10),
+              color: kPrimaryColor,
+              child: Container(
+                height: 40,
+              ),
             ),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: const <Widget>[
+                  Text(
+                    'Register Successfully ',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Done'),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => BottomNav()));
+                },
+              ),
+            ],
           ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Ok'),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BottomNav()));
-              },
-            ),
-          ],
         );
       },
     );
@@ -117,8 +103,8 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
       Uri.parse("http://64.226.104.50:9090/Api/Driver/AddDriver"),
     );
     formData.headers['Authorization'] = "Bearer $value";
-    final XFile? image =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    // final XFile? image =
+    //     await ImagePicker().pickImage(source: ImageSource.gallery);
     formData.fields['driverName'] = driverName.text;
     formData.fields['licenseNumber'] = LicenseNumber.text;
     formData.fields['OwnerPhone'] = ownerPhone.text;
@@ -131,16 +117,21 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
     formData.fields["licenseExpireDate"] = dateExpire.text;
 
     formData.files.add(
-      await http.MultipartFile.fromPath('licensePic', image!.path),
+      await http.MultipartFile.fromPath('licensePic', licenseFile),
     );
-    formData.files.add(
-      await http.MultipartFile.fromPath('driverPic', image.path),
-    );
+    print("yared12222 992900");
+    print(
+        "/data/user/0/com.example.bazralogin/cache/0e681c23-32a7-4b98-9dbd-ba18c4f8e2c6/Screenshot_20230502-041436.png");
     print(licenseFile);
+    print(driverFile);
+    formData.files.add(
+      await http.MultipartFile.fromPath('driverPic', driverFile),
+    );
+
     final response = await formData.send();
 
     if (response.statusCode == 200) {
-      print("yes");
+      _showMyDialog();
     } else {
       print(response.statusCode.toString());
       // throw Exception(
@@ -150,14 +141,16 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
 
   Future vehicleFetch() async {
     final Result = await APIService.driverFetch();
+    setState(() {
+      this.Result = Result;
+    });
+    // if (mounted) {
+    //   timer = Timer.periodic(
+    //       Duration(seconds: 5),
+    //       (Timer t) => setState(() {
 
-    if (mounted) {
-      timer = Timer.periodic(
-          Duration(seconds: 5),
-          (Timer t) => setState(() {
-                this.Result = Result;
-              }));
-    }
+    //           }));
+    // }
   }
 
   void initState() {
@@ -167,18 +160,14 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
   }
 
   @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
+  // void dispose() {}
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     print("${driverName}");
-    debugShowCheckedModeBanner:
-    false;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: SizedBox(
@@ -195,38 +184,22 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
                       child: Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: screenHeight * 0.08,
-                              width: screenWidth * 0.14,
-                              margin: EdgeInsets.only(top: screenHeight * 0.04),
-                              child: MaterialButton(
-                                onPressed: () async {
-                                  Navigator.pop(
-                                    context,
-                                  );
-                                },
-
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: Center(
-                                    child: Icon(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  height: screenHeight * 0.08,
+                                  width: screenWidth * 0.14,
+                                  margin:
+                                      EdgeInsets.only(top: screenHeight * 0.04),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    icon: Icon(
                                       Ionicons.chevron_back,
                                       size: 23,
                                       color: Colors.white,
                                     ),
-                                  ),
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  side:
-                                      BorderSide(color: Colors.white, width: 2),
-                                ),
-
-                                //use this class Circleborder() for circle shape.
-                              ),
-                            ),
-                          ),
+                                  ))),
                           Container(
                               margin: EdgeInsets.only(
                                   left: screenHeight * 0.1,
@@ -247,23 +220,21 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
                       child: Column(
                         children: [
                           SizedBox(
-                            child: SizedBox(
-                              child: TextFormField(
-                                cursorColor: Colors.black,
-                                keyboardType: TextInputType.text,
-                                controller: driverName,
-                                decoration: ThemeHelper()
-                                    .textInputDecoration("Driver Name"),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please Enter Your Driver Name';
-                                  }
-                                  return null;
-                                },
-                                style: TextStyle(
-                                    fontSize: 15, color: Colors.black),
-                              ),
-                            ),
+                            height: 15,
+                          ),
+                          TextFormField(
+                            cursorColor: Colors.black,
+                            keyboardType: TextInputType.text,
+                            controller: driverName,
+                            decoration: ThemeHelper()
+                                .textInputDecoration("Driver Name"),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please Enter Your Driver Name';
+                              }
+                              return null;
+                            },
+                            style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
                           SizedBox(
                             height: 15,
