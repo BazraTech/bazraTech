@@ -196,7 +196,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
                                     const EdgeInsets.only(left: 8.0, right: 8),
                                 child: SizedBox(
                                   height: screenHeight * 0.125,
-                                  width: screenWidth - 40,
+                                  width: screenWidth - 30,
                                   child: TextFormField(
                                     minLines: 5,
                                     maxLines: 6,
@@ -226,7 +226,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
                           height: 10,
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: screenWidth * 0.67),
+                          margin: EdgeInsets.only(left: screenWidth * 0.70),
                           child: Row(
                             children: [
                               Container(
@@ -330,7 +330,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
                       ]),
                       width: MediaQuery.of(context).size.width * 0.25,
                       margin: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.18),
+                          left: MediaQuery.of(context).size.width * 0.2),
                       child: ElevatedButton(
                         onPressed: (() {
                           OnclickedAll();
