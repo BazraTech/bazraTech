@@ -30,8 +30,9 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
   List books = [];
   List vehicleStatusList = [];
   List findVehicle = [];
-  late var timer;
-  vehicleFetchbystatus() async {
+  bool _isLoading = true;
+  // driver  fetch by status
+  driverFetchbystatus() async {
     var client = http.Client();
     final storage = new FlutterSecureStorage();
     var token = await storage.read(key: 'jwt');
@@ -50,6 +51,7 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
       vehicleStatusList = mapResponse['${widget.driverList}'];
       print(vehicleStatusList);
       setState(() {
+        _isLoading = false;
         vehicleStatusList = vehicleStatusList;
 
         findVehicle = vehicleStatusList;
@@ -59,19 +61,7 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
     } else {}
   }
 
-  void initState() {
-    super.initState();
-    vehicleFetchbystatus();
-    
-  }
-
-  @override
-  // void dispose() {
-  //   timer.cancel();
-  //   timer;
-  //   super.dispose();
-  // }
-
+  // driver search by status
   void driversSearch(String enterKeyboard) {
     final findVehicle = vehicleStatusList.where((driver) {
       final name = driver['driverName'].toLowerCase();
@@ -83,6 +73,16 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
     setState(() {
       this.findVehicle = findVehicle;
     });
+  }
+
+  void initState() {
+    super.initState();
+    driverFetchbystatus();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -124,7 +124,7 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
             ),
           ),
           body: SingleChildScrollView(
-              child: findVehicle.isEmpty
+              child: _isLoading
                   ? Container(
                       margin: EdgeInsets.only(top: 130),
                       child: Center(child: CircularProgressIndicator()))

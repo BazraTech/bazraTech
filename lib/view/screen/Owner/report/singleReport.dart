@@ -401,7 +401,7 @@ class _reportPageState extends State<reportPage> {
                   child: Column(
                     children: [
                       Container(
-                        color: Color.fromRGBO(85, 164, 240, 1),
+                        color: Colors.white,
                         child: ExpansionTile(
                           collapsedTextColor: Colors.white,
                           title: Center(

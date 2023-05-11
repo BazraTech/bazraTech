@@ -26,7 +26,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
   List books = [];
   List vehicleStatusList = [];
   List findVehicle = [];
-  late var timer;
+  bool _isLoading = true;
   vehicleFetchbystatus() async {
     var client = http.Client();
     final storage = new FlutterSecureStorage();
@@ -46,6 +46,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
       vehicleStatusList = mapResponse['${widget.onroute}'];
       print(vehicleStatusList);
       setState(() {
+        _isLoading = false;
         vehicleStatusList = vehicleStatusList;
         findVehicle = vehicleStatusList;
       });
@@ -130,7 +131,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
             ),
           ),
           body: SingleChildScrollView(
-              child: findVehicle.isEmpty
+              child: _isLoading
                   ? Container(
                       margin: EdgeInsets.only(top: 130),
                       child: Center(child: CircularProgressIndicator()))

@@ -160,7 +160,21 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
   }
 
   @override
-  // void dispose() {}
+  void dispose() {
+    driverName.dispose();
+    dateBirth.dispose();
+    driverPhone.dispose();
+    driverPic.dispose();
+    dateExpire.dispose();
+    dateIssue.dispose();
+    ownerPhone.dispose();
+    Gender.dispose();
+    licensePic.dispose();
+    LicenseGrade.dispose();
+    LicenseNumber
+        .dispose(); // dispose of the controller when the widget is removed from the tree
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

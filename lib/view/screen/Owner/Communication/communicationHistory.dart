@@ -17,9 +17,8 @@ class communicationHistory extends StatefulWidget {
   State<communicationHistory> createState() => _communicationHistoryState();
 }
 
-late var timer;
-
 class _communicationHistoryState extends State<communicationHistory> {
+  bool _isLoading = true;
   List Result = [];
   void MessageHistory() async {
     var client = http.Client();
@@ -52,7 +51,6 @@ class _communicationHistoryState extends State<communicationHistory> {
   void initState() {
     super.initState();
     MessageHistory();
-    timer = Duration(seconds: 5);
   }
 
   @override

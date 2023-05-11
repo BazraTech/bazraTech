@@ -8,6 +8,7 @@ import 'package:bazralogin/const/constant.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../Model/ApiConfig.dart';
@@ -26,21 +27,17 @@ class CommunicationPage extends StatefulWidget {
   State<CommunicationPage> createState() => _CommunicationPageState();
 }
 
-late var timer;
-
 class _CommunicationPageState extends State<CommunicationPage> {
   TextEditingController _searchController = TextEditingController();
-
-  List<Communicationlist> find = [];
-
+  final TextEditingController _controller = TextEditingController();
   List Result = [];
   List findVehicle = [];
-
   String query = '';
   List listDriver = [];
-
   List drivers = [];
   bool ischeckValue = false;
+
+  // success  alert
   Future<void> _showMyDialog() async {
     return showDialog<void>(
       context: context,
@@ -68,6 +65,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
       },
     );
   }
+  // fetch all deriver
 
   driverFetch() async {
     try {
@@ -103,24 +101,24 @@ class _CommunicationPageState extends State<CommunicationPage> {
     }
   }
 
-  void initState() {
-    super.initState();
+  //  deriver search
+  void vehicleSearch(String enterKeyboard) {
+    setState(() {
+      findVehicle = Result.where((driver) {
+        final name = driver['driverName'].toLowerCase();
 
-    timer = Duration(seconds: 3);
-    driverFetch();
+        final plateNumber = driver['phoneNumber'].toLowerCase();
+        final inputName = enterKeyboard.toLowerCase();
+        final inputLicense = enterKeyboard.toLowerCase();
+        return name.contains(inputName) || plateNumber.contains(inputName);
+      }).toList();
+    });
+    setState(() {
+      findVehicle = findVehicle;
+    });
   }
 
-  var len;
-
-  @override
-  // void dispose() {
-  //   timer.cancel();
-  //   timer;
-  //   super.dispose();
-  // }
-
-  final TextEditingController _controller = TextEditingController();
-
+// send message
   sendMessage() async {
     var value = await storage.read(key: 'jwt');
     Map data = {"message": _controller.text, "receipientPhone": listDriver};
@@ -140,6 +138,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
     }
   }
 
+// select all checkbox
   OnclickedAll() {
     List newmessage = [];
     bool newvalue = false;
@@ -156,6 +155,19 @@ class _CommunicationPageState extends State<CommunicationPage> {
       listDriver = newmessage;
       newvalue = true;
     });
+  }
+
+  void initState() {
+    super.initState();
+
+    driverFetch();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -176,12 +188,14 @@ class _CommunicationPageState extends State<CommunicationPage> {
                   child: Container(
                     margin: EdgeInsets.only(
                         left: 30, right: 60, top: 35, bottom: 10),
-                    child: Text(TranslationUtil.text('Message'),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 23,
-                          color: kPrimaryColor,
-                        )),
+                    child: Text(
+                      TranslationUtil.text('Message'),
+                      style: GoogleFonts.montserrat(
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 23,
+                      ),
+                    ),
                   ),
                 ),
                 Container(
@@ -196,7 +210,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
                                     const EdgeInsets.only(left: 8.0, right: 8),
                                 child: SizedBox(
                                   height: screenHeight * 0.125,
-                                  width: screenWidth - 30,
+                                  width: screenWidth - 25.0,
                                   child: TextFormField(
                                     minLines: 5,
                                     maxLines: 6,
@@ -226,19 +240,23 @@ class _CommunicationPageState extends State<CommunicationPage> {
                           height: 10,
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: screenWidth * 0.70),
+                          margin: EdgeInsets.only(left: screenWidth * 0.7),
                           child: Row(
                             children: [
                               Container(
                                 height: 35,
-                                width: screenWidth * 0.25,
+                                width: screenWidth * 0.26,
                                 child: ElevatedButton(
                                   onPressed: (() {
                                     sendMessage();
                                   }),
-                                  child: const Text(
+                                  child: Text(
                                     "send",
-                                    style: TextStyle(color: Colors.white),
+                                    style: GoogleFonts.montserrat(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
                                   ),
                                   style: ButtonStyle(
                                       backgroundColor:
@@ -268,34 +286,18 @@ class _CommunicationPageState extends State<CommunicationPage> {
                       height: 65,
                       width: screenWidth * 0.5,
                       decoration: const BoxDecoration(
-                        boxShadow: [
-                          // BoxShadow(
-                          //   color: Colors.white,
-                          //   offset: Offset(4, 4),
-                          //   blurRadius: 10,
-                          //   spreadRadius: 1,
-                          // ),
-                          // BoxShadow(
-                          //   color: Colors.white,
-                          //   offset: Offset(-4, -4),
-                          //   blurRadius: 10,
-                          //   spreadRadius: 1,
-                          // ),
-                        ],
-                        // color: Color.fromRGBO(255, 255, 255, 1),
-                      ),
+
+                          // color: Color.fromRGBO(255, 255, 255, 1),
+                          ),
                       child: Container(
                         height: screenHeight * 0.01,
                         width: screenWidth,
                         padding: EdgeInsets.only(top: 10, bottom: 10),
                         margin: EdgeInsets.only(right: 10, left: 10),
                         child: TextField(
+                            onChanged: vehicleSearch,
                             controller: _searchController,
                             decoration: InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.search,
-                                color: Colors.black,
-                              ),
                               hintText: 'Search driver',
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5),
@@ -330,15 +332,18 @@ class _CommunicationPageState extends State<CommunicationPage> {
                       ]),
                       width: MediaQuery.of(context).size.width * 0.25,
                       margin: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.2),
+                          left: MediaQuery.of(context).size.width * 0.21),
                       child: ElevatedButton(
                         onPressed: (() {
                           OnclickedAll();
                         }),
                         child: Text(
                           'Select all',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
+                          style: GoogleFonts.montserrat(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
                         ),
                         style: ButtonStyle(
                             backgroundColor:
@@ -369,21 +374,24 @@ class _CommunicationPageState extends State<CommunicationPage> {
                         children: [
                           Container(
                             height: 60,
-                            width: screenWidth - 27,
+                            width: screenWidth - 29,
                             child: Column(
                               children: <Widget>[
                                 Container(
                                   child: Row(children: [
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(12.0),
                                       child: Container(
                                         width: screenWidth * 0.35,
+                                        margin: EdgeInsets.only(
+                                            top: 10, bottom: 10),
                                         child: Text(
                                           " " + driver['driverName'],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                              color: Colors.grey[500]),
+                                          style: GoogleFonts.montserrat(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 13,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -391,15 +399,17 @@ class _CommunicationPageState extends State<CommunicationPage> {
                                       width: screenWidth * 0.27,
                                       child: Text(
                                         " " + driver['phoneNumber'].toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14,
-                                            color: Colors.grey[500]),
+                                        style: GoogleFonts.montserrat(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                        ),
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          right: 8.0, top: 8),
+                                        right: 8.0,
+                                      ),
                                       child: SizedBox(
                                         width: screenWidth * 0.17,
                                         height: 10,

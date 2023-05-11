@@ -26,6 +26,7 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
   ScrollController controller = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
+  bool _isLoading = true;
   String query = '';
   List Result = [];
   List assignedVehicle = [];
@@ -48,6 +49,8 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
       List results = mapResponse['available'];
 
       setState(() {
+        _isLoading = false;
+
         assignedVehicle = results
             .where((element) => element['status'].contains("INSTOCK"))
             .toList();

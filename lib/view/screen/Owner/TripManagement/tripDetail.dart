@@ -17,7 +17,7 @@ class _TripDetailState extends State<TripDetail> {
   Map<String, dynamic>? results;
 
   static final storage = FlutterSecureStorage();
-
+  bool _isLoading = true;
   _getvehiclebyid() async {
     var value = await storage.read(key: 'jwt');
     try {
@@ -34,6 +34,7 @@ class _TripDetailState extends State<TripDetail> {
 
         print(widget.id);
         setState(() {
+          _isLoading = false;
           results = result;
         });
         return results;
@@ -75,7 +76,7 @@ class _TripDetailState extends State<TripDetail> {
         backgroundColor: kBackgroundColor,
         body: SingleChildScrollView(
             child: SizedBox(
-          child: results == null
+          child: _isLoading
               ? Container(
                   margin: EdgeInsets.only(top: 130),
                   child: Center(child: CircularProgressIndicator()))

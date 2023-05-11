@@ -27,7 +27,7 @@ class _OwnersDriverState extends State<OwnersDriver> {
   List books = [];
   List findVehicle = [];
   List drivers = [];
-  late var timer;
+  bool _isLoading = true;
 
   List Result = [];
   List totalVehicles = [];
@@ -50,6 +50,7 @@ class _OwnersDriverState extends State<OwnersDriver> {
         await storage.write(
             key: "totalDrivers", value: data["totalDrivers"].toString());
         setState(() {
+          _isLoading = false;
           Result = data['drivers'];
           findVehicle = Result;
         });
@@ -62,18 +63,7 @@ class _OwnersDriverState extends State<OwnersDriver> {
       print(e);
     }
   }
-
-  void initState() {
-    super.initState();
-    driverFetch();
-  }
-
-  @override
-  // void dispose() {
-  //   timer.cancel();
-  //   timer;
-  //   super.dispose();
-  // }
+  // search  driver
 
   void driversSearch(String enterKeyboard) {
     setState(() {
@@ -100,6 +90,17 @@ class _OwnersDriverState extends State<OwnersDriver> {
       isPressed = !isPressed;
       // Navigator.of(context).pushNamed(AppRoutes.market);
     });
+  }
+
+  void initState() {
+    super.initState();
+    driverFetch();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -142,7 +143,7 @@ class _OwnersDriverState extends State<OwnersDriver> {
             ),
           ),
           body: SingleChildScrollView(
-              child: findVehicle.isEmpty
+              child: _isLoading
                   ? Container(
                       margin: EdgeInsets.only(top: 130),
                       child: Center(child: CircularProgressIndicator()))

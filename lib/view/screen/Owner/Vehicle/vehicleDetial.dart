@@ -17,6 +17,7 @@ class _vehicleDetialState extends State<vehicleDetial> {
   Map<String, dynamic>? results;
 
   static final storage = FlutterSecureStorage();
+  bool _isLoading = true;
 
   _getvehiclebyid() async {
     var value = await storage.read(key: 'jwt');
@@ -35,6 +36,7 @@ class _vehicleDetialState extends State<vehicleDetial> {
 
         print(widget.id);
         setState(() {
+          _isLoading = false;
           results = result;
         });
         return results;
@@ -45,7 +47,6 @@ class _vehicleDetialState extends State<vehicleDetial> {
       }
     } catch (e) {
       print(e);
-      
     }
   }
 
@@ -76,7 +77,7 @@ class _vehicleDetialState extends State<vehicleDetial> {
         backgroundColor: kBackgroundColor,
         body: SingleChildScrollView(
             child: SizedBox(
-          child: results == null
+          child: _isLoading
               ? Container(
                   margin: EdgeInsets.only(top: 130),
                   child: Center(child: CircularProgressIndicator()))

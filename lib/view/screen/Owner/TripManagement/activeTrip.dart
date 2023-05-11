@@ -26,6 +26,7 @@ class _ActiveTripState extends State<ActiveTrip> {
   ScrollController controller = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
+  bool _isLoading = true;
   String query = '';
   List Result = [];
   List findVehicle = [];
@@ -48,6 +49,7 @@ class _ActiveTripState extends State<ActiveTrip> {
       results = mapResponse['setTrips'];
       setState(() {
         findVehicle = results;
+        _isLoading = false;
       });
       return results;
     } else {
@@ -85,10 +87,9 @@ class _ActiveTripState extends State<ActiveTrip> {
   }
 
   @override
-  // void dispose() {
-  //   timer.cancel();
-  //   super.dispose();
-  // }
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +130,7 @@ class _ActiveTripState extends State<ActiveTrip> {
             ),
           ),
         ),
-        body: findVehicle.isEmpty
+        body: _isLoading
             ? Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Column(

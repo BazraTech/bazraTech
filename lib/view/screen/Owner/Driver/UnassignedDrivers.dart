@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:bazralogin/Model/communication.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +10,6 @@ import 'package:google_places_flutter/model/place_details.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../../../../../Model/communicationList.dart';
 import '../../../../Model/ApiConfig.dart';
-
 import '../../../../const/constant.dart';
 import '../../../../widget/SearchPage.dart';
 import 'vehicleOnStock.dart';
@@ -24,7 +22,7 @@ class UnassignedDrivers extends StatefulWidget {
 
 class _UnassignedDriversState extends State<UnassignedDrivers> {
   TextEditingController _searchController = TextEditingController();
-  ScrollController controller = ScrollController();
+
   bool closeTopContainer = false;
   double topContainer = 0;
   String query = '';
@@ -32,7 +30,8 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
   List findVehicle = [];
   late var timer;
   List totalVehicles = [];
-
+  bool _isLoading = true;
+// fetch unassigndriver
   unassigned() async {
     var client = http.Client();
     final storage = new FlutterSecureStorage();
@@ -51,6 +50,7 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
       List results = mapResponse['drivers'];
 
       setState(() {
+        _isLoading = false;
         Result = results;
         findVehicle = Result;
       });
@@ -58,6 +58,7 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
     }
   }
 
+//  search unassign driver
   void driversSearch(String enterKeyboard) {
     setState(() {
       findVehicle = Result.where((driver) {
@@ -83,6 +84,7 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
 
   @override
   void dispose() {
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -135,7 +137,7 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
             ),
           ),
           backgroundColor: kBackgroundColor,
-          body: findVehicle.isEmpty
+          body: _isLoading
               ? Center(child: CircularProgressIndicator())
               : SingleChildScrollView(
                   child: Column(

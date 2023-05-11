@@ -24,7 +24,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
   String query = '';
   List books = [];
   List vehicleStatusList = [];
-  late var timer;
+  bool _isLoading = true;
   vehicleFetchbystatus() async {
     var client = http.Client();
     final storage = new FlutterSecureStorage();
@@ -43,6 +43,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
       vehicleStatusList = mapResponse['vehiclesINF'];
       print(vehicleStatusList);
       setState(() {
+        _isLoading = false;
         vehicleStatusList = vehicleStatusList;
         findVehicle = vehicleStatusList;
       });
@@ -126,7 +127,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
             ),
           ),
           body: SingleChildScrollView(
-              child: findVehicle.isEmpty
+              child: _isLoading
                   ? Container(
                       margin: EdgeInsets.only(top: 130),
                       child: Center(child: CircularProgressIndicator()))

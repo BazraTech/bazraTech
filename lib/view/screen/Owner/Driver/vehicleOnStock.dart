@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:bazralogin/Model/communication.dart';
-
 import 'package:bazralogin/Theme/customAppBar.dart';
 import 'package:bazralogin/const/color.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_places_flutter/model/place_details.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
 import '../../../../../../Model/communicationList.dart';
 import '../../../../Model/ApiConfig.dart';
-
 import '../../../../const/constant.dart';
 import '../../../../widget/SearchPage.dart';
 import 'assignDriver.dart';
@@ -40,6 +36,7 @@ class _VehicleOnstockState extends State<VehicleOnstock> {
   List totalVehicles = [];
   var client = http.Client();
   final storage = new FlutterSecureStorage();
+  bool _isLoading = true;
 // fetch car on maintaining
   unassignedDrivers() async {
     var token = await storage.read(key: 'jwt');
@@ -55,6 +52,7 @@ class _VehicleOnstockState extends State<VehicleOnstock> {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;
       List results = mapResponse['unassigned'];
       setState(() {
+        _isLoading = false;
         Result = results;
         findVehicle = Result;
       });
@@ -95,10 +93,10 @@ class _VehicleOnstockState extends State<VehicleOnstock> {
   }
 
   @override
-  // void dispose() {
-  //   timer.cancel();
-  //   super.dispose();
-  // }
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +146,7 @@ class _VehicleOnstockState extends State<VehicleOnstock> {
             ),
           ),
           backgroundColor: kBackgroundColor,
-          body: findVehicle.isEmpty
+          body: _isLoading
               ? Center(child: CircularProgressIndicator())
               : SingleChildScrollView(
                   child: Column(

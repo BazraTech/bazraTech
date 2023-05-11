@@ -15,7 +15,7 @@ class Driver_Detial extends StatefulWidget {
 
 class _Driver_DetialState extends State<Driver_Detial> {
   Map<String, dynamic>? results;
-
+  bool _isLoading = true;
   static final storage = FlutterSecureStorage();
 
   _getvehiclebyid() async {
@@ -35,6 +35,7 @@ class _Driver_DetialState extends State<Driver_Detial> {
 
         print(widget.id);
         setState(() {
+          _isLoading = false;
           results = result;
         });
         return results;
@@ -90,7 +91,7 @@ class _Driver_DetialState extends State<Driver_Detial> {
         backgroundColor: kBackgroundColor,
         body: SingleChildScrollView(
             child: SizedBox(
-          child: results == null
+          child: _isLoading
               ? Container(
                   margin: EdgeInsets.only(top: 130),
                   child: Center(child: CircularProgressIndicator()))
