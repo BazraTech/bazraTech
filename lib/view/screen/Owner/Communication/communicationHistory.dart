@@ -39,6 +39,7 @@ class _communicationHistoryState extends State<communicationHistory> {
       List results = mapResponse['messages'];
 
       setState(() {
+        _isLoading = false;
         Result = results;
       });
 
@@ -74,15 +75,11 @@ class _communicationHistoryState extends State<communicationHistory> {
               children: [
                 Container(
                   height: screenHeight * 0.08,
-                  width: screenWidth * 0.85,
+                  width: screenWidth * 0.55,
                   padding: EdgeInsets.only(top: 10, bottom: 10),
                   margin: EdgeInsets.only(right: 10, left: 10),
                   child: TextField(
                       decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Colors.black,
-                    ),
                     hintText: 'Search message history',
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
@@ -97,12 +94,16 @@ class _communicationHistoryState extends State<communicationHistory> {
                     ),
                   )),
                 ),
-                SizedBox(
-                    height: screenHeight * 0.1,
-                    child: Icon(
-                      Icons.calendar_month,
-                      size: 35,
-                    ))
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      height: screenHeight * 0.1,
+                      child: Icon(
+                        Icons.calendar_month,
+                        size: 45,
+                      )),
+                )
               ],
             ),
             Padding(
@@ -115,13 +116,18 @@ class _communicationHistoryState extends State<communicationHistory> {
                       " Message History",
                       style: GoogleFonts.montserrat(
                         color: Colors.black,
-                        fontWeight: FontWeight.normal,
+                        fontWeight: FontWeight.bold,
                         fontSize: 17,
                       ),
                     ),
                   ),
                 ],
               ),
+            ),
+            Divider(
+              color: Colors.grey,
+              thickness: 0.7,
+              height: 20,
             ),
             Container(
               height: screenHeight,
@@ -134,53 +140,75 @@ class _communicationHistoryState extends State<communicationHistory> {
                   return Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: screenHeight * 0.15,
-                          width: screenWidth - 16.0,
-                          child: Result.isEmpty
-                              ? Container(
-                                  margin: EdgeInsets.only(top: 130),
-                                  child: Center(
-                                      child: CircularProgressIndicator()))
-                              : Card(
-                                  child: Container(
-                                      child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8, bottom: 8, top: 0),
-                                    child: Row(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: screenHeight * 0.1,
+                            width: screenWidth - 16.0,
+                            child: _isLoading
+                                ? Container(
+                                    margin: EdgeInsets.only(top: 130),
+                                    child: Center(
+                                        child: CircularProgressIndicator()))
+                                : Container(
+                                    height: screenHeight * 0.1,
+                                    width: screenWidth - 16.0,
+                                    child: Container(
+                                        child: Row(
                                       children: [
                                         Container(
-                                          margin: EdgeInsets.only(
-                                              bottom: screenHeight * 0.05),
                                           child: SizedBox(
-                                            height: screenHeight * 0.07,
+                                            height: screenHeight * 0.06,
+                                            width: screenWidth * 0.1,
                                             child: CircleAvatar(
+                                              backgroundColor: Colors.white,
                                               child: SizedBox(
-                                                height: screenHeight * 0.04,
-                                                child:
-                                                    Center(child: Text('AM')),
-                                              ),
+                                                  height: screenHeight * 0.06,
+                                                  child: Center(
+                                                    child: Text(
+                                                      Result[index]
+                                                              ["recipientName"]
+                                                          .substring(0, 1),
+                                                      style: GoogleFonts
+                                                          .montserrat(
+                                                        color: kPrimaryColor,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 12,
+                                                      ),
+                                                    ),
+                                                  )),
                                             ),
                                           ),
                                         ),
                                         Container(
+                                          height: screenHeight * 0.06,
+                                          width: screenWidth * 0.6,
                                           margin: EdgeInsets.only(
-                                              left: screenWidth * 0.06),
-                                          child: Text(
-                                            Result[index]['message'],
-                                            style: GoogleFonts.montserrat(
-                                              color: kPrimaryColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 13,
-                                            ),
+                                              top: screenHeight * 0.03,
+                                              left: screenWidth * 0.03),
+                                          child: Column(
+                                            children: [
+                                              Center(
+                                                child: Text(
+                                                  Result[index]['message'],
+                                                  style: GoogleFonts.montserrat(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
-                                    ),
-                                  )),
-                                ),
-                        ),
+                                    )),
+                                  ),
+                          )),
+                      Divider(
+                        color: Colors.grey,
+                        thickness: 0.7,
+                        height: 20,
                       ),
                     ],
                   );

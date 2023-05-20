@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:bazralogin/Model/communication.dart';
 import 'package:bazralogin/Theme/customAppBar.dart';
+import 'package:bazralogin/config/APIService.dart';
 import 'package:bazralogin/const/color.dart';
 import 'package:bazralogin/view/screen/Owner/Driver/assignDriver.dart';
 import 'package:bazralogin/view/screen/Owner/TripManagement/setTrip.dart';
@@ -41,8 +42,7 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    var response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/All/Driver'),
+    var response = await http.get(Uri.parse(ApIConfig.avaiableTrip),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;
@@ -123,6 +123,7 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
           backgroundColor: kPrimaryColor,
           title: Container(
             width: double.infinity,
+            margin: EdgeInsets.only(right: screenWidth * 0.12),
             height: 40,
             color: Colors.white,
             child: Center(

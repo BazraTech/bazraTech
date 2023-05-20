@@ -110,26 +110,6 @@ class _SettripsState extends State<Settrips> {
     );
   }
 
-  activeTrip() async {
-    var client = http.Client();
-    final storage = new FlutterSecureStorage();
-    var token = await storage.read(key: 'jwt');
-    Map<String, String> requestHeaders = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-    var response =
-        await http.get(Uri.parse(ApIConfig.allTrip), headers: requestHeaders);
-    if (response.statusCode == 200) {
-      var mapResponse = json.decode(response.body) as Map<String, dynamic>;
-      Result = mapResponse['activeTrips'];
-      return Result;
-    } else {
-      throw Exception('not loaded ');
-    }
-  }
-
   setTrips() async {
     try {
       final storage = new FlutterSecureStorage();
@@ -142,8 +122,7 @@ class _SettripsState extends State<Settrips> {
         "startDate": "2023-05-08",
         "tripType": "$trip"
       };
-      var response = await http.post(
-          Uri.parse('http://64.226.104.50:9090/Api/Admin/CreateTrip'),
+      var response = await http.post(Uri.parse(ApIConfig.creatTrip),
           body: jsonEncode(data) as String,
           headers: {
             "Content-Type": "application/json",
@@ -171,8 +150,8 @@ class _SettripsState extends State<Settrips> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    String? selectedItem = 'SHORT';
-    List<String> items = ['SHORT', 'LONG'];
+    String? selectedItem = 'Select trip';
+    List<String> items = ['SHORT', 'LONG', "Select trip"];
     print('$trip ');
     return Scaffold(
         backgroundColor: Color.fromARGB(255, 229, 229, 229),
@@ -231,8 +210,11 @@ class _SettripsState extends State<Settrips> {
 
                                     child: Container(
                                       height: screenHeight * 0.08,
-                                      child: Image.asset(
-                                          'assets/images/R-removebg-preview.png'),
+                                      child: Icon(
+                                        Ionicons.car,
+                                        color: Colors.red,
+                                        size: 23,
+                                      ),
                                     ),
                                     padding: EdgeInsets.all(11),
                                     minWidth: screenWidth * 0.004,
@@ -301,8 +283,8 @@ class _SettripsState extends State<Settrips> {
                               width: screenWidth,
                               child: TextFormField(
                                 decoration: ThemeHelper().textInputDecoration(
+                                  'Driver Name',
                                   '${widget.drivername} ',
-                                  ' Enter  Driver Name',
                                 ),
                               ),
                             ),
@@ -320,7 +302,7 @@ class _SettripsState extends State<Settrips> {
                                 width: screenWidth,
                                 child: TextField(
                                   decoration: ThemeHelper().textInputDecoration(
-                                    '${widget.platenumber}',
+                                    'Plate number',
                                     '${widget.platenumber}',
                                   ),
                                 )),
@@ -355,7 +337,7 @@ class _SettripsState extends State<Settrips> {
                                       color: Colors.black,
                                     ),
                                     hintStyle: const TextStyle(
-                                        fontWeight: FontWeight.w500,
+                                        fontWeight: FontWeight.w300,
                                         fontSize: 15),
                                     filled: true,
                                     contentPadding:

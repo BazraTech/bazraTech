@@ -33,6 +33,7 @@ var timer;
 final storage = new FlutterSecureStorage();
 
 class _DriversFormOwnerState extends State<DriversFormOwner> {
+  String? _name;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final driverName = TextEditingController();
   final LicenseNumber = TextEditingController();
@@ -48,6 +49,9 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
   final dateExpire = TextEditingController();
 
   List Result = [];
+  List<String> gendersatus = ["Male", "Female", "Select Gender"];
+  final RegExp nameRegex = RegExp(r'^[A-Z][a-zA-Z\s]*$');
+  String? selectedItem = "Select Gender";
 
   Future<void> _showMyDialog() async {
     return showDialog<void>(
@@ -112,7 +116,7 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
     formData.fields['birthDate'] = dateBirth.text;
     formData.fields["experience"] = Experience.text;
     formData.fields["licenseGrade"] = LicenseGrade.text;
-    formData.fields["gender"] = Gender.text;
+    formData.fields["gender"] = "$selectedItem";
     formData.fields["licenseIssueDate"] = dateIssue.text;
     formData.fields["licenseExpireDate"] = dateExpire.text;
 
@@ -216,7 +220,7 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
                                   ))),
                           Container(
                               margin: EdgeInsets.only(
-                                  left: screenHeight * 0.1,
+                                  left: screenHeight * 0.04,
                                   top: screenHeight * 0.04),
                               child: Text(
                                 "Registation From",
@@ -229,8 +233,8 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
+                    Container(
+                      width: screenWidth - 32,
                       child: Column(
                         children: [
                           SizedBox(
@@ -240,13 +244,20 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
                             cursorColor: Colors.black,
                             keyboardType: TextInputType.text,
                             controller: driverName,
-                            decoration: ThemeHelper()
-                                .textInputDecoration("Driver Name"),
+                            decoration: ThemeHelper().textInputDecoration(
+                              "Driver Name",
+                            ),
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Please Enter Your Driver Name';
+                                return 'Please enter your name';
+                              }
+                              if (!nameRegex.hasMatch(value)) {
+                                return 'Name should start with a capital letter';
                               }
                               return null;
+                            },
+                            onSaved: (value) {
+                              _name = value;
                             },
                             style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
@@ -280,10 +291,10 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
                               keyboardType: TextInputType.text,
                               controller: ownerPhone,
                               decoration: ThemeHelper()
-                                  .textInputDecoration("owner phone "),
+                                  .textInputDecoration("Owner phone "),
                               validator: (value) {
                                 if (value?.length != 10) {
-                                  return 'Please Enter Your Gender';
+                                  return 'Please Enter  owner phone';
                                   return null;
                                 }
                               },
@@ -294,23 +305,35 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
                           SizedBox(
                             height: 15,
                           ),
-                          SizedBox(
-                            child: TextFormField(
-                              cursorColor: Colors.black,
-                              cursorHeight: 25,
-                              keyboardType: TextInputType.text,
-                              controller: Gender,
-                              decoration:
-                                  ThemeHelper().textInputDecoration("Gender"),
-                              validator: (value) {
-                                if (value?.length != 10) {
-                                  return 'Please Enter Your Gender';
+                          Container(
+                            width: screenWidth - 16,
+                            child: DropdownButtonFormField<String>(
+                                decoration: ThemeHelper().textInputDecoration(),
+                                value: selectedItem,
+                                items: gendersatus
+                                    .map((item) => DropdownMenuItem<String>(
+                                        value: item,
+                                        child: Text(
+                                          item,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w300,
+                                              fontSize: 15),
+                                        )))
+                                    .toList(),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Please select an option';
+                                  }
                                   return null;
-                                }
-                              },
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
+                                },
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedItem = newValue;
+                                  });
+
+                                  newValue:
+                                  selectedItem;
+                                }),
                           ),
                           SizedBox(
                             height: 15,
@@ -543,7 +566,10 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
                             margin: EdgeInsets.only(top: 15.0),
                             child: ElevatedButton(
                               onPressed: () async {
-                                registerDriver(licensePic.text, driverPic.text);
+                                if (_formKey.currentState!.validate()) {
+                                  registerDriver(
+                                      licensePic.text, driverPic.text);
+                                }
                               },
                               child: Container(
                                 height:

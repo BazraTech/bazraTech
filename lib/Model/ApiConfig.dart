@@ -8,6 +8,7 @@ import 'loginRequestModel.dart';
 
 class APIService {
   var client = http.Client();
+  static String Logoavtar = "";
   final storage = new FlutterSecureStorage();
   static String? ownername;
   static String? totalStockedVehicles;
@@ -152,8 +153,8 @@ class APIService {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.vehicleApi);
-    var response = await client.get(url, headers: requestHeaders);
+    var url = ApIConfig.allvehicle;
+    var response = await client.get(Uri.parse(url), headers: requestHeaders);
 
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;
@@ -255,6 +256,7 @@ class APIService {
 
       var value = await storage.read(key: 'jwt');
 
+     getLogo();
       print(ownername);
 
       return true;
@@ -286,6 +288,28 @@ class APIService {
       return true;
     } else {
       return false;
+    }
+  }
+
+ static getLogo() async {
+    var client = http.Client();
+    final storage = new FlutterSecureStorage();
+    var token = await storage.read(key: 'jwt');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var response =
+        await http.get(Uri.parse(ApIConfig.logo), headers: requestHeaders);
+    if (response.statusCode == 200) {
+      var mapResponse = json.decode(response.body) as Map<String, dynamic>;
+
+      Logoavtar = mapResponse["logo"];
+
+      return Logoavtar;
+    } else {
+      throw Exception('not loaded ');
     }
   }
 }

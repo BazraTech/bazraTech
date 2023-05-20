@@ -3,9 +3,7 @@ import 'package:bazralogin/view/screen/Loging/forgotPin.dart';
 import 'package:bazralogin/view/screen/Owner/Profile/profileEdit/languageOptions.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -28,7 +26,7 @@ class _ProfileState extends State<Profile> {
     double screenWidth = MediaQuery.of(context).size.width;
     final TranslationController controller = Get.put(TranslationController());
     return Scaffold(
-      backgroundColor: kBackgroundColor,
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Container(

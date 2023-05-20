@@ -112,6 +112,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
             ),
             backgroundColor: kPrimaryColor,
             title: Container(
+              margin: EdgeInsets.only(right: screenWidth * 0.12),
               width: double.infinity,
               height: 40,
               color: Colors.white,

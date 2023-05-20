@@ -493,6 +493,7 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                       ModifyDriverStatus(
                                                     driverLicense:
                                                         driver['licenseNumber'],
+                                                    status: driver['status'],
                                                   ),
                                                 ),
                                               );
@@ -520,35 +521,6 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                             ),
                                           ),
                                         )
-                                        // GestureDetector(
-                                        //   onTap: (() {
-                                        //     Navigator.push(
-                                        //         context,
-                                        //         MaterialPageRoute(
-                                        //             builder: (context) =>
-                                        //                 ModifyDriverStatus(
-                                        //                   driverLicense: driver[
-                                        //                       'licenseNumber'],
-                                        //                 )));
-                                        //   }),
-                                        //   child: Padding(
-                                        //     padding: const EdgeInsets.all(10.0),
-                                        //     child: Container(
-                                        //       width: screenWidth,
-                                        //       color: Color.fromRGBO(
-                                        //           244, 244, 244, 0.8),
-                                        //       height: 40,
-                                        //       margin: EdgeInsets.only(top: 20),
-                                        //       child: const Center(
-                                        //         child: Text("Update Status",
-                                        //             style: TextStyle(
-                                        //                 fontSize: 15,
-                                        //                 fontWeight:
-                                        //                     FontWeight.bold)),
-                                        //       ),
-                                        //     ),
-                                        //   ),
-                                        // )
                                       ],
                                     ),
                                   ),

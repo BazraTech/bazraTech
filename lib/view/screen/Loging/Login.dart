@@ -3,15 +3,18 @@ import 'dart:ui';
 import 'package:bazralogin/Theme/Alert.dart';
 import 'package:bazralogin/view/screen/Loging/forgotPin.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:bazralogin/Route/route.dart';
+
 import 'package:bazralogin/Theme/clippbox.dart';
 import 'package:bazralogin/const/color.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
+import '../../../Model/driverCount.dart';
 import '../../../Model/loginRequestModel.dart';
+import '../../../Route/Routes.dart';
 import '../../../config/APIService.dart';
 import '../../../Model/ApiConfig.dart';
 import '../Bottom/Bottom.dart';
@@ -45,6 +48,15 @@ class _LoginState extends State<Login> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   // UserController userController = UserController();
+  Future Total_Drivers() async {
+    final totalDrivers = await CountDrivers.TotalDrivers();
+  }
+
+  Future vehicleFetch() async {
+    // fetch list of total vehicles
+    await APIService.vehicleFetch();
+  }
+
   void clickBtnLogin() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState?.save();
@@ -73,7 +85,7 @@ class _LoginState extends State<Login> {
       var value = await storage.read(key: 'jwt');
 
       Map data = {
-        "phoneNumber": "0927272727",
+        "phoneNumber": "${phoneController.text}",
       };
       var response = await http.post(
           Uri.parse('http://64.226.104.50:9090/Api/User/GeneratePIN'),
@@ -105,8 +117,9 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
-    {}
     super.initState();
+    Total_Drivers();
+    vehicleFetch();
     //futureWelcome = fetchWelcome();
     //clickLoginBtn();
   }
@@ -180,8 +193,7 @@ class _LoginState extends State<Login> {
                                               onSaved: ((newValue) {
                                                 username = newValue;
                                               }),
-                                              inputFormatters: <
-                                                  TextInputFormatter>[
+                                              inputFormatters: <TextInputFormatter>[
                                                 FilteringTextInputFormatter
                                                     .allow(RegExp(r'[0-9]')),
                                                 FilteringTextInputFormatter
@@ -342,9 +354,8 @@ class _LoginState extends State<Login> {
                                                         if (_formKey
                                                             .currentState!
                                                             .validate()) {
-                                                          Navigator.of(context)
-                                                              .pushNamed(AppRoutes
-                                                                  .authRegister);
+                                                          Get.toNamed(AppRoutes
+                                                              .getHomeRoute());
                                                         }
                                                       }),
                                                       child: ElevatedButton(
@@ -422,8 +433,8 @@ class _LoginState extends State<Login> {
                                         child: Container(
                                           child: GestureDetector(
                                             onTap: () {
-                                              Navigator.of(context).pushNamed(
-                                                  AppRoutes.authRegister);
+                                              // Navigator.of(context).pushNamed(
+                                              //     AppRoutes.authRegister);
                                             },
                                             child: Text('SIGN UP',
                                                 style: TextStyle(

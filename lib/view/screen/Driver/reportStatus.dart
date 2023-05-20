@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -7,7 +6,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
-
 import 'package:http/http.dart' as http;
 
 class reportStatus extends StatefulWidget {
@@ -81,34 +79,22 @@ class _reportStatusState extends State<reportStatus> {
                         bottom: Radius.circular(30),
                       )),
                   child: Padding(
-                    padding: const EdgeInsets.all(8),
+                    padding: EdgeInsets.all(8),
                     child: Row(
                       children: [
                         Container(
                           height: screenHeight * 0.06,
                           margin: EdgeInsets.only(bottom: screenHeight * 0.09),
                           width: screenWidth * 0.13,
-                          child: MaterialButton(
-                            onPressed: () async {
-                              navigator!.pop(context);
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
                             },
-
-                            child: Material(
-                              color: Colors.transparent,
-                              child: Center(
-                                child: Icon(
-                                  Ionicons.chevron_back,
-                                  size: 23,
-                                  color: Colors.white,
-                                ),
-                              ),
+                            icon: Icon(
+                              Ionicons.chevron_back,
+                              size: 34,
+                              color: Colors.white,
                             ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              side: BorderSide(color: Colors.white, width: 2),
-                            ),
-
-                            //use this class Circleborder() for circle shape.
                           ),
                         ),
                       ],

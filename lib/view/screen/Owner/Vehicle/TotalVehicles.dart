@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:bazralogin/config/APIService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -34,8 +35,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    var response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/Owner/All'),
+    var response = await http.get(Uri.parse(ApIConfig.allvehicle),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;
@@ -109,6 +109,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
             backgroundColor: kPrimaryColor,
             title: Container(
               width: double.infinity,
+              margin: EdgeInsets.only(right: screenWidth * 0.12),
               height: 40,
               color: Colors.white,
               child: Center(

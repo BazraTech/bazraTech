@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:bazralogin/Route/Routes.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +10,6 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ionicons/ionicons.dart';
-
 
 import '../../../Theme/TextInput.dart';
 import '../Bottom/Bottom.dart';
@@ -37,7 +39,7 @@ class _forgotPinState extends State<forgotPin> {
         "pin": "${resetpin.text}"
       };
       var response = await http.post(
-          Uri.parse('http://198.199.67.201:9090/Api/User/SetPassword'),
+          Uri.parse('http://64.226.104.50:9090/Api/User/SetPin'),
           body: jsonEncode(data) as String,
           headers: {
             "Content-Type": "application/json",
@@ -46,8 +48,7 @@ class _forgotPinState extends State<forgotPin> {
           });
 
       if (response.statusCode == 200) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => BottomNav()));
+        Get.offAllNamed("/home");
       } else {
         print('noooo');
       }
@@ -64,7 +65,6 @@ class _forgotPinState extends State<forgotPin> {
     print("${currentPassword.text}");
 
     return Scaffold(
-      bottomSheet: ConfirmPassword(),
       backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
         child: Container(
@@ -74,7 +74,7 @@ class _forgotPinState extends State<forgotPin> {
             children: [
               Container(
                 margin: EdgeInsets.only(
-                    top: screenHeight * 0.1, left: screenHeight * 0.01),
+                    top: screenHeight * 0.1, left: screenHeight * 0.00),
                 child: Row(
                   children: [
                     Container(
@@ -93,115 +93,163 @@ class _forgotPinState extends State<forgotPin> {
                         margin: EdgeInsets.only(left: screenWidth * 0.14),
                         child: Text(
                           "Change password",
-                          style: TextStyle(fontSize: 23),
+                          style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Nunito"),
                         )),
                   ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(14.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  height: screenHeight * 0.09,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          child: Icon(
+                            Ionicons.chatbox,
+                            color: Color.fromRGBO(255, 194, 14, 1),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        child: Text(
+                            "OTP is alread send  to your phone\n ${widget.phone}"),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
                 child: Container(
                   margin: EdgeInsets.only(top: screenHeight * 0.09),
                   child: Row(
-                    children: [Text(" New Pin")],
+                    children: [
+                      Text(
+                        " New Pin",
+                        style: TextStyle(
+                          fontFamily: "Nunito",
+                          fontSize: 15,
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),
               Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                        width: screenWidth,
-                        child: TextField(
-                          controller: resetpin,
-                          decoration: ThemeHelper().textInputDecoration(),
-                        )),
-                  ),
+                  Container(
+                      width: screenWidth - 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: TextField(
+                        controller: resetpin,
+                        decoration: ThemeHelper().textInputDecoration(),
+                      )),
                 ],
               ),
               SizedBox(
                 height: 10,
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(12.0),
                 child: Container(
                   child: Row(
-                    children: [Text(" New Password")],
+                    children: [
+                      Text(
+                        " New Password",
+                        style: TextStyle(fontFamily: "Nunito", fontSize: 15),
+                      )
+                    ],
                   ),
                 ),
               ),
               Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                        width: screenWidth,
-                        child: TextField(
-                          controller: newpass,
-                          decoration: ThemeHelper().textInputDecoration(),
-                        )),
-                  ),
+                  Container(
+                      width: screenWidth - 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: TextField(
+                        controller: newpass,
+                        decoration: ThemeHelper().textInputDecoration(),
+                      )),
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(12.0),
                 child: Container(
                   margin: EdgeInsets.only(top: screenHeight * 0.03),
                   child: Row(
-                    children: [Text(" Confirm  Password")],
+                    children: [
+                      Text(
+                        " Confirm  Password",
+                        style: TextStyle(
+                          fontFamily: "Nunito",
+                          fontSize: 15,
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),
               Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                        width: screenWidth,
-                        child: TextField(
-                          controller: Confirmpass,
-                          decoration: ThemeHelper().textInputDecoration(),
-                        )),
-                  ),
+                  Container(
+                      width: screenWidth - 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: TextField(
+                        controller: Confirmpass,
+                        decoration: ThemeHelper().textInputDecoration(),
+                      )),
                 ],
-              )
+              ),
+              Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.15,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        width: MediaQuery.of(context).size.width - 30,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            ChangePasswords();
+                          },
+                          child: const Text(
+                            "Confirm",
+                            style: TextStyle(
+                                fontFamily: "Nunito",
+                                color: Color.fromRGBO(255, 255, 255, 1),
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          style: ThemeHelper().buttonStyle(),
+                        ),
+                      ),
+                    ],
+                  ))
             ],
           ),
         ),
       ),
     );
-  }
-
-  Widget ConfirmPassword() {
-    return Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.15,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(0), topRight: Radius.circular(0))),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
-              width: MediaQuery.of(context).size.width - 30,
-              child: ElevatedButton(
-                onPressed: () {
-                  ChangePasswords();
-                },
-                child: const Text(
-                  "Confrim",
-                  style: TextStyle(
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
-                ),
-                style: ThemeHelper().buttonStyle(),
-              ),
-            ),
-          ],
-        ));
   }
 }

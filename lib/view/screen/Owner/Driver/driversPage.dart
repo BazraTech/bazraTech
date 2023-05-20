@@ -1,6 +1,6 @@
 import 'package:bazralogin/controller/Localization.dart';
 
-import 'package:bazralogin/Route/route.dart';
+
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

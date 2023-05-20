@@ -1,5 +1,5 @@
 import 'package:bazralogin/Model/item.dart';
-import 'package:bazralogin/Route/route.dart';
+// import 'package:bazralogin/Route/route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +22,7 @@ class carTest extends StatelessWidget {
               margin: EdgeInsets.only(top: 100),
               child: ElevatedButton(
                 onPressed: (() {
-                  Navigator.pushNamed(context, AppRoutes.carhistory);
+                  // Navigator.pushNamed(context, AppRoutes.carhistory);
                 }),
                 child: Text(
                   "History",

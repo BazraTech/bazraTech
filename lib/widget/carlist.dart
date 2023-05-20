@@ -1,5 +1,5 @@
 import 'package:bazralogin/Model/item.dart';
-import 'package:bazralogin/Route/route.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +19,8 @@ class _FeedproductsState extends State<Feedproducts> {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context)
-              .pushNamed(AppRoutes.mapTracking, arguments: carAttributes.id);
+          // Navigator.of(context)
+          //     .pushNamed(AppRoutes.mapTracking, arguments: carAttributes.id);
         },
         child: Container(
           width: 10,

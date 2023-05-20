@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'package:bazralogin/controller/Localization.dart';
 import 'package:bazralogin/view/screen/Loging/Login.dart';
 import 'package:bazralogin/Theme/verticalDash.dart';
+import 'package:bazralogin/view/screen/Owner/Alert/Notification.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
@@ -11,13 +14,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../Model/driverCount.dart';
 import '../../../../Model/ApiConfig.dart';
+import '../../../../config/APIService.dart';
 import '../../../../const/constant.dart';
 import '../Driver/driversPage.dart';
 import '../TripManagement/setGuzo.dart';
 import '../Vehicle/vehicleStatus.dart';
-
 import '../report/alertType.dart';
 import '../report/singleReport.dart';
+import 'package:http/http.dart' as http;
 
 class OwenerHomepage extends StatefulWidget {
   int? index;
@@ -29,8 +33,13 @@ class OwenerHomepage extends StatefulWidget {
 
 class _OwenerHomepageState extends State<OwenerHomepage> {
   static bool isPressed = true;
+  bool _isLoading = true;
+  late Future<String> _imageUrl;
   Offset distance = isPressed ? Offset(10, 10) : Offset(28, 28);
   double blur = isPressed ? 5.0 : 30.0;
+  String Logoavtar = "";
+  String ownerpic = "";
+  String bazralogo = "";
   List<String> items = [
     'English',
     'Amaharic',
@@ -115,11 +124,60 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
     final assignedDrivers = await CountDrivers.AssignedDriver();
   }
 
+  Future<String> fetchImage() async {
+    var client = http.Client();
+    final storage = new FlutterSecureStorage();
+    var token = await storage.read(key: 'jwt');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    final response = await http.get(
+        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+        headers: requestHeaders);
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      Map<String, dynamic> data = json.decode(response.body);
+      await storage.write(key: "ownerpic", value: data["avatar"].toString());
+
+      ownerpic = (await storage.read(key: 'ownerpic'))!;
+      return data["logo"];
+    } else {
+      throw Exception('Failed to load image');
+    }
+  }
+
+  Future<String> _fetchLogo() async {
+    var client = http.Client();
+    final storage = new FlutterSecureStorage();
+    var token = await storage.read(key: 'jwt');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    final response = await http.get(
+        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+        headers: requestHeaders);
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      Map<String, dynamic> data = json.decode(response.body);
+      await storage.write(key: "ownerpic", value: data["avatar"].toString());
+
+      ownerpic = (await storage.read(key: 'ownerpic'))!;
+      return data["avatar"];
+    } else {
+      throw Exception('Failed to load image');
+    }
+  }
+
   var locale;
   List languge = ['en_us', 'am_AM', 'a_OR'];
   @override
   void initState() {
     // TODO: implement initState
+
     Total_Drivers();
     Assigned();
     Unassigned();
@@ -155,9 +213,26 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                       child: SizedBox(
                           height: screenHeight * 0.08,
                           width: screenWidth * 0.1,
-                          child: Image(
-                              image: AssetImage(
-                                  "assets/images/R-removebg-preview.png"))),
+                          child: ClipOval(
+                              child: SizedBox(
+                            height: screenHeight * 0.5,
+                            width: screenWidth * 0.09,
+                            child: FutureBuilder(
+                              future: fetchImage(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<String> snapshot) {
+                                if (snapshot.connectionState !=
+                                    ConnectionState.done) return Text("");
+                                return ClipOval(
+                                  child: SizedBox(
+                                      height: screenHeight * 0.4,
+                                      width: screenWidth * 0.9,
+                                      child: Image.network(
+                                          snapshot.data.toString())),
+                                );
+                              },
+                            ),
+                          ))),
                     ),
                   ),
                   Padding(
@@ -166,10 +241,20 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                       width: screenWidth * 0.13,
                       height: screenHeight * 0.08,
                       margin: EdgeInsets.only(left: screenWidth * 0.26),
-                      child: Icon(
-                        Ionicons.notifications,
-                        size: 28,
-                        color: Color.fromRGBO(85, 164, 240, 1),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    notificationPage()),
+                          );
+                        },
+                        child: Icon(
+                          Ionicons.notifications,
+                          size: 28,
+                          color: Color.fromRGBO(85, 164, 240, 1),
+                        ),
                       ),
                     ),
                   ),
@@ -244,16 +329,20 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                             )),
                         Container(
                           margin: EdgeInsets.only(left: screenWidth * 0.07),
-                          child: SizedBox(
-                            // width: screenWidth * 0.1,
-                            // height: screenHeight * 0.06,
-                            child: Container(
-                              margin: EdgeInsets.only(right: 27, top: 0),
-                              height: screenHeight * 0.075,
-                              child: Image.asset(
-                                "assets/images/profile.png",
-                              ),
-                            ),
+                          child: FutureBuilder(
+                            future: _fetchLogo(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<String> snapshot) {
+                              if (snapshot.connectionState !=
+                                  ConnectionState.done) return Text("");
+                              return ClipOval(
+                                child: SizedBox(
+                                    height: screenHeight * 0.05,
+                                    width: screenWidth * 0.09,
+                                    child: Image.network(
+                                        snapshot.data.toString())),
+                              );
+                            },
                           ),
                         ),
                       ],
@@ -287,7 +376,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                       color: kPrimaryColor,
 
                                       child: Text(
-                                        "280",
+                                        CountDrivers.totalDrivers.toString(),
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),
@@ -325,7 +414,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                       color: kPrimaryColor,
 
                                       child: Text(
-                                        "280",
+                                        APIService.totalVehicle.toString(),
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),

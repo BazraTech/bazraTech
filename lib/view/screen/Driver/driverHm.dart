@@ -441,10 +441,10 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                         padding: const EdgeInsets.all(10),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => reportStatus()));
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => reportStatus()));
                           },
                           child: AnimatedContainer(
                               //padding: EdgeInsets.only(bottom: _padding),
@@ -487,64 +487,6 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                             color: Colors.blue,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14)),
-                                  ),
-                                ],
-                              )),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: GestureDetector(
-                          onTap: (() {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CreateAlert(
-                                          title: '',
-                                        )));
-                          }),
-                          child: AnimatedContainer(
-                              //padding: EdgeInsets.only(bottom: _padding),
-                              duration: Duration(milliseconds: 100),
-                              decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: isPressed
-                                      ? [
-                                          BoxShadow(
-                                            color: Colors.grey.shade600,
-                                            offset: Offset(4, 4),
-                                            blurRadius: 10,
-                                            spreadRadius: 1,
-                                          ),
-                                          const BoxShadow(
-                                            color: Colors.white,
-                                            offset: Offset(-2, -2),
-                                            blurRadius: 20,
-                                            spreadRadius: 1,
-                                          ),
-                                        ]
-                                      : null),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.04,
-                                    margin: EdgeInsets.only(top: 12),
-                                    //height: 70,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Image.asset(
-                                      "assets/images/available.png",
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 8),
-                                    child: const Text("Available Market",
-                                        style: TextStyle(
-                                            color: Colors.blue,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 13)),
                                   ),
                                 ],
                               )),

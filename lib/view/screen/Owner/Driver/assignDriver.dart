@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:bazralogin/Route/Routes.dart';
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
@@ -90,8 +93,7 @@ class _assignDriverState extends State<assignDriver> {
                         fontWeight: FontWeight.bold),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => BottomNav()));
+                    Get.offNamed(AppRoutes.getDriverpageRoute());
                   },
                 ),
               ),
@@ -178,7 +180,13 @@ class _assignDriverState extends State<assignDriver> {
             ),
           ),
           backgroundColor: kPrimaryColor,
-          title: const Text(" Create Alert Page"),
+          title: const Text(
+            " Create Alert Page",
+            style: TextStyle(
+                fontFamily: "Nunito",
+                fontSize: 23,
+                fontWeight: FontWeight.bold),
+          ),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -192,10 +200,10 @@ class _assignDriverState extends State<assignDriver> {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(6),
-                      topRight: Radius.circular(6),
-                      bottomLeft: Radius.circular(6),
-                      bottomRight: Radius.circular(6),
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
                     )),
                 padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
                 child: Container(
@@ -215,8 +223,11 @@ class _assignDriverState extends State<assignDriver> {
 
                             child: SizedBox(
                               height: screenHeight * 0.08,
-                              child: Image.asset(
-                                  'assets/images/R-removebg-preview.png'),
+                              child: Icon(
+                                Ionicons.car,
+                                color: Colors.red,
+                                size: 25,
+                              ),
                             ),
                             padding: EdgeInsets.all(11),
                             minWidth: screenWidth * 0.004,
@@ -226,14 +237,13 @@ class _assignDriverState extends State<assignDriver> {
                         ),
                         Container(
                             margin: EdgeInsets.only(right: screenWidth * 0.1),
-                            child: Text(
-                              " Assign Driver",
-                              style: GoogleFonts.montserrat(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 17,
-                              ),
-                            )),
+                            child: Text(" Assign Driver",
+                                style: TextStyle(
+                                  fontFamily: "Nuinto",
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 17,
+                                ))),
                       ],
                     ),
                     Container(
@@ -243,17 +253,28 @@ class _assignDriverState extends State<assignDriver> {
                         children: [
                           Column(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  margin:
-                                      EdgeInsets.only(top: screenHeight * 0.07),
-                                  width: double.infinity,
-                                  child: TextFormField(
-                                    decoration:
-                                        ThemeHelper().textInputDecoration(
-                                      ' ${widget.licenseNumber}',
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    "Driver License",
+                                    style: TextStyle(
+                                      fontFamily: "Nuinto",
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 12,
                                     ),
+                                  )),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  decoration: ThemeHelper().textInputDecoration(
+                                    ' ${widget.licenseNumber}',
                                   ),
                                 ),
                               ),
@@ -262,19 +283,30 @@ class _assignDriverState extends State<assignDriver> {
                           SizedBox(
                             height: 10,
                           ),
+                          Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                "Vehicle plate Number",
+                                style: TextStyle(
+                                  fontFamily: "Nuinto",
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 12,
+                                ),
+                              )),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Column(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                    width: double.infinity,
-                                    child: TextField(
-                                      decoration:
-                                          ThemeHelper().textInputDecoration(
-                                        '${widget.plateNumber}',
-                                      ),
-                                    )),
-                              ),
+                              Container(
+                                  width: double.infinity,
+                                  child: TextField(
+                                    decoration:
+                                        ThemeHelper().textInputDecoration(
+                                      '${widget.plateNumber}',
+                                    ),
+                                  )),
                             ],
                           ),
                           Container(
@@ -289,6 +321,7 @@ class _assignDriverState extends State<assignDriver> {
                               child: const Text(
                                 "Assign Driver",
                                 style: TextStyle(
+                                    fontFamily: "Nunito",
                                     color: Color.fromRGBO(255, 255, 255, 1),
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold),

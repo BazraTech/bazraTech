@@ -218,6 +218,23 @@ class _Driver_DetialState extends State<Driver_Detial> {
                       Card(
                         elevation: 5,
                         child: ListTile(
+                          title: const Text("Plate Number",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500, fontSize: 15)),
+                          trailing: Text(
+                            results!["plateNumber"].toString(),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 15),
+                          ),
+                          leading: const Icon(
+                            Icons.calendar_month,
+                            color: kPrimaryColor,
+                          ),
+                        ),
+                      ),
+                      Card(
+                        elevation: 5,
+                        child: ListTile(
                           title: Text("Status",
                               style: TextStyle(
                                   fontWeight: FontWeight.w500, fontSize: 15)),

@@ -124,6 +124,7 @@ class _OwnersDriverState extends State<OwnersDriver> {
             ),
             backgroundColor: kPrimaryColor,
             title: Container(
+              margin: EdgeInsets.only(right: screenWidth * 0.12),
               width: double.infinity,
               height: 40,
               color: Colors.white,
@@ -524,6 +525,7 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                       ModifyDriverStatus(
                                                     driverLicense:
                                                         driver['licenseNumber'],
+                                                    status: driver['status'],
                                                   ),
                                                 ),
                                               );

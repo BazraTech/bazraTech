@@ -10,6 +10,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_places_flutter/model/place_details.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../../../../Model/communicationList.dart';
+import '../../../../config/APIService.dart';
 import '../../../../const/constant.dart';
 import '../Vehicle/vehicleDetial.dart';
 import '../Vehicle/vehicleStatus.dart';
@@ -41,8 +42,7 @@ class _ActiveTripState extends State<ActiveTrip> {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    var response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Admin/Trip/All'),
+    var response = await http.get(Uri.parse(ApIConfig.activeTrip),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;
@@ -154,7 +154,7 @@ class _ActiveTripState extends State<ActiveTrip> {
                               Container(
                                 margin: EdgeInsets.only(left: 15, right: 10),
                                 child: Text(
-                                  " " + trip['driverName'].toString(),
+                                  " " + trip['driver'].toString(),
                                   style: const TextStyle(
                                       // fontWeight: FontWeight.bold,
                                       fontSize: 12,

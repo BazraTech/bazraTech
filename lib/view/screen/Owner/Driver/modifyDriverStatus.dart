@@ -1,19 +1,24 @@
 import 'dart:convert';
+import 'package:bazralogin/Route/Routes.dart';
 import 'package:bazralogin/Theme/TextInput.dart';
 import 'package:bazralogin/const/constant.dart';
+import 'package:bazralogin/view/screen/Owner/Driver/vehicleOnStock.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../../config/APIService.dart';
 import '../../Bottom/Bottom.dart';
+import 'UnassignedDrivers.dart';
 
 class ModifyDriverStatus extends StatefulWidget {
   String? driverLicense;
+  String? status;
 
-  ModifyDriverStatus({super.key, required this.driverLicense});
+  ModifyDriverStatus(
+      {super.key, required this.driverLicense, required this.status});
 
   @override
   State<ModifyDriverStatus> createState() => _ModifyDriverStatusState();
@@ -23,8 +28,16 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
   static bool isPressed = true;
   Offset distance = isPressed ? Offset(10, 10) : Offset(28, 28);
   double blur = isPressed ? 5.0 : 30.0;
-  List<String> location = ["UNASSIGNED", "ASSIGNED", "ONROUTE", "PERMIT"];
-  String? selectedItem = "UNASSIGNED";
+  List<String> assigndsatus = [
+    "Select Status",
+    "UNASSIGNED",
+    "ONROUTE",
+    "PERMIT"
+  ];
+  List<String> unassigndsatus = ["ASSIGNED", "Select Status"];
+  List<String> permitsatus = ["ASSIGNED", "Select Status"];
+
+  String? selectedItem = "Select Status";
   TextEditingController statusController = TextEditingController();
   String? driverStatus;
 
@@ -72,7 +85,11 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
                 children: const <Widget>[
                   Text(
                     'Updated Successfully ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      fontFamily: "Nunito",
+                    ),
                   ),
                 ],
               ),
@@ -116,7 +133,11 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
           ),
         ),
         backgroundColor: kPrimaryColor,
-        title: const Text("Modify Driver Status"),
+        title: const Text(
+          "Modify Driver Status",
+          style: TextStyle(
+              fontFamily: "Nunito", fontSize: 23, fontWeight: FontWeight.bold),
+        ),
       ),
       body: ListView(
         padding: EdgeInsets.zero,
@@ -173,56 +194,169 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: [
-                            Container(
-                              width: screenWidth - 60,
-                              child: DropdownButtonFormField<String>(
-                                decoration: ThemeHelper().textInputDecoration(),
-                                value: selectedItem,
-                                items: location
-                                    .map((item) => DropdownMenuItem<String>(
-                                        value: item,
-                                        child: Text(
-                                          item,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 15),
-                                        )))
-                                    .toList(),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please Enter  Plate Number';
-                                  }
-                                },
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    selectedItem = newValue;
-                                  });
-                                },
+                            if ("${widget.status}" == "ASSIGNED")
+                              Container(
+                                width: screenWidth - 60,
+                                child: DropdownButtonFormField<String>(
+                                  decoration:
+                                      ThemeHelper().textInputDecoration(),
+                                  value: selectedItem,
+                                  items: assigndsatus
+                                      .map((item) => DropdownMenuItem<String>(
+                                          value: item,
+                                          child: Text(
+                                            item,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 15),
+                                          )))
+                                      .toList(),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please Enter  Plate Number';
+                                    }
+                                  },
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedItem = newValue;
+                                    });
+                                  },
+                                ),
                               ),
-                            )
+                            if ("${widget.status}" == "UNASSIGNED")
+                              Container(
+                                width: screenWidth - 60,
+                                child: DropdownButtonFormField<String>(
+                                  decoration:
+                                      ThemeHelper().textInputDecoration(),
+                                  value: selectedItem,
+                                  items: unassigndsatus
+                                      .map((item) => DropdownMenuItem<String>(
+                                          value: item,
+                                          child: Text(
+                                            item,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 15),
+                                          )))
+                                      .toList(),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please Enter  Plate Number';
+                                    }
+                                  },
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedItem = newValue;
+                                    });
+                                  },
+                                ),
+                              ),
+                            if ("${widget.status}" == "PERMIT")
+                              Container(
+                                width: screenWidth - 60,
+                                child: DropdownButtonFormField<String>(
+                                  decoration:
+                                      ThemeHelper().textInputDecoration(),
+                                  value: selectedItem,
+                                  items: permitsatus
+                                      .map((item) => DropdownMenuItem<String>(
+                                          value: item,
+                                          child: Text(
+                                            item,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 15),
+                                          )))
+                                      .toList(),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please Enter  Plate Number';
+                                    }
+                                  },
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedItem = newValue;
+                                    });
+                                  },
+                                ),
+                              )
                           ],
                         ),
                       ),
                       SizedBox(),
-                      Container(
-                        margin:
-                            EdgeInsets.fromLTRB(screenWidth * 0.4, 20, 0, 0),
-                        width: screenWidth * 0.4,
-                        height: screenHeight * 0.05,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            UpdateStatus();
-                          },
-                          child: const Text(
-                            "Update Status",
-                            style: TextStyle(
-                                color: Color.fromRGBO(255, 255, 255, 1),
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
+                      if (selectedItem == "ASSIGNED")
+                        Container(
+                          margin:
+                              EdgeInsets.fromLTRB(screenWidth * 0.4, 20, 0, 0),
+                          width: screenWidth * 0.4,
+                          height: screenHeight * 0.05,
+                          child: ElevatedButton(
+                            style: ThemeHelper().buttonStyle(),
+                            child: Text(
+                              "Update Status",
+                              style: TextStyle(
+                                  fontFamily: "Nunito",
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        UnassignedDrivers()),
+                              );
+                            },
                           ),
-                          style: ThemeHelper().buttonStyle(),
+                        )
+                      else if (selectedItem == "PERMIT")
+                        Container(
+                          margin:
+                              EdgeInsets.fromLTRB(screenWidth * 0.4, 20, 0, 0),
+                          width: screenWidth * 0.4,
+                          height: screenHeight * 0.05,
+                          child: ElevatedButton(
+                            style: ThemeHelper().buttonStyle(),
+                            child: Text(
+                              "Update Status",
+                              style: TextStyle(
+                                  fontFamily: "Nunito",
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        UnassignedDrivers()),
+                              );
+                            },
+                          ),
+                        )
+                      else
+                        Container(
+                          margin:
+                              EdgeInsets.fromLTRB(screenWidth * 0.4, 20, 0, 0),
+                          width: screenWidth * 0.4,
+                          height: screenHeight * 0.05,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              UpdateStatus();
+                            },
+                            child: const Text(
+                              "Update Status",
+                              style: TextStyle(
+                                  fontFamily: "Nunito",
+                                  color: Color.fromRGBO(255, 255, 255, 1),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            style: ThemeHelper().buttonStyle(),
+                          ),
                         ),
-                      ),
                     ]),
                   ),
                 ),

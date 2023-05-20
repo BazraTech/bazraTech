@@ -36,6 +36,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
   List listDriver = [];
   List drivers = [];
   bool ischeckValue = false;
+  bool _isLoading = true;
 
   // success  alert
   Future<void> _showMyDialog() async {
@@ -88,6 +89,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
 
         Result = data['drivers'];
         setState(() {
+          _isLoading = false;
           findVehicle = Result;
         });
 
@@ -365,91 +367,100 @@ class _CommunicationPageState extends State<CommunicationPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(9.0),
-                  child: Column(
-                      children: findVehicle.map((driver) {
-                    return Card(
-                      shadowColor: Colors.black,
-                      color: Colors.white,
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 60,
-                            width: screenWidth - 29,
-                            child: Column(
-                              children: <Widget>[
+                  child: _isLoading
+                      ? Container(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Column(
+                          children: findVehicle.map((driver) {
+                          return Card(
+                            shadowColor: Colors.black,
+                            color: Colors.white,
+                            child: Row(
+                              children: [
                                 Container(
-                                  child: Row(children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Container(
-                                        width: screenWidth * 0.35,
-                                        margin: EdgeInsets.only(
-                                            top: 10, bottom: 10),
-                                        child: Text(
-                                          " " + driver['driverName'],
-                                          style: GoogleFonts.montserrat(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 13,
+                                  height: 60,
+                                  width: screenWidth - 29,
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        child: Row(children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(12.0),
+                                            child: Container(
+                                              width: screenWidth * 0.35,
+                                              margin: EdgeInsets.only(
+                                                  top: 10, bottom: 10),
+                                              child: Text(
+                                                " " + driver['driverName'],
+                                                style: GoogleFonts.montserrat(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 13,
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                          Container(
+                                            width: screenWidth * 0.27,
+                                            child: Text(
+                                              " " +
+                                                  driver['phoneNumber']
+                                                      .toString(),
+                                              style: GoogleFonts.montserrat(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              right: 8.0,
+                                            ),
+                                            child: SizedBox(
+                                              width: screenWidth * 0.17,
+                                              height: 10,
+                                              child: Transform.scale(
+                                                scale: 0.9,
+                                                child: GestureDetector(
+                                                    onTap: () {},
+                                                    child: Checkbox(
+                                                        activeColor:
+                                                            Colors.green,
+                                                        value: driver[
+                                                            'statMessage'],
+                                                        onChanged: (value) {
+                                                          var item = driver[
+                                                              'phoneNumber'];
+                                                          setState(() {
+                                                            driver['statMessage'] =
+                                                                value!;
+                                                            if (value == true) {
+                                                              listDriver
+                                                                  .add(item);
+                                                            } else if (value ==
+                                                                false) {
+                                                              listDriver.removeWhere(
+                                                                  (item) =>
+                                                                      item ==
+                                                                      driver[
+                                                                          'phoneNumber']);
+                                                            }
+                                                          });
+                                                        })),
+                                              ),
+                                            ),
+                                          ),
+                                        ]),
                                       ),
-                                    ),
-                                    Container(
-                                      width: screenWidth * 0.27,
-                                      child: Text(
-                                        " " + driver['phoneNumber'].toString(),
-                                        style: GoogleFonts.montserrat(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                        right: 8.0,
-                                      ),
-                                      child: SizedBox(
-                                        width: screenWidth * 0.17,
-                                        height: 10,
-                                        child: Transform.scale(
-                                          scale: 0.9,
-                                          child: GestureDetector(
-                                              onTap: () {},
-                                              child: Checkbox(
-                                                  activeColor: Colors.green,
-                                                  value: driver['statMessage'],
-                                                  onChanged: (value) {
-                                                    var item =
-                                                        driver['phoneNumber'];
-                                                    setState(() {
-                                                      driver['statMessage'] =
-                                                          value!;
-                                                      if (value == true) {
-                                                        listDriver.add(item);
-                                                      } else if (value ==
-                                                          false) {
-                                                        listDriver.removeWhere(
-                                                            (item) =>
-                                                                item ==
-                                                                driver[
-                                                                    'phoneNumber']);
-                                                      }
-                                                    });
-                                                  })),
-                                        ),
-                                      ),
-                                    ),
-                                  ]),
-                                ),
+                                    ],
+                                  ),
+                                )
                               ],
                             ),
-                          )
-                        ],
-                      ),
-                    );
-                  }).toList()),
+                          );
+                        }).toList()),
                 ),
               ],
             ),

@@ -5,21 +5,26 @@ class ThemeHelper {
       [String lableText = "", String hintText = "", Widget? icon1]) {
     return InputDecoration(
       labelText: lableText,
-      
       hintText: hintText,
       suffix: icon1,
       fillColor: Colors.white,
       filled: true,
       contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(width: 1, color: Colors.black45),
+        borderSide: BorderSide(width: 1, color: Colors.grey.shade400),
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.0), // Specify border radius
+        borderSide: BorderSide(
+          color: Colors.grey.shade400,
+        ), // Specify border color and width
       ),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
           width: 1,
           color: Colors.grey.shade400,
         ),
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(8.0),
       ),
     );
   }
@@ -36,9 +41,6 @@ class ThemeHelper {
 
   BoxDecoration buttonBoxDecoration(BuildContext context,
       [String color1 = "", String color2 = ""]) {
-    Color c1 = Theme.of(context).primaryColor;
-    Color c2 = Theme.of(context).accentColor;
-
     return BoxDecoration(
       boxShadow: [
         BoxShadow(color: Colors.black26, offset: Offset(0, 4), blurRadius: 5.0)
@@ -47,10 +49,7 @@ class ThemeHelper {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         stops: [0.0, 1.0],
-        colors: [
-          c1,
-          c2,
-        ],
+        colors: [],
       ),
       color: Colors.deepPurple.shade300,
       borderRadius: BorderRadius.circular(30),
@@ -61,7 +60,7 @@ class ThemeHelper {
     return ButtonStyle(
       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5.0),
+          borderRadius: BorderRadius.circular(6.0),
         ),
       ),
       minimumSize: MaterialStateProperty.all(Size(5, 5)),
