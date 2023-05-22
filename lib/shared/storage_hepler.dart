@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
    class StorageHelper {
      static const String _tokenKey = 'jwt';
 
-     Future storeToken(String token) async {
+     Future setToken(String token) async {
        final sharedPreferences = await SharedPreferences.getInstance();
        await sharedPreferences.setString(_tokenKey, token);
      }

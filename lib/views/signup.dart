@@ -72,8 +72,6 @@ class _SignupState extends State<Signup> {
     }
   }
 
- 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,9 +94,8 @@ class _SignupState extends State<Signup> {
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.normal,
                       fontFamily: "Roboto"),
-                  hintText: "Phone Number",
-                  icon: Icons.phone,
-                  textController: _phoneController,
+                  hintText: "Company Name",
+                  textController: _companyController,
                   keyboardType: TextInputType.text,
                   onChanged: (value) {},
                   validator: (value) {
@@ -162,19 +159,17 @@ class _SignupState extends State<Signup> {
                 const SizedBox(
                   height: 10,
                 ),
-                ElevatedButton(
+                CustomButton(
                   onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      // Perform your API request
+                    // Perform your API request
 
-                      await registerCargo(
-                          _companyController.text,
-                          _phoneController.text,
-                          _passwordController.text,
-                          _confirmPasswordController.text);
-                    }
+                    await registerCargo(
+                        _companyController.text,
+                        _phoneController.text,
+                        _passwordController.text,
+                        _confirmPasswordController.text);
                   },
-                  child: Text("Submit"),
+                  text: 'Signup',
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 20, bottom: 20),

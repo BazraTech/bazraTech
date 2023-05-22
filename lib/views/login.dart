@@ -66,15 +66,21 @@ class _Cargo_loginState extends State<Cargo_login> {
           headers: {
             "Content-Type": "application/json",
             'Accept': 'application/json',
-            "Authorization": "Bearer $retrievedToken",
           },
         );
         print(response.body);
         print(response.statusCode);
 
         if (response.statusCode == 200) {
-          // ignore: use_build_context_synchronously
-
+          // Parse the response
+          var jsonResponse = json.decode(response.body);
+          //Get the token from the response
+          String? newToken = jsonResponse['jwt'];
+          // Save the token to storage
+          if (newToken != null) {
+            await storageHelper.setToken(newToken);
+          }
+          print(newToken);
           Navigator.push(
             context,
             MaterialPageRoute(builder: (BuildContext context) => BottomNav()),
@@ -88,47 +94,6 @@ class _Cargo_loginState extends State<Cargo_login> {
     }
   }
 
-  Future<String> fetchImage() async {
-    var client = http.Client();
-    final storage = new FlutterSecureStorage();
-    var token = await storage.read(key: 'jwt');
-    Map<String, String> requestHeaders = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-    final response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
-        headers: requestHeaders);
-    if (response.statusCode == 200) {
-      // If the server returns a 200 OK response, parse the JSON.
-      Map<String, dynamic> data = json.decode(response.body);
-      await storage.write(key: "ownerpic", value: data["avatar"].toString());
-
-      ownerPic = (await storage.read(key: 'ownerpic'))!;
-      return data["logo"];
-    } else {
-      throw Exception('Failed to load image');
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    const Duration(seconds: 6);
-    fetchImage();
-    //_loadLogoAndAvatar();
-  }
-
-var  _logo;
-  String? _avatar;
- Future loadImageURLs() async {
-    final logoAndAvatar = await getLogoAndAvatar();
-    setState(() {
-      _logo = logoAndAvatar['logo'];
-      _avatar = logoAndAvatar['avatar'];
-    });
-  }
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -142,7 +107,6 @@ var  _logo;
           child: Form(
             key: _formKey,
             child: Column(children: [
-              Image.network(_logo),
               Container(
                 margin: const EdgeInsets.only(
                   top: 20,

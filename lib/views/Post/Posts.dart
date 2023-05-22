@@ -100,7 +100,6 @@ class _PostsState extends State<Posts> {
       throw error;
     }
   }
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
