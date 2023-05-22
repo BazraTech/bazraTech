@@ -8,6 +8,7 @@ import '../shared/custom-form.dart';
 import '../shared/customButton.dart';
 import '../shared/failAlert.dart';
 import '../shared/succussAlert.dart';
+import 'Bottom_Navigation.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -47,25 +48,30 @@ class _SignupState extends State<Signup> {
       'confirmPassword': "${confirmPass}",
     };
     print(requestData);
-    String body = json.encode(requestData);
-
     try {
+      String body = json.encode(requestData);
       // Make the request and handle the response
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState?.save();
+        final response = await http.post(
+          Uri.parse(url),
+          body: body,
+          headers: {
+            "Content-Type": "application/json",
+            'Accept': 'application/json',
+          },
+        );
+        print(response.body);
+        print(response.statusCode);
 
-      final response = await http.post(
-        Uri.parse(url),
-        body: body,
-        headers: {
-          "Content-Type": "application/json",
-          'Accept': 'application/json',
-        },
-      );
-      print(response.body);
-      print(response.statusCode);
-      if (response.statusCode == 200) {
-        showAlertDialogSuccuss(context);
-      } else {
-        showAlertDialogFail(context);
+        if (response.statusCode == 200) {
+          // Parse the response
+          var jsonResponse = json.decode(response.body);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (BuildContext context) => BottomNav()),
+          );
+        }
       }
     } catch (error) {
       showAlertDialogFail(context);
@@ -102,6 +108,7 @@ class _SignupState extends State<Signup> {
                     if (value!.isEmpty) {
                       return "Please enter your phone number";
                     }
+                    return null;
                   },
                   obscureText: false,
                 ),
@@ -126,12 +133,15 @@ class _SignupState extends State<Signup> {
                   height: 20,
                 ),
                 CustomTextFieldForm(
-                  hintText: "Password",
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+                  hintText: 'Password',
                   textController: _passwordController,
-                  obscureText: false,
-                  onChanged: (value) {},
+                  isPassword: true,
+                  textStyle: TextStyle(fontSize: 16),
+                  onChanged: (value) {
+                    print("password changed: $value");
+                  },
+                  obscureText: true,
+                  showSuffixIcon: true,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter a company name';
@@ -143,12 +153,15 @@ class _SignupState extends State<Signup> {
                   height: 20,
                 ),
                 CustomTextFieldForm(
-                  hintText: "Confirm Password",
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+                  hintText: 'Confirm Password',
                   textController: _confirmPasswordController,
-                  obscureText: false,
-                  onChanged: (value) {},
+                  isPassword: true,
+                  textStyle: TextStyle(fontSize: 16),
+                  onChanged: (value) {
+                    print("password changed: $value");
+                  },
+                  obscureText: true,
+                  showSuffixIcon: true,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter a company name';
@@ -161,8 +174,6 @@ class _SignupState extends State<Signup> {
                 ),
                 CustomButton(
                   onPressed: () async {
-                    // Perform your API request
-
                     await registerCargo(
                         _companyController.text,
                         _phoneController.text,
@@ -177,7 +188,7 @@ class _SignupState extends State<Signup> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute<void>(
+                        MaterialPageRoute(
                             builder: (BuildContext context) =>
                                 const Cargo_login()),
                       );

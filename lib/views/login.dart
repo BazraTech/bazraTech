@@ -135,7 +135,6 @@ class _Cargo_loginState extends State<Cargo_login> {
                     fontStyle: FontStyle.normal,
                     fontFamily: "Roboto"),
                 hintText: "Phone Number",
-                icon: Icons.phone,
                 textController: _phoneController,
                 keyboardType: TextInputType.text,
                 onChanged: (value) {},
@@ -143,6 +142,7 @@ class _Cargo_loginState extends State<Cargo_login> {
                   if (value!.isEmpty) {
                     return "Please enter your phone number";
                   }
+                  return null;
                 },
                 obscureText: false,
               ),
@@ -150,20 +150,21 @@ class _Cargo_loginState extends State<Cargo_login> {
                 height: 20,
               ),
               CustomTextFieldForm(
-                hintText: "Password",
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+                hintText: 'Password',
                 textController: _passwordController,
-                icon: Icons.password,
-                keyboardType: TextInputType.visiblePassword,
-                onChanged: (value) {},
+                isPassword: true,
+                textStyle: TextStyle(fontSize: 16),
+                onChanged: (value) {
+                  print("password changed: $value");
+                },
+                obscureText: true,
+                showSuffixIcon: true,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Please enter your password";
+                    return 'Please enter a company name';
                   }
                   return null;
                 },
-                obscureText: true,
               ),
               const SizedBox(
                 height: 20,
