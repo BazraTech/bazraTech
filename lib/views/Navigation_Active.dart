@@ -33,7 +33,7 @@ class BottomNav_Active extends StatelessWidget {
                     indicatorSize: TabBarIndicatorSize.label,
                     indicatorPadding: EdgeInsets.all(12),
                     indicatorColor: Colors.white,
-                    isScrollable: true,
+                    isScrollable: false,
                     indicatorWeight: 3,
                     labelPadding:
                         EdgeInsets.symmetric(horizontal: screenWidth * 0.055),
@@ -43,7 +43,11 @@ class BottomNav_Active extends StatelessWidget {
                         child: Text(
                           "Vehicle List",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
+                              fontSize: 13,
+                              color: Colors.white,
+                              fontFamily: 'Roboto',
+                              letterSpacing: 1,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       Tab(
@@ -51,7 +55,11 @@ class BottomNav_Active extends StatelessWidget {
                         child: Text(
                           "Bill",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
+                              fontSize: 13,
+                              color: Colors.white,
+                              fontFamily: 'Roboto',
+                              letterSpacing: 1,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ]),

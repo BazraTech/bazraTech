@@ -11,6 +11,8 @@ import '../../shared/storage_hepler.dart';
 import '../../shared/succussAlert.dart';
 import 'package:http/http.dart' as http;
 
+import '../Bottom_Navigation.dart';
+
 class CargoType {
   final int id;
   final String cargoType;
@@ -78,28 +80,35 @@ class _PostsState extends State<Posts> {
     print("********************************");
     try {
       // Make the request and handle the response
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState?.save();
+        final response = await http.post(
+            Uri.parse('http://64.226.104.50:9090/Api/Cargo/PostCargo'),
+            body: body,
+            headers: {
+              "Content-Type": "application/json",
+              'Accept': 'application/json',
+              "Authorization": "Bearer $retrievedToken",
+            });
 
-      final response = await http.post(
-          Uri.parse('http://64.226.104.50:9090/Api/Cargo/PostCargo'),
-          body: body,
-          headers: {
-            "Content-Type": "application/json",
-            'Accept': 'application/json',
-            "Authorization": "Bearer $retrievedToken",
-          });
-
-      print(response.body);
-      print(response.statusCode);
-      if (response.statusCode == 200) {
-        showAlertDialogSuccuss(context);
-      } else {
+        print(response.body);
         print(response.statusCode);
-        showAlertDialogFail(context);
+        if (response.statusCode == 200) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (BuildContext context) => BottomNav()),
+          );
+        } else {
+          print(response.statusCode);
+          showAlertDialogFail(context);
+        }
       }
     } catch (error) {
       throw error;
     }
   }
+
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -108,148 +117,186 @@ class _PostsState extends State<Posts> {
       body: Container(
         padding: EdgeInsets.all(20),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              CustomTextFieldForm(
-                hintText: "From",
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
-                textController: _from,
-                obscureText: false,
-                onChanged: (value) {},
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Please enter your departure";
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CustomTextFieldForm(
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
-                hintText: "To",
-                textController: _to,
-                obscureText: false,
-                onChanged: (value) {},
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter your departure";
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CustomTextFieldForm(
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
-                hintText: "Date",
-                textController: _date,
-                obscureText: false,
-                onChanged: (value) {},
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter your departure";
-                  }
-                },
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: screenWidth,
-                color: kBackgroundColor,
-                height: 30,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              CustomTextFieldForm(
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
-                hintText: "Cargo Type",
-                textController: _cargoType,
-                obscureText: false,
-                onChanged: (value) {},
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter your departure";
-                  }
-                },
-              ),
-              SizedBox(height: 20),
-              CustomTextFieldForm(
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
-                hintText: "Packaging",
-                textController: _packaging,
-                obscureText: false,
-                onChanged: (value) {},
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter your departure";
-                  }
-                },
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              CustomTextFieldForm(
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
-                hintText: "Weight",
-                textController: _weight,
-                obscureText: false,
-                onChanged: (value) {},
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter your departure";
-                  }
-                },
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: screenWidth,
-                color: kBackgroundColor,
-                height: 30,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              CustomTextFieldForm(
-                hintText: "Price",
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
-                textController: _price,
-                obscureText: false,
-                onChanged: (value) {},
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter your departure";
-                  }
-                },
-              ),
-              CustomButton(
-                onPressed: () {
-                  registerCargo(
-                      _from.text,
-                      _to.text,
-                      _date.text,
-                      _cargoType.text,
-                      _packaging.text,
-                      _weight.text,
-                      _price.text);
-                },
-                text: "Post",
-              )
-            ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                CustomTextFieldForm(
+                  hintText: "From",
+                  textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+                  textController: _from,
+                  obscureText: false,
+                  hintTextStyle: TextStyle(
+                    letterSpacing: 1.0,
+                    wordSpacing: 2.0,
+                    // ... other styles
+                  ),
+                  onChanged: (value) {},
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter your departure";
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CustomTextFieldForm(
+                  textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+                  hintText: "To",
+                  textController: _to,
+                  obscureText: false,
+                  hintTextStyle: TextStyle(
+                    letterSpacing: 1.0,
+                    wordSpacing: 2.0,
+                    // ... other styles
+                  ),
+                  onChanged: (value) {},
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your departure";
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CustomTextFieldForm(
+                  textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+                  hintText: "Date",
+                  textController: _date,
+                  obscureText: false,
+                  hintTextStyle: TextStyle(
+                    letterSpacing: 1.0,
+                    wordSpacing: 2.0,
+                    // ... other styles
+                  ),
+                  onChanged: (value) {},
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your departure";
+                    }
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: screenWidth,
+                  color: kBackgroundColor,
+                  height: 30,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                CustomTextFieldForm(
+                  textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+                  hintText: "Cargo Type",
+                  textController: _cargoType,
+                  obscureText: false,
+                  hintTextStyle: TextStyle(
+                    letterSpacing: 1.0,
+                    wordSpacing: 2.0,
+                    // ... other styles
+                  ),
+                  onChanged: (value) {},
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your departure";
+                    }
+                  },
+                ),
+                SizedBox(height: 20),
+                CustomTextFieldForm(
+                  textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+                  hintText: "Packaging",
+                  textController: _packaging,
+                  obscureText: false,
+                  hintTextStyle: TextStyle(
+                    letterSpacing: 1.0,
+                    wordSpacing: 2.0,
+                    // ... other styles
+                  ),
+                  onChanged: (value) {},
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your departure";
+                    }
+                  },
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                CustomTextFieldForm(
+                  textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+                  hintText: "Weight",
+                  textController: _weight,
+                  hintTextStyle: TextStyle(
+                    letterSpacing: 1.0,
+                    wordSpacing: 2.0,
+                    // ... other styles
+                  ), // ... other styl
+                  obscureText: false,
+                  onChanged: (value) {},
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your departure";
+                    }
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: screenWidth,
+                  color: kBackgroundColor,
+                  height: 30,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomTextFieldForm(
+                  hintText: "Price",
+                  textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+                  textController: _price,
+                  obscureText: false,
+                  hintTextStyle: TextStyle(
+                    letterSpacing: 1.0,
+                    wordSpacing: 2.0,
+                    // ... other styles
+                  ),
+                  onChanged: (value) {},
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your departure";
+                    }
+                  },
+                ),
+                CustomButton(
+                  onPressed: () {
+                    registerCargo(
+                        _from.text,
+                        _to.text,
+                        _date.text,
+                        _cargoType.text,
+                        _packaging.text,
+                        _weight.text,
+                        _price.text);
+                  },
+                  text: "Post",
+                )
+              ],
+            ),
           ),
         ),
       ),

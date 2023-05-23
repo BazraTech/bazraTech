@@ -43,7 +43,11 @@ class _CargoHomeState extends State<CargoHome> {
         title: const Text(
           "Hello Alex",
           style: TextStyle(
-              fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+              fontSize: 13,
+              color: Colors.white,
+              fontFamily: 'Roboto',
+              letterSpacing: 1,
+              fontWeight: FontWeight.bold),
         ),
         actions: [
           Container(
@@ -160,8 +164,12 @@ class _CargoHomeState extends State<CargoHome> {
                 SizedBox(height: 16),
                 Text(
                   title,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+                  style: const TextStyle(
+                      fontSize: 13,
+                      color: Colors.black54,
+                      fontFamily: 'Roboto',
+                      letterSpacing: 2.0,
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),

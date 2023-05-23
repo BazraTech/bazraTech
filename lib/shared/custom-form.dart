@@ -1,3 +1,4 @@
+import 'package:cargo/shared/constant.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFieldForm extends StatefulWidget {
@@ -10,17 +11,20 @@ class CustomTextFieldForm extends StatefulWidget {
   final String? Function(String?)? validator;
   final bool obscureText;
   final bool showSuffixIcon;
+  final TextStyle hintTextStyle;
+  
   const CustomTextFieldForm({
     super.key,
     this.isPassword = false,
     this.showSuffixIcon = false,
     this.validator,
+     required this.hintTextStyle,
     required this.textStyle,
     required this.hintText,
     required this.textController,
     this.keyboardType = TextInputType.text,
     required this.onChanged,
-     required this.obscureText,
+    required this.obscureText,
   });
 
   @override
@@ -28,7 +32,7 @@ class CustomTextFieldForm extends StatefulWidget {
 }
 
 class _CustomTextFieldFormState extends State<CustomTextFieldForm> {
-    bool obscureText = true;
+  bool obscureText = true;
 
   void showPassword() {
     setState(() {
@@ -45,24 +49,27 @@ class _CustomTextFieldFormState extends State<CustomTextFieldForm> {
       obscureText: widget.isPassword ? obscureText : false,
       decoration: InputDecoration(
         labelText: widget.hintText,
+        fillColor: Colors.white,
+        labelStyle: widget.hintTextStyle,
+        filled: true,
         focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.blueAccent, width: 1.5),
+          borderSide: BorderSide(color: Colors.white, width: 1.5),
         ),
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey, width: 1.5),
+          borderSide: BorderSide(color: Colors.white, width: 1.5),
         ),
         errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.red, width: 1.5),
         ),
         focusedErrorBorder: const OutlineInputBorder(),
-         suffixIcon: widget.isPassword && widget.showSuffixIcon
-          ? IconButton(
-              icon: Icon(obscureText ? Icons.visibility_off : Icons.visibility),
-              onPressed: showPassword,
-            )
-          : null,
+        suffixIcon: widget.isPassword && widget.showSuffixIcon
+            ? IconButton(
+                icon:
+                    Icon(obscureText ? Icons.visibility_off : Icons.visibility),
+                onPressed: showPassword,
+              )
+            : null,
       ),
-      
     );
   }
 }

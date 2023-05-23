@@ -71,6 +71,8 @@ class _SignupState extends State<Signup> {
             context,
             MaterialPageRoute(builder: (BuildContext context) => BottomNav()),
           );
+        } else {
+          showAlertDialogFail(context);
         }
       }
     } catch (error) {
@@ -86,135 +88,177 @@ class _SignupState extends State<Signup> {
           padding: const EdgeInsets.all(20),
           margin: const EdgeInsets.only(top: 100),
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 20, bottom: 20),
-                  child: const Text(
-                    "Create An Account ",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 20, bottom: 20),
+                    child: const Text(
+                      "Create An Account ",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black54,
+                        letterSpacing: 2.0,
+                        wordSpacing: 1.0,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
-                CustomTextFieldForm(
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.normal,
-                      fontFamily: "Roboto"),
-                  hintText: "Company Name",
-                  textController: _companyController,
-                  keyboardType: TextInputType.text,
-                  onChanged: (value) {},
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please enter your phone number";
-                    }
-                    return null;
-                  },
-                  obscureText: false,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CustomTextFieldForm(
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
-                  hintText: "Phone",
-                  textController: _phoneController,
-                  obscureText: false,
-                  onChanged: (value) {},
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a company name';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CustomTextFieldForm(
-                  hintText: 'Password',
-                  textController: _passwordController,
-                  isPassword: true,
-                  textStyle: TextStyle(fontSize: 16),
-                  onChanged: (value) {
-                    print("password changed: $value");
-                  },
-                  obscureText: true,
-                  showSuffixIcon: true,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a company name';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CustomTextFieldForm(
-                  hintText: 'Confirm Password',
-                  textController: _confirmPasswordController,
-                  isPassword: true,
-                  textStyle: TextStyle(fontSize: 16),
-                  onChanged: (value) {
-                    print("password changed: $value");
-                  },
-                  obscureText: true,
-                  showSuffixIcon: true,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a company name';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                CustomButton(
-                  onPressed: () async {
-                    await registerCargo(
-                        _companyController.text,
-                        _phoneController.text,
-                        _passwordController.text,
-                        _confirmPasswordController.text);
-                  },
-                  text: 'Signup',
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 20, bottom: 20),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const Cargo_login()),
-                      );
+                  CustomTextFieldForm(
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.normal,
+                        fontFamily: "Roboto"),
+                    hintText: "Company Name",
+                    textController: _companyController,
+                    keyboardType: TextInputType.text,
+                    hintTextStyle: const TextStyle(
+                      letterSpacing: 1.0,
+                      wordSpacing: 2.0,
+                      // ... other styles
+                    ),
+                    onChanged: (value) {},
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter your phone number";
+                      }
+                      return null;
                     },
+                    obscureText: false,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CustomTextFieldForm(
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.normal),
+                    hintText: "Phone",
+                    textController: _phoneController,
+                    obscureText: false,
+                    hintTextStyle: const TextStyle(
+                      letterSpacing: 1.0,
+                      wordSpacing: 2.0,
+                      // ... other styles
+                    ),
+                    onChanged: (value) {},
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a company name';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CustomTextFieldForm(
+                    hintText: 'Password',
+                    textController: _passwordController,
+                    isPassword: true,
+                    hintTextStyle: const TextStyle(
+                      letterSpacing: 1.0,
+                      wordSpacing: 2.0,
+                      // ... other styles
+                    ),
+                    textStyle: TextStyle(fontSize: 16),
+                    onChanged: (value) {
+                      print("password changed: $value");
+                    },
+                    obscureText: true,
+                    showSuffixIcon: true,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a company name';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CustomTextFieldForm(
+                    hintText: 'Confirm Password',
+                    textController: _confirmPasswordController,
+                    isPassword: true,
+                    textStyle: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.black54,
+                        fontFamily: 'Roboto',
+                        letterSpacing: 2.0,
+                        fontWeight: FontWeight.bold),
+                    onChanged: (value) {
+                      print("password changed: $value");
+                    },
+                    obscureText: true,
+                    hintTextStyle: const TextStyle(
+                      letterSpacing: 1.0,
+                      wordSpacing: 2.0,
+                      // ... other styles
+                    ),
+                    showSuffixIcon: true,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter a company name';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomButton(
+                    onPressed: () async {
+                      await registerCargo(
+                          _companyController.text,
+                          _phoneController.text,
+                          _passwordController.text,
+                          _confirmPasswordController.text);
+                    },
+                    text: 'Sign up',
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 5),
                     child: Row(
                       children: [
-                        const Text(
-                          "Already Have An Account ",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
                         Container(
-                          margin: const EdgeInsets.only(left: 5),
-                          child: const Text(
-                            "Login",
-                            style: TextStyle(
-                                fontSize: 20,
+                            margin: EdgeInsets.only(left: 40, right: 20),
+                            child: const Text(
+                              "Already have an account?",
+                              style: TextStyle(
+                                fontSize: 15,
+                                letterSpacing: 1,
+                                color: Colors.black54,
+                                fontFamily: 'Roboto',
                                 fontWeight: FontWeight.bold,
-                                color: kPrimaryColor),
-                          ),
-                        )
+                              ),
+                            )),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(
+                                    builder: (BuildContext context) =>
+                                        const Cargo_login()),
+                              );
+                            },
+                            child: const Text(
+                              "Log In",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: kPrimaryColor,
+                                letterSpacing: 1.0,
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ))
                       ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ));

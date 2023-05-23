@@ -44,7 +44,11 @@ class BottomNav extends StatelessWidget {
                         child: Text(
                           "Home",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
+                              fontSize: 13,
+                              color: Colors.white,
+                              fontFamily: 'Roboto',
+                              letterSpacing: 2.0,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       Tab(
@@ -52,7 +56,11 @@ class BottomNav extends StatelessWidget {
                         child: Text(
                           "Tracking",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
+                              fontSize: 13,
+                              color: Colors.white,
+                              fontFamily: 'Roboto',
+                              letterSpacing: 2.0,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       Tab(
@@ -60,7 +68,11 @@ class BottomNav extends StatelessWidget {
                         child: Text(
                           "Communicate",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
+                              fontSize: 13,
+                              color: Colors.white,
+                              fontFamily: 'Roboto',
+                              letterSpacing: 2.0,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       Tab(
@@ -68,7 +80,11 @@ class BottomNav extends StatelessWidget {
                         child: Text(
                           "Profile",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
+                              fontSize: 13,
+                              color: Colors.white,
+                              fontFamily: 'Roboto',
+                              letterSpacing: 2.0,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ]),

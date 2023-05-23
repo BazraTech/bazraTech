@@ -12,6 +12,7 @@ class Active_Work extends StatefulWidget {
 }
 
 class _Active_WorkState extends State<Active_Work> {
+  bool isChecked = false;
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -27,8 +28,8 @@ class _Active_WorkState extends State<Active_Work> {
         child: Column(
           children: [
             Container(
-              padding:
-                  const EdgeInsets.only(top: 10, bottom: 10, right: 10, left: 10),
+              padding: const EdgeInsets.only(
+                  top: 10, bottom: 10, right: 10, left: 10),
               height: screenHeight * 0.5,
               width: screenWidth,
               child: Card(
@@ -66,6 +67,25 @@ class _Active_WorkState extends State<Active_Work> {
                   ),
                 ),
               ),
+            ),
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 20),
+                  alignment: Alignment.bottomLeft,
+                  child: Checkbox(
+                      value: isChecked,
+                      checkColor: Colors.white,
+                      activeColor: Colors.red,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          isChecked = value!;
+                        });
+                      }),
+                ),
+                Text(
+                    "I confirm that I have read all the ${'terms of service'} \n and I agree to all of it ")
+              ],
             ),
             Row(
               children: [

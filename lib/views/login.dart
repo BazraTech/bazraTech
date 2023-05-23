@@ -16,6 +16,7 @@ import '../shared/failAlert.dart';
 import '../shared/logo.dart';
 import '../shared/storage_hepler.dart';
 import '../shared/succussAlert.dart';
+import 'forget.dart';
 
 class Cargo_login extends StatefulWidget {
   const Cargo_login({super.key});
@@ -108,25 +109,16 @@ class _Cargo_loginState extends State<Cargo_login> {
             key: _formKey,
             child: Column(children: [
               Container(
-                margin: const EdgeInsets.only(
-                  top: 20,
-                ),
-                child: const Text(
-                  "Login Now ",
-                  style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: 24,
+                margin: EdgeInsets.only(left: 20, bottom: 60),
+                padding: const EdgeInsets.all(2.0),
+                child: const CircleAvatar(
+                  radius: 70,
+                  backgroundColor: Colors.white,
+                  child: Icon(
+                    Icons.person,
+                    size: 40,
+                    color: Colors.blue,
                   ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 5, bottom: 20),
-                child: const Text(
-                  "Please enter the detail to continue ",
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.bold),
                 ),
               ),
               CustomTextFieldForm(
@@ -142,9 +134,13 @@ class _Cargo_loginState extends State<Cargo_login> {
                   if (value!.isEmpty) {
                     return "Please enter your phone number";
                   }
-                  return null;
                 },
                 obscureText: false,
+                hintTextStyle: const TextStyle(
+                  letterSpacing: 1.0,
+                  wordSpacing: 2.0,
+                  // ... other styles
+                ),
               ),
               const SizedBox(
                 height: 20,
@@ -159,6 +155,11 @@ class _Cargo_loginState extends State<Cargo_login> {
                 },
                 obscureText: true,
                 showSuffixIcon: true,
+                hintTextStyle: const TextStyle(
+                  letterSpacing: 1.0,
+                  wordSpacing: 2.0,
+                  // ... other styles
+                ),
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a company name';
@@ -170,35 +171,49 @@ class _Cargo_loginState extends State<Cargo_login> {
                 height: 20,
               ),
               Container(
+                  margin: EdgeInsets.only(top: 20),
                   alignment: Alignment.centerRight,
-                  child: const Text(
-                    "Forgot Password?",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.blue,
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.bold,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => Forget()),
+                      );
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(right: 25),
+                      child: const Text(
+                        "Forgot Password?",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: kPrimaryColor,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   )),
-              const SizedBox(
-                height: 20,
-              ),
               CustomButton(
                   onPressed: () async {
                     await registerCargo(
                         _phoneController.text, _passwordController.text);
                   },
-                  text: "Login"),
+                  text: "Sign In"),
               Container(
-                margin: EdgeInsets.only(top: 20),
+                margin: EdgeInsets.only(top: 5),
                 child: Row(
                   children: [
                     Container(
-                        margin: EdgeInsets.only(left: 90, right: 10),
+                        margin: EdgeInsets.only(left: 60, right: 10),
                         child: const Text(
-                          "New User?",
+                          "Don't have an account?",
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 15,
+                            letterSpacing: 1.5,
+                            wordSpacing: 1.0,
+                            color: Colors.black54,
+                            fontFamily: 'Roboto',
                             fontWeight: FontWeight.bold,
                           ),
                         )),
@@ -212,11 +227,14 @@ class _Cargo_loginState extends State<Cargo_login> {
                           );
                         },
                         child: const Text(
-                          "SIGNUP",
+                          "Sign Up",
                           style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: kPrimaryColor),
+                            fontSize: 15,
+                            letterSpacing: 1.5,
+                            color: kPrimaryColor,
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.bold,
+                          ),
                         ))
                   ],
                 ),

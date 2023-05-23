@@ -1,3 +1,4 @@
+import 'package:cargo/shared/constant.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
@@ -14,7 +15,7 @@ class CustomButton extends StatelessWidget {
     this.padding = const EdgeInsets.all(16.0),
     this.decoration = const BoxDecoration(
       gradient: LinearGradient(
-        colors: [Color(0xFF2DBD3A), Color(0xFF0BA502)],
+        colors: [kPrimaryColor],
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
       ),
@@ -31,10 +32,6 @@ class CustomButton extends StatelessWidget {
         padding: padding,
         child: ElevatedButton(
           onPressed: onPressed,
-          child: Align(
-            alignment: alignment,
-            child: Text(text),
-          ),
           style: ElevatedButton.styleFrom(
             primary: Theme.of(context).primaryColor,
             onPrimary: Colors.white,
@@ -42,6 +39,19 @@ class CustomButton extends StatelessWidget {
             padding: EdgeInsets.all(16.0),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10))),
+          ),
+          child: Align(
+            alignment: alignment,
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 18,
+                letterSpacing: 1,
+                color: Colors.white,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ),
       ),
