@@ -229,13 +229,13 @@ export default function Navigation({ path, title }) {
                         <h2>Bazra Motors /</h2>
                         <h5>{title}</h5>
                     </div>
-                    {/* <div className='headercontents'>
+                    <div className='headercontents'>
                         <div className='headerIcon'>
-                            <p className='makeGrid'><p><HiBellAlert size="2.2rem" color='red' ></HiBellAlert></p><p className='count' style={{color:"red"}}>{dataSource.length}</p></p>
-                            <p className='makeGrid'><BsFillChatDotsFill size="1.9rem" color='green' ></BsFillChatDotsFill><p className='count' style={{color:"green"}}>{dataSource2.length}</p></p>
+                            <p className='makeGrid'><p><HiBellAlert size="2.2rem" color='red' ></HiBellAlert></p><p className='count' style={{color:"red"}}>{dataSource ? dataSource.length : 0}</p></p>
+                            <p className='makeGrid'><BsFillChatDotsFill size="1.9rem" color='green' ></BsFillChatDotsFill><p className='count' style={{color:"green"}}>{dataSource2 ? dataSource2.length : 0}</p></p>
                         </div> 
 
-                    </div>*/}
+                    </div>
                     <div className='dashbordProfile'>
                         <p className='displayUser'><FaUserAlt className='FaUserAlt' size="1.6rem" color='green'></FaUserAlt></p>
                         <p className='displayUser role'>{user.role}</p>

@@ -9,10 +9,12 @@ import Navigation from '../Navigation/Navigation';
 import Add_avatar from './Add_avatar'
 import SyncLoader from "react-spinners/SyncLoader";
 import swal from "sweetalert";
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import axios from 'axios';
+
 
 export default function () { 
-
+    let isAvatar = false;
     const [popup, setPop] = useState(false);
     const [title, setTitle] = useState("");
     const handleClickEdit = () => {
@@ -23,8 +25,12 @@ export default function () {
         Swal.fire({
             title: title,
             width: "580px",
-            html: `<div> <input type="text" id="login" class="swallpop" value =${value}></div>`,
-            confirmButtonText: 'Update',
+            html: isAvatar ? `<div><input type="file" id="avatar"   class="swallpop" value=${id}>
+            <input type="file" id="logo" class="swallpop" value=${value}></div>`:
+            `<div> <input type="text" id="login"  class="swallpop" value =${value}></div>`
+            ,
+                    
+             confirmButtonText: 'Update',
             showCloseButton: true,
             confirmButtonColor: '#00cc44',
             showClass: {
@@ -34,6 +40,16 @@ export default function () {
                 popup: 'animate__animated animate__fadeOutUp' 
             },
             preConfirm: () => {
+                if (isAvatar)
+                {
+                    const avatar = Swal.getPopup().querySelector('#avatar').files[0];
+                    const logo = Swal.getPopup().querySelector('#logo').files[0];
+                    if (!avatar || !logo) {
+                    Swal.showValidationMessage('Please select both files');
+                    }
+                    return { avatar, logo };
+                }
+                else{
                 const login = Swal.getPopup().querySelector('#login').value
                 if (!login) {
                     Swal.showValidationMessage(`Please enter data`)
@@ -41,10 +57,17 @@ export default function () {
                 
                 return { login: login }
             }
+            }
         }).then((result) => {
             if (result.isConfirmed) {
-                
-                Delete(id, result.value.login, data)
+                if (isAvatar)
+                {
+                    const { avatar, logo } = result.value;
+                    console.log(avatar, logo)
+                    Update(avatar, logo, data)
+                }
+                else
+                Update(id, result.value.login, data)
             }
         })
 
@@ -63,12 +86,12 @@ export default function () {
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                Delete(id, data)
+                // Delete(id, data)
             }
         })
     }
 
-    const Delete = (id, value, data) => {
+    const Update = (id, value, data) => {
         if (data == "Update_Role") {
             Update_Role(id, value);
         }
@@ -102,11 +125,61 @@ export default function () {
         if (data == 'Update_CargoType') {
             Update_CargoType(id, value);
         }
+        ///update Avatar
+        if (data == 'Update_Avatar') {
+            Update_Avatar_logo(id, value);
+        }
         
     };
-// function avatarFunction(){
-//     <Add_avatar />
-// }
+    /******************Update Avatar and cargo****** */
+    const Update_Avatar_logo = async (avatar, logo) => {
+        if (!avatar || !logo) {
+           
+          swal('Error', 'Please select both images.', 'error');
+          return;
+        }
+        console.log("Update_Avatar_logo",avatar, logo)
+        const formData = new FormData();
+        formData.append("logo", logo);
+        formData.append("avatar", avatar);
+    
+        try {
+          const response = await axios.put(
+            'http://64.226.104.50:9090/Api/Admin/UpdateLogo',
+            formData,
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+                "Authorization": `Bearer ${jwt}`,
+              },
+            }
+          );
+    
+          localStorage.setItem("message", JSON.stringify(response.data["message"]));
+          const mess = localStorage.getItem("message");
+          console.log(response);
+          swal("Successfully Updated", `${mess}`, "success", {
+            button: true,
+          });
+
+        } catch (error) {
+          if (error.response) {
+            localStorage.setItem('message', JSON.stringify(error.response.data['message']));
+            const messx = localStorage.getItem('message');
+            console.log('message', messx);
+            console.log(error.response.data);
+            swal("Error", `${messx}`, "error", {
+              button: true,
+            });
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log('Error', error.message);
+          }
+        }
+      };
     /**********update cargo type */
     async function  Update_CargoType(id, cargotype) {
 
@@ -538,7 +611,7 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
         fetch(avatarurl, options)
             .then(respnse => respnse.json())
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 setAvatar(data)
                 setLoading(false)
             })
@@ -585,7 +658,7 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {dataSource7.map(item => {
+                                        {dataSource7 && dataSource7.map(item => {
                                             return <tr className='active_row'>
                                                 <td>{item.id}</td>
                                                 <td>{item.name}</td>
@@ -633,7 +706,7 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {dataSource8.map(item => {
+                                        {dataSource8 && dataSource8.map(item => {
                                             return <tr className='active_row'>
 
                                                 <td>{item.id}</td>
@@ -684,7 +757,7 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {dataSource9.map(item => {
+                                        {dataSource9 && dataSource9.map(item => {
                                             return <tr className='active_row'>
 
                                                 <td>{item.id}</td>
@@ -733,7 +806,7 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {dataSource10.map(item => {
+                                        {dataSource10 && dataSource10.map(item => {
                                             return <tr className='active_row'>
 
                                                 <td>{item.id}</td>
@@ -781,7 +854,7 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {dataSource2.map(item => {
+                                        {dataSource2 && dataSource2.map(item => {
                                             return <tr className='active_row'>
 
                                                 <td>{item.id}</td>
@@ -831,7 +904,7 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {dataSource4.map(item => {
+                                        {dataSource4 && dataSource4.map(item => {
                                             return <tr className='active_row'>
                                                 <td>{item.id}</td>
                                                 <td>{item.conditionName}</td>
@@ -880,7 +953,7 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {datasource6.map(item => {
+                                        {datasource6 && datasource6.map(item => {
                                             return <tr className='active_row'>
                                                 <td>{item.id}</td>
                                                 <td>{item.service}</td>
@@ -929,7 +1002,7 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {dataSource3.map(item => {
+                                        {dataSource3 && dataSource3.map(item => {
                                             return <tr className='active_row'>
                                                 <td>{item.id}</td>
                                                 <td>{item.catagory}</td>
@@ -977,7 +1050,7 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {dataSourc5.map(item => {
+                                        {dataSourc5 && dataSourc5.map(item => {
                                             return <tr className='active_row'>
                                                 <td>{item.id}</td>
                                                 <td>{item.companyType}</td>
@@ -1025,7 +1098,7 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {dataSource.map(item => {
+                                        {dataSource && dataSource.map(item => {
                                             return <tr className='active_row'>
                                                 <td title='Company Id'>{item.id}</td>
                                                 <td title='Sector Name'>{item.sectorName}</td>
@@ -1073,7 +1146,7 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {cargo.map(item => {
+                                        {cargo && cargo.map(item => {
                                             return <tr className='active_row'>
                                                 <td >{item.id}</td>
                                                 <td >{item.cargoType}</td>
@@ -1121,16 +1194,17 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {
+                                        {avatar &&
                                              <tr className='active_row'>
                                                 <td>{avatar.avatar}</td>
                                                 <td>{avatar.logo}</td>
                                                 <td>
                                                     <p className='notification_actions'>
-                                                        <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'>
-                                                            {/* onClick={() => {
-                                                                 handleClickEdit21(item.id, item.cargoType, "Update_CargoType", "Edit Avatar and logo ")
-                                                             }}> */}
+                                                        <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
+                                                            onClick={() => {
+                                                                isAvatar = true;
+                                                                 handleClickEdit21(avatar.avatar, avatar.logo, "Update_Avatar", "Edit Avatar and logo ")
+                                                             }}>
 
                                                             </FaEdit>
                                                     </p>
