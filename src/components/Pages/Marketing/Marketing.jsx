@@ -7,6 +7,7 @@ import { SiTripdotcom } from "react-icons/si";
 import { SiGoogletagmanager } from "react-icons/si";
 import { BiTrip } from "react-icons/bi";
 import Header from '../../Header/Header';
+import SyncLoader from "react-spinners/SyncLoader";
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
 
@@ -53,15 +54,15 @@ export default function () {
   };
   const [Loading, setLoading] = useState([])
   const [totalPages, setTotalPage] = useState(1);
-  const url2 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles";
+  const url2 = "http://64.226.104.50:9090/Api/Admin/All/Cargos";
   const [dataSource2, setDataSource2] = useState([])
   useEffect(() => {
     setLoading(true);
     fetch(url2, options)
       .then(respnse => respnse.json())
       .then(data => {
-        setDataSource2(data.vehiclesINF)
-        setTotalPage(data.totalVehicles); 
+        setDataSource2(data.cargos)
+        setTotalPage(data.cargos); 
         setLoading(false);
 
       })
@@ -113,27 +114,52 @@ export default function () {
 
             <div className={styles.outer_vehicle_table} id='myTable'>
               <p>Available  markate</p>
-
               <table className={styles.vehicle_table} id="myTable">
-
-                <thead>
-                  <tr>
-                    <th>Assigned Driver</th>
-                    <th>Plate Number</th>
-                    <th>Detail</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentPage.map(item => (
-                    <tr className={styles.active_row}>
-
-                      <td>{item.driverName == "null" ? "unassignd" : `${item.driverName}`}</td>
-                      <td>{item.plateNumber}</td>
-                      <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                                            <thead>
+                                                <tr>
+                                                <th>Id</th>
+                                                    <th>Name</th>
+                                                    <th>pickUp</th>
+                                                    <th>dropOff</th>
+                                                    <th>cargoType</th>
+                                                    <th>packaging</th>
+                                                    <th>weight</th>
+                                                    <th>price</th>
+                                                    <th>Detail</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {Loading ?
+                                                          <p className='loading'><SyncLoader
+                                                              color={color}
+                                                              Left={margin}
+                                                              loading={Loading}
+                                                              size={10}
+                                                              aria-label="Loading Spinner"
+                                                              data-testid="loader"
+                                                          /></p> :
+                                                          <div>
+                                                 {currentPage.map(item => (
+                                                    <tr className={styles.active_row}>
+                                                        <td>{item.id}</td>
+                                                        <td>{item.cargoOwner}</td>
+                                                        <td>{item.pickUp}</td>
+                                                        <td>{item.dropOff}</td>
+                                                        <td>{item.cargoType}</td>
+                                                        <td>{item.packaging}</td>
+                                                        <td>{item.weight}</td>
+                                                        <td>{item.price}</td>
+                                                        {/* <td><Link to={`/cargo/${item.id}`}>
+                                                            <button>Detail</button></Link>
+                                                            </td> */}
+                                                         <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
+                                                        
+                                                    </tr>
+                                                ))}
+                                                </div>
+                                             }
+                                            </tbody>
+                                        </table>
             </div>
             <div className={styles.page}>
               <Pagination
