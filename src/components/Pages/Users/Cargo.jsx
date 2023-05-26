@@ -109,15 +109,15 @@ export default function () {
 
     const [dataSource3, setDataSource3] = useState([])
     const [dataSource03, setDataSource03] = useState([])
-    const url3 = "http://64.226.104.50:9090/Api/Admin/All/Cargos";
+    const url3 = "http://64.226.104.50:9090/Api/Admin/All/CargoOwners";
     useEffect(() => {
         setLoading(true)
         fetch(url3, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource3(data.cargos)
-                setDataSource03(data.cargos.length)
-                setTotalPage(data.cargos.length)
+                setDataSource3(data.cargoOwners)
+                setDataSource03(data.cargoOwners.length)
+                setTotalPage(data.cargoOwners.length)
                 setLoading(false)
             })
     }, [])
@@ -451,26 +451,20 @@ export default function () {
                                             <thead>
                                                 <tr>
                                                 <th>Id</th>
-                                                    <th>Name</th>
-                                                    <th>pickUp</th>
-                                                    <th>dropOff</th>
-                                                    <th>cargoType</th>
-                                                    <th>packaging</th>
-                                                    <th>weight</th>
-                                                    <th>price</th>
-                                                </tr>
+                                                    <th>Owner Name</th>
+                                                    <th>Phone Number</th>
+                                                    <th>enabled</th>
+                                                    <th>roles name</th>
+                                                    </tr>
                                             </thead>
                                             <tbody>
                                                 {currentPage.map(item => (
                                                     <tr className={styles.active_row}>
                                                         <td>{item.id}</td>
-                                                        <td>{item.cargoOwner}</td>
-                                                        <td>{item.pickUp}</td>
-                                                        <td>{item.dropOff}</td>
-                                                        <td>{item.cargoType}</td>
-                                                        <td>{item.packaging}</td>
-                                                        <td>{item.weight}</td>
-                                                        <td>{item.price}</td>
+                                                        <td>{item.ownerName}</td>
+                                                        <td>{item.phoneNumber}</td>
+                                                        <td>{item.enabled ? 'Enabled' : 'Disabled'}</td>
+                                                        <td>{item.roles[0].name}</td>
                                                         {/* <td><Link to={`/cargo/${item.id}`}>
                                                             <button>Detail</button></Link>
                                                             </td> */}

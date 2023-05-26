@@ -7,7 +7,6 @@ import { SiTripdotcom } from "react-icons/si";
 import { SiGoogletagmanager } from "react-icons/si";
 import { BiTrip } from "react-icons/bi";
 import Header from '../../Header/Header';
-import SyncLoader from "react-spinners/SyncLoader";
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
 
@@ -62,7 +61,7 @@ export default function () {
       .then(respnse => respnse.json())
       .then(data => {
         setDataSource2(data.cargos)
-        setTotalPage(data.cargos); 
+        setTotalPage(data.cargos.length); 
         setLoading(false);
 
       })
@@ -129,17 +128,7 @@ export default function () {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            {Loading ?
-                                                          <p className='loading'><SyncLoader
-                                                              color={color}
-                                                              Left={margin}
-                                                              loading={Loading}
-                                                              size={10}
-                                                              aria-label="Loading Spinner"
-                                                              data-testid="loader"
-                                                          /></p> :
-                                                          <div>
-                                                 {currentPage.map(item => (
+                                                {currentPage.map(item => (
                                                     <tr className={styles.active_row}>
                                                         <td>{item.id}</td>
                                                         <td>{item.cargoOwner}</td>
@@ -152,12 +141,10 @@ export default function () {
                                                         {/* <td><Link to={`/cargo/${item.id}`}>
                                                             <button>Detail</button></Link>
                                                             </td> */}
-                                                         <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
+                                                         <td><Link to={`/Post_market/${item.id}`}><button>Post</button></Link></td>
                                                         
                                                     </tr>
                                                 ))}
-                                                </div>
-                                             }
                                             </tbody>
                                         </table>
             </div>
