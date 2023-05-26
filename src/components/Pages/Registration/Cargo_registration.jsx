@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import swal from "sweetalert";
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation'; 
+import axios from 'axios';
 
 // import { TbChevronsUpLeft } from 'react-icons/tb';
 
@@ -23,9 +24,9 @@ export default function Cargo_registration() {
         handleClick();
     };
     // const history = useNavigate();
-    const [companyName, setCompanyName] = useState("");
-    const [companyType, setCompantType] = useState("");
-    const [companySector, setCompanySector] = useState("");
+    const [nname,setName] = useState("");
+    const [licenseNumber, setLicenseNumber] = useState("");
+    const [tinNumber, setTinNumber] = useState("");
     const [region, setRegion] = useState("");
     const [city, setCity] = useState("");
     const [subCity, setSubCity] = useState("");
@@ -33,122 +34,97 @@ export default function Cargo_registration() {
     const [specificLocation, setSpecficLocation] = useState("");
     const [houseNumber, setHouseNumber] = useState("");
     const [phoneNumber, setPhonenumber] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastname] = useState("");
-    const [ownerPhoneNumber, setPhoneNumber2] = useState("");
-    const [email, setEmail] = useState("");
-    const [notificationmedia, setNotificationPreference] = useState("");
-    const [serviceRequired, setServiceNeeded] = useState("");
-    const [vehicleName, setvehicleName] = useState("");
-    const [catagory, setVehicleCategory] = useState("");
-    const [conditionName, setVehicleCondition] = useState("");
-    const [plateNumber, setPlateNumber] = useState("");
-    const [manufactureDate, setmanufactureDate] = useState("");
-    const [deviceID, setdeviceId] = useState("");
+    const [businessName, setBusinessName] = useState("");
+    const [businessType, setBusinessType] = useState("");
+    const [businessSector, setBusinessSector] = useState("");
+    const [licenseFile, setLicenseFile] = useState("");
+    const [tinFile, setTinFile] = useState("");
+    
 
-    const [mess, setMEesaa] = useState("");
+   
     const handleClick = (e) => {
-        registerCompany();
+        // const tin = document.querySelector('#tin').file[0]
+        // const license = document.querySelector('#license').file[0]
+         registerCargo();
     };
 
     useEffect(() => {
     }, []);
 
-    async function registerCompany() { 
-        let item =
-        {
-            companyName,
-            companyType,
-            companySector,
-            region,
-            city,
-            subCity,
-            woreda,
-            specificLocation,
-            houseNumber,
-            phoneNumber,
-            firstName,
-            lastName,
-            ownerPhoneNumber,
-            email,
-            notificationmedia,
-            serviceRequired,
-            vehicles: [
+    
+
+    const registerCargo = async () => 
+    {
+
+            const formData = new FormData();
+            formData.append("name", nname);
+            formData.append("licenseNumber", licenseNumber);
+            formData.append("tinNumber", tinNumber);
+            formData.append("businessName", businessName);
+            formData.append("businessType", businessType);
+            formData.append("businessSector", businessSector);
+            formData.append("region", region);
+            formData.append("subCity", subCity);
+            formData.append("specificLocation", specificLocation);
+            formData.append("city", city);
+            formData.append("woreda", woreda);
+            formData.append("houseNumber", houseNumber);
+            formData.append("phoneNumber", phoneNumber);
+            formData.append("licenseFile", licenseFile);
+            formData.append("tinFile", tinFile);
+
+        try{
+            const response = await axios.post(
+                'http://64.226.104.50:9090/Api/CargoOwner/Register',
+                formData,
                 {
-                    vehicleName,
-                    vehicleCatagory: {
-                        catagory,
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        "Authorization": `Bearer ${jwt}`,
                     },
-                    vehicleCondition: {
-                        conditionName,
-                    },
-
-                    plateNumber,
-                    manufactureDate,
-                    deviceID,
-                },
-
-            ]
-
-        };
-        console.log(manufactureDate)
-
-        const options = {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                "Accept": "application/json",
-                "Authorization": `Bearer ${jwt}`
-            },
-            body: JSON.stringify(item),
-        };
-        const url = "http://64.226.104.50:9090/Api/Company/"; 
-        try {
-            const response = await fetch(url, options);
-            const result = await response.json();
-            console.log(result);
-            localStorage.setItem("message", JSON.stringify(result["message"])); 
-            const mess = localStorage.getItem("message");
-            console.log(mess);
-            if (response.ok) {
-                console.log("Signup successful");
-                swal("Successfully Registerd", `${mess}`, "success", {
+                    }
+                );
+              localStorage.setItem("message", JSON.stringify(response.data["message"]));
+                const mess = localStorage.getItem("message");
+                console.log(response);
+                swal("Successfully Registered", `${mess}`, "success", {
                     button: true,
-                    // timer: 60000,
                 });
-                setCompanyName("");
-                setCompantType("");
-                setCompanySector("");
+                setName("");
+                setLicenseNumber("");
+                setPhonenumber("");
                 setRegion("");
                 setCity("");
                 setSubCity("");
                 setWoreda("");
                 setSpecficLocation("");
                 setHouseNumber("");
-                setPhonenumber("");
-                setFirstName("");
-                setLastname("");
-                setPhoneNumber2("");
-                setEmail("");
-                setNotificationPreference("");
-                setServiceNeeded("");
-                setvehicleName("");
-                setVehicleCategory("");
-                setVehicleCondition("");
-                setPlateNumber("");
-                setmanufactureDate("");
-                setdeviceId("");
+                setLicenseFile("");
+                setBusinessSector("");
+                setBusinessType("");
+                setBusinessName("");
+                setTinNumber("");
+                setTinFile("");
 
-            } else {
-                console.log("failed");
-                swal(`Failed To Register ${mess}`, "Error", "error");
-            }
         } catch (error) {
-            console.error(error);
+          if (error.response) {
+            localStorage.setItem('message', JSON.stringify(error.response.data['message']));
+            const messx = localStorage.getItem('message');
+            console.log('message', messx);
+            console.log(error.response.data);
+            swal("Error", `${messx}`, "error", {
+              button: true,
+            });
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log('Error', error.message);
+          }
         }
     }
-
-
+ 
 
     // const user = JSON.parse(   localStorage.getItem('user'));
 
@@ -250,7 +226,7 @@ export default function Cargo_registration() {
 
             {/*--------------- Company Container ---------------*/}
 
-            <Navigation path="/Cargo_registration" title="Registation"></Navigation>
+            <Navigation path="/Company_registration" title="Registation"></Navigation>
 
             {/* --------------- Registration- -------------- */}
 
@@ -273,26 +249,26 @@ export default function Cargo_registration() {
                                 <div>
                                     <p>Name <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input
-                                        name='companyName'
-                                        value={companyName}
+                                        name='nname'
+                                        value={nname}
                                         type="text"
-                                        {...register("organizationName", { required: true })}
-                                        placeholder='Enter organization name'
-                                        onChange={(e) => setCompanyName(e.target.value)}>
+                                        {...register("name", { required: true })}
+                                        placeholder='Enter your name'
+                                        onChange={(e) => setName(e.target.value)}>
                                     </input>
-                                    {companyName <= 0 && errors.organizationName?.type === "required" && <span className={styles.validate_text}>*please enter the organization name</span>}
+                                    {nname <= 0 && errors.name?.type === "required" && <span className={styles.validate_text}>*please enter your name</span>}
                                 </div>
                                 <div>
                                     <p>Phone <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input
-                                        name='companyName'
-                                        value={companyName}
+                                        name='phoneNumber'
+                                        value={phoneNumber}
                                         type="text"
-                                        {...register("organizationName", { required: true })}
-                                        placeholder='Enter organization name'
-                                        onChange={(e) => setCompanyName(e.target.value)}>
+                                        {...register("phoneNumber", { required: true })}
+                                        placeholder='Enter phone Number'
+                                        onChange={(e) => setPhonenumber(e.target.value)}>
                                     </input>
-                                    {companyName <= 0 && errors.organizationName?.type === "required" && <span className={styles.validate_text}>*please enter the organization name</span>}
+                                    {phoneNumber <= 0 && errors.phoneNumber?.type === "required" && <span className={styles.validate_text}>*please enter phone number</span>}
                                 </div>
                                 
                             </div>
@@ -305,17 +281,39 @@ export default function Cargo_registration() {
                                <div>
                                     <p>Business name <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input
-                                        name='companyName'
-                                        value={companyName}
+                                        name='businessName'
+                                        value={businessName}
                                         type="text"
-                                        {...register("organizationName", { required: true })}
-                                        placeholder='Enter organization name'
-                                        onChange={(e) => setCompanyName(e.target.value)}>
+                                        {...register("businessName", { required: true })}
+                                        placeholder='Enter business name'
+                                        onChange={(e) => setBusinessName(e.target.value)}>
                                     </input>
-                                    {companyName <= 0 && errors.organizationName?.type === "required" && <span className={styles.validate_text}>*please enter the organization name</span>}
+                                    {businessName <= 0 && errors.businessName?.type === "required" && <span className={styles.validate_text}>*please enter the business name</span>}
                                 </div>
                                 <div>
-                                    <p>Sub city <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                    <p>Region <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                    <input name='region'
+                                        value={region}
+                                        {...register("region", { required: '*please fill your Region' })}
+                                        placeholder="Please enter your Region"
+                                        onChange={(e) => setRegion(e.target.value)}>
+                                    </input>
+                                    {region <= 0 && errors.region && <span className={styles.validate_text}>{errors.region.message}</span>}
+                                </div>
+
+                                <div>
+                                    <p>Sub City <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                    <input name='subCity'
+                                        value={subCity}
+                                        {...register("subCity", { required: '*please fill your Sub-city' })}
+                                        placeholder="Please enter your Sub-city"
+                                        onChange={(e) => setSubCity(e.target.value)}>
+                                    </input>
+                                    {subCity <= 0 && errors.subCity && <span className={styles.validate_text}>{errors.subCity.message}</span>}
+                                </div>
+
+                                <div>
+                                    <p>Specfic Location <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input name='specificLocation'
                                         value={specificLocation}
                                         {...register("specificLocation", { required: '*please fill your Specfic Location' })}
@@ -323,6 +321,17 @@ export default function Cargo_registration() {
                                         onChange={(e) => setSpecficLocation(e.target.value)}>
                                     </input>
                                     {specificLocation <= 0 && errors.specificLocation && <span className={styles.validate_text}>{errors.specificLocation.message}</span>}
+                                </div>
+
+                                <div>
+                                    <p>City <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                    <input name='city'
+                                        value={city}
+                                        {...register("city", { required: '*please fill your City' })}
+                                        placeholder="Please enter your City"
+                                        onChange={(e) => setCity(e.target.value)}>
+                                    </input>
+                                    {city <= 0 && errors.city && <span className={styles.validate_text}>{errors.city.message}</span>}
                                 </div>
 
                                 <div>
@@ -352,17 +361,7 @@ export default function Cargo_registration() {
                                     </input>
                                     {houseNumber <= 0 && errors.houseNumber && <span className={styles.validate_text}>{errors.houseNumber.message}</span>}
                                 </div>
-                                
-                            <div>
-                                    <p>Specfic Location <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='specificLocation'
-                                        value={specificLocation}
-                                        {...register("specificLocation", { required: '*please fill your Specfic Location' })}
-                                        placeholder="Please enter your Specfic Location"
-                                        onChange={(e) => setSpecficLocation(e.target.value)}>
-                                    </input>
-                                    {specificLocation <= 0 && errors.specificLocation && <span className={styles.validate_text}>{errors.specificLocation.message}</span>}
-                            </div>
+
                             </div>
                             
                            
@@ -376,11 +375,11 @@ export default function Cargo_registration() {
                                 <div>
                                     <p>Business  Type <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select
-                                        value={companyType}
-                                        name='serviceRequired'
-                                        {...register("companyType", { required: '*please choose company type' })}
-                                        onChange={(e) => setCompantType(e.target.value)} >
-                                        <option selected disabled value="">Select Conmpany Type</option>
+                                        value={businessType}
+                                        name='businessType'
+                                        {...register("businessType", { required: '*please choose business type' })}
+                                        onChange={(e) => setBusinessType(e.target.value)} >
+                                        <option selected disabled value="">Select Business Type</option>
                                         {
                                             dataSourc6.map(item => {
                                                 return <>
@@ -389,16 +388,16 @@ export default function Cargo_registration() {
                                             })
                                         }
                                     </select>
-                                    {companyType <= 0 && errors.companyType && <span className={styles.validate_text}>{errors.companyType.message}</span>}
+                                    {businessType <= 0 && errors.businessType && <span className={styles.validate_text}>{errors.businessType.message}</span>}
                                 </div>
 
                                 <div>
                                     <p>Business  Sector <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <select
-                                        {...register("companySector", { required: '*Company sector is required' })} name='companySector'
-                                        value={companySector}
-                                        onChange={(e) => setCompanySector(e.target.value)}>
-                                        <option selected disabled value="">Please Select Company Sector Type</option>
+                                        {...register("businessSector", { required: '*Company sector is required' })} name='businessSector'
+                                        value={businessSector}
+                                        onChange={(e) => setBusinessSector(e.target.value)}>
+                                        <option selected disabled value="">Please Select Business Sector Type</option>
                                         {
                                             dataSource.map(item => {
                                                 return <>
@@ -407,27 +406,27 @@ export default function Cargo_registration() {
                                             })
                                         }
                                     </select>
-                                    {companySector <= 0 && errors.companySector && <span className={styles.validate_text}>{errors.companySector.message}</span>}
+                                    {businessSector <= 0 && errors.businessSector && <span className={styles.validate_text}>{errors.businessSector.message}</span>}
                                 </div>
                                 <div>
                                     <p>Business license number  <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='ownerPhoneNumber' type="text"
-                                        value={ownerPhoneNumber}
-                                        {...register("ownerPhoneNumber", { required: "*please fill your mobile nuber" })}
+                                    <input name='licenseNumber' type="text"
+                                        value={licenseNumber}
+                                        {...register("licenseNumber", { required: "*please fill your license number" })}
                                         placeholder='Enter Business license number'
-                                        onChange={(e) => setPhoneNumber2(e.target.value)}>
+                                        onChange={(e) => setLicenseNumber(e.target.value)}>
                                     </input>
-                                    {ownerPhoneNumber <= 0 && errors.ownerPhoneNumber && <span className={styles.validate_text}>{errors.ownerPhoneNumber.message}</span>}
+                                    {licenseNumber <= 0 && errors.licenseNumber && <span className={styles.validate_text}>{errors.licenseNumber.message}</span>}
                                 </div>
                                 <div>
                                     <p>Tin Number <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='ownerPhoneNumber' type="text"
-                                        value={ownerPhoneNumber}
-                                        {...register("ownerPhoneNumber", { required: "*please fill your mobile nuber" })}
+                                    <input name='tinNumber' type="text"
+                                        value={tinNumber}
+                                        {...register("tinNumber", { required: "*please fill your tin  number" })}
                                         placeholder='Tin Number '
-                                        onChange={(e) => setPhoneNumber2(e.target.value)}>
+                                        onChange={(e) => setTinNumber(e.target.value)}>
                                     </input>
-                                    {ownerPhoneNumber <= 0 && errors.ownerPhoneNumber && <span className={styles.validate_text}>{errors.ownerPhoneNumber.message}</span>}
+                                    {tinNumber <= 0 && errors.tinNumber && <span className={styles.validate_text}>{errors.tinNumber.message}</span>}
                                 </div>
                             </div>
                         </div>
@@ -439,24 +438,26 @@ export default function Cargo_registration() {
                             <div className={styles.additional_information}>
                             <div>
                                     <p>Scanned Tin  <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='ownerPhoneNumber' type="file"
-                                        value={ownerPhoneNumber}
-                                        {...register("ownerPhoneNumber", { required: "*please fill your mobile nuber" })}
+                                    <input name='tinFile' type="file"
+                                        // value={tinFile}
+                                        {...register("tinFile", { required: "*please enter your tin number image" })}
                                         placeholder='Enter Scanned Tin'
-                                        onChange={(e) => setPhoneNumber2(e.target.value)}>
+                                        onChange={(e) => setTinFile(e.target.files[0])}
+                                        id='tin'>
                                     </input>
-                                    {ownerPhoneNumber <= 0 && errors.ownerPhoneNumber && <span className={styles.validate_text}>{errors.ownerPhoneNumber.message}</span>}
+                                    {errors.tinFile && <span className={styles.validate_text}>{errors.tinFile.message}</span>}
                                 </div>
 
                                 <div>
                                     <p>Scanned business license <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='ownerPhoneNumber' type="file"
-                                        value={ownerPhoneNumber}
-                                        {...register("ownerPhoneNumber", { required: "*please fill your mobile nuber" })}
+                                    <input name='licenseFile' type="file"
+                                        // value={licenseFile}
+                                        {...register("licenseFile", { required: "*please enter your license number image" })}
                                         placeholder='Enter Scanned business license'
-                                        onChange={(e) => setPhoneNumber2(e.target.value)}>
+                                        onChange={(e) => setLicenseFile(e.target.files[0])}
+                                       id='license' >
                                     </input>
-                                    {ownerPhoneNumber <= 0 && errors.ownerPhoneNumber && <span className={styles.validate_text}>{errors.ownerPhoneNumber.message}</span>}
+                                    {errors.licenseFile && <span className={styles.validate_text}>{errors.licenseFile.message}</span>}
                                 </div>
                             </div>
                         </div>
@@ -464,7 +465,7 @@ export default function Cargo_registration() {
 
                         {/* --------------- vehicle information- -------------- */}
 
-                        <div className='second_div'>
+                        {/* <div className='second_div'>
                             <h1>Agreement</h1>
                             <div className={styles.vehicle_information}>
                                 
@@ -495,7 +496,7 @@ export default function Cargo_registration() {
                                
                             </div>
 
-                        </div>
+                        </div> */}
 
                         <div className={styles.company_button}>
                             <button className={styles.add}>Register</button>

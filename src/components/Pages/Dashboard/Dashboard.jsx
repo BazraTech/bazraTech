@@ -95,7 +95,16 @@ export default function Dashboard() {
                 setDataSource4(data.messages)
             })
     }, [])
-
+    const url5 = "http://64.226.104.50:9090/Api/Admin/All/Cargos";
+    const [dataSource5, setDataSource5] = useState([])
+    useEffect(() => {
+        fetch(url5, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSource5(data.cargos.length)
+                console.log(data)
+            })
+    }, [])
     return (
 
         <div>
@@ -198,11 +207,12 @@ export default function Dashboard() {
                             </div>
                         </Link>
                     </div>
-                    <div className={styles.tracking}>
+                    <div className={styles.users}>
                         <Link to="/markating" style={{ textDecoration: 'none' }} >
                             <h4>Marketing </h4>
-                            <div className={styles.innerCard8}>
-                                <BsFillBriefcaseFill  size="2.6rem" color='#5959b1'></BsFillBriefcaseFill >
+                            <div className={styles.innerCard3}>
+                                <BsFillBriefcaseFill  size="2.5rem" color='#5959b1'></BsFillBriefcaseFill >
+                                <p>{dataSource5}</p>
                             </div>
                         </Link>
                     </div>

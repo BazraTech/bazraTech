@@ -9,6 +9,7 @@ import Total_number_of_vehile from './components/Pages/Total_number_of_vehicle/T
 // import Tracking_history from './components/Pages/Tracking/Tracking_history';
 import Tracking from './components/Pages/Tracking/Tracking';
 import Marketing from './components/Pages/Marketing/Marketing';
+import Post_market from './components/Pages/Marketing/Post_market';
 import Alert from './components/Pages/alert/Off_road';
 import Users_edit from './components/Pages/Users/Users_edit';
 import Vehicle_detail from './components/Pages/Total_number_of_vehicle/Vehicle_detail';
@@ -63,6 +64,7 @@ class App extends Component{
         <Route path="/Total_number_of_vehicle" element={<Total_number_of_vehile />}></Route>
         <Route path="/tracking" element={<Tracking />}></Route>
         <Route path="/markating" element={<Marketing />}></Route>
+        <Route path="Post_market/:id" element={<Post_market/>}></Route>
         <Route path="/off_road" element={<Off_road />}></Route>
         <Route path="/vehicle_detail" element={<Vehicle_detail />}></Route>
         <Route path="/message_overview" element={<Message_overview />}></Route>
