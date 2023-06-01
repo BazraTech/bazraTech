@@ -4,9 +4,11 @@ import 'package:http/http.dart' as http;
 import 'package:cargo/shared/constant.dart';
 import 'package:cargo/views/login.dart';
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import '../shared/custom-form.dart';
 import '../shared/customButton.dart';
 import '../shared/failAlert.dart';
+import '../shared/storage_hepler.dart';
 import '../shared/succussAlert.dart';
 import 'Bottom_Navigation.dart';
 
@@ -28,12 +30,32 @@ class _SignupState extends State<Signup> {
   @override
   void dispose() {
     // Clean up the controllers when the widget is disposed
-    _companyController.dispose();
+
     _phoneController.dispose();
     _passwordController.dispose();
-    _confirmPasswordController.dispose();
+    // _confirmPasswordController.dispose();
 
     super.dispose();
+  }
+
+  void _showSweetAlert(BuildContext context, AlertType alertType, String title,
+      String description) {
+    Alert(
+      context: context,
+      type: alertType,
+      title: title,
+      desc: description,
+      buttons: [
+        DialogButton(
+          child: Text(
+            'OK',
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pop(context),
+          width: 120,
+        ),
+      ],
+    ).show();
   }
 
   registerCargo(
@@ -48,8 +70,15 @@ class _SignupState extends State<Signup> {
       'confirmPassword': "${confirmPass}",
     };
     print(requestData);
+
+    print(requestData);
+
+    print("********************************");
+    print('Token: $requestData');
+    print("********************************");
     try {
       String body = json.encode(requestData);
+
       // Make the request and handle the response
       if (_formKey.currentState!.validate()) {
         _formKey.currentState?.save();
@@ -63,23 +92,21 @@ class _SignupState extends State<Signup> {
         );
         print(response.body);
         print(response.statusCode);
+        final Map jsonResponse = json.decode(response.body);
 
         if (response.statusCode == 200) {
-          // Parse the response
-          var jsonResponse = json.decode(response.body);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (BuildContext context) => BottomNav()),
-          );
+          _showSweetAlert(
+              context, AlertType.success, 'Success', jsonResponse['message']);
         } else {
-          showAlertDialogFail(context);
+          _showSweetAlert(
+              context, AlertType.error, 'Error', jsonResponse['message']);
         }
       }
-    } catch (error) {
-      showAlertDialogFail(context);
+    } catch (e) {
+      _showSweetAlert(context, AlertType.error, 'Error',
+          'An error occurred, please check your internet connection.');
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -171,51 +198,54 @@ class _SignupState extends State<Signup> {
                     showSuffixIcon: true,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter a company name';
+                        return 'Please enter a password';
                       }
-                      return null;
+                      return PasswordMatchValidator.validate(
+                          value!, _confirmPasswordController.text);
                     },
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   CustomTextFieldForm(
-                    hintText: 'Confirm Password',
-                    textController: _confirmPasswordController,
-                    isPassword: true,
-                    textStyle: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.black54,
-                        fontFamily: 'Roboto',
-                        letterSpacing: 2.0,
-                        fontWeight: FontWeight.bold),
-                    onChanged: (value) {
-                      print("password changed: $value");
-                    },
-                    obscureText: true,
-                    hintTextStyle: const TextStyle(
-                      letterSpacing: 1.0,
-                      wordSpacing: 2.0,
-                      // ... other styles
-                    ),
-                    showSuffixIcon: true,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter a company name';
-                      }
-                      return null;
-                    },
-                  ),
+                      hintText: 'Confirm Password',
+                      textController: _confirmPasswordController,
+                      isPassword: true,
+                      textStyle: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.black54,
+                          fontFamily: 'Roboto',
+                          letterSpacing: 2.0,
+                          fontWeight: FontWeight.bold),
+                      onChanged: (value) {
+                        print("password changed: $value");
+                      },
+                      obscureText: true,
+                      hintTextStyle: const TextStyle(
+                        letterSpacing: 1.0,
+                        wordSpacing: 2.0,
+                        // ... other styles
+                      ),
+                      showSuffixIcon: true,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a confirm password';
+                        }
+
+                        return PasswordMatchValidator.validate(
+                            _passwordController.text, value!);
+                      }),
                   const SizedBox(
                     height: 10,
                   ),
                   CustomButton(
                     onPressed: () async {
                       await registerCargo(
-                          _companyController.text,
-                          _phoneController.text,
-                          _passwordController.text,
-                          _confirmPasswordController.text);
+                        _companyController.text,
+                        _phoneController.text,
+                        _passwordController.text,
+                        _confirmPasswordController.text,
+                      );
                     },
                     text: 'Sign up',
                   ),
@@ -262,5 +292,14 @@ class _SignupState extends State<Signup> {
             ),
           ),
         ));
+  }
+}
+
+class PasswordMatchValidator {
+  static String? validate(String password, String confirmPassword) {
+    if (password != confirmPassword) {
+      return "password do not match";
+    }
+    return null;
   }
 }

@@ -1,6 +1,7 @@
 class Bill {
-  final String trip;
+  final String startTrip;
+  final String endTrip;
   final String status;
   
-  Bill({ required this.trip,  required this.status});
+  Bill({ required this.status,  required this.startTrip, required this.endTrip});
 } 

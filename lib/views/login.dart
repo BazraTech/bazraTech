@@ -5,12 +5,16 @@ import 'package:cargo/Components/Home_Page.dart';
 import 'package:cargo/config/APIConfig.dart';
 import 'package:cargo/shared/constant.dart';
 import 'package:cargo/shared/customButton.dart';
+import 'package:cargo/shared/logoStorage.dart';
 import 'package:cargo/views/Bottom_Navigation.dart';
 import 'package:cargo/views/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../shared/ImageHelper.dart';
+import '../shared/checkConnection.dart';
 import '../shared/custom-form.dart';
 import '../shared/failAlert.dart';
 import '../shared/logo.dart';
@@ -55,6 +59,14 @@ class _Cargo_loginState extends State<Cargo_login> {
     print("********************************");
     print('Token: $retrievedToken');
     print("********************************");
+    bool isConnected = await checkInternetConnection();
+    if (!isConnected) {
+      // Show an error message
+      print(
+          'No internet connection found, please check your internet settings.');
+      // Define this function to show an alert
+      return;
+    }
     try {
       String body = json.encode(requestData);
 
@@ -87,20 +99,61 @@ class _Cargo_loginState extends State<Cargo_login> {
             MaterialPageRoute(builder: (BuildContext context) => BottomNav()),
           );
         } else {
-          showAlertDialogFail(context);
+          _showSweetAlert(context);
         }
       }
     } catch (error) {
-      showAlertDialogFail(context);
+      _showSweetAlert(context);
     }
   }
+
+  void _showSweetAlert(BuildContext context) {
+    Alert(
+      context: context,
+      type: AlertType.warning,
+      desc: "Invalid User Name Or Passowrd.",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "OK",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pop(context),
+          width: 180,
+        )
+      ],
+    ).show();
+  }
+
+  // Future<String> fetchImage() async {
+  //   var client = http.Client();
+  //   StorageHelper storageHelper = StorageHelper();
+  //   String? accessToken = await storageHelper.getToken();
+
+  //   Map<String, String> requestHeaders = {
+  //     'Content-Type': 'application/json',
+  //     'Accept': 'application/json',
+  //     'Authorization': 'Bearer $accessToken',
+  //   };
+  //   final response = await http.get(
+  //       Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+  //       headers: requestHeaders);
+  //   if (response.statusCode == 200) {
+  //     // If the server returns a 200 OK response, parse the JSON.
+  //     Map<String, dynamic> data = json.decode(response.body);
+  //     return data["logo"];
+  //   } else {
+  //     throw Exception('Failed to load image');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      backgroundColor: kBackgroundColor,
+      backgroundColor: Color.fromARGB(255, 246, 247, 249),
       body: Container(
         margin: const EdgeInsets.only(top: 100),
         padding: const EdgeInsets.all(20.0),
@@ -108,19 +161,29 @@ class _Cargo_loginState extends State<Cargo_login> {
           child: Form(
             key: _formKey,
             child: Column(children: [
-              Container(
-                margin: EdgeInsets.only(left: 20, bottom: 60),
-                padding: const EdgeInsets.all(2.0),
-                child: const CircleAvatar(
-                  radius: 70,
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.person,
-                    size: 40,
-                    color: Colors.blue,
-                  ),
-                ),
-              ),
+              // Container(
+              //   alignment: Alignment.center,
+              //   margin: EdgeInsets.only(bottom: 60),
+              //   padding: const EdgeInsets.all(2.0),
+              //   child: CircleAvatar(
+              //     radius: 65,
+              //     backgroundColor: Colors.white,
+              //     child: FutureBuilder(
+              //       future: fetchImage(),
+              //       builder:
+              //           (BuildContext context, AsyncSnapshot<String> snapshot) {
+              //         if (snapshot.connectionState != ConnectionState.done)
+              //           return Text("");
+              //         return ClipOval(
+              //           child: SizedBox(
+              //               height: screenHeight * 0.4,
+              //               width: screenWidth * 0.9,
+              //               child: Image.network(snapshot.data.toString())),
+              //         );
+              //       },
+              //     ),
+              //   ),
+              // ),
               CustomTextFieldForm(
                 textStyle: const TextStyle(
                     fontWeight: FontWeight.bold,

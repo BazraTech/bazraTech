@@ -17,9 +17,9 @@ class BottomNav extends StatelessWidget {
           length: 4,
           child: Scaffold(
             backgroundColor: Colors.white,
-            body: const TabBarView(
+            body: TabBarView(
               children: [
-                CargoHome(),
+                CargoOWnerHomePage(),
                 Tracking(),
                 Communicate(),
                 Profile(),
@@ -44,7 +44,7 @@ class BottomNav extends StatelessWidget {
                         child: Text(
                           "Home",
                           style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 12,
                               color: Colors.white,
                               fontFamily: 'Roboto',
                               letterSpacing: 2.0,
@@ -56,7 +56,7 @@ class BottomNav extends StatelessWidget {
                         child: Text(
                           "Tracking",
                           style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 12,
                               color: Colors.white,
                               fontFamily: 'Roboto',
                               letterSpacing: 2.0,
@@ -68,10 +68,9 @@ class BottomNav extends StatelessWidget {
                         child: Text(
                           "Communicate",
                           style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 12,
                               color: Colors.white,
                               fontFamily: 'Roboto',
-                              letterSpacing: 2.0,
                               fontWeight: FontWeight.bold),
                         ),
                       ),

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import '../../model/bill_details.dart';
 import '../../shared/customAppbar.dart';
 
-
-
 class Bill_Detail extends StatefulWidget {
   const Bill_Detail({super.key});
 

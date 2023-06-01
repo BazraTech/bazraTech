@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:cargo/shared/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
+import '../../Components/Home_Page.dart';
 import '../../shared/custom-form.dart';
 import '../../shared/customButton.dart';
-
+import 'package:intl/intl.dart';
 import '../../shared/failAlert.dart';
 import '../../shared/storage_hepler.dart';
 import '../../shared/succussAlert.dart';
@@ -14,10 +16,14 @@ import 'package:http/http.dart' as http;
 import '../Bottom_Navigation.dart';
 
 class CargoType {
-  final int id;
-  final String cargoType;
+  int id;
+  String cargoType;
 
-  CargoType(this.id, this.cargoType);
+  CargoType({required this.id, required this.cargoType});
+
+  factory CargoType.fromJson(Map json) {
+    return CargoType(id: json['id'], cargoType: json['cargoType']);
+  }
 }
 
 class Posts extends StatefulWidget {
@@ -38,23 +44,45 @@ class _PostsState extends State<Posts> {
   final _packaging = TextEditingController();
   final _weight = TextEditingController();
   final _price = TextEditingController();
-  @override
-  void initState() {
-    super.initState();
-    _isMounted = true;
-  }
 
-  @override
-  void dispose() {
-    // Clean up the controllers when the widget is disposed
-    _from.dispose();
-    _to.dispose();
-    _date.dispose();
-    _cargoType.dispose();
-    _cargoType.dispose();
-    _weight.dispose();
-    _isMounted = false;
-    super.dispose();
+  // @override
+  // void dispose() {
+  //   // Clean up the controllers when the widget is disposed
+  //   _from.dispose();
+  //   _to.dispose();
+  //   _date.dispose();
+  //   _cargoType.dispose();
+  //   _cargoType.dispose();
+  //   _weight.dispose();
+  //   _isMounted = false;
+  //   super.dispose();
+  // }
+  void _showSweetAlert(BuildContext context, AlertType alertType, String title,
+      String description) {
+    Alert(
+      context: context,
+      type: alertType,
+      title: title,
+      desc: description,
+      buttons: [
+        DialogButton(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CargoOWnerHomePage()));
+            },
+            child: Text(
+              'OK',
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          ),
+          onPressed: () => Navigator.pop(context),
+          width: 120,
+        ),
+      ],
+    ).show();
   }
 
   registerCargo(String from, String to, String date, String cargoType,
@@ -72,11 +100,11 @@ class _PostsState extends State<Posts> {
     String body = json.encode(requestData);
 
     StorageHelper storageHelper = StorageHelper();
-    String? retrievedToken = await storageHelper.getToken();
+    String? accessToken = await storageHelper.getToken();
     print(requestData);
 
     print("********************************");
-    print('Token: $retrievedToken');
+    print('accessToken: $accessToken');
     print("********************************");
     try {
       // Make the request and handle the response
@@ -88,34 +116,96 @@ class _PostsState extends State<Posts> {
             headers: {
               "Content-Type": "application/json",
               'Accept': 'application/json',
-              "Authorization": "Bearer $retrievedToken",
+              "Authorization": "Bearer $accessToken",
             });
 
         print(response.body);
         print(response.statusCode);
+        final Map jsonResponse = json.decode(response.body);
+
         if (response.statusCode == 200) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (BuildContext context) => BottomNav()),
-          );
+          _showSweetAlert(
+              context, AlertType.success, 'Success', jsonResponse['message']);
         } else {
-          print(response.statusCode);
-          showAlertDialogFail(context);
+          _showSweetAlert(
+              context, AlertType.error, 'Error', jsonResponse['message']);
         }
       }
-    } catch (error) {
-      throw error;
+    } catch (e) {
+      _showSweetAlert(context, AlertType.error, 'Error',
+          'An error occurred, please check your internet connection.');
     }
   }
 
+  List<CargoType> _cargoTypes = [];
+  CargoType? _selectedCargoType;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchCargoTypes();
+  }
+
+  Future<void> _fetchCargoTypes() async {
+    StorageHelper storageHelper = StorageHelper();
+    String? accessToken = await storageHelper.getToken();
+    final response = await http.get(
+        Uri.parse('http://64.226.104.50:9090/Api/Admin/All/CargoType'),
+        headers: {
+          "Content-Type": "application/json",
+          'Accept': 'application/json',
+          "Authorization": "Bearer $accessToken",
+        });
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      setState(() {
+        _cargoTypes = List.from(data['cargoTypes'])
+            .map((e) => CargoType.fromJson(e))
+            .toList();
+      });
+    } else {
+      throw Exception('Failed to fetch cargo types');
+    }
+  }
+
+  List cargoTypesItems = [];
+  String? selectedCargoType;
+  validateCargoType(CargoType value) {
+    return value == null ? 'Please select a cargo type' : null;
+  }
+
+  TextEditingController _dateController = TextEditingController();
+  String? validateDate(String value) {
+    if (value.isEmpty) {
+      return 'Please select a date';
+    }
+    return null;
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null) {
+      setState(() {
+        _dateController.text = DateFormat('yyyy-MM-dd').format(picked);
+      });
+    }
+  }
+
+  TextEditingController cargoTypeController = TextEditingController();
+  var dropdownvalue;
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: kBackgroundColor,
+      backgroundColor: Color.fromARGB(255, 246, 247, 249),
       body: Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -127,7 +217,7 @@ class _PostsState extends State<Posts> {
                       fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
                   textController: _from,
                   obscureText: false,
-                  hintTextStyle: TextStyle(
+                  hintTextStyle: const TextStyle(
                     letterSpacing: 1.0,
                     wordSpacing: 2.0,
                     // ... other styles
@@ -148,7 +238,123 @@ class _PostsState extends State<Posts> {
                   hintText: "To",
                   textController: _to,
                   obscureText: false,
-                  hintTextStyle: TextStyle(
+                  hintTextStyle: const TextStyle(
+                    letterSpacing: 1.0,
+                    wordSpacing: 2.0,
+                    // ... other styles
+                  ),
+                  onChanged: (value) {},
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your departure";
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  controller: _dateController,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    hintText: "Select a date",
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.calendar_today),
+                      onPressed: () => _selectDate(context),
+                    ),
+                    labelStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.normal),
+                    filled: true,
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 1.5),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 1.5),
+                    ),
+                    errorBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red, width: 1.5),
+                    ),
+                    focusedErrorBorder: const OutlineInputBorder(),
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please select a  date';
+                    }
+                    return null;
+                  },
+                  // validator: _validateDate,
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                TextFormField(
+                  controller: _cargoType,
+                  readOnly: true, // To prevent opening the keyboard
+                  onTap: () async {
+                    CargoType? selectedValue = await showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return FractionallySizedBox(
+                          widthFactor: 0.7,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: _cargoTypes.map((CargoType cargo) {
+                              return ListTile(
+                                title: Text(cargo.cargoType),
+                                onTap: () {
+                                  Navigator.of(context).pop(cargo);
+                                },
+                              );
+                            }).toList(),
+                          ),
+                        );
+                      },
+                    );
+
+                    if (selectedValue != null) {
+                      setState(() {
+                        _selectedCargoType = selectedValue;
+                        _cargoType.text = selectedValue.cargoType;
+                      });
+                    }
+                  },
+                  decoration: const InputDecoration(
+                    fillColor: Colors.white,
+                    hintText: "Select Cargo Type",
+                    labelStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.normal),
+                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 1.5),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 1.5),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red, width: 1.5),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(),
+                    suffixIcon: Icon(Icons.expand_more_rounded),
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please select a cargo type';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                CustomTextFieldForm(
+                  textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+                  hintText: "Packaging",
+                  textController: _packaging,
+                  obscureText: false,
+                  hintTextStyle: const TextStyle(
                     letterSpacing: 1.0,
                     wordSpacing: 2.0,
                     // ... other styles
@@ -166,81 +372,9 @@ class _PostsState extends State<Posts> {
                 CustomTextFieldForm(
                   textStyle: const TextStyle(
                       fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
-                  hintText: "Date",
-                  textController: _date,
-                  obscureText: false,
-                  hintTextStyle: TextStyle(
-                    letterSpacing: 1.0,
-                    wordSpacing: 2.0,
-                    // ... other styles
-                  ),
-                  onChanged: (value) {},
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter your departure";
-                    }
-                  },
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  width: screenWidth,
-                  color: kBackgroundColor,
-                  height: 30,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                CustomTextFieldForm(
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
-                  hintText: "Cargo Type",
-                  textController: _cargoType,
-                  obscureText: false,
-                  hintTextStyle: TextStyle(
-                    letterSpacing: 1.0,
-                    wordSpacing: 2.0,
-                    // ... other styles
-                  ),
-                  onChanged: (value) {},
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter your departure";
-                    }
-                  },
-                ),
-                SizedBox(height: 20),
-                CustomTextFieldForm(
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
-                  hintText: "Packaging",
-                  textController: _packaging,
-                  obscureText: false,
-                  hintTextStyle: TextStyle(
-                    letterSpacing: 1.0,
-                    wordSpacing: 2.0,
-                    // ... other styles
-                  ),
-                  onChanged: (value) {},
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter your departure";
-                    }
-                  },
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                CustomTextFieldForm(
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
                   hintText: "Weight",
                   textController: _weight,
-                  hintTextStyle: TextStyle(
+                  hintTextStyle: const TextStyle(
                     letterSpacing: 1.0,
                     wordSpacing: 2.0,
                     // ... other styles
@@ -253,15 +387,15 @@ class _PostsState extends State<Posts> {
                     }
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
                   width: screenWidth,
-                  color: kBackgroundColor,
-                  height: 30,
+                  color: Colors.grey.shade500,
+                  height: 5,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 CustomTextFieldForm(
@@ -270,7 +404,7 @@ class _PostsState extends State<Posts> {
                       fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
                   textController: _price,
                   obscureText: false,
-                  hintTextStyle: TextStyle(
+                  hintTextStyle: const TextStyle(
                     letterSpacing: 1.0,
                     wordSpacing: 2.0,
                     // ... other styles
@@ -287,7 +421,7 @@ class _PostsState extends State<Posts> {
                     registerCargo(
                         _from.text,
                         _to.text,
-                        _date.text,
+                        _dateController.text,
                         _cargoType.text,
                         _packaging.text,
                         _weight.text,

@@ -27,6 +27,27 @@ class Forget extends StatefulWidget {
 class _ForgetState extends State<Forget> {
   final _formKey = GlobalKey<FormState>();
   final _phoneController = TextEditingController();
+  Future<String> fetchImage() async {
+    var client = http.Client();
+    StorageHelper storageHelper = StorageHelper();
+    String? accessToken = await storageHelper.getToken();
+
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+    };
+    final response = await http.get(
+        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+        headers: requestHeaders);
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      Map<String, dynamic> data = json.decode(response.body);
+      return data["logo"];
+    } else {
+      throw Exception('Failed to load image');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +65,22 @@ class _ForgetState extends State<Forget> {
               Container(
                 margin: EdgeInsets.only(left: 20, bottom: 30),
                 padding: const EdgeInsets.all(2.0),
-                child: const CircleAvatar(
-                  radius: 70,
+                child: CircleAvatar(
+                  radius: 65,
                   backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.person,
-                    size: 40,
-                    color: Colors.blue,
+                  child: FutureBuilder(
+                    future: fetchImage(),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      if (snapshot.connectionState != ConnectionState.done)
+                        return Text("");
+                      return ClipOval(
+                        child: SizedBox(
+                            height: screenHeight * 0.4,
+                            width: screenWidth * 0.9,
+                            child: Image.network(snapshot.data.toString())),
+                      );
+                    },
                   ),
                 ),
               ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../shared/constant.dart';
 import '../../shared/customButton.dart';
 
@@ -77,7 +76,7 @@ class _StatusState extends State<Status> {
                                   margin: EdgeInsets.only(left: 20, top: 10),
                                   child: Text(
                                     "Plate Number",
-                                    style: GoogleFonts.montserrat(
+                                    style:TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black),
@@ -89,7 +88,7 @@ class _StatusState extends State<Status> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     "025462",
-                                    style: GoogleFonts.montserrat(
+                                    style:TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
                                       fontSize: 12,
@@ -106,9 +105,9 @@ class _StatusState extends State<Status> {
                                       margin:
                                           EdgeInsets.only(left: 20, top: 10),
                                       padding: const EdgeInsets.all(4.0),
-                                      child: Text(
+                                      child: const Text(
                                         "Driver Name",
-                                        style: GoogleFonts.montserrat(
+                                        style:TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black,
                                           fontSize: 12,
@@ -121,7 +120,7 @@ class _StatusState extends State<Status> {
                                       padding: const EdgeInsets.all(4.0),
                                       child: Text(
                                         "Abinet",
-                                        style: GoogleFonts.montserrat(
+                                        style:TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black,
                                           fontSize: 12,
