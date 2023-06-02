@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 
@@ -114,7 +114,7 @@ class _communicationHistoryState extends State<communicationHistory> {
                   Container(
                     child: Text(
                       " Message History",
-                      style: GoogleFonts.montserrat(
+                      style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 17,
@@ -168,8 +168,7 @@ class _communicationHistoryState extends State<communicationHistory> {
                                                       Result[index]
                                                               ["recipientName"]
                                                           .substring(0, 1),
-                                                      style: GoogleFonts
-                                                          .montserrat(
+                                                      style:TextStyle(
                                                         color: kPrimaryColor,
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -191,7 +190,7 @@ class _communicationHistoryState extends State<communicationHistory> {
                                               Center(
                                                 child: Text(
                                                   Result[index]['message'],
-                                                  style: GoogleFonts.montserrat(
+                                                  style:TextStyle(
                                                     color: Colors.black,
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 13,

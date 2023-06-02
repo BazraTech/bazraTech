@@ -1,28 +1,28 @@
 import 'dart:async';
 import 'dart:convert';
 
-
 import 'package:bazralogin/Theme/customAppBar.dart';
+import 'package:bazralogin/config/APIService.dart';
 import 'package:bazralogin/const/color.dart';
-import 'package:bazralogin/view/screen/Owner/TripManagement/tripDetail.dart';
+import 'package:bazralogin/view/screen/Owner/Driver/assignDriver.dart';
+import 'package:bazralogin/view/screen/Owner/TripManagement/setTrip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_places_flutter/model/place_details.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import '../../../../../Model/communicationList.dart';
-import '../../../../config/APIService.dart';
 import '../../../../const/constant.dart';
 import '../Vehicle/vehicleDetial.dart';
 import '../Vehicle/vehicleStatus.dart';
 import 'package:http/http.dart' as http;
 
-class ActiveTrip extends StatefulWidget {
-  const ActiveTrip({super.key});
+class AvailableVehicle extends StatefulWidget {
+  const AvailableVehicle({super.key});
   @override
-  State<ActiveTrip> createState() => _ActiveTripState();
+  State<AvailableVehicle> createState() => _AvailableVehicleState();
 }
 
-class _ActiveTripState extends State<ActiveTrip> {
+class _AvailableVehicleState extends State<AvailableVehicle> {
   TextEditingController _searchController = TextEditingController();
   ScrollController controller = ScrollController();
   bool closeTopContainer = false;
@@ -30,10 +30,10 @@ class _ActiveTripState extends State<ActiveTrip> {
   bool _isLoading = true;
   String query = '';
   List Result = [];
+  List assignedVehicle = [];
   List findVehicle = [];
-  List results = [];
-  List totalVehicles = [];
-  activeTrip() async {
+
+  assignedDrivers() async {
     var client = http.Client();
     final storage = new FlutterSecureStorage();
     var token = await storage.read(key: 'jwt');
@@ -42,16 +42,21 @@ class _ActiveTripState extends State<ActiveTrip> {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    var response = await http.get(Uri.parse(ApIConfig.activeTrip),
+    var response = await http.get(Uri.parse(ApIConfig.avaiableTrip),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;
-      results = mapResponse['setTrips'];
+      List results = mapResponse['available'];
+
       setState(() {
-        findVehicle = results;
         _isLoading = false;
+
+        assignedVehicle = results
+            .where((element) => element['status'].contains("INSTOCK"))
+            .toList();
+        findVehicle = assignedVehicle;
       });
-      return results;
+      return assignedVehicle;
     } else {
       throw Exception('not loaded ');
     }
@@ -59,11 +64,13 @@ class _ActiveTripState extends State<ActiveTrip> {
 
   void vehiclesSearch(String enterKeyboard) {
     setState(() {
-      findVehicle = results.where((driver) {
+      findVehicle = assignedVehicle.where((driver) {
+        final name = driver['vehicleName'].toLowerCase();
         final plateNumber = driver['plateNumber'].toLowerCase();
         final inputName = enterKeyboard.toLowerCase();
         final inputPlateNumber = enterKeyboard.toLowerCase();
-        return plateNumber.contains(inputPlateNumber);
+        return name.contains(inputName) ||
+            plateNumber.contains(inputPlateNumber);
       }).toList();
     });
 
@@ -75,7 +82,7 @@ class _ActiveTripState extends State<ActiveTrip> {
   void initState() {
     super.initState();
 
-    activeTrip();
+    assignedDrivers();
     controller.addListener(() {
       double value = controller.offset / 119;
 
@@ -87,15 +94,18 @@ class _ActiveTripState extends State<ActiveTrip> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
+  // void dispose() {
+  //   timer.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     final double categoryHeight = screenHeight * 0.30;
+
+    print(Result);
     return Scaffold(
         backgroundColor: kBackgroundColor,
         appBar: AppBar(
@@ -113,12 +123,13 @@ class _ActiveTripState extends State<ActiveTrip> {
           backgroundColor: kPrimaryColor,
           title: Container(
             width: double.infinity,
+            margin: EdgeInsets.only(right: screenWidth * 0.12),
             height: 40,
             color: Colors.white,
             child: Center(
               child: TextField(
                 onChanged: vehiclesSearch,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Driver Name or Plate No.',
                   border: InputBorder.none,
                   errorBorder: InputBorder.none,
@@ -130,11 +141,11 @@ class _ActiveTripState extends State<ActiveTrip> {
             ),
           ),
         ),
-        body: _isLoading
+        body: findVehicle.isEmpty
             ? Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Column(
-                    children: findVehicle.map((trip) {
+                    children: findVehicle.map((vehicle) {
                   return Container(
                     height: screenHeight * 0.08,
                     child: InkWell(
@@ -142,9 +153,13 @@ class _ActiveTripState extends State<ActiveTrip> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (BuildContext context) => TripDetail(
-                                    id: trip['id'],
-                                  )),
+                              builder: (BuildContext context) => Settrips(
+                                  drivername: vehicle['driverName'],
+                                  platenumber: vehicle['plateNumber'],
+                                  startLocation: "4444",
+                                  destination: "4443",
+                                  startDate: "2-11-14",
+                                  tripType: "LONG")),
                         );
                       }),
                       child: Card(
@@ -154,18 +169,39 @@ class _ActiveTripState extends State<ActiveTrip> {
                               Container(
                                 margin: EdgeInsets.only(left: 15, right: 10),
                                 child: Text(
-                                  " " + trip['driver'].toString(),
+                                  " " + vehicle['vehicleName'],
                                   style: const TextStyle(
                                       // fontWeight: FontWeight.bold,
                                       fontSize: 12,
                                       color: Colors.black87),
                                 ),
                               ),
+                              vehicle['driverName'] != null
+                                  ? Container(
+                                      margin: EdgeInsets.only(left: 20),
+                                      width: screenWidth * 0.28,
+                                      child: Text(
+                                        vehicle['driverName'],
+                                        style: const TextStyle(
+                                            // fontWeight: FontWeight.bold,
+                                            fontSize: 12,
+                                            color: Colors.black87),
+                                      ))
+                                  : Container(
+                                      width: screenWidth * 0.25,
+                                      child: const Text(
+                                        "Unassigned",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                    ),
                               Container(
                                 width: screenWidth * 0.1,
                                 margin: EdgeInsets.only(left: 5),
                                 child: Text(
-                                  trip['plateNumber'],
+                                  vehicle['vehicleCatagory'],
                                   style: const TextStyle(
                                       // fontWeight: FontWeight.bold,
                                       fontSize: 12,
@@ -173,16 +209,23 @@ class _ActiveTripState extends State<ActiveTrip> {
                                 ),
                               ),
                               Container(
-                                width: screenWidth * 0.1,
-                                margin: EdgeInsets.only(left: 5, right: 10),
-                                child: Text(
-                                  trip['tripType'],
-                                  style: const TextStyle(
-                                      // fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                      color: Colors.black87),
-                                ),
-                              ),
+                                  height: screenHeight * 0.038,
+                                  width: screenWidth * 0.23,
+                                  margin: const EdgeInsets.only(
+                                      left: 30, right: 10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6),
+                                    color: kPrimaryColor,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      " " + vehicle['status'],
+                                      style: const TextStyle(
+                                          // fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                          color: Colors.white),
+                                    ),
+                                  ))
                             ]),
                       ),
                     ),

@@ -7,7 +7,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-
 import '../../../../Theme/TextInput.dart';
 import '../../../../config/APIService.dart';
 import '../../Bottom/Bottom.dart';
@@ -15,8 +14,9 @@ import 'TotalVehicles.dart';
 
 class ModifyVehileStatus extends StatefulWidget {
   String? plateNumber;
+  String? sttatus;
 
-  ModifyVehileStatus({super.key, this.plateNumber});
+  ModifyVehileStatus({super.key, this.plateNumber, this.sttatus});
 
   @override
   State<ModifyVehileStatus> createState() => _ModifyVehileStatusState();
@@ -31,6 +31,7 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
   String? vehiclestatus;
   String? selectedItem = "INSTOCK";
   String? plateNum;
+  String? platenumber;
   String? loc;
   final storage = new FlutterSecureStorage();
 
@@ -57,6 +58,7 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
   Future<void> _showMyDialog() async {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+    platenumber = "${widget.plateNumber}";
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -174,38 +176,128 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
             },
             child: Icon(
               Icons.arrow_back_ios,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),
-        backgroundColor: kPrimaryColor,
-        title: const Text(
+        backgroundColor: Colors.white,
+        title: Text(
           "Modify Vehicle Status",
+          style: TextStyle(
+              color: Colors.black,
+              fontFamily: "Nunito",
+              fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.normal,
+              fontSize: 17),
         ),
       ),
       body: SingleChildScrollView(
         child: SizedBox(
-          height: screenHeight * 0.6,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Container(
-                  margin: EdgeInsets.only(top: screenHeight * 0.1),
+          height: screenHeight * 0.7,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: screenHeight * 0.03,
+                ),
+                Container(
+                  height: screenWidth * 0.24,
+                  width: screenWidth,
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3), // Shadow color
+                          blurRadius: 5, // Spread radius
+                          offset: Offset(0, 3), // Offset in (x,y) coordinates
+                        ),
+                      ],
+                      color: Color.fromRGBO(236, 240, 243, 1),
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: Colors.white, // Set the border color
+                        width: 2.5,
+                      )),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 18,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Change Status",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: "Nunito",
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.normal,
+                                fontSize: 15),
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.local_shipping,
+                            color: Colors.red,
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${widget.sttatus}",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 15,
+                              fontFamily: "Nunito",
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.normal,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 45,
+                ),
+                Container(
                   width: screenWidth,
                   height: screenHeight * 0.40,
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(6),
-                        topRight: Radius.circular(6),
-                        bottomLeft: Radius.circular(6),
-                        bottomRight: Radius.circular(6),
-                      )),
-                  padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2), // Shadow color
+                        blurRadius: 5, // Spread radius
+                        offset: Offset(0, 3), // Offset in (x,y) coordinates
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                   child: Container(
-                    margin: EdgeInsets.only(top: 20),
+                    decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                Colors.black.withOpacity(0.3), // Shadow color
+                            blurRadius: 5, // Spread radius
+                            offset: Offset(0, 3), // Offset in (x,y) coordinates
+                          ),
+                        ],
+                        color: Color.fromRGBO(236, 240, 243, 1),
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(
+                          color: Colors.white, // Set the border color
+                          width: 2.5,
+                        )),
                     width: screenWidth * 0.5,
                     child: Column(children: [
                       Column(
@@ -216,9 +308,12 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
                               margin: EdgeInsets.only(top: screenHeight * 0.07),
                               width: double.infinity,
                               child: TextFormField(
-                                decoration: ThemeHelper().textInputDecoration(
-                                  ' ${widget.plateNumber}',
+                                enabled: false,
+                                controller: TextEditingController(
+                                  text: "${widget.plateNumber}",
                                 ),
+                                decoration: ThemeHelper().textInputDecoration(),
+                                style: TextStyle(color: Colors.black),
                               ),
                             ),
                           ),
@@ -232,7 +327,8 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
                         child: Row(
                           children: [
                             Container(
-                              width: screenWidth - 60,
+                              width: screenWidth - 65,
+                              height: screenHeight * 0.065,
                               child: DropdownButtonFormField<String>(
                                 decoration: ThemeHelper().textInputDecoration(),
                                 value: selectedItem,
@@ -270,26 +366,40 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
                             width: screenWidth * 0.4,
                             height: screenHeight * 0.05,
                             child: ElevatedButton(
-                              onPressed: () {
-                                UpdateStatus();
-                              },
-                              child: const Text(
-                                "Update Status",
-                                style: TextStyle(
-                                    color: Color.fromRGBO(255, 255, 255, 1),
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              style: ThemeHelper().buttonStyle(),
-                            ),
+                                onPressed: () {
+                                  UpdateStatus();
+                                },
+                                child: const Text(
+                                  "Update Status",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: "Nunito",
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.normal,
+                                      fontSize: 15),
+                                ),
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                  minimumSize:
+                                      MaterialStateProperty.all(Size(5, 5)),
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.white),
+                                  shadowColor:
+                                      MaterialStateProperty.all(Colors.white),
+                                )),
                           ),
                         ],
                       ),
                     ]),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

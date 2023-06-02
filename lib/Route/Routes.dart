@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../view/screen/Bottom/Bottom.dart';
 import '../view/screen/Owner/Driver/UnassignedDrivers.dart';
 import '../view/screen/Owner/Driver/driversPage.dart';
+import '../view/screen/Owner/Profile/profileEdit/updateOwnerprofile.dart';
 
 class AppRoutes {
   static const String home = '/';
@@ -16,12 +17,14 @@ class AppRoutes {
   static const String driverpage = '/Driverpage';
   static const String unassigndriver = '/UNassigndriver';
   static const String vehicleonstack = '/Vehicleonstacks';
+  static const String updateProfiles = '/Updateprofile';
   static String getHomeRoute() => home;
   static String getLoginRoute() => login;
   static String getDriverpageRoute() => driverpage;
   static String getAlertRoute() => alert;
   static String getUnassigndriver() => unassigndriver;
   static String getVehicleonstaock() => vehicleonstack;
+  static String getUpdateprofile() => updateProfiles;
 
   static List<GetPage> routes = [
     GetPage(name: home, page: () => BottomNav()),
@@ -30,5 +33,6 @@ class AppRoutes {
     GetPage(name: '/Alert', page: () => notificationPage()),
     GetPage(name: unassigndriver, page: () => UnassignedDrivers()),
     GetPage(name: vehicleonstack, page: () => VehicleOnstock()),
+    GetPage(name: updateProfiles, page: () => ownerprofileUpadate()),
   ];
 }

@@ -5,6 +5,7 @@ import 'package:bazralogin/config/APIService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:ionicons/ionicons.dart';
 
 import '../../../../const/constant.dart';
 import 'modifyVehicleStatus.dart';
@@ -47,6 +48,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
         vehicleStatusList = vehicleStatusList;
         findVehicle = vehicleStatusList;
       });
+
       return vehicleStatusList;
     } else {
       throw Exception('not loaded ');
@@ -78,6 +80,11 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
   static bool isPressed = true;
   Offset distance = isPressed ? Offset(10, 10) : Offset(28, 28);
   double blur = isPressed ? 5.0 : 30.0;
+  List<Color> colors = [
+    Colors.blue,
+    Colors.red,
+    Colors.green,
+  ];
 
   String? phoneNumber;
   void buttonState() {
@@ -95,7 +102,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
       child: Scaffold(
           backgroundColor: kBackgroundColor,
           appBar: AppBar(
-            toolbarHeight: 120,
+            toolbarHeight: 80,
             elevation: 0,
             leading: InkWell(
               onTap: () {
@@ -103,10 +110,10 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
               },
               child: const Icon(
                 Icons.arrow_back_ios,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
-            backgroundColor: kPrimaryColor,
+            backgroundColor: Colors.white,
             title: Container(
               width: double.infinity,
               margin: EdgeInsets.only(right: screenWidth * 0.12),
@@ -134,64 +141,80 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                       child: Center(child: CircularProgressIndicator()))
                   : Column(
                       children: [
-                        Container(
-                          height: screenHeight * 0.08,
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  width: screenWidth * 0.2,
-                                  child: const Text(
-                                    "Vehicles",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold,
+                        Padding(
+                          padding: const EdgeInsets.all(13.0),
+                          child: Container(
+                            width: screenWidth - 35,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: Offset(0,
+                                        4), // Adjust the offset to control the shadow's position
+                                  ),
+                                ]),
+                            height: screenHeight * 0.08,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: screenWidth * 0.25,
+                                    child: const Text(
+                                      "Vehicles",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: "Nunito",
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.normal,
+                                          fontSize: 16),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  width: screenWidth * 0.2,
-                                  child: const Text(
-                                    "Assigned Driver",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold,
+                                  Container(
+                                    width: screenWidth * 0.2,
+                                    child: const Text(
+                                      "Driver",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: "Nunito",
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.normal,
+                                          fontSize: 16),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  width: screenWidth * 0.2,
-                                  child: const Text(
-                                    " Plate Number",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold,
+                                  Container(
+                                    width: screenWidth * 0.37,
+                                    child: const Text(
+                                      " Plate Number",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: "Nunito",
+                                          fontWeight: FontWeight.bold,
+                                          fontStyle: FontStyle.normal,
+                                          fontSize: 16),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 1,
-                          margin:
-                              EdgeInsets.only(left: 5, right: 9, bottom: 10),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Container(
-                              height: 1.0,
-                              width: screenWidth,
-                              color: Colors.black87,
+                                ],
+                              ),
                             ),
                           ),
                         ),
                         Column(
                             children: findVehicle.map((vehicle) {
+                          Color borderLeftColor =
+                              Colors.red; // Define the default border color
+
+                          if (vehicle['status'] == "ONROUTE") {
+                            borderLeftColor = Colors
+                                .green; // Update border color based on condition
+                          } else if (vehicle['status'] == "INSTOCK") {
+                            borderLeftColor = Colors
+                                .blue; // Update border color for the else case
+                          }
                           return Container(
                               height: screenHeight * 0.25,
                               padding: EdgeInsets.only(
@@ -209,26 +232,130 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                             )),
                                   );
                                 }),
-                                child: Card(
-                                  elevation: 5,
-                                  child: Container(
-                                    height: screenHeight * 0.03,
-                                    width: screenHeight,
-                                    decoration: BoxDecoration(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(6.0),
+                                      bottomLeft: Radius.circular(6.0),
+                                    ),
+                                    child: Container(
+                                      decoration: BoxDecoration(
                                         border: Border(
-                                      left: const BorderSide(
-                                          color: Colors.green, width: 5),
-                                    )),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              vehicle['status'] == "ONROUTE"
-                                                  ? Container(
+                                          left: BorderSide(
+                                              color: borderLeftColor, width: 6),
+                                        ),
+                                      ),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(3.3),
+                                            bottomLeft: Radius.circular(3.3),
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.2),
+                                              spreadRadius: 2,
+                                              blurRadius: 5,
+                                              offset: Offset(0,
+                                                  4), // Adjust the offset to control the shadow's position
+                                            ),
+                                          ],
+                                        ),
+                                        height: screenHeight * 0.03,
+                                        width: screenHeight,
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  top: 30, left: 10),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  SizedBox(
+                                                    width: screenWidth * 0.2,
+                                                    child: Text(
+                                                      vehicle['vehicleName'],
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: const TextStyle(
+                                                          // fontWeight: FontWeight.bold,
+                                                          fontSize: 14,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: screenWidth * 0.2,
+                                                    child:
+                                                        vehicle["driverName"] ==
+                                                                "null"
+                                                            ? Text("__")
+                                                            : Text(
+                                                                vehicle[
+                                                                    'driverName'],
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .start,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    // fontWeight: FontWeight.bold,
+                                                                    fontSize: 14,
+                                                                    color: Colors.black,
+                                                                    fontWeight: FontWeight.bold),
+                                                              ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: screenWidth * 0.37,
+                                                    child: Text(
+                                                      vehicle['plateNumber'],
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: const TextStyle(
+                                                          // fontWeight: FontWeight.bold,
+                                                          fontSize: 14,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Align(
+                                                alignment: Alignment.topLeft,
+                                                child: Container(
+                                                  height: screenHeight * 0.03,
+                                                  width: screenWidth * 0.03,
+                                                  decoration: BoxDecoration(
+                                                      color: Color.fromRGBO(
+                                                          236, 240, 243, 1),
+                                                      shape: BoxShape.circle),
+                                                  margin: EdgeInsets.only(
+                                                      top: 5, left: 110),
+                                                  child: Icon(
+                                                    Icons.local_shipping,
+                                                    color: borderLeftColor,
+                                                  ),
+                                                )),
+                                            vehicle['status'] == "ONROUTE"
+                                                ? Align(
+                                                    alignment:
+                                                        Alignment.topLeft,
+                                                    child: Container(
                                                       margin: EdgeInsets.only(
-                                                          left: 10, top: 10),
+                                                          left: 110, top: 10),
                                                       child: Text(
                                                         vehicle['status'],
                                                         style: const TextStyle(
@@ -238,154 +365,112 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                                                 FontWeight
                                                                     .bold),
                                                       ),
-                                                    )
-                                                  : vehicle['status'] ==
-                                                          "PARKED"
-                                                      ? Container(
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                                  left: 10,
-                                                                  top: 10),
-                                                          child: Text(
-                                                            vehicle['status'],
-                                                            style: const TextStyle(
-                                                                fontSize: 12,
-                                                                color: Colors
-                                                                    .yellow,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        )
-                                                      : vehicle['status'] ==
-                                                              "INSTOCK"
-                                                          ? Container(
-                                                              margin:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      left: 10,
-                                                                      top: 10),
-                                                              child: Text(
-                                                                vehicle[
-                                                                    'status'],
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color:
-                                                                        kPrimaryColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            )
-                                                          : Container(
-                                                              margin:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      left: 10,
-                                                                      top: 10),
-                                                              child: Text(
-                                                                vehicle[
-                                                                    'status'],
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                        .red,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              )),
-                                            ]),
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                              top: 30, left: 10),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                vehicle['vehicleName'],
-                                                textAlign: TextAlign.start,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                    // fontWeight: FontWeight.bold,
-                                                    fontSize: 14,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              SizedBox(
-                                                child: Text(
-                                                  vehicle['driverName'],
-                                                  textAlign: TextAlign.start,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: const TextStyle(
-                                                      // fontWeight: FontWeight.bold,
-                                                      fontSize: 14,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: screenWidth * 0.27,
-                                                child: Text(
-                                                  vehicle['plateNumber'],
-                                                  textAlign: TextAlign.start,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: const TextStyle(
-                                                      // fontWeight: FontWeight.bold,
-                                                      fontSize: 14,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Visibility(
-                                          visible:
-                                              vehicle['status'] != "ONROUTE",
-                                          child: InkWell(
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ModifyVehileStatus(
-                                                    plateNumber:
-                                                        vehicle['plateNumber'],
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
-                                              child: Container(
-                                                width: screenWidth,
-                                                color: Colors.white,
-                                                height: 40,
-                                                margin:
-                                                    EdgeInsets.only(top: 20),
-                                                child: const Center(
-                                                  child: Text(
-                                                    "Update Status",
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                ),
-                                              ),
+                                                    ),
+                                                  )
+                                                : vehicle['status'] == "PARKED"
+                                                    ? Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 110, top: 10),
+                                                        child: Text(
+                                                          vehicle['status'],
+                                                          style: const TextStyle(
+                                                              fontSize: 12,
+                                                              color: Colors.red,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      )
+                                                    : vehicle['status'] ==
+                                                            "INSTOCK"
+                                                        ? Container(
+                                                            margin:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 110,
+                                                                    top: 10),
+                                                            child: Text(
+                                                              vehicle['status'],
+                                                              style: const TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .blue,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          )
+                                                        : Container(
+                                                            margin:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 110,
+                                                                    top: 10),
+                                                            child: Text(
+                                                              vehicle['status'],
+                                                              style: const TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .red,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            )),
+                                            SizedBox(
+                                              width: 200,
                                             ),
-                                          ),
-                                        )
-                                      ],
+                                            Visibility(
+                                              visible: vehicle['status'] !=
+                                                  "ONROUTE",
+                                              child: InkWell(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ModifyVehileStatus(
+                                                        plateNumber: vehicle[
+                                                            'plateNumber'],
+                                                        sttatus:
+                                                            vehicle['status'],
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
+                                                  child: Container(
+                                                    width: screenWidth,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      border: Border.all(
+                                                        color: Colors.grey
+                                                            .shade300, // Border color
+                                                        width:
+                                                            2.0, // Border width
+                                                      ),
+                                                    ),
+                                                    height: 40,
+                                                    margin: EdgeInsets.only(
+                                                        top: 20),
+                                                    child: const Center(
+                                                      child: Text(
+                                                        "Update Status",
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),

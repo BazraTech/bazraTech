@@ -1,26 +1,20 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:bazralogin/controller/Localization.dart';
-import 'package:bazralogin/view/screen/Loging/Login.dart';
-import 'package:bazralogin/Theme/verticalDash.dart';
 import 'package:bazralogin/view/screen/Owner/Alert/Notification.dart';
+import 'package:bazralogin/view/screen/Owner/market/avilabelMarketforowner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../Model/driverCount.dart';
 import '../../../../Model/ApiConfig.dart';
-import '../../../../config/APIService.dart';
 import '../../../../const/constant.dart';
 import '../Driver/driversPage.dart';
 import '../TripManagement/setGuzo.dart';
 import '../Vehicle/vehicleStatus.dart';
-import '../report/alertType.dart';
-import '../report/singleReport.dart';
+import '../report/ownerReportstatus.dart';
 import 'package:http/http.dart' as http;
 
 class OwenerHomepage extends StatefulWidget {
@@ -70,59 +64,6 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
 
   double _padding = 6.0;
   String query = '';
-  Future vehicleFetch() async {
-    // fetch list of total vehicles
-    await APIService.vehicleFetch();
-  }
-
-  Future driverFetch() async {
-    // fetch list of total vehicles
-    await APIService.driverFetch();
-  }
-
-  Future maintainingcarFetch() async {
-    final maintainin = await APIService.maintainingCar();
-  }
-
-  Future parkedFetch() async {
-    // fetch  parked car
-
-    await APIService.parkedCar();
-  }
-
-  Future onrouteFetch() async {
-    // fetch list of  car on route
-    await APIService.onroutCar();
-  }
-
-  Future instockFetch() async {
-    // fetch list of  car in stock
-    await APIService.InStock();
-  }
-
-  Future Total_Drivers() async {
-    final totalDrivers = await CountDrivers.TotalDrivers();
-  }
-
-  Future Unassigned() async {
-    // fetch  parked car
-    final Unassigned = await CountDrivers.UnASSIGNED();
-  }
-
-  Future Onroute() async {
-    // fetch list of  car on route
-    final assignedDrivers = await CountDrivers.ONROUTE();
-  }
-
-  Future Permit() async {
-    // fetch list of  car in stock
-    final assignedDrivers = await CountDrivers.PERMIT();
-  }
-
-  Future Assigned() async {
-    // fetch list of  car in stock
-    final assignedDrivers = await CountDrivers.AssignedDriver();
-  }
 
   Future<String> fetchImage() async {
     var client = http.Client();
@@ -178,16 +119,6 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
   void initState() {
     // TODO: implement initState
 
-    Total_Drivers();
-    Assigned();
-    Unassigned();
-    Onroute();
-    Permit();
-    maintainingcarFetch();
-    parkedFetch();
-    vehicleFetch();
-    onrouteFetch();
-    instockFetch();
     super.initState();
   }
 
@@ -286,7 +217,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                             " Good morning",
                             textAlign: TextAlign.start,
                             overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.montserrat(
+                            style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
@@ -306,7 +237,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   " Selem" + ",",
                                   textAlign: TextAlign.start,
                                   overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.montserrat(
+                                  style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.normal,
                                     fontSize: 15,
@@ -318,7 +249,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                     "Robel",
                                     textAlign: TextAlign.start,
                                     overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.montserrat(
+                                    style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
                                       fontSize: 15,
@@ -369,12 +300,15 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                 margin: EdgeInsets.only(right: 30),
                                 child: Column(
                                   children: [
-                                    MaterialButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      color: kPrimaryColor,
-
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top: 13,
+                                        bottom: 13,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: kPrimaryColor,
+                                      ),
                                       child: Text(
                                         CountDrivers.totalDrivers.toString(),
                                         style: TextStyle(
@@ -382,13 +316,10 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                         ),
                                       ),
                                       padding: EdgeInsets.all(11),
-                                      minWidth: screenWidth * 0.06,
-                                      //use this class Circleborder() for circle shape.
-                                      shape: const CircleBorder(),
                                     ),
                                     Text(
                                       TranslationUtil.text('Driver'),
-                                      style: GoogleFonts.montserrat(
+                                      style: TextStyle(
                                         color: kPrimaryColor,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 13,
@@ -407,11 +338,15 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                 width: screenWidth * 0.35,
                                 child: Column(
                                   children: [
-                                    MaterialButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      color: kPrimaryColor,
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top: 13,
+                                        bottom: 13,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: kPrimaryColor,
+                                      ),
 
                                       child: Text(
                                         APIService.totalVehicle.toString(),
@@ -420,13 +355,12 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                         ),
                                       ),
                                       padding: EdgeInsets.all(11),
-                                      minWidth: screenWidth * 0.06,
+
                                       //use this class Circleborder() for circle shape.
-                                      shape: const CircleBorder(),
                                     ),
                                     Text(
                                       TranslationUtil.text("Vehicle"),
-                                      style: GoogleFonts.montserrat(
+                                      style: TextStyle(
                                         color: kPrimaryColor,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 13,
@@ -556,8 +490,8 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   margin: EdgeInsets.only(top: 10),
                                   // height: 70,
                                   width: MediaQuery.of(context).size.width,
-                                  child: const Icon(
-                                    MdiIcons.carBack,
+                                  child: Icon(
+                                    Icons.local_shipping,
                                     size: 50,
                                     color: kPrimaryColor,
                                   ),
@@ -566,7 +500,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   margin: EdgeInsets.only(top: 6),
                                   child: Text(
                                     TranslationUtil.text("Vehicle"),
-                                    style: GoogleFonts.montserrat(
+                                    style: TextStyle(
                                       color: kPrimaryColor,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 13,
@@ -584,7 +518,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => reportPage()));
+                                  builder: (context) => ownerReportstatus()));
                         },
                         child: AnimatedContainer(
                             //padding: EdgeInsets.only(bottom: _padding),
@@ -625,7 +559,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   margin: EdgeInsets.only(top: 8),
                                   child: Text(
                                     TranslationUtil.text("Report"),
-                                    style: GoogleFonts.montserrat(
+                                    style: TextStyle(
                                       color: kPrimaryColor,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 13,
@@ -640,12 +574,12 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                       padding: const EdgeInsets.all(10),
                       child: GestureDetector(
                         onTap: (() {
-                          // Navigator.push<void>(
-                          //   context,
-                          //   MaterialPageRoute<void>(
-                          //       builder: (BuildContext context) =>
-                          //           AvailableMarket()),
-                          // );
+                          Navigator.push<void>(
+                            context,
+                            MaterialPageRoute<void>(
+                                builder: (BuildContext context) =>
+                                    availabelMarket()),
+                          );
                         }),
                         child: AnimatedContainer(
                             //padding: EdgeInsets.only(bottom: _padding),
@@ -686,7 +620,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   margin: EdgeInsets.only(top: 8),
                                   child: Text(
                                     TranslationUtil.text("Available Market"),
-                                    style: GoogleFonts.montserrat(
+                                    style: TextStyle(
                                       color: kPrimaryColor,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 13,
@@ -745,7 +679,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   margin: EdgeInsets.only(top: 8),
                                   child: Text(
                                     TranslationUtil.text('Trip management'),
-                                    style: GoogleFonts.montserrat(
+                                    style: TextStyle(
                                       color: kPrimaryColor,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 13,

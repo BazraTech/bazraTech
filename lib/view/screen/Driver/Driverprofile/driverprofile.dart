@@ -17,15 +17,16 @@ import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 import '../../Loging/changePassword.dart';
 import '../../../../const/constant.dart';
+import 'profileUpdate.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({super.key});
+class driverProfile extends StatefulWidget {
+  const driverProfile({super.key});
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<driverProfile> createState() => _driverProfileState();
 }
 
-class _ProfileState extends State<Profile> {
+class _driverProfileState extends State<driverProfile> {
   String ownerpic = "";
   Future<String> _fetchLogo() async {
     var client = http.Client();
@@ -74,7 +75,7 @@ class _ProfileState extends State<Profile> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ownerprofileUpadate(
+                                builder: (context) => driverprofileUpadate(
                                       image: "${ownerpic}",
                                       email: "abushj12@gmail.com",
                                       phone: "0978999967",

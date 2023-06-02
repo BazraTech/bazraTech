@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:bazralogin/Model/Vehicle.dart';
-import 'package:bazralogin/Model/communication.dart';
+
 
 import 'package:bazralogin/const/color.dart';
 import 'package:bazralogin/const/constant.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:http/http.dart' as http;
 
 import '../../../../Model/ApiConfig.dart';
@@ -192,7 +192,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
                         left: 30, right: 60, top: 35, bottom: 10),
                     child: Text(
                       TranslationUtil.text('Message'),
-                      style: GoogleFonts.montserrat(
+                      style: TextStyle(
                         color: kPrimaryColor,
                         fontWeight: FontWeight.bold,
                         fontSize: 23,
@@ -254,7 +254,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
                                   }),
                                   child: Text(
                                     "send",
-                                    style: GoogleFonts.montserrat(
+                                    style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12,
@@ -341,7 +341,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
                         }),
                         child: Text(
                           'Select all',
-                          style: GoogleFonts.montserrat(
+                          style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
@@ -393,7 +393,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
                                                   top: 10, bottom: 10),
                                               child: Text(
                                                 " " + driver['driverName'],
-                                                style: GoogleFonts.montserrat(
+                                                style: TextStyle(
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 13,
@@ -407,7 +407,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
                                               " " +
                                                   driver['phoneNumber']
                                                       .toString(),
-                                              style: GoogleFonts.montserrat(
+                                              style:TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 12,

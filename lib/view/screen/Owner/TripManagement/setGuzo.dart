@@ -1,8 +1,9 @@
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
-import '../report/singleReport.dart';
+import '../report/ownerReport.dart';
 import 'activeTrip.dart';
-import 'availableVehicle.dart';
+import '../market/avilabelMarketforowner.dart';
+import 'avilabelVehiclefortrip.dart';
 
 class tripHistory extends StatelessWidget {
   tripHistory({super.key});
@@ -21,7 +22,7 @@ class tripHistory extends StatelessWidget {
           children: [
             AvailableVehicle(),
             ActiveTrip(),
-            reportPage(),
+            ownerReport(),
           ],
         ),
         bottomNavigationBar: Container(

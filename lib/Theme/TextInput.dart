@@ -9,22 +9,17 @@ class ThemeHelper {
       suffix: icon1,
       fillColor: Colors.white,
       filled: true,
-      contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+      // contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(width: 1, color: Colors.grey.shade400),
+        borderSide: BorderSide(color: Colors.grey.shade400, width: 2),
       ),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0), // Specify border radius
-        borderSide: BorderSide(
-          color: Colors.grey.shade400,
-        ), // Specify border color and width
+      // Specify border color and width
+      disabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey),
       ),
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 1,
-          color: Colors.grey.shade400,
-        ),
-        borderRadius: BorderRadius.circular(8.0),
+        borderSide: BorderSide(color: Colors.grey.shade400, width: 2),
+        borderRadius: BorderRadius.circular(6.0),
       ),
     );
   }
@@ -60,7 +55,7 @@ class ThemeHelper {
     return ButtonStyle(
       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(6.0),
+          borderRadius: BorderRadius.circular(5.0),
         ),
       ),
       minimumSize: MaterialStateProperty.all(Size(5, 5)),

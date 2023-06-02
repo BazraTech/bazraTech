@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:http/http.dart' as http;
 import '../../../../const/constant.dart';
 
@@ -86,7 +86,7 @@ class _notificationPageState extends State<notificationPage> {
                 children: [
                   Text(
                     "Alerts",
-                    style: GoogleFonts.montserrat(
+                    style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 23,
@@ -132,7 +132,7 @@ class _notificationPageState extends State<notificationPage> {
                                               child: Text(
                                                 Result[index]["driver"]
                                                     .substring(0, 1),
-                                                style: GoogleFonts.montserrat(
+                                                style: TextStyle(
                                                   color: kPrimaryColor,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 12,
@@ -155,7 +155,7 @@ class _notificationPageState extends State<notificationPage> {
                                             Container(
                                               child: Text(
                                                 Result[index]['alertocation'],
-                                                style: GoogleFonts.montserrat(
+                                                style: TextStyle(
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 13,
@@ -167,12 +167,12 @@ class _notificationPageState extends State<notificationPage> {
                                                   right: screenWidth * 0.07),
                                               child: Text(
                                                 Result[index]['alertType'],
-                                                style: GoogleFonts.montserrat(
+                                                style:TextStyle(
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.normal,
                                                   fontSize: 13,
                                                 ),
-                                              ),
+                                              ), 
                                             ),
                                           ],
                                         ),

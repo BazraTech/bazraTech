@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:bazralogin/Model/communication.dart';
 import 'package:bazralogin/const/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

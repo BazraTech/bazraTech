@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:intl/intl.dart';
@@ -227,7 +227,7 @@ class _SettripsState extends State<Settrips> {
                                         right: screenWidth * 0.1),
                                     child: Text(
                                       " Set trip",
-                                      style: GoogleFonts.montserrat(
+                                      style:TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.normal,
                                         fontSize: 17,

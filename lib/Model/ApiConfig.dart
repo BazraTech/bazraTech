@@ -202,37 +202,7 @@ class APIService {
     }
   }
 
-  static driverFetch() async {
-    try {
-      final storage = new FlutterSecureStorage();
-      var token = await storage.read(key: 'jwt');
-      var client = http.Client();
-      Map<String, String> requestHeaders = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      };
-      var url = Uri.http(ApIConfig.urlAPI, ApIConfig.driverApi);
-      var response = await client.get(url, headers: requestHeaders);
-
-      print(response.body);
-      if (response.statusCode == 200) {
-        var data = json.decode(response.body);
-        await storage.write(
-            key: "totalDrivers", value: data["totalDrivers"].toString());
-
-        totalDrivers = await storage.read(key: 'totalDrivers');
-        var driverdata = data['drivers'];
-
-        return driverdata;
-      } else {
-        // throw Exception("not Loaded");
-      }
-    } catch (e) {
-      print(e);
-      throw e;
-    }
-  }
+ 
 
   static Future<bool> loginFetch(
     LoginRequestModel model,
@@ -256,7 +226,6 @@ class APIService {
 
       var value = await storage.read(key: 'jwt');
 
-     getLogo();
       print(ownername);
 
       return true;
@@ -288,28 +257,6 @@ class APIService {
       return true;
     } else {
       return false;
-    }
-  }
-
- static getLogo() async {
-    var client = http.Client();
-    final storage = new FlutterSecureStorage();
-    var token = await storage.read(key: 'jwt');
-    Map<String, String> requestHeaders = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-    var response =
-        await http.get(Uri.parse(ApIConfig.logo), headers: requestHeaders);
-    if (response.statusCode == 200) {
-      var mapResponse = json.decode(response.body) as Map<String, dynamic>;
-
-      Logoavtar = mapResponse["logo"];
-
-      return Logoavtar;
-    } else {
-      throw Exception('not loaded ');
     }
   }
 }

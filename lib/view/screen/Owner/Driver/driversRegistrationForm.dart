@@ -7,7 +7,7 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:file_picker/file_picker.dart';
@@ -143,24 +143,11 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
     }
   }
 
-  Future vehicleFetch() async {
-    final Result = await APIService.driverFetch();
-    setState(() {
-      this.Result = Result;
-    });
-    // if (mounted) {
-    //   timer = Timer.periodic(
-    //       Duration(seconds: 5),
-    //       (Timer t) => setState(() {
-
-    //           }));
-    // }
-  }
-
+ 
   void initState() {
     super.initState();
 
-    vehicleFetch();
+   
   }
 
   @override
@@ -224,7 +211,7 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
                                   top: screenHeight * 0.04),
                               child: Text(
                                 "Registation From",
-                                style: GoogleFonts.montserrat(
+                                style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15,

@@ -1,9 +1,8 @@
 import 'package:bazralogin/controller/Localization.dart';
 
-
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:ionicons/ionicons.dart';
 
 import 'DriverStatus.dart';
@@ -18,11 +17,11 @@ class communicate_screen extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Color.fromRGBO(236, 240, 243, 1),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              color: kPrimaryColor,
               padding: EdgeInsets.zero,
               child: Row(
                 children: [
@@ -41,7 +40,7 @@ class communicate_screen extends StatelessWidget {
                         icon: Icon(
                           Ionicons.chevron_back,
                           size: 23,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -51,105 +50,199 @@ class communicate_screen extends StatelessWidget {
                           left: screenHeight * 0.1, top: screenHeight * 0.04),
                       child: Text(
                         "Driver Page",
-                        style: GoogleFonts.montserrat(
-                          color: Colors.white,
+                        style: TextStyle(
+                          fontFamily: "Nunito",
+                          fontSize: 17,
                           fontWeight: FontWeight.bold,
-                          fontSize: 15,
                         ),
                       ))
                 ],
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              margin: const EdgeInsets.fromLTRB(30, 120, 30, 0),
-              width: MediaQuery.of(context).size.width,
-              height: 70,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => DriversFormOwner()));
-                },
-                child: Text(
-                  TranslationUtil.text("Register Driver"),
-                  style: TextStyle(
-                      color: Color.fromRGBO(28, 21, 27, 0.7), fontSize: 20),
+            SizedBox(
+              height: screenHeight * 0.1,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                            builder: (context) => UnassignedDrivers()));
+                  },
+                  child: Container(
+                    height: screenHeight * 0.17,
+                    width: screenWidth * 0.39,
+                    // Height of the border
+
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2), // Shadow color
+                          blurRadius: 5, // Spread radius
+                          offset: Offset(0, 3), // Offset in (x,y) coordinates
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.all(6.0),
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  Colors.black.withOpacity(0.3), // Shadow color
+                              blurRadius: 5, // Spread radius
+                              offset:
+                                  Offset(0, 3), // Offset in (x,y) coordinates
+                            ),
+                          ],
+                          color: Color.fromRGBO(236, 240, 243, 1),
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(
+                            color: Color.fromRGBO(
+                                255, 255, 255, 1), // Set the border color
+                            width: 2.5,
+                          )),
+                      child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Assign driver",
+                            style: TextStyle(
+                              fontFamily: "Nunito",
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+                    ),
+                  ),
                 ),
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.resolveWith((states) {
-                      if (states.contains(MaterialState.pressed)) {
-                        return const Color.fromARGB(255, 249, 248, 248);
-                      }
-                      return const Color.fromARGB(255, 255, 255, 255);
-                    }),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)))),
-              ),
+                SizedBox(
+                  width: 30,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                            builder: (context) => DriverStatus()));
+                  },
+                  child: Container(
+                    height: screenHeight * 0.17,
+                    width: screenWidth * 0.39,
+                    // Height of the border
+
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2), // Shadow color
+                          blurRadius: 5, // Spread radius
+                          offset: Offset(0, 3), // Offset in (x,y) coordinates
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.all(6.0),
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  Colors.black.withOpacity(0.3), // Shadow color
+                              blurRadius: 5, // Spread radius
+                              offset:
+                                  Offset(0, 3), // Offset in (x,y) coordinates
+                            ),
+                          ],
+                          color: Color.fromRGBO(236, 240, 243, 1),
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(
+                            color: Color.fromRGBO(
+                                255, 255, 255, 1), // Set the border color
+                            width: 2.5,
+                          )),
+                      child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Manage driver",
+                            style: TextStyle(
+                              fontFamily: "Nunito",
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 30,
             ),
             Container(
-              padding: const EdgeInsets.all(8.0),
-              margin: const EdgeInsets.fromLTRB(30, 20, 30, 0),
-              width: MediaQuery.of(context).size.width,
-              height: 70,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => DriverStatus()));
-                },
-                child: Text(
-                  TranslationUtil.text("Manage Driver"),
-                  style: TextStyle(
-                      color: Color.fromRGBO(28, 21, 27, 0.7), fontSize: 20),
-                ),
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.resolveWith((states) {
-                      if (states.contains(MaterialState.pressed)) {
-                        return const Color.fromARGB(246, 248, 250, 248);
-                      }
-                      return const Color.fromARGB(255, 255, 255, 255);
-                    }),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)))),
+              margin: EdgeInsets.only(left: screenWidth * 0.1),
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DriversFormOwner()));
+                    },
+                    child: Container(
+                      height: screenHeight * 0.17,
+                      width: screenWidth * 0.39,
+                      // Height of the border
+
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                Colors.black.withOpacity(0.2), // Shadow color
+                            blurRadius: 5, // Spread radius
+                            offset: Offset(0, 3), // Offset in (x,y) coordinates
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(6.0),
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black
+                                    .withOpacity(0.3), // Shadow color
+                                blurRadius: 5, // Spread radius
+                                offset:
+                                    Offset(0, 3), // Offset in (x,y) coordinates
+                              ),
+                            ],
+                            color: Color.fromRGBO(236, 240, 243, 1),
+                            borderRadius: BorderRadius.circular(18),
+                            border: Border.all(
+                              color: Colors.white, // Set the border color
+                              width: 2.5,
+                            )),
+                        child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Register driver",
+                              style: TextStyle(
+                                fontFamily: "Nunito",
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              margin: const EdgeInsets.fromLTRB(30, 20, 30, 0),
-              width: MediaQuery.of(context).size.width,
-              height: 70,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => UnassignedDrivers()));
-                },
-                child: Text(
-                  TranslationUtil.text("Assign Driver"),
-                  style: TextStyle(
-                      color: Color.fromRGBO(28, 21, 27, 0.7), fontSize: 20),
-                ),
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.resolveWith((states) {
-                      if (states.contains(MaterialState.pressed)) {
-                        return const Color.fromARGB(246, 248, 250, 248);
-                      }
-                      return const Color.fromARGB(255, 255, 255, 255);
-                    }),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)))),
-              ),
-            ),
+            )
           ],
         ),
       ),

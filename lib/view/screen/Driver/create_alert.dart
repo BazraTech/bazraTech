@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
@@ -25,9 +25,12 @@ class _CreateAlertState extends State {
   final _formKey = GlobalKey<FormState>();
   List<String> _toDoListLocation = [];
   List<String> _toDoListAlert = [];
-  static bool isPressed = true;
+
   bool isalert = true;
+  bool _value = true;
   String? alertType;
+
+  List<bool> _checkedItems = [false, false, false, false, false];
   List<String> type = [
     "OFFROAD",
     "CAR CRASH",
@@ -38,6 +41,7 @@ class _CreateAlertState extends State {
   int _seconds = 0;
   Timer? _timer;
   String? timecounter;
+  int selectedIndex = -1;
 
   void _startTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
@@ -83,23 +87,51 @@ class _CreateAlertState extends State {
     prefs.setStringList('toDoList', _toDoListLocation.cast());
   }
 
+  // void _showSweetAlert(BuildContext context, AlertType alertType, String title,
+  //     String description) {
+  //   Alert(
+  //     context: context,
+  //     type: alertType,
+  //     title: title,
+  //     desc: description,
+  //     buttons: [
+  //       DialogButton(
+  //         child: Text(
+  //           'OK',
+  //           style: TextStyle(color: Colors.white, fontSize: 20),
+  //         ),
+  //         onPressed: () {
+  //           Navigator.push(context,
+  //               MaterialPageRoute(builder: (context) => Driver_Hompage()));
+  //         },
+  //         width: 120,
+  //         height: 50,
+  //       ),
+  //     ],
+  //   ).show();
+  // }
+
   void Create_Alert() async {
     final storage = new FlutterSecureStorage();
     var value = await storage.read(key: 'jwt');
     Map data = {
-      "alertType": alertType,
+      "alertType": "${alertType}",
       "location": "ADDIS ABABA",
     };
     final url = Uri.parse("http://64.226.104.50:9090/Api/Driver/CreateAlert");
-    http.post(url, body: json.encode(data), headers: {
+    final response = await http.post(url, body: json.encode(data), headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
       "Authorization": "Bearer $value",
-    }).then((response) {
-      _startTimer();
-    }).catchError((error) {
-      print('Error: $error');
     });
+    final Map jsonResponse = json.decode(response.body);
+    if (response.statusCode == 200) {
+      // _showSweetAlert(
+      //     context, AlertType.success, 'Success', jsonResponse['message']);
+    } else {
+      // _showSweetAlert(
+      //     context, AlertType.error, 'Error', jsonResponse['message']);
+    }
   }
 
 // finish alert
@@ -131,48 +163,6 @@ class _CreateAlertState extends State {
     return hour;
   }
 
-  Future<void> _showMyDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return Container(
-          child: AlertDialog(
-            titlePadding: EdgeInsets.all(0),
-            title: Container(
-              padding: EdgeInsets.all(10),
-              color: kPrimaryColor,
-              child: Container(
-                height: 40,
-              ),
-            ),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: const <Widget>[
-                  Text(
-                    'Register Successfully ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('Done'),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => DriverHomePage()));
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   void _stopTimer() {
     _timer?.cancel();
     _timer = null;
@@ -202,7 +192,7 @@ class _CreateAlertState extends State {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: kBackgroundColor,
+      backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       appBar: AppBar(
         toolbarHeight: 80,
         elevation: 0,
@@ -214,11 +204,11 @@ class _CreateAlertState extends State {
             },
             child: Icon(
               Icons.arrow_back_ios,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),
-        backgroundColor: kPrimaryColor,
+        backgroundColor: Colors.white,
         title: Container(
           margin: EdgeInsets.only(left: screenWidth * 0.15),
           child: Text(
@@ -226,7 +216,7 @@ class _CreateAlertState extends State {
             style: TextStyle(
               fontFamily: "Nunito",
               fontSize: 17,
-              color: Colors.white,
+              color: Colors.black,
               fontStyle: FontStyle.normal,
             ),
           ),
@@ -245,116 +235,113 @@ class _CreateAlertState extends State {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(
-                        top: screenHeight * 0.07,
+                      height: screenHeight * 0.4,
+                      child: ListView.builder(
+                        itemCount: type.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                  top: screenHeight * 0.01,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      child: Column(children: [
+                                        Column(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.black
+                                                          .withOpacity(
+                                                              0.3), // Shadow color
+                                                      blurRadius:
+                                                          5, // Spread radius
+                                                      offset: Offset(0,
+                                                          3), // Offset in (x,y) coordinates
+                                                    ),
+                                                  ],
+                                                  color: Color.fromRGBO(
+                                                      236, 240, 243, 1),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                    color: Color.fromRGBO(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        1), // Set the border color
+                                                    width: 2.5,
+                                                  )),
+                                              height: screenHeight * 0.07,
+                                              width: screenWidth * 0.9,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(9.0),
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      height:
+                                                          screenHeight * 0.02,
+                                                      width: screenWidth * 0.04,
+                                                      child: Transform.scale(
+                                                        scale: 1.1,
+                                                        child: Radio(
+                                                          value: index,
+                                                          groupValue:
+                                                              selectedIndex,
+                                                          onChanged: (value) {
+                                                            setState(() {
+                                                              selectedIndex =
+                                                                  value!;
+                                                              alertType =
+                                                                  type[index];
+                                                              isalert = false;
+                                                            });
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Container(
+                                                      height:
+                                                          screenHeight * 0.03,
+                                                      margin: EdgeInsets.only(
+                                                          top: 5),
+                                                      child: Text(
+                                                        type[index],
+                                                        style: TextStyle(
+                                                          fontFamily: "Nunito",
+                                                          fontSize: 15,
+                                                          color: Colors.black,
+                                                          fontStyle:
+                                                              FontStyle.normal,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ]),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          );
+                        },
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            " Select alert type",
-                            style: TextStyle(
-                              fontFamily: "Nunito",
-                              fontSize: 17,
-                              color: Colors.black,
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Container(
-                      child: Column(children: [
-                        Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              height: screenHeight * 0.07,
-                              width: screenWidth * 0.9,
-                              child: Row(
-                                children: [
-                                  Checkbox(
-                                    value: isalert,
-                                    onChanged: (value) {},
-                                  ),
-                                  Text(
-                                    " OFFROAD",
-                                    style: TextStyle(
-                                      fontFamily: "Nunito",
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                      fontStyle: FontStyle.normal,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              height: screenHeight * 0.07,
-                              width: screenWidth * 0.9,
-                              child: Row(
-                                children: [
-                                  Checkbox(
-                                    value: isalert,
-                                    onChanged: (value) {},
-                                  ),
-                                  Text(
-                                    " ACCIDENT",
-                                    style: TextStyle(
-                                      fontFamily: "Nunito",
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                      fontStyle: FontStyle.normal,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              height: screenHeight * 0.07,
-                              width: screenWidth * 0.9,
-                              child: Row(
-                                children: [
-                                  Checkbox(
-                                    value: isalert,
-                                    onChanged: (value) {},
-                                  ),
-                                  Text(
-                                    "Car Crash",
-                                    style: TextStyle(
-                                      fontFamily: "Nunito",
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                      fontStyle: FontStyle.normal,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        )
-                      ]),
                     ),
                   ],
                 ),
@@ -365,6 +352,22 @@ class _CreateAlertState extends State {
                 itemCount: 1,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
+                    decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                Colors.black.withOpacity(0.3), // Shadow color
+                            blurRadius: 5, // Spread radius
+                            offset: Offset(0, 3), // Offset in (x,y) coordinates
+                          ),
+                        ],
+                        color: Color.fromRGBO(236, 240, 243, 1),
+                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(
+                          color: Color.fromRGBO(
+                              255, 255, 255, 1), // Set the border color
+                          width: 2.5,
+                        )),
                     width: MediaQuery.of(context).size.width * 0.525,
                     height: MediaQuery.of(context).size.height * 0.2,
                     margin: EdgeInsets.only(bottom: 20, right: 20, left: 20),
@@ -379,8 +382,8 @@ class _CreateAlertState extends State {
                         children: [
                           Container(
                               margin: EdgeInsets.only(top: 10, bottom: 20),
-                              child: Text('$timecounter' ?? '__')),
-                          Center(child: Text("$alertType")),
+                              child:
+                                  isalert ? Text('__') : Text('${alertType}')),
                           Row(
                             children: [
                               Container(
@@ -397,7 +400,7 @@ class _CreateAlertState extends State {
                                               255, 148, 165, 223);
                                         }
                                         // 98, 172, 181
-                                        return Colors.lightBlue;
+                                        return Colors.white;
                                       }),
                                       shape: MaterialStateProperty.all<
                                               RoundedRectangleBorder>(
@@ -447,7 +450,7 @@ class _CreateAlertState extends State {
                                               255, 148, 165, 223);
                                         }
                                         // 98, 172, 181
-                                        return Colors.lightBlue;
+                                        return Colors.white;
                                       }),
                                       shape: MaterialStateProperty.all<
                                               RoundedRectangleBorder>(
