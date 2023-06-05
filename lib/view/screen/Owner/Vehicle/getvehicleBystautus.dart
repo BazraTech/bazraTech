@@ -99,28 +99,27 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
       child: Scaffold(
           backgroundColor: kBackgroundColor,
           appBar: AppBar(
-            toolbarHeight: 80,
             elevation: 0,
-            leading: InkWell(
-              onTap: () {
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back,
+                  color: Colors.white), // Set the color of the icon
+              onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Icon(
-                Icons.arrow_back_ios,
-                color: Colors.white,
-              ),
             ),
-            backgroundColor: kPrimaryColor,
+            backgroundColor: Color.fromRGBO(168, 123, 6, 1),
             title: Container(
               margin: EdgeInsets.only(right: screenWidth * 0.12),
               width: double.infinity,
               height: 40,
-              color: Colors.white,
+              color: Color.fromRGBO(168, 123, 6, 1),
               child: Center(
                 child: TextField(
                   onChanged: driversSearch,
                   decoration: const InputDecoration(
                     hintText: 'Driver Name or Plate No.',
+                    hintStyle: TextStyle(color: Colors.white),
+                    fillColor: Color.fromRGBO(168, 123, 6, 1),
                     border: InputBorder.none,
                     errorBorder: InputBorder.none,
                     enabledBorder: InputBorder.none,
@@ -164,7 +163,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                     child: const Text(
                                       "Vehicles",
                                       style: TextStyle(
-                                          color: Colors.black,
+                                          color: Color.fromRGBO(168, 123, 6, 1),
                                           fontFamily: "Nunito",
                                           fontWeight: FontWeight.bold,
                                           fontStyle: FontStyle.normal,
@@ -176,7 +175,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                     child: const Text(
                                       "Driver",
                                       style: TextStyle(
-                                          color: Colors.black,
+                                          color: Color.fromRGBO(168, 123, 6, 1),
                                           fontFamily: "Nunito",
                                           fontWeight: FontWeight.bold,
                                           fontStyle: FontStyle.normal,
@@ -188,7 +187,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                     child: const Text(
                                       " Plate Number",
                                       style: TextStyle(
-                                          color: Colors.black,
+                                          color: Color.fromRGBO(168, 123, 6, 1),
                                           fontFamily: "Nunito",
                                           fontWeight: FontWeight.bold,
                                           fontStyle: FontStyle.normal,
@@ -285,6 +284,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                                             FontWeight.bold),
                                                   ),
                                                   SizedBox(
+                                                    width: screenWidth * 0.2,
                                                     child: Text(
                                                       vehicle['driverName'],
                                                       textAlign:
@@ -300,7 +300,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                                     ),
                                                   ),
                                                   SizedBox(
-                                                    width: screenWidth * 0.27,
+                                                    width: screenWidth * 0.37,
                                                     child: Text(
                                                       vehicle['plateNumber'],
                                                       textAlign:
@@ -328,29 +328,31 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                                           236, 240, 243, 1),
                                                       shape: BoxShape.circle),
                                                   margin: EdgeInsets.only(
-                                                      top: 5, left: 110),
+                                                      top: 5, left: 100),
                                                   child: Icon(
                                                     Icons.local_shipping,
                                                     color: borderLeftColor,
                                                   ),
                                                 )),
                                             vehicle['status'] == "ONROUTE"
-                                                ? Align(
-                                                    alignment:
-                                                        Alignment.topLeft,
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                          left: 80, top: 10),
-                                                      child: Text(
-                                                        vehicle['status'],
-                                                        style: const TextStyle(
-                                                            fontSize: 12,
-                                                            color: Colors.green,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                ? Row(
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                          right: 100,
+                                                            top: 10),
+                                                        child: Text(
+                                                          vehicle['status'],
+                                                          style: const TextStyle(
+                                                              fontSize: 12,
+                                                              color:
+                                                                  Colors.green,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
                                                       ),
-                                                    ),
+                                                    ],
                                                   )
                                                 : vehicle['status'] == "PARKED"
                                                     ? Container(
@@ -402,79 +404,53 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                                                       FontWeight
                                                                           .bold),
                                                             )),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
-                                              child: Container(
-                                                width: screenWidth,
-                                                // color: Color.fromRGBO(
-                                                //     244, 244, 244, 0.8),
-                                                height: 40,
-                                                margin:
-                                                    EdgeInsets.only(top: 20),
-                                                child: InkWell(
-                                                    onTap: (() {
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  ModifyVehileStatus(
-                                                                    plateNumber:
-                                                                        vehicle[
-                                                                            'plateNumber'],
-                                                                  )));
-                                                    }),
-                                                    child: Visibility(
-                                                      visible:
-                                                          vehicle['status'] !=
-                                                              "ONROUTE",
-                                                      child: InkWell(
-                                                        onTap: () {
-                                                          Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  ModifyVehileStatus(
-                                                                plateNumber:
-                                                                    vehicle[
-                                                                        'plateNumber'],
-                                                                sttatus: vehicle[
-                                                                    'status'],
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(10.0),
-                                                          child: Container(
-                                                            width: screenWidth,
-                                                            color:
-                                                                Color.fromRGBO(
-                                                                    244,
-                                                                    244,
-                                                                    244,
-                                                                    0.8),
-                                                            height: 40,
-                                                            margin:
-                                                                EdgeInsets.only(
-                                                                    top: 20),
-                                                            child: const Center(
-                                                              child: Text(
-                                                                "Update Status",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        15,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
+                                            Visibility(
+                                              visible: vehicle['status'] !=
+                                                  "ONROUTE",
+                                              child: InkWell(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ModifyVehileStatus(
+                                                        plateNumber: vehicle[
+                                                            'plateNumber'],
+                                                        sttatus:
+                                                            vehicle['status'],
                                                       ),
-                                                    )),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
+                                                  child: Container(
+                                                    width: screenWidth,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      border: Border.all(
+                                                        color: Colors.grey
+                                                            .shade300, // Border color
+                                                        width:
+                                                            2.0, // Border width
+                                                      ),
+                                                    ),
+                                                    height: 40,
+                                                    margin: EdgeInsets.only(
+                                                        top: 20),
+                                                    child: const Center(
+                                                      child: Text(
+                                                        "Update Status",
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             )
                                           ],

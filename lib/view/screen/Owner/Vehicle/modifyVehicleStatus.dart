@@ -168,17 +168,12 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
       appBar: AppBar(
         toolbarHeight: 80,
         elevation: 0,
-        leading: Container(
-          margin: EdgeInsets.only(top: 5),
-          child: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-            ),
-          ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+              color: Colors.black), // Set the color of the icon
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         backgroundColor: Colors.white,
         title: Text(

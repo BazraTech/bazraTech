@@ -1,5 +1,6 @@
 import 'package:bazralogin/const/constant.dart';
 import 'package:bazralogin/view/screen/Driver/driverReport.dart';
+import 'package:bazralogin/view/screen/Owner/report/toggelReport.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../Model/ApiConfig.dart';
@@ -26,9 +27,23 @@ class _ownerReportstatusState extends State<ownerReportstatus> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Report",
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Colors.white,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back,
+                color: Colors.black), // Set the color of the icon
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
         backgroundColor: Colors.white,
         body: TabBarView(
-          children: [ownerReport(), ownerReport(), ownerReport()],
+          children: [MyScreen(), MyScreen(), MyScreen()],
         ),
         bottomNavigationBar: Container(
           height: screenHeight * 0.08,
@@ -63,19 +78,19 @@ class _ownerReportstatusState extends State<ownerReportstatus> {
                     Container(
                       width: screenWidth * 0.23,
                       child: Tab(
-                        text: "Work Report",
+                        text: "Daily Report",
                       ),
                     ),
                     Container(
                       width: screenWidth * 0.23,
                       child: Tab(
-                        text: "Trip Report ",
+                        text: "Weekly Report ",
                       ),
                     ),
                     Container(
                       width: screenWidth * 0.26,
                       child: Tab(
-                        text: "Payment Report",
+                        text: "Monthly Report",
                       ),
                     ),
                   ],

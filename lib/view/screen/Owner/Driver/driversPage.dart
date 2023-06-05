@@ -17,48 +17,25 @@ class communicate_screen extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(236, 240, 243, 1),
+      backgroundColor: Color.fromRGBO(214, 214, 214, 1),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Color.fromRGBO(168, 123, 6, 1),
+        title: Text(
+          "Driver page",
+          style: TextStyle(color: Colors.white),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+              color: Colors.white), // Set the color of the icon
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              padding: EdgeInsets.zero,
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      margin: EdgeInsets.only(top: screenHeight * 0.04),
-                      height: screenHeight * 0.08,
-                      width: screenWidth * 0.14,
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(
-                            context,
-                          );
-                        },
-                        icon: Icon(
-                          Ionicons.chevron_back,
-                          size: 23,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                      margin: EdgeInsets.only(
-                          left: screenHeight * 0.1, top: screenHeight * 0.04),
-                      child: Text(
-                        "Driver Page",
-                        style: TextStyle(
-                          fontFamily: "Nunito",
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ))
-                ],
-              ),
-            ),
             SizedBox(
               height: screenHeight * 0.1,
             ),
@@ -73,37 +50,38 @@ class communicate_screen extends StatelessWidget {
                             builder: (context) => UnassignedDrivers()));
                   },
                   child: Container(
-                    height: screenHeight * 0.17,
-                    width: screenWidth * 0.39,
+                    height: screenHeight * 0.07,
+                    width: screenWidth - 24,
                     // Height of the border
 
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.2), // Shadow color
-                          blurRadius: 5, // Spread radius
-                          offset: Offset(0, 3), // Offset in (x,y) coordinates
+                          color: Colors.white.withOpacity(0.8), // Shadow color
+                          blurRadius: 12, // Spread radius
+                          offset:
+                              Offset(0, -1.7), // Offset in (x,y) coordinates
                         ),
                       ],
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                     child: Container(
                       padding: EdgeInsets.all(6.0),
                       decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
-                              color:
-                                  Colors.black.withOpacity(0.3), // Shadow color
-                              blurRadius: 5, // Spread radius
+                              color: Color.fromRGBO(228, 228, 228, 1)
+                                  .withOpacity(0.8), // Shadow color
+                              blurRadius: 10, // Spread radius
                               offset:
-                                  Offset(0, 3), // Offset in (x,y) coordinates
+                                  Offset(0, -2), // Offset in (x,y) coordinates
                             ),
                           ],
-                          color: Color.fromRGBO(236, 240, 243, 1),
+                          color: Color.fromRGBO(224, 224, 224, 1),
                           borderRadius: BorderRadius.circular(18),
                           border: Border.all(
                             color: Color.fromRGBO(
-                                255, 255, 255, 1), // Set the border color
+                                223, 223, 223, 1), // Set the border color
                             width: 2.5,
                           )),
                       child: Align(
@@ -114,14 +92,20 @@ class communicate_screen extends StatelessWidget {
                               fontFamily: "Nunito",
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(168, 123, 6, 1),
                             ),
                           )),
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 30,
-                ),
+              ],
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
                 InkWell(
                   onTap: () {
                     Navigator.push(
@@ -130,37 +114,38 @@ class communicate_screen extends StatelessWidget {
                             builder: (context) => DriverStatus()));
                   },
                   child: Container(
-                    height: screenHeight * 0.17,
-                    width: screenWidth * 0.39,
+                    height: screenHeight * 0.07,
+                    width: screenWidth - 24,
                     // Height of the border
 
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.2), // Shadow color
-                          blurRadius: 5, // Spread radius
-                          offset: Offset(0, 3), // Offset in (x,y) coordinates
+                          color: Colors.white.withOpacity(0.8), // Shadow color
+                          blurRadius: 12, // Spread radius
+                          offset:
+                              Offset(0, -1.7), // Offset in (x,y) coordinates
                         ),
                       ],
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(18),
                     ),
                     child: Container(
                       padding: EdgeInsets.all(6.0),
                       decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
-                              color:
-                                  Colors.black.withOpacity(0.3), // Shadow color
-                              blurRadius: 5, // Spread radius
+                              color: Color.fromRGBO(228, 228, 228, 1)
+                                  .withOpacity(0.8), // Shadow color
+                              blurRadius: 10, // Spread radius
                               offset:
-                                  Offset(0, 3), // Offset in (x,y) coordinates
+                                  Offset(0, -2), // Offset in (x,y) coordinates
                             ),
                           ],
-                          color: Color.fromRGBO(236, 240, 243, 1),
+                          color: Color.fromRGBO(224, 224, 224, 1),
                           borderRadius: BorderRadius.circular(18),
                           border: Border.all(
                             color: Color.fromRGBO(
-                                255, 255, 255, 1), // Set the border color
+                                223, 223, 223, 1), // Set the border color
                             width: 2.5,
                           )),
                       child: Align(
@@ -171,6 +156,7 @@ class communicate_screen extends StatelessWidget {
                               fontFamily: "Nunito",
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(168, 123, 6, 1),
                             ),
                           )),
                     ),
@@ -179,68 +165,73 @@ class communicate_screen extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 30,
+              height: 50,
             ),
             Container(
-              margin: EdgeInsets.only(left: screenWidth * 0.1),
-              child: Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DriversFormOwner()));
-                    },
-                    child: Container(
-                      height: screenHeight * 0.17,
-                      width: screenWidth * 0.39,
-                      // Height of the border
-
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color:
-                                Colors.black.withOpacity(0.2), // Shadow color
-                            blurRadius: 5, // Spread radius
-                            offset: Offset(0, 3), // Offset in (x,y) coordinates
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(15),
-                      ),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DriversFormOwner()));
+                      },
                       child: Container(
-                        padding: EdgeInsets.all(6.0),
+                        height: screenHeight * 0.07,
+                        width: screenWidth - 24,
+                        // Height of the border
+
                         decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black
-                                    .withOpacity(0.3), // Shadow color
-                                blurRadius: 5, // Spread radius
-                                offset:
-                                    Offset(0, 3), // Offset in (x,y) coordinates
-                              ),
-                            ],
-                            color: Color.fromRGBO(236, 240, 243, 1),
-                            borderRadius: BorderRadius.circular(18),
-                            border: Border.all(
-                              color: Colors.white, // Set the border color
-                              width: 2.5,
-                            )),
-                        child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Register driver",
-                              style: TextStyle(
-                                fontFamily: "Nunito",
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )),
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  Colors.white.withOpacity(0.8), // Shadow color
+                              blurRadius: 12, // Spread radius
+                              offset: Offset(
+                                  0, -1.7), // Offset in (x,y) coordinates
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.all(6.0),
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromRGBO(228, 228, 228, 1)
+                                      .withOpacity(0.8), // Shadow color
+                                  blurRadius: 10, // Spread radius
+                                  offset: Offset(
+                                      0, -2), // Offset in (x,y) coordinates
+                                ),
+                              ],
+                              color: Color.fromRGBO(224, 224, 224, 1),
+                              borderRadius: BorderRadius.circular(18),
+                              border: Border.all(
+                                color: Color.fromRGBO(
+                                    223, 223, 223, 1), // Set the border color
+                                width: 2.5,
+                              )),
+                          child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "Register driver",
+                                style: TextStyle(
+                                  fontFamily: "Nunito",
+                                  color: Color.fromRGBO(168, 123, 6, 1),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             )
           ],

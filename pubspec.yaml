@@ -56,6 +56,7 @@ dependencies:
   
   
   google_fonts: ^4.0.3
+  rflutter_alert: ^2.0.7
 
   flutter_feather_icons: ^2.0.0+1
   flutter_inset_box_shadow: ^1.0.8

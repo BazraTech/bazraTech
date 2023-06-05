@@ -102,33 +102,35 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
       child: Scaffold(
           backgroundColor: kBackgroundColor,
           appBar: AppBar(
-            toolbarHeight: 80,
             elevation: 0,
-            leading: InkWell(
-              onTap: () {
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back,
+                  color: Colors.white), // Set the color of the icon
+              onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-              ),
             ),
-            backgroundColor: Colors.white,
+            backgroundColor: Color.fromRGBO(168, 123, 6, 1),
             title: Container(
               width: double.infinity,
               margin: EdgeInsets.only(right: screenWidth * 0.12),
               height: 40,
-              color: Colors.white,
+              color: Color.fromRGBO(168, 123, 6, 1),
               child: Center(
                 child: TextField(
                   onChanged: driversSearch,
                   decoration: const InputDecoration(
-                    hintText: 'Driver Name or Plate No.',
+                    fillColor: Color.fromRGBO(168, 123, 6, 1),
+                    hintText: 'Driver  or Plate No.',
+                    hintStyle: TextStyle(color: Colors.white),
                     border: InputBorder.none,
                     errorBorder: InputBorder.none,
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
-                    prefixIcon: Icon(Icons.search),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -146,7 +148,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                           child: Container(
                             width: screenWidth - 35,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
+                                borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
                                 boxShadow: [
                                   BoxShadow(
@@ -167,7 +169,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                     child: const Text(
                                       "Vehicles",
                                       style: TextStyle(
-                                          color: Colors.black,
+                                          color: Color.fromRGBO(168, 123, 6, 1),
                                           fontFamily: "Nunito",
                                           fontWeight: FontWeight.bold,
                                           fontStyle: FontStyle.normal,
@@ -179,7 +181,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                     child: const Text(
                                       "Driver",
                                       style: TextStyle(
-                                          color: Colors.black,
+                                          color: Color.fromRGBO(168, 123, 6, 1),
                                           fontFamily: "Nunito",
                                           fontWeight: FontWeight.bold,
                                           fontStyle: FontStyle.normal,
@@ -191,7 +193,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                     child: const Text(
                                       " Plate Number",
                                       style: TextStyle(
-                                          color: Colors.black,
+                                          color: Color.fromRGBO(168, 123, 6, 1),
                                           fontFamily: "Nunito",
                                           fontWeight: FontWeight.bold,
                                           fontStyle: FontStyle.normal,
@@ -387,7 +389,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                                             margin:
                                                                 const EdgeInsets
                                                                         .only(
-                                                                    left: 110,
+                                                                    right: 94,
                                                                     top: 10),
                                                             child: Text(
                                                               vehicle['status'],

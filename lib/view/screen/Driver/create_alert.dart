@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
-
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
@@ -87,29 +87,29 @@ class _CreateAlertState extends State {
     prefs.setStringList('toDoList', _toDoListLocation.cast());
   }
 
-  // void _showSweetAlert(BuildContext context, AlertType alertType, String title,
-  //     String description) {
-  //   Alert(
-  //     context: context,
-  //     type: alertType,
-  //     title: title,
-  //     desc: description,
-  //     buttons: [
-  //       DialogButton(
-  //         child: Text(
-  //           'OK',
-  //           style: TextStyle(color: Colors.white, fontSize: 20),
-  //         ),
-  //         onPressed: () {
-  //           Navigator.push(context,
-  //               MaterialPageRoute(builder: (context) => Driver_Hompage()));
-  //         },
-  //         width: 120,
-  //         height: 50,
-  //       ),
-  //     ],
-  //   ).show();
-  // }
+  void _showSweetAlert(BuildContext context, AlertType alertType, String title,
+      String description) {
+    Alert(
+      context: context,
+      type: alertType,
+      title: title,
+      desc: description,
+      buttons: [
+        DialogButton(
+          child: Text(
+            'OK',
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Driver_Hompage()));
+          },
+          width: 120,
+          height: 50,
+        ),
+      ],
+    ).show();
+  }
 
   void Create_Alert() async {
     final storage = new FlutterSecureStorage();
@@ -126,11 +126,11 @@ class _CreateAlertState extends State {
     });
     final Map jsonResponse = json.decode(response.body);
     if (response.statusCode == 200) {
-      // _showSweetAlert(
-      //     context, AlertType.success, 'Success', jsonResponse['message']);
+      _showSweetAlert(
+          context, AlertType.success, 'Success', jsonResponse['message']);
     } else {
-      // _showSweetAlert(
-      //     context, AlertType.error, 'Error', jsonResponse['message']);
+      _showSweetAlert(
+          context, AlertType.error, 'Error', jsonResponse['message']);
     }
   }
 

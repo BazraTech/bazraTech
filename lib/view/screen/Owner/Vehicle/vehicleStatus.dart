@@ -3,15 +3,10 @@ import 'dart:convert';
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import '../../../../Model/ApiConfig.dart';
 import '../../../../config/APIService.dart';
-import '../Communication/communicationPage.dart';
-
 import '../Vehicle/TotalVehicles.dart';
 import 'package:http/http.dart' as http;
 import '../Vehicle/getvehicleBystautus.dart';
-import '../communication/Communication.dart';
 
 class VehicleStatus extends StatefulWidget {
   VehicleStatus({super.key});
@@ -52,20 +47,18 @@ class _VehicleStatusState extends State<VehicleStatus> {
         bottomNavigationBar: Container(
           height: screenHeight * 0.08,
           decoration: const BoxDecoration(
-            color: kPrimaryColor,
+            color: Colors.white,
           ),
           child: Container(
             child: TabBar(
               isScrollable: true,
               labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
-              indicatorSize: TabBarIndicatorSize.label,
-              indicatorWeight: 4,
+              labelColor: Color.fromRGBO(168, 123, 6, 1),
               indicatorPadding: EdgeInsets.all(4),
-              indicatorColor: Colors.white,
               overlayColor:
                   MaterialStateColor.resolveWith((Set<MaterialState> states) {
                 if (states.contains(MaterialState.pressed)) {
-                  return Colors.blue;
+                  return Colors.black;
                 }
                 if (states.contains(MaterialState.focused)) {
                   return Colors.orange;
@@ -96,7 +89,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
                               child: Text(
                                 total,
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 12),
+                                    color: Colors.black, fontSize: 12),
                               ),
                             ));
                       },
@@ -121,7 +114,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
                               radius: 10,
                               child: Text(
                                 snapshot.data.toString(),
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.black),
                               ),
                             ));
                       },
@@ -147,7 +140,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
                               child: Text(
                                 snapshot.data.toString(),
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 12,
                                 ),
                               ),
@@ -175,7 +168,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
                               child: Text(
                                 snapshot.data.toString(),
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 12,
                                 ),
                               ),
@@ -203,7 +196,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
                               child: Text(
                                 snapshot.data.toString(),
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 12,
                                 ),
                               ),

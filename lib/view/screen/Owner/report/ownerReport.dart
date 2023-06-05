@@ -7,39 +7,41 @@ import 'package:ionicons/ionicons.dart';
 
 import '../../../../Theme/clippbox.dart';
 
-class ownerReport extends StatelessWidget {
-  final Function(int)  ? onContainerTap;
-ownerReport({this.onContainerTap});
+class ownerReport extends StatefulWidget {
+  @override
+  State<ownerReport> createState() => _ownerReportState();
+}
+
+class _ownerReportState extends State<ownerReport> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      body: ListView.builder(
-      itemCount: 5, // Number of containers to display
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () {
-            onContainerTap!(index);
-          },
-          child: Container(
-            height: 100,
-            color: Colors.blue,
-            margin: EdgeInsets.all(10),
-            child: Center(
-              child: Text(
-                'Container $index',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: Container(
+              margin: EdgeInsets.only(top: screenHeight * 0.05),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Ionicons.chevron_back),
+                    iconSize: 23,
+                  )
+                ],
               ),
             ),
           ),
-        );
-      },
-    )
+          
+        ],
+      ),
     );
   }
 }

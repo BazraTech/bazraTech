@@ -31,7 +31,7 @@ class BottomNav extends StatelessWidget {
             ),
             bottomNavigationBar: Container(
               height: screenHeight * 0.1,
-              decoration: const BoxDecoration(color: kPrimaryColor),
+              decoration: const BoxDecoration(color: Colors.white),
               child: Container(
                 width: screenWidth,
                 child: TabBar(
@@ -44,35 +44,55 @@ class BottomNav extends StatelessWidget {
                         EdgeInsets.symmetric(horizontal: screenWidth * 0.055),
                     tabs: [
                       Tab(
-                        icon: Icon(Icons.home),
+                        icon: Icon(
+                          Icons.home,
+                          color: Colors.black,
+                        ),
                         child: Text(
                           TranslationUtil.text("Home"),
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
                         ),
                       ),
                       Tab(
-                        icon: Icon(Icons.location_on),
+                        icon: Icon(
+                          Icons.location_on,
+                          color: Colors.black,
+                        ),
                         child: Text(
                           TranslationUtil.text("GPS Tracking"),
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
                         ),
                       ),
                       Tab(
-                        icon: Icon(Icons.messenger),
+                        icon: Icon(
+                          Icons.messenger,
+                          color: Colors.black,
+                        ),
                         child: Text(
                           TranslationUtil.text("Communication"),
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
                         ),
                       ),
                       Tab(
-                        icon: Icon(Icons.person),
+                        icon: Icon(
+                          Icons.person,
+                          color: Colors.black,
+                        ),
                         child: Text(
                           TranslationUtil.text("Profile"),
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
                         ),
                       ),
                     ]),
