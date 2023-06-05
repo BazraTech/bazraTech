@@ -114,11 +114,12 @@ class _Cargo_loginState extends State<Cargo_login> {
       desc: "Invalid User Name Or Passowrd.",
       buttons: [
         DialogButton(
-          child: Text(
+          child:  Text(
             "OK",
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Cargo_login())),
           width: 180,
         )
       ],

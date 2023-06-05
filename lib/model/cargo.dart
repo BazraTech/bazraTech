@@ -7,7 +7,7 @@ class Cargo {
   String cargoOwner;
   String packaging;
   String weight;
-  String price;
+  String status;
 
   Cargo({
     required this.id,
@@ -18,7 +18,7 @@ class Cargo {
     required this.cargoOwner,
     required this.packaging,
     required this.weight,
-    required this.price,
+    required this.status,
   });
 
   factory Cargo.fromJson(Map json) {
@@ -31,7 +31,7 @@ class Cargo {
       cargoOwner: json['cargoOwner'],
       packaging: json['packaging'],
       weight: json['weight'],
-      price: json['price'],
+      status: json['status'],
     );
   }
 }

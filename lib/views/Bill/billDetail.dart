@@ -1,3 +1,4 @@
+import 'package:cargo/views/Bill/Bill.dart';
 import 'package:flutter/material.dart';
 import '../../model/bill_details.dart';
 import '../../shared/customAppbar.dart';
@@ -22,24 +23,49 @@ List<BillDetails> billDetail = [
 class _Bill_DetailState extends State<Bill_Detail> {
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: CustomAppBar(
-        title: "Detail About Bill Status",
-        showBackButton: true,
+      appBar: AppBar(
+        toolbarHeight: 80,
+        elevation: 0,
+        leading: InkWell(
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => BillStatus()));
+          },
+          child: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.grey,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        title: Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(right: screenWidth * 0.12),
+          height: 40,
+          child: const Center(
+            child: Text(
+              "Cargo History Detail",
+              style: TextStyle(
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        ),
       ),
       body: Column(
         children: billDetail.map((detail) {
           return SingleChildScrollView(
             child: Container(
-              margin: EdgeInsets.only(left: 10, right: 10, top: 20),
+              margin: EdgeInsets.only(left: 8, right: 8, top: 15),
               child: Card(
-                  elevation: 3,
+                  elevation: 2,
                   child: Container(
-                    padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(
-                            width: 16.0, color: Colors.green.shade900),
+                        left: BorderSide(
+                            width: 8.0, color: Colors.green.shade900),
                       ),
                       color: Colors.white,
                     ),
@@ -48,6 +74,14 @@ class _Bill_DetailState extends State<Bill_Detail> {
                         ListTile(
                           title: const Text("Cargo Type"),
                           trailing: Text(detail.cargoType),
+                        ),
+                        Container(
+                          margin: EdgeInsets.zero,
+                          width:
+                              screenWidth, // Change this value to increase or decrease the thickness of the vertical line.
+                          height:
+                              1, // Change this value to increase or decrease the height of the vertical line.
+                          color: Colors.grey.shade600,
                         ),
                         ListTile(
                           title: const Text("Packaging"),

@@ -8,6 +8,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../model/cargo.dart';
 import '../../shared/checkConnection.dart';
 import '../../shared/storage_hepler.dart';
+import 'histrory.dart';
 
 class cargoHistoryDetail extends StatefulWidget {
   final int? cargoId;
@@ -58,9 +59,29 @@ class _cargoHistoryDetailState extends State<cargoHistoryDetail> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: CustomAppBar(
-        title: "Cargo Detail",
-        showBackButton: true,
+      appBar: AppBar(
+        toolbarHeight: 80,
+        elevation: 0,
+        leading: InkWell(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CargoListView()));
+          },
+          child: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.grey,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        title: Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(right: screenWidth * 0.12),
+          height: 40,
+          color: Colors.white,
+          child: const Center(
+            child: Text("Cargo History Detail"),
+          ),
+        ),
       ),
       body: Center(
         child: FutureBuilder(
@@ -125,8 +146,8 @@ class _cargoHistoryDetailState extends State<cargoHistoryDetail> {
                     Card(
                       elevation: 3,
                       child: ListTile(
-                        title: Text("Price"),
-                        trailing: Text('${cargo.price}'),
+                        title: Text("Status"),
+                        trailing: Text('${cargo.status}'),
                       ),
                     ),
                   ],

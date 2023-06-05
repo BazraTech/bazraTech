@@ -8,7 +8,6 @@ import '../shared/constant.dart';
 import '../shared/storage_hepler.dart';
 import '../shared/tapbar.dart';
 import '../views/Bill/Bill.dart';
-import '../views/Navigation_Active.dart';
 import '../views/Notification/Notification.dart';
 import '../views/Report/Report.dart';
 import '../views/Work/Acticve_Work.dart';
@@ -298,7 +297,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => BottomNav_Active()));
+                                  builder: (context) => BillStatus()));
                         },
                         child: AnimatedContainer(
                             duration: Duration(milliseconds: 100),

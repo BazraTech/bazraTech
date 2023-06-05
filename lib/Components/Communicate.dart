@@ -1,4 +1,4 @@
-
+import 'package:cargo/Components/Home_Page.dart';
 import 'package:cargo/shared/customAppbar.dart';
 import 'package:cargo/shared/customButton.dart';
 
@@ -18,9 +18,32 @@ class _CommunicateState extends State<Communicate> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: CustomAppBar(
-        title: "Communication Page",
-        showBackButton: true,
+      appBar: AppBar(
+        toolbarHeight: 80,
+        elevation: 0,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.grey,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        title: Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(right: screenWidth * 0.12),
+          height: 40,
+          child: const Center(
+            child: Text(
+              "Communication Page",
+              style: TextStyle(
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        ),
       ),
       body: Column(
         children: [

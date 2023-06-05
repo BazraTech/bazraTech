@@ -66,6 +66,8 @@ class _PostsState extends State<Posts> {
       desc: description,
       buttons: [
         DialogButton(
+          onPressed: () => Navigator.pop(context),
+          width: 120,
           child: GestureDetector(
             onTap: () {
               Navigator.push(
@@ -73,13 +75,11 @@ class _PostsState extends State<Posts> {
                   MaterialPageRoute(
                       builder: (context) => CargoOWnerHomePage()));
             },
-            child: Text(
+            child: const Text(
               'OK',
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           ),
-          onPressed: () => Navigator.pop(context),
-          width: 120,
         ),
       ],
     ).show();
@@ -204,6 +204,34 @@ class _PostsState extends State<Posts> {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 246, 247, 249),
+      appBar: AppBar(
+        toolbarHeight: 80,
+        elevation: 0,
+        leading: InkWell(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CargoOWnerHomePage()));
+          },
+          child: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.grey,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        title: Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(right: screenWidth * 0.12),
+          height: 40,
+          child: const Center(
+            child: Text(
+              "Post Your Cargo Here",
+              style: TextStyle(
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        ),
+      ),
       body: Container(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
@@ -393,7 +421,7 @@ class _PostsState extends State<Posts> {
                 Container(
                   width: screenWidth,
                   color: Colors.grey.shade500,
-                  height: 5,
+                  height: 3,
                 ),
                 const SizedBox(
                   height: 10,
