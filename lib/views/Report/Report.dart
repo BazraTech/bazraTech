@@ -3,8 +3,10 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 
 import '../../Components/Home_Page.dart';
-import '../../model/bill.dart';
+
+import '../../model/report.dart';
 import '../Bill/billDetail.dart';
+import '../Bottom_Navigation.dart';
 
 class Report extends StatefulWidget {
   const Report({super.key});
@@ -14,11 +16,13 @@ class Report extends StatefulWidget {
 }
 
 class _ReportState extends State<Report> {
-  final List<Bill> bill = [
-    Bill(startTrip: "Addis Abbaba", endTrip: "Djibouti", status: "Paid"),
-    Bill(startTrip: "Addis Abbaba", endTrip: "Djibouti", status: "Paid"),
-    Bill(startTrip: "Addis Abbaba", endTrip: "Djibouti", status: "Unpaid"),
-    Bill(startTrip: "Addis Abbaba", endTrip: "Djibouti", status: "Unpaid"),
+  final List<ReportModel> report = [
+    ReportModel(startTrip: "Jimma", endTrip: "Addis Ababa", Date: "2023-05-20"),
+    ReportModel(
+        startTrip: "Gondar", endTrip: "Addis Ababa", Date: "2023-05-20"),
+    ReportModel(
+        startTrip: "Djibouti", endTrip: "Addis Ababa", Date: "2023-05-20"),
+    ReportModel(startTrip: "Metema", endTrip: "Gondar", Date: "2023-06-06"),
   ];
   @override
   Widget build(BuildContext context) {
@@ -31,8 +35,8 @@ class _ReportState extends State<Report> {
         elevation: 0,
         leading: InkWell(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CargoOWnerHomePage()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => BottomNav()));
           },
           child: const Icon(
             Icons.arrow_back_ios,
@@ -48,7 +52,7 @@ class _ReportState extends State<Report> {
           child: const Center(
             child: TextField(
               decoration: InputDecoration(
-                hintText: 'Driver Name or Plate No.',
+                hintText: 'Date',
                 border: InputBorder.none,
                 errorBorder: InputBorder.none,
                 enabledBorder: InputBorder.none,
@@ -65,7 +69,7 @@ class _ReportState extends State<Report> {
               top: 30,
             ),
             child: Column(
-                children: bill.map((bill) {
+                children: report.map((bill) {
               return Container(
                   padding: const EdgeInsets.only(left: 8, right: 8),
                   margin: const EdgeInsets.only(bottom: 8),
@@ -162,7 +166,7 @@ class _ReportState extends State<Report> {
                             ),
                             ListTile(
                               title: Text(
-                                "Bill Status",
+                                "Date",
                                 style: TextStyle(
                                   fontSize: 15,
                                   color: Colors.grey.shade500,
@@ -171,12 +175,10 @@ class _ReportState extends State<Report> {
                                 ),
                               ),
                               trailing: Text(
-                                bill.status,
-                                style: TextStyle(
+                                bill.Date,
+                                style: const TextStyle(
                                   fontSize: 15,
-                                  color: bill.status == "Paid"
-                                      ? Colors.green
-                                      : Colors.red,
+                                  color: Colors.amber,
                                   fontFamily: 'Roboto',
                                   fontWeight: FontWeight.bold,
                                 ),

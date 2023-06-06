@@ -8,6 +8,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../model/cargo.dart';
 import '../../shared/checkConnection.dart';
 import '../../shared/storage_hepler.dart';
+import '../Bottom_Navigation.dart';
+import '../Post_Navigation.dart';
 import 'histrory.dart';
 
 class cargoHistoryDetail extends StatefulWidget {
@@ -65,7 +67,7 @@ class _cargoHistoryDetailState extends State<cargoHistoryDetail> {
         leading: InkWell(
           onTap: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CargoListView()));
+                MaterialPageRoute(builder: (context) => Post_BottomNav()));
           },
           child: const Icon(
             Icons.arrow_back_ios,
@@ -74,14 +76,17 @@ class _cargoHistoryDetailState extends State<cargoHistoryDetail> {
         ),
         backgroundColor: Colors.white,
         title: Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(right: screenWidth * 0.12),
-          height: 40,
-          color: Colors.white,
-          child: const Center(
-            child: Text("Cargo History Detail"),
-          ),
-        ),
+            width: double.infinity,
+            margin: EdgeInsets.only(right: screenWidth * 0.12),
+            height: 40,
+            child: Center(
+              child: Text(
+                "History Detail",
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+            )),
       ),
       body: Center(
         child: FutureBuilder(
@@ -90,7 +95,7 @@ class _cargoHistoryDetailState extends State<cargoHistoryDetail> {
             if (snapshot.hasData) {
               Cargo cargo = snapshot.data!;
               return Container(
-                margin: EdgeInsets.only(right: 10, left: 10),
+                margin: EdgeInsets.only(right: 10, left: 10, top: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

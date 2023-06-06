@@ -209,8 +209,8 @@ class _PostsState extends State<Posts> {
         elevation: 0,
         leading: InkWell(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CargoOWnerHomePage()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => BottomNav()));
           },
           child: const Icon(
             Icons.arrow_back_ios,

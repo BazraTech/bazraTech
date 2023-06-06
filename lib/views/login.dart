@@ -44,7 +44,7 @@ class _Cargo_loginState extends State<Cargo_login> {
     super.dispose();
   }
 
-  registerCargo(String phone, String pass) async {
+  loginCargo(String phone, String pass) async {
     const url = 'http://64.226.104.50:9090/Api/SignIn/Cargo';
     StorageHelper storageHelper = StorageHelper();
     String? retrievedToken = await storageHelper.getToken();
@@ -114,7 +114,7 @@ class _Cargo_loginState extends State<Cargo_login> {
       desc: "Invalid User Name Or Passowrd.",
       buttons: [
         DialogButton(
-          child:  Text(
+          child: Text(
             "OK",
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
@@ -260,7 +260,7 @@ class _Cargo_loginState extends State<Cargo_login> {
                   )),
               CustomButton(
                   onPressed: () async {
-                    await registerCargo(
+                    await loginCargo(
                         _phoneController.text, _passwordController.text);
                   },
                   text: "Sign In"),

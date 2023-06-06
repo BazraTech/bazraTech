@@ -8,10 +8,10 @@ import '../shared/constant.dart';
 import '../shared/storage_hepler.dart';
 import '../shared/tapbar.dart';
 import '../views/Bill/Bill.dart';
-import '../views/Navigation_Active.dart';
+import '../views/Post_Navigation.dart';
 import '../views/Notification/Notification.dart';
 import '../views/Report/Report.dart';
-import '../views/Work/Acticve_Work.dart';
+import '../views/Work/Active_Work.dart';
 
 class CargoOWnerHomePage extends StatefulWidget {
   int? index;
@@ -32,27 +32,28 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
     }
     return 'Good Evening';
   }
-  // Future<String> fetchImage() async {
-  //   var client = http.Client();
-  //   StorageHelper storageHelper = StorageHelper();
-  //   String? accessToken = await storageHelper.getToken();
 
-  //   Map<String, String> requestHeaders = {
-  //     'Content-Type': 'application/json',
-  //     'Accept': 'application/json',
-  //     'Authorization': 'Bearer $accessToken',
-  //   };
-  //   final response = await http.get(
-  //       Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
-  //       headers: requestHeaders);
-  //   if (response.statusCode == 200) {
-  //     // If the server returns a 200 OK response, parse the JSON.
-  //     Map<String, dynamic> data = json.decode(response.body);
-  //     return data["logo"];
-  //   } else {
-  //     throw Exception('Failed to load image');
-  //   }
-  // }
+  Future<String> fetchImage() async {
+    var client = http.Client();
+    StorageHelper storageHelper = StorageHelper();
+    String? accessToken = await storageHelper.getToken();
+
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+    };
+    final response = await http.get(
+        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+        headers: requestHeaders);
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      Map<String, dynamic> data = json.decode(response.body);
+      return data["logo"];
+    } else {
+      throw Exception('Failed to load image');
+    }
+  }
 
   bool isPressed = true;
   @override
@@ -70,27 +71,27 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Container(
-                  //   margin: EdgeInsets.only(top: 15),
-                  //   padding: const EdgeInsets.all(2.0),
-                  //   child: CircleAvatar(
-                  //     radius: 50,
-                  //     backgroundColor: Colors.white,
-                  //     child: ClipOval(
-                  //       child: FutureBuilder(
-                  //         future: fetchImage(),
-                  //         builder: (BuildContext context,
-                  //             AsyncSnapshot<String> snapshot) {
-                  //           if (snapshot.connectionState !=
-                  //               ConnectionState.done) return Text("");
-                  //           return Image.network(
-                  //             snapshot.data.toString(),
-                  //           );
-                  //         },
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  Container(
+                    margin: EdgeInsets.only(top: 15),
+                    padding: const EdgeInsets.all(2.0),
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.white,
+                      child: ClipOval(
+                        child: FutureBuilder(
+                          future: fetchImage(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            if (snapshot.connectionState !=
+                                ConnectionState.done) return Text("");
+                            return Image.network(
+                              snapshot.data.toString(),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -235,60 +236,61 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(10),
-                      child: InkResponse(
-                        onTap: (() {
+                      child: GestureDetector(
+                        onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Active_Work()));
-                        }),
-                        child: Ink(
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  borderRadius: BorderRadius.circular(6),
-                                  boxShadow: isPressed
-                                      ? [
-                                          BoxShadow(
-                                            color: Colors.grey.shade400,
-                                            offset: Offset(4, 4),
-                                            blurRadius: 15,
-                                            spreadRadius: 1,
-                                          ),
-                                          const BoxShadow(
-                                            color: Colors.white,
-                                            offset: Offset(-4, -4),
-                                            blurRadius: 25,
-                                            spreadRadius: 1,
-                                          ),
-                                        ]
-                                      : null),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.06,
-
-                                    margin: EdgeInsets.only(top: 12),
-                                    //height: 70,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: const Icon(
-                                      Icons.work,
-                                      size: 50,
+                                  builder: (context) => Post_BottomNav()));
+                        },
+                        child: AnimatedContainer(
+                            duration: Duration(milliseconds: 100),
+                            decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: isPressed
+                                    ? [
+                                        BoxShadow(
+                                          color: Colors.grey.shade400,
+                                          offset: Offset(4, 4),
+                                          blurRadius: 15,
+                                          spreadRadius: 1,
+                                        ),
+                                        const BoxShadow(
+                                          color: Colors.white,
+                                          offset: Offset(-4, -4),
+                                          blurRadius: 25,
+                                          spreadRadius: 1,
+                                        ),
+                                      ]
+                                    : null),
+                            child: Column(
+                              children: [
+                                Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.05,
+                                  margin: EdgeInsets.only(top: 12),
+                                  //height: 70,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: const Icon(
+                                    Icons.local_shipping,
+                                    size: 50,
+                                    color: kPrimaryColor,
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 8),
+                                  child: const Text(
+                                    "Post Cargo Work",
+                                    style: TextStyle(
                                       color: kPrimaryColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
                                     ),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 8),
-                                    child: const Text("Active Work",
-                                        style: TextStyle(
-                                            color: kPrimaryColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14)),
-                                  ),
-                                ],
-                              )),
-                        ),
+                                ),
+                              ],
+                            )),
                       ),
                     ),
                     Padding(
@@ -298,7 +300,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => BottomNav_Active()));
+                                  builder: (context) => BillStatus()));
                         },
                         child: AnimatedContainer(
                             duration: Duration(milliseconds: 100),
@@ -350,61 +352,60 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(10),
-                      child: GestureDetector(
-                        onTap: () {
+                      child: InkResponse(
+                        onTap: (() {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => TabNavigate()));
-                        },
-                        child: AnimatedContainer(
-                            duration: Duration(milliseconds: 100),
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: isPressed
-                                    ? [
-                                        BoxShadow(
-                                          color: Colors.grey.shade400,
-                                          offset: Offset(4, 4),
-                                          blurRadius: 15,
-                                          spreadRadius: 1,
-                                        ),
-                                        const BoxShadow(
-                                          color: Colors.white,
-                                          offset: Offset(-4, -4),
-                                          blurRadius: 25,
-                                          spreadRadius: 1,
-                                        ),
-                                      ]
-                                    : null),
-                            child: Column(
-                              children: [
-                                Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.05,
-                                  margin: EdgeInsets.only(top: 12),
-                                  //height: 70,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: const Icon(
-                                    Icons.local_shipping,
-                                    size: 50,
-                                    color: kPrimaryColor,
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 8),
-                                  child: const Text(
-                                    "Post Cargo Work",
-                                    style: TextStyle(
+                                  builder: (context) => List_Vehicles()));
+                        }),
+                        child: Ink(
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  borderRadius: BorderRadius.circular(6),
+                                  boxShadow: isPressed
+                                      ? [
+                                          BoxShadow(
+                                            color: Colors.grey.shade400,
+                                            offset: Offset(4, 4),
+                                            blurRadius: 15,
+                                            spreadRadius: 1,
+                                          ),
+                                          const BoxShadow(
+                                            color: Colors.white,
+                                            offset: Offset(-4, -4),
+                                            blurRadius: 25,
+                                            spreadRadius: 1,
+                                          ),
+                                        ]
+                                      : null),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.06,
+
+                                    margin: EdgeInsets.only(top: 12),
+                                    //height: 70,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: const Icon(
+                                      Icons.work,
+                                      size: 50,
                                       color: kPrimaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
                                     ),
                                   ),
-                                ),
-                              ],
-                            )),
+                                  Container(
+                                    margin: EdgeInsets.only(top: 8),
+                                    child: const Text("Active Work",
+                                        style: TextStyle(
+                                            color: kPrimaryColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14)),
+                                  ),
+                                ],
+                              )),
+                        ),
                       ),
                     ),
                     Padding(

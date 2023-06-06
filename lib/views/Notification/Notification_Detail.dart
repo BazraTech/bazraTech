@@ -1,5 +1,6 @@
 import 'package:cargo/shared/customAppbar.dart';
 import 'package:cargo/shared/customButton.dart';
+import 'package:cargo/views/Notification/Notification.dart';
 import 'package:flutter/material.dart';
 import '../../model/post.dart';
 
@@ -23,10 +24,36 @@ class _NotificationDetailState extends State<NotificationDetail> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-        appBar: CustomAppBar(
-          title: "Notification Detail Info",
-          showBackButton: true,
+        appBar: AppBar(
+          toolbarHeight: 80,
+          elevation: 0,
+          leading: InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Notifications()));
+            },
+            child: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.grey,
+            ),
+          ),
+          backgroundColor: Colors.white,
+          title: Container(
+            width: double.infinity,
+            margin: EdgeInsets.only(right: screenWidth * 0.12),
+            height: 40,
+            color: Colors.white,
+            child: const Center(
+              child: Text(
+                "Notification Detail",
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+          ),
         ),
         body: SingleChildScrollView(
           child: Container(

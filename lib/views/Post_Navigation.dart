@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import '../shared/constant.dart';
 
 import 'Alert/Alert.dart';
-import 'Bill/Bill.dart';
-import 'Notification/Notification.dart';
-import 'Work/Active_Work_detail.dart';
 
-class BottomNav_Active extends StatelessWidget {
-  BottomNav_Active({super.key});
+import 'Notification/Notification.dart';
+import 'Post/Posts.dart';
+import 'Post/histrory.dart';
+
+class Post_BottomNav extends StatelessWidget {
+  Post_BottomNav({super.key});
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -18,10 +19,10 @@ class BottomNav_Active extends StatelessWidget {
           length: 2,
           child: Scaffold(
             backgroundColor: Colors.white,
-            body: const TabBarView(
+            body: TabBarView(
               children: [
-                List_Vehicles(),
-                BillStatus(),
+                Posts(),
+                CargoListView(),
               ],
             ),
             bottomNavigationBar: Container(
@@ -39,9 +40,9 @@ class BottomNav_Active extends StatelessWidget {
                         EdgeInsets.symmetric(horizontal: screenWidth * 0.055),
                     tabs: const [
                       Tab(
-                        icon: Icon(Icons.dashboard),
+                        icon: Icon(Icons.add),
                         child: Text(
-                          "Vehicle List",
+                          "Post Cargo",
                           style: TextStyle(
                               fontSize: 13,
                               color: Colors.white,
@@ -51,9 +52,9 @@ class BottomNav_Active extends StatelessWidget {
                         ),
                       ),
                       Tab(
-                        icon: Icon(Icons.attach_money_rounded),
+                        icon: Icon(Icons.history_edu),
                         child: Text(
-                          "Bill",
+                          "Cargo Post History",
                           style: TextStyle(
                               fontSize: 13,
                               color: Colors.white,

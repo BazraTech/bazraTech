@@ -2,8 +2,8 @@ import 'package:cargo/shared/constant.dart';
 import 'package:cargo/shared/customAppbar.dart';
 import 'package:flutter/material.dart';
 import '../../model/post.dart';
+import '../Bottom_Navigation.dart';
 import 'Notification_Detail.dart';
-
 
 class Notifications extends StatefulWidget {
   const Notifications({super.key});
@@ -40,9 +40,33 @@ class _NotificationsState extends State<Notifications> {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      appBar: CustomAppBar(
-        title: "Vehicle List",
-        showBackButton: true,
+      appBar: AppBar(
+        toolbarHeight: 80,
+        elevation: 0,
+        leading: InkWell(
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => BottomNav()));
+          },
+          child: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.grey,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        title: Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(right: screenWidth * 0.12),
+          height: 40,
+          child: const Center(
+            child: Text(
+              "Notification",
+              style: TextStyle(
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        ),
       ),
       body: Container(
         margin: const EdgeInsets.only(top: 50),

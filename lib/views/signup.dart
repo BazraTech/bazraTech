@@ -107,6 +107,7 @@ class _SignupState extends State<Signup> {
           'An error occurred, please check your internet connection.');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

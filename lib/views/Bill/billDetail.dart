@@ -2,6 +2,7 @@ import 'package:cargo/views/Bill/Bill.dart';
 import 'package:flutter/material.dart';
 import '../../model/bill_details.dart';
 import '../../shared/customAppbar.dart';
+import '../Bottom_Navigation.dart';
 
 class Bill_Detail extends StatefulWidget {
   const Bill_Detail({super.key});
@@ -32,7 +33,7 @@ class _Bill_DetailState extends State<Bill_Detail> {
         leading: InkWell(
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => BillStatus()));
+                context, MaterialPageRoute(builder: (context) => BottomNav()));
           },
           child: const Icon(
             Icons.arrow_back_ios,

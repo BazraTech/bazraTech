@@ -1,4 +1,5 @@
 import 'package:cargo/shared/customAppbar.dart';
+import 'package:cargo/views/Bottom_Navigation.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/alert.dart';
@@ -34,18 +35,38 @@ class _Alert_TypeState extends State<Alert_Type> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: CustomAppBar(
-        title: "Alert",
-        showBackButton: true,
+      appBar: AppBar(
+        toolbarHeight: 80,
+        elevation: 0,
+        leading: InkWell(
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => BottomNav()));
+          },
+          child: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.grey,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        title: Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(right: screenWidth * 0.12),
+          height: 40,
+          color: Colors.white,
+          child: const Center(
+            child: Text("Alert Page"),
+          ),
+        ),
       ),
       body: Container(
         margin: EdgeInsets.only(top: 50),
         child: Column(children: [
           Container(
             margin: EdgeInsets.only(bottom: 20),
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
+              children: [
                 Text(
                   ' DName',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),

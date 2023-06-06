@@ -3,8 +3,8 @@ import 'package:cargo/shared/customAppbar.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../Components/Home_Page.dart';
 import '../../model/bill.dart';
+import '../Bottom_Navigation.dart';
 import 'billDetail.dart';
 
 class BillStatus extends StatefulWidget {
@@ -41,8 +41,8 @@ class _BillStatusState extends State<BillStatus> {
         elevation: 0,
         leading: InkWell(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CargoOWnerHomePage()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => BottomNav()));
           },
           child: const Icon(
             Icons.arrow_back_ios,
@@ -58,7 +58,7 @@ class _BillStatusState extends State<BillStatus> {
           child: const Center(
             child: TextField(
               decoration: InputDecoration(
-                hintText: 'Driver Name or Plate No.',
+                hintText: 'Status',
                 border: InputBorder.none,
                 errorBorder: InputBorder.none,
                 enabledBorder: InputBorder.none,
