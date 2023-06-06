@@ -107,19 +107,19 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                 Navigator.pop(context);
               },
             ),
-            backgroundColor: Color.fromRGBO(168, 123, 6, 1),
+            backgroundColor: kPrimaryColor,
             title: Container(
               margin: EdgeInsets.only(right: screenWidth * 0.12),
               width: double.infinity,
               height: 40,
-              color: Color.fromRGBO(168, 123, 6, 1),
+              color: Colors.white,
               child: Center(
                 child: TextField(
                   onChanged: driversSearch,
                   decoration: const InputDecoration(
                     hintText: 'Driver Name or Plate No.',
-                    hintStyle: TextStyle(color: Colors.white),
-                    fillColor: Color.fromRGBO(168, 123, 6, 1),
+                    hintStyle: TextStyle(color: Colors.black),
+                    fillColor: Colors.white,
                     border: InputBorder.none,
                     errorBorder: InputBorder.none,
                     enabledBorder: InputBorder.none,
@@ -163,7 +163,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                     child: const Text(
                                       "Vehicles",
                                       style: TextStyle(
-                                          color: Color.fromRGBO(168, 123, 6, 1),
+                                          color: kPrimaryColor,
                                           fontFamily: "Nunito",
                                           fontWeight: FontWeight.bold,
                                           fontStyle: FontStyle.normal,
@@ -175,7 +175,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                     child: const Text(
                                       "Driver",
                                       style: TextStyle(
-                                          color: Color.fromRGBO(168, 123, 6, 1),
+                                          color: kPrimaryColor,
                                           fontFamily: "Nunito",
                                           fontWeight: FontWeight.bold,
                                           fontStyle: FontStyle.normal,
@@ -187,7 +187,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                     child: const Text(
                                       " Plate Number",
                                       style: TextStyle(
-                                          color: Color.fromRGBO(168, 123, 6, 1),
+                                          color: kPrimaryColor,
                                           fontFamily: "Nunito",
                                           fontWeight: FontWeight.bold,
                                           fontStyle: FontStyle.normal,
@@ -335,35 +335,28 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                                   ),
                                                 )),
                                             vehicle['status'] == "ONROUTE"
-                                                ? Row(
-                                                    children: [
-                                                      Container(
+                                                ? Container(
+                                                    margin: EdgeInsets.only(
+                                                        right: 100, top: 10),
+                                                    child: Text(
+                                                      vehicle['status'],
+                                                      style: const TextStyle(
+                                                          fontSize: 12,
+                                                          color: Colors.green,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  )
+                                                : vehicle['status'] == "PARKED"
+                                                    ? Container(
                                                         margin: EdgeInsets.only(
-                                                          right: 100,
+                                                            right: 110,
                                                             top: 10),
                                                         child: Text(
                                                           vehicle['status'],
                                                           style: const TextStyle(
                                                               fontSize: 12,
-                                                              color:
-                                                                  Colors.green,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
-                                                : vehicle['status'] == "PARKED"
-                                                    ? Container(
-                                                        margin: EdgeInsets.only(
-                                                            left: 10, top: 10),
-                                                        child: Text(
-                                                          vehicle['status'],
-                                                          style: const TextStyle(
-                                                              fontSize: 12,
-                                                              color:
-                                                                  Colors.yellow,
+                                                              color: Colors.red,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold),
@@ -375,7 +368,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                                             margin:
                                                                 const EdgeInsets
                                                                         .only(
-                                                                    left: 10,
+                                                                    right: 110,
                                                                     top: 10),
                                                             child: Text(
                                                               vehicle['status'],
@@ -388,22 +381,16 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                                                           .bold),
                                                             ),
                                                           )
-                                                        : Container(
-                                                            margin:
-                                                                const EdgeInsets
-                                                                        .only(
-                                                                    left: 10,
-                                                                    top: 10),
-                                                            child: Text(
-                                                              vehicle['status'],
-                                                              style: const TextStyle(
-                                                                  fontSize: 12,
-                                                                  color:
-                                                                      kPrimaryColor,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            )),
+                                                        : Text(
+                                                            vehicle['status'],
+                                                            style: const TextStyle(
+                                                                fontSize: 12,
+                                                                color:
+                                                                    kPrimaryColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
                                             Visibility(
                                               visible: vehicle['status'] !=
                                                   "ONROUTE",

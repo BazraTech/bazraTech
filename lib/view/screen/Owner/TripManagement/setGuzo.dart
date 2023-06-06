@@ -1,4 +1,5 @@
 import 'package:bazralogin/const/constant.dart';
+import 'package:bazralogin/view/screen/Owner/report/toggelReport.dart';
 import 'package:flutter/material.dart';
 import '../report/ownerReport.dart';
 import 'activeTrip.dart';
@@ -22,7 +23,7 @@ class tripHistory extends StatelessWidget {
           children: [
             AvailableVehicle(),
             ActiveTrip(),
-            ownerReport(),
+            MyScreen(),
           ],
         ),
         bottomNavigationBar: Container(

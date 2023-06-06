@@ -162,7 +162,7 @@ class _assignDriverState extends State<assignDriver> {
     String? selectedItem = 'Single Trip';
     List<String> items = ['Single Trip', 'Round Trip'];
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 229, 229, 229),
+        backgroundColor: kBackgroundColor,
         appBar: AppBar(
           toolbarHeight: 80,
           elevation: 0,
@@ -173,14 +173,14 @@ class _assignDriverState extends State<assignDriver> {
                 Navigator.pop(context);
               },
               child: Icon(
-                Icons.arrow_back_ios,
+                Icons.arrow_back,
                 color: Colors.white,
               ),
             ),
           ),
           backgroundColor: kPrimaryColor,
           title: const Text(
-            " Create Alert Page",
+            " Assign driver",
             style: TextStyle(
                 fontFamily: "Nunito",
                 fontSize: 23,
@@ -190,148 +190,211 @@ class _assignDriverState extends State<assignDriver> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(
+              height: screenHeight * 0.03,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: screenWidth * 0.24,
+                width: screenWidth,
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.3), // Shadow color
+                        blurRadius: 5, // Spread radius
+                        offset: Offset(0, 3), // Offset in (x,y) coordinates
+                      ),
+                    ],
+                    color: Color.fromRGBO(255, 255, 255, 1),
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                      color: Colors.white, // Set the border color
+                      width: 2.5,
+                    )),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 18,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Driver Status",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: "Nunito",
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.normal,
+                              fontSize: 15),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "${widget.licenseNumber}",
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontSize: 15,
+                            fontFamily: "Nunito",
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.normal,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 45,
+            ),
             Padding(
               padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
               child: Container(
-                margin: EdgeInsets.only(top: 10),
-                width: screenWidth,
-                height: screenHeight * 0.5,
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                    )),
-                padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
-                child: Container(
-                  margin: EdgeInsets.only(top: 30),
-                  width: screenWidth * 0.5,
-                  child: Column(children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 20),
-                          child: MaterialButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            color: Colors.white,
-
-                            child: SizedBox(
-                              height: screenHeight * 0.08,
-                              child: Icon(
-                                Ionicons.car,
-                                color: Colors.red,
-                                size: 25,
-                              ),
-                            ),
-                            padding: EdgeInsets.all(11),
-                            minWidth: screenWidth * 0.004,
-                            //use this class Circleborder() for circle shape.
-                            shape: const CircleBorder(),
-                          ),
-                        ),
-                        Container(
-                            margin: EdgeInsets.only(right: screenWidth * 0.1),
-                            child: Text(" Assign Driver",
-                                style: TextStyle(
-                                  fontFamily: "Nuinto",
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 17,
-                                ))),
-                      ],
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2), // Shadow color
+                      blurRadius: 5, // Spread radius
+                      offset: Offset(0, 3), // Offset in (x,y) coordinates
                     ),
-                    Container(
-                      height: screenHeight * 0.35,
-                      child: ListView(
-                        padding: EdgeInsets.zero,
+                  ],
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Container(
+                  width: screenWidth,
+                  height: screenHeight * 0.5,
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3), // Shadow color
+                          blurRadius: 5, // Spread radius
+                          offset: Offset(0, 3), // Offset in (x,y) coordinates
+                        ),
+                      ],
+                      color: Color.fromRGBO(236, 240, 243, 1),
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(
+                        color: Color.fromRGBO(
+                            236, 240, 243, 1), // Set the border color
+                        width: 2.5,
+                      )),
+                  padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+                  child: Container(
+                    margin: EdgeInsets.only(top: 30),
+                    width: screenWidth * 0.5,
+                    child: Column(children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Column(
-                            children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    "Driver License",
-                                    style: TextStyle(
-                                      fontFamily: "Nuinto",
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 12,
-                                    ),
-                                  )),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                width: double.infinity,
-                                child: TextFormField(
-                                  decoration: ThemeHelper().textInputDecoration(
-                                    ' ${widget.licenseNumber}',
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                "Vehicle plate Number",
-                                style: TextStyle(
-                                  fontFamily: "Nuinto",
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 12,
-                                ),
-                              )),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Column(
-                            children: [
-                              Container(
-                                  width: double.infinity,
-                                  child: TextField(
-                                    decoration:
-                                        ThemeHelper().textInputDecoration(
-                                      '${widget.plateNumber}',
-                                    ),
-                                  )),
-                            ],
-                          ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(
-                                screenWidth * 0.4, 20, 0, 0),
-                            width: screenWidth * 0.4,
-                            height: screenHeight * 0.05,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                AssignDriver();
-                              },
-                              child: const Text(
-                                "Assign Driver",
-                                style: TextStyle(
-                                    fontFamily: "Nunito",
-                                    color: Color.fromRGBO(255, 255, 255, 1),
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              style: ThemeHelper().buttonStyle(),
-                            ),
-                          ),
+                              child: Text(" Assign Driver",
+                                  style: TextStyle(
+                                    fontFamily: "Nuinto",
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 17,
+                                  ))),
                         ],
                       ),
-                    )
-                  ]),
+                      Container(
+                        height: screenHeight * 0.35,
+                        child: ListView(
+                          padding: EdgeInsets.zero,
+                          children: [
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      "Driver License",
+                                      style: TextStyle(
+                                        fontFamily: "Nuinto",
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 12,
+                                      ),
+                                    )),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                               
+                                Container(
+                                  width: double.infinity,
+                                  child: TextFormField(
+                                    enabled: false,
+                                    controller: TextEditingController(
+                                        text: "${widget.licenseNumber}"),
+                                    decoration:
+                                        ThemeHelper().textInputDecoration(),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  "Vehicle plate Number",
+                                  style: TextStyle(
+                                    fontFamily: "Nuinto",
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 12,
+                                  ),
+                                )),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Column(
+                              children: [
+                                Container(
+                                    width: double.infinity,
+                                    child: TextField(
+                                      enabled: false,
+                                      controller: TextEditingController(
+                                          text: "${widget.plateNumber}"),
+                                      decoration:
+                                          ThemeHelper().textInputDecoration(),
+                                    )),
+                              ],
+                            ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(
+                                  screenWidth * 0.4, 20, 0, 0),
+                              width: screenWidth * 0.4,
+                              height: screenHeight * 0.05,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  AssignDriver();
+                                },
+                                child: const Text(
+                                  "Assign Driver",
+                                  style: TextStyle(
+                                      fontFamily: "Nunito",
+                                      color: Color.fromRGBO(255, 255, 255, 1),
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                style: ThemeHelper().buttonStyle(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ]),
+                  ),
                 ),
               ),
             ),

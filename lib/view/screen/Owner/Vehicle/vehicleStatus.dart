@@ -53,7 +53,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
             child: TabBar(
               isScrollable: true,
               labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
-              labelColor: Color.fromRGBO(168, 123, 6, 1),
+              labelColor: kPrimaryColor,
               indicatorPadding: EdgeInsets.all(4),
               overlayColor:
                   MaterialStateColor.resolveWith((Set<MaterialState> states) {

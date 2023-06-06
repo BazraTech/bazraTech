@@ -110,26 +110,25 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                 Navigator.pop(context);
               },
             ),
-            backgroundColor: Color.fromRGBO(168, 123, 6, 1),
+            backgroundColor: kPrimaryColor,
             title: Container(
               width: double.infinity,
               margin: EdgeInsets.only(right: screenWidth * 0.12),
               height: 40,
-              color: Color.fromRGBO(168, 123, 6, 1),
+              color: Colors.white,
               child: Center(
                 child: TextField(
                   onChanged: driversSearch,
                   decoration: const InputDecoration(
-                    fillColor: Color.fromRGBO(168, 123, 6, 1),
                     hintText: 'Driver  or Plate No.',
-                    hintStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: Colors.black),
                     border: InputBorder.none,
                     errorBorder: InputBorder.none,
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
                     prefixIcon: Icon(
                       Icons.search,
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -169,7 +168,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                     child: const Text(
                                       "Vehicles",
                                       style: TextStyle(
-                                          color: Color.fromRGBO(168, 123, 6, 1),
+                                          color: kPrimaryColor,
                                           fontFamily: "Nunito",
                                           fontWeight: FontWeight.bold,
                                           fontStyle: FontStyle.normal,
@@ -181,7 +180,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                     child: const Text(
                                       "Driver",
                                       style: TextStyle(
-                                          color: Color.fromRGBO(168, 123, 6, 1),
+                                          color: kPrimaryColor,
                                           fontFamily: "Nunito",
                                           fontWeight: FontWeight.bold,
                                           fontStyle: FontStyle.normal,
@@ -193,7 +192,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                     child: const Text(
                                       " Plate Number",
                                       style: TextStyle(
-                                          color: Color.fromRGBO(168, 123, 6, 1),
+                                          color: kPrimaryColor,
                                           fontFamily: "Nunito",
                                           fontWeight: FontWeight.bold,
                                           fontStyle: FontStyle.normal,

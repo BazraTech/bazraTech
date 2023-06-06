@@ -1,14 +1,9 @@
 import 'dart:convert';
-
 import 'package:bazralogin/controller/Localization.dart';
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-
-import '../../../../Model/driverCount.dart';
-import '../../../../Model/ApiConfig.dart';
-
 import '../../../../config/APIService.dart';
 import 'OwnersDriver.dart';
 import 'getDriverByStatus.dart';
@@ -46,7 +41,7 @@ class DriverStatus extends StatelessWidget {
         bottomNavigationBar: Container(
           height: screenHeight * 0.08,
           decoration: const BoxDecoration(
-            color: kPrimaryColor,
+            color: Colors.white,
           ),
           child: Container(
             child: TabBar(
@@ -54,6 +49,7 @@ class DriverStatus extends StatelessWidget {
               labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
               indicatorSize: TabBarIndicatorSize.label,
               indicatorWeight: 4,
+              labelColor: kPrimaryColor,
               indicatorPadding: EdgeInsets.all(4),
               indicatorColor: Colors.white,
               overlayColor:
@@ -95,65 +91,110 @@ class DriverStatus extends StatelessWidget {
                   ),
                 ),
                 Tab(
-                  text: TranslationUtil.text("Assigned Drivers"),
-                  icon: CircleAvatar(
-                    radius: 8,
-                    backgroundColor: Colors.red[400],
-                    child: Text(
-                      CountDrivers.totalAssigned.toString(),
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                    text: TranslationUtil.text("Assigned Drivers"),
+                    icon: Container(
+                      child: FutureBuilder(
+                        future: _assignedDriver(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> snapshot) {
+                          if (snapshot.connectionState != ConnectionState.done)
+                            return Text("");
+                          return SizedBox(
+                              height: screenHeight * 0.03,
+                              width: width * 0.04,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.red[400],
+                                radius: 8,
+                                child: Text(
+                                  snapshot.data.toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ));
+                        },
                       ),
-                    ), //Text
-                  ),
-                ),
+                    )),
                 Tab(
                   text: TranslationUtil.text("UnAssigned Drivers"),
-                  icon: CircleAvatar(
-                    radius: 8,
-                    backgroundColor: Colors.red[400],
-                    child: Text(
-                      CountDrivers.totalUnassigned.toString(),
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ), //Text
+                  icon: Container(
+                    child: FutureBuilder(
+                      future: _driverUnassigned(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<String> snapshot) {
+                        if (snapshot.connectionState != ConnectionState.done)
+                          return Text("");
+                        return SizedBox(
+                            height: screenHeight * 0.03,
+                            width: width * 0.04,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.red[400],
+                              radius: 8,
+                              child: Text(
+                                snapshot.data.toString(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ));
+                      },
+                    ),
                   ),
                 ),
                 Tab(
-                  text: TranslationUtil.text("Permit"),
-                  icon: CircleAvatar(
-                    radius: 8,
-                    backgroundColor: Colors.red[400],
-                    child: Text(
-                      CountDrivers.totalPermit.toString(),
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                    text: TranslationUtil.text("Permit"),
+                    icon: Container(
+                      child: FutureBuilder(
+                        future: _permit(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> snapshot) {
+                          if (snapshot.connectionState != ConnectionState.done)
+                            return Text("");
+                          return SizedBox(
+                              height: screenHeight * 0.03,
+                              width: width * 0.04,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.red[400],
+                                radius: 8,
+                                child: Text(
+                                  snapshot.data.toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ));
+                        },
                       ),
-                    ), //Text
-                  ),
-                ),
+                    )),
                 Tab(
-                  text: TranslationUtil.text("OnRoute Drivers"),
-                  icon: CircleAvatar(
-                    radius: 8,
-                    backgroundColor: Colors.red[400],
-                    child: Text(
-                      CountDrivers.totalOnroute.toString(),
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                    text: TranslationUtil.text("OnRoute Drivers"),
+                    icon: Container(
+                      child: FutureBuilder(
+                        future: _onroutedriver(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> snapshot) {
+                          if (snapshot.connectionState != ConnectionState.done)
+                            return Text("");
+                          return SizedBox(
+                              height: screenHeight * 0.03,
+                              width: width * 0.04,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.red[400],
+                                radius: 8,
+                                child: Text(
+                                  snapshot.data.toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ));
+                        },
                       ),
-                    ), //Text
-                  ),
-                ),
+                    )),
               ],
             ),
           ),
@@ -162,7 +203,7 @@ class DriverStatus extends StatelessWidget {
     );
   }
 
-  Future<String> _totalvehicle() async {
+  Future<String> _onroutedriver() async {
     var client = http.Client();
     final storage = new FlutterSecureStorage();
     var token = await storage.read(key: 'jwt');
@@ -173,13 +214,13 @@ class DriverStatus extends StatelessWidget {
     };
     final response = await http.get(
         Uri.parse(
-            "http://198.199.67.201:9090/Api/Vehicle/Owner/Drivers/ONROUTE"),
+            "http://64.226.104.50:9090/Api/Vehicle/Owner/Drivers/ONROUTE"),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
       Map<String, dynamic> data = json.decode(response.body);
       await storage.write(
-          key: "onroutedriver", value: data["drivers"].toString());
+          key: "onroutedriver", value: data["totalDrivers"].toString());
 
       onroutedriver = (await storage.read(key: 'onroutedriver'))!;
       return onroutedriver;
@@ -199,13 +240,13 @@ class DriverStatus extends StatelessWidget {
       'Authorization': 'Bearer $token',
     };
     final response = await http.get(
-        Uri.parse(
-            "http://198.199.67.201:9090/Api/Vehicle/Owner/Drivers/PERMIT"),
+        Uri.parse("http://64.226.104.50:9090/Api/Vehicle/Owner/Drivers/PERMIT"),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
       Map<String, dynamic> data = json.decode(response.body);
-      await storage.write(key: "permit", value: data["drivers"].toString());
+      await storage.write(
+          key: "permit", value: data["totalDrivers"].toString());
 
       permit = (await storage.read(key: 'permit'))!;
       return permit;
@@ -226,12 +267,13 @@ class DriverStatus extends StatelessWidget {
     };
     final response = await http.get(
         Uri.parse(
-            "http://198.199.67.201:9090/Api/Vehicle/Owner/Drivers/ASSIGNED"),
+            "http://64.226.104.50:9090/Api/Vehicle/Owner/Drivers/ASSIGNED"),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
       Map<String, dynamic> data = json.decode(response.body);
-      await storage.write(key: "assign", value: data["drivers"].toString());
+      await storage.write(
+          key: "assign", value: data["totalDrivers"].toString());
 
       assign = (await storage.read(key: 'assign'))!;
       return assign;
@@ -277,17 +319,18 @@ class DriverStatus extends StatelessWidget {
     };
     final response = await http.get(
         Uri.parse(
-            "http://198.199.67.201:9090/Api/Vehicle/Owner/Drivers/UNASSIGNED"),
+            "http://64.226.104.50:9090/Api/Vehicle/Owner/Drivers/UNASSIGNED"),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
       Map<String, dynamic> data = json.decode(response.body);
-      await storage.write(key: "assigned", value: data["drivers"].toString());
+      await storage.write(
+          key: "assigned", value: data["totalDrivers"].toString());
 
       Unassigned = (await storage.read(key: 'assigned'))!;
       return Unassigned;
     } else {
-      throw Exception('Failed to load image');
+      throw Exception('Failed to load data');
     }
   }
 }

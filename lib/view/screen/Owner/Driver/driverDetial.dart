@@ -3,7 +3,6 @@ import 'package:bazralogin/const/constant.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class Driver_Detial extends StatefulWidget {
   final int? id;
@@ -62,7 +61,6 @@ class _Driver_DetialState extends State<Driver_Detial> {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
-          toolbarHeight: 80,
           elevation: 0,
           leading: Container(
             margin: EdgeInsets.only(top: 5),
@@ -71,20 +69,18 @@ class _Driver_DetialState extends State<Driver_Detial> {
                 Navigator.pop(context);
               },
               child: Icon(
-                Icons.arrow_back_ios,
+                Icons.arrow_back,
                 color: Colors.white,
               ),
             ),
           ),
           backgroundColor: kPrimaryColor,
-          title: const Center(
-            child: Text(
-              "Driver Detail Information",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+          title: Text(
+            "Driver Detail Information",
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),

@@ -5,8 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
-import 'package:bazralogin/Theme/customAppBar.dart';
-import 'package:bazralogin/const/color.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_places_flutter/model/place_details.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -100,51 +99,32 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            centerTitle: true,
-            toolbarHeight: 80,
-            leadingWidth: 24,
             elevation: 0,
-            leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.white,
-                ),
+            leading: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
               ),
             ),
             backgroundColor: kPrimaryColor,
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true, // Center align the title
-              title: Container(
-                margin: EdgeInsets.only(top: 5, left: screenWidth * 0.08),
-                width: screenWidth - 46,
-                height: 40,
-                color: Colors.white,
-                child: Center(
-                  child: TextField(
-                    onChanged: driversSearch,
-                    decoration: InputDecoration(
-                        hintText: 'Driver Name or Plate No.',
-                        border: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        prefixIcon: Container(
-                            margin: EdgeInsets.only(top: screenHeight * 0.01),
-                            child: Icon(Icons.search)),
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 15), // Adjust vertical padding as needed
-                        alignLabelWithHint: true,
-                        hintStyle: TextStyle(
-                          fontFamily: "Nunito",
-                          fontSize: 12,
-                          color: Colors.black,
-                          fontWeight: FontWeight.normal,
-                        )),
+            title: Container(
+              margin: EdgeInsets.only(right: screenWidth * 0.12),
+              width: double.infinity,
+              height: 40,
+              color: Colors.white,
+              child: Center(
+                child: TextField(
+                  onChanged: driversSearch,
+                  decoration: const InputDecoration(
+                    hintText: 'Driver Name or Plate No',
+                    border: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    prefixIcon: Icon(Icons.search),
                   ),
                 ),
               ),
@@ -218,10 +198,8 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        VehicleOnstock(
-                                            licenseNumber:
-                                                driver['licenseNumber'])),
+                                    builder: (BuildContext context) =>VehicleOnstock()
+                                      ),
                               );
                             }),
                             child: Padding(

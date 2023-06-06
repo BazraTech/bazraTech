@@ -119,7 +119,7 @@ class _SettripsState extends State<Settrips> {
         "vehicle": "${widget.platenumber}",
         "startLocation": "Addisa Ababa",
         "destination": "jimma",
-        "startDate": "2023-05-08",
+        "startDate": "2023-06-08",
         "tripType": "$trip"
       };
       var response = await http.post(Uri.parse(ApIConfig.creatTrip),
@@ -154,7 +154,7 @@ class _SettripsState extends State<Settrips> {
     List<String> items = ['SHORT', 'LONG', "Select trip"];
     print('$trip ');
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 229, 229, 229),
+        backgroundColor: kBackgroundColor,
         appBar: AppBar(
           toolbarHeight: 80,
           elevation: 0,
@@ -165,227 +165,249 @@ class _SettripsState extends State<Settrips> {
                 Navigator.pop(context);
               },
               child: Icon(
-                Icons.arrow_back_ios,
+                Icons.arrow_back,
                 color: Colors.white,
               ),
             ),
           ),
           backgroundColor: kPrimaryColor,
-          title: const Text(" Create Alert Page"),
+          title: const Text(" Set Trip"),
         ),
-        body: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    width: screenWidth,
-                    height: screenHeight * 0.75,
-                    margin: EdgeInsets.only(top: screenHeight * 0.04),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(6),
-                          topRight: Radius.circular(6),
-                          bottomLeft: Radius.circular(6),
-                          bottomRight: Radius.circular(6),
-                        )),
-                    child: Column(children: [
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(left: 20),
-                                  child: MaterialButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    color: Colors.white,
-
-                                    child: Container(
-                                      height: screenHeight * 0.08,
-                                      child: Icon(
-                                        Ionicons.car,
-                                        color: Colors.red,
-                                        size: 23,
-                                      ),
-                                    ),
-                                    padding: EdgeInsets.all(11),
-                                    minWidth: screenWidth * 0.004,
-                                    //use this class Circleborder() for circle shape.
-                                    shape: const CircleBorder(),
-                                  ),
-                                ),
-                                Container(
-                                    margin: EdgeInsets.only(
-                                        right: screenWidth * 0.1),
-                                    child: Text(
-                                      " Set trip",
-                                      style:TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 17,
-                                      ),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: screenWidth - 36,
-                                  child: DropdownButtonFormField<String>(
-                                    decoration:
-                                        ThemeHelper().textInputDecoration(),
-                                    value: selectedItem,
-                                    items: items
-                                        .map((item) => DropdownMenuItem<String>(
-                                            value: item,
-                                            child: Text(
-                                              item,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 15),
-                                            )))
-                                        .toList(),
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please Enter  Plate Number';
-                                      }
-                                    },
-                                    onChanged: (item) {
-                                      setState(() {
-                                        selectedItem = item;
-                                        tripType.text = selectedItem.toString();
-                                        trip = tripType.text;
-                                      });
-                                    },
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: screenWidth,
-                              child: TextFormField(
-                                decoration: ThemeHelper().textInputDecoration(
-                                  'Driver Name',
-                                  '${widget.drivername} ',
-                                ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  width: screenWidth,
+                  height: screenHeight * 0.8,
+                  margin: EdgeInsets.only(top: screenHeight * 0.04),
+                  child: Column(children: [
+                    Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            margin: EdgeInsets.only(left: screenWidth * 0.04),
+                            child: Text(
+                              "Select trip",
+                              style: TextStyle(
+                                fontFamily: "Nunito",
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                                width: screenWidth,
-                                child: TextField(
-                                  decoration: ThemeHelper().textInputDecoration(
-                                    'Plate number',
-                                    '${widget.platenumber}',
-                                  ),
-                                )),
-                          ),
-                        ],
-                      ),
-                      SizedBox(),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                                width: screenWidth,
-                                child: TextField(
-                                  controller: dateStart,
-                                  onTap: () async {
-                                    DateTime? pickDate = await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(1980),
-                                        lastDate: DateTime(2101));
-                                    if (pickDate != null) {
-                                      dateStart.text = DateFormat('yyyy-MM-dd')
-                                          .format(pickDate);
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: screenWidth - 36,
+                                child: DropdownButtonFormField<String>(
+                                  decoration:
+                                      ThemeHelper().textInputDecoration(),
+                                  value: selectedItem,
+                                  items: items
+                                      .map((item) => DropdownMenuItem<String>(
+                                          value: item,
+                                          child: Text(
+                                            item,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 15),
+                                          )))
+                                      .toList(),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please Enter  Plate Number';
                                     }
-                                    return null;
                                   },
-                                  decoration: InputDecoration(
-                                    hintText: 'Choose Start Date',
-                                    suffixIcon: Icon(
-                                      Icons.calendar_month,
-                                      color: Colors.black,
-                                    ),
-                                    hintStyle: const TextStyle(
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 15),
-                                    filled: true,
-                                    contentPadding:
-                                        EdgeInsets.fromLTRB(20, 10, 20, 10),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          width: 1, color: Colors.black45),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        width: 1,
-                                        color: Colors.grey.shade400,
-                                      ),
-                                      borderRadius: BorderRadius.circular(5.0),
-                                    ),
-                                    fillColor: Colors.white,
-                                  ),
-                                )),
+                                  onChanged: (item) {
+                                    setState(() {
+                                      selectedItem = item;
+                                      tripType.text = selectedItem.toString();
+                                      trip = tripType.text;
+                                    });
+                                  },
+                                ),
+                              )
+                            ],
                           ),
-                        ],
-                      ),
-                      placesAutoCompleteTextField(),
-                      endAutoCompleteTextField(),
-                      Container(
-                        margin:
-                            EdgeInsets.fromLTRB(screenWidth * 0.4, 20, 0, 0),
-                        width: screenWidth * 0.4,
-                        height: screenHeight * 0.05,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setTrips();
-                          },
-                          child: const Text(
-                            "Set Trip",
-                            style: TextStyle(
-                                color: Color.fromRGBO(255, 255, 255, 1),
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(left: screenWidth * 0.04),
+                        child: Text(
+                          "Driver name",
+                          style: TextStyle(
+                            fontFamily: "Nunito",
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
                           ),
-                          style: ThemeHelper().buttonStyle(),
                         ),
                       ),
-                    ]),
-                  ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: screenWidth,
+                        child: TextFormField(
+                          enabled: false,
+                          controller: TextEditingController(
+                              text: "${widget.drivername} "),
+                          decoration: ThemeHelper().textInputDecoration(),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(left: screenWidth * 0.04),
+                        child: Text(
+                          "Plate Number",
+                          style: TextStyle(
+                            fontFamily: "Nunito",
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                          width: screenWidth,
+                          child: TextField(
+                            enabled: false,
+                            controller: TextEditingController(
+                                text: "${widget.platenumber}"),
+                            decoration: ThemeHelper().textInputDecoration(),
+                          )),
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(left: screenWidth * 0.04),
+                        child: Text(
+                          "Start Date",
+                          style: TextStyle(
+                            fontFamily: "Nunito",
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                          width: screenWidth,
+                          child: TextField(
+                            controller: dateStart,
+                            onTap: () async {
+                              DateTime? pickDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1980),
+                                  lastDate: DateTime(2101));
+                              if (pickDate != null) {
+                                dateStart.text =
+                                    DateFormat('yyyy-MM-dd').format(pickDate);
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Choose Start Date',
+                              suffixIcon: Icon(
+                                Icons.calendar_month,
+                                color: Colors.black,
+                              ),
+                              hintStyle: const TextStyle(
+                                  fontWeight: FontWeight.w300, fontSize: 15),
+                              filled: true,
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(20, 10, 20, 10),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(width: 1, color: Colors.black45),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                  color: Colors.grey.shade400,
+                                ),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              fillColor: Colors.white,
+                            ),
+                          )),
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(left: screenWidth * 0.04),
+                        child: Text(
+                          "Start Locations",
+                          style: TextStyle(
+                            fontFamily: "Nunito",
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        child: placesAutoCompleteTextField(),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(left: screenWidth * 0.04),
+                        child: Text(
+                          "End Location",
+                          style: TextStyle(
+                            fontFamily: "Nunito",
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    endAutoCompleteTextField(),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(screenWidth * 0.53, 20, 0, 0),
+                      width: screenWidth * 0.4,
+                      height: screenHeight * 0.05,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setTrips();
+                        },
+                        child: const Text(
+                          "Set Trip",
+                          style: TextStyle(
+                              color: Color.fromRGBO(255, 255, 255, 1),
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        style: ThemeHelper().buttonStyle(),
+                      ),
+                    ),
+                  ]),
                 ),
-              ],
-            )
-          ],
+              ),
+            ],
+          ),
         ));
   }
 

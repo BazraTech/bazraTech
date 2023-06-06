@@ -20,7 +20,7 @@ class communicate_screen extends StatelessWidget {
       backgroundColor: Color.fromRGBO(214, 214, 214, 1),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color.fromRGBO(168, 123, 6, 1),
+        backgroundColor: kPrimaryColor,
         title: Text(
           "Driver page",
           style: TextStyle(color: Colors.white),
@@ -92,7 +92,7 @@ class communicate_screen extends StatelessWidget {
                               fontFamily: "Nunito",
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromRGBO(168, 123, 6, 1),
+                              color: Colors.black,
                             ),
                           )),
                     ),
@@ -156,7 +156,7 @@ class communicate_screen extends StatelessWidget {
                               fontFamily: "Nunito",
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromRGBO(168, 123, 6, 1),
+                              color: Colors.black,
                             ),
                           )),
                     ),
@@ -222,7 +222,7 @@ class communicate_screen extends StatelessWidget {
                                 "Register driver",
                                 style: TextStyle(
                                   fontFamily: "Nunito",
-                                  color: Color.fromRGBO(168, 123, 6, 1),
+                                  color: Colors.black,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                 ),

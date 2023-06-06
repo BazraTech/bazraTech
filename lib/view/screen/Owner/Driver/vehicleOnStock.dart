@@ -8,21 +8,15 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:google_places_flutter/model/place_details.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import '../../../../../../Model/communicationList.dart';
-import '../../../../Model/ApiConfig.dart';
+
 import '../../../../const/constant.dart';
-import '../../../../widget/SearchPage.dart';
-import 'UnassignedDrivers.dart';
+
 import 'assignDriver.dart';
 
+// ignore: must_be_immutable
 class VehicleOnstock extends StatefulWidget {
   String? licenseNumber;
-  VehicleOnstock({
-    super.key,
-    this.licenseNumber,
-  });
+  VehicleOnstock( {super.key,  this.licenseNumber});
   @override
   State<VehicleOnstock> createState() => _VehicleOnstockState();
 }
@@ -110,58 +104,31 @@ class _VehicleOnstockState extends State<VehicleOnstock> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            leadingWidth: 24,
-            toolbarHeight: 80,
-            centerTitle: true,
             elevation: 0,
-            leading: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Container(
-                margin: EdgeInsets.only(top: 5),
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (BuildContext context) =>
-                    //           UnassignedDrivers()),
-                    // );
-                  },
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.white,
-                  ),
-                ),
+            leading: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
               ),
             ),
             backgroundColor: kPrimaryColor,
-            title: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: screenWidth,
-                height: 40,
-                color: Colors.white,
-                child: Center(
-                  child: TextField(
-                    onChanged: vehiclesSearch,
-                    decoration: InputDecoration(
-                      hintText: 'Driver Name or Plate No.',
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 15), // Adjust vertical padding as needed
-                      alignLabelWithHint: true,
-                      hintStyle: TextStyle(
-                        fontFamily: "Nunito",
-                        fontSize: 12,
-                        color: Colors.black,
-                        fontWeight: FontWeight.normal,
-                      ),
-                      border: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      prefixIcon: Icon(Icons.search),
-                    ),
+            title: Container(
+              margin: EdgeInsets.only(right: screenWidth * 0.12),
+              width: double.infinity,
+              height: 40,
+              color: Colors.white,
+              child: Center(
+                child: TextField(
+                  decoration: const InputDecoration(
+                    hintText: 'Driver Name or Plate No',
+                    border: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    prefixIcon: Icon(Icons.search),
                   ),
                 ),
               ),

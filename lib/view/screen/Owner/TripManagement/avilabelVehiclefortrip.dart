@@ -116,7 +116,7 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
               Navigator.pop(context);
             },
             child: const Icon(
-              Icons.arrow_back_ios,
+              Icons.arrow_back,
               color: Colors.white,
             ),
           ),
