@@ -47,6 +47,7 @@ import Permit from './components/Pages/Drivers/Permit';
 import SignIn from './components/Pages/Sign in page/SignIn';
 import AssigneDriver from './components/Pages/Total_number_of_vehicle/AssigneDriver';
 import Vehicle_Detail from './components/Pages/Users/Vehicle_Table';
+import Market_Progress from './components/Pages/Marketing/Market_Progress'
 
 class App extends Component{
   render(){
@@ -64,6 +65,7 @@ class App extends Component{
         <Route path="/Total_number_of_vehicle" element={<Total_number_of_vehile />}></Route>
         <Route path="/tracking" element={<Tracking />}></Route>
         <Route path="/markating" element={<Marketing />}></Route>
+        <Route path="/Market_Progress/:id" element={<Market_Progress/>}></Route>
         <Route path="Post_market/:id" element={<Post_market/>}></Route>
         <Route path="/off_road" element={<Off_road />}></Route>
         <Route path="/vehicle_detail" element={<Vehicle_detail />}></Route>

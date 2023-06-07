@@ -125,11 +125,18 @@ export default function () {
         if (data == 'Update_CargoType') {
             Update_CargoType(id, value);
         }
-        ///update Avatar
+        //update Avatar
         if (data == 'Update_Avatar') {
             Update_Avatar_logo(id, value);
         }
-        
+        // Update_Business_Type
+        if (data == 'Update_Business_Type') {
+            Update_Business_Type(id, value);
+        }
+        //Update_Business_Sector
+        if (data == 'Update_Business_Sector') {
+            Update_Business_Sector(id, value);
+        }
     };
     /******************Update Avatar and cargo****** */
     const Update_Avatar_logo = async (avatar, logo) => {
@@ -208,7 +215,63 @@ export default function () {
             console.error(error);
         }
     }
+//Update_Business_Type
+async function  Update_Business_Type(id, BusinessType) {
 
+    let item =
+    {
+        businessType: BusinessType, 
+    };
+    const options = {
+        method: "PUT",
+        headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
+        body: JSON.stringify(item),
+    };
+    const url = `http://64.226.104.50:9090/Api/Admin/BusinessType/Update/${id}`;
+    try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        localStorage.setItem("message", JSON.stringify(result["message"]));
+        const mess = localStorage.getItem("message");
+        if (response.ok) {
+            swal("Successful", `${mess}`, "success", { buttons: false, timer: 2000, });
+            setPop(false);
+        } else {
+            swal(`Failed To Register ${mess}`, "Error", "error");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+//  Update_Business_Sector
+async function  Update_Business_Sector(id, businessSector) {
+
+    let item =
+    {
+        businessSector: businessSector, 
+    };
+    const options = {
+        method: "PUT",
+        headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
+        body: JSON.stringify(item),
+    };
+    const url = `http://64.226.104.50:9090/Api/Admin/BusinessSector/Update/${id}`;
+    try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        localStorage.setItem("message", JSON.stringify(result["message"]));
+        const mess = localStorage.getItem("message");
+        if (response.ok) {
+            swal("Successful", `${mess}`, "success", { buttons: false, timer: 2000, });
+            setPop(false);
+        } else {
+            swal(`Failed To Register ${mess}`, "Error", "error");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+//Role
     async function Update_Role(id, rolename) {
 
         let item =
@@ -589,6 +652,29 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource10(data.triptypes)
+                setLoading(false)
+            })
+    }, [])
+    // BusinessSector and
+    const BusinessSectorurl = "http://64.226.104.50:9090/Api/Admin/All/BusinessSectors";
+    const [BusinessSector, setBusinessSector] = useState([])
+    useEffect(() => {
+        setLoading(true)
+        fetch(BusinessSectorurl, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setBusinessSector(data.businessSectors)
+                setLoading(false)
+            })
+    }, [])
+    const BusinessTypeurl = "http://64.226.104.50:9090/Api/Admin/All/BusinessTypes";
+    const [BusinessType, setBusinessType] = useState([])
+    useEffect(() => {
+        setLoading(true)
+        fetch(BusinessTypeurl, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setBusinessType(data.businessSectors)
                 setLoading(false)
             })
     }, [])
@@ -1108,6 +1194,99 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                                                         <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
                                                             onClick={() => {
                                                                 handleClickEdit21(item.id, item.sectorName, "Update_CompanySector", "Edit Company Sector")
+                                                            }}></FaEdit>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={() => {handleClickDelete(item.id, "Company_Sector")}}></MdDeleteForever>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                </div> 
+                {/* ****** Business Type and Business Sector********** */}
+
+                <div className='outer_setting'>
+                    <div className='setting_header'>Business Type</div>
+                    <PopUp title="Add_business_type" />
+                    <div>
+                        {Loading
+                            ? <p className='loading'><SyncLoader
+                                color={color}
+                                Left={margin}
+                                loading={Loading}
+                                size={10}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            /></p>
+                            :
+                            <div className="outer_vehicle_table7" id='myTable'>
+                                <table class="vehicle_table7" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Business Type</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {BusinessType && BusinessType.map(item => {
+                                            return <tr className='active_row'>
+                                                <td>{item.id}</td>
+                                                <td>{item.businessType}</td>
+                                                <td>
+                                                    <p className='notification_actions'>
+                                                        <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
+                                                            onClick={() => {
+                                                                handleClickEdit21(item.id, item.businessType, "Update_Business_Type", "Edit Business Type")
+                                                            }}></FaEdit>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={() => {handleClickDelete(item.id, "Company_Type")}}></MdDeleteForever>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div className='outer_setting'>
+                    <div title='Business Sector' className='setting_header'>Business Sector</div>
+                    <PopUp title="Add_business_sector" />
+                    <div>
+                        {Loading
+                            ? <p className='loading'><SyncLoader
+                                color={color}
+                                Left={margin}
+                                loading={Loading}
+                                size={10}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            /></p>
+                            :
+                            <div className="outer_vehicle_table7" id='myTable'>
+                                <table class="vehicle_table7" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Business Sector</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {BusinessSector && BusinessSector.map(item => {
+                                            return <tr className='active_row'>
+                                                <td title='Company Id'>{item.id}</td>
+                                                <td title='Sector Name'>{item.businessSector}</td>
+                                                <td>
+                                                    <p className='notification_actions'>
+                                                        <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
+                                                            onClick={() => {
+                                                                handleClickEdit21(item.id, item.businessSector, "Update_Business_Sector", "Edit Business Sector")
                                                             }}></FaEdit>
                                                         <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={() => {handleClickDelete(item.id, "Company_Sector")}}></MdDeleteForever>
                                                     </p>
