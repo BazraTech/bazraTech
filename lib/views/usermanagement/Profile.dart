@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
-import '../shared/constant.dart';
-import '../shared/storage_hepler.dart';
+import '../../shared/constant.dart';
+import '../../shared/storage_hepler.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -169,7 +169,7 @@ class _ProfileState extends State<Profile> {
                                         ),
                                       ),
                                       SizedBox(
-                                        width: screenWidth * 0.07,
+                                        width: screenWidth * 0.05,
                                       ),
                                       Icon(Icons.keyboard_arrow_right)
                                     ],
@@ -255,7 +255,7 @@ class _ProfileState extends State<Profile> {
                           Container(
                               margin: EdgeInsets.only(left: 10),
                               width: screenWidth * 0.2,
-                              height: screenHeight * 0.06,
+                              height: screenHeight * 0.03,
                               child: Text(
                                 "Gender",
                                 style: TextStyle(

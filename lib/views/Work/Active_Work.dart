@@ -114,7 +114,7 @@ class _List_VehiclesState extends State<List_Vehicles> {
                     delegate: SliverChildListDelegate(
                       [
                         Container(
-                          height: screenHeight * 0.15,
+                          height: screenHeight * 0.17,
                           child: Card(
                             child: Container(
                               decoration: BoxDecoration(

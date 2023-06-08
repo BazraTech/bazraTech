@@ -203,11 +203,11 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                             child: SizedBox(
                                 height: screenHeight * 0.12,
                                 child: Icon(Icons.local_shipping_rounded,
-                                    size: 70, color: kPrimaryColor)),
+                                    size: 60, color: kPrimaryColor)),
                           ),
                           Positioned(
-                              top: 72,
-                              bottom: 8,
+                              top: 60,
+                              bottom: 5,
                               child: Column(
                                 children: [
                                   Container(

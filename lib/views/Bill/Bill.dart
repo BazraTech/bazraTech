@@ -104,7 +104,7 @@ class _BillStatusState extends State<BillStatus> {
                               ))
                         ],
                       ),
-                      height: screenHeight * 0.17,
+                      height: screenHeight * 0.2,
                       child: ListTile(
                         title: Container(
                           margin: EdgeInsets.only(left: 5),
@@ -135,7 +135,7 @@ class _BillStatusState extends State<BillStatus> {
                                       ),
                                     ),
                                     Container(
-                                      width: screenWidth * 0.25,
+                                      width: screenWidth * 0.2,
                                       child: const Stack(
                                         alignment: Alignment.center,
                                         children: [

@@ -105,7 +105,7 @@ class _NotificationsState extends State<Notifications> {
                 children: [
                   Container(
                     padding: const EdgeInsets.only(left: 10, right: 10),
-                    height: screenHeight * 0.1,
+                    height: screenHeight * 0.13,
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(

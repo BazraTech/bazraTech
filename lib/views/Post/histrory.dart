@@ -216,7 +216,7 @@ class _CargoListViewState extends State {
                                 : _allCargos[index];
                             return ListTile(
                               title: Container(
-                                height: screenHeight * 0.2,
+                                height: screenHeight * 0.22,
                                 child: GestureDetector(
                                   onTap: () {
                                     Navigator.push(
@@ -289,7 +289,7 @@ class _CargoListViewState extends State {
                                                       ),
                                                     ),
                                                     Container(
-                                                      width: screenWidth * 0.25,
+                                                      width: screenWidth * 0.15,
                                                       child: const Stack(
                                                         alignment:
                                                             Alignment.center,

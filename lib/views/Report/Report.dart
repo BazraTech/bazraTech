@@ -97,7 +97,7 @@ class _ReportState extends State<Report> {
                               ))
                         ],
                       ),
-                      height: screenHeight * 0.17,
+                      height: screenHeight * 0.2,
                       child: ListTile(
                         title: Container(
                           margin: EdgeInsets.only(left: 5),
@@ -194,7 +194,6 @@ class _ReportState extends State<Report> {
                                   ),
                                 ),
                               ),
-                             
                             ],
                           ),
                         ),

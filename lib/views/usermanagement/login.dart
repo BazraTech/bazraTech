@@ -90,11 +90,11 @@ class _Cargo_loginState extends State<Cargo_login> {
           var jsonResponse = json.decode(response.body);
           //Get the token from the response
           String? newToken = jsonResponse['jwt'];
-        var name = jsonResponse['user']['name'];
-      var phoneNumber = jsonResponse['user']['PhoneNumber'];
-             SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('name', name);
-      await prefs.setString('phoneNumber', phoneNumber);
+          var name = jsonResponse['user']['name'];
+          var phoneNumber = jsonResponse['user']['PhoneNumber'];
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('name', name);
+          await prefs.setString('phoneNumber', phoneNumber);
           // Save the token to storage
           if (newToken != null) {
             await storageHelper.setToken(newToken);
@@ -286,7 +286,7 @@ class _Cargo_loginState extends State<Cargo_login> {
                 child: Row(
                   children: [
                     Container(
-                        margin: EdgeInsets.only(left: 60, right: 10),
+                        margin: EdgeInsets.only(left: 40, right: 10),
                         child: const Text(
                           "Don't have an account?",
                           style: TextStyle(

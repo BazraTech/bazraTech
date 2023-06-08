@@ -96,7 +96,7 @@ class _Alert_TypeState extends State<Alert_Type> {
           Column(
               children: bill.map((alert) {
             return Container(
-              height: screenHeight * 0.1,
+              height: screenHeight * 0.2,
               padding: EdgeInsets.only(left: 10, right: 10),
               child: Card(
                 elevation: 2,
