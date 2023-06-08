@@ -18,6 +18,7 @@ import '../../../../Theme/customAppBar.dart';
 import '../../../../Model/ApiConfig.dart';
 import '../../../../const/constant.dart';
 import 'assignDriver.dart';
+import 'driversPage.dart';
 
 class DriversFormOwner extends StatefulWidget {
   const DriversFormOwner({super.key});
@@ -52,6 +53,7 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
   List<String> gendersatus = ["Male", "Female", "Select Gender"];
   final RegExp nameRegex = RegExp(r'^[A-Z][a-zA-Z\s]*$');
   String? selectedItem = "Select Gender";
+  bool isLoading = false;
 
   Future<void> _showMyDialog() async {
     return showDialog<void>(
@@ -131,23 +133,58 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
     formData.files.add(
       await http.MultipartFile.fromPath('driverPic', driverFile),
     );
+    setState(() {
+      isLoading = true;
+    });
 
     final response = await formData.send();
+    var responseData = await response.stream.bytesToString();
+    var decodedResponse = json.decode(responseData);
 
     if (response.statusCode == 200) {
-      _showMyDialog();
+      String alertContent = decodedResponse["message"];
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text('API Response'),
+          content: Text(alertContent),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => communicate_screen()));
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
     } else {
-      print(response.statusCode.toString());
+      String alertContent = decodedResponse["message"];
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text(''),
+          content: Text(alertContent),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
       // throw Exception(
       //     'Failed load data with status code ${response.statusCode}');
     }
   }
 
- 
   void initState() {
     super.initState();
-
-   
   }
 
   @override
@@ -174,409 +211,374 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
     print("${driverName}");
 
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: kPrimaryColor,
+        title: Text(
+          "Driver page",
+          style: TextStyle(color: Colors.white),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+              color: Colors.white), // Set the color of the icon
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: SingleChildScrollView(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: Form(
-            key: _formKey,
-            child: Container(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      color: kPrimaryColor,
-                      padding: EdgeInsets.zero,
-                      child: Row(
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                  height: screenHeight * 0.08,
-                                  width: screenWidth * 0.14,
-                                  margin:
-                                      EdgeInsets.only(top: screenHeight * 0.04),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    icon: Icon(
-                                      Ionicons.chevron_back,
-                                      size: 23,
-                                      color: Colors.white,
-                                    ),
-                                  ))),
-                          Container(
-                              margin: EdgeInsets.only(
-                                  left: screenHeight * 0.04,
-                                  top: screenHeight * 0.04),
-                              child: Text(
-                                "Registation From",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ))
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: screenWidth - 32,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 15,
+        child: Form(
+          key: _formKey,
+          child: Container(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    width: screenWidth - 32,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 15,
+                        ),
+                        TextFormField(
+                          cursorColor: Colors.black,
+                          keyboardType: TextInputType.text,
+                          controller: driverName,
+                          decoration: ThemeHelper().textInputDecoration(
+                            "Driver Name",
                           ),
-                          TextFormField(
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your name';
+                            }
+                            if (!nameRegex.hasMatch(value)) {
+                              return 'Name should start with a capital letter';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            _name = value;
+                          },
+                          style: TextStyle(fontSize: 15, color: Colors.black),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          child: TextFormField(
                             cursorColor: Colors.black,
                             keyboardType: TextInputType.text,
-                            controller: driverName,
-                            decoration: ThemeHelper().textInputDecoration(
-                              "Driver Name",
-                            ),
+                            controller: LicenseGrade,
+                            decoration: ThemeHelper()
+                                .textInputDecoration("License Grade"),
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Please enter your name';
-                              }
-                              if (!nameRegex.hasMatch(value)) {
-                                return 'Name should start with a capital letter';
+                                return 'Please Enter Your License Grade';
                               }
                               return null;
                             },
-                            onSaved: (value) {
-                              _name = value;
+                            style: TextStyle(fontSize: 15, color: Colors.black),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          child: TextFormField(
+                            cursorColor: Colors.black,
+                            cursorHeight: 25,
+                            keyboardType: TextInputType.text,
+                            controller: ownerPhone,
+                            decoration: ThemeHelper()
+                                .textInputDecoration("Owner phone "),
+                            validator: (value) {
+                              if (value?.length != 10) {
+                                return 'Please Enter  owner phone';
+                                return null;
+                              }
                             },
                             style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          SizedBox(
-                            child: TextFormField(
-                              cursorColor: Colors.black,
-                              keyboardType: TextInputType.text,
-                              controller: LicenseGrade,
-                              decoration: ThemeHelper()
-                                  .textInputDecoration("License Grade"),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          width: screenWidth - 16,
+                          child: DropdownButtonFormField<String>(
+                              decoration: ThemeHelper().textInputDecoration(),
+                              value: selectedItem,
+                              items: gendersatus
+                                  .map((item) => DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 15),
+                                      )))
+                                  .toList(),
                               validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please Enter Your License Grade';
+                                if (value == null) {
+                                  return 'Please select an option';
                                 }
                                 return null;
                               },
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          SizedBox(
-                            child: TextFormField(
-                              cursorColor: Colors.black,
-                              cursorHeight: 25,
-                              keyboardType: TextInputType.text,
-                              controller: ownerPhone,
-                              decoration: ThemeHelper()
-                                  .textInputDecoration("Owner phone "),
-                              validator: (value) {
-                                if (value?.length != 10) {
-                                  return 'Please Enter  owner phone';
-                                  return null;
-                                }
-                              },
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            width: screenWidth - 16,
-                            child: DropdownButtonFormField<String>(
-                                decoration: ThemeHelper().textInputDecoration(),
-                                value: selectedItem,
-                                items: gendersatus
-                                    .map((item) => DropdownMenuItem<String>(
-                                        value: item,
-                                        child: Text(
-                                          item,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w300,
-                                              fontSize: 15),
-                                        )))
-                                    .toList(),
-                                validator: (value) {
-                                  if (value == null) {
-                                    return 'Please select an option';
-                                  }
-                                  return null;
-                                },
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    selectedItem = newValue;
-                                  });
-
-                                  newValue:
-                                  selectedItem;
-                                }),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          SizedBox(
-                            child: TextFormField(
-                              cursorColor: Colors.black,
-                              cursorHeight: 25,
-                              keyboardType: TextInputType.text,
-                              controller: dateBirth,
-                              decoration: ThemeHelper()
-                                  .textInputDecoration('Date Of Birth'),
-                              onTap: () async {
-                                DateTime? pickDate = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(1980),
-                                    lastDate: DateTime(2101));
-                                if (pickDate != null) {
-                                  dateBirth.text =
-                                      DateFormat('yyyy-MM-dd').format(pickDate);
-                                }
-                                return null;
-                              },
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please Enter Your Date Of Birth';
-                                }
-                                return null;
-                              },
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                          ),
-
-                          SizedBox(
-                            height: 15,
-                          ),
-                          SizedBox(
-                            child: TextFormField(
-                              cursorColor: Colors.black,
-                              cursorHeight: 25,
-                              keyboardType: TextInputType.phone,
-                              controller: driverPhone,
-                              decoration:
-                                  ThemeHelper().textInputDecoration('Phone'),
-                              validator: (value) {
-                                if (value?.length != 10) {
-                                  return 'Please Enter Your Driver Phone Number Correctly';
-                                }
-                              },
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          SizedBox(
-                            child: TextFormField(
-                              cursorColor: Colors.black,
-                              cursorHeight: 25,
-                              keyboardType: TextInputType.text,
-                              controller: Experience,
-                              decoration: ThemeHelper()
-                                  .textInputDecoration('Exprience'),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please Enter Your License Number';
-                                }
-                                return null;
-                              },
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          SizedBox(
-                            child: TextFormField(
-                              cursorColor: Colors.black,
-                              cursorHeight: 25,
-                              keyboardType: TextInputType.text,
-                              controller: LicenseNumber,
-                              decoration: ThemeHelper()
-                                  .textInputDecoration('License Number'),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please Enter Your License Number';
-                                }
-                                return null;
-                              },
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          SizedBox(
-                            child: TextFormField(
-                              cursorColor: Colors.black,
-                              cursorHeight: 25,
-                              keyboardType: TextInputType.text,
-                              controller: dateIssue,
-                              onTap: () async {
-                                DateTime? pickDate = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(1980),
-                                    lastDate: DateTime(2101));
-                                if (pickDate != null) {
-                                  dateIssue.text =
-                                      DateFormat('yyyy-MM-dd').format(pickDate);
-                                }
-                                return null;
-                              },
-                              decoration: ThemeHelper()
-                                  .textInputDecoration("Issue Date"),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please Enter Issue Date';
-                                }
-                                return null;
-                              },
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-
-                          SizedBox(
-                            child: TextFormField(
-                              cursorColor: Colors.black,
-                              cursorHeight: 25,
-                              keyboardType: TextInputType.text,
-                              controller: dateExpire,
-                              onTap: () async {
-                                DateTime? pickDate = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(1980),
-                                    lastDate: DateTime(2101));
-                                if (pickDate != null) {
-                                  dateExpire.text =
-                                      DateFormat('yyyy-MM-dd').format(pickDate);
-                                }
-                                return null;
-                              },
-                              decoration: ThemeHelper()
-                                  .textInputDecoration("Expire Date"),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please Enter Your Expire Date';
-                                }
-                                return null;
-                              },
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          SizedBox(
-                            child: TextFormField(
-                              cursorColor: Colors.black,
-                              cursorHeight: 25,
-                              controller: licensePic,
-                              keyboardType: TextInputType.url,
-                              onTap: () async {
-                                final XFile? image = await ImagePicker()
-                                    .pickImage(source: ImageSource.gallery);
-
+                              onChanged: (String? newValue) {
                                 setState(() {
-                                  licensePic.text = File(image!.path).path;
+                                  selectedItem = newValue;
                                 });
-                                print(licensePic.text);
-                              },
-                              decoration: ThemeHelper()
-                                  .textInputDecoration("Driver License"),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please Upload Your Driver License ';
-                                }
-                                return null;
-                              },
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          SizedBox(
-                            child: TextFormField(
-                              cursorColor: Colors.black,
-                              cursorHeight: 25,
-                              controller: driverPic,
-                              keyboardType: TextInputType.url,
-                              onTap: () async {
-                                final XFile? image = await ImagePicker()
-                                    .pickImage(source: ImageSource.gallery);
 
-                                setState(() {
-                                  driverPic.text = File(image!.path).path;
-                                });
-                                print(driverPic.text);
-                              },
-                              decoration: ThemeHelper()
-                                  .textInputDecoration('Driver picture'),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please Upload Your Driver picture ';
-                                }
-                                return null;
-                              },
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.black),
-                            ),
+                                newValue:
+                                selectedItem;
+                              }),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          child: TextFormField(
+                            cursorColor: Colors.black,
+                            cursorHeight: 25,
+                            keyboardType: TextInputType.text,
+                            controller: dateBirth,
+                            decoration: ThemeHelper()
+                                .textInputDecoration('Date Of Birth'),
+                            onTap: () async {
+                              DateTime? pickDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1980),
+                                  lastDate: DateTime(2101));
+                              if (pickDate != null) {
+                                dateBirth.text =
+                                    DateFormat('yyyy-MM-dd').format(pickDate);
+                              }
+                              return null;
+                            },
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please Enter Your Date Of Birth';
+                              }
+                              return null;
+                            },
+                            style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
-                          SizedBox(
-                            height: 15,
+                        ),
+
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          child: TextFormField(
+                            cursorColor: Colors.black,
+                            cursorHeight: 25,
+                            keyboardType: TextInputType.phone,
+                            controller: driverPhone,
+                            decoration:
+                                ThemeHelper().textInputDecoration('Phone'),
+                            validator: (value) {
+                              if (value?.length != 10) {
+                                return 'Please Enter Your Driver Phone Number Correctly';
+                              }
+                            },
+                            style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
-                          //full name
-                          Container(
-                            margin: EdgeInsets.only(top: 15.0),
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  registerDriver(
-                                      licensePic.text, driverPic.text);
-                                }
-                              },
-                              child: Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.06,
-                                child: Center(
-                                  child: const Text(
-                                    " SAVE",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20),
-                                  ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          child: TextFormField(
+                            cursorColor: Colors.black,
+                            cursorHeight: 25,
+                            keyboardType: TextInputType.text,
+                            controller: Experience,
+                            decoration:
+                                ThemeHelper().textInputDecoration('Exprience'),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please Enter Your License Number';
+                              }
+                              return null;
+                            },
+                            style: TextStyle(fontSize: 15, color: Colors.black),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          child: TextFormField(
+                            cursorColor: Colors.black,
+                            cursorHeight: 25,
+                            keyboardType: TextInputType.text,
+                            controller: LicenseNumber,
+                            decoration: ThemeHelper()
+                                .textInputDecoration('License Number'),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please Enter Your License Number';
+                              }
+                              return null;
+                            },
+                            style: TextStyle(fontSize: 15, color: Colors.black),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                          child: TextFormField(
+                            cursorColor: Colors.black,
+                            cursorHeight: 25,
+                            keyboardType: TextInputType.text,
+                            controller: dateIssue,
+                            onTap: () async {
+                              DateTime? pickDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1980),
+                                  lastDate: DateTime(2101));
+                              if (pickDate != null) {
+                                dateIssue.text =
+                                    DateFormat('yyyy-MM-dd').format(pickDate);
+                              }
+                              return null;
+                            },
+                            decoration:
+                                ThemeHelper().textInputDecoration("Issue Date"),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please Enter Issue Date';
+                              }
+                              return null;
+                            },
+                            style: TextStyle(fontSize: 15, color: Colors.black),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+
+                        SizedBox(
+                          child: TextFormField(
+                            cursorColor: Colors.black,
+                            cursorHeight: 25,
+                            keyboardType: TextInputType.text,
+                            controller: dateExpire,
+                            onTap: () async {
+                              DateTime? pickDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1980),
+                                  lastDate: DateTime(2101));
+                              if (pickDate != null) {
+                                dateExpire.text =
+                                    DateFormat('yyyy-MM-dd').format(pickDate);
+                              }
+                              return null;
+                            },
+                            decoration: ThemeHelper()
+                                .textInputDecoration("Expire Date"),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please Enter Your Expire Date';
+                              }
+                              return null;
+                            },
+                            style: TextStyle(fontSize: 15, color: Colors.black),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          child: TextFormField(
+                            cursorColor: Colors.black,
+                            cursorHeight: 25,
+                            controller: licensePic,
+                            keyboardType: TextInputType.url,
+                            onTap: () async {
+                              final XFile? image = await ImagePicker()
+                                  .pickImage(source: ImageSource.gallery);
+
+                              setState(() {
+                                licensePic.text = File(image!.path).path;
+                              });
+                              print(licensePic.text);
+                            },
+                            decoration: ThemeHelper()
+                                .textInputDecoration("Driver License"),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please Upload Your Driver License ';
+                              }
+                              return null;
+                            },
+                            style: TextStyle(fontSize: 15, color: Colors.black),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          child: TextFormField(
+                            cursorColor: Colors.black,
+                            cursorHeight: 25,
+                            controller: driverPic,
+                            keyboardType: TextInputType.url,
+                            onTap: () async {
+                              final XFile? image = await ImagePicker()
+                                  .pickImage(source: ImageSource.gallery);
+
+                              setState(() {
+                                driverPic.text = File(image!.path).path;
+                              });
+                              print(driverPic.text);
+                            },
+                            decoration: ThemeHelper()
+                                .textInputDecoration('Driver picture'),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please Upload Your Driver picture ';
+                              }
+                              return null;
+                            },
+                            style: TextStyle(fontSize: 15, color: Colors.black),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        //full name
+                        Container(
+                          margin: EdgeInsets.only(top: 15.0),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                registerDriver(licensePic.text, driverPic.text);
+                              }
+                            },
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.06,
+                              child: Center(
+                                child: const Text(
+                                  " SAVE",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
                                 ),
                               ),
-                              style: ThemeHelper().buttonStyle(),
                             ),
+                            style: ThemeHelper().buttonStyle(),
                           ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ),
             ),
           ),

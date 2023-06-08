@@ -28,31 +28,34 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
   List findVehicle = [];
   bool _isLoading = true;
   vehicleFetchbystatus() async {
-    var client = http.Client();
-    final storage = new FlutterSecureStorage();
-    var token = await storage.read(key: 'jwt');
-    Map<String, String> requestHeaders = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-    var response = await http.get(
-        Uri.parse(
-            'http://64.226.104.50:9090/Api/Vehicle/Owner/Status/${widget.route}'),
-        headers: requestHeaders);
-    if (response.statusCode == 200) {
-      var mapResponse = json.decode(response.body) as Map<String, dynamic>;
+    try {
+      var client = http.Client();
+      final storage = new FlutterSecureStorage();
+      var token = await storage.read(key: 'jwt');
+      Map<String, String> requestHeaders = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      var response = await http.get(
+          Uri.parse(
+              'http://64.226.104.50:9090/Api/Vehicle/Owner/Status/${widget.route}'),
+          headers: requestHeaders);
+      if (response.statusCode == 200) {
+        var mapResponse = json.decode(response.body) as Map<String, dynamic>;
 
-      vehicleStatusList = mapResponse['${widget.onroute}'];
-      print(vehicleStatusList);
-      setState(() {
-        _isLoading = false;
-        vehicleStatusList = vehicleStatusList;
-        findVehicle = vehicleStatusList;
-      });
-      return vehicleStatusList;
-    } else {
-      throw Exception('not loaded ');
+        vehicleStatusList = mapResponse['${widget.onroute}'];
+        print(vehicleStatusList);
+        setState(() {
+          _isLoading = false;
+          vehicleStatusList = vehicleStatusList;
+          findVehicle = vehicleStatusList;
+        });
+        return vehicleStatusList;
+      }
+    } catch (error) {
+      // Handle any errors that occur during the API request
+      print('API Error: $error');
     }
   }
 
@@ -212,7 +215,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                 .blue; // Update border color for the else case
                           }
                           return Container(
-                              height: screenHeight * 0.25,
+                              height: screenHeight * 0.24,
                               padding: EdgeInsets.only(
                                 left: 10,
                                 right: 10,
@@ -348,19 +351,27 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                                     ),
                                                   )
                                                 : vehicle['status'] == "PARKED"
-                                                    ? Container(
-                                                        margin: EdgeInsets.only(
-                                                            right: 110,
-                                                            top: 10),
-                                                        child: Text(
-                                                          vehicle['status'],
-                                                          style: const TextStyle(
-                                                              fontSize: 12,
-                                                              color: Colors.red,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
+                                                    ? Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    top: 10),
+                                                            child: Text(
+                                                              vehicle['status'],
+                                                              style: const TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .red,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ),
+                                                        ],
                                                       )
                                                     : vehicle['status'] ==
                                                             "INSTOCK"
@@ -391,50 +402,45 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                                                     FontWeight
                                                                         .bold),
                                                           ),
-                                            Visibility(
-                                              visible: vehicle['status'] !=
-                                                  "ONROUTE",
-                                              child: InkWell(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ModifyVehileStatus(
-                                                        plateNumber: vehicle[
-                                                            'plateNumber'],
-                                                        sttatus:
-                                                            vehicle['status'],
-                                                      ),
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ModifyVehileStatus(
+                                                      plateNumber: vehicle[
+                                                          'plateNumber'],
+                                                      sttatus:
+                                                          vehicle['status'],
                                                     ),
-                                                  );
-                                                },
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      10.0),
-                                                  child: Container(
-                                                    width: screenWidth,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border.all(
-                                                        color: Colors.grey
-                                                            .shade300, // Border color
-                                                        width:
-                                                            2.0, // Border width
-                                                      ),
+                                                  ),
+                                                );
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Container(
+                                                  width: screenWidth,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    border: Border.all(
+                                                      color: Colors.grey
+                                                          .shade300, // Border color
+                                                      width:
+                                                          2.0, // Border width
                                                     ),
-                                                    height: 40,
-                                                    margin: EdgeInsets.only(
-                                                        top: 20),
-                                                    child: const Center(
-                                                      child: Text(
-                                                        "Update Status",
-                                                        style: TextStyle(
-                                                            fontSize: 15,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
+                                                  ),
+                                                  height: 40,
+                                                  margin:
+                                                      EdgeInsets.only(top: 20),
+                                                  child: const Center(
+                                                    child: Text(
+                                                      "Update Status",
+                                                      style: TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
                                                   ),
                                                 ),

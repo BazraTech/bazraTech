@@ -2,9 +2,6 @@
 import 'package:bazralogin/const/constant.dart';
 import 'package:bazralogin/view/screen/Owner/Communication/Communication.dart';
 import 'package:flutter/material.dart';
-
-
-import '../report/ownerReport.dart';
 import 'communicationHistory.dart';
 
 class Communication extends StatelessWidget {

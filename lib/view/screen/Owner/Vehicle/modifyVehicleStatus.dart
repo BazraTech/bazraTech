@@ -170,16 +170,16 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back,
-              color: Colors.black), // Set the color of the icon
+              color: Colors.white), // Set the color of the icon
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: kPrimaryColor,
         title: Text(
           "Modify Vehicle Status",
           style: TextStyle(
-              color: Colors.black,
+              color: Colors.white,
               fontFamily: "Nunito",
               fontWeight: FontWeight.bold,
               fontStyle: FontStyle.normal,
@@ -272,7 +272,7 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
                       BoxShadow(
                         color: Colors.black.withOpacity(0.2), // Shadow color
                         blurRadius: 5, // Spread radius
-                        offset: Offset(0, 3), // Offset in (x,y) coordinates
+                        offset: Offset(0, 2), // Offset in (x,y) coordinates
                       ),
                     ],
                     borderRadius: BorderRadius.circular(15),
@@ -284,7 +284,7 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
                             color:
                                 Colors.black.withOpacity(0.3), // Shadow color
                             blurRadius: 5, // Spread radius
-                            offset: Offset(0, 3), // Offset in (x,y) coordinates
+                            offset: Offset(0, 2), // Offset in (x,y) coordinates
                           ),
                         ],
                         color: Color.fromRGBO(236, 240, 243, 1),

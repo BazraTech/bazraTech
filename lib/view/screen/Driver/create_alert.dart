@@ -87,29 +87,6 @@ class _CreateAlertState extends State {
     prefs.setStringList('toDoList', _toDoListLocation.cast());
   }
 
-  void _showSweetAlert(BuildContext context, AlertType alertType, String title,
-      String description) {
-    Alert(
-      context: context,
-      type: alertType,
-      title: title,
-      desc: description,
-      buttons: [
-        DialogButton(
-          child: Text(
-            'OK',
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Driver_Hompage()));
-          },
-          width: 120,
-          height: 50,
-        ),
-      ],
-    ).show();
-  }
 
   void Create_Alert() async {
     final storage = new FlutterSecureStorage();
@@ -126,11 +103,39 @@ class _CreateAlertState extends State {
     });
     final Map jsonResponse = json.decode(response.body);
     if (response.statusCode == 200) {
-      _showSweetAlert(
-          context, AlertType.success, 'Success', jsonResponse['message']);
+      String alertContent = jsonResponse["message"];
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text('API Response'),
+          content: Text(alertContent),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
     } else {
-      _showSweetAlert(
-          context, AlertType.error, 'Error', jsonResponse['message']);
+      String alertContent = jsonResponse["message"];
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text(''),
+          content: Text(alertContent),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
     }
   }
 
@@ -149,29 +154,29 @@ class _CreateAlertState extends State {
       "Accept": "application/json",
       "Authorization": "Bearer $value",
     }).then((response) {
-      _stopTimer();
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Center(child: Text('Success')),
+          content: Text('API call was successful'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
       print("yes");
-    }).catchError((error) {
-      print('Error: $error');
-      print("no");
-    });
+    }).catchError((error) {});
   }
 
   DateTime greeting() {
     var hour = DateTime.now();
 
     return hour;
-  }
-
-  void _stopTimer() {
-    _timer?.cancel();
-    _timer = null;
-  }
-
-  void _resetTimer() {
-    setState(() {
-      _seconds = 0;
-    });
   }
 
   @override
@@ -203,7 +208,7 @@ class _CreateAlertState extends State {
               Navigator.pop(context);
             },
             child: Icon(
-              Icons.arrow_back_ios,
+              Icons.arrow_back,
               color: Colors.black,
             ),
           ),

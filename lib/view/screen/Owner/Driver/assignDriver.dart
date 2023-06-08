@@ -31,9 +31,11 @@ TextEditingController textEditingController = TextEditingController();
 final storage = new FlutterSecureStorage();
 
 class _assignDriverState extends State<assignDriver> {
+  bool isLoading = false;
   Future<void> _showMyDialog() async {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -130,25 +132,39 @@ class _assignDriverState extends State<assignDriver> {
     );
   }
 
-  AssignDriver() async {
-    var value = await storage.read(key: 'jwt');
-    Map data = {
-      "driver": "${widget.licenseNumber}",
-      "plateNumber": "${widget.plateNumber}",
-    };
-    var response = await http.post(Uri.parse(ApIConfig.assignDriverApi),
-        body: json.encode(data),
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": "Bearer $value",
-        });
+  void performAction() {
+    setState(() {
+      isLoading = true;
+    });
 
-    if (response.statusCode == 200) {
-      _showMyDialog();
-    }
-    print(response.statusCode.toString());
+    // Simulate an asynchronous action
+    Future.delayed(Duration(seconds: 15), () async {
+      var value = await storage.read(key: 'jwt');
+      Map data = {
+        "driver": "${widget.licenseNumber}",
+        "plateNumber": "${widget.plateNumber}",
+      };
+      var response = await http.post(Uri.parse(ApIConfig.assignDriverApi),
+          body: json.encode(data),
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": "Bearer $value",
+          });
+
+      if (response.statusCode == 200) {
+        _showMyDialog();
+      }
+      setState(() {
+        isLoading = false;
+      });
+    });
   }
+
+  // AssignDriver() async {
+
+  //   print(response.statusCode.toString());
+  // }
 
   // void initState() {
   //   // super.initState();
@@ -327,9 +343,9 @@ class _assignDriverState extends State<assignDriver> {
                                 SizedBox(
                                   height: 10,
                                 ),
-                               
                                 Container(
                                   width: double.infinity,
+                                  height: screenHeight * 0.09,
                                   child: TextFormField(
                                     enabled: false,
                                     controller: TextEditingController(
@@ -357,38 +373,71 @@ class _assignDriverState extends State<assignDriver> {
                             SizedBox(
                               height: 10,
                             ),
-                            Column(
-                              children: [
-                                Container(
-                                    width: double.infinity,
-                                    child: TextField(
-                                      enabled: false,
-                                      controller: TextEditingController(
-                                          text: "${widget.plateNumber}"),
-                                      decoration:
-                                          ThemeHelper().textInputDecoration(),
-                                    )),
-                              ],
-                            ),
+                            Container(
+                                height: screenHeight * 0.09,
+                                child: TextField(
+                                  enabled: false,
+                                  controller: TextEditingController(
+                                      text: "${widget.plateNumber}"),
+                                  decoration:
+                                      ThemeHelper().textInputDecoration(),
+                                )),
                             Container(
                               margin: EdgeInsets.fromLTRB(
                                   screenWidth * 0.4, 20, 0, 0),
                               width: screenWidth * 0.4,
                               height: screenHeight * 0.05,
                               child: ElevatedButton(
-                                onPressed: () {
-                                  AssignDriver();
-                                },
-                                child: const Text(
-                                  "Assign Driver",
-                                  style: TextStyle(
-                                      fontFamily: "Nunito",
-                                      color: Color.fromRGBO(255, 255, 255, 1),
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                style: ThemeHelper().buttonStyle(),
-                              ),
+                                  onPressed: isLoading ? null : performAction,
+                                  child: Container(
+                                    height: 55,
+                                    width: screenWidth,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        isLoading
+                                            ? SizedBox(
+                                                height: 24,
+                                                width: 24,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(Colors.white),
+                                                ),
+                                              )
+                                            : SizedBox(), // Empty SizedBox if not loading
+                                        SizedBox(width: 8),
+                                        Text(
+                                          isLoading
+                                              ? 'Please Wait'
+                                              : 'Assign Driver',
+                                          style: TextStyle(
+                                              fontFamily: "Nunito",
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.resolveWith(
+                                              (states) {
+                                        if (states
+                                            .contains(MaterialState.pressed)) {
+                                          return Color.fromRGBO(
+                                              255, 148, 165, 223);
+                                        }
+                                        // 98, 172, 181
+                                        return Colors.lightBlue;
+                                      }),
+                                      shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(6))))),
                             ),
                           ],
                         ),

@@ -213,7 +213,7 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                 left: 10,
                                 right: 10,
                               ),
-                              height: screenHeight * 0.27,
+                              height: screenHeight * 0.23,
                               child: InkWell(
                                 onTap: (() {
                                   Navigator.push(
@@ -538,8 +538,6 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                     ),
                                                     width: screenWidth,
                                                     height: 40,
-                                                    margin: EdgeInsets.only(
-                                                        top: 20),
                                                     child: const Center(
                                                       child: Text(
                                                         "Update Status",

@@ -87,9 +87,8 @@ class _activeWorkState extends State<activeWork> {
                         Navigator.pop(context);
                       },
                       icon: Icon(
-                        Ionicons.chevron_back,
-                        size: 34,
-                        color: Colors.black,
+                        Ionicons.arrow_back,
+                        color: Colors.white,
                       ),
                     ),
                   ),

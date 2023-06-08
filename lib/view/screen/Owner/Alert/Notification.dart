@@ -72,7 +72,7 @@ class _notificationPageState extends State<notificationPage> {
                         Navigator.pop(context);
                       },
                       child: const Icon(
-                        Icons.arrow_back_ios,
+                        Icons.arrow_back,
                         color: Colors.black,
                       ),
                     ),
@@ -95,16 +95,22 @@ class _notificationPageState extends State<notificationPage> {
                 ],
               ),
             ),
-            Divider(
-              color: Colors.grey,
-              thickness: 0.7,
-              height: 20,
-            ),
             Container(
               height: screenHeight,
               // margin: EdgeInsets.only(bottom: 200),
               child: _isLoading
                   ? Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.shade400.withOpacity(0.2),
+                            spreadRadius: -1,
+                            blurRadius: 1,
+                            offset:
+                                Offset(0, -3), // horizontal, vertical offset
+                          ),
+                        ],
+                      ),
                       margin: EdgeInsets.only(top: 130),
                       child: Center(child: CircularProgressIndicator()))
                   : ListView.builder(
@@ -115,8 +121,9 @@ class _notificationPageState extends State<notificationPage> {
                         return Column(
                           children: [
                             Container(
+                              color: Colors.white,
                               height: screenHeight * 0.1,
-                              width: screenWidth - 16.0,
+                              width: screenWidth,
                               child: Container(
                                   child: Row(
                                 children: [
@@ -167,12 +174,12 @@ class _notificationPageState extends State<notificationPage> {
                                                   right: screenWidth * 0.07),
                                               child: Text(
                                                 Result[index]['alertType'],
-                                                style:TextStyle(
+                                                style: TextStyle(
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.normal,
                                                   fontSize: 13,
                                                 ),
-                                              ), 
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -187,11 +194,6 @@ class _notificationPageState extends State<notificationPage> {
                                   )
                                 ],
                               )),
-                            ),
-                            Divider(
-                              color: Colors.grey,
-                              thickness: 0.7,
-                              height: 20,
                             ),
                           ],
                         );

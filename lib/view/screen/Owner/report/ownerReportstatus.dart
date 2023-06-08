@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../Model/ApiConfig.dart';
 import '../Vehicle/vehicleStatus.dart';
-import 'ownerReport.dart';
 
 class ownerReportstatus extends StatefulWidget {
   ownerReportstatus({super.key});
@@ -28,17 +27,34 @@ class _ownerReportstatusState extends State<ownerReportstatus> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            "Report",
-            style: TextStyle(color: Colors.black),
-          ),
-          backgroundColor: Colors.white,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back,
-                color: Colors.black), // Set the color of the icon
-            onPressed: () {
+          elevation: 0,
+          leading: InkWell(
+            onTap: () {
               Navigator.pop(context);
             },
+            child: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: kPrimaryColor,
+          title: Container(
+            margin: EdgeInsets.only(right: screenWidth * 0.12),
+            width: double.infinity,
+            height: 40,
+            color: Colors.white,
+            child: Center(
+              child: TextField(
+                decoration: const InputDecoration(
+                  hintText: 'Driver Name or Plate No',
+                  border: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  prefixIcon: Icon(Icons.search),
+                ),
+              ),
+            ),
           ),
         ),
         backgroundColor: Colors.white,
@@ -47,9 +63,7 @@ class _ownerReportstatusState extends State<ownerReportstatus> {
         ),
         bottomNavigationBar: Container(
           height: screenHeight * 0.08,
-          decoration: const BoxDecoration(
-            color: kPrimaryColor,
-          ),
+          decoration: const BoxDecoration(color: Colors.white),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -60,7 +74,8 @@ class _ownerReportstatusState extends State<ownerReportstatus> {
                   indicatorSize: TabBarIndicatorSize.label,
                   indicatorWeight: 4,
                   indicatorPadding: EdgeInsets.all(4),
-                  indicatorColor: Colors.white,
+                  labelColor: Colors.black,
+                  indicatorColor: Colors.blue,
                   overlayColor: MaterialStateColor.resolveWith(
                       (Set<MaterialState> states) {
                     if (states.contains(MaterialState.pressed)) {

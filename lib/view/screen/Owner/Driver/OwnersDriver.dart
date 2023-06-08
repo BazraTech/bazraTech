@@ -229,7 +229,7 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                 .blue; // Update border color for the else case
                           }
                           return Container(
-                              height: screenHeight * 0.27,
+                              height: screenHeight * 0.23,
                               padding: const EdgeInsets.only(
                                 left: 10,
                                 right: 10,
@@ -563,8 +563,6 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                     ),
                                                     width: screenWidth,
                                                     height: 40,
-                                                    margin: EdgeInsets.only(
-                                                        top: 20),
                                                     child: const Center(
                                                       child: Text(
                                                         "Update Status",
@@ -579,36 +577,6 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                 ),
                                               ),
                                             )
-                                            // Padding(
-                                            //   padding: const EdgeInsets.all(10.0),
-                                            //   child: Container(
-                                            //     width: screenWidth,
-                                            //     color: Color.fromRGBO(
-                                            //         244, 244, 244, 0.8),
-                                            //     height: 37,
-                                            //     margin: EdgeInsets.only(
-                                            //         top: screenHeight * 0.02),
-                                            //     child: InkWell(
-                                            //       onTap: (() {
-                                            //         Navigator.push(
-                                            //             context,
-                                            //             MaterialPageRoute(
-                                            //                 builder: (context) =>
-                                            //                     ModifyDriverStatus(
-                                            //                         driverLicense:
-                                            //                             driver[
-                                            //                                 'licenseNumber'])));
-                                            //       }),
-                                            //       child: const Center(
-                                            //         child: Text("Update Status",
-                                            //             style: TextStyle(
-                                            //                 fontSize: 15,
-                                            //                 fontWeight:
-                                            //                     FontWeight.bold)),
-                                            //       ),
-                                            //     ),
-                                            //   ),
-                                            // )
                                           ],
                                         ),
                                       ),

@@ -273,7 +273,7 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
                       BoxShadow(
                         color: Colors.black.withOpacity(0.2), // Shadow color
                         blurRadius: 5, // Spread radius
-                        offset: Offset(0, 3), // Offset in (x,y) coordinates
+                        offset: Offset(0, 2), // Offset in (x,y) coordinates
                       ),
                     ],
                     borderRadius: BorderRadius.circular(15),
@@ -285,7 +285,7 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
                             color:
                                 Colors.black.withOpacity(0.3), // Shadow color
                             blurRadius: 5, // Spread radius
-                            offset: Offset(0, 3), // Offset in (x,y) coordinates
+                            offset: Offset(0, 2), // Offset in (x,y) coordinates
                           ),
                         ],
                         color: Color.fromRGBO(236, 240, 243, 1),

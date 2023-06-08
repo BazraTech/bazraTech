@@ -37,6 +37,7 @@ class _LoginState extends State<Login> {
   String? username;
   var name;
   String? password;
+  bool isLoading = false;
 
   final _formKey = GlobalKey<FormState>();
   void _passwordView() {
@@ -55,28 +56,6 @@ class _LoginState extends State<Login> {
   Future vehicleFetch() async {
     // fetch list of total vehicles
     await APIService.vehicleFetch();
-  }
-
-  void clickBtnLogin() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState?.save();
-
-      LoginRequestModel model =
-          LoginRequestModel(username: username!, password: password!);
-
-      APIService.loginFetch(model).then((response) async {
-        if (APIService.ownername == "DRIVER") {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => driverBottomn()));
-        } else if (APIService.ownername == "OWNER") {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => BottomNav()));
-        } else {
-          showAlertDialog(context);
-        }
-      });
-    }
-    APIService.ownername = "";
   }
 
   ResetPasswords() async {
@@ -113,6 +92,30 @@ class _LoginState extends State<Login> {
       print(e);
       throw e;
     }
+  }
+
+  void clickBtnLogin() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState?.save();
+
+      LoginRequestModel model =
+          LoginRequestModel(username: username!, password: password!);
+      setState(() {
+        isLoading = true;
+      });
+      APIService.loginFetch(model).then((response) async {
+        if (APIService.ownername == "DRIVER") {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => driverBottomn()));
+        } else if (APIService.ownername == "OWNER") {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => BottomNav()));
+        } else {
+          showAlertDialog(context);
+        }
+      });
+    }
+    APIService.ownername = "";
   }
 
   @override
@@ -299,7 +302,7 @@ class _LoginState extends State<Login> {
                                       ),
                                     ),
                                     Container(
-                                      margin: EdgeInsets.only(left: 10),
+                                      margin: EdgeInsets.only(left: 7),
                                       width: width,
                                       height: hight * 0.03,
                                       alignment: Alignment.bottomLeft,
@@ -309,84 +312,110 @@ class _LoginState extends State<Login> {
                                         },
                                         child: const Text(
                                           " Forget Password",
-                                          style: TextStyle(color: Colors.blue),
+                                          style: TextStyle(
+                                            color: Colors.blue,
+                                            fontFamily: "Nunito",
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: SizedBox(
-                                        width: width,
-                                        height: hight * 0.13,
-                                        child: Container(
-                                            child: Container(
-                                                // ignore: prefer_const_constructors
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(22.0),
-                                                    bottomLeft:
-                                                        Radius.circular(22.0),
-                                                    bottomRight:
-                                                        Radius.circular(22.0),
-                                                    topRight:
-                                                        Radius.circular(22.0),
-                                                  ),
+                                    SizedBox(
+                                      width: width,
+                                      height: hight * 0.13,
+                                      child: Container(
+                                          child: Container(
+                                              // ignore: prefer_const_constructors
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  topLeft:
+                                                      Radius.circular(22.0),
+                                                  bottomLeft:
+                                                      Radius.circular(22.0),
+                                                  bottomRight:
+                                                      Radius.circular(22.0),
+                                                  topRight:
+                                                      Radius.circular(22.0),
                                                 ),
-                                                child: TextButton(
-                                                  onPressed: (() {
-                                                    if (_formKey.currentState!
-                                                        .validate()) {
-                                                      Get.toNamed(AppRoutes
-                                                          .getHomeRoute());
-                                                    }
-                                                  }),
-                                                  child: ElevatedButton(
-                                                      onPressed: clickBtnLogin,
-                                                      child: Container(
-                                                        margin: const EdgeInsets
-                                                            .only(top: 5.0),
-                                                        height: 40,
-                                                        width: 320,
-                                                        child: const Center(
-                                                          child: Text(
-                                                            "SIGN IN",
+                                              ),
+                                              child: TextButton(
+                                                onPressed: (() {
+                                                  if (_formKey.currentState!
+                                                      .validate()) {
+                                                    Get.toNamed(AppRoutes
+                                                        .getHomeRoute());
+                                                  }
+                                                }),
+                                                child: ElevatedButton(
+                                                    onPressed: isLoading
+                                                        ? null
+                                                        : clickBtnLogin,
+                                                    child: Container(
+                                                      height: 55,
+                                                      width: width,
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          isLoading
+                                                              ? SizedBox(
+                                                                  height: 24,
+                                                                  width: 24,
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                                    valueColor: AlwaysStoppedAnimation<
+                                                                            Color>(
+                                                                        Colors
+                                                                            .white),
+                                                                  ),
+                                                                )
+                                                              : SizedBox(), // Empty SizedBox if not loading
+                                                          SizedBox(width: 8),
+                                                          Text(
+                                                            isLoading
+                                                                ? 'Please Wait'
+                                                                : 'Sign IN',
                                                             style: TextStyle(
+                                                                fontFamily:
+                                                                    "Nunito",
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
                                                                 color: Colors
-                                                                    .white,
-                                                                fontSize: 20),
-                                                          ),
-                                                        ),
+                                                                    .white),
+                                                          )
+                                                        ],
                                                       ),
-                                                      style: ButtonStyle(
-                                                          backgroundColor:
-                                                              MaterialStateProperty
-                                                                  .resolveWith(
-                                                                      (states) {
-                                                            if (states.contains(
-                                                                MaterialState
-                                                                    .pressed)) {
-                                                              return Color
-                                                                  .fromRGBO(
-                                                                      255,
-                                                                      148,
-                                                                      165,
-                                                                      223);
-                                                            }
-                                                            // 98, 172, 181
-                                                            return Colors
-                                                                .lightBlue;
-                                                          }),
-                                                          shape: MaterialStateProperty.all<
-                                                                  RoundedRectangleBorder>(
-                                                              RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              6))))),
-                                                ))),
-                                      ),
+                                                    ),
+                                                    style: ButtonStyle(
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .resolveWith(
+                                                                    (states) {
+                                                          if (states.contains(
+                                                              MaterialState
+                                                                  .pressed)) {
+                                                            return Color
+                                                                .fromRGBO(
+                                                                    255,
+                                                                    148,
+                                                                    165,
+                                                                    223);
+                                                          }
+                                                          // 98, 172, 181
+                                                          return Colors
+                                                              .lightBlue;
+                                                        }),
+                                                        shape: MaterialStateProperty.all<
+                                                                RoundedRectangleBorder>(
+                                                            RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            6))))),
+                                              ))),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -401,6 +430,8 @@ class _LoginState extends State<Login> {
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 17,
+                                                fontFamily: "Nunito",
+                                                fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                             Container(
@@ -411,8 +442,11 @@ class _LoginState extends State<Login> {
                                                 },
                                                 child: Text('SIGN UP',
                                                     style: TextStyle(
-                                                        color: Colors.lightBlue,
-                                                        fontSize: 18)),
+                                                      fontFamily: "Nunito",
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.lightBlue,
+                                                    )),
                                               ),
                                             )
                                           ],

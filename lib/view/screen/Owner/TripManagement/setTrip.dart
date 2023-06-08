@@ -51,6 +51,7 @@ class _SettripsState extends State<Settrips> {
   String? endPlace;
   List Result = [];
   String? trip;
+  bool isLoading = false;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Future<void> _showMyDialog1() async {
@@ -122,6 +123,7 @@ class _SettripsState extends State<Settrips> {
         "startDate": "2023-06-08",
         "tripType": "$trip"
       };
+
       var response = await http.post(Uri.parse(ApIConfig.creatTrip),
           body: jsonEncode(data) as String,
           headers: {
@@ -129,6 +131,9 @@ class _SettripsState extends State<Settrips> {
             "Accept": "application/json",
             "Authorization": "Bearer $value",
           });
+      setState(() {
+        isLoading = true;
+      });
 
       if (response.statusCode == 200) {
         _showMyDialog();
@@ -390,18 +395,49 @@ class _SettripsState extends State<Settrips> {
                       width: screenWidth * 0.4,
                       height: screenHeight * 0.05,
                       child: ElevatedButton(
-                        onPressed: () {
-                          setTrips();
-                        },
-                        child: const Text(
-                          "Set Trip",
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        style: ThemeHelper().buttonStyle(),
-                      ),
+                          onPressed: isLoading ? null : setTrips(),
+                          child: Container(
+                            height: 55,
+                            width: screenWidth,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                isLoading
+                                    ? SizedBox(
+                                        height: 24,
+                                        width: 24,
+                                        child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.white),
+                                        ),
+                                      )
+                                    : SizedBox(), // Empty SizedBox if not loading
+                                SizedBox(width: 8),
+                                Text(
+                                  isLoading ? 'Please Wait' : 'Set Trip',
+                                  style: TextStyle(
+                                      fontFamily: "Nunito",
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                )
+                              ],
+                            ),
+                          ),
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith((states) {
+                                if (states.contains(MaterialState.pressed)) {
+                                  return Color.fromRGBO(255, 148, 165, 223);
+                                }
+                                // 98, 172, 181
+                                return Colors.lightBlue;
+                              }),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(6))))),
                     ),
                   ]),
                 ),

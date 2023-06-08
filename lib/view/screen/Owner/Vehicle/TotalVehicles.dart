@@ -176,7 +176,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                     ),
                                   ),
                                   Container(
-                                    width: screenWidth * 0.2,
+                                    width: screenWidth * 0.23,
                                     child: const Text(
                                       "Driver",
                                       style: TextStyle(
@@ -405,7 +405,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                                             margin:
                                                                 const EdgeInsets
                                                                         .only(
-                                                                    left: 110,
+                                                                    right: 64,
                                                                     top: 10),
                                                             child: Text(
                                                               vehicle['status'],
@@ -417,53 +417,43 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                                                       FontWeight
                                                                           .bold),
                                                             )),
-                                            SizedBox(
-                                              width: 200,
-                                            ),
-                                            Visibility(
-                                              visible: vehicle['status'] !=
-                                                  "ONROUTE",
-                                              child: InkWell(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ModifyVehileStatus(
-                                                        plateNumber: vehicle[
-                                                            'plateNumber'],
-                                                        sttatus:
-                                                            vehicle['status'],
-                                                      ),
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ModifyVehileStatus(
+                                                      plateNumber: vehicle[
+                                                          'plateNumber'],
+                                                      sttatus:
+                                                          vehicle['status'],
                                                     ),
-                                                  );
-                                                },
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      10.0),
-                                                  child: Container(
-                                                    width: screenWidth,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border.all(
-                                                        color: Colors.grey
-                                                            .shade300, // Border color
-                                                        width:
-                                                            2.0, // Border width
-                                                      ),
+                                                  ),
+                                                );
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Container(
+                                                  width: screenWidth,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    border: Border.all(
+                                                      color: Colors.grey
+                                                          .shade300, // Border color
+                                                      width:
+                                                          2.0, // Border width
                                                     ),
-                                                    height: 40,
-                                                    margin: EdgeInsets.only(
-                                                        top: 20),
-                                                    child: const Center(
-                                                      child: Text(
-                                                        "Update Status",
-                                                        style: TextStyle(
-                                                            fontSize: 15,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
+                                                  ),
+                                                  height: 40,
+                                                  child: const Center(
+                                                    child: Text(
+                                                      "Update Status",
+                                                      style: TextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
                                                   ),
                                                 ),

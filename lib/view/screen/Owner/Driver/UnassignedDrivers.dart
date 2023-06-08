@@ -198,8 +198,11 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (BuildContext context) =>VehicleOnstock()
-                                      ),
+                                    builder: (BuildContext context) =>
+                                        VehicleOnstock(
+                                          licenseNumber:
+                                              driver['licenseNumber'],
+                                        )),
                               );
                             }),
                             child: Padding(

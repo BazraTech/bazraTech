@@ -1,5 +1,6 @@
 import 'package:bazralogin/Theme/clippbox.dart';
-import 'package:bazralogin/view/screen/Owner/report/ownerReport.dart';
+import 'package:date_format/date_format.dart';
+
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -726,7 +727,7 @@ class _MyScreenState extends State<MyScreen> {
                                                             SizedBox(
                                                               width:
                                                                   screenHeight *
-                                                                      0.235,
+                                                                      0.3,
                                                             ),
                                                             Text("5/24/2023")
                                                           ],
@@ -1011,7 +1012,7 @@ class _MyScreenState extends State<MyScreen> {
                                                                 4), // Adjust the offset to control the shadow's position
                                                           ),
                                                         ]),
-                                                    height: screenHeight * 0.4,
+                                                    height: screenHeight * 0.45,
                                                     margin: EdgeInsets.zero,
                                                     width: screenWidth - 22,
                                                     child: Column(
@@ -1182,8 +1183,8 @@ class _MyScreenState extends State<MyScreen> {
                                                                         .time)),
                                                             SizedBox(
                                                               width:
-                                                                  screenHeight *
-                                                                      0.235,
+                                                                  screenWidth *
+                                                                      0.3,
                                                             ),
                                                             Text("5/24/2023")
                                                           ],
@@ -1321,7 +1322,7 @@ class _MyScreenState extends State<MyScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        height: screenHeight * 0.16,
+                        height: screenHeight * 0.2,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: Colors.white,
