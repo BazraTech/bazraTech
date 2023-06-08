@@ -12,7 +12,7 @@ class CustomTextFieldForm extends StatefulWidget {
   final bool obscureText;
   final bool showSuffixIcon;
   final TextStyle hintTextStyle;
-  
+    final Function(bool)? onFocusChange; // added onFocusChange callback
   const CustomTextFieldForm({
     super.key,
     this.isPassword = false,
@@ -21,6 +21,7 @@ class CustomTextFieldForm extends StatefulWidget {
      required this.hintTextStyle,
     required this.textStyle,
     required this.hintText,
+  required this.onFocusChange,
     required this.textController,
     this.keyboardType = TextInputType.text,
     required this.onChanged,
@@ -70,6 +71,22 @@ class _CustomTextFieldFormState extends State<CustomTextFieldForm> {
               )
             : null,
       ),
+       onChanged: widget.onChanged,
+      onTap: () {
+        if (widget.onFocusChange != null) {
+          widget.onFocusChange!(true);
+        }
+      },
+      onFieldSubmitted: (value) {
+        if (widget.onFocusChange != null) {
+          widget.onFocusChange!(false);
+        }
+      },
+      onEditingComplete: () {
+        if (widget.onFocusChange != null) {
+          widget.onFocusChange!(false);
+        }
+      },
     );
   }
 }

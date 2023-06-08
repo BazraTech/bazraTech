@@ -196,6 +196,7 @@ class _PostsState extends State<Posts> {
     }
   }
 
+  bool _isFocus = false;
   TextEditingController cargoTypeController = TextEditingController();
   var dropdownvalue;
   final _formKey = GlobalKey<FormState>();
@@ -245,11 +246,17 @@ class _PostsState extends State<Posts> {
                       fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
                   textController: _from,
                   obscureText: false,
-                  hintTextStyle: const TextStyle(
+                  hintTextStyle: TextStyle(
                     letterSpacing: 1.0,
                     wordSpacing: 2.0,
+                    color: _isFocus ? Colors.red : Colors.grey,
                     // ... other styles
                   ),
+                  onFocusChange: (focus) {
+                    setState(() {
+                      _isFocus = focus;
+                    });
+                  },
                   onChanged: (value) {},
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -266,11 +273,17 @@ class _PostsState extends State<Posts> {
                   hintText: "To",
                   textController: _to,
                   obscureText: false,
-                  hintTextStyle: const TextStyle(
+                  hintTextStyle: TextStyle(
                     letterSpacing: 1.0,
                     wordSpacing: 2.0,
+                    color: _isFocus ? Colors.green : Colors.grey,
                     // ... other styles
                   ),
+                  onFocusChange: (focus) {
+                    setState(() {
+                      _isFocus = focus;
+                    });
+                  },
                   onChanged: (value) {},
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -382,11 +395,17 @@ class _PostsState extends State<Posts> {
                   hintText: "Packaging",
                   textController: _packaging,
                   obscureText: false,
-                  hintTextStyle: const TextStyle(
+                  hintTextStyle: TextStyle(
                     letterSpacing: 1.0,
                     wordSpacing: 2.0,
+                    color: _isFocus ? Colors.green : Colors.grey,
                     // ... other styles
                   ),
+                  onFocusChange: (focus) {
+                    setState(() {
+                      _isFocus = focus;
+                    });
+                  },
                   onChanged: (value) {},
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -402,12 +421,18 @@ class _PostsState extends State<Posts> {
                       fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
                   hintText: "Weight",
                   textController: _weight,
-                  hintTextStyle: const TextStyle(
+                  hintTextStyle: TextStyle(
                     letterSpacing: 1.0,
                     wordSpacing: 2.0,
+                    color: _isFocus ? Colors.green : Colors.grey,
                     // ... other styles
                   ), // ... other styl
                   obscureText: false,
+                  onFocusChange: (focus) {
+                    setState(() {
+                      _isFocus = focus;
+                    });
+                  },
                   onChanged: (value) {},
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -432,11 +457,17 @@ class _PostsState extends State<Posts> {
                       fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
                   textController: _price,
                   obscureText: false,
-                  hintTextStyle: const TextStyle(
+                  hintTextStyle: TextStyle(
                     letterSpacing: 1.0,
                     wordSpacing: 2.0,
+                    color: _isFocus ? Colors.green : Colors.grey,
                     // ... other styles
                   ),
+                  onFocusChange: (focus) {
+                    setState(() {
+                      _isFocus = focus;
+                    });
+                  },
                   onChanged: (value) {},
                   validator: (value) {
                     if (value == null || value.isEmpty) {

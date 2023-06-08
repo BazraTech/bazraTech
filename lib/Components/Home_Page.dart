@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../shared/ImageHelper.dart';
+import '../shared/cargoInfo.dart';
 import '../shared/constant.dart';
 import '../shared/storage_hepler.dart';
 import '../shared/tapbar.dart';
@@ -41,7 +43,6 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': 'Bearer $accessToken',
     };
     final response = await http.get(
         Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
@@ -53,6 +54,22 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
     } else {
       throw Exception('Failed to load image');
     }
+  }
+
+  String name = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getCargoInfo();
+  }
+
+  Future<void> getCargoInfo() async {
+    CargoInfo cargoInfo = CargoInfo();
+    String? cargoName = await cargoInfo.getCargoInfo();
+    setState(() {
+      name = cargoName ?? '';
+    });
   }
 
   bool isPressed = true;
@@ -137,12 +154,12 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                       Row(
                         children: [
                           Container(
-                            margin: EdgeInsets.only(right: 10),
-                            child: Text(
-                              greeting(),
+                            margin: EdgeInsets.only(left: 90, top: 10),
+                            child: const Text(
+                              "Welcome Back ",
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
                                 fontFamily: 'Roboto',
@@ -151,13 +168,13 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 3),
-                            child: const Text(
-                              "Robel",
+                            margin: EdgeInsets.only(top: 13, left: 10),
+                            child: Text(
+                              "$name",
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 14,
+                              style: const TextStyle(
+                                fontSize: 20,
                                 color: Colors.white,
                                 fontFamily: 'Roboto',
                                 fontWeight: FontWeight.bold,

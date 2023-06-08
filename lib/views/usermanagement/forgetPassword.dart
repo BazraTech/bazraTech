@@ -6,16 +6,19 @@ import 'package:cargo/config/APIConfig.dart';
 import 'package:cargo/shared/constant.dart';
 import 'package:cargo/shared/customButton.dart';
 import 'package:cargo/views/Bottom_Navigation.dart';
-import 'package:cargo/views/signup.dart';
+import 'package:cargo/views/usermanagement/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../shared/custom-form.dart';
-import '../shared/failAlert.dart';
-import '../shared/logo.dart';
-import '../shared/storage_hepler.dart';
-import '../shared/succussAlert.dart';
+import '../../shared/custom-form.dart';
+import '../../shared/failAlert.dart';
+import '../../shared/logo.dart';
+import '../../shared/storage_hepler.dart';
+import '../../shared/succussAlert.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+import 'changePassword.dart';
 
 class Forget extends StatefulWidget {
   const Forget({super.key});
@@ -35,7 +38,6 @@ class _ForgetState extends State<Forget> {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': 'Bearer $accessToken',
     };
     final response = await http.get(
         Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
@@ -46,6 +48,80 @@ class _ForgetState extends State<Forget> {
       return data["logo"];
     } else {
       throw Exception('Failed to load image');
+    }
+  }
+
+  bool _isFocus = false;
+  void _showSweetAlert(BuildContext context, AlertType alertType, String title,
+      String description) {
+    Alert(
+      context: context,
+      type: alertType,
+      title: title,
+      desc: description,
+      buttons: [
+        DialogButton(
+          child: Text(
+            'OK',
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => ChangePassword()),
+            )
+          },
+          width: 120,
+        ),
+      ],
+    ).show();
+  }
+
+  generatePin(String cargoOwnerPhone) async {
+    const url = 'http://64.226.104.50:9090/Api/User/GeneratePIN';
+
+    // Define your request data as a Map
+    Map requestData = {
+      'phoneNumber': "${cargoOwnerPhone}",
+    };
+    print(requestData);
+
+    print(requestData);
+
+    print("********************************");
+    print('Token: $requestData');
+    print("********************************");
+    try {
+      String body = json.encode(requestData);
+      StorageHelper storageHelper = StorageHelper();
+      String? accessToken = await storageHelper.getToken();
+      // Make the request and handle the response
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState?.save();
+        final response = await http.post(
+          Uri.parse(url),
+          body: body,
+          headers: {
+            "Content-Type": "application/json",
+            'Accept': 'application/json',
+          },
+        );
+        print(response.body);
+        print(response.statusCode);
+        final Map jsonResponse = json.decode(response.body);
+
+        if (response.statusCode == 200) {
+          _showSweetAlert(
+              context, AlertType.success, 'Success', jsonResponse['message']);
+        } else {
+          _showSweetAlert(
+              context, AlertType.error, 'Error', jsonResponse['message']);
+        }
+      }
+    } catch (e) {
+      _showSweetAlert(context, AlertType.error, 'Error',
+          'An error occurred, please check your internet connection.');
     }
   }
 
@@ -115,14 +191,21 @@ class _ForgetState extends State<Forget> {
                     fontStyle: FontStyle.normal,
                     fontFamily: "Roboto"),
                 hintText: "Phone Number",
-                hintTextStyle: const TextStyle(
+                hintTextStyle: TextStyle(
                   letterSpacing: 1.0,
                   wordSpacing: 2.0,
+                  color: _isFocus ? Colors.red : Colors.blue,
+
                   // ... other styles
                 ),
                 textController: _phoneController,
                 keyboardType: TextInputType.text,
                 onChanged: (value) {},
+                onFocusChange: (focus) {
+                  setState(() {
+                    _isFocus = focus;
+                  });
+                },
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Please enter your phone number";
@@ -147,17 +230,13 @@ class _ForgetState extends State<Forget> {
                     ),
                   )),
               CustomButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState?.save();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => BottomNav()),
-                      );
-                    }
-                  },
-                  text: "Continue"),
+                onPressed: () async {
+                  await generatePin(
+                    _phoneController.text,
+                  );
+                },
+                text: 'Reset',
+              ),
             ]),
           ),
         ),

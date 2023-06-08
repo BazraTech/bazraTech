@@ -2,15 +2,15 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:cargo/shared/constant.dart';
-import 'package:cargo/views/login.dart';
+import 'package:cargo/views/usermanagement/login.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import '../shared/custom-form.dart';
-import '../shared/customButton.dart';
-import '../shared/failAlert.dart';
-import '../shared/storage_hepler.dart';
-import '../shared/succussAlert.dart';
-import 'Bottom_Navigation.dart';
+import '../../shared/custom-form.dart';
+import '../../shared/customButton.dart';
+import '../../shared/failAlert.dart';
+import '../../shared/storage_hepler.dart';
+import '../../shared/succussAlert.dart';
+import '../Bottom_Navigation.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -108,6 +108,7 @@ class _SignupState extends State<Signup> {
     }
   }
 
+  bool _isFocus = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,12 +143,18 @@ class _SignupState extends State<Signup> {
                     hintText: "Company Name",
                     textController: _companyController,
                     keyboardType: TextInputType.text,
-                    hintTextStyle: const TextStyle(
+                    hintTextStyle: TextStyle(
                       letterSpacing: 1.0,
                       wordSpacing: 2.0,
+                      color: _isFocus ? Colors.red : Colors.grey,
                       // ... other styles
                     ),
                     onChanged: (value) {},
+                    onFocusChange: (focus) {
+                      setState(() {
+                        _isFocus = focus;
+                      });
+                    },
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Please enter your phone number";
@@ -166,11 +173,17 @@ class _SignupState extends State<Signup> {
                     hintText: "Phone",
                     textController: _phoneController,
                     obscureText: false,
-                    hintTextStyle: const TextStyle(
+                    hintTextStyle: TextStyle(
                       letterSpacing: 1.0,
                       wordSpacing: 2.0,
+                      color: _isFocus ? Colors.red : Colors.grey,
                       // ... other styles
                     ),
+                    onFocusChange: (focus) {
+                      setState(() {
+                        _isFocus = focus;
+                      });
+                    },
                     onChanged: (value) {},
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -186,9 +199,10 @@ class _SignupState extends State<Signup> {
                     hintText: 'Password',
                     textController: _passwordController,
                     isPassword: true,
-                    hintTextStyle: const TextStyle(
+                    hintTextStyle: TextStyle(
                       letterSpacing: 1.0,
                       wordSpacing: 2.0,
+                      color: _isFocus ? Colors.red : Colors.grey,
                       // ... other styles
                     ),
                     textStyle: TextStyle(fontSize: 16),
@@ -197,6 +211,11 @@ class _SignupState extends State<Signup> {
                     },
                     obscureText: true,
                     showSuffixIcon: true,
+                    onFocusChange: (focus) {
+                      setState(() {
+                        _isFocus = focus;
+                      });
+                    },
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please enter a password';
@@ -222,12 +241,18 @@ class _SignupState extends State<Signup> {
                         print("password changed: $value");
                       },
                       obscureText: true,
-                      hintTextStyle: const TextStyle(
+                      hintTextStyle: TextStyle(
                         letterSpacing: 1.0,
                         wordSpacing: 2.0,
+                        color: _isFocus ? Colors.red : Colors.grey,
                         // ... other styles
                       ),
                       showSuffixIcon: true,
+                      onFocusChange: (focus) {
+                        setState(() {
+                          _isFocus = focus;
+                        });
+                      },
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter a confirm password';

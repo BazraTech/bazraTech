@@ -77,7 +77,7 @@ class _TabNavigateState extends State with SingleTickerProviderStateMixin {
           controller: _tabController,
           children: [
             CargoListView(),
-            Posts(),
+            //Posts(),
           ],
         ),
       ),

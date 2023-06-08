@@ -7,20 +7,20 @@ import 'package:cargo/shared/constant.dart';
 import 'package:cargo/shared/customButton.dart';
 import 'package:cargo/shared/logoStorage.dart';
 import 'package:cargo/views/Bottom_Navigation.dart';
-import 'package:cargo/views/signup.dart';
+import 'package:cargo/views/usermanagement/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../shared/ImageHelper.dart';
-import '../shared/checkConnection.dart';
-import '../shared/custom-form.dart';
-import '../shared/failAlert.dart';
-import '../shared/logo.dart';
-import '../shared/storage_hepler.dart';
-import '../shared/succussAlert.dart';
-import 'forget.dart';
+import '../../shared/ImageHelper.dart';
+import '../../shared/checkConnection.dart';
+import '../../shared/custom-form.dart';
+import '../../shared/failAlert.dart';
+import '../../shared/logo.dart';
+import '../../shared/storage_hepler.dart';
+import '../../shared/succussAlert.dart';
+import 'forgetPassword.dart';
 
 class Cargo_login extends StatefulWidget {
   const Cargo_login({super.key});
@@ -34,6 +34,7 @@ class _Cargo_loginState extends State<Cargo_login> {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   String? ownerPic;
+  bool _isFocused = false;
   @override
   void dispose() {
     // Clean up the controllers when the widget is disposed
@@ -89,6 +90,11 @@ class _Cargo_loginState extends State<Cargo_login> {
           var jsonResponse = json.decode(response.body);
           //Get the token from the response
           String? newToken = jsonResponse['jwt'];
+        var name = jsonResponse['user']['name'];
+      var phoneNumber = jsonResponse['user']['PhoneNumber'];
+             SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('name', name);
+      await prefs.setString('phoneNumber', phoneNumber);
           // Save the token to storage
           if (newToken != null) {
             await storageHelper.setToken(newToken);
@@ -126,27 +132,26 @@ class _Cargo_loginState extends State<Cargo_login> {
     ).show();
   }
 
-  // Future<String> fetchImage() async {
-  //   var client = http.Client();
-  //   StorageHelper storageHelper = StorageHelper();
-  //   String? accessToken = await storageHelper.getToken();
+  Future<String> fetchImage() async {
+    var client = http.Client();
+    StorageHelper storageHelper = StorageHelper();
+    String? accessToken = await storageHelper.getToken();
 
-  //   Map<String, String> requestHeaders = {
-  //     'Content-Type': 'application/json',
-  //     'Accept': 'application/json',
-  //     'Authorization': 'Bearer $accessToken',
-  //   };
-  //   final response = await http.get(
-  //       Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
-  //       headers: requestHeaders);
-  //   if (response.statusCode == 200) {
-  //     // If the server returns a 200 OK response, parse the JSON.
-  //     Map<String, dynamic> data = json.decode(response.body);
-  //     return data["logo"];
-  //   } else {
-  //     throw Exception('Failed to load image');
-  //   }
-  // }
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+    final response = await http.get(
+        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+        headers: requestHeaders);
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      Map<String, dynamic> data = json.decode(response.body);
+      return data["logo"];
+    } else {
+      throw Exception('Failed to load image');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -162,29 +167,29 @@ class _Cargo_loginState extends State<Cargo_login> {
           child: Form(
             key: _formKey,
             child: Column(children: [
-              // Container(
-              //   alignment: Alignment.center,
-              //   margin: EdgeInsets.only(bottom: 60),
-              //   padding: const EdgeInsets.all(2.0),
-              //   child: CircleAvatar(
-              //     radius: 65,
-              //     backgroundColor: Colors.white,
-              //     child: FutureBuilder(
-              //       future: fetchImage(),
-              //       builder:
-              //           (BuildContext context, AsyncSnapshot<String> snapshot) {
-              //         if (snapshot.connectionState != ConnectionState.done)
-              //           return Text("");
-              //         return ClipOval(
-              //           child: SizedBox(
-              //               height: screenHeight * 0.4,
-              //               width: screenWidth * 0.9,
-              //               child: Image.network(snapshot.data.toString())),
-              //         );
-              //       },
-              //     ),
-              //   ),
-              // ),
+              Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(bottom: 60),
+                padding: const EdgeInsets.all(2.0),
+                child: CircleAvatar(
+                  radius: 65,
+                  backgroundColor: Colors.white,
+                  child: FutureBuilder(
+                    future: fetchImage(),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      if (snapshot.connectionState != ConnectionState.done)
+                        return Text("");
+                      return ClipOval(
+                        child: SizedBox(
+                            height: screenHeight * 0.4,
+                            width: screenWidth * 0.9,
+                            child: Image.network(snapshot.data.toString())),
+                      );
+                    },
+                  ),
+                ),
+              ),
               CustomTextFieldForm(
                 textStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
@@ -192,6 +197,11 @@ class _Cargo_loginState extends State<Cargo_login> {
                     fontFamily: "Roboto"),
                 hintText: "Phone Number",
                 textController: _phoneController,
+                onFocusChange: (focused) {
+                  setState(() {
+                    _isFocused = focused;
+                  });
+                },
                 keyboardType: TextInputType.text,
                 onChanged: (value) {},
                 validator: (value) {
@@ -200,9 +210,10 @@ class _Cargo_loginState extends State<Cargo_login> {
                   }
                 },
                 obscureText: false,
-                hintTextStyle: const TextStyle(
+                hintTextStyle: TextStyle(
                   letterSpacing: 1.0,
                   wordSpacing: 2.0,
+                  color: _isFocused ? Colors.green.shade700 : Colors.grey,
                   // ... other styles
                 ),
               ),
@@ -219,11 +230,17 @@ class _Cargo_loginState extends State<Cargo_login> {
                 },
                 obscureText: true,
                 showSuffixIcon: true,
-                hintTextStyle: const TextStyle(
+                hintTextStyle: TextStyle(
                   letterSpacing: 1.0,
                   wordSpacing: 2.0,
+                  color: _isFocused ? Colors.red : Colors.grey,
                   // ... other styles
                 ),
+                onFocusChange: (focus) {
+                  setState(() {
+                    _isFocused = focus;
+                  });
+                },
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a company name';
