@@ -7,6 +7,7 @@ import '../../Components/Home_Page.dart';
 import '../../model/report.dart';
 import '../Bill/billDetail.dart';
 import '../Bottom_Navigation.dart';
+import 'ReportDetail.dart';
 
 class Report extends StatefulWidget {
   const Report({super.key});
@@ -73,122 +74,133 @@ class _ReportState extends State<Report> {
               return Container(
                   padding: const EdgeInsets.only(left: 8, right: 8),
                   margin: const EdgeInsets.only(bottom: 8),
-                  child: Card(
-                      child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey.shade200.withOpacity(0.7),
-                            blurRadius: 8.0,
-                            spreadRadius: 2.0,
-                            offset: const Offset(
-                              6, // Move to right 7.0 horizontally
-                              8, // Move to bottom 8.0 Vertically
-                            ))
-                      ],
-                    ),
-                    height: screenHeight * 0.17,
-                    child: ListTile(
-                      title: Container(
-                        margin: EdgeInsets.only(left: 5),
-                        child: Column(
-                          children: [
-                            ListTile(
-                              title: Row(
-                                children: [
-                                  Text(
-                                    bill.startTrip,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey.shade600,
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.bold,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Report_Detail()));
+                    },
+                    child: Card(
+                        child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey.shade200.withOpacity(0.7),
+                              blurRadius: 8.0,
+                              spreadRadius: 2.0,
+                              offset: const Offset(
+                                6, // Move to right 7.0 horizontally
+                                8, // Move to bottom 8.0 Vertically
+                              ))
+                        ],
+                      ),
+                      height: screenHeight * 0.17,
+                      child: ListTile(
+                        title: Container(
+                          margin: EdgeInsets.only(left: 5),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                title: Row(
+                                  children: [
+                                    Text(
+                                      bill.startTrip,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey.shade600,
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      left: 8,
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        left: 8,
+                                      ),
+                                      child: Icon(Icons.trip_origin,
+                                          size: 15,
+                                          color: Colors.grey.shade300),
                                     ),
-                                    child: Icon(Icons.trip_origin,
-                                        size: 15, color: Colors.grey.shade300),
-                                  ),
-                                  Container(
-                                    width: screenWidth * 0.25,
-                                    child: const Stack(
-                                      alignment: Alignment.center,
-                                      children: [
-                                        DottedLine(
-                                          lineThickness: 1.0,
-                                          dashLength: 4.0,
-                                          dashColor: Colors.grey,
-                                          dashGapRadius: 2.0,
-                                        ),
-                                        Icon(
-                                          Icons.local_shipping,
-                                          color: Colors.grey,
-                                          size: 20,
-                                        ),
-                                      ],
+                                    Container(
+                                      width: screenWidth * 0.25,
+                                      child: const Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          DottedLine(
+                                            lineThickness: 1.0,
+                                            dashLength: 4.0,
+                                            dashColor: Colors.grey,
+                                            dashGapRadius: 2.0,
+                                          ),
+                                          Icon(
+                                            Icons.local_shipping,
+                                            color: Colors.grey,
+                                            size: 20,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(right: 8),
-                                    alignment: Alignment.centerLeft,
-                                    child: Icon(Icons.location_on,
-                                        size: 15, color: Colors.grey.shade300),
-                                  ),
-                                  Text(
-                                    bill.endTrip,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey.shade600,
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.bold,
+                                    Container(
+                                      margin: EdgeInsets.only(right: 8),
+                                      alignment: Alignment.centerLeft,
+                                      child: Icon(Icons.location_on,
+                                          size: 15,
+                                          color: Colors.grey.shade300),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                top: 20,
-                              ),
-                              child: const Expanded(
-                                child: DottedLine(
-                                  lineThickness: 1.0,
-                                  dashLength: 4.0,
-                                  dashColor: Colors.grey,
-                                  dashGapRadius: 2.0,
+                                    Text(
+                                      bill.endTrip,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey.shade600,
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ),
-                            ListTile(
-                              title: Text(
-                                "Date",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.grey.shade500,
-                                  fontFamily: 'Roboto',
-                                  fontWeight: FontWeight.bold,
+                              Container(
+                                margin: EdgeInsets.only(
+                                  top: 20,
+                                ),
+                                child: const Expanded(
+                                  child: DottedLine(
+                                    lineThickness: 1.0,
+                                    dashLength: 4.0,
+                                    dashColor: Colors.grey,
+                                    dashGapRadius: 2.0,
+                                  ),
                                 ),
                               ),
-                              trailing: Text(
-                                bill.Date,
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.amber,
-                                  fontFamily: 'Roboto',
-                                  fontWeight: FontWeight.bold,
+                              ListTile(
+                                title: Text(
+                                  "Date",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.grey.shade500,
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                trailing: Text(
+                                  bill.Date,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.amber,
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            )
-                          ],
+                             
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  )));
+                    )),
+                  ));
             }).toList())),
       ),
     );

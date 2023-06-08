@@ -99,7 +99,9 @@ class _NotificationDetailState extends State<NotificationDetail> {
                     );
                   }).toList(),
                 ),
-                CustomButton(onPressed: () {}, text: "Approve")
+                Container(
+                    margin: EdgeInsets.only(top: 130),
+                    child: CustomButton(onPressed: () {}, text: "Approve"))
               ],
             ),
           ),
