@@ -21,7 +21,7 @@ import 'animate.css';
 import "./header.css"
 import './navigation.css';
 
-export default function Navigation({ path, title }) {
+export default function Navigation({ path, title, link, past }) {
 
     const [popup, setPop] = useState(false);
     const handleClickopen = () => {
@@ -164,7 +164,7 @@ export default function Navigation({ path, title }) {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/markating" style={path == "/markating" ? { color: getColor() } : { color: getColor2() }}>
+                            <Link to="/marketing" style={path == "/marketing" ? { color: getColor() } : { color: getColor2() }}>
                                 <p className="hovertext" data-hover="Market"><BsFillBriefcaseFill size="1.8rem"></BsFillBriefcaseFill></p>
                             </Link>
                         </li>
@@ -227,8 +227,10 @@ export default function Navigation({ path, title }) {
 
                     <div className='headerTitle'>
                         <h2>Bazra Motors /</h2>
-                        <h5>{title}</h5>
+                   { past && <Link to={link} className='link-header'><h5>{past}/</h5></Link>}
+                       <h5>{title}</h5>
                     </div>
+                    <div className='header_right'>
                     <div className='headercontents'>
                         <div className='headerIcon'>
                             <p className='makeGrid'><p><HiBellAlert size="2.2rem" color='red' ></HiBellAlert></p><p className='count' style={{color:"red"}}>{dataSource ? dataSource.length : 0}</p></p>
@@ -237,15 +239,15 @@ export default function Navigation({ path, title }) {
 
                     </div>
                     <div className='dashbordProfile'>
-                        <p className='displayUser'><FaUserAlt className='FaUserAlt' size="1.6rem" color='green'></FaUserAlt></p>
-                        <p className='displayUser role'>{user.role}</p>
+                        <p className='displayUser small'><FaUserAlt className='FaUserAlt' size="1.6rem" color='green'></FaUserAlt></p>
+                        <p className='displayUser role small'>{user.role}</p>
                         <p onClick={() => { toggle() }}><IoMdArrowDropdownCircle size="1.2rem" color='green'></IoMdArrowDropdownCircle></p>
                     </div>
-                    <p className='toggle'>
+                    {/* <p className='toggle'>
                         <label onClick={action ? showMenu : hideMenu}><BsThreeDotsVertical className='FaUserAlt' size="1.6rem" color='green'></BsThreeDotsVertical></label>
                         <label onClick={() => { toggle() }}>{state ? <FaUserAlt size="1.2rem" color='green'></FaUserAlt> : <FaUserAlt size="1.2rem" color='green'></FaUserAlt>}</label>
-                    </p>
-
+                    </p> */}
+                    </div>
                 </div>
 
             </div>

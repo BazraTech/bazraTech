@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+// import { useHistory } from 'React-router-dom';
 import styles from './Post_market.module.css';
 import { useForm } from 'react-hook-form';
 import { Link, useParams, useNavigate } from 'react-router-dom';
@@ -12,8 +13,16 @@ import Market_Progress from './Market_Progress'
 export default function Post_market() 
 {
 
-    let isPost = false;
-
+    const {
+        register,
+        handleSubmit,
+        watch, 
+        formState: { errors }, 
+    } = useForm();
+    const onSubmit = (data) => {
+        console.log(data);
+        handleClick();
+    };
     const [state, setState] = useState(false);
 
     const toggle = () => {
@@ -61,18 +70,21 @@ console.log(dataSource);
     const goBack = () => {
         navigate(-1);
     }
-    const onSubmit = async () => {
-        
+
+    // const history = useHistory();
+
+    const handleClick = async () => {
+        console.log('Im on submit function');
         const options = {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
-                // "Accept": "application/json",
+                "Accept": "application/json",
                 "Authorization": `Bearer ${jwt}`
             },
            
         };
-        const url = "http://64.226.104.50:9090/Api/Admin/PostCargo"; 
+        const url =`http://64.226.104.50:9090/Api/Admin/PostCargo/${id}`; 
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -84,9 +96,10 @@ console.log(dataSource);
                 console.log("Posted successful");
                 swal("Successfully Posted", `${mess}`, "success", {
                     button: true,
-                    // timer: 60000,
+                    timer: 60000,
                 });
-                <Market_Progress />
+                // history.push('/market-progress');
+                window.location.href = `/Market_Progress/${id}`;
 
             } else {
                 console.log("failed");
@@ -105,7 +118,7 @@ console.log(dataSource);
 
         <div>
 
-            <Navigation path="/markating" title="Post markate"></Navigation>
+            <Navigation path="/marketing" title="Post markate" link="/marketing" past="marketing"></Navigation>
 
             <div className={styles.main_content}>
 
@@ -115,7 +128,7 @@ console.log(dataSource);
                 </div>
                 <div className={styles.allDiv}>
                     
-                    <form onSubmit={onSubmit}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
 
                         <div div className={styles.forms}>
                             <div>
@@ -143,15 +156,11 @@ console.log(dataSource);
                                     <p>weight</p>
                                     <input  value={dataSource.weight} type="text" disabled={diabled}></input>
                                 </div>
-                                <div>
-                                    <p>price</p>
-                                    <input  value={dataSource.price} type="text" disabled={diabled}></input>
-                                </div>
 
                             <div className={styles.setButton}>
                             
-                            {/* <button className= {styles.button3 }  >Post</button> */}
-                            <Link  className= {styles.button3 } to={`/Market_Progress/${id}`}> Post </Link>
+                            <button className= {styles.button3 }  >Post</button>
+                            {/* <Link  className= {styles.button3 } to={`/Market_Progress/${id}`}> Post </Link> */}
                         </div>
                      </div>
 

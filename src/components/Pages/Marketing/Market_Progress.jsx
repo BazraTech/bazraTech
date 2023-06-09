@@ -38,7 +38,7 @@ export default function Market_Progress() {
       
     };
     const { id } = useParams()
-    const url2 = `http://64.226.104.50:9090/Api/Admin/All/Cargos/${id}`;
+    const url2 = `http://64.226.104.50:9090/Api/Admin/All/CargosBy/ACCEPT`;
 
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
@@ -51,7 +51,7 @@ export default function Market_Progress() {
                 // setLoading(false);
             })
     }, [])
-console.log(dataSource);
+ console.log(dataSource);
 
 
 
@@ -71,7 +71,8 @@ console.log(dataSource);
 
         <div>
 
-            <Navigation path="/markating" title="Post progress"></Navigation>
+          {dataSource.status ='ACTIVE' ?<Navigation path="/marketing" title="Post progress" link="/marketing" past="marketing"></Navigation>:
+           <Navigation path="/marketing" title="Post progress" link={`/Post_market/${id}`} past="post marketing"></Navigation>}
 
             <div className={styles.main_content}>
 
@@ -86,11 +87,11 @@ console.log(dataSource);
 
                         <div className={styles.forms}>
                                 <div>
-                                        <p>Cargo owner </p>
+                                        <p>20 ton </p>
                                         <input  value={dataSource.cargoOwner} type="text" disabled={diabled}></input>
                                 </div> 
                                 <div>
-                                    <p>packaging </p>
+                                    <p>40 ton </p>
                                         <input  value={dataSource.packaging} type="text" disabled={diabled}></input>
                                 </div>
                                 
@@ -102,17 +103,57 @@ console.log(dataSource);
                                         </div>
                                     </div><span>{percent}%</span>
                                  </div>
+                                 <button>Send to Cargo Owner</button>
                         
                         </div>  
+                    </form>
+                 </div>
+
                         
-                 </form>
+            {/*---------------- table ------------------- */}
+
+            <div className={styles.outer_vehicle_table} id='myTable'>
+              <p>Vihecles list</p>
+              <table className={styles.vehicle_table} id="myTable">
+                                            <thead>
+                                                <tr>
+                                                <th>Id</th>
+                                                    <th>vihicle owner Name</th>
+                                                    <th>driver</th>
+                                                    <th>price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                              
+                                                    <tr className={styles.active_row}>
+                                                        <td>{dataSource.id}</td>
+                                                        <td>{dataSource.cargoOwner}</td>
+                                                        <td>{dataSource.packaging}</td>
+                                                        <td>{dataSource.weight}</td>
+                                                                                                             
+                                                    </tr>
+                                              
+                                            </tbody>
+                                        </table>
+            </div>
+            <div className={styles.page}>
+              {/* <Pagination */}
+                {/* // onChange={(page) => setCurentPage(page)}
+                // pageSize={postPerPage}
+                // current={page}
+                // total={totalPages}
+              // showQuickJumper
+              // showSizeChanger
+              // onShowSizeChange={onShowSizeChange} */}
+              {/* /> */}
+           
                  
             </div>
 
-            </div>
+            
 
             {/* ---------------end Registaration--------------- */}
         </div>
-
+ </div>
     )
 }

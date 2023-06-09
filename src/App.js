@@ -64,7 +64,7 @@ class App extends Component{
         <Route path="/individual" element={<Individual_registration />}></Route>
         <Route path="/Total_number_of_vehicle" element={<Total_number_of_vehile />}></Route>
         <Route path="/tracking" element={<Tracking />}></Route>
-        <Route path="/markating" element={<Marketing />}></Route>
+        <Route path="/marketing" element={<Marketing />}></Route>
         <Route path="/Market_Progress/:id" element={<Market_Progress/>}></Route>
         <Route path="Post_market/:id" element={<Post_market/>}></Route>
         <Route path="/off_road" element={<Off_road />}></Route>

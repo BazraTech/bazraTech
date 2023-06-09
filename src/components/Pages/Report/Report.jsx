@@ -8,6 +8,7 @@ import { FaParking } from "react-icons/fa";
 import { GrSettingsOption } from "react-icons/gr";
 import { IoSettingsOutline } from "react-icons/io5";
 // import './total_no_of_vehicle.css';
+import './Report.css';
 import { Link, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -67,7 +68,7 @@ export default function () {
         },
     };
 
-    const url = "http://64.226.104.50:9090/Api/Vehicle/Status/inroute";
+    const url = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/ONROUTE";
 
     const [dataSource, setDataSource] = useState([])
     const [Loading, setLoading] = useState([])
@@ -83,7 +84,7 @@ export default function () {
             })
     }, [])
 
-    const url2 = "http://64.226.104.50:9090/Api/Vehicle/All";
+    const url2 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles";
 
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
@@ -91,7 +92,7 @@ export default function () {
         fetch(url2, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource2(data.vehicles)
+                setDataSource2(data.vehiclesINF)
                 console.log(dataSource2)
                 setLoading(false);
 
@@ -129,6 +130,49 @@ export default function () {
 
             <div className='main_content'>
 
+            <div className='outer_vehicle_tables' id='myTable'>
+        <p>Total Vehicle</p>
+
+        <table class="vehicle_table" id="myTable">
+
+          <thead>
+            <tr>
+              <th>Profile</th>
+              <th>Assigned Driver</th>
+              <th>Vehicle ID</th>
+              <th>Vehicle Type</th>
+              <th>Plate Number</th>
+              <th>Report</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentPage.map(item => (
+              <tr className='active_row'>
+
+                <td>{item.vehicleName}</td>
+                <td>{item.driver}</td>
+                <td>{item.id}</td>
+                <td>{item.vehicleCatagory.catagory}</td>
+                <td>{item.plateNumber}</td>
+                <td><Link to={`/report_detail/${item.id}`}><button>Report</button></Link></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className='page'>
+        <Pagination
+          onChange={(page) => setCurentPage(page)}
+          pageSize={postPerPage}
+          current={page}
+          total={total}
+          showQuickJumper
+          showSizeChanger
+          onShowSizeChange={onShowSizeChange}
+
+        />
+      </div>
 
             </div>
         </div >

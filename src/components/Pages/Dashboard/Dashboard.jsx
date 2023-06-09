@@ -208,7 +208,7 @@ export default function Dashboard() {
                         </Link>
                     </div>
                     <div className={styles.users}>
-                        <Link to="/markating" style={{ textDecoration: 'none' }} >
+                        <Link to="/marketing" style={{ textDecoration: 'none' }} >
                             <h4>Marketing </h4>
                             <div className={styles.innerCard3}>
                                 <BsFillBriefcaseFill  size="2.5rem" color='#5959b1'></BsFillBriefcaseFill >

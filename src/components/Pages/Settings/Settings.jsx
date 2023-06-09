@@ -690,6 +690,20 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                 setLoading(false)
             })
     }, [])
+    //driver state
+   
+const DriverStateurl = "http://64.226.104.50:9090/Api/Admin/DriverState/All";
+const [DriverState, setDriverState] = useState([])
+useEffect(() => {
+    setLoading(true)
+    fetch(DriverStateurl, options)
+        .then(respnse => respnse.json())
+        .then(data => {
+            setDriverState(data.driverState)
+            setLoading(false)
+        })
+}, [])
+    // logo and avatar
     const avatarurl = "http://64.226.104.50:9090/Api/Admin/LogoandAvatar";
     const [avatar, setAvatar] = useState([])
     useEffect(() => {
@@ -1396,6 +1410,52 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                         }
                     </div>
                 </div>
+                {/* /********Driver state */}
+                <div className='outer_setting'>
+                    <div title='Driver state' className='setting_header'>Driver state</div>
+                    <PopUp title="Add_Driver_State" />
+                    <div>
+                        {Loading
+                            ? <p className='loading'><SyncLoader
+                                color={color}
+                                Left={margin}
+                                loading={Loading}
+                                size={10}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            /></p>
+                            :
+                            <div className="outer_vehicle_table7" id='myTable'>
+                                <table class="vehicle_table7" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Driver state</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {DriverState && DriverState.map(item => {
+                                            return <tr className='active_row'>
+                                                <td >{item.id}</td>
+                                                <td >{item.driverState}</td>
+                                                <td>
+                                                    <p className='notification_actions'>
+                                                        <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
+                                                            onClick={() => {
+                                                                handleClickEdit21(item.id, item.driverState, "Update_CargoType", "Edit Cargo Type")
+                                                            }}></FaEdit>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={() => {handleClickDelete(item.id, "Cargo_Type")}}></MdDeleteForever>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                </div> 
 
                 <div>
                     {/* {popup ?
