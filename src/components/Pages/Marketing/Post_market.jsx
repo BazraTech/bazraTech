@@ -7,8 +7,12 @@ import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import axios from "axios";
 import swal from "sweetalert";
+import Market_Progress from './Market_Progress'
 
-export default function Post_market() {
+export default function Post_market() 
+{
+
+    let isPost = false;
 
     const [state, setState] = useState(false);
 
@@ -57,9 +61,44 @@ console.log(dataSource);
     const goBack = () => {
         navigate(-1);
     }
-    const onSubmit = (e) => {
-        e.preventDefault()
-    };
+    const onSubmit = async () => {
+        
+        const options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                // "Accept": "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
+           
+        };
+        const url = "http://64.226.104.50:9090/Api/Admin/PostCargo"; 
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            console.log(result);
+            localStorage.setItem("message", JSON.stringify(result["message"])); 
+            const mess = localStorage.getItem("message");
+            console.log(mess);
+            if (response.ok) {
+                console.log("Posted successful");
+                swal("Successfully Posted", `${mess}`, "success", {
+                    button: true,
+                    // timer: 60000,
+                });
+                <Market_Progress />
+
+            } else {
+                console.log("failed");
+                swal(`Failed To Post ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+        
+    
    
 
     return (
@@ -75,9 +114,10 @@ console.log(dataSource);
                     <p ><h4>Cargo Owner Name : {dataSource.cargoOwner} <br /> Pakaging : {dataSource.packaging}</h4></p>
                 </div>
                 <div className={styles.allDiv}>
-                     <form onSubmit={(onSubmit)}>
+                    
+                    <form onSubmit={onSubmit}>
 
-                        <div className={styles.forms}>
+                        <div div className={styles.forms}>
                             <div>
                                     <p>Cargo owner </p>
                                     <input  value={dataSource.cargoOwner} type="text" disabled={diabled}></input>
@@ -108,14 +148,15 @@ console.log(dataSource);
                                     <input  value={dataSource.price} type="text" disabled={diabled}></input>
                                 </div>
 
-                            </div>
-                        <div className={styles.setButton}>
+                            <div className={styles.setButton}>
                             
-                            <button className= {styles.button3 }type='submit' disabled={diabled}>Post</button>
+                            {/* <button className= {styles.button3 }  >Post</button> */}
+                            <Link  className= {styles.button3 } to={`/Market_Progress/${id}`}> Post </Link>
                         </div>
+                     </div>
 
                     </form>
-                </div>
+             </div>
 
             </div>
 

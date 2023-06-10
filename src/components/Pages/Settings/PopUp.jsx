@@ -126,6 +126,16 @@ let isAvatar = false;
             console.log("onSumit")
             Add_Avatar(inputData, logo);
         }
+        /// Add_business_type"
+        if (title === 'Add_business_type') {
+            console.log("onSumit")
+            Add_business_type(inputData);
+        }
+        // Add_business_sector
+        if (title === 'Add_business_sector') {
+            console.log("onSumit")
+            Add_business_sector(inputData);
+        }
 
     };
 
@@ -440,6 +450,66 @@ let isAvatar = false;
             body: JSON.stringify(item),
         };
         const url = "http://64.226.104.50:9090/Api/Admin/CreateCargoType";
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            if (response.ok) {
+                swal("Successful", `${mess}`, "success", {
+                    buttons: false,
+                    timer: 2000,
+                });
+                setPopupAdd(false);
+            } else {
+                swal(`Failed To Register ${mess}`, "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    //Add_business_type
+    async function Add_business_type(businessType) {
+        let item =
+        {
+            businessType: businessType,
+        };
+        const options = {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
+            body: JSON.stringify(item),
+        };
+        const url = "http://64.226.104.50:9090/Api/Admin/CreateBusinessType";
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            if (response.ok) {
+                swal("Successful", `${mess}`, "success", {
+                    buttons: false,
+                    timer: 2000,
+                });
+                setPopupAdd(false);
+            } else {
+                swal(`Failed To Register ${mess}`, "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    // Add business sector
+    async function Add_business_sector(businessSector) {
+        let item =
+        {
+            businessSector: businessSector,
+        };
+        const options = {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
+            body: JSON.stringify(item),
+        };
+        const url = "http://64.226.104.50:9090/Api/Admin/CreateBusinessSector";
         try {
             const response = await fetch(url, options);
             const result = await response.json();

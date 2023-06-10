@@ -316,10 +316,10 @@ export default function () {
                                     </tr>
                                 }):
                                  <tr>
-                                        <td>from</td>
-                                        <td>to</td>
-                                        <td>message</td>
-                                        <td>status</td>
+                                        <td> - </td>
+                                        <td> - </td>
+                                        <td> - </td>
+                                        <td> - </td>
 
                                     </tr>
                             }

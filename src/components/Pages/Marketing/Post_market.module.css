@@ -198,7 +198,20 @@
     color: #ff0000;
     font-size: 14px;
   }
-  
+  /********************/
+  /* progress bar */
+  .progressBar{
+    border: 3ps solid red;
+  }
+  .progressDiv{
+    border: .5px solid ;
+    border-radius: 10px;
+  }
+  .progress{
+    /* border: 1px solid rgb(226, 226, 210); */
+    height: 15px;
+    border-radius: 10px;
+  }
   @media screen and (max-width: 900px) {
     .forms {
       display: grid;

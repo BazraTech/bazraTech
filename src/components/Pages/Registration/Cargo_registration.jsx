@@ -138,13 +138,13 @@ export default function Cargo_registration() {
 
     };
 
-    const url = "http://64.226.104.50:9090/Api/Admin/All/CompanySector/";
+    const url = "http://64.226.104.50:9090/Api/Admin/All/BusinessSectors";
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
         fetch(url, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource(data.companySectors)
+                setDataSource(data.businessSectors)
                 console.log(dataSource)
             })
     }, [])
@@ -193,13 +193,13 @@ export default function Cargo_registration() {
             })
     }, [])
 
-    const url5 = "http://64.226.104.50:9090/Api/Admin/All/CompanyType/";
+    const url5 = "http://64.226.104.50:9090/Api/Admin/All/BusinessTypes";
     const [dataSourc6, setDataSource6] = useState([])
     useEffect(() => {
         fetch(url5, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource6(data.companyTypes)
+                setDataSource6(data.businessSectors)
                 console.log(dataSource)
             })
     }, [])
@@ -383,7 +383,7 @@ export default function Cargo_registration() {
                                         {
                                             dataSourc6.map(item => {
                                                 return <>
-                                                    <option>{item.companyType}</option>
+                                                    <option>{item.businessType}</option>
                                                 </>
                                             })
                                         }
@@ -401,7 +401,7 @@ export default function Cargo_registration() {
                                         {
                                             dataSource.map(item => {
                                                 return <>
-                                                    <option>{item.sectorName}</option>
+                                                    <option>{item.businessSector}</option>
                                                 </>
                                             })
                                         }
