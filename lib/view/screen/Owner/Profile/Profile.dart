@@ -61,7 +61,7 @@ class _ProfileState extends State<Profile> {
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Container(
-          margin: EdgeInsets.only(top: 40),
+          margin: EdgeInsets.only(top: 28),
           child: SingleChildScrollView(
             child: Column(children: [
               Row(
@@ -144,7 +144,7 @@ class _ProfileState extends State<Profile> {
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10),
                     )),
-                height: screenHeight * 0.26,
+                height: screenHeight * 0.28,
                 width: screenWidth,
                 child: Column(children: [
                   SizedBox(
@@ -265,9 +265,6 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -283,7 +280,7 @@ class _ProfileState extends State<Profile> {
                           Container(
                               margin: EdgeInsets.only(left: 10),
                               width: screenWidth * 0.2,
-                              height: screenHeight * 0.06,
+                              height: screenHeight * 0.05,
                               child: Text(
                                 TranslationUtil.text(
                                   "Gender",

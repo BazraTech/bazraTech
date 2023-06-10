@@ -442,7 +442,6 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                     ),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.only(top: 8),
                                     child: Text(TranslationUtil.text("Driver"),
                                         style: TextStyle(
                                             color: kPrimaryColor,
@@ -497,7 +496,6 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(top: 6),
                                   child: Text(
                                     TranslationUtil.text("Vehicle"),
                                     style: TextStyle(
@@ -608,7 +606,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                 Container(
                                   height:
                                       MediaQuery.of(context).size.height * 0.06,
-                                  margin: EdgeInsets.only(top: 12),
+                                  margin: EdgeInsets.only(top: 6),
                                   //height: 70,
                                   width: MediaQuery.of(context).size.width,
                                   child: Image.asset(
@@ -676,7 +674,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(top: 8),
+                                  margin: EdgeInsets.only(top: 5),
                                   child: Text(
                                     TranslationUtil.text('Trip management'),
                                     style: TextStyle(

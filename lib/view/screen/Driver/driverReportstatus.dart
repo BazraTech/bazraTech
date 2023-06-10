@@ -1,5 +1,6 @@
 import 'package:bazralogin/const/constant.dart';
 import 'package:bazralogin/view/screen/Driver/driverReport.dart';
+import 'package:bazralogin/view/screen/Owner/report/toggelReport.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../Model/ApiConfig.dart';
@@ -25,6 +26,38 @@ class _driverReportstatusState extends State<driverReportstatus> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 80,
+          elevation: 0,
+          leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+          ),
+          backgroundColor: Colors.white,
+          title: Container(
+            margin: EdgeInsets.only(right: screenWidth * 0.12),
+            width: double.infinity,
+            height: 40,
+            color: Colors.white,
+            child: Center(
+              child: TextField(
+                decoration: const InputDecoration(
+                  hintText: 'Driver Name or Plate No',
+                  border: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  prefixIcon: Icon(Icons.search),
+                ),
+              ),
+            ),
+          ),
+        ),
         backgroundColor: Color.fromRGBO(236, 240, 243, 1),
         body: TabBarView(
           children: [driverReport(), driverReport(), driverReport()],

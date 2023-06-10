@@ -27,6 +27,7 @@ class _forgotPinState extends State<forgotPin> {
   TextEditingController newpass = TextEditingController();
   TextEditingController Confirmpass = TextEditingController();
   TextEditingController resetpin = TextEditingController();
+  bool isLoading = false;
   ChangePasswords() async {
     try {
       final storage = new FlutterSecureStorage();
@@ -46,6 +47,9 @@ class _forgotPinState extends State<forgotPin> {
             "Accept": "application/json",
             "Authorization": "Bearer $value",
           });
+      setState(() {
+        isLoading = true;
+      });
 
       if (response.statusCode == 200) {
         Get.offAllNamed("/home");
@@ -65,6 +69,23 @@ class _forgotPinState extends State<forgotPin> {
     print("${currentPassword.text}");
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Change password",
+          style: TextStyle(color: Colors.black),
+        ),
+        elevation: 0,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: kBackgroundColor,
+      ),
       backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
         child: Container(
@@ -72,37 +93,8 @@ class _forgotPinState extends State<forgotPin> {
           color: kBackgroundColor,
           child: Column(
             children: [
-              Container(
-                margin: EdgeInsets.only(
-                    top: screenHeight * 0.1, left: screenHeight * 0.00),
-                child: Row(
-                  children: [
-                    Container(
-                      // margin: EdgeInsets.only(bottom: screenHeight * 0.2),
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(
-                          Icons.arrow_back_ios_new,
-                          size: 30,
-                        ),
-                      ),
-                    ),
-                    Container(
-                        margin: EdgeInsets.only(left: screenWidth * 0.14),
-                        child: Text(
-                          "Change password",
-                          style: TextStyle(
-                              fontSize: 23,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Nunito"),
-                        )),
-                  ],
-                ),
-              ),
               Padding(
-                padding: const EdgeInsets.all(14.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -230,19 +222,49 @@ class _forgotPinState extends State<forgotPin> {
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width - 30,
                         child: ElevatedButton(
-                          onPressed: () {
-                            ChangePasswords();
-                          },
-                          child: const Text(
-                            "Confirm",
-                            style: TextStyle(
-                                fontFamily: "Nunito",
-                                color: Color.fromRGBO(255, 255, 255, 1),
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          style: ThemeHelper().buttonStyle(),
-                        ),
+                            onPressed: isLoading ? null : ChangePasswords,
+                            child: Container(
+                              height: 55,
+                              width: screenWidth,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  isLoading
+                                      ? SizedBox(
+                                          height: 24,
+                                          width: 24,
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                                    Colors.white),
+                                          ),
+                                        )
+                                      : SizedBox(), // Empty SizedBox if not loading
+                                  SizedBox(width: 8),
+                                  Text(
+                                    isLoading ? 'Please Wait' : 'Save',
+                                    style: TextStyle(
+                                        fontFamily: "Nunito",
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  )
+                                ],
+                              ),
+                            ),
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.resolveWith((states) {
+                                  if (states.contains(MaterialState.pressed)) {
+                                    return Color.fromRGBO(255, 148, 165, 223);
+                                  }
+                                  // 98, 172, 181
+                                  return Colors.lightBlue;
+                                }),
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(6))))),
                       ),
                     ],
                   ))

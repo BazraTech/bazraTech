@@ -9,6 +9,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../Theme/clippbox.dart';
+import '../../../config/APIService.dart';
 
 class activeWork extends StatefulWidget {
   const activeWork({super.key});
@@ -20,6 +21,8 @@ class activeWork extends StatefulWidget {
 class _activeWorkState extends State<activeWork> {
   bool _isActivebutton = false;
   bool _isActivebutton2 = false;
+  bool _isLoading = true;
+  List Result = [];
   //change state of button
   void setActiveButton(bool isActive) {
     setState(() {
@@ -31,6 +34,37 @@ class _activeWorkState extends State<activeWork> {
     setState(() {
       _isActivebutton2 = isActive;
     });
+  }
+
+  activecargoFetch() async {
+    try {
+      final storage = new FlutterSecureStorage();
+      var token = await storage.read(key: 'jwt');
+      var client = http.Client();
+      Map<String, String> requestHeaders = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      var url = Uri.http(ApIConfig.urlAPI, ApIConfig.corgaStatus);
+      var response = await client.get(url, headers: requestHeaders);
+
+      print(response.body);
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        List Results = data["cargos"];
+        setState(() {
+          _isLoading = false;
+          Result = Results;
+        });
+
+        return Result;
+      } else {
+        throw Exception("not Loaded");
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   // load  or unload  car using function
@@ -48,18 +82,53 @@ class _activeWorkState extends State<activeWork> {
             "Accept": "application/json",
             "Authorization": "Bearer $value",
           });
+      final Map jsonResponse = json.decode(response.body);
 
       if (response.statusCode == 200) {
         if (load == load) {
-          print("yes");
+          String alertContent = jsonResponse["message"];
+          showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+              title: Center(child: Text('Success')),
+              content: Text(alertContent),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            ),
+          );
         }
       } else {
-        print('noo');
+        String alertContent = jsonResponse["message"];
+        showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            title: Text(''),
+            content: Text(alertContent),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        );
       }
     } catch (e) {
       print(e);
-      throw e;
     }
+  }
+
+  void initState() {
+    super.initState();
+    activecargoFetch();
   }
 
   @override
@@ -67,7 +136,7 @@ class _activeWorkState extends State<activeWork> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+      backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -81,14 +150,14 @@ class _activeWorkState extends State<activeWork> {
                     color: Color.fromRGBO(85, 164, 240, 1),
                     padding: EdgeInsets.zero,
                     margin: EdgeInsets.only(
-                        top: screenHeight * 0.05, right: screenWidth * 0.4),
+                        top: screenHeight * 0.08, right: screenWidth * 0.4),
                     child: IconButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
                       icon: Icon(
                         Ionicons.arrow_back,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -98,7 +167,7 @@ class _activeWorkState extends State<activeWork> {
             Container(
               child: Stack(children: [
                 Container(
-                  height: screenHeight * 0.25,
+                  height: screenHeight * 0.15,
                   // margin: EdgeInsets.only(bottom: 40),
                   decoration: BoxDecoration(
                       color: Color.fromRGBO(85, 164, 240, 1),
@@ -113,104 +182,142 @@ class _activeWorkState extends State<activeWork> {
                   ),
                 ),
                 Positioned(
-                    child: Container(
-                  margin: EdgeInsets.only(top: 99),
-                  height: screenHeight * 0.22,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(236, 240, 243, 1),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          height: screenHeight * 0.19,
-                          width: screenWidth - 20,
-                          child: Container(
-                            margin: EdgeInsets.only(
-                                top: screenWidth * 0.05,
-                                bottom: screenWidth * 0.05),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                    child: Column(
+                  children: [
+                    Center(
+                        child: Text(
+                      "Active Work",
+                      style: TextStyle(
+                        fontFamily: "Nuinto",
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 17,
+                      ),
+                    )),
+                    Container(
+                      height: screenHeight * 0.22,
+                      margin: EdgeInsets.only(top: 10),
+                      child: _isLoading
+                          ? Text("")
+                          : ListView.builder(
+                              itemCount: 1,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return Row(
                                   children: [
                                     Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Icon(
-                                          Icons.trip_origin,
-                                          color: Colors.green,
-                                        )),
-                                    CustomPaint(
-                                      size: Size(screenWidth * 0.19, 2),
-                                      painter: DashLinePainter(),
-                                    ),
-                                    Container(
-                                      height: screenHeight * 0.07,
-                                      width: screenWidth * 0.07,
-                                      child: Icon(
-                                        Icons.local_shipping,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                    CustomPaint(
-                                      size: Size(screenWidth * 0.2, 2),
-                                      painter: DashLinePainter(),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(
-                                        Icons.trip_origin,
-                                        color: Colors.red,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(10.0),
                                       child: Container(
-                                        width: screenWidth * 0.3,
-                                        margin: EdgeInsets.only(
-                                            left: screenWidth * 0.15),
-                                        child: Text(
-                                          "Jimma",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                            fontSize: 12,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                        height: screenHeight * 0.19,
+                                        width: screenWidth - 20,
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                              top: screenWidth * 0.05,
+                                              bottom: screenWidth * 0.05),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Icon(
+                                                        Icons.trip_origin,
+                                                        color: Colors.green,
+                                                      )),
+                                                  CustomPaint(
+                                                    size: Size(
+                                                        screenWidth * 0.19, 2),
+                                                    painter: DashLinePainter(),
+                                                  ),
+                                                  Container(
+                                                    height: screenHeight * 0.07,
+                                                    width: screenWidth * 0.07,
+                                                    child: Icon(
+                                                      Icons.local_shipping,
+                                                      color: Colors.red,
+                                                    ),
+                                                  ),
+                                                  CustomPaint(
+                                                    size: Size(
+                                                        screenWidth * 0.2, 2),
+                                                    painter: DashLinePainter(),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Icon(
+                                                      Icons.trip_origin,
+                                                      color: Colors.red,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Container(
+                                                      width: screenWidth * 0.3,
+                                                      margin: EdgeInsets.only(
+                                                          left: screenWidth *
+                                                              0.15),
+                                                      child: Text(
+                                                        Result[index]["pickUp"],
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black,
+                                                          fontSize: 12,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: screenWidth * 0.1,
+                                                  ),
+                                                  Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              4.0),
+                                                      child: Container(
+                                                        width:
+                                                            screenWidth * 0.3,
+                                                        child: Text(
+                                                          Result[index]
+                                                              ["dropOff"],
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.black,
+                                                            fontSize: 12,
+                                                          ),
+                                                        ),
+                                                      ))
+                                                ],
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: screenWidth * 0.1,
-                                    ),
-                                    Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Container(
-                                          width: screenWidth * 0.3,
-                                          child: Text(
-                                            "Addisa Ababa",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ))
                                   ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                                );
+                              }),
+                    ),
+                  ],
                 ))
               ]),
             ),
@@ -227,6 +334,8 @@ class _activeWorkState extends State<activeWork> {
                         children: [
                           Container(
                             decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black
@@ -235,14 +344,13 @@ class _activeWorkState extends State<activeWork> {
                                     offset: Offset(
                                         0, 3), // Offset in (x,y) coordinates
                                   ),
-                                ],
-                                color: Color.fromRGBO(236, 240, 243, 1),
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Color.fromRGBO(
-                                      255, 255, 255, 1), // Set the border color
-                                  width: 2.5,
-                                )),
+                                  const BoxShadow(
+                                    color: Colors.white,
+                                    offset: Offset(-4, -4),
+                                    blurRadius: 25,
+                                    spreadRadius: 1,
+                                  ),
+                                ]),
                             width: screenWidth * 0.44,
                             height: screenHeight * 0.1,
                             child: ElevatedButton(
@@ -284,6 +392,8 @@ class _activeWorkState extends State<activeWork> {
                           Spacer(),
                           Container(
                             decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black
@@ -292,14 +402,13 @@ class _activeWorkState extends State<activeWork> {
                                     offset: Offset(
                                         0, 3), // Offset in (x,y) coordinates
                                   ),
-                                ],
-                                color: Color.fromRGBO(236, 240, 243, 1),
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Color.fromRGBO(
-                                      255, 255, 255, 1), // Set the border color
-                                  width: 2.5,
-                                )),
+                                  const BoxShadow(
+                                    color: Colors.white,
+                                    offset: Offset(-4, -4),
+                                    blurRadius: 25,
+                                    spreadRadius: 1,
+                                  ),
+                                ]),
                             width: screenWidth * 0.44,
                             height: screenHeight * 0.1,
                             child: ElevatedButton(
@@ -352,6 +461,8 @@ class _activeWorkState extends State<activeWork> {
                         children: [
                           Container(
                             decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black
@@ -360,19 +471,18 @@ class _activeWorkState extends State<activeWork> {
                                     offset: Offset(
                                         0, 3), // Offset in (x,y) coordinates
                                   ),
-                                ],
-                                color: Color.fromRGBO(236, 240, 243, 1),
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Color.fromRGBO(
-                                      255, 255, 255, 1), // Set the border color
-                                  width: 2.5,
-                                )),
+                                  const BoxShadow(
+                                    color: Colors.white,
+                                    offset: Offset(-4, -4),
+                                    blurRadius: 25,
+                                    spreadRadius: 1,
+                                  ),
+                                ]),
                             width: screenWidth * 0.44,
                             height: screenHeight * 0.1,
                             child: ElevatedButton(
                               onPressed: () {
-                                Unloadandloadcar('');
+                                Unloadandloadcar('DEPARTURE');
                                 setActiveButton(true);
                               },
                               child: Text(
@@ -411,6 +521,8 @@ class _activeWorkState extends State<activeWork> {
                           Spacer(),
                           Container(
                             decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black
@@ -419,18 +531,18 @@ class _activeWorkState extends State<activeWork> {
                                     offset: Offset(
                                         0, 3), // Offset in (x,y) coordinates
                                   ),
-                                ],
-                                color: Color.fromRGBO(236, 240, 243, 1),
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Color.fromRGBO(
-                                      255, 255, 255, 1), // Set the border color
-                                  width: 2.5,
-                                )),
+                                  const BoxShadow(
+                                    color: Colors.white,
+                                    offset: Offset(-4, -4),
+                                    blurRadius: 25,
+                                    spreadRadius: 1,
+                                  ),
+                                ]),
                             width: screenWidth * 0.44,
                             height: screenHeight * 0.1,
                             child: ElevatedButton(
                               onPressed: () {
+                                Unloadandloadcar("DEPARRIVE");
                                 setActiveButton(false);
                               },
                               style: ButtonStyle(
@@ -457,7 +569,7 @@ class _activeWorkState extends State<activeWork> {
                                 elevation: MaterialStateProperty.all<double>(0),
                               ),
                               child: Text(
-                                "DEPARTUREARRIVED",
+                                "DEPARRIVED",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
@@ -476,6 +588,8 @@ class _activeWorkState extends State<activeWork> {
                         padding: const EdgeInsets.all(10.0),
                         child: Container(
                           decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black
@@ -484,19 +598,19 @@ class _activeWorkState extends State<activeWork> {
                                   offset: Offset(
                                       0, 3), // Offset in (x,y) coordinates
                                 ),
-                              ],
-                              color: Color.fromRGBO(236, 240, 243, 1),
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                color: Color.fromRGBO(
-                                    255, 255, 255, 1), // Set the border color
-                                width: 2.5,
-                              )),
+                                const BoxShadow(
+                                  color: Colors.white,
+                                  offset: Offset(-4, -4),
+                                  blurRadius: 25,
+                                  spreadRadius: 1,
+                                ),
+                              ]),
                           width: screenWidth * 0.44,
                           height: screenHeight * 0.1,
                           child: ElevatedButton(
                             onPressed: () {
                               setActiveButton(false);
+                              Unloadandloadcar("DESTARRIVE");
                             },
                             style: ButtonStyle(
                               backgroundColor:

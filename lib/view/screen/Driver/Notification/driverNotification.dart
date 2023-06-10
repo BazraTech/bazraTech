@@ -55,7 +55,7 @@ class _drivernotificationPageState extends State<drivernotificationPage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(236, 240, 243, 1),
+      backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -72,7 +72,7 @@ class _drivernotificationPageState extends State<drivernotificationPage> {
                         Navigator.pop(context);
                       },
                       child: const Icon(
-                        Icons.arrow_back_ios,
+                        Icons.arrow_back,
                         color: Colors.black,
                       ),
                     ),
@@ -95,30 +95,30 @@ class _drivernotificationPageState extends State<drivernotificationPage> {
                 ],
               ),
             ),
-            Divider(
-              color: Colors.grey,
-              thickness: 0.7,
-              height: 20,
-            ),
             Container(
               height: screenHeight,
-
-              // margin: EdgeInsets.only(bottom: 200),
-              // child: _isLoading
-              //     ? Container(
-              //         margin: EdgeInsets.only(top: 130),
-              //         child: Center(child: CircularProgressIndicator()))
-              //
               child: ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
-                itemCount: 1,
+                itemCount: 2,
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
                       Container(
                         height: screenHeight * 0.1,
-                        width: screenWidth - 16.0,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.shade400.withOpacity(0.2),
+                              spreadRadius: -1,
+                              blurRadius: 1,
+                              offset:
+                                  Offset(0, -3), // horizontal, vertical offset
+                            ),
+                          ],
+                        ),
+                        width: screenWidth,
                         child: Container(
                             child: Row(
                           children: [
@@ -187,11 +187,6 @@ class _drivernotificationPageState extends State<drivernotificationPage> {
                             )
                           ],
                         )),
-                      ),
-                      Divider(
-                        color: Colors.grey,
-                        thickness: 0.7,
-                        height: 20,
                       ),
                     ],
                   );

@@ -89,7 +89,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
                               child: Text(
                                 total,
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 12),
+                                    color: Colors.white, fontSize: 12),
                               ),
                             ));
                       },
@@ -114,7 +114,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
                               radius: 10,
                               child: Text(
                                 snapshot.data.toString(),
-                                style: TextStyle(color: Colors.black),
+                                style: TextStyle(color: Colors.white),
                               ),
                             ));
                       },
@@ -140,7 +140,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
                               child: Text(
                                 snapshot.data.toString(),
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontSize: 12,
                                 ),
                               ),
@@ -168,7 +168,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
                               child: Text(
                                 snapshot.data.toString(),
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontSize: 12,
                                 ),
                               ),
@@ -196,7 +196,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
                               child: Text(
                                 snapshot.data.toString(),
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontSize: 12,
                                 ),
                               ),

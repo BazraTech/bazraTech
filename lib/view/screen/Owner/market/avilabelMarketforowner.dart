@@ -158,7 +158,7 @@ class _availabelMarketState extends State<availabelMarket> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(22.0),
                                   child: Container(
-                                    height: screenHeight * 0.3,
+                                    height: screenHeight * 0.35,
                                     margin: EdgeInsets.zero,
                                     decoration: BoxDecoration(
                                         color: Colors.white,

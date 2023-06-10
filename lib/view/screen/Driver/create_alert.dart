@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
@@ -8,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
 
+import '../../../config/APIService.dart';
 import '../../../const/constant.dart';
 import 'driverHomePage.dart';
 
@@ -25,10 +27,12 @@ class _CreateAlertState extends State {
   final _formKey = GlobalKey<FormState>();
   List<String> _toDoListLocation = [];
   List<String> _toDoListAlert = [];
-
+  int? Resultsm;
   bool isalert = true;
   bool _value = true;
   String? alertType;
+  String? Results;
+  List findVehicle = [];
 
   List<bool> _checkedItems = [false, false, false, false, false];
   List<String> type = [
@@ -87,7 +91,6 @@ class _CreateAlertState extends State {
     prefs.setStringList('toDoList', _toDoListLocation.cast());
   }
 
-
   void Create_Alert() async {
     final storage = new FlutterSecureStorage();
     var value = await storage.read(key: 'jwt');
@@ -107,7 +110,7 @@ class _CreateAlertState extends State {
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
-          title: Text('API Response'),
+          title: Center(child: Text('Success')),
           content: Text(alertContent),
           actions: [
             TextButton(
@@ -139,8 +142,41 @@ class _CreateAlertState extends State {
     }
   }
 
+  driverFetch() async {
+    try {
+      final storage = new FlutterSecureStorage();
+      var token = await storage.read(key: 'jwt');
+      var client = http.Client();
+      Map<String, String> requestHeaders = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      var url = Uri.http(ApIConfig.urlAPI, ApIConfig.getalert);
+      var response = await client.get(url, headers: requestHeaders);
+
+      print(response.body);
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        final Result = data['activeAlerts'];
+        setState(() {
+          final Result = data["activeAlerts"];
+          int Resultsm = data["activeAlerts"][0]['id'];
+          print(Resultsm);
+        });
+
+        return Result;
+      } else {
+        throw Exception("not Loaded");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
 // finish alert
   void finishAlert() async {
+    driverFetch();
     final storage = new FlutterSecureStorage();
     var value = await storage.read(key: 'jwt');
     Map data = {
@@ -148,7 +184,7 @@ class _CreateAlertState extends State {
       "location": "ADDIS ABABA",
     };
     final url =
-        Uri.parse("http://64.226.104.50:9090/Api/Driver/FinishAlert/224");
+        Uri.parse("http://64.226.104.50:9090/Api/Driver/FinishAlert/96");
     http.post(url, body: json.encode(data), headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
@@ -157,8 +193,8 @@ class _CreateAlertState extends State {
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
-          title: Center(child: Text('Success')),
-          content: Text('API call was successful'),
+          title: Container(child: Center(child: Text('Success'))),
+          content: Text('Alert Finished'),
           actions: [
             TextButton(
               onPressed: () {
@@ -170,7 +206,23 @@ class _CreateAlertState extends State {
         ),
       );
       print("yes");
-    }).catchError((error) {});
+    }).catchError((error) {
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text(''),
+          content: Text("Wrong"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   DateTime greeting() {
@@ -183,6 +235,7 @@ class _CreateAlertState extends State {
   void initState() {
     super.initState();
     _loadToDoList();
+    driverFetch();
   }
 
   void dispose() {
@@ -200,7 +253,7 @@ class _CreateAlertState extends State {
       backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       appBar: AppBar(
         toolbarHeight: 80,
-        elevation: 0,
+        elevation: 1,
         leading: Container(
           margin: EdgeInsets.only(top: 5),
           child: InkWell(
@@ -231,6 +284,9 @@ class _CreateAlertState extends State {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            SizedBox(
+              height: 12,
+            ),
             ListTile(
               title: Container(
                 margin: EdgeInsets.only(
@@ -440,10 +496,7 @@ class _CreateAlertState extends State {
                                 margin: EdgeInsets.only(top: 20),
                                 child: ElevatedButton(
                                   onPressed: () => {
-                                    if (_formKey.currentState!.validate())
-                                      {
-                                        _addToAlert(alertType.toString()),
-                                      }
+                                    _addToAlert(alertType.toString()),
                                   },
                                   style: ButtonStyle(
                                       backgroundColor:

@@ -26,7 +26,7 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
   static bool isPressed = true;
   Offset distance = isPressed ? Offset(10, 10) : Offset(28, 28);
   double blur = isPressed ? 5.0 : 30.0;
-  List<String> location = ['INSTOCK', 'MAINTAINING ', 'ONROUTE', 'PARKED'];
+  List<String> location = ['INSTOCK', "MAINTAINING", 'ONROUTE', 'PARKED'];
   TextEditingController statusController = TextEditingController();
   String? vehiclestatus;
   String? selectedItem = "INSTOCK";

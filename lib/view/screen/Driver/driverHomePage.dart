@@ -2,13 +2,11 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:bazralogin/view/screen/Driver/avilablelMarket_Fordriver.dart';
-import 'package:bazralogin/view/screen/Driver/driverReport.dart';
-import 'package:bazralogin/view/screen/Loging/Login.dart';
+
 import 'package:bazralogin/view/screen/Driver/activeWork.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+
 import 'package:ionicons/ionicons.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -99,7 +97,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
     return Scaffold(
         backgroundColor: Color.fromRGBO(236, 240, 243, 1),
         appBar: AppBar(
-          toolbarHeight: 100,
+          toolbarHeight: 80,
           automaticallyImplyLeading: false,
           elevation: 0,
           backgroundColor: Color.fromRGBO(255, 255, 255, 1),
@@ -134,34 +132,40 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                             ),
                           ))),
                     ),
-                    Spacer(),
+                    SizedBox(
+                      width: screenWidth * 0.66,
+                    ),
                     Container(
                       height: screenHeight * 0.06,
                       width: screenWidth * 0.09,
                       margin: EdgeInsets.only(
                         top: screenHeight * 0.02,
+                        left: 7,
                       ),
-                      child: MaterialButton(
-                        onPressed: () async {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      drivernotificationPage()));
-                        },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: MaterialButton(
+                          onPressed: () async {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        drivernotificationPage()));
+                          },
 
-                        child: Material(
-                          color: Colors.transparent,
-                          child: Center(
-                            child: Icon(
-                              Ionicons.notifications,
-                              size: 23,
-                              color: Colors.black,
+                          child: Material(
+                            color: Colors.transparent,
+                            child: Center(
+                              child: Icon(
+                                Ionicons.notifications,
+                                size: 23,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
-                        ),
 
-                        //use this class Circleborder() for circle shape.
+                          //use this class Circleborder() for circle shape.
+                        ),
                       ),
                     ),
                   ],
@@ -251,7 +255,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                     ],
                   ),
                   Container(
-                      height: 50,
+                      height: 46,
                       margin: EdgeInsets.only(right: screenWidth * 0.7, top: 0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -334,7 +338,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
               ),
               Flexible(
                 child: Container(
-                  margin: EdgeInsets.only(top: 35),
+                  margin: EdgeInsets.only(top: 15),
                   child: GridView(
                     // ignore: sort_child_properties_last
                     children: [

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bazralogin/Theme/TextInput.dart';
+import 'package:bazralogin/const/constant.dart';
 import 'package:bazralogin/view/screen/Loging/Login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -89,7 +90,7 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
     String phonenumber = "${widget.phone}";
 
     return Scaffold(
-      backgroundColor: Color.fromRGBO(236, 240, 243, 1),
+      backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -103,8 +104,7 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
                       Navigator.pop(context);
                     },
                     icon: Icon(
-                      Ionicons.chevron_back,
-                      size: 34,
+                      Ionicons.arrow_back,
                       color: Colors.black,
                     ),
                   ),

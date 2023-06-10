@@ -13,6 +13,9 @@ class ApIConfig {
   static const String allvehicle =
       "http://64.226.104.50:9090/Api/Vehicle/Owner/All";
   static const String driverApi = "/Api/Vehicle/Owner/Drivers/All";
+  static const String getalert = "/Api/Driver/Alerts/ByStatus";
+  static const String corgaStatus = "/Api/Driver/All/Cargos/ACTIVE";
+
   static const String logIn = "/Api/SignIn/Owner";
   static const String vehiclebystatus =
       "http://64.226.104.50:9090/Api/Vehicle/Owner/Status";

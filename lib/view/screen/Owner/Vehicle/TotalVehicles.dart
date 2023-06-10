@@ -217,7 +217,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                 .blue; // Update border color for the else case
                           }
                           return Container(
-                              height: screenHeight * 0.25,
+                              height: screenHeight * 0.28,
                               padding: EdgeInsets.only(
                                 left: 10,
                                 right: 10,
@@ -446,7 +446,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                                           2.0, // Border width
                                                     ),
                                                   ),
-                                                  height: 40,
+                                                  height: 26,
                                                   child: const Center(
                                                     child: Text(
                                                       "Update Status",

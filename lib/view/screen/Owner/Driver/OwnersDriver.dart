@@ -229,7 +229,7 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                 .blue; // Update border color for the else case
                           }
                           return Container(
-                              height: screenHeight * 0.23,
+                              height: screenHeight * 0.29,
                               padding: const EdgeInsets.only(
                                 left: 10,
                                 right: 10,
@@ -404,11 +404,11 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                                     Container(
                                                                         margin: EdgeInsets.only(
                                                                             left:
-                                                                                23),
+                                                                                10),
                                                                         child:
                                                                             SizedBox(
                                                                           width:
-                                                                              screenWidth * 0.36,
+                                                                              screenWidth * 0.33,
                                                                           child:
                                                                               Text(
                                                                             "PlateNumber",

@@ -108,7 +108,6 @@ class _driverProfileState extends State<driverProfile> {
                             if (snapshot.connectionState !=
                                 ConnectionState.done) return Text("");
                             return Container(
-                              height: screenHeight * 0.09,
                               width: screenWidth * 0.18,
                               child: ClipOval(
                                 child: Container(
@@ -178,31 +177,27 @@ class _driverProfileState extends State<driverProfile> {
                                   ),
                                 )),
                             SizedBox(
-                              height: 5,
+                              width: screenWidth * 0.12,
                             ),
                             Container(
-                                width: screenWidth * 0.60,
-                                height: screenHeight * 0.06,
                                 child: Container(
-                                  margin:
-                                      EdgeInsets.only(left: screenWidth * 0.12),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "abushj12@gmail.com",
-                                        style: TextStyle(
-                                          fontFamily: "Nunito",
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: screenWidth * 0.07,
-                                      ),
-                                      Icon(Ionicons.chevron_forward_outline)
-                                    ],
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "abushj12@gmail.com",
+                                    style: TextStyle(
+                                      fontFamily: "Nunito",
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.normal,
+                                    ),
                                   ),
-                                )),
+                                  SizedBox(
+                                    width: screenWidth * 0.07,
+                                  ),
+                                  Icon(Ionicons.chevron_forward_outline)
+                                ],
+                              ),
+                            )),
                           ],
                         ),
                       ),
@@ -225,7 +220,6 @@ class _driverProfileState extends State<driverProfile> {
                         children: [
                           Container(
                               width: screenWidth * 0.25,
-                              height: screenHeight * 0.06,
                               margin: EdgeInsets.only(left: 10),
                               child: Text(
                                 TranslationUtil.text("Date of Birth"),
@@ -235,33 +229,31 @@ class _driverProfileState extends State<driverProfile> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               )),
+                          SizedBox(
+                            width: screenWidth * 0.19,
+                          ),
                           Container(
-                              width: screenWidth * 0.54,
                               child: Container(
-                                margin:
-                                    EdgeInsets.only(left: screenWidth * 0.1),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          left: screenWidth * 0.07),
-                                      child: Text(
-                                        "2022-12-2",
-                                        style: TextStyle(
-                                          fontFamily: "Nunito",
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  child: Text(
+                                    "2022-12-2",
+                                    style: TextStyle(
+                                      fontFamily: "Nunito",
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.normal,
                                     ),
-                                    Container(
-                                        margin: EdgeInsets.only(
-                                            left: screenWidth * 0.12),
-                                        child: Icon(
-                                            Ionicons.chevron_forward_outline))
-                                  ],
+                                  ),
                                 ),
-                              )),
+                                Container(
+                                    margin: EdgeInsets.only(
+                                        left: screenWidth * 0.12),
+                                    child:
+                                        Icon(Ionicons.chevron_forward_outline))
+                              ],
+                            ),
+                          )),
                         ],
                       ),
                     ),
@@ -284,7 +276,6 @@ class _driverProfileState extends State<driverProfile> {
                           Container(
                               margin: EdgeInsets.only(left: 10),
                               width: screenWidth * 0.2,
-                              height: screenHeight * 0.06,
                               child: Text(
                                 TranslationUtil.text(
                                   "Gender",
@@ -295,31 +286,31 @@ class _driverProfileState extends State<driverProfile> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               )),
+                          SizedBox(
+                            width: screenWidth * 0.2,
+                          ),
                           Container(
-                              width: screenWidth * 0.6,
                               child: Container(
-                                child: Row(
-                                  children: [
-                                    Container(
-                                        margin: EdgeInsets.only(
-                                            left: screenWidth * 0.21),
-                                        child: Center(
-                                            child: Text(
-                                          "Male",
-                                          style: TextStyle(
-                                            fontFamily: "Nunito",
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                        ))),
-                                    Container(
-                                        margin: EdgeInsets.only(
-                                            left: screenWidth * 0.22),
-                                        child: Icon(
-                                            Ionicons.chevron_forward_outline))
-                                  ],
-                                ),
-                              )),
+                            child: Row(
+                              children: [
+                                Container(
+                                    child: Center(
+                                        child: Text(
+                                  "Male",
+                                  style: TextStyle(
+                                    fontFamily: "Nunito",
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ))),
+                                Container(
+                                    margin: EdgeInsets.only(
+                                        left: screenWidth * 0.22),
+                                    child:
+                                        Icon(Ionicons.chevron_forward_outline))
+                              ],
+                            ),
+                          )),
                         ],
                       ),
                     ),

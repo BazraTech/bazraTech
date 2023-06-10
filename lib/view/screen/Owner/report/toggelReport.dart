@@ -1,6 +1,4 @@
 import 'package:bazralogin/Theme/clippbox.dart';
-import 'package:date_format/date_format.dart';
-
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -118,159 +116,167 @@ class _MyScreenState extends State<MyScreen> {
                                                               ),
                                                             ],
                                                           ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Row(
-                                                                children: [
-                                                                  Text("From"),
-                                                                  SizedBox(
-                                                                    width: 5,
-                                                                  ),
-                                                                  Container(
-                                                                    height: 20,
-                                                                    width: 20,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      border: Border.all(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          width:
-                                                                              2),
-                                                                      shape: BoxShape
-                                                                          .circle,
-                                                                      color: Colors
-                                                                          .white,
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Row(
+                                                              children: [
+                                                                Row(
+                                                                  children: [
+                                                                    Text(
+                                                                        "From"),
+                                                                    SizedBox(
+                                                                      width: 5,
                                                                     ),
-                                                                    child: Icon(
-                                                                      Icons
-                                                                          .trip_origin,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      size: 10,
-                                                                    ),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                              CustomPaint(
-                                                                size: Size(
-                                                                    screenWidth *
-                                                                        0.19,
-                                                                    2),
-                                                                painter:
-                                                                    DashLinePainter(),
-                                                              ),
-                                                              Container(
-                                                                height:
-                                                                    screenHeight *
-                                                                        0.07,
-                                                                width:
-                                                                    screenWidth *
-                                                                        0.07,
-                                                                child: Icon(
-                                                                  Icons
-                                                                      .local_shipping,
-                                                                  color: Colors
-                                                                      .red,
-                                                                  size: 23,
+                                                                    Container(
+                                                                      height:
+                                                                          20,
+                                                                      width: 20,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        border: Border.all(
+                                                                            color:
+                                                                                Colors.black,
+                                                                            width: 2),
+                                                                        shape: BoxShape
+                                                                            .circle,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .trip_origin,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        size:
+                                                                            10,
+                                                                      ),
+                                                                    )
+                                                                  ],
                                                                 ),
-                                                              ),
-                                                              CustomPaint(
-                                                                size: Size(
-                                                                    screenWidth *
-                                                                        0.2,
-                                                                    2),
-                                                                painter:
-                                                                    DashLinePainter(),
-                                                              ),
-                                                              SizedBox(
+                                                                CustomPaint(
+                                                                  size: Size(
+                                                                      screenWidth *
+                                                                          0.19,
+                                                                      2),
+                                                                  painter:
+                                                                      DashLinePainter(),
+                                                                ),
+                                                                Container(
+                                                                  height:
+                                                                      screenHeight *
+                                                                          0.07,
                                                                   width:
+                                                                      screenWidth *
+                                                                          0.07,
+                                                                  child: Icon(
+                                                                    Icons
+                                                                        .local_shipping,
+                                                                    color: Colors
+                                                                        .red,
+                                                                    size: 23,
+                                                                  ),
+                                                                ),
+                                                                CustomPaint(
+                                                                  size: Size(
                                                                       screenWidth *
                                                                           0.2,
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Container(
-                                                                        height:
-                                                                            20,
-                                                                        width:
-                                                                            20,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          border: Border.all(
-                                                                              color: Colors.black,
-                                                                              width: 2),
-                                                                          shape:
-                                                                              BoxShape.circle,
-                                                                          color:
-                                                                              Colors.white,
+                                                                      2),
+                                                                  painter:
+                                                                      DashLinePainter(),
+                                                                ),
+                                                                SizedBox(
+                                                                    width:
+                                                                        screenWidth *
+                                                                            0.2,
+                                                                    child: Row(
+                                                                      children: [
+                                                                        Container(
+                                                                          height:
+                                                                              20,
+                                                                          width:
+                                                                              20,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            border:
+                                                                                Border.all(color: Colors.black, width: 2),
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                            color:
+                                                                                Colors.white,
+                                                                          ),
+                                                                          child:
+                                                                              Icon(
+                                                                            Icons.trip_origin,
+                                                                            color:
+                                                                                Colors.black,
+                                                                            size:
+                                                                                10,
+                                                                          ),
                                                                         ),
-                                                                        child:
-                                                                            Icon(
-                                                                          Icons
-                                                                              .trip_origin,
-                                                                          color:
-                                                                              Colors.black,
-                                                                          size:
-                                                                              10,
+                                                                        SizedBox(
+                                                                          width:
+                                                                              5,
                                                                         ),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        width:
-                                                                            5,
-                                                                      ),
-                                                                      Text(
-                                                                          "To"),
-                                                                    ],
-                                                                  ))
-                                                            ],
+                                                                        Text(
+                                                                            "To"),
+                                                                      ],
+                                                                    ))
+                                                              ],
+                                                            ),
                                                           ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Container(
-                                                                  width:
-                                                                      screenWidth *
-                                                                          0.3,
-                                                                  child: Text(
-                                                                      "Addisa Ababa")),
-                                                              SizedBox(
-                                                                width:
-                                                                    screenWidth *
-                                                                        0.15,
-                                                              ),
-                                                              SizedBox(
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Row(
+                                                              children: [
+                                                                Container(
+                                                                    width:
+                                                                        screenWidth *
+                                                                            0.3,
+                                                                    child: Text(
+                                                                        "Addisa Ababa")),
+                                                                SizedBox(
                                                                   width:
                                                                       screenWidth *
                                                                           0.15,
-                                                                  child: Text(
-                                                                      "Mekele")),
-                                                            ],
+                                                                ),
+                                                                SizedBox(
+                                                                    width:
+                                                                        screenWidth *
+                                                                            0.15,
+                                                                    child: Text(
+                                                                        "Mekele")),
+                                                              ],
+                                                            ),
                                                           ),
                                                           SizedBox(
                                                             height:
                                                                 screenHeight *
                                                                     0.003,
                                                           ),
-                                                          Row(
-                                                            children: [
-                                                              Container(
-                                                                  margin: EdgeInsets.only(
-                                                                      left: screenWidth *
-                                                                          0.04),
-                                                                  child: Icon(
-                                                                      Ionicons
-                                                                          .time)),
-                                                              SizedBox(
-                                                                width:
-                                                                    screenHeight *
-                                                                        0.235,
-                                                              ),
-                                                              Text("5/24/2023")
-                                                            ],
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Row(
+                                                              children: [
+                                                                Container(
+                                                                    child: Icon(
+                                                                        Ionicons
+                                                                            .time)),
+                                                                SizedBox(
+                                                                  width:
+                                                                      screenHeight *
+                                                                          0.235,
+                                                                ),
+                                                                Text(
+                                                                    "5/24/2023")
+                                                              ],
+                                                            ),
                                                           ),
                                                           Container(
                                                             decoration:
@@ -286,97 +292,77 @@ class _MyScreenState extends State<MyScreen> {
                                                                       10.0),
                                                               child: Column(
                                                                 children: [
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsets.all(
-                                                                            8.0),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        Container(
-                                                                            width: screenWidth *
-                                                                                0.35,
-                                                                            child:
-                                                                                Text("Package")),
-                                                                        SizedBox(
-                                                                          width:
-                                                                              screenWidth * 0.08,
-                                                                        ),
-                                                                        Container(
-                                                                            width: screenWidth *
-                                                                                0.35,
-                                                                            child:
-                                                                                Text("Weight"))
-                                                                      ],
-                                                                    ),
+                                                                  Row(
+                                                                    children: [
+                                                                      Container(
+                                                                          width: screenWidth *
+                                                                              0.35,
+                                                                          child:
+                                                                              Text("Package")),
+                                                                      SizedBox(
+                                                                        width: screenWidth *
+                                                                            0.08,
+                                                                      ),
+                                                                      Container(
+                                                                          width: screenWidth *
+                                                                              0.35,
+                                                                          child:
+                                                                              Text("Weight"))
+                                                                    ],
                                                                   ),
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsets.all(
-                                                                            8.0),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        Container(
-                                                                            width: screenWidth *
-                                                                                0.35,
-                                                                            child:
-                                                                                Text("__")),
-                                                                        SizedBox(
-                                                                          width:
-                                                                              screenWidth * 0.08,
-                                                                        ),
-                                                                        Container(
-                                                                            width: screenWidth *
-                                                                                0.35,
-                                                                            child:
-                                                                                Text("4500KG"))
-                                                                      ],
-                                                                    ),
+                                                                  Row(
+                                                                    children: [
+                                                                      Container(
+                                                                          width: screenWidth *
+                                                                              0.35,
+                                                                          child:
+                                                                              Text("__")),
+                                                                      SizedBox(
+                                                                        width: screenWidth *
+                                                                            0.08,
+                                                                      ),
+                                                                      Container(
+                                                                          width: screenWidth *
+                                                                              0.35,
+                                                                          child:
+                                                                              Text("4500KG"))
+                                                                    ],
                                                                   ),
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsets.all(
-                                                                            8.0),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        Container(
-                                                                            width: screenWidth *
-                                                                                0.35,
-                                                                            child:
-                                                                                Text("Cargo type")),
-                                                                        SizedBox(
-                                                                          width:
-                                                                              screenWidth * 0.08,
-                                                                        ),
-                                                                        Container(
-                                                                            width: screenWidth *
-                                                                                0.35,
-                                                                            child:
-                                                                                Text("Price"))
-                                                                      ],
-                                                                    ),
+                                                                  Row(
+                                                                    children: [
+                                                                      Container(
+                                                                          width: screenWidth *
+                                                                              0.35,
+                                                                          child:
+                                                                              Text("Cargo type")),
+                                                                      SizedBox(
+                                                                        width: screenWidth *
+                                                                            0.08,
+                                                                      ),
+                                                                      Container(
+                                                                          width: screenWidth *
+                                                                              0.35,
+                                                                          child:
+                                                                              Text("Price"))
+                                                                    ],
                                                                   ),
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsets.all(
-                                                                            8.0),
-                                                                    child: Row(
-                                                                      children: [
-                                                                        Container(
-                                                                            width: screenWidth *
-                                                                                0.35,
-                                                                            child:
-                                                                                Text("__")),
-                                                                        SizedBox(
-                                                                          width:
-                                                                              screenWidth * 0.08,
-                                                                        ),
-                                                                        Container(
-                                                                            width: screenWidth *
-                                                                                0.35,
-                                                                            child:
-                                                                                Text("900000birr"))
-                                                                      ],
-                                                                    ),
+                                                                  Row(
+                                                                    children: [
+                                                                      Container(
+                                                                          width: screenWidth *
+                                                                              0.35,
+                                                                          child:
+                                                                              Text("__")),
+                                                                      SizedBox(
+                                                                        width: screenWidth *
+                                                                            0.08,
+                                                                      ),
+                                                                      Container(
+                                                                          width: screenWidth *
+                                                                              0.35,
+                                                                          child:
+                                                                              Text("900000birr"))
+                                                                    ],
                                                                   )
                                                                 ],
                                                               ),
@@ -512,6 +498,7 @@ class _MyScreenState extends State<MyScreen> {
                               )),
                             ),
                           )),
+            // alert report
             showList2
                 ? Visibility(
                     visible: showList2,
@@ -555,7 +542,7 @@ class _MyScreenState extends State<MyScreen> {
                                                                 4), // Adjust the offset to control the shadow's position
                                                           ),
                                                         ]),
-                                                    height: screenHeight * 0.4,
+                                                    height: screenHeight * 0.38,
                                                     margin: EdgeInsets.zero,
                                                     width: screenWidth - 22,
                                                     child: Column(
@@ -582,45 +569,47 @@ class _MyScreenState extends State<MyScreen> {
                                                           ],
                                                         ),
                                                         Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
                                                           children: [
-                                                            Row(
-                                                              children: [
-                                                                Text("From"),
-                                                                SizedBox(
-                                                                  width: 5,
-                                                                ),
-                                                                Container(
-                                                                  height: 20,
-                                                                  width: 20,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        width:
-                                                                            2),
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    color: Colors
-                                                                        .white,
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child: Row(
+                                                                children: [
+                                                                  Text("From"),
+                                                                  SizedBox(
+                                                                    width: 5,
                                                                   ),
-                                                                  child: Icon(
-                                                                    Icons
-                                                                        .trip_origin,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    size: 10,
-                                                                  ),
-                                                                )
-                                                              ],
+                                                                  Container(
+                                                                    height: 20,
+                                                                    width: 20,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      border: Border.all(
+                                                                          color: Colors
+                                                                              .black,
+                                                                          width:
+                                                                              2),
+                                                                      shape: BoxShape
+                                                                          .circle,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                    child: Icon(
+                                                                      Icons
+                                                                          .trip_origin,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      size: 10,
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
                                                             ),
                                                             CustomPaint(
                                                               size: Size(
                                                                   screenWidth *
-                                                                      0.19,
+                                                                      0.12,
                                                                   2),
                                                               painter:
                                                                   DashLinePainter(),
@@ -643,7 +632,7 @@ class _MyScreenState extends State<MyScreen> {
                                                             CustomPaint(
                                                               size: Size(
                                                                   screenWidth *
-                                                                      0.2,
+                                                                      0.12,
                                                                   2),
                                                               painter:
                                                                   DashLinePainter(),
@@ -651,7 +640,7 @@ class _MyScreenState extends State<MyScreen> {
                                                             SizedBox(
                                                                 width:
                                                                     screenWidth *
-                                                                        0.2,
+                                                                        0.13,
                                                                 child: Row(
                                                                   children: [
                                                                     Container(
@@ -687,50 +676,54 @@ class _MyScreenState extends State<MyScreen> {
                                                                 ))
                                                           ],
                                                         ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Container(
-                                                                width:
-                                                                    screenWidth *
-                                                                        0.3,
-                                                                child: Text(
-                                                                    "Addisa Ababa")),
-                                                            SizedBox(
-                                                              width:
-                                                                  screenWidth *
-                                                                      0.15,
-                                                            ),
-                                                            SizedBox(
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Row(
+                                                            children: [
+                                                              Container(
+                                                                  width:
+                                                                      screenWidth *
+                                                                          0.3,
+                                                                  child: Text(
+                                                                      "Addisa Ababa")),
+                                                              SizedBox(
                                                                 width:
                                                                     screenWidth *
                                                                         0.15,
-                                                                child: Text(
-                                                                    "Mekele")),
-                                                          ],
+                                                              ),
+                                                              SizedBox(
+                                                                  width:
+                                                                      screenWidth *
+                                                                          0.15,
+                                                                  child: Text(
+                                                                      "Mekele")),
+                                                            ],
+                                                          ),
                                                         ),
                                                         SizedBox(
                                                           height: screenHeight *
                                                               0.003,
                                                         ),
-                                                        Row(
-                                                          children: [
-                                                            Container(
-                                                                margin: EdgeInsets.only(
-                                                                    left: screenWidth *
-                                                                        0.04),
-                                                                child: Icon(
-                                                                    Ionicons
-                                                                        .time)),
-                                                            SizedBox(
-                                                              width:
-                                                                  screenHeight *
-                                                                      0.3,
-                                                            ),
-                                                            Text("5/24/2023")
-                                                          ],
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(10.0),
+                                                          child: Row(
+                                                            children: [
+                                                              Container(
+                                                                  child: Icon(
+                                                                      Ionicons
+                                                                          .time)),
+                                                              SizedBox(
+                                                                width:
+                                                                    screenHeight *
+                                                                        0.22,
+                                                              ),
+                                                              Text("5/24/2023")
+                                                            ],
+                                                          ),
                                                         ),
                                                         Container(
                                                           decoration:
@@ -744,101 +737,77 @@ class _MyScreenState extends State<MyScreen> {
                                                                     .all(10.0),
                                                             child: Column(
                                                               children: [
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          8.0),
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Container(
-                                                                          width: screenWidth *
-                                                                              0.35,
-                                                                          child:
-                                                                              Text("Package")),
-                                                                      SizedBox(
+                                                                Row(
+                                                                  children: [
+                                                                    Container(
                                                                         width: screenWidth *
-                                                                            0.08,
-                                                                      ),
-                                                                      Container(
-                                                                          width: screenWidth *
-                                                                              0.35,
-                                                                          child:
-                                                                              Text("Weight"))
-                                                                    ],
-                                                                  ),
+                                                                            0.35,
+                                                                        child: Text(
+                                                                            "Package")),
+                                                                    SizedBox(
+                                                                      width: screenWidth *
+                                                                          0.08,
+                                                                    ),
+                                                                    Container(
+                                                                        width: screenWidth *
+                                                                            0.35,
+                                                                        child: Text(
+                                                                            "Weight"))
+                                                                  ],
                                                                 ),
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          8.0),
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Container(
-                                                                          width: screenWidth *
-                                                                              0.35,
-                                                                          child:
-                                                                              Text("__")),
-                                                                      SizedBox(
+                                                                Row(
+                                                                  children: [
+                                                                    Container(
                                                                         width: screenWidth *
-                                                                            0.08,
-                                                                      ),
-                                                                      Container(
-                                                                          width: screenWidth *
-                                                                              0.35,
-                                                                          child:
-                                                                              Text("4500KG"))
-                                                                    ],
-                                                                  ),
+                                                                            0.35,
+                                                                        child: Text(
+                                                                            "__")),
+                                                                    SizedBox(
+                                                                      width: screenWidth *
+                                                                          0.08,
+                                                                    ),
+                                                                    Container(
+                                                                        width: screenWidth *
+                                                                            0.35,
+                                                                        child: Text(
+                                                                            "4500KG"))
+                                                                  ],
                                                                 ),
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          8.0),
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Container(
-                                                                          width: screenWidth *
-                                                                              0.35,
-                                                                          child:
-                                                                              Text("Cargo type")),
-                                                                      SizedBox(
+                                                                Row(
+                                                                  children: [
+                                                                    Container(
                                                                         width: screenWidth *
-                                                                            0.08,
-                                                                      ),
-                                                                      Container(
-                                                                          width: screenWidth *
-                                                                              0.35,
-                                                                          child:
-                                                                              Text("Price"))
-                                                                    ],
-                                                                  ),
+                                                                            0.35,
+                                                                        child: Text(
+                                                                            "Cargo type")),
+                                                                    SizedBox(
+                                                                      width: screenWidth *
+                                                                          0.08,
+                                                                    ),
+                                                                    Container(
+                                                                        width: screenWidth *
+                                                                            0.35,
+                                                                        child: Text(
+                                                                            "Price"))
+                                                                  ],
                                                                 ),
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          8.0),
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Container(
-                                                                          width: screenWidth *
-                                                                              0.35,
-                                                                          child:
-                                                                              Text("__")),
-                                                                      SizedBox(
+                                                                Row(
+                                                                  children: [
+                                                                    Container(
                                                                         width: screenWidth *
-                                                                            0.08,
-                                                                      ),
-                                                                      Container(
-                                                                          width: screenWidth *
-                                                                              0.35,
-                                                                          child:
-                                                                              Text("900000birr"))
-                                                                    ],
-                                                                  ),
+                                                                            0.35,
+                                                                        child: Text(
+                                                                            "__")),
+                                                                    SizedBox(
+                                                                      width: screenWidth *
+                                                                          0.08,
+                                                                    ),
+                                                                    Container(
+                                                                        width: screenWidth *
+                                                                            0.35,
+                                                                        child: Text(
+                                                                            "900000birr"))
+                                                                  ],
                                                                 )
                                                               ],
                                                             ),
@@ -969,6 +938,7 @@ class _MyScreenState extends State<MyScreen> {
                       ),
                     ),
                   ),
+            //work report
             showList1
                 ? Visibility(
                     visible: showList1,
@@ -1012,7 +982,7 @@ class _MyScreenState extends State<MyScreen> {
                                                                 4), // Adjust the offset to control the shadow's position
                                                           ),
                                                         ]),
-                                                    height: screenHeight * 0.45,
+                                                    height: screenHeight * 0.4,
                                                     margin: EdgeInsets.zero,
                                                     width: screenWidth - 22,
                                                     child: Column(
@@ -1039,45 +1009,50 @@ class _MyScreenState extends State<MyScreen> {
                                                           ],
                                                         ),
                                                         Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
                                                           children: [
-                                                            Row(
-                                                              children: [
-                                                                Text("From"),
-                                                                SizedBox(
-                                                                  width: 5,
-                                                                ),
-                                                                Container(
-                                                                  height: 20,
-                                                                  width: 20,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    border: Border.all(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        width:
-                                                                            2),
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    color: Colors
-                                                                        .white,
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .all(
+                                                                      10.0),
+                                                              child: Row(
+                                                                children: [
+                                                                  Container(
+                                                                      child: Text(
+                                                                          "From")),
+                                                                  SizedBox(
+                                                                    width: 5,
                                                                   ),
-                                                                  child: Icon(
-                                                                    Icons
-                                                                        .trip_origin,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    size: 10,
-                                                                  ),
-                                                                )
-                                                              ],
+                                                                  Container(
+                                                                    height: 20,
+                                                                    width: 20,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      border: Border.all(
+                                                                          color: Colors
+                                                                              .black,
+                                                                          width:
+                                                                              2),
+                                                                      shape: BoxShape
+                                                                          .circle,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                    child: Icon(
+                                                                      Icons
+                                                                          .trip_origin,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      size: 10,
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
                                                             ),
                                                             CustomPaint(
                                                               size: Size(
                                                                   screenWidth *
-                                                                      0.19,
+                                                                      0.12,
                                                                   2),
                                                               painter:
                                                                   DashLinePainter(),
@@ -1100,7 +1075,7 @@ class _MyScreenState extends State<MyScreen> {
                                                             CustomPaint(
                                                               size: Size(
                                                                   screenWidth *
-                                                                      0.2,
+                                                                      0.12,
                                                                   2),
                                                               painter:
                                                                   DashLinePainter(),
@@ -1144,29 +1119,31 @@ class _MyScreenState extends State<MyScreen> {
                                                                 ))
                                                           ],
                                                         ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Container(
-                                                                width:
-                                                                    screenWidth *
-                                                                        0.3,
-                                                                child: Text(
-                                                                    "Addisa Ababa")),
-                                                            SizedBox(
-                                                              width:
-                                                                  screenWidth *
-                                                                      0.15,
-                                                            ),
-                                                            SizedBox(
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(10.0),
+                                                          child: Row(
+                                                            children: [
+                                                              Container(
+                                                                  width:
+                                                                      screenWidth *
+                                                                          0.3,
+                                                                  child: Text(
+                                                                      "Addisa Ababa")),
+                                                              SizedBox(
                                                                 width:
                                                                     screenWidth *
                                                                         0.15,
-                                                                child: Text(
-                                                                    "Mekele")),
-                                                          ],
+                                                              ),
+                                                              SizedBox(
+                                                                  width:
+                                                                      screenWidth *
+                                                                          0.15,
+                                                                  child: Text(
+                                                                      "Mekele")),
+                                                            ],
+                                                          ),
                                                         ),
                                                         SizedBox(
                                                           height: screenHeight *
@@ -1177,14 +1154,14 @@ class _MyScreenState extends State<MyScreen> {
                                                             Container(
                                                                 margin: EdgeInsets.only(
                                                                     left: screenWidth *
-                                                                        0.04),
+                                                                        0.014),
                                                                 child: Icon(
                                                                     Ionicons
                                                                         .time)),
                                                             SizedBox(
                                                               width:
                                                                   screenWidth *
-                                                                      0.3,
+                                                                      0.39,
                                                             ),
                                                             Text("5/24/2023")
                                                           ],
@@ -1201,101 +1178,77 @@ class _MyScreenState extends State<MyScreen> {
                                                                     .all(10.0),
                                                             child: Column(
                                                               children: [
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          8.0),
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Container(
-                                                                          width: screenWidth *
-                                                                              0.35,
-                                                                          child:
-                                                                              Text("Package")),
-                                                                      SizedBox(
+                                                                Row(
+                                                                  children: [
+                                                                    Container(
                                                                         width: screenWidth *
-                                                                            0.08,
-                                                                      ),
-                                                                      Container(
-                                                                          width: screenWidth *
-                                                                              0.35,
-                                                                          child:
-                                                                              Text("Weight"))
-                                                                    ],
-                                                                  ),
+                                                                            0.35,
+                                                                        child: Text(
+                                                                            "Package")),
+                                                                    SizedBox(
+                                                                      width: screenWidth *
+                                                                          0.08,
+                                                                    ),
+                                                                    Container(
+                                                                        width: screenWidth *
+                                                                            0.35,
+                                                                        child: Text(
+                                                                            "Weight"))
+                                                                  ],
                                                                 ),
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          8.0),
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Container(
-                                                                          width: screenWidth *
-                                                                              0.35,
-                                                                          child:
-                                                                              Text("__")),
-                                                                      SizedBox(
+                                                                Row(
+                                                                  children: [
+                                                                    Container(
                                                                         width: screenWidth *
-                                                                            0.08,
-                                                                      ),
-                                                                      Container(
-                                                                          width: screenWidth *
-                                                                              0.35,
-                                                                          child:
-                                                                              Text("4500KG"))
-                                                                    ],
-                                                                  ),
+                                                                            0.35,
+                                                                        child: Text(
+                                                                            "__")),
+                                                                    SizedBox(
+                                                                      width: screenWidth *
+                                                                          0.08,
+                                                                    ),
+                                                                    Container(
+                                                                        width: screenWidth *
+                                                                            0.35,
+                                                                        child: Text(
+                                                                            "4500KG"))
+                                                                  ],
                                                                 ),
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          8.0),
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Container(
-                                                                          width: screenWidth *
-                                                                              0.35,
-                                                                          child:
-                                                                              Text("Cargo type")),
-                                                                      SizedBox(
+                                                                Row(
+                                                                  children: [
+                                                                    Container(
                                                                         width: screenWidth *
-                                                                            0.08,
-                                                                      ),
-                                                                      Container(
-                                                                          width: screenWidth *
-                                                                              0.35,
-                                                                          child:
-                                                                              Text("Price"))
-                                                                    ],
-                                                                  ),
+                                                                            0.35,
+                                                                        child: Text(
+                                                                            "Cargo type")),
+                                                                    SizedBox(
+                                                                      width: screenWidth *
+                                                                          0.08,
+                                                                    ),
+                                                                    Container(
+                                                                        width: screenWidth *
+                                                                            0.35,
+                                                                        child: Text(
+                                                                            "Price"))
+                                                                  ],
                                                                 ),
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          8.0),
-                                                                  child: Row(
-                                                                    children: [
-                                                                      Container(
-                                                                          width: screenWidth *
-                                                                              0.35,
-                                                                          child:
-                                                                              Text("__")),
-                                                                      SizedBox(
+                                                                Row(
+                                                                  children: [
+                                                                    Container(
                                                                         width: screenWidth *
-                                                                            0.08,
-                                                                      ),
-                                                                      Container(
-                                                                          width: screenWidth *
-                                                                              0.35,
-                                                                          child:
-                                                                              Text("900000birr"))
-                                                                    ],
-                                                                  ),
+                                                                            0.35,
+                                                                        child: Text(
+                                                                            "__")),
+                                                                    SizedBox(
+                                                                      width: screenWidth *
+                                                                          0.08,
+                                                                    ),
+                                                                    Container(
+                                                                        width: screenWidth *
+                                                                            0.35,
+                                                                        child: Text(
+                                                                            "900000birr"))
+                                                                  ],
                                                                 )
                                                               ],
                                                             ),

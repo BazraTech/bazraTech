@@ -46,12 +46,12 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
     });
     final Map jsonResponse = json.decode(response.body);
     if (response.statusCode == 200) {
-      String alertContent = jsonResponse["message"];
+      // String alertContent = jsonResponse["message"];
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
           title: Text('API Response'),
-          content: Text(alertContent),
+          content: Text("Successfully Accept work"),
           actions: [
             TextButton(
               onPressed: () {
@@ -164,6 +164,7 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
       child: Scaffold(
           backgroundColor: kBackgroundColor,
           appBar: AppBar(
+            toolbarHeight: 80,
             elevation: 0,
             leading: InkWell(
               onTap: () {
@@ -171,10 +172,10 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
               },
               child: const Icon(
                 Icons.arrow_back,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
-            backgroundColor: kPrimaryColor,
+            backgroundColor: Colors.white,
             title: Container(
               margin: EdgeInsets.only(right: screenWidth * 0.12),
               width: double.infinity,
@@ -212,9 +213,9 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
                                 },
                                 child: Container(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(22.0),
+                                    padding: const EdgeInsets.all(19.0),
                                     child: Container(
-                                      height: screenHeight * 0.3,
+                                      height: screenHeight * 0.34,
                                       margin: EdgeInsets.zero,
                                       decoration: BoxDecoration(
                                           color: Colors.white,
@@ -323,11 +324,8 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
                                                 Container(
                                                     margin: EdgeInsets.only(
                                                         left:
-                                                            screenWidth * 0.1),
-                                                    child: Icon(
-                                                      Ionicons.time,
-                                                      color: Colors.green,
-                                                    )),
+                                                            screenWidth * 0.08),
+                                                    child: Text("Time")),
                                               ],
                                             ),
                                           ),
@@ -343,7 +341,7 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
                                                 width: screenWidth * 0.16,
                                               ),
                                               SizedBox(
-                                                  width: screenWidth * 0.22,
+                                                  width: screenWidth * 0.2,
                                                   child: Text(driver["dropOff"]
                                                       .toString())),
                                               Text(driver["date"].toString())

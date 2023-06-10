@@ -4,6 +4,7 @@ import 'package:bazralogin/const/constant.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
+import '../Driver/Driverprofile/driverprofile.dart';
 import '../Owner/Communication/communicationPage.dart';
 import '../Owner/Home/HomePage.dart';
 import '../Owner/Profile/Profile.dart';
@@ -26,7 +27,7 @@ class BottomNav extends StatelessWidget {
                 OwenerHomepage(),
                 displaycarlaction(),
                 Communication(),
-                Profile(),
+                driverProfile()
               ],
             ),
             bottomNavigationBar: Container(

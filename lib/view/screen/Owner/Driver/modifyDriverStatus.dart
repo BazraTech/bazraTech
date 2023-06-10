@@ -32,7 +32,7 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
   List<String> location = [
     "ASSIGNED",
     "Select Status",
-    'UNASSIGNED ',
+    "UNASSIGNED",
     'ONROUTE',
     'PERMIT'
   ];
@@ -326,7 +326,7 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
                             children: [
                               Container(
                                 width: screenWidth - 65,
-                                height: screenHeight * 0.065,
+                                height: screenHeight * 0.08,
                                 child: DropdownButtonFormField<String>(
                                   decoration:
                                       ThemeHelper().textInputDecoration(),
