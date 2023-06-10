@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import '../cargo.dart';
 import '../shared/constant.dart';
 
+import '../smart.dart';
 import 'Alert/Alert.dart';
 
 import 'Notification/Notification.dart';
@@ -22,7 +24,7 @@ class Post_BottomNav extends StatelessWidget {
             body: TabBarView(
               children: [
                 Posts(),
-                CargoListView(),
+                HistoryCargo(),
               ],
             ),
             bottomNavigationBar: Container(

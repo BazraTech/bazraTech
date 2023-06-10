@@ -2,21 +2,24 @@ import 'dart:io';
 
 import 'package:cargo/shared/storage_hepler.dart';
 import 'package:cargo/views/Bottom_Navigation.dart';
+import 'package:cargo/views/Work/CargoType/Actions.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:rflutter_alert/rflutter_alert.dart';
+
+import 'model/VehicleListForCargo.dart';
 import 'model/cargo.dart';
 import 'shared/constant.dart';
 
-class HistoryCargo extends StatefulWidget {
+class VehicleCargo extends StatefulWidget {
   @override
-  State<HistoryCargo> createState() => _HistoryCargoState();
+  State<VehicleCargo> createState() => _VehicleCargoState();
 }
 
-class _HistoryCargoState extends State<HistoryCargo> {
+class _VehicleCargoState extends State<VehicleCargo> {
   Future? futureCargoDrivers;
   Future fetchCargos() async {
     try {
@@ -148,28 +151,24 @@ class _HistoryCargoState extends State<HistoryCargo> {
                       onTap: () {
                         setState(() {});
                       },
-                      child: Container(
-                        height: screenHeight * 0.2,
-                        child: Card(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              boxShadow: [
-                                BoxShadow(
-                                    color:
-                                        Colors.grey.shade200.withOpacity(0.7),
-                                    blurRadius: 8.0,
-                                    spreadRadius: 2.0,
-                                    offset: const Offset(
-                                      6, // Move to right 7.0 horizontally
-                                      8, // Move to bottom 8.0 Vertically
-                                    ))
-                              ],
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      child: Card(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.shade200.withOpacity(0.7),
+                                  blurRadius: 8.0,
+                                  spreadRadius: 2.0,
+                                  offset: const Offset(
+                                    6, // Move to right 7.0 horizontally
+                                    8, // Move to bottom 8.0 Vertically
+                                  ))
+                            ],
+                          ),
+                          child: ExpansionTile(
+                            title: Column(
                               children: [
                                 ListTile(
                                   title: Row(
@@ -234,50 +233,82 @@ class _HistoryCargoState extends State<HistoryCargo> {
                                     ],
                                   ),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(
-                                    top: 15,
-                                  ),
-                                  child: const DottedLine(
-                                    lineThickness: 1.0,
-                                    dashLength: 4.0,
-                                    dashColor: Colors.grey,
-                                    dashGapRadius: 2.0,
+                              ],
+                            ),
+                            subtitle: Container(
+                              alignment: Alignment.bottomCenter,
+                              child: isExpanded
+                                  ? Icon(Icons.keyboard_arrow_down)
+                                  : Icon(Icons.keyboard_arrow_down),
+                            ),
+                            trailing: Container(
+                              child: CircleAvatar(
+                                radius: 18,
+                                backgroundColor: Colors.grey.shade300,
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "+2",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.red,
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                                ListTile(
-                                  title: Text(
-                                    "Cargo Status",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.grey.shade500,
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            children: [
+                              Stack(
+                                children: [
+                                  Center(
+                                    child: SizedBox(
+                                      height: screenHeight * 0.5,
+                                      child: Container(
+                                          margin: EdgeInsets.only(top: 10),
+                                          child: Status()),
                                     ),
                                   ),
-                                  trailing: Container(
-                                    width: 70,
-                                    height: 25,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Color.fromARGB(255, 252, 216, 214),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        driver.status,
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          color:
-                                              Color.fromARGB(255, 255, 86, 74),
-                                          fontFamily: 'Roboto',
-                                          fontWeight: FontWeight.bold,
+                                  Positioned(
+                                    bottom: 2,
+                                    child: SizedBox(
+                                      width: screenWidth,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          print("Button Pressed");
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.grey[300],
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 15, vertical: 15),
+                                          textStyle: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontStyle: FontStyle.italic),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(3),
+                                          ),
+                                          side: BorderSide(
+                                              color: Colors.grey.shade400),
+                                          elevation: 1,
+                                        ),
+                                        child: Text(
+                                          "Track",
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.grey.shade600,
+                                              fontFamily: 'Roboto',
+                                              letterSpacing: 1,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                )
-                              ],
-                            ),
+                                  )
+                                ],
+                              ),
+                              // Add more ListTiles here for displaying other CargoDriver properties
+                            ],
                           ),
                         ),
                       ),

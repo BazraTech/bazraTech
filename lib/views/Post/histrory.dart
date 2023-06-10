@@ -205,29 +205,19 @@ class _CargoListViewState extends State {
                     // Display the cargos list
 
                     Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: _searching
-                              ? _searchResults.length
-                              : _allCargos.length,
-                          itemBuilder: (context, index) {
-                            Cargo cargo = _searching
-                                ? _searchResults[index]
-                                : _allCargos[index];
-                            return ListTile(
-                              title: Container(
-                                height: screenHeight * 0.22,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            cargoHistoryDetail(
-                                                cargoId: cargo.id),
-                                      ),
-                                    );
-                                  },
+                        child: Container(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: _searching
+                                ? _searchResults.length
+                                : _allCargos.length,
+                            itemBuilder: (context, index) {
+                              Cargo cargo = _searching
+                                  ? _searchResults[index]
+                                  : _allCargos[index];
+                              return ListTile(
+                                title: Container(
+                                  height: screenHeight * 0.22,
                                   child: GestureDetector(
                                     onTap: () {
                                       Navigator.push(
@@ -239,117 +229,53 @@ class _CargoListViewState extends State {
                                         ),
                                       );
                                     },
-                                    child: Card(
-                                        child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10)),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Colors.grey.shade200
-                                                  .withOpacity(0.7),
-                                              blurRadius: 8.0,
-                                              spreadRadius: 2.0,
-                                              offset: const Offset(
-                                                6, // Move to right 7.0 horizontally
-                                                8, // Move to bottom 8.0 Vertically
-                                              ))
-                                        ],
-                                      ),
-                                      height: screenHeight * 0.18,
-                                      child: ListTile(
-                                        title: Container(
-                                          margin: EdgeInsets.only(left: 5),
-                                          child: Column(
-                                            children: [
-                                              ListTile(
-                                                title: Row(
-                                                  children: [
-                                                    Text(
-                                                      cargo.pickUp,
-                                                      style: const TextStyle(
-                                                        fontSize: 14,
-                                                        color: Color.fromARGB(
-                                                            255, 123, 129, 236),
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                        left: 8,
-                                                      ),
-                                                      child: const Icon(
-                                                        Icons.trip_origin,
-                                                        size: 15,
-                                                        color: Color.fromARGB(
-                                                            255, 123, 129, 236),
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      width: screenWidth * 0.15,
-                                                      child: const Stack(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        children: [
-                                                          DottedLine(
-                                                            lineThickness: 1.0,
-                                                            dashLength: 4.0,
-                                                            dashColor:
-                                                                Colors.grey,
-                                                            dashGapRadius: 2.0,
-                                                          ),
-                                                          Icon(
-                                                            Icons
-                                                                .local_shipping,
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    123,
-                                                                    129,
-                                                                    236),
-                                                            size: 20,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: 8),
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Icon(
-                                                          Icons.location_on,
-                                                          size: 15,
-                                                          color: Colors
-                                                              .grey.shade300),
-                                                    ),
-                                                    Text(
-                                                      cargo.dropOff,
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors
-                                                            .grey.shade600,
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                subtitle: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                cargoHistoryDetail(
+                                                    cargoId: cargo.id),
+                                          ),
+                                        );
+                                      },
+                                      child: Card(
+                                          child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey.shade200
+                                                    .withOpacity(0.7),
+                                                blurRadius: 8.0,
+                                                spreadRadius: 2.0,
+                                                offset: const Offset(
+                                                  6, // Move to right 7.0 horizontally
+                                                  8, // Move to bottom 8.0 Vertically
+                                                ))
+                                          ],
+                                        ),
+                                        height: screenHeight * 0.18,
+                                        child: ListTile(
+                                          title: Container(
+                                            margin: EdgeInsets.only(left: 5),
+                                            child: Column(
+                                              children: [
+                                                ListTile(
+                                                  title: Row(
                                                     children: [
                                                       Text(
-                                                        cargo.date,
-                                                        style: TextStyle(
-                                                          fontSize: 10,
-                                                          color: Colors
-                                                              .grey.shade600,
+                                                        cargo.pickUp,
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              123,
+                                                              129,
+                                                              236),
                                                           fontFamily: 'Roboto',
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -357,8 +283,78 @@ class _CargoListViewState extends State {
                                                       ),
                                                       Container(
                                                         margin: EdgeInsets.only(
-                                                            right: 30),
-                                                        child: Text(
+                                                          left: 8,
+                                                        ),
+                                                        child: const Icon(
+                                                          Icons.trip_origin,
+                                                          size: 15,
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              123,
+                                                              129,
+                                                              236),
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        width:
+                                                            screenWidth * 0.15,
+                                                        child: const Stack(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          children: [
+                                                            DottedLine(
+                                                              lineThickness:
+                                                                  1.0,
+                                                              dashLength: 4.0,
+                                                              dashColor:
+                                                                  Colors.grey,
+                                                              dashGapRadius:
+                                                                  2.0,
+                                                            ),
+                                                            Icon(
+                                                              Icons
+                                                                  .local_shipping,
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      123,
+                                                                      129,
+                                                                      236),
+                                                              size: 20,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                            right: 8),
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        child: Icon(
+                                                            Icons.location_on,
+                                                            size: 15,
+                                                            color: Colors
+                                                                .grey.shade300),
+                                                      ),
+                                                      Text(
+                                                        cargo.dropOff,
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors
+                                                              .grey.shade600,
+                                                          fontFamily: 'Roboto',
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  subtitle: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
                                                           cargo.date,
                                                           style: TextStyle(
                                                             fontSize: 10,
@@ -370,69 +366,87 @@ class _CargoListViewState extends State {
                                                                 FontWeight.bold,
                                                           ),
                                                         ),
-                                                      ),
-                                                    ]),
-                                              ),
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  top: 15,
+                                                        Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  right: 30),
+                                                          child: Text(
+                                                            cargo.date,
+                                                            style: TextStyle(
+                                                              fontSize: 10,
+                                                              color: Colors.grey
+                                                                  .shade600,
+                                                              fontFamily:
+                                                                  'Roboto',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ]),
                                                 ),
-                                                child: const Expanded(
-                                                  child: DottedLine(
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                    top: 15,
+                                                  ),
+                                                  child: const DottedLine(
                                                     lineThickness: 1.0,
                                                     dashLength: 4.0,
                                                     dashColor: Colors.grey,
                                                     dashGapRadius: 2.0,
                                                   ),
                                                 ),
-                                              ),
-                                              ListTile(
-                                                title: Text(
-                                                  "Cargo Status",
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Colors.grey.shade500,
-                                                    fontFamily: 'Roboto',
-                                                    fontWeight: FontWeight.bold,
+                                                ListTile(
+                                                  title: Text(
+                                                    "Cargo Status",
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                      color:
+                                                          Colors.grey.shade500,
+                                                      fontFamily: 'Roboto',
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
                                                   ),
-                                                ),
-                                                trailing: Container(
-                                                  width: 70,
-                                                  height: 25,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    color: Color.fromARGB(
-                                                        255, 252, 216, 214),
-                                                  ),
-                                                  child: Center(
-                                                    child: Text(
-                                                      cargo.status,
-                                                      style: const TextStyle(
-                                                        fontSize: 15,
-                                                        color: Color.fromARGB(
-                                                            255, 255, 86, 74),
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                  trailing: Container(
+                                                    width: 70,
+                                                    height: 25,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      color: Color.fromARGB(
+                                                          255, 252, 216, 214),
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        cargo.status,
+                                                        style: const TextStyle(
+                                                          fontSize: 15,
+                                                          color: Color.fromARGB(
+                                                              255, 255, 86, 74),
+                                                          fontFamily: 'Roboto',
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              )
-                                            ],
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    )),
+                                      )),
+                                    ),
                                   ),
                                 ),
-                              ),
 
-                              // Add other cargo details as needed
-                            );
-                          },
+                                // Add other cargo details as needed
+                              );
+                            },
+                          ),
                         ),
                       );
               } else if (snapshot.hasError) {

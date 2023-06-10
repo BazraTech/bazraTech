@@ -4,16 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../cargo.dart';
 import '../shared/ImageHelper.dart';
 import '../shared/cargoInfo.dart';
 import '../shared/constant.dart';
 import '../shared/storage_hepler.dart';
 import '../shared/tapbar.dart';
 import '../views/Bill/Bill.dart';
+import '../views/Bill/parent.dart';
 import '../views/Post_Navigation.dart';
 import '../views/Notification/Notification.dart';
 import '../views/Report/Report.dart';
 import '../views/Work/Active_Work.dart';
+import '../views/activework.dart';
 
 class CargoOWnerHomePage extends StatefulWidget {
   int? index;
@@ -213,25 +216,21 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                                   Container(
                                     margin: EdgeInsets.only(top: 0, left: 5),
                                     width: screenWidth * 0.25,
-                                    child: const Expanded(
-                                      child: DottedLine(
-                                        direction: Axis.horizontal,
-                                        lineThickness: 3.0,
-                                        dashLength: 18.0,
-                                        dashColor: Colors.black87,
-                                      ),
+                                    child: const DottedLine(
+                                      direction: Axis.horizontal,
+                                      lineThickness: 3.0,
+                                      dashLength: 18.0,
+                                      dashColor: Colors.black87,
                                     ),
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(top: 10, left: 5),
                                     width: screenWidth * 0.25,
-                                    child: const Expanded(
-                                      child: DottedLine(
-                                        direction: Axis.horizontal,
-                                        lineThickness: 3.0,
-                                        dashLength: 18.0,
-                                        dashColor: Colors.black87,
-                                      ),
+                                    child: const DottedLine(
+                                      direction: Axis.horizontal,
+                                      lineThickness: 3.0,
+                                      dashLength: 18.0,
+                                      dashColor: Colors.black87,
                                     ),
                                   ),
                                 ],
@@ -317,7 +316,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => BillStatus()));
+                                  builder: (context) => Parent()));
                         },
                         child: AnimatedContainer(
                             duration: Duration(milliseconds: 100),
@@ -374,7 +373,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => List_Vehicles()));
+                                  builder: (context) => VehicleCargo()));
                         }),
                         child: Ink(
                           child: Container(

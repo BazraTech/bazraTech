@@ -165,13 +165,11 @@ class _ReportState extends State<Report> {
                                 margin: EdgeInsets.only(
                                   top: 20,
                                 ),
-                                child: const Expanded(
-                                  child: DottedLine(
-                                    lineThickness: 1.0,
-                                    dashLength: 4.0,
-                                    dashColor: Colors.grey,
-                                    dashGapRadius: 2.0,
-                                  ),
+                                child: const DottedLine(
+                                  lineThickness: 1.0,
+                                  dashLength: 4.0,
+                                  dashColor: Colors.grey,
+                                  dashGapRadius: 2.0,
                                 ),
                               ),
                               ListTile(

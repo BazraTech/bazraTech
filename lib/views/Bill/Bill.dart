@@ -1,11 +1,10 @@
-import 'package:cargo/shared/constant.dart';
-import 'package:cargo/shared/customAppbar.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import '../../model/bill.dart';
+
+import '../Bill/billDetail.dart';
 import '../Bottom_Navigation.dart';
-import 'billDetail.dart';
 
 class BillStatus extends StatefulWidget {
   const BillStatus({super.key});
@@ -18,6 +17,14 @@ class _BillStatusState extends State<BillStatus> {
   final List<Bill> bill = [
     Bill(startTrip: "Addis Abbaba", endTrip: "Djibouti", status: "Paid"),
     Bill(startTrip: "Addis Abbaba", endTrip: "Djibouti", status: "Paid"),
+    Bill(startTrip: "Addis Abbaba", endTrip: "Djibouti", status: "Unpaid"),
+    Bill(startTrip: "Addis Abbaba", endTrip: "Djibouti", status: "Unpaid"),
+    Bill(startTrip: "Addis Abbaba", endTrip: "Djibouti", status: "Unpaid"),
+    Bill(startTrip: "Addis Abbaba", endTrip: "Djibouti", status: "Unpaid"),
+    Bill(startTrip: "Addis Abbaba", endTrip: "Djibouti", status: "Unpaid"),
+    Bill(startTrip: "Addis Abbaba", endTrip: "Djibouti", status: "Unpaid"),
+    Bill(startTrip: "Addis Abbaba", endTrip: "Djibouti", status: "Unpaid"),
+    Bill(startTrip: "Addis Abbaba", endTrip: "Djibouti", status: "Unpaid"),
     Bill(startTrip: "Addis Abbaba", endTrip: "Djibouti", status: "Unpaid"),
     Bill(startTrip: "Addis Abbaba", endTrip: "Djibouti", status: "Unpaid"),
   ];
@@ -58,7 +65,7 @@ class _BillStatusState extends State<BillStatus> {
           child: const Center(
             child: TextField(
               decoration: InputDecoration(
-                hintText: 'Status',
+                hintText: 'Date',
                 border: InputBorder.none,
                 errorBorder: InputBorder.none,
                 enabledBorder: InputBorder.none,
@@ -79,14 +86,12 @@ class _BillStatusState extends State<BillStatus> {
               return Container(
                   padding: const EdgeInsets.only(left: 8, right: 8),
                   margin: const EdgeInsets.only(bottom: 8),
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: () {
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Bill_Detail(),
-                        ),
-                      );
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Bill_Detail()));
                     },
                     child: Card(
                         child: Container(
@@ -115,10 +120,9 @@ class _BillStatusState extends State<BillStatus> {
                                   children: [
                                     Text(
                                       bill.startTrip,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 14,
-                                        color:
-                                            Color.fromARGB(255, 123, 129, 236),
+                                        color: Colors.grey.shade600,
                                         fontFamily: 'Roboto',
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -127,15 +131,12 @@ class _BillStatusState extends State<BillStatus> {
                                       margin: EdgeInsets.only(
                                         left: 8,
                                       ),
-                                      child: const Icon(
-                                        Icons.trip_origin,
-                                        size: 15,
-                                        color:
-                                            Color.fromARGB(255, 123, 129, 236),
-                                      ),
+                                      child: Icon(Icons.trip_origin,
+                                          size: 15,
+                                          color: Colors.grey.shade300),
                                     ),
                                     Container(
-                                      width: screenWidth * 0.2,
+                                      width: screenWidth * 0.25,
                                       child: const Stack(
                                         alignment: Alignment.center,
                                         children: [
@@ -147,8 +148,7 @@ class _BillStatusState extends State<BillStatus> {
                                           ),
                                           Icon(
                                             Icons.local_shipping,
-                                            color: Color.fromARGB(
-                                                255, 123, 129, 236),
+                                            color: Colors.grey,
                                             size: 20,
                                           ),
                                         ],
@@ -177,18 +177,16 @@ class _BillStatusState extends State<BillStatus> {
                                 margin: EdgeInsets.only(
                                   top: 20,
                                 ),
-                                child: const Expanded(
-                                  child: DottedLine(
-                                    lineThickness: 1.0,
-                                    dashLength: 4.0,
-                                    dashColor: Colors.grey,
-                                    dashGapRadius: 2.0,
-                                  ),
+                                child: const DottedLine(
+                                  lineThickness: 1.0,
+                                  dashLength: 4.0,
+                                  dashColor: Colors.grey,
+                                  dashGapRadius: 2.0,
                                 ),
                               ),
                               ListTile(
                                 title: Text(
-                                  "Bill Status",
+                                  "Date",
                                   style: TextStyle(
                                     fontSize: 15,
                                     color: Colors.grey.shade500,
@@ -198,16 +196,14 @@ class _BillStatusState extends State<BillStatus> {
                                 ),
                                 trailing: Text(
                                   bill.status,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 15,
-                                    color: bill.status == "Paid"
-                                        ? Colors.green
-                                        : Colors.red,
+                                    color: Colors.amber,
                                     fontFamily: 'Roboto',
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
