@@ -92,8 +92,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 15),
-                    padding: const EdgeInsets.all(2.0),
+                    margin: EdgeInsets.only(top: 15, bottom: 10),
                     child: CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.white,
@@ -129,7 +128,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                         },
                         child: const Icon(
                           Icons.notifications,
-                          size: 28,
+                          size: 30,
                           color: Color.fromRGBO(85, 164, 240, 1),
                         ),
                       ),

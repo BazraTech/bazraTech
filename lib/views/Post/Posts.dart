@@ -12,7 +12,7 @@ import '../../shared/failAlert.dart';
 import '../../shared/storage_hepler.dart';
 import '../../shared/succussAlert.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:file_picker/file_picker.dart';
 import '../Bottom_Navigation.dart';
 
 class CargoType {
@@ -34,8 +34,6 @@ class Posts extends StatefulWidget {
 }
 
 class _PostsState extends State<Posts> {
-  String? selectedItem = 'Liquid';
-  List<String> items = ['Liquid', 'PLC'];
   bool _isMounted = false;
   final _from = TextEditingController();
   final _to = TextEditingController();
@@ -198,8 +196,28 @@ class _PostsState extends State<Posts> {
 
   bool _isFocus = false;
   TextEditingController cargoTypeController = TextEditingController();
+  final TextEditingController _fileController = TextEditingController();
   var dropdownvalue;
   final _formKey = GlobalKey<FormState>();
+//e a function to pick a file
+  void updateControllerWithFile(PlatformFile file) {
+    _fileController.text = file.name;
+  }
+
+  Future pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      updateControllerWithFile(file);
+      print("File name: ${file.name}");
+      print("File size: ${file.size}");
+      print("File path: ${file.path}");
+    } else {
+      // User canceled the picker.
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -389,29 +407,39 @@ class _PostsState extends State<Posts> {
                 const SizedBox(
                   height: 12,
                 ),
-                CustomTextFieldForm(
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
-                  hintText: "Packaging",
-                  textController: _packaging,
-                  obscureText: false,
-                  hintTextStyle: TextStyle(
-                    letterSpacing: 1.0,
-                    wordSpacing: 2.0,
-                    color: _isFocus ? Colors.green : Colors.grey,
-                    // ... other styles
+                TextFormField(
+                  controller: _fileController,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    hintText: "Select a Packaging file",
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.attach_file_rounded),
+                      onPressed: () async {
+                        await pickFile();
+                      },
+                    ),
+                    labelStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.normal),
+                    filled: true,
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 1.5),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 1.5),
+                    ),
+                    errorBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red, width: 1.5),
+                    ),
+                    focusedErrorBorder: const OutlineInputBorder(),
                   ),
-                  onFocusChange: (focus) {
-                    setState(() {
-                      _isFocus = focus;
-                    });
-                  },
-                  onChanged: (value) {},
-                  validator: (value) {
+                  validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Please enter your departure";
+                      return 'Please select a packaging file';
                     }
+                    return null;
                   },
+                  // validator: _validateDate,
                 ),
                 const SizedBox(
                   height: 20,
