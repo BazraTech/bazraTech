@@ -4,15 +4,15 @@ import 'dart:ui';
 import 'package:bazralogin/view/screen/Driver/avilablelMarket_Fordriver.dart';
 
 import 'package:bazralogin/view/screen/Driver/activeWork.dart';
+import 'package:bazralogin/view/screen/Owner/Driver/updateDriverinfo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:ionicons/ionicons.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../../config/APIService.dart';
 import '../../../controller/Localization.dart';
-import '../../../Theme/clippbox.dart';
 import '../../../Theme/verticalDash.dart';
 import '../../../const/constant.dart';
 import 'package:http/http.dart' as http;
@@ -34,8 +34,16 @@ class _Driver_HompageState extends State<Driver_Hompage> {
   Offset distance = isPressed ? Offset(10, 10) : Offset(28, 28);
   double blur = isPressed ? 5.0 : 30.0;
   String Logoavtar = "";
+  String? plateNumber;
+
   String ownerpic = "";
+  Map<String, dynamic>? Result;
+  String? driverstate;
+  String? startpalce;
+  String? endplace;
   String? phoneNumber;
+  bool _isLoading = true;
+  List Listactivework = [];
   void buttonState() {
     setState(() {
       isPressed = !isPressed;
@@ -57,7 +65,65 @@ class _Driver_HompageState extends State<Driver_Hompage> {
     return 'Good Evening';
   }
 
-  //fetch driver picture
+// fetch driver info
+  Future fetchDriverinfo() async {
+    final storage = new FlutterSecureStorage();
+    var token = await storage.read(key: 'jwt');
+    var client = http.Client();
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.drverInfo);
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      await storage.write(
+          key: "totalVehicles", value: data["state"].toString());
+
+      driverstate = await storage.read(key: 'totalVehicles');
+      await storage.write(
+          key: "totalVehicle", value: data["plateNumber"].toString());
+
+      plateNumber = await storage.read(key: 'totalVehicle');
+      setState(() {
+        _isLoading = false;
+        Result = data;
+      });
+
+      return Result;
+    } else {}
+  }
+  //
+
+  //fetch driver status
+  Future fetchActivework() async {
+    final storage = new FlutterSecureStorage();
+    var token = await storage.read(key: 'jwt');
+    var client = http.Client();
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.corgaStatus);
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+
+      endplace = await storage.read(key: 'totalVehicle');
+      setState(() {
+        _isLoading = false;
+        List Results = data["cargos"];
+      });
+
+      return Result;
+    } else {}
+  }
+
   Future<String> _fetchLogo() async {
     var client = http.Client();
     final storage = new FlutterSecureStorage();
@@ -84,7 +150,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    fetchDriverinfo();
 
     super.initState();
   }
@@ -93,6 +159,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+    print(driverstate);
     String tdata;
     return Scaffold(
         backgroundColor: Color.fromRGBO(236, 240, 243, 1),
@@ -186,58 +253,90 @@ class _Driver_HompageState extends State<Driver_Hompage> {
           height: MediaQuery.of(context).size.height,
           child: Column(
             children: [
+              // fetch driver info
+
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   gradient: LinearGradient(
                     colors: [
-                      Colors.black26,
-                      Color.fromRGBO(2, 72, 249, 1),
+                      Color.fromRGBO(95, 112, 247, 1),
+                      Color.fromRGBO(163, 163, 234, 1),
                     ],
                     // stops: [0.4, 0.4],
                   ),
                 ),
                 margin: EdgeInsets.only(top: 20),
-                padding: EdgeInsets.all(8.0),
                 height: screenHeight * 0.28,
                 child: Column(children: [
-                  Container(
-                      margin: EdgeInsets.only(top: 20, bottom: 20),
-                      child: Text(
-                        "Today's Schedule",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      )),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                        margin: EdgeInsets.only(top: 20, bottom: 20),
+                        child: Text(
+                          "Today's Schedule",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        )),
+                  ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                          margin: EdgeInsets.only(left: 10, top: 9),
+                          margin: EdgeInsets.only(left: 14, top: 9),
                           child: Row(
                             children: [
-                              Icon(
-                                Icons.trip_origin,
-                                color: Colors.green,
+                              Container(
+                                height: 20,
+                                width: 20,
+                                decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.black, width: 2),
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                ),
+                                child: Icon(
+                                  Icons.trip_origin,
+                                  color: Colors.green,
+                                  size: 10,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 2,
                               ),
                               SizedBox(
                                 width: screenWidth * 0.4,
-                                child: Text(
-                                  "From   \n Addis Abeba",
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      // fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        "From ",
+                                        textAlign: TextAlign.start,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                            // fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: startpalce == null
+                                          ? Text('__')
+                                          : Text(startpalce.toString()),
+                                    )
+                                  ],
                                 ),
                               ),
                             ],
                           )),
                       Container(
-                        margin: EdgeInsets.only(left: screenWidth * 0.08),
+                        margin: EdgeInsets.only(left: 14, top: 0),
                         child: SizedBox(
                           width: screenWidth * 0.22,
                           child: Text(
@@ -256,12 +355,13 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                   ),
                   Container(
                       height: 46,
-                      margin: EdgeInsets.only(right: screenWidth * 0.7, top: 0),
+                      margin:
+                          EdgeInsets.only(right: screenWidth * 0.62, top: 0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           SizedBox(
-                            height: 10,
+                            height: 12,
                             child: CustomPaint(
                               painter: DashedLineVerticalPainter(),
                               size: Size(
@@ -270,11 +370,12 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                               ),
                             ),
                           ),
+                          // Adjust the vertical offset as needed
                           Icon(
-                            Ionicons.car,
-                            size: 23,
-                            color: Colors.blue,
+                            Icons.local_shipping,
+                            color: Colors.black,
                           ),
+
                           SizedBox(
                             height: 10,
                             child: CustomPaint(
@@ -291,15 +392,29 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                   //   height: 10,
                   // ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                          margin: EdgeInsets.only(left: 10),
+                          margin: EdgeInsets.only(left: 14),
                           child: Row(
                             children: [
-                              Icon(
-                                Icons.location_pin,
-                                color: Colors.red,
+                              Container(
+                                height: 20,
+                                width: 20,
+                                decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.black, width: 2),
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                ),
+                                child: Icon(
+                                  Icons.trip_origin,
+                                  color: Colors.red,
+                                  size: 10,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 2,
                               ),
                               SizedBox(
                                 width: screenWidth * 0.4,
@@ -317,7 +432,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                             ],
                           )),
                       Container(
-                        margin: EdgeInsets.only(left: screenWidth * 0.07),
+                        margin: EdgeInsets.only(left: screenWidth * 0.04),
                         child: SizedBox(
                           width: screenWidth * 0.22,
                           child: Text(
@@ -407,10 +522,46 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                         padding: const EdgeInsets.all(10),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => activeWork()));
+                            print(driverstate);
+                            if (Result!['state'] == null) {
+                              showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: Container(
+                                      padding: EdgeInsets.all(10),
+                                      color: kPrimaryColor,
+                                      child: Center(
+                                          child: Container(
+                                              height: 20,
+                                              child: Text(
+                                                'Alert',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              )))),
+                                  content: Container(
+                                    height: 50,
+                                    child: Center(
+                                      child: Text(
+                                        'Driver not accept job',
+                                      ),
+                                    ),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => activeWork()));
                           },
                           child: AnimatedContainer(
                               duration: Duration(milliseconds: 100),
@@ -516,12 +667,47 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                         padding: const EdgeInsets.all(10),
                         child: GestureDetector(
                           onTap: (() {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CreateAlert(
-                                          title: '',
-                                        )));
+                            if (Result!['plateNumber'] == null) {
+                              showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: Container(
+                                      padding: EdgeInsets.all(10),
+                                      color: kPrimaryColor,
+                                      child: Center(
+                                          child: Container(
+                                              height: 20,
+                                              child: Text(
+                                                'Alert',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              )))),
+                                  content: Container(
+                                    height: 50,
+                                    child: Center(
+                                      child: Text(
+                                        'Driver not on route',
+                                      ),
+                                    ),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CreateAlert(
+                                            title: '',
+                                          )));
                           }),
                           child: AnimatedContainer(
                               //padding: EdgeInsets.only(bottom: _padding),
@@ -592,22 +778,4 @@ class _Driver_HompageState extends State<Driver_Hompage> {
         activeIndex: _current,
         count: 5,
       );
-}
-
-class MyClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.lineTo(0, size.height * 0.4);
-    path.lineTo(size.width * 0.75, size.height * 0.6);
-    path.lineTo(size.width, size.height * 0.4);
-
-    path.lineTo(size.width, 0);
-    path.lineTo(size.width * 0.75, size.height * 0.2);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

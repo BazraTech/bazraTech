@@ -33,7 +33,9 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
   String? plateNum;
   String? platenumber;
   String? loc;
+  bool _shouldShowDialog = true;
   final storage = new FlutterSecureStorage();
+  AlertDialog? _myAlertDialog;
 
   UpdateStatus() async {
     var value = await storage.read(key: 'jwt');
@@ -50,109 +52,33 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
         });
 
     if (response.statusCode == 200) {
-      _showMyDialog();
+      showPopUpAlert(context);
+      _myAlertDialog = null;
     }
     print(response.statusCode.toString());
   }
 
-  Future<void> _showMyDialog() async {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-    platenumber = "${widget.plateNumber}";
-    return showDialog<void>(
+  void showPopUpAlert(BuildContext context) {
+    showDialog(
       context: context,
-      barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return Container(
-          width: screenWidth * 0.9,
-          height: screenHeight * 0.07,
-          child: AlertDialog(
-            titlePadding: EdgeInsets.all(0),
-            title: Container(
+        return AlertDialog(
+          title: Container(
               padding: EdgeInsets.all(10),
               color: kPrimaryColor,
-              child: Center(
-                child: Container(
-                  height: 20,
-                  child: const Text(
-                    "Alert",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
+              child:
+                  Center(child: Container(height: 20, child: Text('Alert')))),
+          content:
+              Container(height: 50, child: Center(child: Text('successfully'))),
+          actions: [
+            ElevatedButton(
+              child: Text('OK'),
+              onPressed: () {
+                // Pop the dialog route to remove it from the tree
+                Navigator.pop(context);
+              },
             ),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: const <Widget>[
-                  Text(
-                    'Updated Successfully ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              Container(
-                margin: EdgeInsets.only(right: 10),
-                width: 100,
-                decoration: const BoxDecoration(
-                  color: kPrimaryColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(6.0),
-                    bottomLeft: Radius.circular(6.0),
-                    bottomRight: Radius.circular(6.0),
-                    topRight: Radius.circular(6.0),
-                  ),
-                ),
-                height: 30,
-                child: TextButton(
-                  child: const Text(
-                    'Done',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => BottomNav()));
-                  },
-                ),
-              ),
-              Container(
-                width: 100,
-                margin: EdgeInsets.only(right: 25),
-                decoration: const BoxDecoration(
-                  color: kPrimaryColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(6.0),
-                    bottomLeft: Radius.circular(6.0),
-                    bottomRight: Radius.circular(6.0),
-                    topRight: Radius.circular(6.0),
-                  ),
-                ),
-                height: 30,
-                child: TextButton(
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OwnersVehicle()));
-                  },
-                ),
-              ),
-            ],
-          ),
+          ],
         );
       },
     );

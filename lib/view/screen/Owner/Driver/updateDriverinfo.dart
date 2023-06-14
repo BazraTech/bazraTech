@@ -5,9 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../../Theme/customAppBar.dart';
-import '../../../../const/constant.dart';
-
 //import 'package:open_file/open_file.dart';
 
 class updateDriverinfo extends StatefulWidget {

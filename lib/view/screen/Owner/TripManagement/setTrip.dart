@@ -54,7 +54,7 @@ class _SettripsState extends State<Settrips> {
   bool isLoading = false;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Future<void> _showMyDialog1() async {
+  _showMyDialog1() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -82,7 +82,7 @@ class _SettripsState extends State<Settrips> {
     );
   }
 
-  Future<void> _showMyDialog() async {
+  _showMyDialog() async {
     print(selectedItem);
     return showDialog<void>(
       context: context,
@@ -111,39 +111,48 @@ class _SettripsState extends State<Settrips> {
     );
   }
 
-  setTrips() async {
-    try {
-      final storage = new FlutterSecureStorage();
-      var value = await storage.read(key: 'jwt');
+  void performAction() {
+    setState(() {
+      isLoading = true;
+    });
 
-      Map data = {
-        "vehicle": "${widget.platenumber}",
-        "startLocation": "Addisa Ababa",
-        "destination": "jimma",
-        "startDate": "2023-06-08",
-        "tripType": "$trip"
-      };
+    // Simulate an asynchronous action
+    Future.delayed(Duration(seconds: 15), () async {
+      try {
+        final storage = new FlutterSecureStorage();
+        var value = await storage.read(key: 'jwt');
 
-      var response = await http.post(Uri.parse(ApIConfig.creatTrip),
-          body: jsonEncode(data) as String,
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization": "Bearer $value",
+        Map data = {
+          "vehicle": "${widget.platenumber}",
+          "startLocation": "Addisa Ababa",
+          "destination": "jimma",
+          "startDate": "${dateStart.text}",
+          "tripType": "$trip"
+        };
+
+        var response = await http.post(Uri.parse(ApIConfig.creatTrip),
+            body: jsonEncode(data) as String,
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "Authorization": "Bearer $value",
+            });
+
+        if (response.statusCode == 200) {
+          _showMyDialog();
+        } else {
+          setState(() {
+            isLoading = true;
           });
-      setState(() {
-        isLoading = true;
-      });
-
-      if (response.statusCode == 200) {
-        _showMyDialog();
-      } else {
-        print('noo');
+        }
+      } catch (e) {
+        print(e);
+        throw e;
       }
-    } catch (e) {
-      print(e);
-      throw e;
-    }
+      setState(() {
+        isLoading = false;
+      });
+    });
   }
 
   void initState() {
@@ -157,7 +166,7 @@ class _SettripsState extends State<Settrips> {
     double screenWidth = MediaQuery.of(context).size.width;
     String? selectedItem = 'Select trip';
     List<String> items = ['SHORT', 'LONG', "Select trip"];
-    print('$trip ');
+    print("${dateStart.text}");
     return Scaffold(
         backgroundColor: kBackgroundColor,
         appBar: AppBar(
@@ -338,15 +347,13 @@ class _SettripsState extends State<Settrips> {
                               hintStyle: const TextStyle(
                                   fontWeight: FontWeight.w300, fontSize: 15),
                               filled: true,
-                              contentPadding:
-                                  EdgeInsets.fromLTRB(20, 10, 20, 10),
                               focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(width: 1, color: Colors.black45),
+                                borderSide: BorderSide(
+                                    width: 2, color: Colors.grey.shade400),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  width: 1,
+                                  width: 2,
                                   color: Colors.grey.shade400,
                                 ),
                                 borderRadius: BorderRadius.circular(5.0),
@@ -393,9 +400,9 @@ class _SettripsState extends State<Settrips> {
                     Container(
                       margin: EdgeInsets.fromLTRB(screenWidth * 0.53, 20, 0, 0),
                       width: screenWidth * 0.4,
-                      height: screenHeight * 0.05,
+                      height: screenHeight * 0.06,
                       child: ElevatedButton(
-                          onPressed: isLoading ? null : setTrips(),
+                          onPressed: isLoading ? null : performAction,
                           child: Container(
                             height: 55,
                             width: screenWidth,

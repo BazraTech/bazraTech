@@ -112,6 +112,9 @@ class _LoginState extends State<Login> {
               context, MaterialPageRoute(builder: (context) => BottomNav()));
         } else {
           showAlertDialog(context);
+          setState(() {
+            isLoading = false;
+          });
         }
       });
     }

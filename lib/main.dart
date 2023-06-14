@@ -23,14 +23,46 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        locale: Locale('en', 'US'),
-        fallbackLocale: Locale('en', 'us'),
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        initialRoute: AppRoutes.getHomeRoute(),
-        getPages: AppRoutes.routes,
-        home: Login());
+      locale: Locale('en', 'US'),
+      fallbackLocale: Locale('en', 'us'),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      initialRoute: AppRoutes.getHomeRoute(),
+      getPages: AppRoutes.routes,
+      home: WillPopScope(
+          onWillPop: () async {
+            return showConfirmationDialog(context)
+                .then((value) => value ?? false);
+          },
+          child: Login()),
+    );
+  }
+
+  Future<bool?> showConfirmationDialog(BuildContext context) async {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Exit App'),
+          content: Text('Are you sure you want to exit?'),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop(false); // Stay in the app
+              },
+            ),
+            ElevatedButton(
+              child: Text('Yes'),
+              onPressed: () {
+                Navigator.of(context).pop(true); // Exit the app
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

@@ -1,9 +1,7 @@
 import 'package:bazralogin/const/constant.dart';
 import 'package:bazralogin/view/screen/Owner/report/toggelReport.dart';
 import 'package:flutter/material.dart';
-
 import 'activeTrip.dart';
-import '../market/avilabelMarketforowner.dart';
 import 'avilabelVehiclefortrip.dart';
 
 class tripHistory extends StatelessWidget {

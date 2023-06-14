@@ -160,330 +160,326 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    return SafeArea(
-      child: Scaffold(
-          backgroundColor: kBackgroundColor,
-          appBar: AppBar(
-            toolbarHeight: 80,
-            elevation: 0,
-            leading: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: const Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-              ),
-            ),
-            backgroundColor: Colors.white,
-            title: Container(
-              margin: EdgeInsets.only(right: screenWidth * 0.12),
-              width: double.infinity,
-              height: 40,
-              color: Colors.white,
-              child: Center(
-                child: TextField(
-                  onChanged: driversSearch,
-                  decoration: const InputDecoration(
-                    hintText: 'Driver Name or Plate No',
-                    border: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    prefixIcon: Icon(Icons.search),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          body: SingleChildScrollView(
-              child: _isLoading
-                  ? Container(
-                      margin: EdgeInsets.only(top: 130),
-                      child: Center(child: CircularProgressIndicator()))
-                  : Column(
-                      children: [
-                        Column(
-                            children: Result.map((driver) {
-                          return Column(
+    return Scaffold(
+        backgroundColor: kBackgroundColor,
+        body: SingleChildScrollView(
+            child: _isLoading
+                ? Container(
+                    margin: EdgeInsets.only(top: 130),
+                    child: Center(child: CircularProgressIndicator()))
+                : Column(
+                    children: [
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(19.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               InkWell(
                                 onTap: () {
-                                  acceptMarket(driver["id"].toString());
+                                  Navigator.pop(context);
                                 },
-                                child: Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(19.0),
-                                    child: Container(
-                                      height: screenHeight * 0.34,
-                                      margin: EdgeInsets.zero,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(0.8),
-                                              spreadRadius: 2,
-                                              blurRadius: 5,
-                                              offset: Offset(0,
-                                                  4), // Adjust the offset to control the shadow's position
-                                            ),
-                                          ]),
-                                      width: screenWidth - 44,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.zero,
-                                                child: ClipPath(
-                                                  clipper:
-                                                      QuarterCircleClipper(),
-                                                  child: Container(
-                                                    width: screenWidth - 44,
-                                                    height: 50,
-                                                    color: Colors.blue,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                left: screenWidth * 0.02),
-                                            child: Row(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Text("From"),
-                                                    Container(
-                                                      height: 20,
-                                                      width: 20,
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: Colors.black,
-                                                            width: 2),
-                                                        shape: BoxShape.circle,
-                                                        color: Colors.white,
-                                                      ),
-                                                      child: Icon(
-                                                        Icons.trip_origin,
-                                                        color: Colors.black,
-                                                        size: 10,
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                                CustomPaint(
-                                                  size: Size(
-                                                      screenWidth * 0.1, 2),
-                                                  painter: DashLinePainter(),
-                                                ),
-                                                Container(
-                                                  width: screenWidth * 0.07,
-                                                  child: Icon(
-                                                    Icons.local_shipping,
-                                                    color: Colors.red,
-                                                    size: 23,
-                                                  ),
-                                                ),
-                                                CustomPaint(
-                                                  size: Size(
-                                                      screenWidth * 0.1, 2),
-                                                  painter: DashLinePainter(),
-                                                ),
-                                                SizedBox(
-                                                    width: screenWidth * 0.2,
-                                                    child: Row(
-                                                      children: [
-                                                        Container(
-                                                          height: 20,
-                                                          width: 20,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            border: Border.all(
-                                                                color: Colors
-                                                                    .black,
-                                                                width: 2),
-                                                            shape:
-                                                                BoxShape.circle,
-                                                            color: Colors.white,
-                                                          ),
-                                                          child: Icon(
-                                                            Icons.trip_origin,
-                                                            color: Colors.black,
-                                                            size: 10,
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 5,
-                                                        ),
-                                                        Text("To".toString()),
-                                                      ],
-                                                    )),
-                                                Container(
-                                                    margin: EdgeInsets.only(
-                                                        left:
-                                                            screenWidth * 0.08),
-                                                    child: Text("Time")),
-                                              ],
-                                            ),
-                                          ),
-                                          Row(
-                                            children: [
-                                              Container(
-                                                  margin: EdgeInsets.only(
-                                                      left: screenWidth * 0.02),
-                                                  width: screenWidth * 0.3,
-                                                  child: Text(driver["pickUp"]
-                                                      .toString())),
-                                              SizedBox(
-                                                width: screenWidth * 0.16,
-                                              ),
-                                              SizedBox(
-                                                  width: screenWidth * 0.2,
-                                                  child: Text(driver["dropOff"]
-                                                      .toString())),
-                                              Text(driver["date"].toString())
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 6,
-                                          ),
-                                          CustomPaint(
-                                            size: Size(screenWidth * 0.9, 2),
-                                            painter: DashLinePainter(),
-                                          ),
-                                          Container(
-                                            width: screenWidth,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(12.0),
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                          width: screenWidth *
-                                                              0.35,
-                                                          child: Text(
-                                                              "CargoType")),
-                                                      SizedBox(
-                                                        width:
-                                                            screenWidth * 0.06,
-                                                      ),
-                                                      Container(
-                                                          width: screenWidth *
-                                                              0.35,
-                                                          child: Text(driver[
-                                                                  "cargoType"]
-                                                              .toString()))
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 2,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                          width: screenWidth *
-                                                              0.35,
-                                                          child: Text(
-                                                              "Packaging")),
-                                                      SizedBox(
-                                                        width:
-                                                            screenWidth * 0.06,
-                                                      ),
-                                                      Container(
-                                                          width: screenWidth *
-                                                              0.35,
-                                                          child: Text(driver[
-                                                                  "packaging"]
-                                                              .toString()))
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 2,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                          width: screenWidth *
-                                                              0.35,
-                                                          child:
-                                                              Text("Weight")),
-                                                      SizedBox(
-                                                        width:
-                                                            screenWidth * 0.06,
-                                                      ),
-                                                      Container(
-                                                          width: screenWidth *
-                                                              0.35,
-                                                          child: Text(
-                                                              driver["weight"]
-                                                                  .toString()))
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 2,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                          width: screenWidth *
-                                                              0.35,
-                                                          child:
-                                                              Text("Status")),
-                                                      SizedBox(
-                                                        width:
-                                                            screenWidth * 0.06,
-                                                      ),
-                                                      Container(
-                                                          width: screenWidth *
-                                                              0.38,
-                                                          child: Text(
-                                                              driver["status"]
-                                                                  .toString()))
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 2,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                          width: screenWidth *
-                                                              0.35,
-                                                          child: Text(
-                                                              "Remaining")),
-                                                      SizedBox(
-                                                        width:
-                                                            screenWidth * 0.06,
-                                                      ),
-                                                      Container(
-                                                          width: screenWidth *
-                                                              0.38,
-                                                          child: Text(driver[
-                                                                  "remaining"]
-                                                              .toString()))
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                child: const Icon(
+                                  Icons.arrow_back,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 30,
+                              ),
+                              Container(
+                                width: screenWidth * 0.6,
+                                height: 40,
+                                color: kBackgroundColor,
+                                child: Center(
+                                  child: TextField(
+                                    onChanged: driversSearch,
+                                    decoration: const InputDecoration(
+                                      hintText: '',
+                                      border: InputBorder.none,
+                                      errorBorder: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      prefixIcon: Icon(Icons.search),
                                     ),
                                   ),
                                 ),
                               ),
                             ],
-                          );
-                        }).toList()),
-                      ],
-                    ))),
-    );
-    ;
+                          ),
+                        ),
+                      ),
+                      Column(
+                          children: Result.map((driver) {
+                        return Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                acceptMarket(driver["id"].toString());
+                              },
+                              child: Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(19.0),
+                                  child: Container(
+                                    height: screenHeight * 0.34,
+                                    margin: EdgeInsets.zero,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.8),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: Offset(0,
+                                                4), // Adjust the offset to control the shadow's position
+                                          ),
+                                        ]),
+                                    width: screenWidth - 44,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.zero,
+                                              child: ClipPath(
+                                                clipper: QuarterCircleClipper(),
+                                                child: Container(
+                                                  width: screenWidth - 44,
+                                                  height: 50,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              left: screenWidth * 0.02),
+                                          child: Row(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Text("From"),
+                                                  Container(
+                                                    height: 20,
+                                                    width: 20,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: Colors.black,
+                                                          width: 2),
+                                                      shape: BoxShape.circle,
+                                                      color: Colors.white,
+                                                    ),
+                                                    child: Icon(
+                                                      Icons.trip_origin,
+                                                      color: Colors.black,
+                                                      size: 10,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                              CustomPaint(
+                                                size:
+                                                    Size(screenWidth * 0.1, 2),
+                                                painter: DashLinePainter(),
+                                              ),
+                                              Container(
+                                                width: screenWidth * 0.07,
+                                                child: Icon(
+                                                  Icons.local_shipping,
+                                                  color: Colors.red,
+                                                  size: 23,
+                                                ),
+                                              ),
+                                              CustomPaint(
+                                                size:
+                                                    Size(screenWidth * 0.1, 2),
+                                                painter: DashLinePainter(),
+                                              ),
+                                              SizedBox(
+                                                  width: screenWidth * 0.2,
+                                                  child: Row(
+                                                    children: [
+                                                      Container(
+                                                        height: 20,
+                                                        width: 20,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          border: Border.all(
+                                                              color:
+                                                                  Colors.black,
+                                                              width: 2),
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color: Colors.white,
+                                                        ),
+                                                        child: Icon(
+                                                          Icons.trip_origin,
+                                                          color: Colors.black,
+                                                          size: 10,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                      Text("To".toString()),
+                                                    ],
+                                                  )),
+                                              Container(
+                                                  margin: EdgeInsets.only(
+                                                      left: screenWidth * 0.08),
+                                                  child: Text("Time")),
+                                            ],
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                                margin: EdgeInsets.only(
+                                                    left: screenWidth * 0.02),
+                                                width: screenWidth * 0.3,
+                                                child: Text(driver["pickUp"]
+                                                    .toString())),
+                                            SizedBox(
+                                              width: screenWidth * 0.16,
+                                            ),
+                                            SizedBox(
+                                                width: screenWidth * 0.2,
+                                                child: Text(driver["dropOff"]
+                                                    .toString())),
+                                            Text(driver["date"].toString())
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 6,
+                                        ),
+                                        CustomPaint(
+                                          size: Size(screenWidth * 0.9, 2),
+                                          painter: DashLinePainter(),
+                                        ),
+                                        Container(
+                                          width: screenWidth,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(12.0),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                        width:
+                                                            screenWidth * 0.35,
+                                                        child:
+                                                            Text("CargoType")),
+                                                    SizedBox(
+                                                      width: screenWidth * 0.06,
+                                                    ),
+                                                    Container(
+                                                        width:
+                                                            screenWidth * 0.35,
+                                                        child: Text(
+                                                            driver["cargoType"]
+                                                                .toString()))
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 2,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                        width:
+                                                            screenWidth * 0.35,
+                                                        child:
+                                                            Text("Packaging")),
+                                                    SizedBox(
+                                                      width: screenWidth * 0.06,
+                                                    ),
+                                                    Container(
+                                                        width:
+                                                            screenWidth * 0.35,
+                                                        child: Text(
+                                                            driver["packaging"]
+                                                                .toString()))
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 2,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                        width:
+                                                            screenWidth * 0.35,
+                                                        child: Text("Weight")),
+                                                    SizedBox(
+                                                      width: screenWidth * 0.06,
+                                                    ),
+                                                    Container(
+                                                        width:
+                                                            screenWidth * 0.35,
+                                                        child: Text(
+                                                            driver["weight"]
+                                                                .toString()))
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 2,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                        width:
+                                                            screenWidth * 0.35,
+                                                        child: Text("Status")),
+                                                    SizedBox(
+                                                      width: screenWidth * 0.06,
+                                                    ),
+                                                    Container(
+                                                        width:
+                                                            screenWidth * 0.38,
+                                                        child: Text(
+                                                            driver["status"]
+                                                                .toString()))
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 2,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                        width:
+                                                            screenWidth * 0.35,
+                                                        child:
+                                                            Text("Remaining")),
+                                                    SizedBox(
+                                                      width: screenWidth * 0.06,
+                                                    ),
+                                                    Container(
+                                                        width:
+                                                            screenWidth * 0.38,
+                                                        child: Text(
+                                                            driver["remaining"]
+                                                                .toString()))
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }).toList()),
+                    ],
+                  )));
   }
 }

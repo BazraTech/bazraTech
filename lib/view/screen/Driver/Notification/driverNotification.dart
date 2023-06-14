@@ -107,7 +107,7 @@ class _drivernotificationPageState extends State<drivernotificationPage> {
                       Container(
                         height: screenHeight * 0.1,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: kBackgroundColor,
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.shade400.withOpacity(0.2),
@@ -127,7 +127,7 @@ class _drivernotificationPageState extends State<drivernotificationPage> {
                                 height: screenHeight * 0.08,
                                 width: screenWidth * 0.1,
                                 child: CircleAvatar(
-                                  backgroundColor: Colors.white,
+                                  backgroundColor: kBackgroundColor,
                                   child: SizedBox(
                                       height: screenHeight * 0.06,
                                       child: Center(

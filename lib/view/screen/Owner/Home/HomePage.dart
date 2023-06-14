@@ -200,8 +200,8 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
 
                     gradient: LinearGradient(
                       colors: [
-                        Colors.black26,
-                        Color.fromRGBO(2, 72, 249, 1),
+                        Color.fromRGBO(95, 112, 247, 1),
+                        Color.fromRGBO(163, 163, 234, 1),
                       ],
                       // stops: [0.4, 0.4],
                     ),

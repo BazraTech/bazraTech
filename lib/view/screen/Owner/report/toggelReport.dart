@@ -1,7 +1,6 @@
 import 'package:bazralogin/Theme/clippbox.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-
 import '../../../../const/constant.dart';
 
 class MyScreen extends StatefulWidget {

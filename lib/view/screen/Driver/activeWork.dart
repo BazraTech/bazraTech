@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 
@@ -275,7 +272,7 @@ class _activeWorkState extends State<activeWork> {
                                                           left: screenWidth *
                                                               0.15),
                                                       child: Text(
-                                                        Result[index]["pickUp"],
+                                                        '',
                                                         style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,

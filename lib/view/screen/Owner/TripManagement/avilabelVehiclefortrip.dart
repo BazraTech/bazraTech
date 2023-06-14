@@ -1,19 +1,11 @@
-import 'dart:async';
 import 'dart:convert';
 
-import 'package:bazralogin/Theme/customAppBar.dart';
 import 'package:bazralogin/config/APIService.dart';
-import 'package:bazralogin/const/color.dart';
-import 'package:bazralogin/view/screen/Owner/Driver/assignDriver.dart';
 import 'package:bazralogin/view/screen/Owner/TripManagement/setTrip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:google_places_flutter/model/place_details.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import '../../../../../Model/communicationList.dart';
+import 'package:lottie/lottie.dart';
 import '../../../../const/constant.dart';
-import '../Vehicle/vehicleDetial.dart';
-import '../Vehicle/vehicleStatus.dart';
 import 'package:http/http.dart' as http;
 
 class AvailableVehicle extends StatefulWidget {
@@ -109,7 +101,7 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
     return Scaffold(
         backgroundColor: kBackgroundColor,
         appBar: AppBar(
-          toolbarHeight: 120,
+          toolbarHeight: 80,
           elevation: 0,
           leading: InkWell(
             onTap: () {
@@ -141,96 +133,121 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
             ),
           ),
         ),
-        body: findVehicle.isEmpty
+        body: _isLoading
             ? Center(child: CircularProgressIndicator())
-            : SingleChildScrollView(
-                child: Column(
-                    children: findVehicle.map((vehicle) {
-                  return Container(
-                    height: screenHeight * 0.08,
-                    child: InkWell(
-                      onTap: (() {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => Settrips(
-                                  drivername: vehicle['driverName'],
-                                  platenumber: vehicle['plateNumber'],
-                                  startLocation: "4444",
-                                  destination: "4443",
-                                  startDate: "2-11-14",
-                                  tripType: "LONG")),
-                        );
-                      }),
-                      child: Card(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(left: 15, right: 10),
-                                child: Text(
-                                  " " + vehicle['vehicleName'],
-                                  style: const TextStyle(
-                                      // fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                      color: Colors.black87),
-                                ),
-                              ),
-                              vehicle['driverName'] != null
-                                  ? Container(
-                                      margin: EdgeInsets.only(left: 20),
-                                      width: screenWidth * 0.28,
+            : Column(
+                children: [
+                  if (findVehicle == null || findVehicle.isEmpty)
+                    Center(
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          top: screenHeight * 0.2,
+                        ),
+                        width: 300,
+                        height: 300,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Lottie.asset(
+                            'assets/images/noapidatas.json', // Replace with your animation file path
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    )
+                  else
+                    SingleChildScrollView(
+                      child: Column(
+                          children: findVehicle.map((vehicle) {
+                        return Container(
+                          height: screenHeight * 0.08,
+                          child: InkWell(
+                            onTap: (() {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) => Settrips(
+                                        drivername: vehicle['driverName'],
+                                        platenumber: vehicle['plateNumber'],
+                                        startLocation: "4444",
+                                        destination: "4443",
+                                        startDate: "2-11-14",
+                                        tripType: "LONG")),
+                              );
+                            }),
+                            child: Card(
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      margin:
+                                          EdgeInsets.only(left: 15, right: 10),
                                       child: Text(
-                                        vehicle['driverName'],
+                                        " " + vehicle['vehicleName'],
                                         style: const TextStyle(
                                             // fontWeight: FontWeight.bold,
                                             fontSize: 12,
                                             color: Colors.black87),
-                                      ))
-                                  : Container(
-                                      width: screenWidth * 0.25,
-                                      child: const Text(
-                                        "Unassigned",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.black87,
-                                        ),
                                       ),
                                     ),
-                              Container(
-                                width: screenWidth * 0.1,
-                                margin: EdgeInsets.only(left: 5),
-                                child: Text(
-                                  vehicle['vehicleCatagory'],
-                                  style: const TextStyle(
-                                      // fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                      color: Colors.black87),
-                                ),
-                              ),
-                              Container(
-                                  height: screenHeight * 0.038,
-                                  width: screenWidth * 0.23,
-                                  margin: const EdgeInsets.only(
-                                      left: 30, right: 10),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(6),
-                                    color: kPrimaryColor,
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      " " + vehicle['status'],
-                                      style: const TextStyle(
-                                          // fontWeight: FontWeight.bold,
-                                          fontSize: 12,
-                                          color: Colors.white),
+                                    vehicle['driverName'] != null
+                                        ? Container(
+                                            margin: EdgeInsets.only(left: 20),
+                                            width: screenWidth * 0.28,
+                                            child: Text(
+                                              vehicle['driverName'],
+                                              style: const TextStyle(
+                                                  // fontWeight: FontWeight.bold,
+                                                  fontSize: 12,
+                                                  color: Colors.black87),
+                                            ))
+                                        : Container(
+                                            width: screenWidth * 0.25,
+                                            child: const Text(
+                                              "Unassigned",
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.black87,
+                                              ),
+                                            ),
+                                          ),
+                                    Container(
+                                      width: screenWidth * 0.1,
+                                      margin: EdgeInsets.only(left: 5),
+                                      child: Text(
+                                        vehicle['vehicleCatagory'],
+                                        style: const TextStyle(
+                                            // fontWeight: FontWeight.bold,
+                                            fontSize: 12,
+                                            color: Colors.black87),
+                                      ),
                                     ),
-                                  ))
-                            ]),
-                      ),
-                    ),
-                  );
-                }).toList()),
+                                    Container(
+                                        height: screenHeight * 0.038,
+                                        width: screenWidth * 0.23,
+                                        margin: const EdgeInsets.only(
+                                            left: 30, right: 10),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                          color: kPrimaryColor,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            " " + vehicle['status'],
+                                            style: const TextStyle(
+                                                // fontWeight: FontWeight.bold,
+                                                fontSize: 12,
+                                                color: Colors.white),
+                                          ),
+                                        ))
+                                  ]),
+                            ),
+                          ),
+                        );
+                      }).toList()),
+                    )
+                ],
               ));
   }
 }

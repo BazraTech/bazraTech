@@ -129,8 +129,7 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
                         fontWeight: FontWeight.bold),
                   ),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => BottomNav()));
+                    Navigator.pop(context);
                   },
                 ),
               ),

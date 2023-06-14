@@ -6,13 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-
-import 'package:google_places_flutter/google_places_flutter.dart';
-import 'package:google_places_flutter/model/prediction.dart';
-import 'package:intl/intl.dart';
-
-import 'package:ionicons/ionicons.dart';
-
 import 'package:http/http.dart' as http;
 import '../../../../Theme/TextInput.dart';
 import '../../../../config/APIService.dart';
@@ -161,16 +154,7 @@ class _assignDriverState extends State<assignDriver> {
     });
   }
 
-  // AssignDriver() async {
-
-  //   print(response.statusCode.toString());
-  // }
-
-  // void initState() {
-  //   // super.initState();
-
-  // }
-
+ 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;

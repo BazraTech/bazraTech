@@ -151,10 +151,7 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => communicate_screen()));
+                Navigator.pop(context);
               },
               child: Text('OK'),
             ),
