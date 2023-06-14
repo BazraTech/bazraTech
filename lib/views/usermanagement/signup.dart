@@ -5,6 +5,7 @@ import 'package:cargo/shared/constant.dart';
 import 'package:cargo/views/usermanagement/login.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import '../../localization/app_localizations.dart';
 import '../../shared/custom-form.dart';
 import '../../shared/customButton.dart';
 import '../../shared/failAlert.dart';
@@ -123,9 +124,11 @@ class _SignupState extends State<Signup> {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(top: 20, bottom: 20),
-                    child: const Text(
-                      "Create An Account ",
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)
+                              ?.translate("Create An Account ") ??
+                          "Create An Account",
+                      style: const TextStyle(
                         fontSize: 20,
                         color: Colors.black54,
                         letterSpacing: 2.0,
@@ -140,7 +143,9 @@ class _SignupState extends State<Signup> {
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal,
                         fontFamily: "Roboto"),
-                    hintText: "Company Name",
+                    hintText: AppLocalizations.of(context)
+                            ?.translate("Company Name") ??
+                        "Company Name",
                     textController: _companyController,
                     keyboardType: TextInputType.text,
                     hintTextStyle: TextStyle(
@@ -157,7 +162,9 @@ class _SignupState extends State<Signup> {
                     },
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "Please enter your phone number";
+                        return AppLocalizations.of(context)
+                                ?.translate("Please enter your company name") ??
+                            "Please enter your company name";
                       }
                       return null;
                     },
@@ -170,7 +177,9 @@ class _SignupState extends State<Signup> {
                     textStyle: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal),
-                    hintText: "Phone",
+                    hintText: AppLocalizations.of(context)
+                            ?.translate("Phone Number") ??
+                        "Phone Number",
                     textController: _phoneController,
                     obscureText: false,
                     hintTextStyle: TextStyle(
@@ -187,7 +196,9 @@ class _SignupState extends State<Signup> {
                     onChanged: (value) {},
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter a company name';
+                        return AppLocalizations.of(context)
+                                ?.translate('Please enter your phone number') ??
+                            "Please enter your phone number ";
                       }
                       return null;
                     },
@@ -196,7 +207,9 @@ class _SignupState extends State<Signup> {
                     height: 20,
                   ),
                   CustomTextFieldForm(
-                    hintText: 'Password',
+                    hintText:
+                        AppLocalizations.of(context)?.translate('Password') ??
+                            "Password",
                     textController: _passwordController,
                     isPassword: true,
                     hintTextStyle: TextStyle(
@@ -218,7 +231,9 @@ class _SignupState extends State<Signup> {
                     },
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter a password';
+                        return AppLocalizations.of(context)
+                                ?.translate('Please Enter Password') ??
+                            "Please Enter Password";
                       }
                       return PasswordMatchValidator.validate(
                           value!, _confirmPasswordController.text);
@@ -228,7 +243,9 @@ class _SignupState extends State<Signup> {
                     height: 20,
                   ),
                   CustomTextFieldForm(
-                      hintText: 'Confirm Password',
+                      hintText: AppLocalizations.of(context)
+                              ?.translate('Confirm Password') ??
+                          "Confirm Password",
                       textController: _confirmPasswordController,
                       isPassword: true,
                       textStyle: const TextStyle(
@@ -255,7 +272,7 @@ class _SignupState extends State<Signup> {
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Please enter a confirm password';
+                          return "Please Confirm Password";
                         }
 
                         return PasswordMatchValidator.validate(
@@ -273,7 +290,8 @@ class _SignupState extends State<Signup> {
                         _confirmPasswordController.text,
                       );
                     },
-                    text: 'Sign up',
+                    text: AppLocalizations.of(context)?.translate('Sign Up') ??
+                        "Sign Up",
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 5),
@@ -281,9 +299,11 @@ class _SignupState extends State<Signup> {
                       children: [
                         Container(
                             margin: EdgeInsets.only(left: 40, right: 20),
-                            child: const Text(
-                              "Already have an account?",
-                              style: TextStyle(
+                            child: Text(
+                              AppLocalizations.of(context)
+                                      ?.translate("Already have an account?") ??
+                                  "Already have an account?",
+                              style: const TextStyle(
                                 fontSize: 15,
                                 letterSpacing: 1,
                                 color: Colors.black54,
@@ -300,9 +320,11 @@ class _SignupState extends State<Signup> {
                                         const Cargo_login()),
                               );
                             },
-                            child: const Text(
-                              "Log In",
-                              style: TextStyle(
+                            child: Text(
+                              AppLocalizations.of(context)
+                                      ?.translate("Login") ??
+                                  "Login",
+                              style: const TextStyle(
                                 fontSize: 15,
                                 color: kPrimaryColor,
                                 letterSpacing: 1.0,

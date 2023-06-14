@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import '../cargo.dart';
-import '../shared/constant.dart';
+import '../../cargo.dart';
+import '../../localization/app_localizations.dart';
+import '../../shared/constant.dart';
 
-import '../smart.dart';
-import 'Alert/Alert.dart';
+import '../../smart.dart';
+import '../Alert/Alert.dart';
 
-import 'Notification/Notification.dart';
-import 'Post/Posts.dart';
-import 'Post/histrory.dart';
+import '../Notification/Notification.dart';
+import 'Posts.dart';
+import 'histrory.dart';
 
 class Post_BottomNav extends StatelessWidget {
   Post_BottomNav({super.key});
@@ -40,12 +41,14 @@ class Post_BottomNav extends StatelessWidget {
                     indicatorWeight: 3,
                     labelPadding:
                         EdgeInsets.symmetric(horizontal: screenWidth * 0.055),
-                    tabs: const [
+                    tabs: [
                       Tab(
                         icon: Icon(Icons.add),
                         child: Text(
-                          "Post Cargo",
-                          style: TextStyle(
+                          AppLocalizations.of(context)
+                                  ?.translate("Post Cargo") ??
+                              "Post Cargo",
+                          style: const TextStyle(
                               fontSize: 13,
                               color: Colors.white,
                               fontFamily: 'Roboto',
@@ -56,8 +59,10 @@ class Post_BottomNav extends StatelessWidget {
                       Tab(
                         icon: Icon(Icons.history_edu),
                         child: Text(
-                          "Cargo Post History",
-                          style: TextStyle(
+                          AppLocalizations.of(context)
+                                  ?.translate("Cargo History") ??
+                              "Cargo History",
+                          style: const TextStyle(
                               fontSize: 13,
                               color: Colors.white,
                               fontFamily: 'Roboto',

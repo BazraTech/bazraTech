@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../../Components/Home_Page.dart';
+import '../../localization/app_localizations.dart';
 import '../../shared/custom-form.dart';
 import '../../shared/customButton.dart';
 import 'package:intl/intl.dart';
@@ -42,19 +43,6 @@ class _PostsState extends State<Posts> {
   final _packaging = TextEditingController();
   final _weight = TextEditingController();
   final _price = TextEditingController();
-
-  // @override
-  // void dispose() {
-  //   // Clean up the controllers when the widget is disposed
-  //   _from.dispose();
-  //   _to.dispose();
-  //   _date.dispose();
-  //   _cargoType.dispose();
-  //   _cargoType.dispose();
-  //   _weight.dispose();
-  //   _isMounted = false;
-  //   super.dispose();
-  // }
   void _showSweetAlert(BuildContext context, AlertType alertType, String title,
       String description) {
     Alert(
@@ -241,10 +229,11 @@ class _PostsState extends State<Posts> {
           width: double.infinity,
           margin: EdgeInsets.only(right: screenWidth * 0.12),
           height: 40,
-          child: const Center(
+          child: Center(
             child: Text(
-              "Post Your Cargo Here",
-              style: TextStyle(
+              AppLocalizations.of(context)?.translate("Post Your Cargo Here") ??
+                  "Post Your Cargo Here",
+              style: const TextStyle(
                 color: Colors.grey,
               ),
             ),
@@ -278,7 +267,9 @@ class _PostsState extends State<Posts> {
                   onChanged: (value) {},
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Please enter your departure";
+                      return AppLocalizations.of(context)
+                              ?.translate("Please enter your departure") ??
+                          "Please enter your departure";
                     }
                   },
                 ),
@@ -288,7 +279,8 @@ class _PostsState extends State<Posts> {
                 CustomTextFieldForm(
                   textStyle: const TextStyle(
                       fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
-                  hintText: "To",
+                  hintText:
+                      AppLocalizations.of(context)?.translate("To") ?? "To",
                   textController: _to,
                   obscureText: false,
                   hintTextStyle: TextStyle(
@@ -305,7 +297,9 @@ class _PostsState extends State<Posts> {
                   onChanged: (value) {},
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please enter your departure";
+                      return AppLocalizations.of(context)
+                              ?.translate("Please enter your destination") ??
+                          "Please enter your destination";
                     }
                   },
                 ),
@@ -316,7 +310,9 @@ class _PostsState extends State<Posts> {
                   controller: _dateController,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
-                    hintText: "Select a date",
+                    hintText: AppLocalizations.of(context)
+                            ?.translate("Select a date") ??
+                        "Select a date",
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.calendar_today),
                       onPressed: () => _selectDate(context),
@@ -338,7 +334,9 @@ class _PostsState extends State<Posts> {
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please select a  date';
+                      return AppLocalizations.of(context)
+                              ?.translate('Please select a  date') ??
+                          "Please select a date";
                     }
                     return null;
                   },
@@ -399,7 +397,9 @@ class _PostsState extends State<Posts> {
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please select a cargo type';
+                      return AppLocalizations.of(context)
+                              ?.translate('Please select a cargo type') ??
+                          "Please select a cargo type";
                     }
                     return null;
                   },
@@ -411,7 +411,9 @@ class _PostsState extends State<Posts> {
                   controller: _fileController,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
-                    hintText: "Select a Packaging file",
+                    hintText: AppLocalizations.of(context)
+                            ?.translate("Select a bill file") ??
+                        "Select a bill file",
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.attach_file_rounded),
                       onPressed: () async {
@@ -435,7 +437,9 @@ class _PostsState extends State<Posts> {
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please select a packaging file';
+                      return AppLocalizations.of(context)
+                              ?.translate('Select a bill file') ??
+                          "Select a bill file";
                     }
                     return null;
                   },
@@ -447,7 +451,8 @@ class _PostsState extends State<Posts> {
                 CustomTextFieldForm(
                   textStyle: const TextStyle(
                       fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
-                  hintText: "Weight",
+                  hintText: AppLocalizations.of(context)?.translate("Weight") ??
+                      "Weight",
                   textController: _weight,
                   hintTextStyle: TextStyle(
                     letterSpacing: 1.0,
@@ -464,7 +469,9 @@ class _PostsState extends State<Posts> {
                   onChanged: (value) {},
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please enter your departure";
+                      return AppLocalizations.of(context)
+                              ?.translate("Please enter your weight") ??
+                          "Please enter your weight";
                     }
                   },
                 ),
@@ -499,7 +506,7 @@ class _PostsState extends State<Posts> {
                   onChanged: (value) {},
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please enter your departure";
+                      return "Please enter your price";
                     }
                   },
                 ),
@@ -514,7 +521,8 @@ class _PostsState extends State<Posts> {
                         _weight.text,
                         _price.text);
                   },
-                  text: "Post",
+                  text:
+                      AppLocalizations.of(context)?.translate("Post") ?? "Post",
                 )
               ],
             ),

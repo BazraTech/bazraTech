@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:cargo/Components/Home_Page.dart';
 import 'package:cargo/config/APIConfig.dart';
+import 'package:cargo/localization/app_localizations.dart';
 import 'package:cargo/shared/constant.dart';
 import 'package:cargo/shared/customButton.dart';
 import 'package:cargo/views/Bottom_Navigation.dart';
@@ -30,26 +31,26 @@ class Forget extends StatefulWidget {
 class _ForgetState extends State<Forget> {
   final _formKey = GlobalKey<FormState>();
   final _phoneController = TextEditingController();
-  Future<String> fetchImage() async {
-    var client = http.Client();
-    StorageHelper storageHelper = StorageHelper();
-    String? accessToken = await storageHelper.getToken();
+  // Future<String> fetchImage() async {
+  //   var client = http.Client();
+  //   StorageHelper storageHelper = StorageHelper();
+  //   String? accessToken = await storageHelper.getToken();
 
-    Map<String, String> requestHeaders = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    };
-    final response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
-        headers: requestHeaders);
-    if (response.statusCode == 200) {
-      // If the server returns a 200 OK response, parse the JSON.
-      Map<String, dynamic> data = json.decode(response.body);
-      return data["logo"];
-    } else {
-      throw Exception('Failed to load image');
-    }
-  }
+  //   Map<String, String> requestHeaders = {
+  //     'Content-Type': 'application/json',
+  //     'Accept': 'application/json',
+  //   };
+  //   final response = await http.get(
+  //       Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+  //       headers: requestHeaders);
+  //   if (response.statusCode == 200) {
+  //     // If the server returns a 200 OK response, parse the JSON.
+  //     Map<String, dynamic> data = json.decode(response.body);
+  //     return data["logo"];
+  //   } else {
+  //     throw Exception('Failed to load image');
+  //   }
+  // }
 
   bool _isFocus = false;
   void _showSweetAlert(BuildContext context, AlertType alertType, String title,
@@ -138,32 +139,33 @@ class _ForgetState extends State<Forget> {
           child: Form(
             key: _formKey,
             child: Column(children: [
-              Container(
-                margin: EdgeInsets.only(left: 20, bottom: 30),
-                padding: const EdgeInsets.all(2.0),
-                child: CircleAvatar(
-                  radius: 65,
-                  backgroundColor: Colors.white,
-                  child: FutureBuilder(
-                    future: fetchImage(),
-                    builder:
-                        (BuildContext context, AsyncSnapshot<String> snapshot) {
-                      if (snapshot.connectionState != ConnectionState.done)
-                        return Text("");
-                      return ClipOval(
-                        child: SizedBox(
-                            height: screenHeight * 0.4,
-                            width: screenWidth * 0.9,
-                            child: Image.network(snapshot.data.toString())),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              const Center(
+              // Container(
+              //   margin: EdgeInsets.only(left: 20, bottom: 30),
+              //   padding: const EdgeInsets.all(2.0),
+              //   child: CircleAvatar(
+              //     radius: 65,
+              //     backgroundColor: Colors.white,
+              //     child: FutureBuilder(
+              //       future: fetchImage(),
+              //       builder:
+              //           (BuildContext context, AsyncSnapshot<String> snapshot) {
+              //         if (snapshot.connectionState != ConnectionState.done)
+              //           return Text("");
+              //         return ClipOval(
+              //           child: SizedBox(
+              //               height: screenHeight * 0.4,
+              //               width: screenWidth * 0.9,
+              //               child: Image.network(snapshot.data.toString())),
+              //         );
+              //       },
+              //     ),
+              //   ),
+              // ),
+              Center(
                 child: Text(
-                  "Forget Password",
-                  style: TextStyle(
+                  AppLocalizations.of(context)?.translate("Forget Password") ??
+                      "Forget Password",
+                  style: const TextStyle(
                     fontSize: 20,
                     letterSpacing: 1,
                     color: kPrimaryColor,
@@ -174,9 +176,11 @@ class _ForgetState extends State<Forget> {
               ),
               Container(
                 margin: EdgeInsets.only(top: 15, bottom: 45),
-                child: const Text(
-                  "Enter your phone number to get a verification code.",
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)?.translate(
+                          "Enter your phone number to get a verification code.") ??
+                      "Enter your phone number to get a verification code.",
+                  style: const TextStyle(
                       fontSize: 13,
                       color: Colors.black54,
                       fontFamily: 'Roboto',
@@ -190,7 +194,9 @@ class _ForgetState extends State<Forget> {
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.normal,
                     fontFamily: "Roboto"),
-                hintText: "Phone Number",
+                hintText:
+                    AppLocalizations.of(context)?.translate("Phone Number") ??
+                        "Phone Number",
                 hintTextStyle: TextStyle(
                   letterSpacing: 1.0,
                   wordSpacing: 2.0,
@@ -208,7 +214,9 @@ class _ForgetState extends State<Forget> {
                 },
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Please enter your phone number";
+                    return AppLocalizations.of(context)
+                            ?.translate("Please enter your phone number") ??
+                        "Please enter your phone number";
                   }
                 },
                 obscureText: false,
@@ -219,9 +227,11 @@ class _ForgetState extends State<Forget> {
               Container(
                   margin: EdgeInsets.only(top: 20),
                   alignment: Alignment.centerLeft,
-                  child: const Text(
-                    "You will receive a 5 digit verification code.",
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)?.translate(
+                            "You will receive a 5 digit verification code.") ??
+                        "You will receive a 5 digit verification code.",
+                    style: const TextStyle(
                       fontSize: 15,
                       letterSpacing: 1,
                       color: Colors.black54,
@@ -235,7 +245,8 @@ class _ForgetState extends State<Forget> {
                     _phoneController.text,
                   );
                 },
-                text: 'Reset',
+                text:
+                    AppLocalizations.of(context)?.translate('Reset') ?? "Reset",
               ),
             ]),
           ),

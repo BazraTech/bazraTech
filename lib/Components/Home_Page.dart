@@ -1,22 +1,24 @@
 import 'dart:convert';
+import 'package:cargo/localization/localization_event.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../cargo.dart';
-import '../shared/ImageHelper.dart';
+
+import '../localization/app_localizations.dart';
+import '../localization/localization_bloc.dart';
 import '../shared/cargoInfo.dart';
 import '../shared/constant.dart';
+
 import '../shared/storage_hepler.dart';
-import '../shared/tapbar.dart';
-import '../views/Bill/Bill.dart';
 import '../views/Bill/parent.dart';
-import '../views/Post_Navigation.dart';
+import '../views/Post/Post_Navigation.dart';
 import '../views/Notification/Notification.dart';
 import '../views/Report/Report.dart';
-import '../views/Work/Active_Work.dart';
-import '../views/activework.dart';
 
 class CargoOWnerHomePage extends StatefulWidget {
   int? index;
@@ -76,6 +78,28 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
   }
 
   bool isPressed = true;
+  Widget buildLanguageDropdown(BuildContext context) {
+    final localeBloc = context.read<LocaleBloc>();
+
+    return DropdownButton<Locale>(
+      value: localeBloc.state.locale,
+      items: <Locale>[
+        Locale('en', ''),
+        Locale('am', ''),
+      ].map<DropdownMenuItem<Locale>>((Locale value) {
+        return DropdownMenuItem<Locale>(
+          value: value,
+          child: Text(value.languageCode),
+        );
+      }).toList(),
+      onChanged: (Locale? newLocale) {
+        if (newLocale != null) {
+          localeBloc.add(ChangeLocale(newLocale));
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -89,7 +113,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
               margin: EdgeInsets.only(top: screenHeight * 0.055),
               // color: Colors.white,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
                     margin: EdgeInsets.only(top: 15, bottom: 10),
@@ -114,7 +138,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      width: screenWidth * 0.13,
+                      width: screenWidth * 0.07,
                       height: screenHeight * 0.08,
                       margin: EdgeInsets.only(left: screenWidth * 0.26),
                       child: InkWell(
@@ -134,6 +158,9 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                       ),
                     ),
                   ),
+                  Container(
+                      // margin: EdgeInsets.only(left: screenWidth * 0.4),
+                      child: buildLanguageDropdown(context)),
                 ],
               ),
             ),
@@ -157,8 +184,10 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                         children: [
                           Container(
                             margin: EdgeInsets.only(left: 90, top: 10),
-                            child: const Text(
-                              "Welcome Back ",
+                            child: Text(
+                              AppLocalizations.of(context)
+                                      ?.translate("Welcome Back ") ??
+                                  "Welcome Back",
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -295,9 +324,11 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(top: 8),
-                                  child: const Text(
-                                    "Post Cargo Work",
-                                    style: TextStyle(
+                                  child: Text(
+                                    AppLocalizations.of(context)
+                                            ?.translate("Post Cargo Work") ??
+                                        "Post Cargo Work",
+                                    style: const TextStyle(
                                       color: kPrimaryColor,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 13,
@@ -352,9 +383,11 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(top: 6),
-                                  child: const Text(
-                                    "Bill",
-                                    style: TextStyle(
+                                  child: Text(
+                                    AppLocalizations.of(context)
+                                            ?.translate("Bill") ??
+                                        "Bill",
+                                    style: const TextStyle(
                                       color: kPrimaryColor,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 13,
@@ -412,8 +445,11 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(top: 8),
-                                    child: const Text("Active Work",
-                                        style: TextStyle(
+                                    child: Text(
+                                        AppLocalizations.of(context)
+                                                ?.translate("Active Work") ??
+                                            "Active Work",
+                                        style: const TextStyle(
                                             color: kPrimaryColor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14)),
@@ -470,9 +506,11 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(top: 8),
-                                  child: const Text(
-                                    'Report',
-                                    style: TextStyle(
+                                  child: Text(
+                                    AppLocalizations.of(context)
+                                            ?.translate('Report') ??
+                                        "Report",
+                                    style: const TextStyle(
                                       color: kPrimaryColor,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 13,

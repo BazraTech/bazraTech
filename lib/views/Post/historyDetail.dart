@@ -9,7 +9,7 @@ import '../../model/cargo.dart';
 import '../../shared/checkConnection.dart';
 import '../../shared/storage_hepler.dart';
 import '../Bottom_Navigation.dart';
-import '../Post_Navigation.dart';
+import 'Post_Navigation.dart';
 import 'histrory.dart';
 
 class cargoHistoryDetail extends StatefulWidget {

@@ -9,10 +9,16 @@ import 'package:cargo/shared/logoStorage.dart';
 import 'package:cargo/views/Bottom_Navigation.dart';
 import 'package:cargo/views/usermanagement/signup.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../localization/app_localizations.dart';
+import '../../localization/localization_bloc.dart';
+import '../../localization/localization_event.dart';
+import '../../navigate/navigateBloc.dart';
+import '../../navigate/navigatestateEvent.dart';
 import '../../shared/ImageHelper.dart';
 import '../../shared/checkConnection.dart';
 import '../../shared/custom-form.dart';
@@ -100,10 +106,7 @@ class _Cargo_loginState extends State<Cargo_login> {
             await storageHelper.setToken(newToken);
           }
           print(newToken);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (BuildContext context) => BottomNav()),
-          );
+          context.read<NavigationBloc>().add(NavigateTo('/bottomNav'));
         } else {
           _showSweetAlert(context);
         }
@@ -132,25 +135,47 @@ class _Cargo_loginState extends State<Cargo_login> {
     ).show();
   }
 
-  Future<String> fetchImage() async {
-    var client = http.Client();
-    StorageHelper storageHelper = StorageHelper();
-    String? accessToken = await storageHelper.getToken();
+  // Future<String> fetchImage() async {
+  //   var client = http.Client();
+  //   StorageHelper storageHelper = StorageHelper();
+  //   String? accessToken = await storageHelper.getToken();
 
-    Map<String, String> requestHeaders = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    };
-    final response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
-        headers: requestHeaders);
-    if (response.statusCode == 200) {
-      // If the server returns a 200 OK response, parse the JSON.
-      Map<String, dynamic> data = json.decode(response.body);
-      return data["logo"];
-    } else {
-      throw Exception('Failed to load image');
-    }
+  //   Map<String, String> requestHeaders = {
+  //     'Content-Type': 'application/json',
+  //     'Accept': 'application/json',
+  //   };
+  //   final response = await http.get(
+  //       Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+  //       headers: requestHeaders);
+  //   if (response.statusCode == 200) {
+  //     // If the server returns a 200 OK response, parse the JSON.
+  //     Map<String, dynamic> data = json.decode(response.body);
+  //     return data["logo"];
+  //   } else {
+  //     throw Exception('Failed to load image');
+  //   }
+  // }
+
+  Widget buildLanguageDropdown(BuildContext context) {
+    final localeBloc = context.read<LocaleBloc>();
+
+    return DropdownButton<Locale>(
+      value: localeBloc.state.locale,
+      items: <Locale>[
+        Locale('en', ''),
+        Locale('am', ''),
+      ].map<DropdownMenuItem<Locale>>((Locale value) {
+        return DropdownMenuItem<Locale>(
+          value: value,
+          child: Text(value.languageCode),
+        );
+      }).toList(),
+      onChanged: (Locale? newLocale) {
+        if (newLocale != null) {
+          localeBloc.add(ChangeLocale(newLocale));
+        }
+      },
+    );
   }
 
   @override
@@ -168,34 +193,17 @@ class _Cargo_loginState extends State<Cargo_login> {
             key: _formKey,
             child: Column(children: [
               Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.only(bottom: 60),
-                padding: const EdgeInsets.all(2.0),
-                child: CircleAvatar(
-                  radius: 65,
-                  backgroundColor: Colors.white,
-                  child: FutureBuilder(
-                    future: fetchImage(),
-                    builder:
-                        (BuildContext context, AsyncSnapshot<String> snapshot) {
-                      if (snapshot.connectionState != ConnectionState.done)
-                        return Text("");
-                      return ClipOval(
-                        child: SizedBox(
-                            height: screenHeight * 0.4,
-                            width: screenWidth * 0.9,
-                            child: Image.network(snapshot.data.toString())),
-                      );
-                    },
-                  ),
-                ),
-              ),
+                  margin: EdgeInsets.only(left: screenWidth * 0.5),
+                  child: buildLanguageDropdown(context)),
+            
               CustomTextFieldForm(
                 textStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.normal,
                     fontFamily: "Roboto"),
-                hintText: "Phone Number",
+                hintText:
+                    AppLocalizations.of(context)?.translate("Phone Number") ??
+                        "Phone Number",
                 textController: _phoneController,
                 onFocusChange: (focused) {
                   setState(() {
@@ -206,7 +214,9 @@ class _Cargo_loginState extends State<Cargo_login> {
                 onChanged: (value) {},
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Please enter your phone number";
+                    return AppLocalizations.of(context)
+                            ?.translate('Password') ??
+                        "Please enter your phone number";
                   }
                 },
                 obscureText: false,
@@ -221,7 +231,8 @@ class _Cargo_loginState extends State<Cargo_login> {
                 height: 20,
               ),
               CustomTextFieldForm(
-                hintText: 'Password',
+                hintText: AppLocalizations.of(context)?.translate('Password') ??
+                    'Password',
                 textController: _passwordController,
                 isPassword: true,
                 textStyle: TextStyle(fontSize: 16),
@@ -243,7 +254,9 @@ class _Cargo_loginState extends State<Cargo_login> {
                 },
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Please enter a company name';
+                    return AppLocalizations.of(context)
+                            ?.translate('Please enter a company name') ??
+                        "Please enter a company name";
                   }
                   return null;
                 },
@@ -264,9 +277,11 @@ class _Cargo_loginState extends State<Cargo_login> {
                     },
                     child: Container(
                       margin: EdgeInsets.only(right: 25),
-                      child: const Text(
-                        "Forgot Password?",
-                        style: TextStyle(
+                      child: Text(
+                        AppLocalizations.of(context)
+                                ?.translate("Forgot Password?") ??
+                            "Forgot Password",
+                        style: const TextStyle(
                           fontSize: 15,
                           color: kPrimaryColor,
                           fontFamily: 'Roboto',
@@ -280,16 +295,19 @@ class _Cargo_loginState extends State<Cargo_login> {
                     await loginCargo(
                         _phoneController.text, _passwordController.text);
                   },
-                  text: "Sign In"),
+                  text: AppLocalizations.of(context)?.translate("Login") ??
+                      "Login"),
               Container(
                 margin: EdgeInsets.only(top: 5),
                 child: Row(
                   children: [
                     Container(
                         margin: EdgeInsets.only(left: 40, right: 10),
-                        child: const Text(
-                          "Don't have an account?",
-                          style: TextStyle(
+                        child: Text(
+                          AppLocalizations.of(context)
+                                  ?.translate("Don't have an account?") ??
+                              "Don't have an account",
+                          style: const TextStyle(
                             fontSize: 15,
                             letterSpacing: 1.5,
                             wordSpacing: 1.0,
@@ -307,9 +325,10 @@ class _Cargo_loginState extends State<Cargo_login> {
                                     const Signup()),
                           );
                         },
-                        child: const Text(
-                          "Sign Up",
-                          style: TextStyle(
+                        child: Text(
+                          AppLocalizations.of(context)?.translate("Sign Up") ??
+                              "Sigun up",
+                          style: const TextStyle(
                             fontSize: 15,
                             letterSpacing: 1.5,
                             color: kPrimaryColor,

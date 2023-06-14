@@ -6,6 +6,7 @@ import 'package:cargo/shared/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+import '../../localization/app_localizations.dart';
 import '../../shared/custom-form.dart';
 import '../../shared/customButton.dart';
 import 'login.dart';
@@ -117,9 +118,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(top: 20, bottom: 20),
-                    child: const Text(
-                      "Change Your Password ",
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)
+                              ?.translate("Change Your Password") ??
+                          "Change Your Password",
+                      style: const TextStyle(
                         fontSize: 20,
                         color: Colors.black54,
                         letterSpacing: 2.0,
@@ -130,7 +133,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                     ),
                   ),
                   CustomTextFieldForm(
-                    hintText: 'New Password',
+                    hintText: AppLocalizations.of(context)
+                            ?.translate('New Password') ??
+                        "New Password",
                     textController: _passwordController,
                     isPassword: true,
                     hintTextStyle: TextStyle(
@@ -152,7 +157,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                     },
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter new password';
+                        return AppLocalizations.of(context)
+                                ?.translate('Please enter new password') ??
+                            "Please enter new password";
                       }
                       return PasswordMatchValidator.validate(
                           value!, _confirmPasswordController.text);
@@ -162,7 +169,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                     height: 20,
                   ),
                   CustomTextFieldForm(
-                    hintText: 'Confirm Password',
+                    hintText: AppLocalizations.of(context)
+                            ?.translate('Confirm Password') ??
+                        "Confirm Password",
                     textController: _confirmPasswordController,
                     isPassword: true,
                     hintTextStyle: TextStyle(
@@ -184,7 +193,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                     },
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter confirm password';
+                        return AppLocalizations.of(context)
+                                ?.translate('Please Confirm Password') ??
+                            "Please Confirm Password";
                       }
                       return PasswordMatchValidator.validate(
                           value!, _passwordController.text);
@@ -197,7 +208,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                     textStyle: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal),
-                    hintText: "User Name",
+                    hintText: AppLocalizations.of(context)
+                            ?.translate("Phone Number") ??
+                        "Phone Number",
                     textController: _username,
                     obscureText: false,
                     hintTextStyle: TextStyle(
@@ -214,7 +227,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                     onChanged: (value) {},
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter a user name';
+                        return AppLocalizations.of(context)
+                                ?.translate("Please enter your phone number") ??
+                            "Please enter your phone number";
                       }
                       return null;
                     },
@@ -229,7 +244,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                     textStyle: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal),
-                    hintText: "Pin",
+                    hintText:
+                        AppLocalizations.of(context)?.translate("Pin Number") ??
+                            "Pin Number",
                     textController: _pin,
                     obscureText: false,
                     hintTextStyle: TextStyle(
@@ -246,7 +263,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                     onChanged: (value) {},
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter pin';
+                        return AppLocalizations.of(context)
+                                ?.translate('Please enter pin number') ??
+                            "Please enter pin number";
                       }
                       return null;
                     },
@@ -266,7 +285,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                         _pin.text,
                       );
                     },
-                    text: 'Change Password',
+                    text: AppLocalizations.of(context)
+                            ?.translate('Change Password') ??
+                        "Change Password",
                   ),
                 ],
               ),
