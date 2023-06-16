@@ -1,15 +1,11 @@
 import 'package:bazralogin/controller/Localization.dart';
-
 import 'package:bazralogin/view/screen/Loging/Login.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'Route/Routes.dart';
-import 'view/screen/Owner/report/ownerReportstatus.dart';
-import 'view/screen/Owner/report/toggelReport.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

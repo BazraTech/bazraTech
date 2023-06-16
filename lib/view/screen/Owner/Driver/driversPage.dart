@@ -17,7 +17,7 @@ class communicate_screen extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(214, 214, 214, 1),
+      backgroundColor: kBackgroundColor,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: kPrimaryColor,
@@ -37,7 +37,7 @@ class communicate_screen extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: screenHeight * 0.1,
+              height: screenHeight * 0.15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -50,58 +50,49 @@ class communicate_screen extends StatelessWidget {
                             builder: (context) => UnassignedDrivers()));
                   },
                   child: Container(
-                    height: screenHeight * 0.07,
-                    width: screenWidth - 24,
                     // Height of the border
-
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.white.withOpacity(0.8), // Shadow color
-                          blurRadius: 12, // Spread radius
-                          offset:
-                              Offset(0, -1.7), // Offset in (x,y) coordinates
+                          color: Color.fromRGBO(255, 255, 255, 1)
+                              .withOpacity(0.8), // Shadow color
+                          blurRadius: 10, // Spread radius
+                          offset: Offset(0, -3), // Offset in (x,y) coordinates
                         ),
                       ],
-                      borderRadius: BorderRadius.circular(16),
                     ),
-                    child: Container(
-                      padding: EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color.fromRGBO(228, 228, 228, 1)
-                                  .withOpacity(0.8), // Shadow color
-                              blurRadius: 10, // Spread radius
-                              offset:
-                                  Offset(0, -2), // Offset in (x,y) coordinates
-                            ),
-                          ],
-                          color: Color.fromRGBO(224, 224, 224, 1),
-                          borderRadius: BorderRadius.circular(18),
-                          border: Border.all(
-                            color: Color.fromRGBO(
-                                223, 223, 223, 1), // Set the border color
-                            width: 2.5,
-                          )),
-                      child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Assign driver",
-                            style: TextStyle(
-                              fontFamily: "Nunito",
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          )),
+
+                    child: PhysicalModel(
+                      color: Colors.white,
+                      shape: BoxShape.rectangle,
+                      elevation: 3,
+                      child: Container(
+                        height: screenHeight * 0.07,
+                        width: screenWidth - 24,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(8),
+                          bottom: Radius.circular(8),
+                        )),
+                        child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Assign driver",
+                              style: TextStyle(
+                                fontFamily: "Nunito",
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            )),
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
             SizedBox(
-              height: 50,
+              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -129,43 +120,31 @@ class communicate_screen extends StatelessWidget {
                       ],
                       borderRadius: BorderRadius.circular(18),
                     ),
-                    child: Container(
-                      padding: EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color.fromRGBO(228, 228, 228, 1)
-                                  .withOpacity(0.8), // Shadow color
-                              blurRadius: 10, // Spread radius
-                              offset:
-                                  Offset(0, -2), // Offset in (x,y) coordinates
-                            ),
-                          ],
-                          color: Color.fromRGBO(224, 224, 224, 1),
-                          borderRadius: BorderRadius.circular(18),
-                          border: Border.all(
-                            color: Color.fromRGBO(
-                                223, 223, 223, 1), // Set the border color
-                            width: 2.5,
-                          )),
-                      child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Manage driver",
-                            style: TextStyle(
-                              fontFamily: "Nunito",
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          )),
+                    child: PhysicalModel(
+                      color: Colors.white,
+                      shape: BoxShape.rectangle,
+                      elevation: 3,
+                      child: Container(
+                        padding: EdgeInsets.all(6.0),
+                        child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Manage driver",
+                              style: TextStyle(
+                                fontFamily: "Nunito",
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            )),
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
             SizedBox(
-              height: 50,
+              height: 20,
             ),
             Container(
               child: Padding(
@@ -180,53 +159,29 @@ class communicate_screen extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => DriversFormOwner()));
                       },
-                      child: Container(
-                        height: screenHeight * 0.07,
-                        width: screenWidth - 24,
-                        // Height of the border
-
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color:
-                                  Colors.white.withOpacity(0.8), // Shadow color
-                              blurRadius: 12, // Spread radius
-                              offset: Offset(
-                                  0, -1.7), // Offset in (x,y) coordinates
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                      child: PhysicalModel(
+                        color: Colors.white,
+                        shape: BoxShape.rectangle,
+                        elevation: 3,
                         child: Container(
-                          padding: EdgeInsets.all(6.0),
-                          decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color.fromRGBO(228, 228, 228, 1)
-                                      .withOpacity(0.8), // Shadow color
-                                  blurRadius: 10, // Spread radius
-                                  offset: Offset(
-                                      0, -2), // Offset in (x,y) coordinates
-                                ),
-                              ],
-                              color: Color.fromRGBO(224, 224, 224, 1),
-                              borderRadius: BorderRadius.circular(18),
-                              border: Border.all(
-                                color: Color.fromRGBO(
-                                    223, 223, 223, 1), // Set the border color
-                                width: 2.5,
-                              )),
-                          child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Register driver",
-                                style: TextStyle(
-                                  fontFamily: "Nunito",
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
+                          height: screenHeight * 0.07,
+                          width: screenWidth - 24,
+                          // Height of the border
+
+                          child: Container(
+                            padding: EdgeInsets.all(6.0),
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Register driver",
+                                  style: TextStyle(
+                                    fontFamily: "Nunito",
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )),
+                          ),
                         ),
                       ),
                     ),

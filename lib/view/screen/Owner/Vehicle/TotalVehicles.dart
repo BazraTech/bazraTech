@@ -122,7 +122,11 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                     onChanged: driversSearch,
                     decoration: const InputDecoration(
                       hintText: 'Driver  or Plate No.',
-                      hintStyle: TextStyle(color: Colors.black),
+                      hintStyle: TextStyle(
+                          fontFamily: 'Nunito',
+                          fontSize: AppFonts.smallFontSize,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
                       border: InputBorder.none,
                       errorBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,
@@ -146,6 +150,10 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                           if (findVehicle == null || findVehicle.isEmpty)
                             Center(
                               child: Container(
+                                padding: EdgeInsets.only(
+                                  left: 10,
+                                  right: 10,
+                                ),
                                 margin: EdgeInsets.only(
                                   top: screenHeight * 0.2,
                                 ),
@@ -164,63 +172,78 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                             Column(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(13.0),
+                                  padding: const EdgeInsets.all(18.0),
                                   child: Container(
-                                    width: screenWidth - 35,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            spreadRadius: 2,
-                                            blurRadius: 5,
-                                            offset: Offset(0,
-                                                4), // Adjust the offset to control the shadow's position
-                                          ),
-                                        ]),
+                                    width: screenWidth,
                                     height: screenHeight * 0.08,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            width: screenWidth * 0.25,
-                                            child: const Text(
-                                              "Vehicles",
-                                              style: TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontFamily: "Nunito",
-                                                  fontWeight: FontWeight.bold,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontSize: 16),
-                                            ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(6.0),
+                                        bottomLeft: Radius.circular(6.0),
+                                      ),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border: Border(
+                                            left: BorderSide(
+                                                color: Colors.blue, width: 6),
                                           ),
-                                          Container(
-                                            width: screenWidth * 0.23,
-                                            child: const Text(
-                                              "Driver",
-                                              style: TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontFamily: "Nunito",
-                                                  fontWeight: FontWeight.bold,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontSize: 16),
-                                            ),
+                                        ),
+                                        child: Container(
+                                          color: Colors.white,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                width: screenWidth * 0.25,
+                                                child: const Text(
+                                                  "Vehicles",
+                                                  textAlign: TextAlign.left,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: AppFonts
+                                                          .smallFontSize,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: screenWidth * 0.2,
+                                                child: const Text(
+                                                  "Driver",
+                                                  textAlign: TextAlign.left,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: AppFonts
+                                                          .smallFontSize,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: screenWidth * 0.37,
+                                                child: const Text(
+                                                  " Plate Number",
+                                                  textAlign: TextAlign.left,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: 14,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          Container(
-                                            width: screenWidth * 0.37,
-                                            child: const Text(
-                                              " Plate Number",
-                                              style: TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontFamily: "Nunito",
-                                                  fontWeight: FontWeight.bold,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontSize: 16),
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -256,7 +279,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                           );
                                         }),
                                         child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
+                                          padding: commanpaddingforallapp,
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.only(
                                               topLeft: Radius.circular(6.0),
@@ -297,82 +320,93 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                                   children: [
                                                     Container(
                                                       margin: EdgeInsets.only(
-                                                          top: 30, left: 10),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          SizedBox(
-                                                            width: screenWidth *
-                                                                0.2,
-                                                            child: Text(
-                                                              vehicle[
-                                                                  'vehicleName'],
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .start,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style:
-                                                                  const TextStyle(
-                                                                      // fontWeight: FontWeight.bold,
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
+                                                        top: 30,
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(12.0),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            SizedBox(
+                                                              width:
+                                                                  screenWidth *
+                                                                      0.25,
+                                                              child: Text(
+                                                                vehicle[
+                                                                    'vehicleName'],
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontFamily:
+                                                                        'Nunito',
+                                                                    fontSize:
+                                                                        AppFonts
+                                                                            .smallFontSize,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
                                                             ),
-                                                          ),
-                                                          SizedBox(
-                                                            width: screenWidth *
-                                                                0.2,
-                                                            child:
-                                                                vehicle["driverName"] ==
-                                                                        "null"
-                                                                    ? Text("__")
-                                                                    : Text(
-                                                                        vehicle[
-                                                                            'driverName'],
-                                                                        textAlign:
-                                                                            TextAlign.start,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                        style: const TextStyle(
-                                                                            // fontWeight: FontWeight.bold,
-                                                                            fontSize: 14,
-                                                                            color: Colors.black,
-                                                                            fontWeight: FontWeight.bold),
-                                                                      ),
-                                                          ),
-                                                          SizedBox(
-                                                            width: screenWidth *
-                                                                0.37,
-                                                            child: Text(
-                                                              vehicle[
-                                                                  'plateNumber'],
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .start,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style:
-                                                                  const TextStyle(
-                                                                      // fontWeight: FontWeight.bold,
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
+                                                            SizedBox(
+                                                              width:
+                                                                  screenWidth *
+                                                                      0.2,
+                                                              child:
+                                                                  vehicle["driverName"] ==
+                                                                          "null"
+                                                                      ? Text(
+                                                                          "__")
+                                                                      : Text(
+                                                                          vehicle[
+                                                                              'driverName'],
+                                                                          textAlign:
+                                                                              TextAlign.left,
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis,
+                                                                          style: const TextStyle(
+                                                                              fontFamily: 'Nunito',
+                                                                              fontSize: AppFonts.smallFontSize,
+                                                                              color: Colors.black,
+                                                                              fontWeight: FontWeight.bold),
+                                                                        ),
                                                             ),
-                                                          ),
-                                                        ],
+                                                            SizedBox(
+                                                              width:
+                                                                  screenWidth *
+                                                                      0.37,
+                                                              child: Text(
+                                                                vehicle[
+                                                                    'plateNumber'],
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontFamily:
+                                                                        'Nunito',
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
                                                     ),
                                                     Align(
@@ -392,10 +426,10 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                                                       1),
                                                               shape: BoxShape
                                                                   .circle),
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                                  top: 5,
-                                                                  left: 110),
+                                                          margin: EdgeInsets.only(
+                                                              top: 5,
+                                                              left: leftmargin -
+                                                                  2),
                                                           child: Icon(
                                                             Icons
                                                                 .local_shipping,
@@ -405,37 +439,17 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                                         )),
                                                     vehicle['status'] ==
                                                             "ONROUTE"
-                                                        ? Align(
-                                                            alignment: Alignment
-                                                                .topLeft,
-                                                            child: Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      left: 110,
-                                                                      top: 10),
-                                                              child: Text(
-                                                                vehicle[
-                                                                    'status'],
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                        .green,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            ),
-                                                          )
-                                                        : vehicle['status'] ==
-                                                                "PARKED"
-                                                            ? Container(
+                                                        ? Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Container(
                                                                 margin: EdgeInsets
                                                                     .only(
+                                                                        top: 10,
                                                                         left:
-                                                                            110,
-                                                                        top:
-                                                                            10),
+                                                                            leftmargin),
                                                                 child: Text(
                                                                   vehicle[
                                                                       'status'],
@@ -443,51 +457,105 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                                                       fontSize:
                                                                           12,
                                                                       color: Colors
-                                                                          .red,
+                                                                          .green,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .bold),
                                                                 ),
-                                                              )
-                                                            : vehicle['status'] ==
-                                                                    "INSTOCK"
-                                                                ? Container(
-                                                                    margin: const EdgeInsets
-                                                                            .only(
-                                                                        right:
-                                                                            94,
+                                                              ),
+                                                            ],
+                                                          )
+                                                        : vehicle['status'] ==
+                                                                "PARKED"
+                                                            ? Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Container(
+                                                                    margin: EdgeInsets.only(
+                                                                        left:
+                                                                            leftmargin,
                                                                         top:
                                                                             10),
                                                                     child: Text(
                                                                       vehicle[
                                                                           'status'],
-                                                                      style: const TextStyle(
-                                                                          fontSize:
-                                                                              12,
-                                                                          color: Colors
-                                                                              .blue,
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                      style: TextStyle(
+                                                                          fontFamily:
+                                                                              'Nunito',
+                                                                          fontSize: AppFonts
+                                                                              .smallFontSize,
+                                                                          color:
+                                                                              borderLeftColor,
                                                                           fontWeight:
                                                                               FontWeight.bold),
                                                                     ),
+                                                                  ),
+                                                                ],
+                                                              )
+                                                            : vehicle['status'] ==
+                                                                    "INSTOCK"
+                                                                ? Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Container(
+                                                                        margin: const EdgeInsets.only(
+                                                                            left:
+                                                                                leftmargin,
+                                                                            top:
+                                                                                10),
+                                                                        child:
+                                                                            Text(
+                                                                          vehicle[
+                                                                              'status'],
+                                                                          textAlign:
+                                                                              TextAlign.center,
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis,
+                                                                          style: TextStyle(
+                                                                              fontFamily: 'Nunito',
+                                                                              fontSize: 14,
+                                                                              color: borderLeftColor,
+                                                                              fontWeight: FontWeight.bold),
+                                                                        ),
+                                                                      ),
+                                                                    ],
                                                                   )
-                                                                : Container(
-                                                                    margin: const EdgeInsets
-                                                                            .only(
-                                                                        right:
-                                                                            64,
-                                                                        top:
-                                                                            10),
-                                                                    child: Text(
-                                                                      vehicle[
-                                                                          'status'],
-                                                                      style: const TextStyle(
-                                                                          fontSize:
-                                                                              12,
-                                                                          color: Colors
-                                                                              .red,
-                                                                          fontWeight:
-                                                                              FontWeight.bold),
-                                                                    )),
+                                                                : Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Container(
+                                                                          margin: const EdgeInsets.only(
+                                                                              left:
+                                                                                  leftmargin,
+                                                                              top:
+                                                                                  10),
+                                                                          child:
+                                                                              Text(
+                                                                            vehicle['status'],
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Nunito',
+                                                                                fontSize: 14,
+                                                                                color: borderLeftColor,
+                                                                                fontWeight: FontWeight.bold),
+                                                                          )),
+                                                                    ],
+                                                                  ),
                                                     InkWell(
                                                       onTap: () {
                                                         Navigator.push(
@@ -507,27 +575,45 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                                         padding:
                                                             const EdgeInsets
                                                                 .all(10.0),
-                                                        child: Container(
-                                                          width: screenWidth,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Colors.white,
-                                                            border: Border.all(
-                                                              color: Colors.grey
-                                                                  .shade300, // Border color
-                                                              width:
-                                                                  2.0, // Border width
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .bottomCenter,
+                                                          child: Container(
+                                                            width: screenWidth,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color:
+                                                                  Colors.white,
+                                                              border:
+                                                                  Border.all(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .shade300, // Border color
+                                                                width:
+                                                                    2.0, // Border width
+                                                              ),
                                                             ),
-                                                          ),
-                                                          height: 26,
-                                                          child: const Center(
-                                                            child: Text(
-                                                              "Update Status",
-                                                              style: TextStyle(
-                                                                  fontSize: 15,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
+                                                            height: 40,
+                                                            child: const Center(
+                                                              child: Text(
+                                                                "Update Status",
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontFamily:
+                                                                        'Nunito',
+                                                                    fontSize:
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),

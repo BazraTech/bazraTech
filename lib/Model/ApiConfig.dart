@@ -11,6 +11,7 @@ class APIService {
   static String Logoavtar = "";
   final storage = new FlutterSecureStorage();
   static String? ownername;
+  static String? owner;
   static String? totalStockedVehicles;
   static String? totalVehicle;
   static String? totalDrivers;
@@ -202,8 +203,6 @@ class APIService {
     }
   }
 
- 
-
   static Future<bool> loginFetch(
     LoginRequestModel model,
   ) async {
@@ -221,9 +220,10 @@ class APIService {
       var data = jsonDecode(response.body);
 
       await storage.write(key: "jwt", value: data["jwt"]);
+      await storage.write(key: "user", value: data["user"]["username"]);
 
       ownername = data["user"]["role"][0];
-
+      owner = await storage.read(key: 'user');
       var value = await storage.read(key: 'jwt');
 
       print(ownername);
@@ -249,7 +249,7 @@ class APIService {
       var data = jsonDecode(response.body);
 
       await storage.write(key: "jwt", value: data["jwt"]);
-      await storage.write(key: "user", value: data["user"]["name"]);
+      await storage.write(key: "user", value: data["username"]);
 
       var value = await storage.read(key: 'jwt');
       ownername = await storage.read(key: 'user');

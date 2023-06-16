@@ -246,7 +246,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                 SizedBox(
                                   width: screenWidth * 0.37,
                                   child: Text(
-                                    "Robel",
+                                    APIService.owner.toString(),
                                     textAlign: TextAlign.start,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(

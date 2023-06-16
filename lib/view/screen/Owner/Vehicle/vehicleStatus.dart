@@ -88,8 +88,11 @@ class _VehicleStatusState extends State<VehicleStatus> {
                               radius: 10,
                               child: Text(
                                 total,
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 12),
+                                style: const TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontSize: AppFonts.smallFontSize,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ));
                       },
@@ -114,7 +117,11 @@ class _VehicleStatusState extends State<VehicleStatus> {
                               radius: 10,
                               child: Text(
                                 snapshot.data.toString(),
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontSize: AppFonts.smallFontSize,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ));
                       },
@@ -139,10 +146,11 @@ class _VehicleStatusState extends State<VehicleStatus> {
                               radius: 8,
                               child: Text(
                                 snapshot.data.toString(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                ),
+                                style: const TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontSize: AppFonts.smallFontSize,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ));
                       },
@@ -167,10 +175,11 @@ class _VehicleStatusState extends State<VehicleStatus> {
                               radius: 8,
                               child: Text(
                                 snapshot.data.toString(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                ),
+                                style: const TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontSize: AppFonts.smallFontSize,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ));
                       },
@@ -195,10 +204,11 @@ class _VehicleStatusState extends State<VehicleStatus> {
                               radius: 8,
                               child: Text(
                                 snapshot.data.toString(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                ),
+                                style: const TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontSize: AppFonts.smallFontSize,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ));
                       },

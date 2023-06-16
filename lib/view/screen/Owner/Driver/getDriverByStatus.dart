@@ -1,17 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-
-import 'package:bazralogin/controller/Localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:ionicons/ionicons.dart';
 import 'package:lottie/lottie.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import '../../../../Theme/customAppBar.dart';
 import '../../../../const/constant.dart';
-import '../Vehicle/vehicleDetial.dart';
+
 import 'driverDetial.dart';
 import 'modifyDriverStatus.dart';
 
@@ -36,6 +31,7 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
     Colors.red,
     Colors.green,
   ];
+  Color borderLeftColor = Colors.red;
   bool _isLoading = true;
   // driver  fetch by status
   driverFetchbystatus() async {
@@ -53,7 +49,12 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
         headers: requestHeaders);
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;
-
+      if ("${widget.driverStatus}" == "ASSIGNED") {
+        borderLeftColor =
+            Colors.green; // Update border color based on condition
+      } else if ("${widget.driverStatus}" == "ONROUTE") {
+        borderLeftColor = Colors.blue; // Update border color for the else case
+      }
       vehicleStatusList = mapResponse['${widget.driverList}'];
       print(vehicleStatusList);
       setState(() {
@@ -157,63 +158,77 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                             Column(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(13.0),
+                                  padding: const EdgeInsets.all(18.0),
                                   child: Container(
-                                    width: screenWidth - 35,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            spreadRadius: 2,
-                                            blurRadius: 5,
-                                            offset: Offset(0,
-                                                4), // Adjust the offset to control the shadow's position
-                                          ),
-                                        ]),
+                                    width: screenWidth,
                                     height: screenHeight * 0.08,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            width: screenWidth * 0.25,
-                                            child: const Text(
-                                              "Drivers",
-                                              style: TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontFamily: "Nunito",
-                                                  fontWeight: FontWeight.bold,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontSize: 16),
-                                            ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(6.0),
+                                        bottomLeft: Radius.circular(6.0),
+                                      ),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border: Border(
+                                            left: BorderSide(
+                                                color: borderLeftColor,
+                                                width: 6),
                                           ),
-                                          Container(
-                                            width: screenWidth * 0.2,
-                                            child: const Text(
-                                              "License ",
-                                              style: TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontFamily: "Nunito",
-                                                  fontWeight: FontWeight.bold,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontSize: 16),
-                                            ),
+                                        ),
+                                        child: Container(
+                                          color: Colors.white,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                width: screenWidth * 0.25,
+                                                child: const Text(
+                                                  "Drivers",
+                                                  textAlign: TextAlign.center,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: 14,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: screenWidth * 0.2,
+                                                child: const Text(
+                                                  "License ",
+                                                  textAlign: TextAlign.center,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: 14,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: screenWidth * 0.37,
+                                                child: const Text(
+                                                  "Phone Number",
+                                                  textAlign: TextAlign.center,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: 14,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          Container(
-                                            width: screenWidth * 0.37,
-                                            child: const Text(
-                                              "Phone Number",
-                                              style: TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontFamily: "Nunito",
-                                                  fontWeight: FontWeight.bold,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontSize: 16),
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -294,7 +309,7 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                       child: Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
-                                                                .spaceBetween,
+                                                                .center,
                                                         children: [
                                                           Container(
                                                             width: screenWidth *
@@ -304,20 +319,19 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                                   'driverName'],
                                                               textAlign:
                                                                   TextAlign
-                                                                      .start,
+                                                                      .center,
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
-                                                              style:
-                                                                  const TextStyle(
-                                                                      // fontWeight: FontWeight.bold,
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
+                                                              style: const TextStyle(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
                                                             ),
                                                           ),
                                                           SizedBox(
@@ -328,20 +342,19 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                                   'licenseNumber'],
                                                               textAlign:
                                                                   TextAlign
-                                                                      .start,
+                                                                      .center,
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
-                                                              style:
-                                                                  const TextStyle(
-                                                                      // fontWeight: FontWeight.bold,
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
+                                                              style: const TextStyle(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
                                                             ),
                                                           ),
                                                           SizedBox(
@@ -352,20 +365,19 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                                   'phoneNumber'],
                                                               textAlign:
                                                                   TextAlign
-                                                                      .start,
+                                                                      .center,
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
-                                                              style:
-                                                                  const TextStyle(
-                                                                      // fontWeight: FontWeight.bold,
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
+                                                              style: const TextStyle(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
                                                             ),
                                                           ),
                                                         ],
@@ -447,16 +459,22 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                                           0.25,
                                                                       margin: EdgeInsets.only(
                                                                           left:
-                                                                              10,
+                                                                              38,
                                                                           top:
                                                                               10),
                                                                       child:
                                                                           Text(
                                                                         driver[
                                                                             'status'],
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
                                                                         style: TextStyle(
+                                                                            fontFamily:
+                                                                                'Nunito',
                                                                             fontSize:
-                                                                                12,
+                                                                                14,
                                                                             color:
                                                                                 borderLeftColor,
                                                                             fontWeight:
@@ -476,7 +494,9 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                                             children: [
                                                                               Text(
                                                                                 driver['status'],
-                                                                                style: TextStyle(fontSize: 12, color: borderLeftColor, fontWeight: FontWeight.bold),
+                                                                                textAlign: TextAlign.center,
+                                                                                overflow: TextOverflow.ellipsis,
+                                                                                style: TextStyle(fontFamily: 'Nunito', fontSize: 14, color: borderLeftColor, fontWeight: FontWeight.bold),
                                                                               ),
                                                                             ],
                                                                           ),
@@ -487,41 +507,54 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                                                   10),
                                                                           child:
                                                                               Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.center,
                                                                             children: [
-                                                                              Text(
-                                                                                driver['status'],
-                                                                                style: TextStyle(fontSize: 12, color: borderLeftColor, fontWeight: FontWeight.bold),
+                                                                              SizedBox(
+                                                                                width: 35,
                                                                               ),
                                                                               Container(
-                                                                                margin: EdgeInsets.only(left: screenWidth * 0.1),
-                                                                                child: MaterialButton(
-                                                                                  onPressed: () {
-                                                                                    // action to perform when button is pressed
-                                                                                  },
-                                                                                  child: SizedBox(
-                                                                                    child: Icon(
-                                                                                      Icons.local_shipping,
-                                                                                      color: borderLeftColor,
-                                                                                    ),
-                                                                                  ),
-                                                                                  color: Colors.white,
-
-                                                                                  shape: CircleBorder(), // set the shape of the button
-                                                                                ),
-                                                                              ),
-                                                                              Container(
-                                                                                width: screenWidth * 0.37,
                                                                                 child: Column(
                                                                                   children: [
                                                                                     Container(
                                                                                         child: Text(
                                                                                       "PlateNumber",
-                                                                                      style: TextStyle(color: Colors.black),
+                                                                                      style: const TextStyle(fontFamily: 'Nunito', fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
                                                                                     )),
                                                                                     Container(child: Text(driver['plateNumber'] == null ? "__" : driver['plateNumber'])),
                                                                                   ],
                                                                                 ),
-                                                                              )
+                                                                              ),
+                                                                              Column(
+                                                                                children: [
+                                                                                  SizedBox(
+                                                                                    width: 80,
+                                                                                  ),
+                                                                                  MaterialButton(
+                                                                                    onPressed: () {
+                                                                                      // action to perform when button is pressed
+                                                                                    },
+                                                                                    child: SizedBox(
+                                                                                      child: Icon(
+                                                                                        Icons.local_shipping,
+                                                                                        color: borderLeftColor,
+                                                                                      ),
+                                                                                    ),
+                                                                                    color: Colors.white,
+
+                                                                                    shape: CircleBorder(), // set the shape of the button
+                                                                                  ),
+                                                                                  Container(
+                                                                                    margin: EdgeInsets.only(left: 15),
+                                                                                    child: Text(
+                                                                                      driver['status'],
+                                                                                      textAlign: TextAlign.center,
+                                                                                      overflow: TextOverflow.ellipsis,
+                                                                                      style: TextStyle(fontFamily: 'Nunito', fontSize: 14, color: borderLeftColor, fontWeight: FontWeight.bold),
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
                                                                             ],
                                                                           )),
                                                         ]),
@@ -568,9 +601,19 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                             child: const Center(
                                                               child: Text(
                                                                 "Update Status",
-                                                                style: TextStyle(
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontFamily:
+                                                                        'Nunito',
                                                                     fontSize:
-                                                                        15,
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .bold),

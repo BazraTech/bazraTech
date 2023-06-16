@@ -5,7 +5,6 @@ import 'package:bazralogin/view/screen/Driver/driverBottomnav.dart';
 import 'package:bazralogin/view/screen/Loging/forgotPin.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:bazralogin/Theme/clippbox.dart';
-import 'package:bazralogin/const/color.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;

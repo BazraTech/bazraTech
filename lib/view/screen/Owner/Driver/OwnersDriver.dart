@@ -29,6 +29,7 @@ class _OwnersDriverState extends State<OwnersDriver> {
   List findVehicle = [];
   List drivers = [];
   bool _isLoading = true;
+
   List<Color> colors = [
     Colors.blue,
     Colors.red,
@@ -55,6 +56,7 @@ class _OwnersDriverState extends State<OwnersDriver> {
         var data = json.decode(response.body);
         await storage.write(
             key: "totalDrivers", value: data["totalDrivers"].toString());
+
         setState(() {
           _isLoading = false;
           Result = data['drivers'];
@@ -176,63 +178,79 @@ class _OwnersDriverState extends State<OwnersDriver> {
                             Column(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(13.0),
+                                  padding: containerpaddingfordriverandowner,
                                   child: Container(
-                                    width: screenWidth - 35,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            spreadRadius: 2,
-                                            blurRadius: 5,
-                                            offset: Offset(0,
-                                                4), // Adjust the offset to control the shadow's position
-                                          ),
-                                        ]),
+                                    width: screenWidth,
                                     height: screenHeight * 0.08,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            width: screenWidth * 0.25,
-                                            child: const Text(
-                                              "Drivers",
-                                              style: TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontFamily: "Nunito",
-                                                  fontWeight: FontWeight.bold,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontSize: 16),
-                                            ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(6.0),
+                                        bottomLeft: Radius.circular(6.0),
+                                      ),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border: Border(
+                                            left: BorderSide(
+                                                color: Colors.blue, width: 6),
                                           ),
-                                          Container(
-                                            width: screenWidth * 0.2,
-                                            child: const Text(
-                                              "License ",
-                                              style: TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontFamily: "Nunito",
-                                                  fontWeight: FontWeight.bold,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontSize: 16),
-                                            ),
+                                        ),
+                                        child: Container(
+                                          color: Colors.white,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                width: screenWidth * 0.25,
+                                                child: const Text(
+                                                  "Drivers",
+                                                  textAlign: TextAlign.left,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: AppFonts
+                                                          .smallFontSize,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: screenWidth * 0.2,
+                                                child: const Text(
+                                                  "License ",
+                                                  textAlign: TextAlign.left,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: AppFonts
+                                                          .smallFontSize,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: screenWidth * 0.37,
+                                                child: const Text(
+                                                  "Phone Number",
+                                                  textAlign: TextAlign.left,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: AppFonts
+                                                          .smallFontSize,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          Container(
-                                            width: screenWidth * 0.37,
-                                            child: const Text(
-                                              "Phone Number",
-                                              style: TextStyle(
-                                                  color: kPrimaryColor,
-                                                  fontFamily: "Nunito",
-                                                  fontWeight: FontWeight.bold,
-                                                  fontStyle: FontStyle.normal,
-                                                  fontSize: 16),
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -309,11 +327,11 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                   children: [
                                                     Container(
                                                       margin: EdgeInsets.only(
-                                                          top: 30, left: 10),
+                                                          top: 30, left: 8),
                                                       child: Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
-                                                                .spaceBetween,
+                                                                .center,
                                                         children: [
                                                           Container(
                                                             width: screenWidth *
@@ -323,20 +341,19 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                                   'driverName'],
                                                               textAlign:
                                                                   TextAlign
-                                                                      .start,
+                                                                      .left,
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
-                                                              style:
-                                                                  const TextStyle(
-                                                                      // fontWeight: FontWeight.bold,
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
+                                                              style: const TextStyle(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
                                                             ),
                                                           ),
                                                           SizedBox(
@@ -347,20 +364,19 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                                   'licenseNumber'],
                                                               textAlign:
                                                                   TextAlign
-                                                                      .start,
+                                                                      .left,
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
-                                                              style:
-                                                                  const TextStyle(
-                                                                      // fontWeight: FontWeight.bold,
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
+                                                              style: const TextStyle(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
                                                             ),
                                                           ),
                                                           SizedBox(
@@ -371,20 +387,19 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                                   'phoneNumber'],
                                                               textAlign:
                                                                   TextAlign
-                                                                      .start,
+                                                                      .left,
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
-                                                              style:
-                                                                  const TextStyle(
-                                                                      // fontWeight: FontWeight.bold,
-                                                                      fontSize:
-                                                                          14,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
+                                                              style: const TextStyle(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
                                                             ),
                                                           ),
                                                         ],
@@ -400,8 +415,6 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                               ? Container(
                                                                   margin: EdgeInsets
                                                                       .only(
-                                                                          left:
-                                                                              10,
                                                                           top:
                                                                               10),
                                                                   child: Row(
@@ -419,30 +432,34 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                                               fontWeight: FontWeight.bold),
                                                                         ),
                                                                       ),
-                                                                      Container(
-                                                                        margin:
-                                                                            EdgeInsets.only(),
+                                                                      Align(
+                                                                        alignment:
+                                                                            Alignment.center,
                                                                         child:
-                                                                            MaterialButton(
-                                                                          onPressed:
-                                                                              () {
-                                                                            // action to perform when button is pressed
-                                                                          },
+                                                                            Container(
+                                                                          width:
+                                                                              screenWidth * 0.25,
+                                                                          margin:
+                                                                              EdgeInsets.only(),
                                                                           child:
-                                                                              SizedBox(
-                                                                            width:
-                                                                                screenWidth * 0.16,
+                                                                              MaterialButton(
+                                                                            onPressed:
+                                                                                () {
+                                                                              // action to perform when button is pressed
+                                                                            },
                                                                             child:
-                                                                                Icon(
-                                                                              Icons.local_shipping,
-                                                                              color: borderLeftColor,
+                                                                                SizedBox(
+                                                                              child: Icon(
+                                                                                Icons.local_shipping,
+                                                                                color: borderLeftColor,
+                                                                              ),
                                                                             ),
-                                                                          ),
-                                                                          color:
-                                                                              Colors.white,
+                                                                            color:
+                                                                                Colors.white,
 
-                                                                          shape:
-                                                                              CircleBorder(), // set the shape of the button
+                                                                            shape:
+                                                                                CircleBorder(), // set the shape of the button
+                                                                          ),
                                                                         ),
                                                                       ),
                                                                       Container(
@@ -450,17 +467,20 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                                             Column(
                                                                           children: [
                                                                             Container(
-                                                                                margin: EdgeInsets.only(left: 10),
                                                                                 child: SizedBox(
-                                                                                  width: screenWidth * 0.33,
-                                                                                  child: Text(
-                                                                                    "PlateNumber",
-                                                                                    style: TextStyle(color: Colors.black),
-                                                                                  ),
-                                                                                )),
+                                                                              width: screenWidth * 0.370,
+                                                                              child: Text(
+                                                                                "PlateNumber",
+                                                                                style: const TextStyle(fontFamily: 'Nunito', fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
+                                                                              ),
+                                                                            )),
                                                                             Container(
-                                                                                margin: EdgeInsets.only(right: 60),
-                                                                                child: Text(driver['plateNumber'] == null ? "__" : driver['plateNumber'])),
+                                                                              width: screenWidth * 0.40,
+                                                                              child: Text(
+                                                                                driver['plateNumber'] == null ? "__" : driver['plateNumber'],
+                                                                                style: const TextStyle(fontFamily: 'Nunito', fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
+                                                                              ),
+                                                                            ),
                                                                           ],
                                                                         ),
                                                                       )
@@ -469,36 +489,47 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                                 )
                                                               : driver['status'] ==
                                                                       "UNASSIGNED"
-                                                                  ? Container(
-                                                                      margin: EdgeInsets.only(
-                                                                          left:
-                                                                              10,
-                                                                          top:
-                                                                              10),
-                                                                      child:
-                                                                          Text(
-                                                                        driver[
-                                                                            'status'],
-                                                                        style: const TextStyle(
-                                                                            fontSize:
-                                                                                12,
-                                                                            color:
-                                                                                Colors.red,
-                                                                            fontWeight: FontWeight.bold),
-                                                                      ),
+                                                                  ? Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Container(
+                                                                          width:
+                                                                              screenWidth * 0.25,
+                                                                          margin: EdgeInsets.only(
+                                                                              left: 18,
+                                                                              top: 10),
+                                                                          child:
+                                                                              Text(
+                                                                            driver['status'],
+                                                                            textAlign:
+                                                                                TextAlign.left,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Nunito',
+                                                                                fontSize: 14,
+                                                                                color: borderLeftColor,
+                                                                                fontWeight: FontWeight.bold),
+                                                                          ),
+                                                                        ),
+                                                                      ],
                                                                     )
                                                                   : driver['status'] ==
                                                                           "PERMIT"
                                                                       ? Container(
                                                                           margin: const EdgeInsets.only(
-                                                                              left: 10,
+                                                                              left: leftmargin,
                                                                               top: 10),
                                                                           child:
                                                                               Row(
                                                                             children: [
-                                                                              Text(
-                                                                                driver['status'],
-                                                                                style: TextStyle(fontSize: 12, color: borderLeftColor, fontWeight: FontWeight.bold),
+                                                                              Container(
+                                                                                width: screenWidth * 0.25,
+                                                                                child: Text(
+                                                                                  driver['status'],
+                                                                                ),
                                                                               ),
                                                                             ],
                                                                           ),
@@ -506,68 +537,84 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                                       : Container(
                                                                           margin: const EdgeInsets.only(
                                                                               left:
-                                                                                  10,
+                                                                                  8,
                                                                               top:
-                                                                                  10),
+                                                                                  15),
                                                                           child:
                                                                               Row(
                                                                             children: [
-                                                                              Text(
-                                                                                driver['status'],
-                                                                                style: TextStyle(fontSize: 12, color: borderLeftColor, fontWeight: FontWeight.bold),
+                                                                              Column(
+                                                                                children: [
+                                                                                  Container(
+                                                                                    width: screenWidth * 0.25,
+                                                                                    margin: EdgeInsets.only(left: 8),
+                                                                                    child: Text(
+                                                                                      driver['status'],
+                                                                                      textAlign: TextAlign.left,
+                                                                                      overflow: TextOverflow.ellipsis,
+                                                                                      style: TextStyle(fontFamily: 'Nunito', fontSize: 14, color: borderLeftColor, fontWeight: FontWeight.bold),
+                                                                                    ),
+                                                                                  ),
+                                                                                  SizedBox(
+                                                                                    height: 15,
+                                                                                  ),
+                                                                                ],
                                                                               ),
                                                                               Container(
-                                                                                margin: EdgeInsets.only(left: screenWidth * 0.07),
-                                                                                child: MaterialButton(
-                                                                                  onPressed: () {
-                                                                                    // action to perform when button is pressed
-                                                                                  },
-                                                                                  child: Icon(Icons.local_shipping, color: borderLeftColor),
-                                                                                  color: Colors.white,
-
-                                                                                  shape: CircleBorder(), // set the shape of the button
-                                                                                ),
-                                                                              ),
-                                                                              Container(
-                                                                                margin: EdgeInsets.only(left: screenWidth * 0.08),
+                                                                                width: screenWidth * 0.2,
                                                                                 child: Column(
                                                                                   children: [
+                                                                                    Align(
+                                                                                      alignment: Alignment.center,
+                                                                                      child: Container(
+                                                                                        margin: EdgeInsets.only(right: 30),
+                                                                                        child: MaterialButton(
+                                                                                          onPressed: () {
+                                                                                            // action to perform when button is pressed
+                                                                                          },
+                                                                                          child: Icon(Icons.local_shipping, color: borderLeftColor),
+                                                                                          color: Colors.white,
+
+                                                                                          shape: CircleBorder(), // set the shape of the button
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
                                                                                     Container(
+                                                                                        margin: EdgeInsets.only(right: 30),
                                                                                         child: Text(
-                                                                                      "PlateNumber",
-                                                                                      style: TextStyle(color: Colors.black),
-                                                                                    )),
-                                                                                    Container(child: Text(driver['plateNumber'] == null ? "__" : driver['plateNumber'])),
+                                                                                          driver['plateNumber'] == null ? "__" : driver['plateNumber'],
+                                                                                          textAlign: TextAlign.left,
+                                                                                          overflow: TextOverflow.ellipsis,
+                                                                                          style: const TextStyle(fontFamily: 'Nunito', fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
+                                                                                        )),
                                                                                   ],
                                                                                 ),
-                                                                              )
+                                                                              ),
                                                                             ],
                                                                           )),
                                                         ]),
-                                                    Visibility(
-                                                      visible:
-                                                          driver['status'] !=
-                                                              "ONROUTE",
-                                                      child: InkWell(
-                                                        onTap: () {
-                                                          Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  ModifyDriverStatus(
-                                                                driverLicense:
-                                                                    driver[
-                                                                        'licenseNumber'],
-                                                                status: driver[
-                                                                    'status'],
-                                                              ),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                ModifyDriverStatus(
+                                                              driverLicense: driver[
+                                                                  'licenseNumber'],
+                                                              status: driver[
+                                                                  'status'],
                                                             ),
-                                                          );
-                                                        },
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(10.0),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(10.0),
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .bottomCenter,
                                                           child: Container(
                                                             decoration:
                                                                 BoxDecoration(
@@ -587,9 +634,13 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                             child: const Center(
                                                               child: Text(
                                                                 "Update Status",
-                                                                style: TextStyle(
+                                                                style: const TextStyle(
+                                                                    fontFamily:
+                                                                        'Nunito',
                                                                     fontSize:
-                                                                        15,
+                                                                        14,
+                                                                    color: Colors
+                                                                        .black,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .bold),
