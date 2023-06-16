@@ -185,7 +185,7 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                 width: screenWidth * 0.25,
                                                 child: const Text(
                                                   "Drivers",
-                                                  textAlign: TextAlign.center,
+                                                  textAlign: TextAlign.left,
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   style: const TextStyle(
@@ -200,7 +200,7 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                 width: screenWidth * 0.2,
                                                 child: const Text(
                                                   "License ",
-                                                  textAlign: TextAlign.center,
+                                                  textAlign: TextAlign.left,
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   style: const TextStyle(
@@ -215,7 +215,7 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                 width: screenWidth * 0.37,
                                                 child: const Text(
                                                   "Phone Number",
-                                                  textAlign: TextAlign.center,
+                                                  textAlign: TextAlign.left,
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   style: const TextStyle(
@@ -319,7 +319,7 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                                   'driverName'],
                                                               textAlign:
                                                                   TextAlign
-                                                                      .center,
+                                                                      .left,
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
@@ -342,7 +342,7 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                                   'licenseNumber'],
                                                               textAlign:
                                                                   TextAlign
-                                                                      .center,
+                                                                      .left,
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
@@ -365,7 +365,7 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                                   'phoneNumber'],
                                                               textAlign:
                                                                   TextAlign
-                                                                      .center,
+                                                                      .left,
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
@@ -391,94 +391,83 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                           driver['status'] ==
                                                                   "ASSIGNED"
                                                               ? Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
                                                                   children: [
+                                                                    Container(
+                                                                      width:
+                                                                          screenWidth *
+                                                                              0.2,
+                                                                      margin: EdgeInsets.only(
+                                                                          left:
+                                                                              20,
+                                                                          top:
+                                                                              10),
+                                                                      child: Text(
+                                                                          driver[
+                                                                              'status'],
+                                                                          style: TextStyle(
+                                                                              fontFamily: 'Nunito',
+                                                                              fontSize: 14,
+                                                                              color: borderLeftColor,
+                                                                              fontWeight: FontWeight.bold)),
+                                                                    ),
                                                                     Container(
                                                                       width: screenWidth *
                                                                           0.25,
-                                                                      margin: EdgeInsets.only(
-                                                                          left:
-                                                                              10,
-                                                                          top:
-                                                                              10),
-                                                                      child:
-                                                                          Text(
-                                                                        driver[
-                                                                            'status'],
-                                                                        style: const TextStyle(
-                                                                            fontSize:
-                                                                                12,
-                                                                            color:
-                                                                                Colors.green,
-                                                                            fontWeight: FontWeight.bold),
-                                                                      ),
-                                                                    ),
-                                                                    Container(
-                                                                      width: screenWidth *
-                                                                          0.16,
-                                                                      child:
-                                                                          MaterialButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          // action to perform when button is pressed
-                                                                        },
-                                                                        child: Icon(
-                                                                            Icons
-                                                                                .local_shipping,
-                                                                            color:
-                                                                                borderLeftColor),
-                                                                        color: Colors
-                                                                            .white,
-
-                                                                        shape:
-                                                                            CircleBorder(), // set the shape of the button
-                                                                      ),
-                                                                    ),
-                                                                    Container(
-                                                                      width: screenWidth *
-                                                                          0.37,
                                                                       child:
                                                                           Column(
                                                                         children: [
                                                                           Container(
-                                                                              child: Text(
-                                                                            "PlateNumber",
-                                                                            style:
-                                                                                TextStyle(color: Colors.black),
-                                                                          )),
+                                                                            margin:
+                                                                                EdgeInsets.only(right: 20),
+                                                                            child:
+                                                                                MaterialButton(
+                                                                              onPressed: () {
+                                                                                // action to perform when button is pressed
+                                                                              },
+                                                                              child: Icon(Icons.local_shipping, color: borderLeftColor),
+                                                                              color: Colors.white,
+
+                                                                              shape: CircleBorder(), // set the shape of the button
+                                                                            ),
+                                                                          ),
                                                                           Container(
+                                                                              margin: EdgeInsets.only(right: 15),
                                                                               child: Text(driver['plateNumber'] == null ? "__" : driver['plateNumber'])),
                                                                         ],
                                                                       ),
-                                                                    )
+                                                                    ),
                                                                   ],
                                                                 )
                                                               : driver['status'] ==
                                                                       "UNASSIGNED"
-                                                                  ? Container(
-                                                                      width: screenWidth *
-                                                                          0.25,
-                                                                      margin: EdgeInsets.only(
-                                                                          left:
-                                                                              38,
-                                                                          top:
-                                                                              10),
+                                                                  ? Align(
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .topLeft,
                                                                       child:
-                                                                          Text(
-                                                                        driver[
-                                                                            'status'],
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                        style: TextStyle(
-                                                                            fontFamily:
-                                                                                'Nunito',
-                                                                            fontSize:
-                                                                                14,
-                                                                            color:
-                                                                                borderLeftColor,
-                                                                            fontWeight:
-                                                                                FontWeight.bold),
+                                                                          Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            left:
+                                                                                20,
+                                                                            top:
+                                                                                10),
+                                                                        child:
+                                                                            Text(
+                                                                          driver[
+                                                                              'status'],
+                                                                          textAlign:
+                                                                              TextAlign.center,
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis,
+                                                                          style: TextStyle(
+                                                                              fontFamily: 'Nunito',
+                                                                              fontSize: 14,
+                                                                              color: borderLeftColor,
+                                                                              fontWeight: FontWeight.bold),
+                                                                        ),
                                                                       ),
                                                                     )
                                                                   : driver['status'] ==

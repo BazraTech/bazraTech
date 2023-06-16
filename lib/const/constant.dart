@@ -18,6 +18,7 @@ const paddingforbutton = 8;
 // marginfordriverandowner
 const rightmargin = 45.0;
 const leftmargin = 20.0;
+
 // our default Shadow
 const kDefaultShadow = BoxShadow(
   offset: Offset(0, 15),
@@ -30,4 +31,5 @@ class AppFonts {
   static const double smallFontSize = 14.0;
   static const double mediumFontSize = 20.0;
   static const double largeFontSize = 24.0;
+  static const driverandvehiclefontsize = 10.0;
 }

@@ -77,13 +77,16 @@ class DriverStatus extends StatelessWidget {
                           return Text("");
                         return SizedBox(
                             height: screenHeight * 0.03,
-                            width: width * 0.04,
+                            width: width * 0.06,
                             child: CircleAvatar(
                               backgroundColor: Colors.red[400],
                               radius: 10,
                               child: Text(
                                 snapshot.data.toString(),
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize:
+                                        AppFonts.driverandvehiclefontsize),
                               ),
                             ));
                       },
@@ -101,7 +104,7 @@ class DriverStatus extends StatelessWidget {
                             return Text("");
                           return SizedBox(
                               height: screenHeight * 0.03,
-                              width: width * 0.04,
+                              width: width * 0.06,
                               child: CircleAvatar(
                                 backgroundColor: Colors.red[400],
                                 radius: 8,
@@ -109,7 +112,7 @@ class DriverStatus extends StatelessWidget {
                                   snapshot.data.toString(),
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 12,
+                                    fontSize: AppFonts.driverandvehiclefontsize,
                                   ),
                                 ),
                               ));
@@ -127,7 +130,7 @@ class DriverStatus extends StatelessWidget {
                           return Text("");
                         return SizedBox(
                             height: screenHeight * 0.03,
-                            width: width * 0.04,
+                            width: width * 0.06,
                             child: CircleAvatar(
                               backgroundColor: Colors.red[400],
                               radius: 8,
@@ -135,7 +138,7 @@ class DriverStatus extends StatelessWidget {
                                 snapshot.data.toString(),
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 12,
+                                  fontSize: AppFonts.driverandvehiclefontsize,
                                 ),
                               ),
                             ));
@@ -154,7 +157,7 @@ class DriverStatus extends StatelessWidget {
                             return Text("");
                           return SizedBox(
                               height: screenHeight * 0.03,
-                              width: width * 0.04,
+                              width: width * 0.064,
                               child: CircleAvatar(
                                 backgroundColor: Colors.red[400],
                                 radius: 8,
@@ -162,7 +165,7 @@ class DriverStatus extends StatelessWidget {
                                   snapshot.data.toString(),
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 12,
+                                    fontSize: 10,
                                   ),
                                 ),
                               ));
@@ -180,7 +183,7 @@ class DriverStatus extends StatelessWidget {
                             return Text("");
                           return SizedBox(
                               height: screenHeight * 0.03,
-                              width: width * 0.04,
+                              width: width * 0.064,
                               child: CircleAvatar(
                                 backgroundColor: Colors.red[400],
                                 radius: 8,
@@ -188,7 +191,7 @@ class DriverStatus extends StatelessWidget {
                                   snapshot.data.toString(),
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 12,
+                                    fontSize: 10,
                                   ),
                                 ),
                               ));

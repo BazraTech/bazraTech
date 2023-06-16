@@ -415,23 +415,27 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                               ? Container(
                                                                   margin: EdgeInsets
                                                                       .only(
+                                                                          left:
+                                                                              15,
                                                                           top:
                                                                               10),
                                                                   child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
                                                                     children: [
                                                                       SizedBox(
-                                                                        width: screenWidth *
-                                                                            0.2,
-                                                                        child:
-                                                                            Text(
-                                                                          driver[
-                                                                              'status'],
-                                                                          style: const TextStyle(
-                                                                              fontSize: 12,
-                                                                              color: Colors.green,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                      ),
+                                                                          width: screenWidth *
+                                                                              0.2,
+                                                                          child:
+                                                                              Text(
+                                                                            driver['status'],
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Nunito',
+                                                                                fontSize: 14,
+                                                                                color: borderLeftColor,
+                                                                                fontWeight: FontWeight.bold),
+                                                                          )),
                                                                       Align(
                                                                         alignment:
                                                                             Alignment.center,
@@ -442,48 +446,32 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                                           margin:
                                                                               EdgeInsets.only(),
                                                                           child:
+                                                                              Column(
+                                                                            children: [
                                                                               MaterialButton(
-                                                                            onPressed:
-                                                                                () {
-                                                                              // action to perform when button is pressed
-                                                                            },
-                                                                            child:
-                                                                                SizedBox(
-                                                                              child: Icon(
-                                                                                Icons.local_shipping,
-                                                                                color: borderLeftColor,
-                                                                              ),
-                                                                            ),
-                                                                            color:
-                                                                                Colors.white,
+                                                                                onPressed: () {
+                                                                                  // action to perform when button is pressed
+                                                                                },
+                                                                                child: SizedBox(
+                                                                                  child: Icon(
+                                                                                    Icons.local_shipping,
+                                                                                    color: borderLeftColor,
+                                                                                  ),
+                                                                                ),
+                                                                                color: Colors.white,
 
-                                                                            shape:
-                                                                                CircleBorder(), // set the shape of the button
+                                                                                shape: CircleBorder(), // set the shape of the button
+                                                                              ),
+                                                                              Container(
+                                                                                child: Text(
+                                                                                  driver['plateNumber'] == null ? "__" : driver['plateNumber'],
+                                                                                  style: const TextStyle(fontFamily: 'Nunito', fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
+                                                                                ),
+                                                                              ),
+                                                                            ],
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                      Container(
-                                                                        child:
-                                                                            Column(
-                                                                          children: [
-                                                                            Container(
-                                                                                child: SizedBox(
-                                                                              width: screenWidth * 0.370,
-                                                                              child: Text(
-                                                                                "PlateNumber",
-                                                                                style: const TextStyle(fontFamily: 'Nunito', fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
-                                                                              ),
-                                                                            )),
-                                                                            Container(
-                                                                              width: screenWidth * 0.40,
-                                                                              child: Text(
-                                                                                driver['plateNumber'] == null ? "__" : driver['plateNumber'],
-                                                                                style: const TextStyle(fontFamily: 'Nunito', fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      )
                                                                     ],
                                                                   ),
                                                                 )
@@ -524,6 +512,8 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                                               top: 10),
                                                                           child:
                                                                               Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.center,
                                                                             children: [
                                                                               Container(
                                                                                 width: screenWidth * 0.25,
