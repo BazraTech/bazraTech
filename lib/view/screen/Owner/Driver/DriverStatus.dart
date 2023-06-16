@@ -104,7 +104,7 @@ class DriverStatus extends StatelessWidget {
                             return Text("");
                           return SizedBox(
                               height: screenHeight * 0.03,
-                              width: width * 0.06,
+                              width: width * 0.07,
                               child: CircleAvatar(
                                 backgroundColor: Colors.red[400],
                                 radius: 8,
@@ -130,7 +130,7 @@ class DriverStatus extends StatelessWidget {
                           return Text("");
                         return SizedBox(
                             height: screenHeight * 0.03,
-                            width: width * 0.06,
+                            width: width * 0.07,
                             child: CircleAvatar(
                               backgroundColor: Colors.red[400],
                               radius: 8,
@@ -157,7 +157,7 @@ class DriverStatus extends StatelessWidget {
                             return Text("");
                           return SizedBox(
                               height: screenHeight * 0.03,
-                              width: width * 0.064,
+                              width: width * 0.07,
                               child: CircleAvatar(
                                 backgroundColor: Colors.red[400],
                                 radius: 8,
@@ -183,7 +183,7 @@ class DriverStatus extends StatelessWidget {
                             return Text("");
                           return SizedBox(
                               height: screenHeight * 0.03,
-                              width: width * 0.064,
+                              width: width * 0.07,
                               child: CircleAvatar(
                                 backgroundColor: Colors.red[400],
                                 radius: 8,
