@@ -6,7 +6,7 @@ import { FaUsers } from "react-icons/fa";
 import { HiBellAlert } from "react-icons/hi2";
 import { HiDocumentReport } from "react-icons/hi";
 import { FaRegIdCard } from 'react-icons/fa';
-import { BsFillChatDotsFill, BsFillBriefcaseFill } from "react-icons/bs";
+import { BsFillChatDotsFill, BsFillBriefcaseFill  } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
 import { BiTrip } from "react-icons/bi";
@@ -216,38 +216,43 @@ export default function Navigation({ path, title, link, past }) {
                                 <p className="hovertext" data-hover="Setting"><AiFillSetting size="1.8rem" ></AiFillSetting></p>
                             </Link>
                         </li>
+                        <li>
+                            <Link to="/settingss" style={path == "/settingss" ? { color: getColor() } : { color: getColor2() }}>
+                                <p className="hovertext" data-hover="Setting"><AiFillSetting size="1.8rem" ></AiFillSetting></p>
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </div>
 
             <div>
+
                 {/* ----------------- all content ------------------- */}
 
                 <div className="dashboard_headers"> 
 
                     <div className='headerTitle'>
                         <h2>Bazra Motors /</h2>
-                   { past && <Link to={link} className='link-header'><h5>{past}/</h5></Link>}
-                       <h5>{title}</h5>
+                        { past && <h5><Link to={link}  className='headerLink'>{past}/</Link></h5>}
+                        <h5>{title}</h5>
                     </div>
-                    <div className='header_right'>
                     <div className='headercontents'>
                         <div className='headerIcon'>
-                            <p className='makeGrid'><p><HiBellAlert size="2.2rem" color='red' ></HiBellAlert></p><p className='count' style={{color:"red"}}>{dataSource ? dataSource.length : 0}</p></p>
-                            <p className='makeGrid'><BsFillChatDotsFill size="1.9rem" color='green' ></BsFillChatDotsFill><p className='count' style={{color:"green"}}>{dataSource2 ? dataSource2.length : 0}</p></p>
-                        </div> 
+                            <p className='makeGrid'><p><HiBellAlert size="2.2rem" color='red' ></HiBellAlert></p><p className='count' style={{color:"red"}}>{dataSource.length}</p></p>
+                            <p className='makeGrid'><BsFillChatDotsFill size="1.9rem" color='green' ></BsFillChatDotsFill><p className='count' style={{color:"green"}}>{dataSource2.length}</p></p>
+                        </div>
 
                     </div>
                     <div className='dashbordProfile'>
-                        <p className='displayUser small'><FaUserAlt className='FaUserAlt' size="1.6rem" color='green'></FaUserAlt></p>
-                        <p className='displayUser role small'>{user.role}</p>
+                        <p className='displayUser'><FaUserAlt className='FaUserAlt' size="1.6rem" color='green'></FaUserAlt></p>
+                        <p className='displayUser role'>{user.role}</p>
                         <p onClick={() => { toggle() }}><IoMdArrowDropdownCircle size="1.2rem" color='green'></IoMdArrowDropdownCircle></p>
                     </div>
-                    {/* <p className='toggle'>
+                    <p className='toggle'>
                         <label onClick={action ? showMenu : hideMenu}><BsThreeDotsVertical className='FaUserAlt' size="1.6rem" color='green'></BsThreeDotsVertical></label>
                         <label onClick={() => { toggle() }}>{state ? <FaUserAlt size="1.2rem" color='green'></FaUserAlt> : <FaUserAlt size="1.2rem" color='green'></FaUserAlt>}</label>
-                    </p> */}
-                    </div>
+                    </p>
+
                 </div>
 
             </div>

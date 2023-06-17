@@ -15,6 +15,7 @@ import Users_edit from './components/Pages/Users/Users_edit';
 import Vehicle_detail from './components/Pages/Total_number_of_vehicle/Vehicle_detail';
 import Message_overview from './components/Pages/Message/Message_overview';
 import Settings from './components/Pages/Settings/Settings';
+import Settingss from './components/Pages/Settings/Settingss';
 import Report from './components/Pages/Report/Report';
 import Report_detail from './components/Pages/Report/Report_detail'; 
 import PopUp from './components/Pages/Settings/PopUp';
@@ -29,7 +30,7 @@ import Company from './components/Pages/Users/Company';
 import Cargo from './components/Pages/Users/Cargo';
 import Cargo_registration from './components/Pages/Registration/Cargo_registration'
 import Cargo_detail from './components/Pages/Users/Cargo_detail'
-import Add_avatar from './components/Pages/Settings/Add_avatar';
+import AddItem from './components/Pages/Settings/AddItem';
 import Individual from './components/Pages/Users/Individual';
 import Accident from './components/Pages/alert/Accident';
 import Driver from './components/Pages/alert/Driver';
@@ -48,6 +49,7 @@ import SignIn from './components/Pages/Sign in page/SignIn';
 import AssigneDriver from './components/Pages/Total_number_of_vehicle/AssigneDriver';
 import Vehicle_Detail from './components/Pages/Users/Vehicle_Table';
 import Market_Progress from './components/Pages/Marketing/Market_Progress'
+import Settingtable from './components/Pages/Settings/Settingtable';
 
 class App extends Component{
   render(){
@@ -71,6 +73,8 @@ class App extends Component{
         <Route path="/vehicle_detail" element={<Vehicle_detail />}></Route>
         <Route path="/message_overview" element={<Message_overview />}></Route>
         <Route path="/settings" element={<Settings />}></Route>
+        <Route path="/settingss" element={<Settingss />}></Route>
+        <Route path="/Settingtable" element={<Settingtable />}></Route>
         <Route path="/report" element={<Report />}></Route>
         <Route path="/report_detail/:id/:platenumber" element={<Report_detail />}></Route>
         <Route path="/popup" element={<PopUp />}></Route>
@@ -81,7 +85,7 @@ class App extends Component{
         <Route path="/on_stock" element={<On_stock />}></Route>
         <Route path="/maintenance" element={<Maintenance />}></Route>
         <Route path="/company" element={<Company />}></Route>
-        <Route path="/Add_avatar" element={<Add_avatar/>}></Route>
+        <Route path="/AddItem" element={<AddItem/>}></Route>
         <Route path="/cargo" element={<Cargo />}></Route>
         <Route path="/cargo/:id" element={<Cargo_detail />}></Route>
         <Route path='/Cargo_registration' element={<Cargo_registration />} ></Route>

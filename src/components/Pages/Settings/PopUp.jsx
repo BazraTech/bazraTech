@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 
 export default function PopUp(props) {
     
-    const title = props.title
+    const {title, stateurl} = props
 
 let isAvatar = false;
     if (title == 'Avatar')
@@ -123,22 +123,22 @@ let isAvatar = false;
         }
         //// Avatar && Logo
         if (title === 'Avatar') {
-            console.log("onSumit")
+            
             Add_Avatar(inputData, logo);
         }
         /// Add_business_type"
         if (title === 'Add_business_type') {
-            console.log("onSumit")
+           
             Add_business_type(inputData);
         }
         // Add_business_sector
         if (title === 'Add_business_sector') {
-            console.log("onSumit")
+            
             Add_business_sector(inputData);
         }
          // Add_driver_state
-         if (title === 'Add_Driver_State') {
-            console.log("onSumit")
+         if (title === 'driverState') {
+          
             Add_Driver_State(inputData);
         }
 
@@ -544,9 +544,9 @@ let isAvatar = false;
             headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Admin/CreateDriverState";
+        // const url = "http://64.226.104.50:9090/Api/Admin/CreateDriverState";
         try {
-            const response = await fetch(url, options);
+            const response = await fetch(stateurl, options);
             const result = await response.json();
             localStorage.setItem("message", JSON.stringify(result["message"]));
             const mess = localStorage.getItem("message");

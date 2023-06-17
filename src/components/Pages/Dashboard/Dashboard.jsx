@@ -75,6 +75,28 @@ export default function Dashboard() {
                 setDataSource3(data.vehicleOwnerINF) 
             })
     }, [])
+    const [dataSourcein, setDataSourcein] = useState([])
+    const urin = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/Role/individual";
+    useEffect(() => {
+        setLoading(true)
+        fetch(urin, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setDataSourcein(data.totalusers)
+                setLoading(false)
+            })
+    }, [])
+    const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoOwners";
+    const [cargo, setCargo] = useState([])
+    useEffect(() => {
+        fetch(cargourl, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setCargo(data.cargoOwners)
+                console.log(cargo)
+            })
+    }, [])
+
 
     const url3 = "http://64.226.104.50:9090/Api/Admin/Alerts/OFFROAD";
     const [dataSource, setDataSource] = useState([])
@@ -101,7 +123,7 @@ export default function Dashboard() {
         fetch(url5, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource5(data.cargos.length)
+                setDataSource5(data.cargos)
                 console.log(data)
             })
     }, [])
@@ -125,7 +147,7 @@ export default function Dashboard() {
                             <h4>Total Vehicles </h4>
                             <div className={styles.innerCard}>
                                 <AiFillCar size="2.6rem" ></AiFillCar>
-                                <p>{dataSource1.length}</p>
+                                <p>{dataSource1 && dataSource1.length}</p>
                             </div>
                         </Link>
                     </div>
@@ -135,7 +157,7 @@ export default function Dashboard() {
                             <h4>Total Driver </h4>
                             <div className={styles.innerCard}>
                                 <ImUserTie size="2.4rem"></ImUserTie>
-                                <p>{dataSource2.length}</p>
+                                <p>{dataSource2 && dataSource2.length}</p>
                             </div> 
                         </Link>
                     </div>
@@ -146,8 +168,8 @@ export default function Dashboard() {
                             <h4>Communication </h4>
                             <div className={styles.innerCard2}>
                                 <BsFillChatDotsFill size="2.4rem" ></BsFillChatDotsFill>
-                                {/* <p>{dataSource4.length}</p> */}
-                                <p>Message</p> 
+                                <p>{dataSource4 && dataSource4.length}</p>
+                                {/* <p>Message</p>  */}
                             </div>
                         </Link>
                     </div>
@@ -157,7 +179,7 @@ export default function Dashboard() {
                             <h4>Total Users</h4>
                             <div className={styles.innerCard3}>
                                 <FaUsers size="2.5rem" color='#002e4d'></FaUsers>
-                                <p>{dataSource3.length}</p>
+                                <p>{dataSource3 && dataSource3.length + dataSourcein + cargo.length}</p>
                             </div>
                         </Link>
                     </div>
@@ -194,7 +216,7 @@ export default function Dashboard() {
                             <h4>Alerts </h4>
                             <div className={styles.innerCard7}>
                                 <HiBellAlert size="2.6rem" color='#F80404'></HiBellAlert>
-                                <p>{dataSource.length}</p>
+                                <p>{dataSource && dataSource.length}</p>
                             </div>
                         </Link>
                     </div>
@@ -212,7 +234,7 @@ export default function Dashboard() {
                             <h4>Marketing </h4>
                             <div className={styles.innerCard3}>
                                 <BsFillBriefcaseFill  size="2.5rem" color='#5959b1'></BsFillBriefcaseFill >
-                                <p>{dataSource5}</p>
+                                <p>{dataSource5 && dataSource5.length}</p>
                             </div>
                         </Link>
                     </div>

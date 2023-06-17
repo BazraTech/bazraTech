@@ -52,7 +52,20 @@ export default function Market_Progress() {
             })
     }, [])
  console.log(dataSource);
+ const url1 = `http://64.226.104.50:9090/Api/Admin/All/Cargos/${id}`;
 
+ const [dataSource1, setDataSource1] = useState([])
+ useEffect(() => {
+     // setLoading(true);
+     fetch(url1, options)
+         .then(respnse => respnse.json())
+         .then(data => {
+             setDataSource1(data)
+             console.log(dataSource1)
+             // setLoading(false);
+         })
+ }, [])
+console.log(dataSource1);
 
 
     const navigate = useNavigate();
@@ -78,7 +91,7 @@ export default function Market_Progress() {
 
                 <div className={styles.tripHeader}>
                     <p><h1 className={styles.avaliableVehicles}>Post cargo Detail</h1></p>
-                    <p ><h4>Cargo Owner Name : {dataSource.cargoOwner} <br /> Pakaging : {dataSource.packaging}</h4></p>
+                    <p ><h4>Cargo Owner Name : {dataSource1.cargoOwner} <br /> Pakaging : {dataSource1.packaging}</h4></p>
                 </div>
                 <div className={styles.allDiv}>
                    
@@ -88,11 +101,11 @@ export default function Market_Progress() {
                         <div className={styles.forms}>
                                 <div>
                                         <p>20 ton </p>
-                                        <input  value={dataSource.cargoOwner} type="text" disabled={diabled}></input>
+                                        <input  value={dataSource1.cargoOwner} type="text" disabled={diabled}></input>
                                 </div> 
                                 <div>
                                     <p>40 ton </p>
-                                        <input  value={dataSource.packaging} type="text" disabled={diabled}></input>
+                                        <input  value={dataSource1.packaging} type="text" disabled={diabled}></input>
                                 </div>
                                 
                                     <div className={styles.progressBar}>
@@ -103,9 +116,9 @@ export default function Market_Progress() {
                                         </div>
                                     </div><span>{percent}%</span>
                                  </div>
-                                 <button>Send to Cargo Owner</button>
-                        
+                                                      
                         </div>  
+                        <button className={styles.button3}>Send to Cargo Owner</button>
                     </form>
                  </div>
 
