@@ -164,7 +164,7 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
                       child: Column(
                         children: [
                           Padding(
-                            padding: containerpaddingfordriverandowner,
+                            padding: EdgeInsets.all(10),
                             child: Container(
                               width: screenWidth,
                               height: screenHeight * 0.08,
