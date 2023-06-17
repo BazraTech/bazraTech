@@ -123,6 +123,11 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
                 onChanged: vehiclesSearch,
                 decoration: InputDecoration(
                   hintText: 'Driver Name or Plate No.',
+                  helperStyle: TextStyle(
+                    fontFamily: 'Nunito',
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
                   border: InputBorder.none,
                   errorBorder: InputBorder.none,
                   enabledBorder: InputBorder.none,
@@ -182,7 +187,7 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Container(
-                                          width: screenWidth * 0.25,
+                                          width: screenWidth * 0.2,
                                           child: const Text(
                                             "vehicle",
                                             textAlign: TextAlign.left,
@@ -208,7 +213,7 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
                                           ),
                                         ),
                                         Container(
-                                          width: screenWidth * 0.26,
+                                          width: screenWidth * 0.28,
                                           child: const Text(
                                             "vehicle Catagory",
                                             textAlign: TextAlign.left,
@@ -221,7 +226,7 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
                                           ),
                                         ),
                                         Container(
-                                          width: screenWidth * 0.13,
+                                          width: screenWidth * 0.17,
                                           child: const Text(
                                             "Status",
                                             textAlign: TextAlign.left,
@@ -293,8 +298,7 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Container(
-                                              margin: EdgeInsets.only(
-                                                  left: 15, right: 10),
+                                              width: screenWidth * 0.2,
                                               child: Text(
                                                 " " + vehicle['vehicleName'],
                                                 textAlign: TextAlign.left,
@@ -333,8 +337,7 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
                                                     ),
                                                   ),
                                             Container(
-                                              width: screenWidth * 0.26,
-                                              margin: EdgeInsets.only(left: 5),
+                                              width: screenWidth * 0.28,
                                               child: Text(
                                                 vehicle['vehicleCatagory'],
                                                 textAlign: TextAlign.left,
@@ -349,9 +352,7 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
                                             ),
                                             Container(
                                                 height: screenHeight * 0.038,
-                                                width: screenWidth * 0.2,
-                                                margin: const EdgeInsets.only(
-                                                    left: 30, right: 10),
+                                                width: screenWidth * 0.17,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(6),

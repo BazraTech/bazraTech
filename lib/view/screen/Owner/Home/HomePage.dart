@@ -28,6 +28,7 @@ class OwenerHomepage extends StatefulWidget {
 }
 
 class _OwenerHomepageState extends State<OwenerHomepage> {
+  DateTime pre_backprees = DateTime.now();
   static bool isPressed = true;
   bool _isLoading = true;
   late Future<String> _imageUrl;
@@ -124,7 +125,6 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
     super.initState();
   }
 
-  DateTime pre_backprees = DateTime.now();
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;

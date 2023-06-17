@@ -65,7 +65,7 @@ class communicate_screen extends StatelessWidget {
                     child: PhysicalModel(
                       color: Colors.white,
                       shape: BoxShape.rectangle,
-                      elevation: 3,
+                      // elevation: 3,
                       child: Container(
                         height: screenHeight * 0.07,
                         width: screenWidth - 24,
@@ -123,7 +123,7 @@ class communicate_screen extends StatelessWidget {
                     child: PhysicalModel(
                       color: Colors.white,
                       shape: BoxShape.rectangle,
-                      elevation: 3,
+                      // elevation: 3,
                       child: Container(
                         padding: EdgeInsets.all(6.0),
                         child: Align(
