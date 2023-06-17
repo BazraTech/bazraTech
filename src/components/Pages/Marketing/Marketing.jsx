@@ -87,7 +87,7 @@ export default function () {
 
       {/*---------------navigation---------------*/}
 
-      <Navigation path="/markating" title="markating"></Navigation>
+      <Navigation path="/marketing" title="marketing"></Navigation>
 
       {/* --------------- tracking header --------------- */} 
 
@@ -118,13 +118,10 @@ export default function () {
                                                 <tr>
                                                 <th>Id</th>
                                                     <th>Name</th>
-                                                    <th>pickUp</th>
-                                                    <th>dropOff</th>
-                                                    <th>cargoType</th>
                                                     <th>packaging</th>
                                                     <th>weight</th>
-                                                    <th>price</th>
-                                                    <th>Detail</th>
+                                                    <th>Status</th>
+                                                    <th>Detail/progress</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -132,16 +129,14 @@ export default function () {
                                                     <tr className={styles.active_row}>
                                                         <td>{item.id}</td>
                                                         <td>{item.cargoOwner}</td>
-                                                        <td>{item.pickUp}</td>
-                                                        <td>{item.dropOff}</td>
-                                                        <td>{item.cargoType}</td>
                                                         <td>{item.packaging}</td>
                                                         <td>{item.weight}</td>
-                                                        <td>{item.price}</td>
-                                                        {/* <td><Link to={`/cargo/${item.id}`}>
+                                                        <td>{item.status}</td>
+                                                       {/* <td><Link to={`/cargo/${item.id}`}>
                                                             <button>Detail</button></Link>
                                                             </td> */}
-                                                         <td><Link to={`/Post_market/${item.id}`}><button>Post</button></Link></td>
+                                                         <td>{item.status == 'ACTIVE' ?<Link to={`/Market_Progress/${item.id}`}><button>Progress</button></Link>:
+                                                         <Link to={`/Post_market/${item.id}`}><button>Detail</button></Link>}</td>
                                                         
                                                     </tr>
                                                 ))}

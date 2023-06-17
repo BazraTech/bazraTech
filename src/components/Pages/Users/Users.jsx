@@ -103,7 +103,16 @@ export default function () {
                 setLoading(false)
             })
     }, [])
-
+    const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoOwners";
+    const [cargo, setCargo] = useState([])
+    useEffect(() => {
+        fetch(cargourl, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setCargo(data.cargoOwners)
+                console.log(cargo)
+            })
+    }, [])
 
     const [popup, setPop] = useState(false);
     const [popup1, setPop1] = useState(false);
@@ -160,16 +169,7 @@ export default function () {
                 console.log(dataSource4)
             })
     }, [])
-    const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoOwners";
-    const [cargo, setCargo] = useState([])
-    useEffect(() => {
-        fetch(cargourl, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setCargo(data.cargoOwners.length)
-                console.log(cargo)
-            })
-    }, [])
+
     const onSubmit = (data) => {
         console.log(data);
         Addvehicle();
@@ -369,7 +369,7 @@ export default function () {
                             <div className={styles.innerContents1}>
                                 <h4>Total Users</h4>
                                 <div>
-                                    <p><FaUsers size="2.2rem"></FaUsers><b>{dataSource.length}</b></p>
+                                    <p><FaUsers size="2.2rem"></FaUsers><b>{dataSource.length + cargo.length + dataSource3}</b></p>
                                 </div>
                             </div>
                         </Link>
@@ -399,7 +399,7 @@ export default function () {
                             <div className={styles.innerContents}>
                                 <h4>Cargo</h4>
                                 <div>
-                                    <p><FaUserAlt size="2rem"></FaUserAlt><b>{cargo}</b></p>
+                                    <p><FaUserAlt size="2rem"></FaUserAlt><b>{cargo.length}</b></p>
                                 </div>
                             </div>
                         </Link>

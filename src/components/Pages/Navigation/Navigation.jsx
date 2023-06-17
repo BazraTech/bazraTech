@@ -6,7 +6,7 @@ import { FaUsers } from "react-icons/fa";
 import { HiBellAlert } from "react-icons/hi2";
 import { HiDocumentReport } from "react-icons/hi";
 import { FaRegIdCard } from 'react-icons/fa';
-import { BsFillChatDotsFill, BsFillBriefcaseFill } from "react-icons/bs";
+import { BsFillChatDotsFill, BsFillBriefcaseFill  } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import { AiFillSetting } from "react-icons/ai";
 import { BiTrip } from "react-icons/bi";
@@ -21,7 +21,7 @@ import 'animate.css';
 import "./header.css"
 import './navigation.css';
 
-export default function Navigation({ path, title }) {
+export default function Navigation({ path, title, link, past }) {
 
     const [popup, setPop] = useState(false);
     const handleClickopen = () => {
@@ -164,7 +164,7 @@ export default function Navigation({ path, title }) {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/markating" style={path == "/markating" ? { color: getColor() } : { color: getColor2() }}>
+                            <Link to="/marketing" style={path == "/marketing" ? { color: getColor() } : { color: getColor2() }}>
                                 <p className="hovertext" data-hover="Market"><BsFillBriefcaseFill size="1.8rem"></BsFillBriefcaseFill></p>
                             </Link>
                         </li>
@@ -216,24 +216,31 @@ export default function Navigation({ path, title }) {
                                 <p className="hovertext" data-hover="Setting"><AiFillSetting size="1.8rem" ></AiFillSetting></p>
                             </Link>
                         </li>
+                        <li>
+                            <Link to="/settingss" style={path == "/settingss" ? { color: getColor() } : { color: getColor2() }}>
+                                <p className="hovertext" data-hover="Setting"><AiFillSetting size="1.8rem" ></AiFillSetting></p>
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </div>
 
             <div>
+
                 {/* ----------------- all content ------------------- */}
 
                 <div className="dashboard_headers"> 
 
                     <div className='headerTitle'>
                         <h2>Bazra Motors /</h2>
+                        { past && <h5><Link to={link}  className='headerLink'>{past}/</Link></h5>}
                         <h5>{title}</h5>
                     </div>
                     <div className='headercontents'>
                         <div className='headerIcon'>
-                            <p className='makeGrid'><p><HiBellAlert size="2.2rem" color='red' ></HiBellAlert></p><p className='count' style={{color:"red"}}>{dataSource ? dataSource.length : 0}</p></p>
-                            <p className='makeGrid'><BsFillChatDotsFill size="1.9rem" color='green' ></BsFillChatDotsFill><p className='count' style={{color:"green"}}>{dataSource2 ? dataSource2.length : 0}</p></p>
-                        </div> 
+                            <p className='makeGrid'><p><HiBellAlert size="2.2rem" color='red' ></HiBellAlert></p><p className='count' style={{color:"red"}}>{dataSource.length}</p></p>
+                            <p className='makeGrid'><BsFillChatDotsFill size="1.9rem" color='green' ></BsFillChatDotsFill><p className='count' style={{color:"green"}}>{dataSource2.length}</p></p>
+                        </div>
 
                     </div>
                     <div className='dashbordProfile'>

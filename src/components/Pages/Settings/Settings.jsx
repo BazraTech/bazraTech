@@ -6,7 +6,8 @@ import { Link, NavLink } from 'react-router-dom';
 import PopUp from './PopUp';
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
-import Add_avatar from './Add_avatar'
+import DeleteItem from './Settingtable'
+import AddItem from './AddItem'
 import SyncLoader from "react-spinners/SyncLoader";
 import swal from "sweetalert";
 import Swal from 'sweetalert2';
@@ -72,7 +73,7 @@ export default function () {
         })
 
     }
-    const handleClickDelete = (id, data) => {
+    const handleClickDelete = (id,data) => {
         Swal.fire({
             text: `Are you sure You Want to Delete This ${data}`,
             icon: 'warning',
@@ -86,9 +87,46 @@ export default function () {
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                // Delete(id, data)
+                Delete(id)
             }
         })
+    }
+    // const DeleteL = (id)=>{
+    //     Delete(id);
+    // }
+    async function Delete(id) {
+        const mess = localStorage.getItem("message");
+        const options = {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
+            };
+        await axios.delete(`${id}`,options).then((response) => {
+            // Success 🎉
+            localStorage.setItem("message", JSON.stringify(response["message"]));
+           
+            swal(`${mess}`, "success", {
+                buttons: false, timer: 2000,
+            });
+        }).catch(function (error) {
+            if (error.response) {
+              // Request made and server responded
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.log(error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log('Error', error.message);
+              swal(`Failed To delete ${mess}`, "error");
+            }
+        
+          })
     }
 
     const Update = (id, value, data) => {
@@ -690,6 +728,20 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                 setLoading(false)
             })
     }, [])
+    //driver state
+   
+const DriverStateurl = "http://64.226.104.50:9090/Api/Admin/DriverState/All";
+const [DriverState, setDriverState] = useState([])
+useEffect(() => {
+    setLoading(true)
+    fetch(DriverStateurl, options)
+        .then(respnse => respnse.json())
+        .then(data => {
+            setDriverState(data.driverState)
+            setLoading(false)
+        })
+}, [])
+    // logo and avatar
     const avatarurl = "http://64.226.104.50:9090/Api/Admin/LogoandAvatar";
     const [avatar, setAvatar] = useState([])
     useEffect(() => {
@@ -1099,7 +1151,8 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                                                             onClick={() => {
                                                                 handleClickEdit21(item.id, item.catagory, "Update_VehicleCatagory", "Edit Vehicle Category")
                                                             }}></FaEdit>
-                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={() => {handleClickDelete(item.id, "Vehicle_Category")}}></MdDeleteForever>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red'
+                                                         onClick={() => {handleClickDelete(`http://64.226.104.50:9090/Api/Admin/VehicleCatagory/${item.id}`, item.catagory)}}></MdDeleteForever>
                                                     </p>
                                                 </td>
                                             </tr>
@@ -1303,7 +1356,9 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
 
                 <div className='outer_setting'>
                     <div title='cargo type' className='setting_header'>Cargo type</div>
-                    <PopUp title="Add_Cargo_Type" />
+                    <AddItem title="Add_Cargo_Type" post='driverState' 
+                    url= "http://64.226.104.50:9090/Api/Admin/CreateCargoType"
+                        />
                     <div>
                         {Loading
                             ? <p className='loading'><SyncLoader
@@ -1335,7 +1390,9 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                                                             onClick={() => {
                                                                 handleClickEdit21(item.id, item.cargoType, "Update_CargoType", "Edit Cargo Type")
                                                             }}></FaEdit>
-                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' onClick={() => {handleClickDelete(item.id, "Cargo_Type")}}></MdDeleteForever>
+                                                        <MdDeleteForever title='Delete' className='action_edit' size="1.6rem" color='red' 
+                                                        onClick={() => {handleClickDelete(`http://64.226.104.50:9090/Api/Admin/CargoType/${item.id}`, item.cargoType)}}>
+                                                        </MdDeleteForever>
                                                     </p>
                                                 </td>
                                             </tr>
@@ -1396,6 +1453,53 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
                         }
                     </div>
                 </div>
+                {/* /********Driver state */}
+                <div className='outer_setting'>
+                    <div title='Driver state' className='setting_header'>Driver state</div>
+                    <AddItem title="driver State"
+                          url="http://64.226.104.50:9090/Api/Admin/CreateDriverState" />
+                    <div>
+                        {Loading
+                            ? <p className='loading'><SyncLoader
+                                color={color}
+                                Left={margin}
+                                loading={Loading}
+                                size={10}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            /></p>
+                            :
+                            <div className="outer_vehicle_table7" id='myTable'>
+                                <table class="vehicle_table7" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Driver state</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {DriverState && DriverState.map(item => {
+                                            return <tr className='active_row'>
+                                                <td >{item.id}</td>
+                                                <td >{item.driverState}</td>
+                                                <td>
+                                                    <p className='notification_actions'>
+                                                        <FaEdit title='Edit' className='action_edit' size="1.4rem" color='green'
+                                                            onClick={() => {
+                                                                handleClickEdit21(item.id, item.driverState, "Update_CargoType", "Edit Cargo Type")
+                                                            }}></FaEdit>
+                                                        
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                </div> 
 
                 <div>
                     {/* {popup ?

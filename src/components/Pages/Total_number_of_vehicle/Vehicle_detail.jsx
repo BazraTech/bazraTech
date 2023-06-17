@@ -150,8 +150,8 @@ console.log(dataSource);
                 <div className={styles.allDiv}>
                     <div className={styles.addToMaintenance}>
                         <p onClick={() => { 
-                            addToMaintenance("MAINTAINING")
-                            }}>Add to Maintenance</p>
+                            {dataSource.status != "MAINTAINING" && addToMaintenance("MAINTAINING")}
+                            }}> {dataSource.status != "MAINTAINING" ? 'Add to Maintenance':'On Maintainance'}</p>
                     </div>
 
                     <form onSubmit={(onSubmit)}>
@@ -159,7 +159,7 @@ console.log(dataSource);
                         <div className={styles.forms}> 
 
                             <div>
-                                <p>Vehicle Catagory </p>
+                                <p>Vehicle Catagory</p>
                                 {inputtag ? <input Value={dataSource.vehicleCatagory} className='select' disabled={diabled}></input> : ""}
                                 {selecttag ?
                                     <select className='select' placeholder='Select Vecicle Catagory'

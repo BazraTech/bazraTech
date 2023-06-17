@@ -38,7 +38,7 @@ export default function Market_Progress() {
       
     };
     const { id } = useParams()
-    const url2 = `http://64.226.104.50:9090/Api/Admin/All/Cargos/${id}`;
+    const url2 = `http://64.226.104.50:9090/Api/Admin/All/CargosBy/ACCEPT`;
 
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
@@ -51,8 +51,21 @@ export default function Market_Progress() {
                 // setLoading(false);
             })
     }, [])
-console.log(dataSource);
+ console.log(dataSource);
+ const url1 = `http://64.226.104.50:9090/Api/Admin/All/Cargos/${id}`;
 
+ const [dataSource1, setDataSource1] = useState([])
+ useEffect(() => {
+     // setLoading(true);
+     fetch(url1, options)
+         .then(respnse => respnse.json())
+         .then(data => {
+             setDataSource1(data)
+             console.log(dataSource1)
+             // setLoading(false);
+         })
+ }, [])
+console.log(dataSource1);
 
 
     const navigate = useNavigate();
@@ -71,13 +84,14 @@ console.log(dataSource);
 
         <div>
 
-            <Navigation path="/markating" title="Post progress"></Navigation>
+          {dataSource.status ='ACTIVE' ?<Navigation path="/marketing" title="Post progress" link="/marketing" past="marketing"></Navigation>:
+           <Navigation path="/marketing" title="Post progress" link={`/Post_market/${id}`} past="post marketing"></Navigation>}
 
             <div className={styles.main_content}>
 
                 <div className={styles.tripHeader}>
                     <p><h1 className={styles.avaliableVehicles}>Post cargo Detail</h1></p>
-                    <p ><h4>Cargo Owner Name : {dataSource.cargoOwner} <br /> Pakaging : {dataSource.packaging}</h4></p>
+                    <p ><h4>Cargo Owner Name : {dataSource1.cargoOwner} <br /> Pakaging : {dataSource1.packaging}</h4></p>
                 </div>
                 <div className={styles.allDiv}>
                    
@@ -86,12 +100,12 @@ console.log(dataSource);
 
                         <div className={styles.forms}>
                                 <div>
-                                        <p>Cargo owner </p>
-                                        <input  value={dataSource.cargoOwner} type="text" disabled={diabled}></input>
+                                        <p>20 ton </p>
+                                        <input  value={dataSource1.cargoOwner} type="text" disabled={diabled}></input>
                                 </div> 
                                 <div>
-                                    <p>packaging </p>
-                                        <input  value={dataSource.packaging} type="text" disabled={diabled}></input>
+                                    <p>40 ton </p>
+                                        <input  value={dataSource1.packaging} type="text" disabled={diabled}></input>
                                 </div>
                                 
                                     <div className={styles.progressBar}>
@@ -102,17 +116,57 @@ console.log(dataSource);
                                         </div>
                                     </div><span>{percent}%</span>
                                  </div>
-                        
+                                                      
                         </div>  
+                        <button className={styles.button3}>Send to Cargo Owner</button>
+                    </form>
+                 </div>
+
                         
-                 </form>
+            {/*---------------- table ------------------- */}
+
+            <div className={styles.outer_vehicle_table} id='myTable'>
+              <p>Vihecles list</p>
+              <table className={styles.vehicle_table} id="myTable">
+                                            <thead>
+                                                <tr>
+                                                <th>Id</th>
+                                                    <th>vihicle owner Name</th>
+                                                    <th>driver</th>
+                                                    <th>price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                              
+                                                    <tr className={styles.active_row}>
+                                                        <td>{dataSource.id}</td>
+                                                        <td>{dataSource.cargoOwner}</td>
+                                                        <td>{dataSource.packaging}</td>
+                                                        <td>{dataSource.weight}</td>
+                                                                                                             
+                                                    </tr>
+                                              
+                                            </tbody>
+                                        </table>
+            </div>
+            <div className={styles.page}>
+              {/* <Pagination */}
+                {/* // onChange={(page) => setCurentPage(page)}
+                // pageSize={postPerPage}
+                // current={page}
+                // total={totalPages}
+              // showQuickJumper
+              // showSizeChanger
+              // onShowSizeChange={onShowSizeChange} */}
+              {/* /> */}
+           
                  
             </div>
 
-            </div>
+            
 
             {/* ---------------end Registaration--------------- */}
         </div>
-
+ </div>
     )
 }
