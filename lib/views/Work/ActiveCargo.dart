@@ -1,57 +1,70 @@
 import 'dart:io';
 
-import 'package:cargo/shared/constant.dart';
+import 'package:cargo/ActiveWork.dart';
+import 'package:cargo/shared/storage_hepler.dart';
+import 'package:cargo/views/Bottom_Navigation.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../localization/app_localizations.dart';
 import '../../model/cargo.dart';
-import 'package:lottie/lottie.dart';
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import '../../shared/constant.dart';
 
-import '../../shared/storage_hepler.dart';
-import '../Bottom_Navigation.dart';
-import 'historyDetail.dart';
-
-Future fetchCargos() async {
-  try {
-    StorageHelper storageHelper = StorageHelper();
-    String? accessToken = await storageHelper.getToken();
-    final response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Cargo/All/Cargos'),
-        headers: {
-          "Content-Type": "application/json",
-          'Accept': 'application/json',
-          "Authorization": "Bearer $accessToken",
-        });
-    print(response);
-    if (response.statusCode == 200) {
-      List cargoJson = json.decode(response.body)['cargos'];
-      return cargoJson.map((cargo) => Cargo.fromJson(cargo)).toList();
-    } // Handle connection timeout error
-  } on SocketException catch (_) {
-    // Handle connection timeout error
-    print('Connection timed out');
-  } catch (error) {
-    // Handle other errors
-
-    print("error:$error");
-  }
-}
-
-class CargoListView extends StatefulWidget {
-  String? plateNumber;
+class ActiveCargo extends StatefulWidget {
   final AppLocalizations? localizations;
-  CargoListView({Key? key, this.localizations}) : super(key: key);
   @override
-  _CargoListViewState createState() => _CargoListViewState();
+  const ActiveCargo({Key? key, this.localizations}) : super(key: key);
+
+  @override
+  _ActiveCargoState createState() => _ActiveCargoState();
 }
 
-class _CargoListViewState extends State {
-  Future? futureCargos;
-  TextEditingController searchController = TextEditingController();
-  List _searchResults = [];
+class _ActiveCargoState extends State<ActiveCargo> {
+  Future? futureCargoDrivers;
+  List activeCargoStatus = [];
+  Future<List<Cargo>> fetchActiveCargos() async {
+    try {
+      StorageHelper storageHelper = StorageHelper();
+      String? accessToken = await storageHelper.getToken();
+      final response = await http.get(
+          Uri.parse('http://64.226.104.50:9090/Api/Cargo/All/Cargos'),
+          headers: {
+            "Content-Type": "application/json",
+            'Accept': 'application/json',
+            "Authorization": "Bearer $accessToken",
+          });
+      print(response);
+      if (response.statusCode == 200) {
+        List cargoJson = json.decode(response.body)['cargos'];
+        List<Cargo> activeCargos = cargoJson
+            .map((cargo) => Cargo.fromJson(cargo))
+            .where((cargo) => cargo.status == 'ACTIVE')
+            .toList();
+        return activeCargos;
+      } else {
+        Alert(
+          context: context,
+          title: "Error",
+          desc: "Failed to fetch data",
+          type: AlertType.error,
+        ).show();
+        return [];
+      }
+    } catch (e) {
+      print('Error in fetchActiveCargos(): $e');
+      Alert(
+        context: context,
+        title: "Error",
+        desc: "Failed to fetch data",
+        type: AlertType.error,
+      ).show();
+      return [];
+    }
+  }
+
   List _allCargos = [];
 
   bool _searching = false;
@@ -59,28 +72,29 @@ class _CargoListViewState extends State {
   @override
   void initState() {
     super.initState();
-    fetchCargos().then((cargos) {
+    fetchActiveCargos().then((cargos) {
       setState(() {
         _allCargos = cargos;
       });
     });
   }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   futureCargoDrivers = fetchCargoDrivers().then((value) {
+  //     setState(() {
+  //       _cargoDrivers = value;
+  //     });
+  //   }).catchError((error) {
+  //     print(error);
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //       content: Text('Failed to fetch data'),
+  //     ));
+  //   });
+  // }
 
-  void searchCargosByOwnerName(String status) async {
-    try {
-      List cargos = await fetchCargos();
-      List filteredCargos = cargos
-          .where((cargo) =>
-              cargo.status.toLowerCase().contains(status.toLowerCase()))
-          .toList();
-      setState(() {
-        _searchResults = filteredCargos;
-      });
-    } catch (e) {
-      throw Exception('Failed to search cargos by owner name');
-    }
-  }
-
+  bool isExpanded = false;
+  List _data = [];
   Future<bool> _checkInternetConnection() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile) {
@@ -91,12 +105,8 @@ class _CargoListViewState extends State {
     return false;
   }
 
-  bool isPressed = true;
-
   @override
   Widget build(BuildContext context) {
-    // Determine which list of cargos to display
-    List cargos = _searching ? _searchResults : _allCargos;
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -124,8 +134,8 @@ class _CargoListViewState extends State {
             child: TextField(
               decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)
-                        ?.translate('cargo Name or Plate No.') ??
-                    "cargo Name or Plate No.",
+                        ?.translate('Driver Name or Plate No.') ??
+                    "Driver Name or Plate No.",
                 border: InputBorder.none,
                 errorBorder: InputBorder.none,
                 enabledBorder: InputBorder.none,
@@ -139,13 +149,13 @@ class _CargoListViewState extends State {
       body: Container(
         margin: EdgeInsets.only(left: 10, right: 10, top: 30),
         child: FutureBuilder(
-          future: fetchCargos(),
+          future: fetchActiveCargos(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
-                  Cargo cargo = snapshot.data![index];
+                  Cargo driver = snapshot.data![index];
                   return InkWell(
                     onTap: () {
                       setState(() {});
@@ -155,12 +165,9 @@ class _CargoListViewState extends State {
                       child: GestureDetector(
                         onTap: (() {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  cargoHistoryDetail(cargoId: cargo.id),
-                            ),
-                          );
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => VehicleCargo()));
                         }),
                         child: Card(
                           child: Container(
@@ -187,7 +194,7 @@ class _CargoListViewState extends State {
                                   title: Row(
                                     children: [
                                       Text(
-                                        cargo.pickUp,
+                                        driver.pickUp,
                                         style: const TextStyle(
                                           fontSize: 14,
                                           color: Color.fromARGB(
@@ -236,8 +243,8 @@ class _CargoListViewState extends State {
                                       ),
                                       Text(
                                         AppLocalizations.of(context)!
-                                                .translate(cargo.dropOff) ??
-                                            cargo.dropOff,
+                                                .translate(driver.dropOff) ??
+                                            driver.dropOff,
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: Colors.grey.shade600,
@@ -281,8 +288,8 @@ class _CargoListViewState extends State {
                                     child: Center(
                                       child: Text(
                                         AppLocalizations.of(context)!
-                                                .translate(cargo.status) ??
-                                            cargo.status,
+                                                .translate(driver.status) ??
+                                            driver.status,
                                         style: const TextStyle(
                                           fontSize: 15,
                                           color:

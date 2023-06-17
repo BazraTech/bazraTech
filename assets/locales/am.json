@@ -51,9 +51,16 @@
   "Select a date":"ቀን ይምረጡ",
   "Please Select a date":"እባክዎ ቀን ይምረጡ",
   "Select Cargo Type":"የጭነት ዓይነትን ይምረጡ",
+  "Select a bill file":"የክፍያ መጠየቂያ ፋይል ይምረጡ",
   "Weight":"ክብደት",
   "Please enter weight":"እባክዎ ክብደት ያስገቡ",
   "Post":"ለጥፍ",
   "Post Cargo":"ጭነት ለጥፍ",
-  "Cargo History":"የጭነት ታሪክ"
+  "Cargo History":"የጭነት ታሪክ",
+  "Status":"ሁኔታ",
+  "Cargo Status":"የጭነት ሁኔታ",
+  "Driver Name or Plate No.":"የአሽከርካሪ ስም ወይም የሰሌዳ ቁጥር",
+  "Press Back Again To Exit":"ለመውጣት እንደገና ይጫኑ",
+  "Addis Ababa":"አዲስ አበባ",
+  "ACTIVE":"ንቁ"
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import '../localization/app_localizations.dart';
+import '../views/Post/Post_Navigation.dart';
 import 'navigateBloc.dart';
 import 'navigatestateEvent.dart';
 
@@ -13,9 +14,8 @@ class MainApp extends StatelessWidget {
   final String routeName;
   final Map<String, WidgetBuilder> routeBuilders = {
     '/login': (BuildContext context) => Cargo_login(),
-    '/bottomNav': (BuildContext context) => Builder(
-          builder: (context) => BottomNav(),
-        ),
+    '/bottomNav': (BuildContext context) =>
+        Builder(builder: (context) => BottomNav()),
     '/home': (BuildContext context) => CargoOWnerHomePage(),
     // Add more pages here
   };

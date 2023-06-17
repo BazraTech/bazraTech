@@ -29,66 +29,70 @@ class BottomNav extends StatelessWidget {
           decoration: const BoxDecoration(color: kPrimaryColor),
           child: Container(
             width: screenWidth,
-            child: TabBar(
-                indicatorSize: TabBarIndicatorSize.label,
-                indicatorPadding: EdgeInsets.all(12),
-                indicatorColor: Colors.white,
-                isScrollable: true,
-                indicatorWeight: 3,
-                labelPadding:
-                    EdgeInsets.symmetric(horizontal: screenWidth * 0.055),
-                tabs: [
-                  Tab(
-                    icon: Icon(Icons.home),
-                    child: Text(
-                      AppLocalizations.of(context)?.translate("Home") ?? "Home",
-                      style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.white,
-                          fontFamily: 'Roboto',
-                          letterSpacing: 2.0,
-                          fontWeight: FontWeight.bold),
+            child: Center(
+              child: TabBar(
+                  indicatorSize: TabBarIndicatorSize.label,
+                  indicatorPadding: EdgeInsets.all(12),
+                  indicatorColor: Colors.white,
+                  isScrollable: true,
+                  indicatorWeight: 3,
+                  labelPadding:
+                      EdgeInsets.symmetric(horizontal: screenWidth * 0.055),
+                  tabs: [
+                    Tab(
+                      icon: Icon(Icons.home),
+                      child: Text(
+                        AppLocalizations.of(context)?.translate("Home") ??
+                            "Home",
+                        style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                            fontFamily: 'Roboto',
+                            letterSpacing: 2.0,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                  Tab(
-                    icon: Icon(Icons.location_on),
-                    child: Text(
-                      AppLocalizations.of(context)?.translate("Tracking") ??
-                          "Tracking",
-                      style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.white,
-                          fontFamily: 'Roboto',
-                          letterSpacing: 2.0,
-                          fontWeight: FontWeight.bold),
+                    Tab(
+                      icon: Icon(Icons.location_on),
+                      child: Text(
+                        AppLocalizations.of(context)?.translate("Tracking") ??
+                            "Tracking",
+                        style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                            fontFamily: 'Roboto',
+                            letterSpacing: 2.0,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                  Tab(
-                    icon: Icon(Icons.messenger),
-                    child: Text(
-                      AppLocalizations.of(context)?.translate("Communicate") ??
-                          "Communicate",
-                      style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.white,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.bold),
+                    Tab(
+                      icon: Icon(Icons.messenger),
+                      child: Text(
+                        AppLocalizations.of(context)
+                                ?.translate("Communicate") ??
+                            "Communicate",
+                        style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                  Tab(
-                    icon: Icon(Icons.person),
-                    child: Text(
-                      AppLocalizations.of(context)?.translate("Profile") ??
-                          "Profile",
-                      style: const TextStyle(
-                          fontSize: 13,
-                          color: Colors.white,
-                          fontFamily: 'Roboto',
-                          letterSpacing: 2.0,
-                          fontWeight: FontWeight.bold),
+                    Tab(
+                      icon: Icon(Icons.person),
+                      child: Text(
+                        AppLocalizations.of(context)?.translate("Profile") ??
+                            "Profile",
+                        style: const TextStyle(
+                            fontSize: 13,
+                            color: Colors.white,
+                            fontFamily: 'Roboto',
+                            letterSpacing: 2.0,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                ]),
+                  ]),
+            ),
           ),
         ),
       ),

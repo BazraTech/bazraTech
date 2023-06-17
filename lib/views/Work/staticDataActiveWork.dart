@@ -1,19 +1,11 @@
-import 'package:cargo/shared/customAppbar.dart';
-import 'package:cargo/views/Bottom_Navigation.dart';
 import 'package:flutter/material.dart';
-
 import '../../model/post.dart';
 import '../../shared/constant.dart';
-import '../../shared/customButton.dart';
-import '../../shared/tapbar.dart';
-import '../Bill/Bill.dart';
-import '../Report/Report.dart';
-
+import 'ActiveCargo.dart';
 import 'CargoType/Actions.dart';
 
 class List_Vehicles extends StatefulWidget {
   const List_Vehicles({super.key});
-
   @override
   State<List_Vehicles> createState() => _List_VehiclesState();
 }
@@ -72,8 +64,8 @@ class _List_VehiclesState extends State<List_Vehicles> {
         elevation: 0,
         leading: InkWell(
           onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => BottomNav()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ActiveCargo()));
           },
           child: const Icon(
             Icons.arrow_back_ios,

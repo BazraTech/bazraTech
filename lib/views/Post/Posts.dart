@@ -2,10 +2,13 @@ import 'dart:convert';
 
 import 'package:cargo/shared/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../../Components/Home_Page.dart';
 import '../../localization/app_localizations.dart';
+import '../../navigate/navigateBloc.dart';
+import '../../navigate/navigatestateEvent.dart';
 import '../../shared/custom-form.dart';
 import '../../shared/customButton.dart';
 import 'package:intl/intl.dart';
@@ -28,7 +31,7 @@ class CargoType {
 }
 
 class Posts extends StatefulWidget {
-  const Posts({super.key});
+  const Posts({super.key, AppLocalizations? localizations});
 
   @override
   State<Posts> createState() => _PostsState();
@@ -56,10 +59,7 @@ class _PostsState extends State<Posts> {
           width: 120,
           child: GestureDetector(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CargoOWnerHomePage()));
+              context.read<NavigationBloc>().add(NavigateTo('/home'));
             },
             child: const Text(
               'OK',
@@ -248,7 +248,8 @@ class _PostsState extends State<Posts> {
             child: Column(
               children: [
                 CustomTextFieldForm(
-                  hintText: "From",
+                  hintText:
+                      AppLocalizations.of(context)?.translate("From") ?? "From",
                   textStyle: const TextStyle(
                       fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
                   textController: _from,
@@ -376,10 +377,12 @@ class _PostsState extends State<Posts> {
                       });
                     }
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     fillColor: Colors.white,
-                    hintText: "Select Cargo Type",
-                    labelStyle: TextStyle(
+                    hintText: AppLocalizations.of(context)
+                            ?.translate("Select Cargo Type") ??
+                        "Select Cargo Type",
+                    labelStyle: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal),
                     filled: true,
@@ -476,39 +479,7 @@ class _PostsState extends State<Posts> {
                   },
                 ),
                 const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  width: screenWidth,
-                  color: Colors.grey.shade500,
-                  height: 3,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                CustomTextFieldForm(
-                  hintText: "Price",
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
-                  textController: _price,
-                  obscureText: false,
-                  hintTextStyle: TextStyle(
-                    letterSpacing: 1.0,
-                    wordSpacing: 2.0,
-                    color: _isFocus ? Colors.green : Colors.grey,
-                    // ... other styles
-                  ),
-                  onFocusChange: (focus) {
-                    setState(() {
-                      _isFocus = focus;
-                    });
-                  },
-                  onChanged: (value) {},
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter your price";
-                    }
-                  },
+                  height: 30,
                 ),
                 CustomButton(
                   onPressed: () {

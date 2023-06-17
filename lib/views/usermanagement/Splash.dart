@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cargo/ActiveWork.dart';
 import 'package:cargo/shared/storage_hepler.dart';
 import 'package:cargo/views/Bottom_Navigation.dart';
 import 'package:connectivity/connectivity.dart';
@@ -8,17 +9,23 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'model/cargo.dart';
-import 'shared/constant.dart';
+import '../../localization/app_localizations.dart';
+import '../../model/cargo.dart';
+import '../../shared/constant.dart';
 
-class HistoryCargo extends StatefulWidget {
+class ActiveCargo extends StatefulWidget {
+  final AppLocalizations? localizations;
   @override
-  State<HistoryCargo> createState() => _HistoryCargoState();
+  const ActiveCargo({Key? key, this.localizations}) : super(key: key);
+
+  @override
+  _ActiveCargoState createState() => _ActiveCargoState();
 }
 
-class _HistoryCargoState extends State<HistoryCargo> {
+class _ActiveCargoState extends State<ActiveCargo> {
   Future? futureCargoDrivers;
-  Future fetchCargos() async {
+  List activeCargoStatus = [];
+  Future<List<Cargo>> fetchActiveCargos() async {
     try {
       StorageHelper storageHelper = StorageHelper();
       String? accessToken = await storageHelper.getToken();
@@ -32,9 +39,12 @@ class _HistoryCargoState extends State<HistoryCargo> {
       print(response);
       if (response.statusCode == 200) {
         List cargoJson = json.decode(response.body)['cargos'];
-        return cargoJson.map((cargo) => Cargo.fromJson(cargo)).toList();
-      } // Handle connection timeout error
-      else {
+        List<Cargo> activeCargos = cargoJson
+            .map((cargo) => Cargo.fromJson(cargo))
+            .where((cargo) => cargo.status == 'ACTIVE')
+            .toList();
+        return activeCargos;
+      } else {
         Alert(
           context: context,
           title: "Error",
@@ -44,7 +54,7 @@ class _HistoryCargoState extends State<HistoryCargo> {
         return [];
       }
     } catch (e) {
-      print('Error in _fetchCargoDrivers(): $e');
+      print('Error in fetchActiveCargos(): $e');
       Alert(
         context: context,
         title: "Error",
@@ -62,7 +72,7 @@ class _HistoryCargoState extends State<HistoryCargo> {
   @override
   void initState() {
     super.initState();
-    fetchCargos().then((cargos) {
+    fetchActiveCargos().then((cargos) {
       setState(() {
         _allCargos = cargos;
       });
@@ -100,56 +110,31 @@ class _HistoryCargoState extends State<HistoryCargo> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: kBackgroundColor,
-        appBar: AppBar(
-          toolbarHeight: 80,
-          elevation: 0,
-          leading: InkWell(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => BottomNav()));
-            },
-            child: const Icon(
-              Icons.arrow_back_ios,
-              color: Color.fromARGB(255, 162, 162, 162),
-            ),
-          ),
-          backgroundColor: Color.fromARGB(255, 252, 254, 250),
-          title: Container(
-            width: double.infinity,
-            margin: EdgeInsets.only(right: screenWidth * 0.12),
-            height: 40,
-            color: Color.fromARGB(255, 252, 254, 250),
-            child: const Center(
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Driver Name or Plate No.',
-                  border: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  prefixIcon: Icon(Icons.search),
-                ),
-              ),
-            ),
-          ),
-        ),
-        body: Container(
-          margin: EdgeInsets.only(left: 10, right: 10, top: 30),
-          child: FutureBuilder(
-            future: fetchCargos(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    Cargo driver = snapshot.data![index];
-                    return InkWell(
-                      onTap: () {
-                        setState(() {});
-                      },
-                      child: Container(
-                        height: screenHeight * 0.2,
+      backgroundColor: kBackgroundColor,
+   
+      body: Container(
+        margin: EdgeInsets.only(left: 10, right: 10, top: 30),
+        child: FutureBuilder(
+          future: fetchActiveCargos(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  Cargo driver = snapshot.data![index];
+                  return InkWell(
+                    onTap: () {
+                      setState(() {});
+                    },
+                    child: Container(
+                      height: screenHeight * 0.2,
+                      child: GestureDetector(
+                        onTap: (() {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => VehicleCargo()));
+                        }),
                         child: Card(
                           child: Container(
                             decoration: BoxDecoration(
@@ -223,7 +208,9 @@ class _HistoryCargoState extends State<HistoryCargo> {
                                             color: Colors.grey.shade300),
                                       ),
                                       Text(
-                                        driver.dropOff,
+                                        AppLocalizations.of(context)!
+                                                .translate(driver.dropOff) ??
+                                            driver.dropOff,
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: Colors.grey.shade600,
@@ -247,7 +234,9 @@ class _HistoryCargoState extends State<HistoryCargo> {
                                 ),
                                 ListTile(
                                   title: Text(
-                                    "Cargo Status",
+                                    AppLocalizations.of(context)
+                                            ?.translate("Cargo Status") ??
+                                        "Cargo Status",
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: Colors.grey.shade500,
@@ -264,7 +253,9 @@ class _HistoryCargoState extends State<HistoryCargo> {
                                     ),
                                     child: Center(
                                       child: Text(
-                                        driver.status,
+                                        AppLocalizations.of(context)!
+                                                .translate(driver.status) ??
+                                            driver.status,
                                         style: const TextStyle(
                                           fontSize: 15,
                                           color:
@@ -281,70 +272,72 @@ class _HistoryCargoState extends State<HistoryCargo> {
                           ),
                         ),
                       ),
-                    );
-                  },
-                );
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              }
-
-              return Center(
-                child: FutureBuilder(
-                  future: Future.delayed(
-                      Duration(seconds: 10), () => _checkInternetConnection()),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else {
-                      return Container(
-                          alignment: Alignment.center,
-                          height: screenHeight * 0.13,
-                          width: screenWidth * 0.7,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.shade200.withOpacity(0.7),
-                                  blurRadius: 8.0,
-                                  spreadRadius: 2.0,
-                                  offset: const Offset(
-                                    6, // Move to right 7.0 horizontally
-                                    8, // Move to bottom 8.0 Vertically
-                                  ))
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(top: 10),
-                                child: Text('Network Error',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.grey.shade500,
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                    'No Network. Connect your device to internet or mobile data',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey.shade500,
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                              ),
-                            ],
-                          ));
-                    }
-                  },
-                ),
+                    ),
+                  );
+                },
               );
-            },
-          ),
-        ));
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+
+            return Center(
+              child: FutureBuilder(
+                future: Future.delayed(
+                    Duration(seconds: 10), () => _checkInternetConnection()),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else {
+                    return Container(
+                        alignment: Alignment.center,
+                        height: screenHeight * 0.13,
+                        width: screenWidth * 0.7,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.shade200.withOpacity(0.7),
+                                blurRadius: 8.0,
+                                spreadRadius: 2.0,
+                                offset: const Offset(
+                                  6, // Move to right 7.0 horizontally
+                                  8, // Move to bottom 8.0 Vertically
+                                ))
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(top: 10),
+                              child: Text('Network Error',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.grey.shade500,
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                  'No Network. Connect your device to internet or mobile data',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey.shade500,
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                            ),
+                          ],
+                        ));
+                  }
+                },
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 }

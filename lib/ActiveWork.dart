@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cargo/shared/storage_hepler.dart';
 import 'package:cargo/views/Bottom_Navigation.dart';
+import 'package:cargo/views/Work/ActiveCargo.dart';
 import 'package:cargo/views/Work/CargoType/Actions.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -110,7 +111,7 @@ class _VehicleCargoState extends State<VehicleCargo> {
           leading: InkWell(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => BottomNav()));
+                  MaterialPageRoute(builder: (context) => ActiveCargo()));
             },
             child: const Icon(
               Icons.arrow_back_ios,

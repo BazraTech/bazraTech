@@ -1,16 +1,10 @@
 import 'dart:convert';
-
-import 'package:cargo/shared/customAppbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import '../../model/cargo.dart';
 import '../../shared/checkConnection.dart';
 import '../../shared/storage_hepler.dart';
-import '../Bottom_Navigation.dart';
 import 'Post_Navigation.dart';
-import 'histrory.dart';
 
 class cargoHistoryDetail extends StatefulWidget {
   final int? cargoId;
@@ -79,7 +73,7 @@ class _cargoHistoryDetailState extends State<cargoHistoryDetail> {
             width: double.infinity,
             margin: EdgeInsets.only(right: screenWidth * 0.12),
             height: 40,
-            child: Center(
+            child: const Center(
               child: Text(
                 "History Detail",
                 style: TextStyle(

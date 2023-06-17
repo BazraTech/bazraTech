@@ -5,18 +5,20 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:http/http.dart' as http;
+import '../../localization/app_localizations.dart';
 import '../../model/cargo.dart';
 import '../../shared/storage_hepler.dart';
 import '../Bottom_Navigation.dart';
+import 'billDetail.dart';
 
-class Parent extends StatefulWidget {
-  const Parent({super.key});
+class CargoBill extends StatefulWidget {
+  const CargoBill({super.key});
 
   @override
-  State<Parent> createState() => _ParentState();
+  State<CargoBill> createState() => _CargoBillState();
 }
 
-class _ParentState extends State<Parent> {
+class _CargoBillState extends State<CargoBill> {
   Future? futureCargoDrivers;
   Future fetchCargos() async {
     try {
@@ -104,10 +106,12 @@ class _ParentState extends State<Parent> {
             margin: EdgeInsets.only(right: screenWidth * 0.12),
             height: 40,
             color: Color.fromARGB(255, 252, 254, 250),
-            child: const Center(
+            child: Center(
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: 'Driver Name or Plate No.',
+                  hintText: AppLocalizations.of(context)
+                          ?.translate('Driver Name or Plate No.') ??
+                      "Driver Name or Plate No.",
                   border: InputBorder.none,
                   errorBorder: InputBorder.none,
                   enabledBorder: InputBorder.none,
@@ -128,8 +132,14 @@ class _ParentState extends State<Parent> {
                       Cargo driver = snapshot.data![index];
                       return InkWell(
                         onTap: () {
-                          setState(() {});
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Bill_Detail()));
                         },
+                        // onTap: () {
+                        //   setState(() {});
+                        // },
                         child: Column(
                           children: [
                             Card(
@@ -230,7 +240,9 @@ class _ParentState extends State<Parent> {
                                   ),
                                   ListTile(
                                     title: Text(
-                                      "Status",
+                                      AppLocalizations.of(context)
+                                              ?.translate("Status") ??
+                                          "Status",
                                       style: TextStyle(
                                         fontSize: 15,
                                         color: Colors.grey.shade500,

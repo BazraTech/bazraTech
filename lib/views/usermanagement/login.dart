@@ -135,26 +135,26 @@ class _Cargo_loginState extends State<Cargo_login> {
     ).show();
   }
 
-  // Future<String> fetchImage() async {
-  //   var client = http.Client();
-  //   StorageHelper storageHelper = StorageHelper();
-  //   String? accessToken = await storageHelper.getToken();
+  Future<String> fetchImage() async {
+    var client = http.Client();
+    StorageHelper storageHelper = StorageHelper();
+    String? accessToken = await storageHelper.getToken();
 
-  //   Map<String, String> requestHeaders = {
-  //     'Content-Type': 'application/json',
-  //     'Accept': 'application/json',
-  //   };
-  //   final response = await http.get(
-  //       Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
-  //       headers: requestHeaders);
-  //   if (response.statusCode == 200) {
-  //     // If the server returns a 200 OK response, parse the JSON.
-  //     Map<String, dynamic> data = json.decode(response.body);
-  //     return data["logo"];
-  //   } else {
-  //     throw Exception('Failed to load image');
-  //   }
-  // }
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+    final response = await http.get(
+        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+        headers: requestHeaders);
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      Map<String, dynamic> data = json.decode(response.body);
+      return data["logo"];
+    } else {
+      throw Exception('Failed to load image');
+    }
+  }
 
   Widget buildLanguageDropdown(BuildContext context) {
     final localeBloc = context.read<LocaleBloc>();
@@ -193,9 +193,28 @@ class _Cargo_loginState extends State<Cargo_login> {
             key: _formKey,
             child: Column(children: [
               Container(
+                margin: EdgeInsets.only(top: 15, bottom: 10),
+                child: CircleAvatar(
+                  radius: 70,
+                  backgroundColor: Colors.white,
+                  child: ClipOval(
+                    child: FutureBuilder(
+                      future: fetchImage(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<String> snapshot) {
+                        if (snapshot.connectionState != ConnectionState.done)
+                          return Text("");
+                        return Image.network(
+                          snapshot.data.toString(),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              Container(
                   margin: EdgeInsets.only(left: screenWidth * 0.5),
                   child: buildLanguageDropdown(context)),
-            
               CustomTextFieldForm(
                 textStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
