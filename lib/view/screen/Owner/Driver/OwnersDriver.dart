@@ -448,21 +448,25 @@ class _OwnersDriverState extends State<OwnersDriver> {
                                                                           child:
                                                                               Column(
                                                                             children: [
-                                                                              MaterialButton(
-                                                                                onPressed: () {
-                                                                                  // action to perform when button is pressed
-                                                                                },
-                                                                                child: SizedBox(
-                                                                                  child: Icon(
-                                                                                    Icons.local_shipping,
-                                                                                    color: borderLeftColor,
+                                                                              Container(
+                                                                                margin: EdgeInsets.only(right: rightmarginfordrivermanage),
+                                                                                child: MaterialButton(
+                                                                                  onPressed: () {
+                                                                                    // action to perform when button is pressed
+                                                                                  },
+                                                                                  child: SizedBox(
+                                                                                    child: Icon(
+                                                                                      Icons.local_shipping,
+                                                                                      color: borderLeftColor,
+                                                                                    ),
                                                                                   ),
-                                                                                ),
-                                                                                color: Colors.white,
+                                                                                  color: Colors.white,
 
-                                                                                shape: CircleBorder(), // set the shape of the button
+                                                                                  shape: CircleBorder(), // set the shape of the button
+                                                                                ),
                                                                               ),
                                                                               Container(
+                                                                                margin: EdgeInsets.only(right: rightmarginfordrivermanage),
                                                                                 child: Text(
                                                                                   driver['plateNumber'] == null ? "__" : driver['plateNumber'],
                                                                                   style: const TextStyle(fontFamily: 'Nunito', fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),

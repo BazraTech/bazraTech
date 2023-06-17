@@ -517,7 +517,7 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
                                                                               Column(
                                                                                 children: [
                                                                                   SizedBox(
-                                                                                    width: 130,
+                                                                                    width: 120,
                                                                                   ),
                                                                                   MaterialButton(
                                                                                     onPressed: () {

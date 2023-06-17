@@ -8,14 +8,16 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../../../Model/driverCount.dart';
 import '../../../../Model/ApiConfig.dart';
+import '../../../../Model/driverCount.dart';
 import '../../../../const/constant.dart';
+
+import 'package:http/http.dart' as http;
+
 import '../Driver/driversPage.dart';
 import '../TripManagement/setGuzo.dart';
 import '../Vehicle/vehicleStatus.dart';
 import '../report/ownerReportstatus.dart';
-import 'package:http/http.dart' as http;
 
 class OwenerHomepage extends StatefulWidget {
   int? index;
@@ -122,131 +124,139 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
     super.initState();
   }
 
+  DateTime pre_backprees = DateTime.now();
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     String tdata;
-    return Scaffold(
-        backgroundColor: kBackgroundColor,
-        body: Column(
-          children: [
-            Container(
-              height: screenHeight * 0.07,
-              margin: EdgeInsets.only(top: screenHeight * 0.055),
-              // color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      child: SizedBox(
-                          height: screenHeight * 0.08,
-                          width: screenWidth * 0.1,
-                          child: ClipOval(
-                              child: SizedBox(
-                            height: screenHeight * 0.5,
-                            width: screenWidth * 0.09,
-                            child: FutureBuilder(
-                              future: fetchImage(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<String> snapshot) {
-                                if (snapshot.connectionState !=
-                                    ConnectionState.done) return Text("");
-                                return ClipOval(
-                                  child: SizedBox(
-                                      height: screenHeight * 0.4,
-                                      width: screenWidth * 0.9,
-                                      child: Image.network(
-                                          snapshot.data.toString())),
-                                );
-                              },
-                            ),
-                          ))),
+    return WillPopScope(
+      onWillPop: () async {
+        final timegap = DateTime.now().difference(pre_backprees);
+        final canEXit = timegap >= const Duration(seconds: 2);
+        pre_backprees = DateTime.now();
+        if (canEXit) {
+          const snack = SnackBar(
+            content: Text(
+              "Press Back Again To Exit",
+              style: TextStyle(fontSize: 20),
+            ),
+            duration: Duration(seconds: 2),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snack);
+          return false;
+        } else {
+          return true;
+        }
+      },
+      child: Scaffold(
+          backgroundColor: kBackgroundColor,
+          body: Column(
+            children: [
+              Container(
+                height: screenHeight * 0.07,
+                margin: EdgeInsets.only(top: screenHeight * 0.055),
+                // color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        child: SizedBox(
+                            height: screenHeight * 0.08,
+                            width: screenWidth * 0.1,
+                            child: ClipOval(
+                                child: SizedBox(
+                              height: screenHeight * 0.5,
+                              width: screenWidth * 0.09,
+                              child: FutureBuilder(
+                                future: fetchImage(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<String> snapshot) {
+                                  if (snapshot.connectionState !=
+                                      ConnectionState.done) return Text("");
+                                  return ClipOval(
+                                    child: SizedBox(
+                                        height: screenHeight * 0.4,
+                                        width: screenWidth * 0.9,
+                                        child: Image.network(
+                                            snapshot.data.toString())),
+                                  );
+                                },
+                              ),
+                            ))),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: screenWidth * 0.13,
-                      height: screenHeight * 0.08,
-                      margin: EdgeInsets.only(left: screenWidth * 0.26),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    notificationPage()),
-                          );
-                        },
-                        child: Icon(
-                          Ionicons.notifications,
-                          size: 28,
-                          color: Color.fromRGBO(85, 164, 240, 1),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: screenWidth * 0.13,
+                        height: screenHeight * 0.08,
+                        margin: EdgeInsets.only(left: screenWidth * 0.26),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      notificationPage()),
+                            );
+                          },
+                          child: Icon(
+                            Ionicons.notifications,
+                            size: 28,
+                            color: Color.fromRGBO(85, 164, 240, 1),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    // borderRadius: BorderRadius.circular(20),
+              Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      // borderRadius: BorderRadius.circular(20),
 
-                    gradient: LinearGradient(
-                      colors: [
-                        Color.fromRGBO(95, 112, 247, 1),
-                        Color.fromRGBO(163, 163, 234, 1),
-                      ],
-                      // stops: [0.4, 0.4],
+                      gradient: LinearGradient(
+                        colors: [
+                          Color.fromRGBO(95, 112, 247, 1),
+                          Color.fromRGBO(163, 163, 234, 1),
+                        ],
+                        // stops: [0.4, 0.4],
+                      ),
                     ),
-                  ),
-                  padding: EdgeInsets.all(8.0),
-                  height: screenHeight * 0.23,
-                  child: Column(children: [
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: screenWidth * 0.45,
-                          child: Text(
-                            " Good morning",
-                            textAlign: TextAlign.start,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
+                    padding: EdgeInsets.all(8.0),
+                    height: screenHeight * 0.23,
+                    child: Column(children: [
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: screenWidth * 0.45,
+                            child: Text(
+                              " Good morning",
+                              textAlign: TextAlign.start,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(left: screenWidth * 0.1),
-                            child: Row(
-                              children: [
-                                Text(
-                                  " Selem" + ",",
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: screenWidth * 0.37,
-                                  child: Text(
-                                    APIService.owner.toString(),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                              margin: EdgeInsets.only(left: screenWidth * 0.1),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    " Selem" + ",",
                                     textAlign: TextAlign.start,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -255,110 +265,263 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                       fontSize: 15,
                                     ),
                                   ),
+                                  SizedBox(
+                                    width: screenWidth * 0.37,
+                                    child: Text(
+                                      APIService.owner.toString(),
+                                      textAlign: TextAlign.start,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          Container(
+                            margin: EdgeInsets.only(left: screenWidth * 0.07),
+                            child: FutureBuilder(
+                              future: _fetchLogo(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<String> snapshot) {
+                                if (snapshot.connectionState !=
+                                    ConnectionState.done) return Text("");
+                                return ClipOval(
+                                  child: SizedBox(
+                                      height: screenHeight * 0.05,
+                                      width: screenWidth * 0.09,
+                                      child: Image.network(
+                                          snapshot.data.toString())),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ]),
+                  ),
+                  Positioned(
+                    child: Container(
+                      margin: EdgeInsets.only(
+                          top: screenHeight * 0.13, left: 30, right: 30),
+                      height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: Colors.white,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: screenWidth * 0.35,
+                                  margin: EdgeInsets.only(right: 30),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                          top: 13,
+                                          bottom: 13,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: kPrimaryColor,
+                                        ),
+                                        child: Text(
+                                          CountDrivers.totalDrivers.toString(),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        padding: EdgeInsets.all(11),
+                                      ),
+                                      Text(
+                                        TranslationUtil.text('Driver'),
+                                        style: TextStyle(
+                                          color: kPrimaryColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ],
-                            )),
-                        Container(
-                          margin: EdgeInsets.only(left: screenWidth * 0.07),
-                          child: FutureBuilder(
-                            future: _fetchLogo(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<String> snapshot) {
-                              if (snapshot.connectionState !=
-                                  ConnectionState.done) return Text("");
-                              return ClipOval(
-                                child: SizedBox(
-                                    height: screenHeight * 0.05,
-                                    width: screenWidth * 0.09,
-                                    child: Image.network(
-                                        snapshot.data.toString())),
-                              );
-                            },
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ]),
-                ),
-                Positioned(
-                  child: Container(
-                    margin: EdgeInsets.only(
-                        top: screenHeight * 0.13, left: 30, right: 30),
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      color: Colors.white,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Row(
-                            children: [
-                              Container(
-                                width: screenWidth * 0.35,
-                                margin: EdgeInsets.only(right: 30),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                        top: 13,
-                                        bottom: 13,
+                          Container(
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: screenWidth * 0.35,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                          top: 13,
+                                          bottom: 13,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: kPrimaryColor,
+                                        ),
+
+                                        child: Text(
+                                          APIService.totalVehicle.toString(),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        padding: EdgeInsets.all(11),
+
+                                        //use this class Circleborder() for circle shape.
                                       ),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: kPrimaryColor,
-                                      ),
-                                      child: Text(
-                                        CountDrivers.totalDrivers.toString(),
+                                      Text(
+                                        TranslationUtil.text("Vehicle"),
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: kPrimaryColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
                                         ),
                                       ),
-                                      padding: EdgeInsets.all(11),
-                                    ),
-                                    Text(
-                                      TranslationUtil.text('Driver'),
-                                      style: TextStyle(
-                                        color: kPrimaryColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 13,
-                                      ),
-                                    )
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        Container(
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: screenWidth * 0.35,
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              // Container(
+              //   height: screenHeight * 0.05,
+              //   decoration: BoxDecoration(
+              //     color: kBackgroundColor,
+              //     borderRadius: BorderRadius.only(
+              //         topLeft: Radius.circular(10),
+              //         topRight: Radius.circular(10)),
+              //   ),
+              // ),
+              Flexible(
+                child: Container(
+                  padding:
+                      EdgeInsets.only(left: 25, right: 25, bottom: 25, top: 20),
+
+                  // margin: EdgeInsets.only(top: 35),
+                  child: GridView(
+                    padding: EdgeInsets.zero,
+                    // ignore: sort_child_properties_last
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: InkResponse(
+                          onTap: (() {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        communicate_screen()));
+                          }),
+                          child: Ink(
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    borderRadius: BorderRadius.circular(6),
+                                    boxShadow: isPressed
+                                        ? [
+                                            BoxShadow(
+                                              color: Colors.grey.shade400,
+                                              offset: Offset(4, 4),
+                                              blurRadius: 15,
+                                              spreadRadius: 1,
+                                            ),
+                                            const BoxShadow(
+                                              color: Colors.white,
+                                              offset: Offset(-4, -4),
+                                              blurRadius: 25,
+                                              spreadRadius: 1,
+                                            ),
+                                          ]
+                                        : null),
                                 child: Column(
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.only(
-                                        top: 13,
-                                        bottom: 13,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.06,
+
+                                      margin: EdgeInsets.only(top: 12),
+                                      //height: 70,
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Image.asset(
+                                        "assets/images/driver.png",
                                         color: kPrimaryColor,
                                       ),
-
-                                      child: Text(
-                                        APIService.totalVehicle.toString(),
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      padding: EdgeInsets.all(11),
-
-                                      //use this class Circleborder() for circle shape.
                                     ),
-                                    Text(
+                                    Container(
+                                      child: Text(
+                                          TranslationUtil.text("Driver"),
+                                          style: TextStyle(
+                                              color: kPrimaryColor,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14)),
+                                    ),
+                                  ],
+                                )),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => VehicleStatus()));
+                          },
+                          child: AnimatedContainer(
+                              duration: Duration(milliseconds: 100),
+                              decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: isPressed
+                                      ? [
+                                          BoxShadow(
+                                            color: Colors.grey.shade400,
+                                            offset: Offset(4, 4),
+                                            blurRadius: 15,
+                                            spreadRadius: 1,
+                                          ),
+                                          const BoxShadow(
+                                            color: Colors.white,
+                                            offset: Offset(-4, -4),
+                                            blurRadius: 25,
+                                            spreadRadius: 1,
+                                          ),
+                                        ]
+                                      : null),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(top: 10),
+                                    // height: 70,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Icon(
+                                      Icons.local_shipping,
+                                      size: 50,
+                                      color: kPrimaryColor,
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Text(
                                       TranslationUtil.text("Vehicle"),
                                       style: TextStyle(
                                         color: kPrimaryColor,
@@ -366,51 +529,87 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                         fontSize: 13,
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+                                  ),
+                                ],
+                              )),
                         ),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-            // Container(
-            //   height: screenHeight * 0.05,
-            //   decoration: BoxDecoration(
-            //     color: kBackgroundColor,
-            //     borderRadius: BorderRadius.only(
-            //         topLeft: Radius.circular(10),
-            //         topRight: Radius.circular(10)),
-            //   ),
-            // ),
-            Flexible(
-              child: Container(
-                padding:
-                    EdgeInsets.only(left: 25, right: 25, bottom: 25, top: 20),
-
-                // margin: EdgeInsets.only(top: 35),
-                child: GridView(
-                  padding: EdgeInsets.zero,
-                  // ignore: sort_child_properties_last
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: InkResponse(
-                        onTap: (() {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => communicate_screen()));
-                        }),
-                        child: Ink(
-                          child: Container(
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ownerReportstatus()));
+                          },
+                          child: AnimatedContainer(
+                              //padding: EdgeInsets.only(bottom: _padding),
+                              duration: Duration(milliseconds: 100),
                               decoration: BoxDecoration(
                                   color: Color.fromARGB(255, 255, 255, 255),
-                                  borderRadius: BorderRadius.circular(6),
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: isPressed
+                                      ? [
+                                          BoxShadow(
+                                            color: Colors.grey.shade400,
+                                            offset: Offset(4, 4),
+                                            blurRadius: 15,
+                                            spreadRadius: 1,
+                                          ),
+                                          const BoxShadow(
+                                            color: Colors.white,
+                                            offset: Offset(-4, -4),
+                                            blurRadius: 25,
+                                            spreadRadius: 1,
+                                          ),
+                                        ]
+                                      : null),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.05,
+                                    margin: EdgeInsets.only(top: 12),
+                                    //height: 70,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Image.asset(
+                                      "assets/images/profit-report.png",
+                                      color: kPrimaryColor,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(top: 8),
+                                    child: Text(
+                                      TranslationUtil.text("Report"),
+                                      style: TextStyle(
+                                        color: kPrimaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: GestureDetector(
+                          onTap: (() {
+                            Navigator.push<void>(
+                              context,
+                              MaterialPageRoute<void>(
+                                  builder: (BuildContext context) =>
+                                      availabelMarket()),
+                            );
+                          }),
+                          child: AnimatedContainer(
+                              //padding: EdgeInsets.only(bottom: _padding),
+                              duration: Duration(milliseconds: 100),
+                              decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  borderRadius: BorderRadius.circular(10),
                                   boxShadow: isPressed
                                       ? [
                                           BoxShadow(
@@ -432,278 +631,105 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   Container(
                                     height: MediaQuery.of(context).size.height *
                                         0.06,
-
-                                    margin: EdgeInsets.only(top: 12),
+                                    margin: EdgeInsets.only(top: 6),
                                     //height: 70,
                                     width: MediaQuery.of(context).size.width,
                                     child: Image.asset(
-                                      "assets/images/driver.png",
+                                      "assets/images/available.png",
                                       color: kPrimaryColor,
                                     ),
                                   ),
                                   Container(
-                                    child: Text(TranslationUtil.text("Driver"),
-                                        style: TextStyle(
-                                            color: kPrimaryColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14)),
+                                    margin: EdgeInsets.only(top: 8),
+                                    child: Text(
+                                      TranslationUtil.text("Available Market"),
+                                      style: TextStyle(
+                                        color: kPrimaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               )),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => VehicleStatus()));
-                        },
-                        child: AnimatedContainer(
-                            duration: Duration(milliseconds: 100),
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: isPressed
-                                    ? [
-                                        BoxShadow(
-                                          color: Colors.grey.shade400,
-                                          offset: Offset(4, 4),
-                                          blurRadius: 15,
-                                          spreadRadius: 1,
-                                        ),
-                                        const BoxShadow(
-                                          color: Colors.white,
-                                          offset: Offset(-4, -4),
-                                          blurRadius: 25,
-                                          spreadRadius: 1,
-                                        ),
-                                      ]
-                                    : null),
-                            child: Column(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(top: 10),
-                                  // height: 70,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Icon(
-                                    Icons.local_shipping,
-                                    size: 50,
-                                    color: kPrimaryColor,
-                                  ),
-                                ),
-                                Container(
-                                  child: Text(
-                                    TranslationUtil.text("Vehicle"),
-                                    style: TextStyle(
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => tripHistory()));
+                          },
+                          child: AnimatedContainer(
+                              //padding: EdgeInsets.only(bottom: _padding),
+                              duration: Duration(milliseconds: 100),
+                              decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: isPressed
+                                      ? [
+                                          BoxShadow(
+                                            color: Colors.grey.shade400,
+                                            offset: Offset(4, 4),
+                                            blurRadius: 15,
+                                            spreadRadius: 1,
+                                          ),
+                                          const BoxShadow(
+                                            color: Colors.white,
+                                            offset: Offset(-4, -4),
+                                            blurRadius: 25,
+                                            spreadRadius: 1,
+                                          ),
+                                        ]
+                                      : null),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.06,
+                                    margin: EdgeInsets.only(top: 12),
+                                    //height: 70,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Image.asset(
+                                      "assets/images/travel.png",
                                       color: kPrimaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
                                     ),
                                   ),
-                                ),
-                              ],
-                            )),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ownerReportstatus()));
-                        },
-                        child: AnimatedContainer(
-                            //padding: EdgeInsets.only(bottom: _padding),
-                            duration: Duration(milliseconds: 100),
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: isPressed
-                                    ? [
-                                        BoxShadow(
-                                          color: Colors.grey.shade400,
-                                          offset: Offset(4, 4),
-                                          blurRadius: 15,
-                                          spreadRadius: 1,
-                                        ),
-                                        const BoxShadow(
-                                          color: Colors.white,
-                                          offset: Offset(-4, -4),
-                                          blurRadius: 25,
-                                          spreadRadius: 1,
-                                        ),
-                                      ]
-                                    : null),
-                            child: Column(
-                              children: [
-                                Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.05,
-                                  margin: EdgeInsets.only(top: 12),
-                                  //height: 70,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Image.asset(
-                                    "assets/images/profit-report.png",
-                                    color: kPrimaryColor,
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 8),
-                                  child: Text(
-                                    TranslationUtil.text("Report"),
-                                    style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
+                                  Container(
+                                    margin: EdgeInsets.only(top: 5),
+                                    child: Text(
+                                      TranslationUtil.text('Trip management'),
+                                      style: TextStyle(
+                                        color: kPrimaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            )),
+                                ],
+                              )),
+                        ),
                       ),
+                    ],
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      childAspectRatio: MediaQuery.of(context).size.width /
+                          (MediaQuery.of(context).size.height / 3),
+                      maxCrossAxisExtent: 200,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: GestureDetector(
-                        onTap: (() {
-                          Navigator.push<void>(
-                            context,
-                            MaterialPageRoute<void>(
-                                builder: (BuildContext context) =>
-                                    availabelMarket()),
-                          );
-                        }),
-                        child: AnimatedContainer(
-                            //padding: EdgeInsets.only(bottom: _padding),
-                            duration: Duration(milliseconds: 100),
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: isPressed
-                                    ? [
-                                        BoxShadow(
-                                          color: Colors.grey.shade400,
-                                          offset: Offset(4, 4),
-                                          blurRadius: 15,
-                                          spreadRadius: 1,
-                                        ),
-                                        const BoxShadow(
-                                          color: Colors.white,
-                                          offset: Offset(-4, -4),
-                                          blurRadius: 25,
-                                          spreadRadius: 1,
-                                        ),
-                                      ]
-                                    : null),
-                            child: Column(
-                              children: [
-                                Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.06,
-                                  margin: EdgeInsets.only(top: 6),
-                                  //height: 70,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Image.asset(
-                                    "assets/images/available.png",
-                                    color: kPrimaryColor,
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 8),
-                                  child: Text(
-                                    TranslationUtil.text("Available Market"),
-                                    style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => tripHistory()));
-                        },
-                        child: AnimatedContainer(
-                            //padding: EdgeInsets.only(bottom: _padding),
-                            duration: Duration(milliseconds: 100),
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: isPressed
-                                    ? [
-                                        BoxShadow(
-                                          color: Colors.grey.shade400,
-                                          offset: Offset(4, 4),
-                                          blurRadius: 15,
-                                          spreadRadius: 1,
-                                        ),
-                                        const BoxShadow(
-                                          color: Colors.white,
-                                          offset: Offset(-4, -4),
-                                          blurRadius: 25,
-                                          spreadRadius: 1,
-                                        ),
-                                      ]
-                                    : null),
-                            child: Column(
-                              children: [
-                                Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.06,
-                                  margin: EdgeInsets.only(top: 12),
-                                  //height: 70,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Image.asset(
-                                    "assets/images/travel.png",
-                                    color: kPrimaryColor,
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 5),
-                                  child: Text(
-                                    TranslationUtil.text('Trip management'),
-                                    style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
-                      ),
-                    ),
-                  ],
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    childAspectRatio: MediaQuery.of(context).size.width /
-                        (MediaQuery.of(context).size.height / 3),
-                    maxCrossAxisExtent: 200,
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 8,
+                    //scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
                   ),
-                  //scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
                 ),
               ),
-            ),
-          ],
-        ));
+            ],
+          )),
+    );
   }
 
   Widget buildIndicator() => AnimatedSmoothIndicator(

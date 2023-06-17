@@ -157,95 +157,228 @@ class _AvailableVehicleState extends State<AvailableVehicle> {
                   else
                     SingleChildScrollView(
                       child: Column(
-                          children: findVehicle.map((vehicle) {
-                        return Container(
-                          height: screenHeight * 0.08,
-                          child: InkWell(
-                            onTap: (() {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) => Settrips(
-                                        drivername: vehicle['driverName'],
-                                        platenumber: vehicle['plateNumber'],
-                                        startLocation: "4444",
-                                        destination: "4443",
-                                        startDate: "2-11-14",
-                                        tripType: "LONG")),
-                              );
-                            }),
-                            child: Card(
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      margin:
-                                          EdgeInsets.only(left: 15, right: 10),
-                                      child: Text(
-                                        " " + vehicle['vehicleName'],
-                                        style: const TextStyle(
-                                            // fontWeight: FontWeight.bold,
-                                            fontSize: 12,
-                                            color: Colors.black87),
-                                      ),
+                        children: [
+                          Padding(
+                            padding: containerpaddingfordriverandowner,
+                            child: Container(
+                              width: screenWidth,
+                              height: screenHeight * 0.08,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(6.0),
+                                  bottomLeft: Radius.circular(6.0),
+                                ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      left: BorderSide(
+                                          color: Colors.blue, width: 6),
                                     ),
-                                    vehicle['driverName'] != null
-                                        ? Container(
-                                            margin: EdgeInsets.only(left: 20),
-                                            width: screenWidth * 0.28,
-                                            child: Text(
-                                              vehicle['driverName'],
-                                              style: const TextStyle(
-                                                  // fontWeight: FontWeight.bold,
-                                                  fontSize: 12,
-                                                  color: Colors.black87),
-                                            ))
-                                        : Container(
-                                            width: screenWidth * 0.25,
-                                            child: const Text(
-                                              "Unassigned",
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black87,
-                                              ),
+                                  ),
+                                  child: Container(
+                                    color: Colors.white,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: screenWidth * 0.25,
+                                          child: const Text(
+                                            "vehicle",
+                                            textAlign: TextAlign.left,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontFamily: 'Nunito',
+                                              fontSize: 14,
+                                              color: Colors.black,
                                             ),
                                           ),
-                                    Container(
-                                      width: screenWidth * 0.1,
-                                      margin: EdgeInsets.only(left: 5),
-                                      child: Text(
-                                        vehicle['vehicleCatagory'],
-                                        style: const TextStyle(
-                                            // fontWeight: FontWeight.bold,
-                                            fontSize: 12,
-                                            color: Colors.black87),
-                                      ),
-                                    ),
-                                    Container(
-                                        height: screenHeight * 0.038,
-                                        width: screenWidth * 0.23,
-                                        margin: const EdgeInsets.only(
-                                            left: 30, right: 10),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                          color: kPrimaryColor,
                                         ),
-                                        child: Center(
-                                          child: Text(
-                                            " " + vehicle['status'],
+                                        Container(
+                                          width: screenWidth * 0.2,
+                                          child: const Text(
+                                            "Driver ",
+                                            textAlign: TextAlign.left,
+                                            overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
-                                                // fontWeight: FontWeight.bold,
-                                                fontSize: 12,
-                                                color: Colors.white),
+                                              fontFamily: 'Nunito',
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            ),
                                           ),
-                                        ))
-                                  ]),
+                                        ),
+                                        Container(
+                                          width: screenWidth * 0.26,
+                                          child: const Text(
+                                            "vehicle Catagory",
+                                            textAlign: TextAlign.left,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontFamily: 'Nunito',
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: screenWidth * 0.13,
+                                          child: const Text(
+                                            "Status",
+                                            textAlign: TextAlign.left,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontFamily: 'Nunito',
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        );
-                      }).toList()),
+                          Column(
+                              children: findVehicle.map((vehicle) {
+                            int index = findVehicle.indexOf(vehicle);
+                            Color borderLeftColor = Colors.red;
+                            if (index % 2 == 0) {
+                              borderLeftColor = Colors
+                                  .green; // Update border color based on condition
+                            } else {
+                              borderLeftColor = Colors
+                                  .blue; // Update border color for the else case
+                            }
+                            return Container(
+                              height: screenHeight * 0.08,
+                              padding: const EdgeInsets.only(
+                                left: 10,
+                                right: 10,
+                              ),
+                              child: InkWell(
+                                onTap: (() {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            Settrips(
+                                                drivername:
+                                                    vehicle['driverName'],
+                                                platenumber:
+                                                    vehicle['plateNumber'],
+                                                startLocation: "4444",
+                                                destination: "4443",
+                                                startDate: "2-11-14",
+                                                tripType: "LONG")),
+                                  );
+                                }),
+                                child: Container(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(6.0),
+                                      bottomLeft: Radius.circular(6.0),
+                                    ),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border(
+                                          left: BorderSide(
+                                              color: borderLeftColor, width: 6),
+                                        ),
+                                      ),
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  left: 15, right: 10),
+                                              child: Text(
+                                                " " + vehicle['vehicleName'],
+                                                textAlign: TextAlign.left,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  fontFamily: 'Nunito',
+                                                  fontSize:
+                                                      AppFonts.smallFontSize,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ),
+                                            vehicle['driverName'] != null
+                                                ? Container(
+                                                    width: screenWidth * 0.2,
+                                                    child: Text(
+                                                      vehicle['driverName'],
+                                                      textAlign: TextAlign.left,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: const TextStyle(
+                                                        fontFamily: 'Nunito',
+                                                        fontSize: AppFonts
+                                                            .smallFontSize,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ))
+                                                : Container(
+                                                    width: screenWidth * 0.2,
+                                                    child: const Text(
+                                                      "Unassigned",
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black87,
+                                                      ),
+                                                    ),
+                                                  ),
+                                            Container(
+                                              width: screenWidth * 0.26,
+                                              margin: EdgeInsets.only(left: 5),
+                                              child: Text(
+                                                vehicle['vehicleCatagory'],
+                                                textAlign: TextAlign.left,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  fontFamily: 'Nunito',
+                                                  fontSize:
+                                                      AppFonts.smallFontSize,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                                height: screenHeight * 0.038,
+                                                width: screenWidth * 0.2,
+                                                margin: const EdgeInsets.only(
+                                                    left: 30, right: 10),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(6),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    " " + vehicle['status'],
+                                                    textAlign: TextAlign.left,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: AppFonts
+                                                          .smallFontSize,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ))
+                                          ]),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }).toList()),
+                        ],
+                      ),
                     )
                 ],
               ));

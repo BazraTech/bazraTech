@@ -7,11 +7,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../../../../Theme/Alert.dart';
 import '../../../../Theme/TextInput.dart';
 import '../../../../config/APIService.dart';
-import '../../Bottom/Bottom.dart';
-import '../Vehicle/TotalVehicles.dart';
-import 'UnassignedDrivers.dart';
+
 import 'vehicleOnStock.dart';
 
 class ModifyDriverStatus extends StatefulWidget {
@@ -62,111 +61,15 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
         });
 
     if (response.statusCode == 200) {
-      _showMyDialog();
+      var decodedResponse = json.decode(response.body);
+      String alertContent = decodedResponse["message"];
+      showMyAlert(context, "Alert", alertContent);
     }
     print(response.statusCode.toString());
   }
 
-  Future<void> _showMyDialog() async {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-    platenumber = "${widget.driverLicense}";
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return Container(
-          width: screenWidth * 0.9,
-          height: screenHeight * 0.07,
-          child: AlertDialog(
-            titlePadding: EdgeInsets.all(0),
-            title: Container(
-              padding: EdgeInsets.all(10),
-              color: kPrimaryColor,
-              child: Center(
-                child: Container(
-                  height: 20,
-                  child: const Text(
-                    "Alert",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: const <Widget>[
-                  Text(
-                    'Updated Successfully ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              Container(
-                margin: EdgeInsets.only(right: 10),
-                width: 100,
-                decoration: const BoxDecoration(
-                  color: kPrimaryColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(6.0),
-                    bottomLeft: Radius.circular(6.0),
-                    bottomRight: Radius.circular(6.0),
-                    topRight: Radius.circular(6.0),
-                  ),
-                ),
-                height: 30,
-                child: TextButton(
-                  child: const Text(
-                    'Done',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-              Container(
-                width: 100,
-                margin: EdgeInsets.only(right: 25),
-                decoration: const BoxDecoration(
-                  color: kPrimaryColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(6.0),
-                    bottomLeft: Radius.circular(6.0),
-                    bottomRight: Radius.circular(6.0),
-                    topRight: Radius.circular(6.0),
-                  ),
-                ),
-                height: 30,
-                child: TextButton(
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OwnersVehicle()));
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+  void showMyAlert(BuildContext context, String title, String message) {
+    alertutils.showMyDialog(context, title, message);
   }
 
   @override

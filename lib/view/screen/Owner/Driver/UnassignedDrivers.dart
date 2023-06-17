@@ -85,6 +85,7 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     final double categoryHeight = screenHeight * 0.30;
+    print(findVehicle.length);
     print('yee');
     print(Result);
     return SafeArea(
@@ -148,164 +149,265 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                           child: Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: containerpaddingfordriverandowner,
                                 child: Container(
+                                  width: screenWidth,
                                   height: screenHeight * 0.08,
-                                  child: Center(
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                            left: screenWidth * 0.03,
-                                          ),
-                                          width: screenWidth * 0.28,
-                                          child: const Text(
-                                            "Drivers",
-                                            style: TextStyle(
-                                              fontFamily: "Nunito",
-                                              fontSize: 15,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: screenWidth * 0.28,
-                                          child: const Text(
-                                            "Drivers Phone",
-                                            style: TextStyle(
-                                              fontFamily: "Nunito",
-                                              fontSize: 15,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: screenWidth * 0.28,
-                                          margin: EdgeInsets.only(
-                                              right: screenWidth * 0.01),
-                                          child: const Text(
-                                            " Status",
-                                            style: TextStyle(
-                                              fontFamily: "Nunito",
-                                              fontSize: 15,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(6.0),
+                                      bottomLeft: Radius.circular(6.0),
                                     ),
-                                  ),
-                                ),
-                              ),
-                              Column(
-                                  children: findVehicle.map((driver) {
-                                return Container(
-                                  height: screenHeight * 0.1,
-                                  child: GestureDetector(
-                                    onTap: (() {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                VehicleOnstock(
-                                                  licenseNumber:
-                                                      driver['licenseNumber'],
-                                                )),
-                                      );
-                                    }),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Card(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(children: [
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          left: BorderSide(
+                                              color: Colors.blue, width: 6),
+                                        ),
+                                      ),
+                                      child: Container(
+                                        color: Colors.white,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
                                             Container(
-                                              width: screenWidth * 0.28,
-                                              margin: EdgeInsets.only(),
-                                              child: Text(
-                                                " " +
-                                                    driver['driverName']
-                                                        .toString(),
+                                              width: screenWidth * 0.25,
+                                              child: const Text(
+                                                "Drivers",
+                                                textAlign: TextAlign.left,
+                                                overflow: TextOverflow.ellipsis,
                                                 style: const TextStyle(
-                                                    fontFamily: "Nunito",
-                                                    fontSize: 12,
-                                                    color: Colors.black87),
+                                                  fontFamily: 'Nunito',
+                                                  fontSize: 14,
+                                                  color: Colors.black,
+                                                ),
                                               ),
                                             ),
-                                            driver['phoneNumber'] != null
-                                                ? Container(
-                                                    width: screenWidth * 0.28,
-                                                    child: Text(
-                                                      driver['phoneNumber'],
-                                                      style: const TextStyle(
-                                                          fontFamily: "Nunito",
-                                                          fontSize: 12,
-                                                          color:
-                                                              Colors.black87),
-                                                    ))
-                                                : Container(
-                                                    width: screenWidth * 0.28,
-                                                    child: const Text(
-                                                      "Unknown",
-                                                      style: TextStyle(
-                                                        fontSize: 12,
-                                                        color: Colors.black87,
-                                                      ),
-                                                    ),
-                                                  ),
-                                            driver['status'] != null
-                                                ? Container(
-                                                    height:
-                                                        screenHeight * 0.038,
-                                                    width: screenWidth * 0.28,
-
-                                                    // decoration: BoxDecoration(
-                                                    //   borderRadius:
-                                                    //       BorderRadius.circular(6),
-                                                    //   color: kPrimaryColor,
-                                                    // ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        " " + driver['status'],
-                                                        style: const TextStyle(
-                                                            fontFamily:
-                                                                "Nunito",
-                                                            fontSize: 12,
-                                                            color:
-                                                                Colors.black),
-                                                      ),
-                                                    ))
-                                                : Container(
-                                                    height:
-                                                        screenHeight * 0.038,
-                                                    width: screenWidth * 0.28,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              6),
-                                                      color: kPrimaryColor,
-                                                    ),
-                                                    child: const Center(
-                                                      child: Text(
-                                                        "UnAssigned",
-                                                        style: const TextStyle(
-                                                            fontFamily:
-                                                                "Nunito",
-                                                            fontSize: 12,
-                                                            color:
-                                                                Colors.white),
-                                                      ),
-                                                    ))
-                                          ]),
+                                            Container(
+                                              width: screenWidth * 0.3,
+                                              child: const Text(
+                                                "Phone Number ",
+                                                textAlign: TextAlign.left,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  fontFamily: 'Nunito',
+                                                  fontSize: 14,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: screenWidth * 0.25,
+                                              child: const Text(
+                                                "Status",
+                                                textAlign: TextAlign.left,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  fontFamily: 'Nunito',
+                                                  fontSize: 14,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
                                   ),
-                                );
-                              }).toList()),
+                                ),
+                              ),
+                              Container(
+                                child: Column(
+                                    children: findVehicle.map((driver) {
+                                  int index = findVehicle.indexOf(driver);
+                                  Color borderLeftColor = Colors.red;
+                                  if (index % 2 == 0) {
+                                    borderLeftColor = Colors
+                                        .green; // Update border color based on condition
+                                  } else {
+                                    borderLeftColor = Colors
+                                        .blue; // Update border color for the else case
+                                  }
+                                  return Container(
+                                    height: screenHeight * 0.1,
+                                    padding: const EdgeInsets.only(
+                                      left: 10,
+                                      right: 10,
+                                    ),
+                                    margin: EdgeInsets.only(),
+                                    child: GestureDetector(
+                                      onTap: (() {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  VehicleOnstock(
+                                                    licenseNumber:
+                                                        driver['licenseNumber'],
+                                                  )),
+                                        );
+                                      }),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(6.0),
+                                            bottomLeft: Radius.circular(6.0),
+                                          ),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              border: Border(
+                                                left: BorderSide(
+                                                    color: borderLeftColor,
+                                                    width: 6),
+                                              ),
+                                            ),
+                                            child: Container(
+                                              color: Colors.white,
+                                              child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      width: screenWidth * 0.25,
+                                                      margin: EdgeInsets.only(),
+                                                      child: Text(
+                                                        " " +
+                                                            driver['driverName']
+                                                                .toString(),
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: const TextStyle(
+                                                          fontFamily: 'Nunito',
+                                                          fontSize: 14,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    driver['phoneNumber'] !=
+                                                            null
+                                                        ? Container(
+                                                            width: screenWidth *
+                                                                0.3,
+                                                            child: Text(
+                                                              driver[
+                                                                  'phoneNumber'],
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
+                                                            ))
+                                                        : Container(
+                                                            width: screenWidth *
+                                                                0.25,
+                                                            child: const Text(
+                                                              "Unknown",
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                    driver['status'] != null
+                                                        ? Container(
+                                                            height:
+                                                                screenHeight *
+                                                                    0.038,
+                                                            width: screenWidth *
+                                                                0.28,
+
+                                                            // decoration: BoxDecoration(
+                                                            //   borderRadius:
+                                                            //       BorderRadius.circular(6),
+                                                            //   color: kPrimaryColor,
+                                                            // ),
+                                                            child: Center(
+                                                              child: Text(
+                                                                " " +
+                                                                    driver[
+                                                                        'status'],
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                            ))
+                                                        : Container(
+                                                            height:
+                                                                screenHeight *
+                                                                    0.038,
+                                                            width: screenWidth *
+                                                                0.28,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          6),
+                                                              color:
+                                                                  kPrimaryColor,
+                                                            ),
+                                                            child: const Center(
+                                                              child: Text(
+                                                                "UnAssigned",
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                            ))
+                                                  ]),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }).toList()),
+                              ),
                             ],
                           ),
                         )

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:bazralogin/Theme/Alert.dart';
 import 'package:bazralogin/view/screen/Bottom/Bottom.dart';
 
 import 'package:date_format/date_format.dart';
@@ -55,46 +56,6 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
   String? selectedItem = "Select Gender";
   bool isLoading = false;
 
-  Future<void> _showMyDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return Container(
-          child: AlertDialog(
-            titlePadding: EdgeInsets.all(0),
-            title: Container(
-              padding: EdgeInsets.all(10),
-              color: kPrimaryColor,
-              child: Container(
-                height: 40,
-              ),
-            ),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: const <Widget>[
-                  Text(
-                    'Register Successfully ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: const Text('Done'),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => BottomNav()));
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   Future<void> registerDriver(String driverFile, String licenseFile) async {
     var value = await storage.read(key: 'jwt');
 
@@ -113,7 +74,7 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
     //     await ImagePicker().pickImage(source: ImageSource.gallery);
     formData.fields['driverName'] = driverName.text;
     formData.fields['licenseNumber'] = LicenseNumber.text;
-    formData.fields['OwnerPhone'] = ownerPhone.text;
+    formData.fields['OwnerPhone'] = APIService.owner.toString();
     formData.fields['driverPhone'] = driverPhone.text;
     formData.fields['birthDate'] = dateBirth.text;
     formData.fields["experience"] = Experience.text;
@@ -143,42 +104,17 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
 
     if (response.statusCode == 200) {
       String alertContent = decodedResponse["message"];
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: Text('API Response'),
-          content: Text(alertContent),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
+      alertutils.showMyDialog(context, "Alert", alertContent);
     } else {
       String alertContent = decodedResponse["message"];
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: Text(''),
-          content: Text(alertContent),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
+      alertutils.showMyDialog(context, "Alert", alertContent);
+
       // throw Exception(
       //     'Failed load data with status code ${response.statusCode}');
     }
   }
+
+  void showMyAlert(BuildContext context, String title, String message) {}
 
   void initState() {
     super.initState();
@@ -279,26 +215,7 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
                             style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
                         ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        SizedBox(
-                          child: TextFormField(
-                            cursorColor: Colors.black,
-                            cursorHeight: 25,
-                            keyboardType: TextInputType.text,
-                            controller: ownerPhone,
-                            decoration: ThemeHelper()
-                                .textInputDecoration("Owner phone "),
-                            validator: (value) {
-                              if (value?.length != 10) {
-                                return 'Please Enter  owner phone';
-                                return null;
-                              }
-                            },
-                            style: TextStyle(fontSize: 15, color: Colors.black),
-                          ),
-                        ),
+
                         SizedBox(
                           height: 15,
                         ),

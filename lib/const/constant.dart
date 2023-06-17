@@ -11,6 +11,7 @@ const kBlueColor = Color(0xFF40BAD5);
 // const padding
 const kDefaultPadding = 20.0;
 const containerpaddingfordriverandowner = EdgeInsets.all(18.0);
+
 const commanpaddingforallapp = EdgeInsets.all(9.0);
 const marginforowneranddriver = 45;
 const borderradiusforbutton = 6;
@@ -18,6 +19,7 @@ const paddingforbutton = 8;
 // marginfordriverandowner
 const rightmargin = 45.0;
 const leftmargin = 20.0;
+const rightmarginfordrivermanage = 2.0;
 
 // our default Shadow
 const kDefaultShadow = BoxShadow(
