@@ -739,7 +739,8 @@ useEffect(() => {
 <div className={styles.dashboardContents}>
 
     <div className={styles.totalVehicles}  onClick={(event)=>{handleClick({url:"http://64.226.104.50:9090/Api/Admin/All", 
-                                                                name:"Roles Type"},event)}} >
+                                                                name:"Roles Type",title:'Role Type',
+                                                                createUrl:"http://64.226.104.50:9090/Api/Admin/CreateRole"},event)}} >
             <h4>Roles </h4>
             <div className={styles.innerCard}>
                 {/* <AiFillCar size="2.6rem" ></AiFillCar> */}
