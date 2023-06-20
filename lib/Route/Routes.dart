@@ -1,13 +1,14 @@
-import 'package:bazralogin/view/screen/Loging/Login.dart';
-import 'package:bazralogin/view/screen/Owner/Alert/Notification.dart';
-import 'package:bazralogin/view/screen/Owner/Driver/vehicleOnStock.dart';
+import 'package:bazralogin/screen/Loging/Login.dart';
+import 'package:bazralogin/screen/Owner/Alert/Notification.dart';
+import 'package:bazralogin/screen/Owner/Driver/vehicleOnStock.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-import '../view/screen/Bottom/Bottom.dart';
-import '../view/screen/Owner/Driver/UnassignedDrivers.dart';
-import '../view/screen/Owner/Driver/driversPage.dart';
-import '../view/screen/Owner/Profile/profileEdit/updateOwnerprofile.dart';
+import '../screen/Bottom/Bottom.dart';
+import '../screen/Owner/Driver/UnassignedDrivers.dart';
+import '../screen/Owner/Driver/driversPage.dart';
+import '../screen/Owner/Profile/profileEdit/updateOwnerprofile.dart';
+import '../screen/Owner/Vehicle/TotalVehicles.dart';
 
 class AppRoutes {
   static const String home = '/';

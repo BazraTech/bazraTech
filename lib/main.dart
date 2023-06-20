@@ -1,10 +1,12 @@
 import 'package:bazralogin/controller/Localization.dart';
-import 'package:bazralogin/view/screen/Loging/Login.dart';
+import 'package:bazralogin/screen/Bottom/Bottom.dart';
+import 'package:bazralogin/screen/Driver/driverBottomnav.dart';
+import 'package:bazralogin/screen/Loging/Login.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'Route/Routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +17,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -24,9 +27,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: AppRoutes.getHomeRoute(),
-      getPages: AppRoutes.routes,
-      home: Login(),
+      initialRoute: '/',
+      getPages: [
+        GetPage(name: '/', page: () => Login()),
+        GetPage(name: '/home', page: () => BottomNav()),
+        GetPage(name: '/drivehome', page: () => driverBottomn()),
+      ],
     );
   }
 }

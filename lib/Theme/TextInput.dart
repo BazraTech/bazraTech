@@ -6,6 +6,11 @@ class ThemeHelper {
     return InputDecoration(
       labelText: lableText,
       hintText: hintText,
+      hintStyle: TextStyle(
+          fontFamily: 'Nunito',
+          fontSize: 14,
+          color: Colors.black,
+          fontWeight: FontWeight.normal),
       suffix: icon1,
       fillColor: Colors.white,
       filled: true,
