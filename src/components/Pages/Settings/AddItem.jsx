@@ -102,9 +102,11 @@ let isAvatar = false;
 
 
     //Add Driver state
-    async function Add_Item(post) {
+    async function Add_Item(item) {
+     
+    
         let items ={
-           post
+         item
         }
         const options = {
             method: "POST",
