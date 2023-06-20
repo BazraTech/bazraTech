@@ -1,7 +1,7 @@
 import 'package:cargo/shared/constant.dart';
 import 'package:dotted_line/dotted_line.dart';
 import '../../model/cargo.dart';
-
+import '../../localization/app_localizations.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import '../../shared/storage_hepler.dart';
 import '../Bottom_Navigation.dart';
 import 'historyDetail.dart';
+import 'package:lottie/lottie.dart';
 
 Future fetchCargos() async {
   StorageHelper storageHelper = StorageHelper();
@@ -44,7 +45,8 @@ Future searchCargosByOwnerName(String status) async {
 
 class CargoListView extends StatefulWidget {
   String? plateNumber;
-
+  final AppLocalizations? localizations;
+  CargoListView({Key? key, this.localizations}) : super(key: key);
   @override
   _CargoListViewState createState() => _CargoListViewState();
 }
@@ -117,12 +119,17 @@ class _CargoListViewState extends State {
             margin: EdgeInsets.only(top: 30),
             height: screenHeight,
             child: FutureBuilder(
-              future: _searchResults.isNotEmpty // Add this condition
-                  ? Future.value(
-                      _searchResults) // If there are search results, use _searchResults
-                  : fetchCargos(), // Otherwise, fetch all cargos
+              future: searchCargosByOwnerName(searchController.text),
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
+                if (snapshot.data!.isEmpty) {
+                  Center(
+                    child: Lottie.asset(
+                      'assets/images/noapidatas.json',
+                      fit: BoxFit.cover,
+                    ),
+                  );
+                }
+                if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                   return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
@@ -273,13 +280,11 @@ class _CargoListViewState extends State {
                                           margin: EdgeInsets.only(
                                             top: 15,
                                           ),
-                                          child: const Expanded(
-                                            child: DottedLine(
-                                              lineThickness: 1.0,
-                                              dashLength: 4.0,
-                                              dashColor: Colors.grey,
-                                              dashGapRadius: 2.0,
-                                            ),
+                                          child: DottedLine(
+                                            lineThickness: 1.0,
+                                            dashLength: 4.0,
+                                            dashColor: Colors.grey,
+                                            dashGapRadius: 2.0,
                                           ),
                                         ),
                                         ListTile(
@@ -327,6 +332,14 @@ class _CargoListViewState extends State {
                         // Add other cargo details as needed
                       );
                     },
+                  );
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  // Show Lottie animation if search results are empty
+                  return Center(
+                    child: Lottie.asset(
+                      'assets/images/noapidatas.json',
+                      fit: BoxFit.cover,
+                    ),
                   );
                 } else if (snapshot.hasError) {
                   return Center(child: Text('${snapshot.error}'));

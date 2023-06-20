@@ -54,6 +54,9 @@ dependencies:
   intl: ^0.18.0
   flutter_localization: ^0.1.12
   lottie: ^2.4.0
+  printing: ^5.11.0
+  pdf: ^3.10.4
+  modern_form_esys_flutter_share: ^1.1.2
 
 dev_dependencies:
   flutter_test:

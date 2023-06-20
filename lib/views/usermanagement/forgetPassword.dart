@@ -197,21 +197,16 @@ class _ForgetState extends State<Forget> {
                 hintText:
                     AppLocalizations.of(context)?.translate("Phone Number") ??
                         "Phone Number",
-                hintTextStyle: TextStyle(
+                hintTextStyle: const TextStyle(
                   letterSpacing: 1.0,
                   wordSpacing: 2.0,
-                  color: _isFocus ? Colors.red : Colors.blue,
+                  color: Colors.grey,
 
                   // ... other styles
                 ),
                 textController: _phoneController,
                 keyboardType: TextInputType.text,
                 onChanged: (value) {},
-                onFocusChange: (focus) {
-                  setState(() {
-                    _isFocus = focus;
-                  });
-                },
                 validator: (value) {
                   if (value!.isEmpty) {
                     return AppLocalizations.of(context)

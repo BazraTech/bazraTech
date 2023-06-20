@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
+import '../../localization/localization_bloc.dart';
+import '../../localization/localization_event.dart';
 import '../../shared/constant.dart';
 import '../../shared/storage_hepler.dart';
 
@@ -34,6 +37,55 @@ class _ProfileState extends State<Profile> {
     } else {
       throw Exception('Failed to load image');
     }
+  }
+
+  Widget buildLanguageDropdown(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    final localeBloc = context.read<LocaleBloc>();
+    bool isPressed = true;
+    return Container(
+      width: screenWidth * 0.09,
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        borderRadius: BorderRadius.all(Radius.circular((6))),
+        boxShadow: isPressed
+            ? [
+                BoxShadow(
+                  color: Colors.grey.shade200,
+                  offset: Offset(4, 4),
+                  blurRadius: 15,
+                  spreadRadius: 1,
+                ),
+                const BoxShadow(
+                  color: Colors.white,
+                  offset: Offset(-4, -4),
+                  blurRadius: 25,
+                  spreadRadius: 1,
+                ),
+              ]
+            : null,
+      ),
+      child: DropdownButton<Locale>(
+        value: localeBloc.state.locale,
+        underline: Container(),
+        iconSize: 30,
+        items: <Locale>[
+          Locale('en', ''),
+          Locale('am', ''),
+        ].map<DropdownMenuItem<Locale>>((Locale value) {
+          return DropdownMenuItem<Locale>(
+            value: value,
+            child: Text(value.languageCode),
+          );
+        }).toList(),
+        onChanged: (Locale? newLocale) {
+          if (newLocale != null) {
+            localeBloc.add(ChangeLocale(newLocale));
+          }
+        },
+      ),
+    );
   }
 
   @override
@@ -298,8 +350,8 @@ class _ProfileState extends State<Profile> {
                 height: 20,
               ),
               Container(
-                height: screenHeight * 0.1,
-                decoration: BoxDecoration(
+                height: screenHeight * 0.15,
+                decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10),
@@ -309,42 +361,32 @@ class _ProfileState extends State<Profile> {
                     )),
                 child: Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                              height: screenWidth * 0.08,
-                              width: screenWidth * 0.08,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(252, 221, 244, 1),
-                                  borderRadius: BorderRadius.circular(6)),
-                              child: Icon(Icons.language_sharp)),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                                width: screenWidth * 0.3,
-                                child: Text(
-                                  "Language",
-                                  style: TextStyle(
-                                    fontFamily: "Nunito",
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: screenWidth * 0.26),
-                            child: IconButton(
-                              onPressed: (() {}),
-                              icon: Container(
-                                  child: Icon(Icons.keyboard_arrow_right)),
-                            ),
-                          ),
-                        ],
-                      ),
+                    Row(
+                      children: [
+                        Container(
+                            height: screenWidth * 0.08,
+                            margin: EdgeInsets.only(left: 20, right: 8),
+                            width: screenWidth * 0.08,
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(252, 221, 244, 1),
+                                borderRadius: BorderRadius.circular(6)),
+                            child: Icon(Icons.language_sharp)),
+                        Container(
+                            width: screenWidth * 0.2,
+                            child: const Text(
+                              "Language",
+                              style: TextStyle(
+                                fontFamily: "Nunito",
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                      ],
                     ),
+                    Container(
+                        margin: EdgeInsets.only(left: screenWidth * 0.3),
+                        width: screenWidth * 0.15,
+                        child: buildLanguageDropdown(context)),
                   ],
                 ),
               ),

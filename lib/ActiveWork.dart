@@ -1,17 +1,20 @@
 import 'dart:io';
+import 'package:lottie/lottie.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'package:cargo/shared/storage_hepler.dart';
-import 'package:cargo/views/Bottom_Navigation.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:cargo/views/Work/ActiveCargo.dart';
 import 'package:cargo/views/Work/CargoType/Actions.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:rflutter_alert/rflutter_alert.dart';
-
-import 'model/VehicleListForCargo.dart';
+import 'package:modern_form_esys_flutter_share/modern_form_esys_flutter_share.dart';
 import 'model/cargo.dart';
 import 'shared/constant.dart';
 
@@ -139,244 +142,433 @@ class _VehicleCargoState extends State<VehicleCargo> {
           ),
         ),
         body: Container(
-          margin: EdgeInsets.only(left: 10, right: 10, top: 30),
-          child: FutureBuilder(
-            future: fetchCargos(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    Cargo driver = snapshot.data![index];
-                    return InkWell(
-                      onTap: () {
-                        setState(() {});
-                      },
-                      child: Card(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.shade200.withOpacity(0.7),
-                                  blurRadius: 8.0,
-                                  spreadRadius: 2.0,
-                                  offset: const Offset(
-                                    6, // Move to right 7.0 horizontally
-                                    8, // Move to bottom 8.0 Vertically
-                                  ))
-                            ],
-                          ),
-                          child: ExpansionTile(
-                            title: Column(
-                              children: [
-                                ListTile(
-                                  title: Row(
+            margin: EdgeInsets.only(left: 10, right: 10, top: 30),
+            child: FutureBuilder(
+              future: fetchCargos(),
+              builder: (context, snapshot) {
+                 if (snapshot.data!.isEmpty) {
+                    Center(
+                      child: Lottie.asset(
+                        'assets/images/noapidatas.json',
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  }
+                if (snapshot.hasData) {
+                  return Container(
+                    height: screenHeight * 0.9,
+                    child: Stack(
+                      children: [
+                        ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            Cargo driver = snapshot.data![index];
+                            return InkWell(
+                              onTap: () {
+                                setState(() {});
+                              },
+                              child: Card(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.shade200
+                                              .withOpacity(0.7),
+                                          blurRadius: 8.0,
+                                          spreadRadius: 2.0,
+                                          offset: const Offset(
+                                            6, // Move to right 7.0 horizontally
+                                            8, // Move to bottom 8.0 Vertically
+                                          ))
+                                    ],
+                                  ),
+                                  child: ExpansionTile(
+                                    title: Column(
+                                      children: [
+                                        ListTile(
+                                          title: Row(
+                                            children: [
+                                              Text(
+                                                driver.pickUp,
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                  color: Color.fromARGB(
+                                                      255, 123, 129, 236),
+                                                  fontFamily: 'Roboto',
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  left: 8,
+                                                ),
+                                                child: const Icon(
+                                                  Icons.trip_origin,
+                                                  size: 15,
+                                                  color: Color.fromARGB(
+                                                      255, 123, 129, 236),
+                                                ),
+                                              ),
+                                              Container(
+                                                width: screenWidth * 0.15,
+                                                child: const Stack(
+                                                  alignment: Alignment.center,
+                                                  children: [
+                                                    DottedLine(
+                                                      lineThickness: 1.0,
+                                                      dashLength: 4.0,
+                                                      dashColor: Colors.grey,
+                                                      dashGapRadius: 2.0,
+                                                    ),
+                                                    Icon(
+                                                      Icons.local_shipping,
+                                                      color: Color.fromARGB(
+                                                          255, 123, 129, 236),
+                                                      size: 20,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                margin:
+                                                    EdgeInsets.only(right: 8),
+                                                alignment: Alignment.centerLeft,
+                                                child: Icon(Icons.location_on,
+                                                    size: 15,
+                                                    color:
+                                                        Colors.grey.shade300),
+                                              ),
+                                              Text(
+                                                driver.dropOff,
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.grey.shade600,
+                                                  fontFamily: 'Roboto',
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    subtitle: Container(
+                                      alignment: Alignment.bottomCenter,
+                                      child: isExpanded
+                                          ? Icon(Icons.keyboard_arrow_down)
+                                          : Icon(Icons.keyboard_arrow_down),
+                                    ),
+                                    trailing: Container(
+                                      child: CircleAvatar(
+                                        radius: 18,
+                                        backgroundColor: Colors.grey.shade300,
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "+2",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.red,
+                                                fontFamily: 'Roboto',
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                     children: [
-                                      Text(
-                                        driver.pickUp,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Color.fromARGB(
-                                              255, 123, 129, 236),
-                                          fontFamily: 'Roboto',
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          left: 8,
-                                        ),
-                                        child: const Icon(
-                                          Icons.trip_origin,
-                                          size: 15,
-                                          color: Color.fromARGB(
-                                              255, 123, 129, 236),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: screenWidth * 0.15,
-                                        child: const Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            DottedLine(
-                                              lineThickness: 1.0,
-                                              dashLength: 4.0,
-                                              dashColor: Colors.grey,
-                                              dashGapRadius: 2.0,
+                                      Stack(
+                                        children: [
+                                          Center(
+                                            child: SizedBox(
+                                              height: screenHeight * 0.5,
+                                              child: Container(
+                                                  margin:
+                                                      EdgeInsets.only(top: 10),
+                                                  child: Status()),
                                             ),
-                                            Icon(
-                                              Icons.local_shipping,
-                                              color: Color.fromARGB(
-                                                  255, 123, 129, 236),
-                                              size: 20,
+                                          ),
+                                          Positioned(
+                                            bottom: 2,
+                                            child: SizedBox(
+                                              width: screenWidth,
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  print("Button Pressed");
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  primary: Colors.grey[300],
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 15,
+                                                      vertical: 15),
+                                                  textStyle: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 18,
+                                                      fontStyle:
+                                                          FontStyle.italic),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            3),
+                                                  ),
+                                                  side: BorderSide(
+                                                      color:
+                                                          Colors.grey.shade400),
+                                                  elevation: 1,
+                                                ),
+                                                child: Text(
+                                                  "Track",
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color:
+                                                          Colors.grey.shade600,
+                                                      fontFamily: 'Roboto',
+                                                      letterSpacing: 1,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
                                             ),
-                                          ],
-                                        ),
+                                          )
+                                        ],
                                       ),
-                                      Container(
-                                        margin: EdgeInsets.only(right: 8),
-                                        alignment: Alignment.centerLeft,
-                                        child: Icon(Icons.location_on,
-                                            size: 15,
-                                            color: Colors.grey.shade300),
-                                      ),
-                                      Text(
-                                        driver.dropOff,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey.shade600,
-                                          fontFamily: 'Roboto',
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
+                                      // Add more ListTiles here for displaying other CargoDriver properties
                                     ],
                                   ),
                                 ),
-                              ],
-                            ),
-                            subtitle: Container(
-                              alignment: Alignment.bottomCenter,
-                              child: isExpanded
-                                  ? Icon(Icons.keyboard_arrow_down)
-                                  : Icon(Icons.keyboard_arrow_down),
-                            ),
-                            trailing: Container(
-                              child: CircleAvatar(
-                                radius: 18,
-                                backgroundColor: Colors.grey.shade300,
-                                child: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "+2",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.red,
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
                               ),
-                            ),
+                            );
+                          },
+                        ),
+                        Positioned(
+                          bottom: 4,
+                          right: 4,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Stack(
-                                children: [
-                                  Center(
-                                    child: SizedBox(
-                                      height: screenHeight * 0.5,
-                                      child: Container(
-                                          margin: EdgeInsets.only(top: 10),
-                                          child: Status()),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    bottom: 2,
-                                    child: SizedBox(
-                                      width: screenWidth,
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          print("Button Pressed");
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Colors.grey[300],
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 15, vertical: 15),
-                                          textStyle: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                              fontStyle: FontStyle.italic),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(3),
-                                          ),
-                                          side: BorderSide(
-                                              color: Colors.grey.shade400),
-                                          elevation: 1,
+                              // FloatingActionButton(
+                              //   onPressed: () async {
+                              //     final pdf = pw.Document();
+                              //     pdf.addPage(pw.Page(
+                              //       pageFormat: PdfPageFormat.a4,
+                              //       build: (pw.Context context) {
+                              //         return pw.Column(
+                              //           crossAxisAlignment:
+                              //               pw.CrossAxisAlignment.start,
+                              //           children: List.generate(
+                              //             snapshot.data!.length,
+                              //             (index) {
+                              //               final cargo = snapshot.data![index];
+                              //               return pw.Column(
+                              //                 crossAxisAlignment:
+                              //                     pw.CrossAxisAlignment.start,
+                              //                 children: [
+                              //                   pw.Row(
+                              //                     mainAxisAlignment: pw
+                              //                         .MainAxisAlignment
+                              //                         .spaceBetween,
+                              //                     children: [
+                              //                       pw.Text(
+                              //                         'Pick up:',
+                              //                         style: pw.TextStyle(
+                              //                             fontWeight: pw
+                              //                                 .FontWeight.bold),
+                              //                       ),
+                              //                       pw.Text(
+                              //                         cargo.pickUp,
+                              //                         style: pw.TextStyle(
+                              //                             fontWeight: pw
+                              //                                 .FontWeight.bold),
+                              //                       ),
+                              //                     ],
+                              //                   ),
+                              //                   pw.Row(
+                              //                     mainAxisAlignment: pw
+                              //                         .MainAxisAlignment
+                              //                         .spaceBetween,
+                              //                     children: [
+                              //                       pw.Text(
+                              //                         'Drop off:',
+                              //                         style: pw.TextStyle(
+                              //                             fontWeight: pw
+                              //                                 .FontWeight.bold),
+                              //                       ),
+                              //                       pw.Text(
+                              //                         cargo.dropOff,
+                              //                         style: pw.TextStyle(
+                              //                             fontWeight: pw
+                              //                                 .FontWeight.bold),
+                              //                       ),
+                              //                     ],
+                              //                   ),
+                              //                   pw.SizedBox(height: 8),
+                              //                 ],
+                              //               );
+                              //             },
+                              //           ),
+                              //         );
+                              //       },
+                              //     ));
+                              //     final bytes = await pdf.save();
+                              //     final fileName = 'my_cargos.pdf';
+                              //     final directory =
+                              //         await getApplicationDocumentsDirectory();
+                              //     final file =
+                              //         File('${directory.path}/$fileName');
+                              //     await file
+                              //         .writeAsBytes(bytes.buffer.asUint8List());
+                              //     ScaffoldMessenger.of(context)
+                              //         .showSnackBar(SnackBar(
+                              //       content: Text('PDF saved to ${file.path}'),
+                              //     ));
+                              //   },
+                              //   child: Icon(Icons.download),
+                              // ),
+                              // SizedBox(width: 16),
+                              FloatingActionButton(
+                                onPressed: () async {
+                                  final pdf = pw.Document();
+                                  pdf.addPage(pw.Page(
+                                    pageFormat: PdfPageFormat.a4,
+                                    build: (pw.Context context) {
+                                      return pw.Column(
+                                        crossAxisAlignment:
+                                            pw.CrossAxisAlignment.start,
+                                        children: List.generate(
+                                          snapshot.data!.length,
+                                          (index) {
+                                            final cargo = snapshot.data![index];
+                                            return pw.Column(
+                                              crossAxisAlignment:
+                                                  pw.CrossAxisAlignment.start,
+                                              children: [
+                                                pw.Row(
+                                                  mainAxisAlignment: pw
+                                                      .MainAxisAlignment
+                                                      .spaceBetween,
+                                                  children: [
+                                                    pw.Text(
+                                                      'Pick up:',
+                                                      style: pw.TextStyle(
+                                                          fontWeight: pw
+                                                              .FontWeight.bold),
+                                                    ),
+                                                    pw.Text(
+                                                      cargo.pickUp,
+                                                      style: pw.TextStyle(
+                                                          fontWeight: pw
+                                                              .FontWeight.bold),
+                                                    ),
+                                                  ],
+                                                ),
+                                                pw.Row(
+                                                  mainAxisAlignment: pw
+                                                      .MainAxisAlignment
+                                                      .spaceBetween,
+                                                  children: [
+                                                    pw.Text(
+                                                      'Drop off:',
+                                                      style: pw.TextStyle(
+                                                          fontWeight: pw
+                                                              .FontWeight.bold),
+                                                    ),
+                                                    pw.Text(
+                                                      cargo.dropOff,
+                                                      style: pw.TextStyle(
+                                                          fontWeight: pw
+                                                              .FontWeight.bold),
+                                                    ),
+                                                  ],
+                                                ),
+                                                pw.SizedBox(height: 8),
+                                              ],
+                                            );
+                                          },
                                         ),
-                                        child: Text(
-                                          "Track",
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.grey.shade600,
-                                              fontFamily: 'Roboto',
-                                              letterSpacing: 1,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
+                                      );
+                                    },
+                                  ));
+                                  final bytes = await pdf.save();
+                                  await Share.file(
+                                    'My Cargos',
+                                    'my_cargos.pdf',
+                                    bytes.buffer.asUint8List(),
+                                    'application/pdf',
+                                  );
+                                },
+                                child: Icon(Icons.share),
                               ),
-                              // Add more ListTiles here for displaying other CargoDriver properties
                             ],
                           ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              }
+                      ],
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
 
-              return Center(
-                child: FutureBuilder(
-                  future: Future.delayed(
-                      Duration(seconds: 10), () => _checkInternetConnection()),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else {
-                      return Container(
-                          alignment: Alignment.center,
-                          height: screenHeight * 0.13,
-                          width: screenWidth * 0.7,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.shade200.withOpacity(0.7),
-                                  blurRadius: 8.0,
-                                  spreadRadius: 2.0,
-                                  offset: const Offset(
-                                    6, // Move to right 7.0 horizontally
-                                    8, // Move to bottom 8.0 Vertically
-                                  ))
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(top: 10),
-                                child: Text('Network Error',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.grey.shade500,
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                    'No Network. Connect your device to internet or mobile data',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey.shade500,
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                              ),
-                            ],
-                          ));
-                    }
-                  },
-                ),
-              );
-            },
-          ),
-        ));
+                return Center(
+                  child: FutureBuilder(
+                    future: Future.delayed(Duration(seconds: 10),
+                        () => _checkInternetConnection()),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else {
+                        return Container(
+                            alignment: Alignment.center,
+                            height: screenHeight * 0.13,
+                            width: screenWidth * 0.7,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              boxShadow: [
+                                BoxShadow(
+                                    color:
+                                        Colors.grey.shade200.withOpacity(0.7),
+                                    blurRadius: 8.0,
+                                    spreadRadius: 2.0,
+                                    offset: const Offset(
+                                      6, // Move to right 7.0 horizontally
+                                      8, // Move to bottom 8.0 Vertically
+                                    ))
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(top: 10),
+                                  child: Text('Network Error',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.grey.shade500,
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                      'No Network. Connect your device to internet or mobile data',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey.shade500,
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                ),
+                              ],
+                            ));
+                      }
+                    },
+                  ),
+                );
+              },
+            )));
   }
 }

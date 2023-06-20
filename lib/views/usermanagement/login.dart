@@ -157,24 +157,53 @@ class _Cargo_loginState extends State<Cargo_login> {
   }
 
   Widget buildLanguageDropdown(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     final localeBloc = context.read<LocaleBloc>();
-
-    return DropdownButton<Locale>(
-      value: localeBloc.state.locale,
-      items: <Locale>[
-        Locale('en', ''),
-        Locale('am', ''),
-      ].map<DropdownMenuItem<Locale>>((Locale value) {
-        return DropdownMenuItem<Locale>(
-          value: value,
-          child: Text(value.languageCode),
-        );
-      }).toList(),
-      onChanged: (Locale? newLocale) {
-        if (newLocale != null) {
-          localeBloc.add(ChangeLocale(newLocale));
-        }
-      },
+    bool isPressed = true;
+    return Container(
+      alignment: Alignment.center,
+      height: screenHeight * 0.07,
+      width: screenWidth * 0.2,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular((6))),
+        boxShadow: isPressed
+            ? [
+                BoxShadow(
+                  color: Colors.grey.shade200,
+                  offset: Offset(4, 4),
+                  blurRadius: 15,
+                  spreadRadius: 1,
+                ),
+                const BoxShadow(
+                  color: Colors.white,
+                  offset: Offset(-4, -4),
+                  blurRadius: 25,
+                  spreadRadius: 1,
+                ),
+              ]
+            : null,
+      ),
+      child: DropdownButton<Locale>(
+        value: localeBloc.state.locale,
+        underline: Container(),
+        iconSize: 30,
+        items: <Locale>[
+          Locale('en', ''),
+          Locale('am', ''),
+        ].map<DropdownMenuItem<Locale>>((Locale value) {
+          return DropdownMenuItem<Locale>(
+            value: value,
+            child: Text(value.languageCode),
+          );
+        }).toList(),
+        onChanged: (Locale? newLocale) {
+          if (newLocale != null) {
+            localeBloc.add(ChangeLocale(newLocale));
+          }
+        },
+      ),
     );
   }
 
@@ -185,181 +214,177 @@ class _Cargo_loginState extends State<Cargo_login> {
 
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 246, 247, 249),
-      body: Container(
-        margin: const EdgeInsets.only(top: 100),
-        padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(children: [
-              Container(
-                margin: EdgeInsets.only(top: 15, bottom: 10),
-                child: CircleAvatar(
-                  radius: 70,
-                  backgroundColor: Colors.white,
-                  child: ClipOval(
-                    child: FutureBuilder(
-                      future: fetchImage(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<String> snapshot) {
-                        if (snapshot.connectionState != ConnectionState.done)
-                          return Text("");
-                        return Image.network(
-                          snapshot.data.toString(),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                  margin: EdgeInsets.only(left: screenWidth * 0.5),
-                  child: buildLanguageDropdown(context)),
-              CustomTextFieldForm(
-                textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.normal,
-                    fontFamily: "Roboto"),
-                hintText:
-                    AppLocalizations.of(context)?.translate("Phone Number") ??
-                        "Phone Number",
-                textController: _phoneController,
-                onFocusChange: (focused) {
-                  setState(() {
-                    _isFocused = focused;
-                  });
-                },
-                keyboardType: TextInputType.text,
-                onChanged: (value) {},
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return AppLocalizations.of(context)
-                            ?.translate('Password') ??
-                        "Please enter your phone number";
-                  }
-                },
-                obscureText: false,
-                hintTextStyle: TextStyle(
-                  letterSpacing: 1.0,
-                  wordSpacing: 2.0,
-                  color: _isFocused ? Colors.green.shade700 : Colors.grey,
-                  // ... other styles
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CustomTextFieldForm(
-                hintText: AppLocalizations.of(context)?.translate('Password') ??
-                    'Password',
-                textController: _passwordController,
-                isPassword: true,
-                textStyle: TextStyle(fontSize: 16),
-                onChanged: (value) {
-                  print("password changed: $value");
-                },
-                obscureText: true,
-                showSuffixIcon: true,
-                hintTextStyle: TextStyle(
-                  letterSpacing: 1.0,
-                  wordSpacing: 2.0,
-                  color: _isFocused ? Colors.red : Colors.grey,
-                  // ... other styles
-                ),
-                onFocusChange: (focus) {
-                  setState(() {
-                    _isFocused = focus;
-                  });
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return AppLocalizations.of(context)
-                            ?.translate('Please enter a company name') ??
-                        "Please enter a company name";
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                  margin: EdgeInsets.only(top: 20),
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => Forget()),
-                      );
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(right: 25),
-                      child: Text(
-                        AppLocalizations.of(context)
-                                ?.translate("Forgot Password?") ??
-                            "Forgot Password",
-                        style: const TextStyle(
-                          fontSize: 15,
-                          color: kPrimaryColor,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+                margin: EdgeInsets.only(left: screenWidth * 0.7, top: 65),
+                child: buildLanguageDropdown(context)),
+            Container(
+              margin: const EdgeInsets.only(top: 50),
+              padding: const EdgeInsets.all(20.0),
+              child: Form(
+                key: _formKey,
+                child: Column(children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 15, bottom: 10),
+                    child: CircleAvatar(
+                      radius: 70,
+                      backgroundColor: Colors.white,
+                      child: ClipOval(
+                        child: FutureBuilder(
+                          future: fetchImage(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            if (snapshot.connectionState !=
+                                ConnectionState.done) return Text("");
+                            return Image.network(
+                              snapshot.data.toString(),
+                            );
+                          },
                         ),
                       ),
                     ),
-                  )),
-              CustomButton(
-                  onPressed: () async {
-                    await loginCargo(
-                        _phoneController.text, _passwordController.text);
-                  },
-                  text: AppLocalizations.of(context)?.translate("Login") ??
-                      "Login"),
-              Container(
-                margin: EdgeInsets.only(top: 5),
-                child: Row(
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(left: 40, right: 10),
-                        child: Text(
-                          AppLocalizations.of(context)
-                                  ?.translate("Don't have an account?") ??
-                              "Don't have an account",
-                          style: const TextStyle(
-                            fontSize: 15,
-                            letterSpacing: 1.5,
-                            wordSpacing: 1.0,
-                            color: Colors.black54,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )),
-                    GestureDetector(
+                  ),
+                  CustomTextFieldForm(
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.normal,
+                        fontFamily: "Roboto"),
+                    hintText: AppLocalizations.of(context)
+                            ?.translate("Phone Number") ??
+                        "Phone Number",
+                    textController: _phoneController,
+                    keyboardType: TextInputType.text,
+                    onChanged: (value) {},
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return AppLocalizations.of(context)
+                                ?.translate('Password') ??
+                            "Please enter your phone number";
+                      }
+                    },
+                    obscureText: false,
+                    hintTextStyle: TextStyle(
+                      letterSpacing: 1.0,
+                      wordSpacing: 2.0,
+                      color: _isFocused ? Colors.green.shade700 : Colors.grey,
+                      // ... other styles
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CustomTextFieldForm(
+                    hintText:
+                        AppLocalizations.of(context)?.translate('Password') ??
+                            'Password',
+                    textController: _passwordController,
+                    isPassword: true,
+                    textStyle: TextStyle(fontSize: 16),
+                    onChanged: (value) {
+                      print("password changed: $value");
+                    },
+                    obscureText: true,
+                    showSuffixIcon: true,
+                    hintTextStyle: TextStyle(
+                      letterSpacing: 1.0,
+                      wordSpacing: 2.0,
+                      color: _isFocused ? Colors.red : Colors.grey,
+                      // ... other styles
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return AppLocalizations.of(context)
+                                ?.translate('Please enter a company name') ??
+                            "Please enter a company name";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                      margin: EdgeInsets.only(top: 20),
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute<void>(
-                                builder: (BuildContext context) =>
-                                    const Signup()),
+                            MaterialPageRoute(
+                                builder: (BuildContext context) => Forget()),
                           );
                         },
-                        child: Text(
-                          AppLocalizations.of(context)?.translate("Sign Up") ??
-                              "Sigun up",
-                          style: const TextStyle(
-                            fontSize: 15,
-                            letterSpacing: 1.5,
-                            color: kPrimaryColor,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.bold,
+                        child: Container(
+                          margin: EdgeInsets.only(right: 25),
+                          child: Text(
+                            AppLocalizations.of(context)
+                                    ?.translate("Forgot Password?") ??
+                                "Forgot Password",
+                            style: const TextStyle(
+                              fontSize: 15,
+                              color: kPrimaryColor,
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ))
-                  ],
-                ),
-              )
-            ]),
-          ),
+                        ),
+                      )),
+                  CustomButton(
+                      onPressed: () async {
+                        await loginCargo(
+                            _phoneController.text, _passwordController.text);
+                      },
+                      text: AppLocalizations.of(context)?.translate("Login") ??
+                          "Login"),
+                  Container(
+                    margin: EdgeInsets.only(top: 5),
+                    child: Row(
+                      children: [
+                        Container(
+                            margin: EdgeInsets.only(left: 40, right: 10),
+                            child: Text(
+                              AppLocalizations.of(context)
+                                      ?.translate("Don't have an account?") ??
+                                  "Don't have an account",
+                              style: const TextStyle(
+                                fontSize: 15,
+                                letterSpacing: 1.5,
+                                wordSpacing: 1.0,
+                                color: Colors.black54,
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(
+                                    builder: (BuildContext context) =>
+                                        const Signup()),
+                              );
+                            },
+                            child: Text(
+                              AppLocalizations.of(context)
+                                      ?.translate("Sign Up") ??
+                                  "Sigun up",
+                              style: const TextStyle(
+                                fontSize: 15,
+                                letterSpacing: 1.5,
+                                color: kPrimaryColor,
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ))
+                      ],
+                    ),
+                  )
+                ]),
+              ),
+            ),
+          ],
         ),
       ),
     );

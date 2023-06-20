@@ -71,27 +71,6 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
   }
 
   bool isPressed = true;
-  Widget buildLanguageDropdown(BuildContext context) {
-    final localeBloc = context.read<LocaleBloc>();
-
-    return DropdownButton<Locale>(
-      value: localeBloc.state.locale,
-      items: <Locale>[
-        Locale('en', ''),
-        Locale('am', ''),
-      ].map<DropdownMenuItem<Locale>>((Locale value) {
-        return DropdownMenuItem<Locale>(
-          value: value,
-          child: Text(value.languageCode),
-        );
-      }).toList(),
-      onChanged: (Locale? newLocale) {
-        if (newLocale != null) {
-          localeBloc.add(ChangeLocale(newLocale));
-        }
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,12 +90,6 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                 height: 70,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  // border: const Border(
-                  //   left: BorderSide(
-                  //     color: Colors.green,
-                  //     width: 3.0,
-                  //   ),
-                  // ),
                   borderRadius: BorderRadius.all(Radius.circular((6))),
                   boxShadow: isPressed
                       ? [
@@ -185,11 +158,11 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(3.0),
                       child: Container(
                         width: screenWidth * 0.07,
                         height: screenHeight * 0.08,
-                        margin: EdgeInsets.only(left: screenWidth * 0.26),
+                        margin: EdgeInsets.only(left: screenWidth * 0.5),
                         child: InkWell(
                           onTap: () {
                             Navigator.push(
@@ -207,9 +180,6 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                         ),
                       ),
                     ),
-                    Container(
-                        // margin: EdgeInsets.only(left: screenWidth * 0.4),
-                        child: buildLanguageDropdown(context)),
                   ],
                 ),
               ),

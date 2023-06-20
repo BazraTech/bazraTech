@@ -1,3 +1,4 @@
+import 'package:cargo/views/Post/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,7 +48,7 @@ class Post_BottomNav extends StatelessWidget {
                   ),
                   BlocBuilder<LocaleBloc, LocaleState>(
                     builder: (context, localeState) {
-                      return CargoListView(
+                      return CargoHistory(
                         localizations: AppLocalizations.of(context),
                       );
                     },

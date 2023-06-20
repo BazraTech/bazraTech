@@ -155,11 +155,7 @@ class _SignupState extends State<Signup> {
                       // ... other styles
                     ),
                     onChanged: (value) {},
-                    onFocusChange: (focus) {
-                      setState(() {
-                        _isFocus = focus;
-                      });
-                    },
+                  
                     validator: (value) {
                       if (value!.isEmpty) {
                         return AppLocalizations.of(context)
@@ -188,11 +184,7 @@ class _SignupState extends State<Signup> {
                       color: _isFocus ? Colors.red : Colors.grey,
                       // ... other styles
                     ),
-                    onFocusChange: (focus) {
-                      setState(() {
-                        _isFocus = focus;
-                      });
-                    },
+                    
                     onChanged: (value) {},
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -224,11 +216,7 @@ class _SignupState extends State<Signup> {
                     },
                     obscureText: true,
                     showSuffixIcon: true,
-                    onFocusChange: (focus) {
-                      setState(() {
-                        _isFocus = focus;
-                      });
-                    },
+                    
                     validator: (value) {
                       if (value!.isEmpty) {
                         return AppLocalizations.of(context)
@@ -265,11 +253,7 @@ class _SignupState extends State<Signup> {
                         // ... other styles
                       ),
                       showSuffixIcon: true,
-                      onFocusChange: (focus) {
-                        setState(() {
-                          _isFocus = focus;
-                        });
-                      },
+                     
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Please Confirm Password";

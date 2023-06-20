@@ -79,7 +79,7 @@ class _ReportState extends State<Report> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Report_Detail()));
+                              builder: (context) => BillDetailScreen()));
                     },
                     child: Card(
                         child: Container(

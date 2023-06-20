@@ -150,11 +150,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     },
                     obscureText: true,
                     showSuffixIcon: true,
-                    onFocusChange: (focus) {
-                      setState(() {
-                        _isFocus = focus;
-                      });
-                    },
+                    
                     validator: (value) {
                       if (value!.isEmpty) {
                         return AppLocalizations.of(context)
@@ -186,11 +182,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     },
                     obscureText: true,
                     showSuffixIcon: true,
-                    onFocusChange: (focus) {
-                      setState(() {
-                        _isFocus = focus;
-                      });
-                    },
+                    
                     validator: (value) {
                       if (value!.isEmpty) {
                         return AppLocalizations.of(context)
@@ -219,11 +211,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                       color: _isFocus ? Colors.red : Colors.grey,
                       // ... other styles
                     ),
-                    onFocusChange: (focus) {
-                      setState(() {
-                        _isFocus = focus;
-                      });
-                    },
+                    
                     onChanged: (value) {},
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -255,11 +243,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                       color: _isFocus ? Colors.red : Colors.grey,
                       // ... other styles
                     ),
-                    onFocusChange: (focus) {
-                      setState(() {
-                        _isFocus = focus;
-                      });
-                    },
+                    
                     onChanged: (value) {},
                     validator: (value) {
                       if (value!.isEmpty) {

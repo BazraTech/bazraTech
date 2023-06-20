@@ -206,8 +206,10 @@ class _PostsState extends State<Posts> {
     }
   }
 
+  bool isPressed = true;
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 246, 247, 249),
@@ -260,11 +262,6 @@ class _PostsState extends State<Posts> {
                     color: _isFocus ? Colors.red : Colors.grey,
                     // ... other styles
                   ),
-                  onFocusChange: (focus) {
-                    setState(() {
-                      _isFocus = focus;
-                    });
-                  },
                   onChanged: (value) {},
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -290,11 +287,6 @@ class _PostsState extends State<Posts> {
                     color: _isFocus ? Colors.green : Colors.grey,
                     // ... other styles
                   ),
-                  onFocusChange: (focus) {
-                    setState(() {
-                      _isFocus = focus;
-                    });
-                  },
                   onChanged: (value) {},
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -353,18 +345,21 @@ class _PostsState extends State<Posts> {
                     CargoType? selectedValue = await showModalBottomSheet(
                       context: context,
                       builder: (BuildContext context) {
-                        return FractionallySizedBox(
-                          widthFactor: 0.7,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: _cargoTypes.map((CargoType cargo) {
-                              return ListTile(
-                                title: Text(cargo.cargoType),
-                                onTap: () {
-                                  Navigator.of(context).pop(cargo);
-                                },
-                              );
-                            }).toList(),
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Container(
+                            width: 300, // set the width as desired
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: _cargoTypes.map((CargoType cargo) {
+                                return ListTile(
+                                  title: Text(cargo.cargoType),
+                                  onTap: () {
+                                    Navigator.of(context).pop(cargo);
+                                  },
+                                );
+                              }).toList(),
+                            ),
                           ),
                         );
                       },
@@ -412,6 +407,7 @@ class _PostsState extends State<Posts> {
                 ),
                 TextFormField(
                   controller: _fileController,
+                  readOnly: true,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     hintText: AppLocalizations.of(context)
@@ -464,11 +460,7 @@ class _PostsState extends State<Posts> {
                     // ... other styles
                   ), // ... other styl
                   obscureText: false,
-                  onFocusChange: (focus) {
-                    setState(() {
-                      _isFocus = focus;
-                    });
-                  },
+
                   onChanged: (value) {},
                   validator: (value) {
                     if (value == null || value.isEmpty) {

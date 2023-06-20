@@ -8,6 +8,7 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:lottie/lottie.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../localization/app_localizations.dart';
 import '../../model/cargo.dart';
@@ -151,7 +152,19 @@ class _ActiveCargoState extends State<ActiveCargo> {
         child: FutureBuilder(
           future: fetchActiveCargos(),
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.data == null || snapshot.data!.isEmpty) {
+              try {
+                return Center(
+                  child: Lottie.asset(
+                    'assets/images/noapidatas.json',
+                    fit: BoxFit.cover,
+                  ),
+                );
+              } catch (e) {
+                print('Lottie Error: $e');
+                return Container();
+              }
+            } else if (snapshot.hasData) {
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
@@ -255,52 +268,6 @@ class _ActiveCargoState extends State<ActiveCargo> {
                                     ],
                                   ),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(
-                                    top: 15,
-                                  ),
-                                  child: const DottedLine(
-                                    lineThickness: 1.0,
-                                    dashLength: 4.0,
-                                    dashColor: Colors.grey,
-                                    dashGapRadius: 2.0,
-                                  ),
-                                ),
-                                ListTile(
-                                  title: Text(
-                                    AppLocalizations.of(context)
-                                            ?.translate("Cargo Status") ??
-                                        "Cargo Status",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.grey.shade500,
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  trailing: Container(
-                                    width: 70,
-                                    height: 25,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Color.fromARGB(255, 252, 216, 214),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        AppLocalizations.of(context)!
-                                                .translate(driver.status) ??
-                                            driver.status,
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          color:
-                                              Color.fromARGB(255, 255, 86, 74),
-                                          fontFamily: 'Roboto',
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                )
                               ],
                             ),
                           ),
