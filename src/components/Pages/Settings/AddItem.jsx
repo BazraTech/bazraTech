@@ -3,11 +3,12 @@ import { useForm } from 'react-hook-form';
 import swal from "sweetalert";
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import { create } from 'json-server';
 
 export default function AddItem(props) {
     
-    const {title, url, post} = props
-
+    const {title, createUrl} = props
+// console.log(title, createUrl)
 let isAvatar = false;
     if (title == 'Avatar')
     {
@@ -102,19 +103,22 @@ let isAvatar = false;
 
 
     //Add Driver state
-    async function Add_Item(item) {
-     
-    
-        let items ={
-         item
+    async function Add_Item(post) {
+        let items
+        if(title == 'Roles Type')
+        {
+           items ={
+            rolename: post,
+             }
         }
+        
         const options = {
             method: "POST",
             headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
             body: JSON.stringify(items),
         };
         try {
-            const response = await fetch(url, options);
+            const response = await fetch(createUrl, options);
             const result = await response.json();
             localStorage.setItem("message", JSON.stringify(result["message"]));
             const mess = localStorage.getItem("message");
@@ -185,7 +189,7 @@ let isAvatar = false;
 
         <>
             <div>
-                <div className='add_notification' onClick={handleClickopen}>{title}</div>
+                <div className='add_notification' onClick={handleClickopen}>Create {title}</div>
             </div>
 
             <div>

@@ -10,7 +10,8 @@ import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
 import { useLocation } from 'react-router-dom';
-
+import PopUp from './PopUp'
+import AddItem from './AddItem';
 export default function Settingtable(props) {
 
   function tableSearch() {
@@ -48,7 +49,7 @@ export default function Settingtable(props) {
   let isAvatar =false;
   if (data.name == 'Avatar and Logo')
   isAvatar = true
-  console.log(data.url, data.name)
+  console.log(data.url, data.name, data.createUrl)
   const options = {
 
     headers: {
@@ -158,8 +159,7 @@ export default function Settingtable(props) {
           {/*---------------- search bar ------------------- */}
           <div className={styles.vehiclesOnMap}>
             <div className={styles.search}>
-              <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search . . ."></input>
-              <button>Search</button>
+              <AddItem title={data.title} createUrl={data.createUrl}/>
             </div>
 
             {/*---------------- table ------------------- */}
