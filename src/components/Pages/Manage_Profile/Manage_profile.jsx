@@ -82,7 +82,7 @@ export default function () {
             })
     }, [])
 
-    const url2 = "http://198.199.67.201:9090/Api/Admin/All/VehicleOwners/";
+    const url2 = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         setLoading(true);

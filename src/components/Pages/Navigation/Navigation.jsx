@@ -238,8 +238,8 @@ export default function Navigation({ path, title, link, past }) {
                     </div>
                     <div className='headercontents'>
                         <div className='headerIcon'>
-                            <p className='makeGrid'><p><HiBellAlert size="2.2rem" color='red' ></HiBellAlert></p><p className='count' style={{color:"red"}}>{dataSource.length}</p></p>
-                            <p className='makeGrid'><BsFillChatDotsFill size="1.9rem" color='green' ></BsFillChatDotsFill><p className='count' style={{color:"green"}}>{dataSource2.length}</p></p>
+                            <p className='makeGrid'><p><HiBellAlert size="2.2rem" color='red' ></HiBellAlert></p><p className='count' style={{color:"red"}}>{dataSource && dataSource.length}</p></p>
+                            <p className='makeGrid'><BsFillChatDotsFill size="1.9rem" color='green' ></BsFillChatDotsFill><p className='count' style={{color:"green"}}>{dataSource2 && dataSource2.length}</p></p>
                         </div>
 
                     </div>

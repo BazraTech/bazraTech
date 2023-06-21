@@ -23,28 +23,7 @@ import { FaUserMinus } from "react-icons/fa";
 
 export default function () {
 
-    function tableSearch() {
-
-        let input, filter, table, tr, td, txtValue, errors;
-
-        //Intialising Variables
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-
-        for (let i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
+   
 
     let [state, setState] = useState("false");
     const [popup, setPop] = useState(false);
@@ -136,7 +115,7 @@ export default function () {
 
     const indexOfLastPage = page * postPerPage;
     const indexOfFirstPage = indexOfLastPage - postPerPage;
-    const currentPage = dataSource.slice(indexOfFirstPage, indexOfLastPage);
+    const currentPage = dataSource && dataSource.slice(indexOfFirstPage, indexOfLastPage);
 
     const onShowSizeChange = (current, pageSize) => {
         setpostPerPage(pageSize);
@@ -157,6 +136,31 @@ console.log(id);
     function changeName(show) {
         setShow(show);
     }
+
+    
+    const [filteredRows, setFilteredRows] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
+
+
+    const handleSearch = (e) => {
+        const value = e.target.value;
+        setSearchValue(value);
+     
+        const filteredData = currentPage.filter((item) => {
+          // Customize the conditions as per your search requirements
+          return (
+            item.driverName.toLowerCase().includes(value.toLowerCase()) ||
+            item.vehicleOwner.toLowerCase().includes(value.toLowerCase()) ||
+            item.experience.toString().toLowerCase().includes(value.toLowerCase())||
+            item.licenseNumber.toString().toLowerCase().includes(value.toLowerCase()) ||
+            item.status.toLowerCase().includes(value.toLowerCase())
+            
+          );
+        });
+    
+        setFilteredRows(filteredData);
+      };
+    const searchResult = searchValue === '' ? currentPage : filteredRows;
 
 
     return (
@@ -240,7 +244,7 @@ console.log(id);
                             <div className={styles.vehicle_search}>
                                 <p title='search'>
                                     <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                                    <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                                    <input type="text" id="myInput" value={searchValue}  onChange={handleSearch} placeholder="Search"></input>
                                     <button>Search</button>
                                 </p>
                             </div>
@@ -255,8 +259,7 @@ console.log(id);
                                         <th>Experience</th>
                                         <th>LicenseGrade</th>
                                         <th>Status</th>
-                                        <th>Company</th>
-                                        <th>id</th>
+                                        <th>Owner</th>
                                         <th>Detail</th>
                                         <th>Tracking</th> 
                                        
@@ -264,7 +267,7 @@ console.log(id);
                                 </thead>
 
                                 <tbody>
-                                    {currentPage.map(item => (
+                                    {searchResult.map(item => (
                                         <tr className={styles.active_row}>
 
                                             <td>{item.driverName}</td>
@@ -273,7 +276,6 @@ console.log(id);
                                             <td>{item.licenseGrade}</td>
                                             <td>{item.status}</td>
                                             <td>{item.vehicleOwner}</td>
-                                            <td>{item.id}</td>
                                             <td><button onClick={() => {
                                                 setId(item.id) 
                                                 setShow("true")
