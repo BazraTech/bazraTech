@@ -127,6 +127,7 @@ export default function Dashboard() {
                 console.log(data)
             })
     }, [])
+    const users = dataSource3 && dataSource3.length + dataSourcein +  cargo && cargo.length
     return (
 
         <div>
@@ -179,7 +180,7 @@ export default function Dashboard() {
                             <h4>Total Users</h4>
                             <div className={styles.innerCard3}>
                                 <FaUsers size="2.5rem" color='#002e4d'></FaUsers>
-                                <p>{dataSource3 && dataSource3.length + dataSourcein + cargo.length}</p>
+                                <p>{users}</p>
                             </div>
                         </Link>
                     </div>

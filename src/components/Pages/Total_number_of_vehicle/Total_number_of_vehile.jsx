@@ -18,29 +18,8 @@ import SyncLoader from "react-spinners/SyncLoader";
 
 
 export default function () {
-
-    function tableSearch() {
-
-        let input, filter, table, tr, td, txtValue, errors;
-
-        //Intialising Variables for search bar
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-
-        for (let i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[4];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
+    
+    
 
     let [active, setActive] = useState("total_vehicle");
     let [state, setState] = useState("false");
@@ -134,7 +113,32 @@ export default function () {
 
     const [color, setColor] = useState("green");
     const [margin, setMargin] = useState("");
+    
+    const [filteredRows, setFilteredRows] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
 
+
+    const handleSearch = (e) => {
+        const value = e.target.value;
+        setSearchValue(value);
+    
+       
+        const filteredData = currentPage.filter((item) => {
+          // Customize the conditions as per your search requirements
+          return (
+            item.companyName.toLowerCase().includes(value.toLowerCase()) ||
+            item.vehicleName.toLowerCase().includes(value.toLowerCase()) ||
+            item.driverName.toLowerCase().includes(value.toLowerCase()) ||
+            item.id.toString().includes(value)||
+            item.plateNumber.toString().includes(value)||
+            item.status.toLowerCase().includes(value.toLowerCase())
+            
+          );
+        });
+    
+        setFilteredRows(filteredData);
+      };
+    const searchResult = searchValue === '' ? currentPage : filteredRows;
 
     return (
 
@@ -217,7 +221,7 @@ export default function () {
                             <div className={styles.vehicle_search}>
                                 <p title='search'>
                                     <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                                    <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                                    <input type="text" id="myInput" value={searchValue} onChange={handleSearch}  placeholder="Search"></input>
                                     <button>Search</button>
                                 </p>
                             </div>
@@ -240,17 +244,18 @@ export default function () {
                                 </thead>
 
                                 <tbody>
-                                    {currentPage.map(item => (
+                                    {searchResult.map(item => (
                                         <tr className={styles.active_row}>
                                              <td>{item.companyName}</td>
                                             <td>{item.vehicleName}</td>
-                                            <td>{item.driverName == "null" ? "unassignd" : `${item.driverName}`}</td>
+                                            <td>{item.driverName == "null" ? "Unassigned" : `${item.driverName}`}</td>
                                             <td>{item.id}</td>
                                             <td>{item.plateNumber}</td>
                                             <td>{item.status}</td>
                                             <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
                                             <td><Link to="/tracking"><button>Tracking</button></Link></td>
-                                            <td><Link to={`/AssignDriver/${item.plateNumber}`}><button>Assaign</button></Link></td>
+                                           { item.driverName == "null" ? <td><Link to={`/AssignDriver/${item.plateNumber}`}><button>Assaign</button></Link></td>:
+                                            <td><Link to={`/AssignDriver/${item.plateNumber}`}><button style={{backgroundColor:"green", width:'12em'}}>Change driver</button></Link></td>}
                                         </tr>
                                     ))}
                                 </tbody>

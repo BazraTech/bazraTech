@@ -121,6 +121,7 @@ export default function () {
             })
     }, [])
 
+
     const url5 = "http://64.226.104.50:9090/Api/Admin/Drivers/PERMIT";
     const [dataSource5, setDataSource5] = useState([])
     useEffect(() => {
@@ -167,7 +168,7 @@ export default function () {
 
             {/*---------------navigation---------------*/}
 
-            <Navigation path="/Total_Drivers" title="Un Assigned Drivers"></Navigation>
+            <Navigation path="/Total_Drivers" title="UnAssigned Drivers"></Navigation>
 
 
             {/* --------------- users --------------- */}
@@ -246,7 +247,7 @@ export default function () {
                                 </p>
                             </div>
 
-                            <p>UN ASSIGNED DRIVERS</p>
+                            <p>UNASSIGNED DRIVERS</p>
 
                             <table className={styles.vehicle_table} id="myTable">
 

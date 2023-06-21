@@ -14,7 +14,8 @@ export default function () {
     const [password, setPassword] = useState("");
     const [data, setdata] = useState("");
     const [error, setError] = useState(false);
-
+    const [email, setEmail] =useState('')
+    const [forgate, setForgate] = useState(false)
     const validation = (e) => {
         e.preventDefault();
 
@@ -25,7 +26,13 @@ export default function () {
             login();
         }
     }
+    const handleForgate = (e) => {
+        e.preventDefault()
+        console.log(forgate);
+        setForgate(false)
+        console.log(forgate);
 
+    }
     useEffect(() => {
     }, []);
 
@@ -91,7 +98,7 @@ export default function () {
             // window.location.href = "/dashboard"; 
         }
     }
-
+console.log(forgate)
     return ( 
         <> 
 
@@ -105,8 +112,8 @@ export default function () {
 
                 {/*-------------- Right side ---------------*/}
                 <div className={styles.right_login}>
-                    <form className={styles.signup_right} onSubmit={validation}>
-                        <div className={styles.signForm}>
+                    <form className={styles.signup_right} onSubmit={forgate ? handleForgate : validation}>
+                       {forgate == false ? <div className={styles.signForm}>
                             <p className={styles.loginHeader}>Welcome To Bazra</p>
                             <label>User Name</label>
                             <input type="username" placeholder="Username" onChange={e => setUsername(e.target.value)} name="username"></input>
@@ -114,9 +121,16 @@ export default function () {
                             <label>Password</label>
                             <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} name="password"></input>
                             {error && password.length <= 0 ? <span className={styles.validateText}>please enter your password</span> : ""}
-                            <p>Forget Password?</p> 
+                            <p type='button' onClick={()=>setForgate(true)}>Forget Password?</p> 
                             <button className=''>Sign In</button>
-                        </div>
+                        </div>:
+                         <div className={styles.signForm}>
+                         <p className={styles.loginHeader}>Reset Password</p>
+                         <label>Email</label>
+                         <input type="email" placeholder="Email" value = {email} onChange={e => setEmail(e.target.value)} name="email"></input>
+                         {error && email.length <= 0 ? <span className={styles.validateText}>please enter your email</span> : ""}
+                         <button type='submit' >Submit</button>
+                     </div>}
                     </form>
                 </div>
             </div>
