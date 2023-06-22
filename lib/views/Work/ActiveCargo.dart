@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cargo/ActiveWork.dart';
+import 'package:cargo/Components/Home_Page.dart';
 import 'package:cargo/shared/storage_hepler.dart';
 import 'package:cargo/views/Bottom_Navigation.dart';
 import 'package:connectivity/connectivity.dart';
@@ -16,8 +17,9 @@ import '../../shared/constant.dart';
 
 class ActiveCargo extends StatefulWidget {
   final AppLocalizations? localizations;
+  final int? id;
   @override
-  const ActiveCargo({Key? key, this.localizations}) : super(key: key);
+  const ActiveCargo({Key? key, this.localizations, this.id}) : super(key: key);
 
   @override
   _ActiveCargoState createState() => _ActiveCargoState();
@@ -26,23 +28,28 @@ class ActiveCargo extends StatefulWidget {
 class _ActiveCargoState extends State<ActiveCargo> {
   Future? futureCargoDrivers;
   List activeCargoStatus = [];
-  Future<List<Cargo>> fetchActiveCargos() async {
+  List _searchResults = [];
+  List _allCargos = [];
+
+  bool _searching = false;
+  Future fetchActiveCargos() async {
     try {
       StorageHelper storageHelper = StorageHelper();
       String? accessToken = await storageHelper.getToken();
       final response = await http.get(
-          Uri.parse('http://64.226.104.50:9090/Api/Cargo/All/Cargos'),
-          headers: {
-            "Content-Type": "application/json",
-            'Accept': 'application/json',
-            "Authorization": "Bearer $accessToken",
-          });
+        Uri.parse('http://64.226.104.50:9090/Api/Cargo/All/Cargos'),
+        headers: {
+          "Content-Type": "application/json",
+          'Accept': 'application/json',
+          "Authorization": "Bearer $accessToken",
+        },
+      );
       print(response);
       if (response.statusCode == 200) {
         List cargoJson = json.decode(response.body)['cargos'];
         List<Cargo> activeCargos = cargoJson
             .map((cargo) => Cargo.fromJson(cargo))
-            .where((cargo) => cargo.status == 'ACTIVE')
+            .where((cargo) => cargo.status == 'ACCEPTED')
             .toList();
         return activeCargos;
       } else {
@@ -52,6 +59,10 @@ class _ActiveCargoState extends State<ActiveCargo> {
           desc: "Failed to fetch data",
           type: AlertType.error,
         ).show();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => CargoOWnerHomePage()),
+        );
         return [];
       }
     } catch (e) {
@@ -62,13 +73,13 @@ class _ActiveCargoState extends State<ActiveCargo> {
         desc: "Failed to fetch data",
         type: AlertType.error,
       ).show();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => CargoOWnerHomePage()),
+      );
       return [];
     }
   }
-
-  List _allCargos = [];
-
-  bool _searching = false;
 
   @override
   void initState() {
@@ -79,20 +90,20 @@ class _ActiveCargoState extends State<ActiveCargo> {
       });
     });
   }
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   futureCargoDrivers = fetchCargoDrivers().then((value) {
-  //     setState(() {
-  //       _cargoDrivers = value;
-  //     });
-  //   }).catchError((error) {
-  //     print(error);
-  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //       content: Text('Failed to fetch data'),
-  //     ));
-  //   });
-  // }
+
+  TextEditingController searchController = TextEditingController();
+  Future searchCargosByOwnerName(String status) async {
+    try {
+      List cargos = await fetchActiveCargos();
+      List filteredCargos = cargos
+          .where((cargo) =>
+              cargo.dropOff.toLowerCase().contains(status.toLowerCase()))
+          .toList();
+      return filteredCargos;
+    } catch (e) {
+      throw Exception('Failed to search cargos by destination');
+    }
+  }
 
   bool isExpanded = false;
   List _data = [];
@@ -133,10 +144,21 @@ class _ActiveCargoState extends State<ActiveCargo> {
           color: Color.fromARGB(255, 252, 254, 250),
           child: Center(
             child: TextField(
+              controller: searchController,
+              onChanged: (value) {
+                searchCargosByOwnerName(value).then((searchedCargos) {
+                  setState(() {
+                    // Wrap the assignment in a setState to refresh the Widget
+                    _searchResults = searchedCargos;
+                  });
+                }).catchError((error) {
+                  print(error);
+                });
+              },
               decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)
-                        ?.translate('Driver Name or Plate No.') ??
-                    "Driver Name or Plate No.",
+                hintText:
+                    AppLocalizations.of(context)?.translate('Destination') ??
+                        "Destination",
                 border: InputBorder.none,
                 errorBorder: InputBorder.none,
                 enabledBorder: InputBorder.none,
@@ -150,21 +172,9 @@ class _ActiveCargoState extends State<ActiveCargo> {
       body: Container(
         margin: EdgeInsets.only(left: 10, right: 10, top: 30),
         child: FutureBuilder(
-          future: fetchActiveCargos(),
+          future: searchCargosByOwnerName(searchController.text),
           builder: (context, snapshot) {
-            if (snapshot.data == null || snapshot.data!.isEmpty) {
-              try {
-                return Center(
-                  child: Lottie.asset(
-                    'assets/images/noapidatas.json',
-                    fit: BoxFit.cover,
-                  ),
-                );
-              } catch (e) {
-                print('Lottie Error: $e');
-                return Container();
-              }
-            } else if (snapshot.hasData) {
+            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
@@ -180,7 +190,8 @@ class _ActiveCargoState extends State<ActiveCargo> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => VehicleCargo()));
+                                  builder: (context) =>
+                                      VehicleCargo(id: driver.id)));
                         }),
                         child: Card(
                           child: Container(
@@ -268,6 +279,52 @@ class _ActiveCargoState extends State<ActiveCargo> {
                                     ],
                                   ),
                                 ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    top: 15,
+                                  ),
+                                  child: const DottedLine(
+                                    lineThickness: 1.0,
+                                    dashLength: 4.0,
+                                    dashColor: Colors.grey,
+                                    dashGapRadius: 2.0,
+                                  ),
+                                ),
+                                ListTile(
+                                  title: Text(
+                                    AppLocalizations.of(context)
+                                            ?.translate("Cargo Status") ??
+                                        "Cargo Status",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.grey.shade500,
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  trailing: Container(
+                                    width: 80,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Color.fromARGB(255, 252, 216, 214),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        AppLocalizations.of(context)!
+                                                .translate(driver.status) ??
+                                            driver.status,
+                                        style: const TextStyle(
+                                          fontSize: 15,
+                                          color:
+                                              Color.fromARGB(255, 255, 86, 74),
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                           ),

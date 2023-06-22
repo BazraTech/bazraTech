@@ -8,6 +8,7 @@ import '../../localization/localization_bloc.dart';
 import '../../localization/localization_event.dart';
 import '../../shared/constant.dart';
 import '../../shared/storage_hepler.dart';
+import 'languages.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -349,45 +350,52 @@ class _ProfileState extends State<Profile> {
               SizedBox(
                 height: 20,
               ),
-              Container(
-                height: screenHeight * 0.15,
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                    )),
-                child: Row(
-                  children: [
-                    Row(
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LanguageListItem()),
+                  );
+                },
+                child: Card(
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.04,
+                      vertical:
+                          screenHeight * 0.035, // Increase the vertical padding
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                            height: screenWidth * 0.08,
-                            margin: EdgeInsets.only(left: 20, right: 8),
-                            width: screenWidth * 0.08,
-                            decoration: BoxDecoration(
+                        Row(
+                          children: [
+                            Container(
+                              height: screenWidth * 0.08,
+                              width: screenWidth * 0.08,
+                              decoration: BoxDecoration(
                                 color: Color.fromRGBO(252, 221, 244, 1),
-                                borderRadius: BorderRadius.circular(6)),
-                            child: Icon(Icons.language_sharp)),
-                        Container(
-                            width: screenWidth * 0.2,
-                            child: const Text(
-                              "Language",
-                              style: TextStyle(
-                                fontFamily: "Nunito",
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
+                                borderRadius: BorderRadius.circular(6),
                               ),
-                            )),
+                              child: Icon(Icons.language_sharp),
+                            ),
+                            SizedBox(width: screenWidth * 0.04),
+                            Text(
+                              'Language',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: screenWidth * 0.05,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Icon(Icons.keyboard_arrow_right),
                       ],
                     ),
-                    Container(
-                        margin: EdgeInsets.only(left: screenWidth * 0.3),
-                        width: screenWidth * 0.15,
-                        child: buildLanguageDropdown(context)),
-                  ],
+                  ),
                 ),
               ),
               SizedBox(

@@ -52,7 +52,16 @@ class _SignupState extends State<Signup> {
             'OK',
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            if (alertType == AlertType.success) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => Cargo_login()),
+              );
+            } else if (alertType == AlertType.error) {
+              Navigator.pop(context);
+            }
+          },
           width: 120,
         ),
       ],
@@ -98,6 +107,8 @@ class _SignupState extends State<Signup> {
         if (response.statusCode == 200) {
           _showSweetAlert(
               context, AlertType.success, 'Success', jsonResponse['message']);
+
+          ;
         } else {
           _showSweetAlert(
               context, AlertType.error, 'Error', jsonResponse['message']);
@@ -109,6 +120,7 @@ class _SignupState extends State<Signup> {
     }
   }
 
+  bool _isErrorVisible = false;
   bool _isFocus = false;
   @override
   Widget build(BuildContext context) {
@@ -155,7 +167,6 @@ class _SignupState extends State<Signup> {
                       // ... other styles
                     ),
                     onChanged: (value) {},
-                  
                     validator: (value) {
                       if (value!.isEmpty) {
                         return AppLocalizations.of(context)
@@ -184,7 +195,6 @@ class _SignupState extends State<Signup> {
                       color: _isFocus ? Colors.red : Colors.grey,
                       // ... other styles
                     ),
-                    
                     onChanged: (value) {},
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -198,37 +208,65 @@ class _SignupState extends State<Signup> {
                   const SizedBox(
                     height: 20,
                   ),
-                  CustomTextFieldForm(
-                    hintText:
-                        AppLocalizations.of(context)?.translate('Password') ??
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomTextFieldForm(
+                        hintText: AppLocalizations.of(context)
+                                ?.translate('Password') ??
                             "Password",
-                    textController: _passwordController,
-                    isPassword: true,
-                    hintTextStyle: TextStyle(
-                      letterSpacing: 1.0,
-                      wordSpacing: 2.0,
-                      color: _isFocus ? Colors.red : Colors.grey,
-                      // ... other styles
-                    ),
-                    textStyle: TextStyle(fontSize: 16),
-                    onChanged: (value) {
-                      print("password changed: $value");
-                    },
-                    obscureText: true,
-                    showSuffixIcon: true,
-                    
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return AppLocalizations.of(context)
-                                ?.translate('Please Enter Password') ??
-                            "Please Enter Password";
-                      }
-                      return PasswordMatchValidator.validate(
-                          value!, _confirmPasswordController.text);
-                    },
+                        textController: _passwordController,
+                        isPassword: true,
+                        hintTextStyle: TextStyle(
+                          letterSpacing: 1.0,
+                          wordSpacing: 2.0,
+                          color: _isErrorVisible ? Colors.red : Colors.grey,
+                          // ... other styles
+                        ),
+                        textStyle: TextStyle(fontSize: 16),
+                        onChanged: (value) {
+                          print("password changed: $value");
+                          if (_isErrorVisible) {
+                            setState(() {
+                              _isErrorVisible = false;
+                            });
+                          }
+                        },
+                        obscureText: true,
+                        showSuffixIcon: true,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return AppLocalizations.of(context)
+                                    ?.translate('Please Enter Password') ??
+                                "Please Enter Password";
+                          }
+
+                          final passwordRegex =
+                              RegExp(r'^(?=.*?[A-Z])(?=.*?[0-9]).{8,}$');
+                          if (!passwordRegex.hasMatch(value)) {
+                            setState(() {
+                              _isErrorVisible = true;
+                            });
+                            return " ";
+                          }
+
+                          return PasswordMatchValidator.validate(
+                              value, _confirmPasswordController.text);
+                        },
+                      ),
+                      if (_isErrorVisible) // Only show the error message if it's visible
+                        Text(
+                          "Password must contain at least one capital letter, one number, and be at least 8 characters long",
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                    ],
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   CustomTextFieldForm(
                       hintText: AppLocalizations.of(context)
@@ -253,7 +291,6 @@ class _SignupState extends State<Signup> {
                         // ... other styles
                       ),
                       showSuffixIcon: true,
-                     
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Please Confirm Password";

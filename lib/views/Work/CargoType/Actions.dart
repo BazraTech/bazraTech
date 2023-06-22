@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import '../../../shared/constant.dart';
+import '../ActiveCargo.dart';
 
 class Status extends StatefulWidget {
   const Status({super.key});
@@ -11,6 +14,78 @@ class Status extends StatefulWidget {
 
 class _StatusState extends State<Status> {
   bool isPressed = true;
+  
+  void _showSweetAlert(BuildContext context, AlertType alertType, String title,
+      String description) {
+    Alert(
+      context: context,
+      type: alertType,
+      title: title,
+      desc: description,
+      buttons: [
+        DialogButton(
+          child: Text(
+            'OK',
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () {
+            if (alertType == AlertType.success) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => ActiveCargo()),
+              );
+            } else if (alertType == AlertType.error) {
+              Navigator.pop(context);
+            }
+          },
+          width: 120,
+        ),
+      ],
+    ).show();
+  }
+
+  ApproveCargoState(String action) async {
+    const url = 'http://64.226.104.50:9090/Api/SignUp/Cargo';
+
+    // Define your request data as a Map
+    Map requestData = {
+      'cargoState': "${action}",
+    };
+    print(requestData);
+
+    print(requestData);
+
+    print("********************************");
+    print('Token: $requestData');
+    print("********************************");
+    try {
+      String body = json.encode(requestData);
+
+      // Make the request and handle the response
+      final response = await http.post(
+        Uri.parse(url),
+        body: body,
+        headers: {
+          "Content-Type": "application/json",
+          'Accept': 'application/json',
+        },
+      );
+      print(response.body);
+      print(response.statusCode);
+      final Map jsonResponse = json.decode(response.body);
+
+      if (response.statusCode == 200) {
+        _showSweetAlert(
+            context, AlertType.success, 'Success', jsonResponse['message']);
+      } else {
+        _showSweetAlert(
+            context, AlertType.error, 'Error', jsonResponse['message']);
+      }
+    } catch (e) {
+      _showSweetAlert(context, AlertType.error, 'Error',
+          'An error occurred, please check your internet connection.');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return GridView(
@@ -21,8 +96,7 @@ class _StatusState extends State<Status> {
           padding: const EdgeInsets.all(10),
           child: InkResponse(
             onTap: (() {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => Active_Work()));
+            //  ApproveCargoState(action)
             }),
             child: Ink(
               child: Container(

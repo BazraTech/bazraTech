@@ -135,10 +135,12 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                 margin: EdgeInsets.only(top: screenHeight * 0.055),
                 // color: Colors.white,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 15, bottom: 10),
+                      margin: EdgeInsets.only(
+                        top: 15,
+                        bottom: 10,
+                      ),
                       child: CircleAvatar(
                         radius: 50,
                         backgroundColor: Colors.white,
@@ -162,7 +164,9 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                       child: Container(
                         width: screenWidth * 0.07,
                         height: screenHeight * 0.08,
-                        margin: EdgeInsets.only(left: screenWidth * 0.5),
+                        margin: EdgeInsets.only(
+                          left: screenWidth * 0.6,
+                        ),
                         child: InkWell(
                           onTap: () {
                             Navigator.push(

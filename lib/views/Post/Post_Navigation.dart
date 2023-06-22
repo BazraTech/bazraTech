@@ -48,7 +48,7 @@ class Post_BottomNav extends StatelessWidget {
                   ),
                   BlocBuilder<LocaleBloc, LocaleState>(
                     builder: (context, localeState) {
-                      return CargoHistory(
+                      return CargoHistory(  
                         localizations: AppLocalizations.of(context),
                       );
                     },

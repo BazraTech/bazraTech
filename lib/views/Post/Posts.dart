@@ -48,27 +48,31 @@ class _PostsState extends State<Posts> {
   final _price = TextEditingController();
   void _showSweetAlert(BuildContext context, AlertType alertType, String title,
       String description) {
-    Alert(
+    showDialog(
       context: context,
-      type: alertType,
-      title: title,
-      desc: description,
-      buttons: [
-        DialogButton(
-          onPressed: () => Navigator.pop(context),
-          width: 120,
-          child: GestureDetector(
-            onTap: () {
-              context.read<NavigationBloc>().add(NavigateTo('/home'));
-            },
-            child: const Text(
-              'OK',
-              style: TextStyle(color: Colors.white, fontSize: 20),
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(description),
+          actions: [
+            ElevatedButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                if (alertType == AlertType.success) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => BottomNav()),
+                  );
+                } else if (alertType == AlertType.error) {
+                  Navigator.pop(context);
+                }
+              },
             ),
-          ),
-        ),
-      ],
-    ).show();
+          ],
+        );
+      },
+    );
   }
 
   registerCargo(String from, String to, String date, String cargoType,
@@ -168,16 +172,21 @@ class _PostsState extends State<Posts> {
     return null;
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+  Future<void> _selectDateRange(BuildContext context) async {
+    final DateTimeRange? picked = await showDateRangePicker(
       context: context,
-      initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime(2100),
+      initialDateRange: DateTimeRange(
+        start: DateTime.now(),
+        end: DateTime.now().add(Duration(days: 1)),
+      ),
     );
     if (picked != null) {
       setState(() {
-        _dateController.text = DateFormat('yyyy-MM-dd').format(picked);
+        _dateController.text = DateFormat('yyyy-MM-dd').format(picked.start) +
+            ' to ' +
+            DateFormat('yyyy-MM-dd').format(picked.end);
       });
     }
   }
@@ -301,6 +310,7 @@ class _PostsState extends State<Posts> {
                 ),
                 TextFormField(
                   controller: _dateController,
+                  readOnly: true,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     hintText: AppLocalizations.of(context)
@@ -308,7 +318,7 @@ class _PostsState extends State<Posts> {
                         "Select a date",
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.calendar_today),
-                      onPressed: () => _selectDate(context),
+                      onPressed: () => _selectDateRange(context),
                     ),
                     labelStyle: const TextStyle(
                         fontWeight: FontWeight.bold,
@@ -467,6 +477,33 @@ class _PostsState extends State<Posts> {
                       return AppLocalizations.of(context)
                               ?.translate("Please enter your weight") ??
                           "Please enter your weight";
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                CustomTextFieldForm(
+                  textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
+                  hintText:
+                      AppLocalizations.of(context)?.translate("Packaging") ??
+                          "Packaging",
+                  textController: _packaging,
+                  hintTextStyle: TextStyle(
+                    letterSpacing: 1.0,
+                    wordSpacing: 2.0,
+                    color: _isFocus ? Colors.green : Colors.grey,
+                    // ... other styles
+                  ), // ... other styl
+                  obscureText: false,
+
+                  onChanged: (value) {},
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return AppLocalizations.of(context)
+                              ?.translate("Please enter your package") ??
+                          "Please enter your package";
                     }
                   },
                 ),

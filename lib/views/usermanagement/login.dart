@@ -40,6 +40,9 @@ class _Cargo_loginState extends State<Cargo_login> {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   String? ownerPic;
+  bool _isLoading = true;
+  List<String> _data = [];
+
   bool _isFocused = false;
   @override
   void dispose() {
@@ -135,6 +138,12 @@ class _Cargo_loginState extends State<Cargo_login> {
     ).show();
   }
 
+  @override
+  void initState() {
+    super.initState();
+    fetchImage();
+  }
+
   Future<String> fetchImage() async {
     var client = http.Client();
     StorageHelper storageHelper = StorageHelper();
@@ -147,12 +156,18 @@ class _Cargo_loginState extends State<Cargo_login> {
     final response = await http.get(
         Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
         headers: requestHeaders);
+
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
       Map<String, dynamic> data = json.decode(response.body);
       return data["logo"];
     } else {
-      throw Exception('Failed to load image');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to load image'),
+        ),
+      );
+      return '';
     }
   }
 

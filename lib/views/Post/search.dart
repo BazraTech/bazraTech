@@ -122,13 +122,13 @@ class _CargoListViewState extends State {
               future: searchCargosByOwnerName(searchController.text),
               builder: (context, snapshot) {
                 if (snapshot.data!.isEmpty) {
-                  Center(
-                    child: Lottie.asset(
-                      'assets/images/noapidatas.json',
-                      fit: BoxFit.cover,
-                    ),
-                  );
-                }
+                    Center(
+                      child: Lottie.asset(
+                        'assets/images/noapidatas.json',
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  }
                 if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                   return ListView.builder(
                     itemCount: snapshot.data!.length,

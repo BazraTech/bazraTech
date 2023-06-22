@@ -76,7 +76,7 @@ class _CargoHistoryState extends State {
           .toList();
       return filteredCargos;
     } catch (e) {
-      throw Exception('Failed to search cargos by owner name');
+      throw Exception('Failed to search cargos by status');
     }
   }
 
@@ -152,13 +152,23 @@ class _CargoHistoryState extends State {
               child: FutureBuilder(
                 future: searchCargosByOwnerName(searchController.text),
                 builder: (context, snapshot) {
-                  if (snapshot.data!.isEmpty) {
-                    Center(
-                      child: Lottie.asset(
-                        'assets/images/noapidatas.json',
-                        fit: BoxFit.cover,
-                      ),
-                    );
+                  if (_searchResults.isEmpty &&
+                      searchController.text.isNotEmpty) {
+                    if (searchController.text.length < 3 ||
+                        searchController.text.contains('dummy')) {
+                      Container(
+                        height: double.infinity,
+                        child: Center(
+                          child: Lottie.asset(
+                            'assets/images/noapidatas.json',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    } else {
+                      // Display a message indicating that no results were found
+                      Text('No results found for "${searchController.text}".');
+                    }
                   }
                   if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                     return ListView.builder(
@@ -367,18 +377,68 @@ class _CargoHistoryState extends State {
                         );
                       },
                     );
-                  } else if (snapshot.connectionState == ConnectionState.done) {
-                    // Show Lottie animation if search results are empty
-                    return Center(
-                      child: Lottie.asset(
-                        'assets/images/noapidatas.json',
-                        fit: BoxFit.cover,
-                      ),
-                    );
                   } else if (snapshot.hasError) {
-                    return Center(child: Text('${snapshot.error}'));
+                    return Center(child: Text('Error: ${snapshot.error}'));
                   }
-                  return Center(child: CircularProgressIndicator());
+
+                  return Center(
+                    child: FutureBuilder(
+                      future: Future.delayed(Duration(seconds: 10),
+                          () => _checkInternetConnection()),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else {
+                          return Container(
+                              alignment: Alignment.center,
+                              height: screenHeight * 0.13,
+                              width: screenWidth * 0.7,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color:
+                                          Colors.grey.shade200.withOpacity(0.7),
+                                      blurRadius: 8.0,
+                                      spreadRadius: 2.0,
+                                      offset: const Offset(
+                                        6, // Move to right 7.0 horizontally
+                                        8, // Move to bottom 8.0 Vertically
+                                      ))
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(top: 10),
+                                    child: Text('Network Error',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.grey.shade500,
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                        'No Network. Connect your device to internet or mobile data',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.grey.shade500,
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                ],
+                              ));
+                        }
+                      },
+                    ),
+                  );
                 },
               ),
             ),
