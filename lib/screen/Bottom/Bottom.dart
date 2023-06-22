@@ -43,7 +43,7 @@ class BottomNav extends StatelessWidget {
                   OwenerHomepage(),
                   Communication(),
                   Communication(),
-                  driverProfile()
+                Profile()
                 ],
               ),
               bottomNavigationBar: Container(

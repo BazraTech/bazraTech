@@ -561,63 +561,71 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                                                           )),
                                                                     ],
                                                                   ),
-                                                    InkWell(
-                                                      onTap: () {
-                                                        Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                ModifyVehileStatus(
-                                                              plateNumber: vehicle[
-                                                                  'plateNumber'],
-                                                              sttatus: vehicle[
-                                                                  'status'],
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(10.0),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .bottomCenter,
-                                                          child: Container(
-                                                            width: screenWidth,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color:
-                                                                  Colors.white,
-                                                              border:
-                                                                  Border.all(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade300, // Border color
-                                                                width:
-                                                                    2.0, // Border width
+                                                    Visibility(
+                                                      visible:
+                                                          vehicle['status'] !=
+                                                              "ONROUTE",
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  ModifyVehileStatus(
+                                                                plateNumber:
+                                                                    vehicle[
+                                                                        'plateNumber'],
+                                                                sttatus: vehicle[
+                                                                    'status'],
                                                               ),
                                                             ),
-                                                            height: 40,
-                                                            child: const Center(
-                                                              child: Text(
-                                                                "Update Status",
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                                style: const TextStyle(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    fontSize:
-                                                                        14,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
+                                                          );
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(10.0),
+                                                          child: Align(
+                                                            alignment: Alignment
+                                                                .bottomCenter,
+                                                            child: Container(
+                                                              width:
+                                                                  screenWidth,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: Colors
+                                                                    .white,
+                                                                border:
+                                                                    Border.all(
+                                                                  color: Colors
+                                                                      .grey
+                                                                      .shade300, // Border color
+                                                                  width:
+                                                                      2.0, // Border width
+                                                                ),
+                                                              ),
+                                                              height: 40,
+                                                              child:
+                                                                  const Center(
+                                                                child: Text(
+                                                                  "Update Status",
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  style: const TextStyle(
+                                                                      fontFamily:
+                                                                          'Nunito',
+                                                                      fontSize:
+                                                                          14,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
                                                               ),
                                                             ),
                                                           ),

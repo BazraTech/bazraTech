@@ -35,10 +35,10 @@ class _driverReportstatusState extends State<driverReportstatus> {
             },
             child: const Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: kPrimaryColor,
           title: Container(
             margin: EdgeInsets.only(right: screenWidth * 0.12),
             width: double.infinity,

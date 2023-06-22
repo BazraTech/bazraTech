@@ -272,7 +272,7 @@ class _activeWorkState extends State<activeWork> {
                                                           left: screenWidth *
                                                               0.15),
                                                       child: Text(
-                                                        '',
+                                                        Result[index]["pickUp"],
                                                         style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -352,6 +352,66 @@ class _activeWorkState extends State<activeWork> {
                             height: screenHeight * 0.1,
                             child: ElevatedButton(
                               onPressed: () {
+                                Unloadandloadcar("DEPARRIVE");
+                                setActiveButton(false);
+                              },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                    if (!_isActivebutton) {
+                                      return Colors.grey.shade300;
+                                    } else {
+                                      return Color.fromRGBO(236, 240, 243, 1);
+                                    }
+                                  },
+                                ),
+                                foregroundColor:
+                                    MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                    if (!_isActivebutton) {
+                                      return Colors.white;
+                                    } else {
+                                      return Colors.black;
+                                    }
+                                  },
+                                ),
+                                elevation: MaterialStateProperty.all<double>(0),
+                              ),
+                              child: Text(
+                                "DEPARRIVED",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Spacer(),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black
+                                        .withOpacity(0.3), // Shadow color
+                                    blurRadius: 5, // Spread radius
+                                    offset: Offset(
+                                        0, 3), // Offset in (x,y) coordinates
+                                  ),
+                                  const BoxShadow(
+                                    color: Colors.white,
+                                    offset: Offset(-4, -4),
+                                    blurRadius: 25,
+                                    spreadRadius: 1,
+                                  ),
+                                ]),
+                            width: screenWidth * 0.44,
+                            height: screenHeight * 0.1,
+                            child: ElevatedButton(
+                              onPressed: () {
                                 Unloadandloadcar("LOAD");
                                 setActiveButton2(true);
                               },
@@ -383,6 +443,75 @@ class _activeWorkState extends State<activeWork> {
                                   },
                                 ),
                                 elevation: MaterialStateProperty.all<double>(0),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                      margin: EdgeInsets.only(top: screenHeight * 0.03),
+                      child: Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black
+                                        .withOpacity(0.3), // Shadow color
+                                    blurRadius: 5, // Spread radius
+                                    offset: Offset(
+                                        0, 3), // Offset in (x,y) coordinates
+                                  ),
+                                  const BoxShadow(
+                                    color: Colors.white,
+                                    offset: Offset(-4, -4),
+                                    blurRadius: 25,
+                                    spreadRadius: 1,
+                                  ),
+                                ]),
+                            width: screenWidth * 0.44,
+                            height: screenHeight * 0.1,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                setActiveButton(false);
+                                Unloadandloadcar("DESTARRIVE");
+                              },
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                    if (!_isActivebutton) {
+                                      return Colors.grey.shade300;
+                                    } else {
+                                      return Color.fromRGBO(236, 240, 243, 1);
+                                    }
+                                  },
+                                ),
+                                foregroundColor:
+                                    MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                    if (!_isActivebutton) {
+                                      return Colors.white;
+                                    } else {
+                                      return Colors.black;
+                                    }
+                                  },
+                                ),
+                                elevation: MaterialStateProperty.all<double>(0),
+                              ),
+                              child: Text(
+                                "DESTINATIONARRIVED",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: 11,
+                                ),
                               ),
                             ),
                           ),
@@ -450,135 +579,6 @@ class _activeWorkState extends State<activeWork> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      margin: EdgeInsets.only(top: screenHeight * 0.03),
-                      child: Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black
-                                        .withOpacity(0.3), // Shadow color
-                                    blurRadius: 5, // Spread radius
-                                    offset: Offset(
-                                        0, 3), // Offset in (x,y) coordinates
-                                  ),
-                                  const BoxShadow(
-                                    color: Colors.white,
-                                    offset: Offset(-4, -4),
-                                    blurRadius: 25,
-                                    spreadRadius: 1,
-                                  ),
-                                ]),
-                            width: screenWidth * 0.44,
-                            height: screenHeight * 0.1,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Unloadandloadcar('DEPARTURE');
-                                setActiveButton(true);
-                              },
-                              child: Text(
-                                "DEPARTURE",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  fontSize: 11,
-                                ),
-                              ),
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
-                                    if (!_isActivebutton) {
-                                      return Color.fromRGBO(236, 240, 243, 1);
-                                    } else {
-                                      return Colors.grey.shade300;
-                                    }
-                                  },
-                                ),
-                                foregroundColor:
-                                    MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
-                                    if (!_isActivebutton) {
-                                      return Colors.white;
-                                    } else {
-                                      return Colors.black;
-                                    }
-                                  },
-                                ),
-                                elevation: MaterialStateProperty.all<double>(0),
-                              ),
-                            ),
-                          ),
-                          Spacer(),
-                          Container(
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black
-                                        .withOpacity(0.3), // Shadow color
-                                    blurRadius: 5, // Spread radius
-                                    offset: Offset(
-                                        0, 3), // Offset in (x,y) coordinates
-                                  ),
-                                  const BoxShadow(
-                                    color: Colors.white,
-                                    offset: Offset(-4, -4),
-                                    blurRadius: 25,
-                                    spreadRadius: 1,
-                                  ),
-                                ]),
-                            width: screenWidth * 0.44,
-                            height: screenHeight * 0.1,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Unloadandloadcar("DEPARRIVE");
-                                setActiveButton(false);
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
-                                    if (!_isActivebutton) {
-                                      return Colors.grey.shade300;
-                                    } else {
-                                      return Color.fromRGBO(236, 240, 243, 1);
-                                    }
-                                  },
-                                ),
-                                foregroundColor:
-                                    MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
-                                    if (!_isActivebutton) {
-                                      return Colors.white;
-                                    } else {
-                                      return Colors.black;
-                                    }
-                                  },
-                                ),
-                                elevation: MaterialStateProperty.all<double>(0),
-                              ),
-                              child: Text(
-                                "DEPARRIVED",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                   Row(
                     children: [
                       Padding(
@@ -606,17 +606,25 @@ class _activeWorkState extends State<activeWork> {
                           height: screenHeight * 0.1,
                           child: ElevatedButton(
                             onPressed: () {
-                              setActiveButton(false);
-                              Unloadandloadcar("DESTARRIVE");
+                              Unloadandloadcar('DEPARTURE');
+                              setActiveButton(true);
                             },
+                            child: Text(
+                              "DEPARTURE",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 11,
+                              ),
+                            ),
                             style: ButtonStyle(
                               backgroundColor:
                                   MaterialStateProperty.resolveWith<Color>(
                                 (Set<MaterialState> states) {
                                   if (!_isActivebutton) {
-                                    return Colors.grey.shade300;
-                                  } else {
                                     return Color.fromRGBO(236, 240, 243, 1);
+                                  } else {
+                                    return Colors.grey.shade300;
                                   }
                                 },
                               ),
@@ -631,14 +639,6 @@ class _activeWorkState extends State<activeWork> {
                                 },
                               ),
                               elevation: MaterialStateProperty.all<double>(0),
-                            ),
-                            child: Text(
-                              "DESTINATIONARRIVED",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 11,
-                              ),
                             ),
                           ),
                         ),

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:bazralogin/Theme/Alert.dart';
 import 'package:bazralogin/screen/Driver/driverBottomnav.dart';
 import 'package:bazralogin/screen/Loging/forgotPin.dart';
+import 'package:flutter_network_connectivity/flutter_network_connectivity.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:bazralogin/Theme/clippbox.dart';
 import 'package:get/get.dart';
@@ -27,6 +28,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool isHiddenPassword = true;
+  bool hasInternetConnection = true;
   bool isExcecuted = false;
   bool value = false;
   String? username;
@@ -106,7 +108,8 @@ class _LoginState extends State<Login> {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => BottomNav()));
         } else {
-          showAlertDialog(context);
+          AlertDialoug.showMyDialog(
+              context, "Alert", "Invalid password and username");
           setState(() {
             isLoading = false;
           });
@@ -116,9 +119,19 @@ class _LoginState extends State<Login> {
     APIService.ownername = "";
   }
 
+  Future<void> checkConnectivity() async {
+    final connectivity = FlutterNetworkConnectivity();
+    final isConnected = await connectivity.isNetworkConnectionAvailable();
+
+    setState(() {
+      hasInternetConnection = isConnected;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    checkConnectivity();
     Total_Drivers();
     vehicleFetch();
     //futureWelcome = fetchWelcome();

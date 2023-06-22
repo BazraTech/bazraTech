@@ -64,12 +64,11 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
         ),
       );
     } else {
-      String alertContent = jsonResponse["message"];
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
           title: Text(''),
-          content: Text(alertContent),
+          content: Text("no"),
           actions: [
             TextButton(
               onPressed: () {
@@ -239,7 +238,7 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
                                     alignment: Alignment.center,
                                     child: Container(
                                       child: Container(
-                                        height: screenHeight * 0.25,
+                                        height: screenHeight * 0.265,
                                         margin: EdgeInsets.zero,
                                         decoration: BoxDecoration(
                                             color: Colors.white,

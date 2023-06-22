@@ -366,6 +366,7 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
                     height: height * 0.08,
                     child: TextFormField(
                         enabled: false,
+                        controller: TextEditingController(text: genderowner),
                         decoration: ThemeHelper().textInputDecoration(""))),
               ],
             ),
@@ -393,7 +394,7 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
                     height: height * 0.08,
                     child: TextFormField(
                         enabled: false,
-                        controller: TextEditingController(text: genderowner),
+                        controller: TextEditingController(text: date),
                         decoration: ThemeHelper().textInputDecoration())),
               ],
             ),

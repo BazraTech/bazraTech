@@ -1,22 +1,17 @@
 import 'dart:convert';
-
-import 'package:bazralogin/Route/Routes.dart';
 import 'package:bazralogin/config/APIService.dart';
 import 'package:bazralogin/controller/Localization.dart';
-import 'package:bazralogin/screen/Owner/Profile/profileEdit/languageOptions.dart';
 import 'package:bazralogin/screen/Owner/Profile/profileEdit/updateOwnerprofile.dart';
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
+import '../../../controller/apiController.dart';
 import '../../Loging/changePassword.dart';
 import '../../../../const/constant.dart';
+import '../Driver/assignDriver.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -25,8 +20,22 @@ class Profile extends StatefulWidget {
   State<Profile> createState() => _ProfileState();
 }
 
+Map<String, dynamic>? Result;
+String? driverstate;
+
+String? namedriver;
+bool _isLoading = true;
+
 class _ProfileState extends State<Profile> {
   String ownerpic = "";
+  bool _isLoading = true;
+  Map<String, dynamic>? Result;
+  Map<String, dynamic>? findVehicle;
+  String? ownername;
+  String? ownerphone;
+  String? owneremail;
+  
+
   Future<String> _fetchLogo() async {
     var client = http.Client();
     final storage = new FlutterSecureStorage();
@@ -51,11 +60,59 @@ class _ProfileState extends State<Profile> {
     }
   }
 
+// fetch owner info
+  Driversinfo() async {
+    var token = await storage.read(key: 'jwt');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var response =
+        await http.get(Uri.parse(ApIConfig.ownerInfo), headers: requestHeaders);
+    if (response.statusCode == 200) {
+      var mapResponse = json.decode(response.body) as Map<String, dynamic>;
+      Map<String, dynamic> results = mapResponse['ownerINF'];
+      await storage.write(
+          key: "totalVehicles",
+          value: mapResponse["ownerINF"]["firstName"].toString());
+
+      ownername = await storage.read(key: 'totalVehicles');
+      await storage.write(
+          key: "phone",
+          value: mapResponse["ownerINF"]["phoneNumber"].toString());
+
+      ownerphone = await storage.read(key: 'phone');
+      await storage.write(
+          key: "email", value: mapResponse["ownerINF"]["email"].toString());
+
+      owneremail = await storage.read(key: 'email');
+      setState(() {
+        _isLoading = false;
+        Result = results;
+        findVehicle = Result;
+      });
+      return Result;
+    } else {
+      throw Exception('not loaded ');
+    }
+  }
+
+  void initState() {
+    super.initState();
+
+    Driversinfo();
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     final TranslationController controller = Get.put(TranslationController());
+    final ApiController _apiController = Get.put(ApiController());
+
+    print(_apiController.data);
+
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: Padding(
@@ -76,10 +133,10 @@ class _ProfileState extends State<Profile> {
                             MaterialPageRoute(
                                 builder: (context) => ownerprofileUpadate(
                                       image: "${ownerpic}",
-                                      email: "abushj12@gmail.com",
-                                      phone: "0978999967",
+                                      email: owneremail,
+                                      phone: ownerphone,
                                       datebirth: "12/4/000",
-                                      name: "Alex",
+                                      name: ownername,
                                       gender: "Male",
                                     )));
                       },
@@ -125,15 +182,14 @@ class _ProfileState extends State<Profile> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Alex"),
+                          ownername == null
+                              ? Container()
+                              : Text(ownername.toString())
                         ],
                       ),
                     ],
                   ),
                 ],
-              ),
-              SizedBox(
-                height: 20,
               ),
               Container(
                 decoration: BoxDecoration(
@@ -148,177 +204,242 @@ class _ProfileState extends State<Profile> {
                 width: screenWidth,
                 child: Column(children: [
                   SizedBox(
-                    // height: screenHeight * 0.06,
-                    // width: screenWidth * 0.85,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border(
-                          bottom: BorderSide(
-                            color: Colors.grey,
-                            width: 0.2,
-                          ),
-                        )),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Container(
-                                margin: EdgeInsets.only(left: 10),
-                                width: screenWidth * 0.2,
-                                child: Text(
-                                  TranslationUtil.text("Email"),
-                                  style: TextStyle(
-                                    fontFamily: "Nunito",
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Container(
-                                width: screenWidth * 0.60,
-                                height: screenHeight * 0.06,
-                                child: Container(
-                                  margin:
-                                      EdgeInsets.only(left: screenWidth * 0.12),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "abushj12@gmail.com",
-                                        style: TextStyle(
-                                          fontFamily: "Nunito",
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: screenWidth * 0.07,
-                                      ),
-                                      Icon(Ionicons.chevron_forward_outline)
-                                    ],
-                                  ),
-                                )),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border(
-                        bottom: BorderSide(
-                          color: Colors.grey,
-                          width: 0.3,
-                        ),
-                      )),
-                      child: Row(
-                        children: [
-                          Container(
-                              width: screenWidth * 0.25,
-                              height: screenHeight * 0.06,
-                              margin: EdgeInsets.only(left: 10),
-                              child: Text(
-                                TranslationUtil.text("Date of Birth"),
-                                style: TextStyle(
-                                  fontFamily: "Nunito",
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
-                          Container(
-                              width: screenWidth * 0.54,
-                              child: Container(
-                                margin:
-                                    EdgeInsets.only(left: screenWidth * 0.1),
-                                child: Row(
+                    height: screenHeight * 0.28,
+
+                    child: FutureBuilder(builder: (context, snapshot) {
+                      future:
+                      _apiController.fetchData();
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Container();
+                      } else {
+                        return Container(
+                          height: screenHeight * 0.23,
+                          child: ListView.builder(
+                            itemCount: 1,
+                            padding: EdgeInsets.zero,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                child: Column(
                                   children: [
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          left: screenWidth * 0.07),
-                                      child: Text(
-                                        "2022-12-2",
-                                        style: TextStyle(
-                                          fontFamily: "Nunito",
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.normal,
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: screenHeight * 0.06,
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                          bottom: BorderSide(
+                                            color: Colors.grey,
+                                            width: 0.2,
+                                          ),
+                                        )),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Container(
+                                                margin: EdgeInsets.only(
+                                                    left: screenWidth * 0.03),
+                                                width: screenWidth * 0.2,
+                                                child: Text(
+                                                  TranslationUtil.text("Email"),
+                                                  textAlign: TextAlign.left,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: AppFonts
+                                                          .smallFontSize,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.normal),
+                                                )),
+                                            Spacer(),
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      right: 20),
+                                                  child: _apiController
+                                                              .data['email'] ==
+                                                          null
+                                                      ? Container()
+                                                      : Text(
+                                                          _apiController
+                                                              .data['email']
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                "Nunito",
+                                                            fontSize: 13,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal,
+                                                          ),
+                                                        ),
+                                                ),
+                                                Icon(
+                                                  Ionicons
+                                                      .chevron_forward_outline,
+                                                  color: Colors.black,
+                                                )
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                        margin: EdgeInsets.only(
-                                            left: screenWidth * 0.12),
-                                        child: Icon(
-                                            Ionicons.chevron_forward_outline))
-                                  ],
-                                ),
-                              )),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border(
-                        bottom: BorderSide(
-                          color: Colors.grey,
-                          width: 0.2,
-                        ),
-                      )),
-                      child: Row(
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(left: 10),
-                              width: screenWidth * 0.2,
-                              height: screenHeight * 0.05,
-                              child: Text(
-                                TranslationUtil.text(
-                                  "Gender",
-                                ),
-                                style: TextStyle(
-                                  fontFamily: "Nunito",
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
-                          Container(
-                              width: screenWidth * 0.6,
-                              child: Container(
-                                child: Row(
-                                  children: [
-                                    Container(
-                                        margin: EdgeInsets.only(
-                                            left: screenWidth * 0.21),
-                                        child: Center(
-                                            child: Text(
-                                          "Male",
-                                          style: TextStyle(
-                                            fontFamily: "Nunito",
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.normal,
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: screenHeight * 0.06,
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                          bottom: BorderSide(
+                                            color: Colors.grey,
+                                            width: 0.3,
                                           ),
-                                        ))),
-                                    Container(
-                                        margin: EdgeInsets.only(
-                                            left: screenWidth * 0.22),
-                                        child: Icon(
-                                            Ionicons.chevron_forward_outline))
+                                        )),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                                margin:
+                                                    EdgeInsets.only(left: 10),
+                                                child: Text(
+                                                  TranslationUtil.text(
+                                                      "Date of Birth"),
+                                                  textAlign: TextAlign.left,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: AppFonts
+                                                          .smallFontSize,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.normal),
+                                                )),
+                                            Spacer(),
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      right: 20),
+                                                  child: Text(
+                                                    "2022-12-2",
+                                                    textAlign: TextAlign.center,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Nunito',
+                                                        fontSize: AppFonts
+                                                            .smallFontSize,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.normal),
+                                                  ),
+                                                ),
+                                                Container(
+                                                    child: Icon(Ionicons
+                                                        .chevron_forward_outline))
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: screenHeight * 0.06,
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                          bottom: BorderSide(
+                                            color: Colors.grey,
+                                            width: 0.2,
+                                          ),
+                                        )),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                                margin:
+                                                    EdgeInsets.only(left: 10),
+                                                child: Text(
+                                                  TranslationUtil.text(
+                                                    "Gender",
+                                                  ),
+                                                  textAlign: TextAlign.left,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: AppFonts
+                                                          .smallFontSize,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.normal),
+                                                )),
+                                            Spacer(),
+                                            Row(
+                                              children: [
+                                                Container(
+                                                    margin: EdgeInsets.only(
+                                                        right: 20),
+                                                    child: Center(
+                                                        child: Text(
+                                                      "Male",
+                                                      textAlign: TextAlign.left,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: const TextStyle(
+                                                          fontFamily: 'Nunito',
+                                                          fontSize: AppFonts
+                                                              .smallFontSize,
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight
+                                                              .normal),
+                                                    ))),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Container(
+                                                    child: Icon(Ionicons
+                                                        .chevron_forward_outline))
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
-                              )),
-                        ],
-                      ),
-                    ),
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    }),
+                    // child: _isLoading
+                    //     ? Container()
+                    //     : ListView.builder(
+                    //         itemCount: 1,
+                    //         padding: EdgeInsets.zero,
+                    //         itemBuilder: (context, index) {
+                    //           return
+                    //         },
+                    //       ),
                   ),
                 ]),
               ),
@@ -352,31 +473,23 @@ class _ProfileState extends State<Profile> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                                width: screenWidth * 0.3,
+                                width: screenWidth -
+                                    (screenWidth * 0.08 +
+                                        screenWidth * 0.03 +
+                                        76),
                                 child: Text(
                                   TranslationUtil.text("Language"),
-                                  style: TextStyle(
-                                    fontFamily: "Nunito",
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontFamily: 'Nunito',
+                                      fontSize: AppFonts.smallFontSize,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.normal),
                                 )),
                           ),
                           Container(
-                            margin: EdgeInsets.only(left: screenWidth * 0.26),
-                            child: IconButton(
-                              onPressed: (() {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            languageOption()));
-                              }),
-                              icon: Container(
-                                  child:
-                                      Icon(Ionicons.chevron_forward_outline)),
-                            ),
-                          ),
+                              child: Icon(Ionicons.chevron_forward_outline)),
                         ],
                       ),
                     ),
@@ -413,31 +526,36 @@ class _ProfileState extends State<Profile> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                                width: screenWidth * 0.36,
+                                width: screenWidth -
+                                    (screenWidth * 0.08 +
+                                        screenWidth * 0.03 +
+                                        76),
                                 child: Text(
                                   TranslationUtil.text('Change password'),
-                                  style: TextStyle(
-                                    fontFamily: "Nunito",
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontFamily: 'Nunito',
+                                      fontSize: AppFonts.smallFontSize,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.normal),
                                 )),
                           ),
-                          Container(
-                              margin: EdgeInsets.only(
-                                  left:
-                                      MediaQuery.of(context).size.width * 0.23),
-                              child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              ChangePassword()),
-                                    );
-                                  },
-                                  child:
-                                      Icon(Ionicons.chevron_forward_outline))),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                                child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                ChangePassword()),
+                                      );
+                                    },
+                                    child: Icon(
+                                        Ionicons.chevron_forward_outline))),
+                          ),
                         ],
                       ),
                     ),
@@ -455,21 +573,26 @@ class _ProfileState extends State<Profile> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                                width: screenWidth * 0.3,
+                                width: screenWidth -
+                                    (screenWidth * 0.08 +
+                                        screenWidth * 0.03 +
+                                        76),
                                 child: Text(
                                   TranslationUtil.text("Help"),
-                                  style: TextStyle(
-                                    fontFamily: "Nunito",
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontFamily: 'Nunito',
+                                      fontSize: AppFonts.smallFontSize,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.normal),
                                 )),
                           ),
-                          Container(
-                              margin: EdgeInsets.only(
-                                  left:
-                                      MediaQuery.of(context).size.width * 0.3),
-                              child: Icon(Ionicons.chevron_forward_outline)),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                                child: Icon(Ionicons.chevron_forward_outline)),
+                          ),
                         ],
                       ),
                     ),
@@ -487,21 +610,26 @@ class _ProfileState extends State<Profile> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                                width: screenWidth * 0.3,
+                                width: screenWidth -
+                                    (screenWidth * 0.08 +
+                                        screenWidth * 0.03 +
+                                        76),
                                 child: Text(
                                   TranslationUtil.text("Setting"),
-                                  style: TextStyle(
-                                    fontFamily: "Nunito",
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontFamily: 'Nunito',
+                                      fontSize: AppFonts.smallFontSize,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.normal),
                                 )),
                           ),
-                          Container(
-                              margin: EdgeInsets.only(
-                                  left:
-                                      MediaQuery.of(context).size.width * 0.3),
-                              child: Icon(Ionicons.chevron_forward_outline)),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                                child: Icon(Ionicons.chevron_forward_outline)),
+                          ),
                         ],
                       ),
                     ),

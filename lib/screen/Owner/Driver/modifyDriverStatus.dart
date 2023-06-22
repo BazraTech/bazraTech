@@ -28,15 +28,10 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
   static bool isPressed = true;
   Offset distance = isPressed ? Offset(10, 10) : Offset(28, 28);
   double blur = isPressed ? 5.0 : 30.0;
-  List<String> location = [
-    "ASSIGNED",
-    "Select Status",
-    "UNASSIGNED",
-    'ONROUTE',
-    'PERMIT'
-  ];
+  List<String> location = ["Select Status", "UNASSIGNED", 'ONROUTE', 'PERMIT'];
 
   List<String> unassigndsatus = ["ASSIGNED", "Select Status"];
+  List<String> onroute = ['PERMIT', "Select Status"];
 
   TextEditingController statusController = TextEditingController();
   String? vehiclestatus;
@@ -231,6 +226,43 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
                                       ThemeHelper().textInputDecoration(),
                                   value: selectedItem,
                                   items: location
+                                      .map((item) => DropdownMenuItem<String>(
+                                          value: item,
+                                          child: Text(
+                                            item,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 15),
+                                          )))
+                                      .toList(),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please Enter  Plate Number';
+                                    }
+                                  },
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedItem = newValue;
+                                    });
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      else if ("${widget.status}" == 'ONROUTE')
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: screenWidth - 65,
+                                height: screenHeight * 0.08,
+                                child: DropdownButtonFormField<String>(
+                                  decoration:
+                                      ThemeHelper().textInputDecoration(),
+                                  value: selectedItem,
+                                  items: onroute
                                       .map((item) => DropdownMenuItem<String>(
                                           value: item,
                                           child: Text(

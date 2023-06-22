@@ -102,8 +102,7 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
                       Navigator.pop(context);
                     },
                     icon: Icon(
-                      Ionicons.chevron_back,
-                      size: 34,
+                      Ionicons.arrow_back,
                       color: Colors.black,
                     ),
                   ),

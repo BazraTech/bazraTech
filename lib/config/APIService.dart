@@ -2,6 +2,8 @@ class ApIConfig {
   static const String urlAPI = "64.226.104.50:9090";
   static const String aviablemarket = "/Api/Vehicle/All/Market";
   static const String drverInfo = "/Api/Driver/Info";
+  static const String ownerInfo =
+      "http://64.226.104.50:9090/Api/Vehicle/Owner/Info";
   static const String logo =
       "http://64.226.104.50:9090/Api/Admin/LogoandAvatar";
   static String assignDriverApi =

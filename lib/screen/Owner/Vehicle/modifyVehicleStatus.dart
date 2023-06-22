@@ -10,9 +10,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../Theme/TextInput.dart';
 import '../../../config/APIService.dart';
-import '../../Bottom/Bottom.dart';
-import 'TotalVehicles.dart';
 
+// ignore: must_be_immutable
 class ModifyVehileStatus extends StatefulWidget {
   String? plateNumber;
   String? sttatus;
@@ -27,16 +26,20 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
   static bool isPressed = true;
   Offset distance = isPressed ? Offset(10, 10) : Offset(28, 28);
   double blur = isPressed ? 5.0 : 30.0;
-  List<String> location = ['INSTOCK', "MAINTAINING", 'ONROUTE', 'PARKED'];
+  List<String> location = ["Select Status", "MAINTAINING", 'ONROUTE', 'PARKED'];
+  List<String> maintaince = ["Select Status", 'INSTOCK', 'ONROUTE', 'PARKED'];
+  List<String> parked = ["Select Status", 
+    'INSTOCK',
+    'ONROUTE',
+  ];
   TextEditingController statusController = TextEditingController();
   String? vehiclestatus;
-  String? selectedItem = "INSTOCK";
+  String? selectedItem = "Select Status";
   String? plateNum;
   String? platenumber;
   String? loc;
   bool _shouldShowDialog = true;
   final storage = new FlutterSecureStorage();
- 
 
   UpdateStatus() async {
     var value = await storage.read(key: 'jwt');
@@ -56,12 +59,9 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
     if (response.statusCode == 200) {
       String alertContent = decodedResponse["message"];
       alertutils.showMyDialog(context, "Alert", alertContent);
-     
     }
     print(response.statusCode.toString());
   }
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -222,41 +222,117 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
                       SizedBox(
                         height: 10,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: screenWidth - 65,
-                              height: screenHeight * 0.065,
-                              child: DropdownButtonFormField<String>(
-                                decoration: ThemeHelper().textInputDecoration(),
-                                value: selectedItem,
-                                items: location
-                                    .map((item) => DropdownMenuItem<String>(
-                                        value: item,
-                                        child: Text(
-                                          item,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 15),
-                                        )))
-                                    .toList(),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please Enter  Plate Number';
-                                  }
-                                },
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    selectedItem = newValue;
-                                  });
-                                },
-                              ),
-                            )
-                          ],
+                      if ("${widget.sttatus}" == 'INSTOCK')
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: screenWidth - 65,
+                                height: screenHeight * 0.065,
+                                child: DropdownButtonFormField<String>(
+                                  decoration:
+                                      ThemeHelper().textInputDecoration(),
+                                  value: selectedItem,
+                                  items: location
+                                      .map((item) => DropdownMenuItem<String>(
+                                          value: item,
+                                          child: Text(
+                                            item,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 15),
+                                          )))
+                                      .toList(),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please Enter  Plate Number';
+                                    }
+                                  },
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedItem = newValue;
+                                    });
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      else if ("${widget.sttatus}" == "MAINTAINING")
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: screenWidth - 65,
+                                height: screenHeight * 0.065,
+                                child: DropdownButtonFormField<String>(
+                                  decoration:
+                                      ThemeHelper().textInputDecoration(),
+                                  value: selectedItem,
+                                  items: maintaince
+                                      .map((item) => DropdownMenuItem<String>(
+                                          value: item,
+                                          child: Text(
+                                            item,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 15),
+                                          )))
+                                      .toList(),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please Enter  Plate Number';
+                                    }
+                                  },
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedItem = newValue;
+                                    });
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      else if ("${widget.sttatus}" == 'PARKED')
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: screenWidth - 65,
+                                height: screenHeight * 0.065,
+                                child: DropdownButtonFormField<String>(
+                                  decoration:
+                                      ThemeHelper().textInputDecoration(),
+                                  value: selectedItem,
+                                  items: parked
+                                      .map((item) => DropdownMenuItem<String>(
+                                          value: item,
+                                          child: Text(
+                                            item,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 15),
+                                          )))
+                                      .toList(),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please Enter  Plate Number';
+                                    }
+                                  },
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedItem = newValue;
+                                    });
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
                       SizedBox(),
                       Row(
                         children: [

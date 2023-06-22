@@ -207,11 +207,11 @@ class _CreateAlertState extends State {
             },
             child: Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: kPrimaryColor,
         title: Container(
           margin: EdgeInsets.only(left: screenWidth * 0.15),
           child: Text(
@@ -219,7 +219,7 @@ class _CreateAlertState extends State {
             style: TextStyle(
               fontFamily: "Nunito",
               fontSize: 17,
-              color: Colors.black,
+              color: Colors.white,
               fontStyle: FontStyle.normal,
             ),
           ),
