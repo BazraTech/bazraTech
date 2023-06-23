@@ -29,6 +29,7 @@ class OwenerHomepage extends StatefulWidget {
 }
 
 class _OwenerHomepageState extends State<OwenerHomepage> {
+  bool _isMounted = false;
   DateTime pre_backprees = DateTime.now();
   static bool isPressed = true;
   bool _showExitSnackbar = false;
@@ -70,6 +71,17 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
     }
   }
 
+  void myAsyncMethod() {
+    // Perform asynchronous operation
+    Future.delayed(Duration(seconds: 2), () {
+      if (_isMounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Async operation completed')),
+        );
+      }
+    });
+  }
+
   Future<String> _fetchLogo() async {
     var client = http.Client();
     final storage = new FlutterSecureStorage();
@@ -94,23 +106,11 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
     }
   }
 
-  void initState() {
-    super.initState();
-    BackButtonInterceptor.add(myInterceptor);
-  }
-
-  @override
-  void dispose() {
-    BackButtonInterceptor.remove(myInterceptor);
-    super.dispose();
-  }
-
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
     if (ModalRoute.of(context)?.isCurrent == true) {
       if (currentBackPressTime == null ||
           DateTime.now().difference(currentBackPressTime!) >
               Duration(seconds: 2)) {
-        // Show a Snackbar at the bottom indicating to press back again to exit
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Press back again to exit'),
@@ -122,11 +122,26 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
       } else {
         // Close the app when back button is pressed again
         SystemNavigator.pop();
-        return true; // Stop the default back button event
+        return true;
+        // Stop the default back button event
       }
     }
+
     return false;
-    // Return true to stop the default back button event
+  }
+
+  void initState() {
+    _isMounted = true;
+    super.initState();
+
+    BackButtonInterceptor.add(myInterceptor);
+  }
+
+  @override
+  void dispose() {
+    _isMounted = false;
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
   }
 
   Widget build(BuildContext context) {

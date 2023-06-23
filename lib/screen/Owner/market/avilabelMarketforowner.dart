@@ -74,7 +74,7 @@ class _availabelMarketState extends State<availabelMarket> {
         final continer = driver['weight'].toLowerCase();
         final inputName = enterKeyboard.toLowerCase();
         final inputLicense = enterKeyboard.toLowerCase();
-        return name.contains(inputName) || continer.contains(inputName);
+        return name.contains(inputName) || continer.contains(inputLicense);
       }).toList();
     });
     setState(() {

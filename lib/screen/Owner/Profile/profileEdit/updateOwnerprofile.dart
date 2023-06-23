@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bazralogin/Theme/Alert.dart';
 import 'package:bazralogin/Theme/TextInput.dart';
 
 import 'package:flutter/material.dart';
@@ -9,6 +10,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../../config/APIService.dart';
+import '../../Driver/assignDriver.dart';
+
 class ownerprofileUpadate extends StatefulWidget {
   String? image;
   String? email;
@@ -16,12 +20,17 @@ class ownerprofileUpadate extends StatefulWidget {
   String? datebirth;
   String? gender;
   String? name;
-
+  String? woreda;
+  String? notificationmedia;
+  String? houseNumber;
   ownerprofileUpadate(
       {super.key,
       this.image,
       this.email,
       this.datebirth,
+      this.woreda,
+      this.houseNumber,
+      this.notificationmedia,
       this.gender,
       this.name,
       this.phone});
@@ -36,6 +45,7 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
   bool isHiddenPassword = true;
   String Logoavtar = "";
   String ownerpic = "";
+  bool isLoading = false;
   PickedFile? _pickedImage;
   final ImagePicker _picker = ImagePicker();
 
@@ -51,6 +61,44 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
     );
     setState(() {
       _pickedImage = pickedFile;
+    });
+  }
+
+  void performAction() {
+    setState(() {
+      isLoading = true;
+    });
+
+    // Simulate an asynchronous action
+    Future.delayed(Duration(seconds: 15), () async {
+      var value = await storage.read(key: 'jwt');
+      Map data = {
+        "region": "ksdiweoi",
+        "subCity": "sfwrwe",
+        "specificLocation": "sffsdf",
+        "city": "fwrfwerwe",
+        "woreda": "kiseiwr",
+        "houseNumber": "sfsfs",
+        "notificationmedia": "SMS",
+        "serviceRequired": "EXCELLENT"
+      };
+      var response = await http.put(
+          Uri.parse("http://64.226.104.50:9090/Api/Vehicle/UpdateInfo"),
+          body: json.encode(data),
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": "Bearer $value",
+          });
+
+      if (response.statusCode == 200) {
+        var decodedResponse = json.decode(response.body);
+        String alertContent = decodedResponse["message"];
+        alertutils.showMyDialog(context, "Alert", alertContent);
+      }
+      setState(() {
+        isLoading = false;
+      });
     });
   }
 
@@ -110,12 +158,12 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
               ],
             ),
             Container(
-              height: height * 0.2,
+              height: height * 0.15,
               child: Stack(
                 children: [
                   Positioned(
                       left: width * 0.3,
-                      height: height * 0.2,
+                      height: height * 0.15,
                       child: Column(
                         children: [
                           Stack(
@@ -396,22 +444,139 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
                         decoration: ThemeHelper().textInputDecoration())),
               ],
             ),
+            SizedBox(height: 5),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                margin: EdgeInsets.only(left: width * 0.04),
+                child: Text(
+                  "Woreda",
+                  style: TextStyle(
+                    fontFamily: "Nunito",
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 5),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    width: width - 32,
+                    height: height * 0.07,
+                    child: TextFormField(
+                        enabled: false,
+                        controller:
+                            TextEditingController(text: "${widget.woreda}"),
+                        decoration: ThemeHelper().textInputDecoration())),
+              ],
+            ),
+            SizedBox(height: 5),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                margin: EdgeInsets.only(left: width * 0.04),
+                child: Text(
+                  "Notificationmedia",
+                  style: TextStyle(
+                    fontFamily: "Nunito",
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 5),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    width: width - 32,
+                    height: height * 0.08,
+                    child: TextFormField(
+                        enabled: false,
+                        controller: TextEditingController(
+                            text: "${widget.notificationmedia}"),
+                        decoration: ThemeHelper().textInputDecoration(""))),
+              ],
+            ),
+            SizedBox(height: 5),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                margin: EdgeInsets.only(left: width * 0.04),
+                child: Text(
+                  "HouseNumber",
+                  style: TextStyle(
+                    fontFamily: "Nunito",
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 5),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    width: width - 32,
+                    height: height * 0.08,
+                    child: TextFormField(
+                        controller: TextEditingController(
+                            text: "${widget.houseNumber}"),
+                        decoration: ThemeHelper().textInputDecoration())),
+              ],
+            ),
             SizedBox(height: height * 0.03),
             Container(
-              width: width - 32,
+              width: width - 20,
+              margin: EdgeInsets.only(bottom: 20),
               height: height * 0.06,
               child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Save",
-                    style: TextStyle(
-                      fontFamily: "Nunito",
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
+                  onPressed: isLoading ? null : performAction,
+                  child: Container(
+                    height: 55,
+                    width: width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        isLoading
+                            ? SizedBox(
+                                height: 24,
+                                width: 24,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white),
+                                ),
+                              )
+                            : SizedBox(), // Empty SizedBox if not loading
+                        SizedBox(width: 8),
+                        Text(
+                          isLoading ? 'Please Wait' : 'Update',
+                          style: TextStyle(
+                              fontFamily: "Nunito",
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        )
+                      ],
                     ),
                   ),
-                  style: ThemeHelper().buttonStyle()),
-            )
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith((states) {
+                        if (states.contains(MaterialState.pressed)) {
+                          return Color.fromRGBO(255, 148, 165, 223);
+                        }
+                        // 98, 172, 181
+                        return Colors.lightBlue;
+                      }),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6))))),
+            ),
           ],
         ),
       ),

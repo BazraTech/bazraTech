@@ -3,6 +3,8 @@ import 'package:bazralogin/screen/Bottom/Bottom.dart';
 import 'package:bazralogin/screen/Driver/driverBottomnav.dart';
 import 'package:bazralogin/screen/Loging/Login.dart';
 
+import 'package:bazralogin/screen/Owner/Profile/profileEdit/updateOwnerprofile.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';

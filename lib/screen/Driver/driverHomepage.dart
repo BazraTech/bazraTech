@@ -197,7 +197,6 @@ class _Driver_HompageState extends State<Driver_Hompage> {
     return Scaffold(
         backgroundColor: Color.fromRGBO(236, 240, 243, 1),
         appBar: AppBar(
-          toolbarHeight: 80,
           automaticallyImplyLeading: false,
           elevation: 0,
           backgroundColor: Colors.white,
@@ -209,6 +208,9 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: 5,
+                    ),
                     Container(
                       child: SizedBox(
                           height: screenHeight * 0.08,
@@ -253,16 +255,13 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                           )),
                     ),
                     SizedBox(
-                      width: screenWidth * 0.66,
+                      width: screenWidth * 0.6,
                     ),
                     Align(
                       alignment: Alignment.topRight,
                       child: Container(
                         height: screenHeight * 0.2,
                         width: screenWidth * 0.09,
-                        margin: EdgeInsets.only(
-                          left: 5,
-                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: MaterialButton(
@@ -279,8 +278,8 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                               child: Center(
                                 child: Icon(
                                   Ionicons.notifications,
-                                  size: 23,
-                                  color: Colors.black,
+                                  size: 27,
+                                  color: Colors.blue,
                                 ),
                               ),
                             ),
@@ -298,7 +297,6 @@ class _Driver_HompageState extends State<Driver_Hompage> {
         ),
         //ScrollConfiguration to remove glow effect
         body: Container(
-          padding: EdgeInsets.all(10),
           decoration: const BoxDecoration(
             color: kBackgroundColor,
           ),
@@ -308,173 +306,190 @@ class _Driver_HompageState extends State<Driver_Hompage> {
               // fetch driver info
 
               Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  gradient: LinearGradient(
-                    colors: [
-                      Color.fromRGBO(95, 112, 247, 1),
-                      Color.fromRGBO(163, 163, 234, 1),
-                    ],
-                    // stops: [0.4, 0.4],
-                  ),
-                ),
-                margin: EdgeInsets.only(top: 20),
-                height: screenHeight * 0.28,
-                child: Column(children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                        margin: EdgeInsets.only(top: 20, bottom: 20),
-                        child: Text(
-                          "Today's Schedule",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontFamily: 'Nunito',
-                              fontSize: AppFonts.smallFontSize,
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal),
-                        )),
-                  ),
+                child: Stack(children: [
                   Container(
-                    height: screenHeight * 0.15,
-                    margin: EdgeInsets.only(top: 10),
-                    child: _isLoading
-                        ? Text("")
-                        : ListView.builder(
-                            itemCount: 1,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10))),
-                                    height: screenHeight * 0.19,
-                                    width: screenWidth - 20,
-                                    child: Container(
-                                      margin: EdgeInsets.only(
-                                          top: screenWidth * 0.05,
-                                          bottom: screenWidth * 0.05),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Icon(
-                                                    Icons.trip_origin,
-                                                    color: Colors.green,
-                                                  )),
-                                              CustomPaint(
-                                                size:
-                                                    Size(screenWidth * 0.16, 2),
-                                                painter: DashLinePainter(),
-                                              ),
-                                              Column(
+                    height: screenHeight * 0.2,
+                    // margin: EdgeInsets.only(bottom: 40),
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromRGBO(95, 112, 247, 1),
+                            Color.fromRGBO(163, 163, 234, 1),
+                          ],
+                          // stops: [0.4, 0.4],
+                        ),
+                        borderRadius: BorderRadius.vertical(
+                          bottom: Radius.circular(30),
+                        )),
+                    child: Padding(
+                      padding: EdgeInsets.all(0),
+                      child: Row(
+                        children: [],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                      child: Column(
+                    children: [
+                      Center(
+                          child: Text(
+                        "Today work shudule",
+                        style: TextStyle(
+                          fontFamily: "Nuinto",
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 17,
+                        ),
+                      )),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          height: screenHeight * 0.16,
+                          margin: EdgeInsets.only(top: 60),
+                          child: _isLoading
+                              ? Text("")
+                              : ListView.builder(
+                                  itemCount: 1,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10))),
+                                            height: screenHeight * 0.19,
+                                            width: screenWidth - 42,
+                                            child: Container(
+                                              margin: EdgeInsets.only(
+                                                  top: screenWidth * 0.05,
+                                                  bottom: screenWidth * 0.05),
+                                              child: Column(
                                                 children: [
-                                                  Container(
-                                                    height: screenHeight * 0.07,
-                                                    width: screenWidth * 0.07,
-                                                    child: Icon(
-                                                      Icons.local_shipping,
-                                                      color: Colors.white,
-                                                    ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Icon(
+                                                            Icons.trip_origin,
+                                                            color: Colors.green,
+                                                          )),
+                                                      CustomPaint(
+                                                        size: Size(
+                                                            screenWidth * 0.14,
+                                                            2),
+                                                        painter:
+                                                            DashLinePainter(),
+                                                      ),
+                                                      Container(
+                                                        height:
+                                                            screenHeight * 0.07,
+                                                        width:
+                                                            screenWidth * 0.07,
+                                                        child: Icon(
+                                                          Icons.local_shipping,
+                                                          color: Colors.red,
+                                                        ),
+                                                      ),
+                                                      CustomPaint(
+                                                        size: Size(
+                                                            screenWidth * 0.14,
+                                                            2),
+                                                        painter:
+                                                            DashLinePainter(),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Icon(
+                                                          Icons.trip_origin,
+                                                          color: Colors.red,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Container(
+                                                          width: screenWidth *
+                                                              0.26,
+                                                          margin: EdgeInsets.only(
+                                                              left:
+                                                                  screenWidth *
+                                                                      0.15),
+                                                          child: Text(
+                                                            Result!["status"],
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 12,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width:
+                                                            screenWidth * 0.1,
+                                                      ),
+                                                      Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(4.0),
+                                                          child: Container(
+                                                            width: screenWidth *
+                                                                0.26,
+                                                            child: Text(
+                                                              Result!["status"],
+                                                              style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 12,
+                                                              ),
+                                                            ),
+                                                          ))
+                                                    ],
                                                   ),
                                                 ],
                                               ),
-                                              CustomPaint(
-                                                size:
-                                                    Size(screenWidth * 0.16, 2),
-                                                painter: DashLinePainter(),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Icon(
-                                                  Icons.trip_origin,
-                                                  color: Colors.red,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Container(
-                                                  // margin: EdgeInsets.only(
-                                                  //     left: 20),
-                                                  width: screenWidth * 0.33,
-                                                  child: Text(
-                                                    Result!["status"],
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontFamily: 'Nunito',
-                                                        fontSize: AppFonts
-                                                            .smallFontSize,
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Container(
-                                                    width: screenWidth * 0.2,
-                                                    child: Text(
-                                                      Result!["plateNumber"],
-                                                      textAlign: TextAlign.left,
-                                                      style: TextStyle(
-                                                          fontFamily: 'Nunito',
-                                                          fontSize: AppFonts
-                                                              .smallFontSize,
-                                                          color: Colors.black,
-                                                          fontWeight: FontWeight
-                                                              .normal),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  width: screenWidth * 0.3,
-                                                  child: Text(
-                                                    Result!["status"],
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                        fontFamily: 'Nunito',
-                                                        fontSize: AppFonts
-                                                            .smallFontSize,
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                )
-                                              ],
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }),
-                  ),
-                  // SizedBox(
-                  //   height: 10,
-                  // ),
+                                        ),
+                                      ],
+                                    );
+                                  }),
+                        ),
+                      ),
+                    ],
+                  ))
                 ]),
               ),
+
               Flexible(
                 child: Container(
-                  margin: EdgeInsets.only(top: 15),
+                  padding: EdgeInsets.all(10),
+                  height: screenHeight * 0.3,
                   child: GridView(
                     // ignore: sort_child_properties_last
                     children: [

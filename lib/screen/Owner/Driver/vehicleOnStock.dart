@@ -16,7 +16,7 @@ import 'assignDriver.dart';
 // ignore: must_be_immutable
 class VehicleOnstock extends StatefulWidget {
   String? licenseNumber;
-  VehicleOnstock( {super.key,  this.licenseNumber});
+  VehicleOnstock({super.key, this.licenseNumber});
   @override
   State<VehicleOnstock> createState() => _VehicleOnstockState();
 }
@@ -141,57 +141,90 @@ class _VehicleOnstockState extends State<VehicleOnstock> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(12.0),
+                        padding: containerpaddingfordriverandowner,
                         child: Container(
+                          width: screenWidth,
                           height: screenHeight * 0.08,
-                          child: Center(
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: screenWidth * 0.25,
-                                  child: const Text(
-                                    "Vehicles",
-                                    style: TextStyle(
-                                      fontFamily: "Nunito",
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(6.0),
+                              bottomLeft: Radius.circular(6.0),
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  left:
+                                      BorderSide(color: Colors.blue, width: 6),
                                 ),
-                                Container(
-                                  width: screenWidth * 0.25,
-                                  child: const Text(
-                                    "Plate No",
-                                    style: TextStyle(
-                                      fontFamily: "Nunito",
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
+                              ),
+                              child: Container(
+                                color: Colors.white,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: screenWidth * 0.25,
+                                      child: const Text(
+                                        "Vehicle",
+                                        textAlign: TextAlign.left,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontFamily: 'Nunito',
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                Container(
-                                  width: screenWidth * 0.28,
-                                  child: const Text(
-                                    " Status",
-                                    style: TextStyle(
-                                      fontFamily: "Nunito",
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
+                                    Container(
+                                      width: screenWidth * 0.3,
+                                      child: const Text(
+                                        "Plate number ",
+                                        textAlign: TextAlign.left,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontFamily: 'Nunito',
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    Container(
+                                      width: screenWidth * 0.25,
+                                      child: const Text(
+                                        "Status",
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontFamily: 'Nunito',
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                         ),
                       ),
                       Column(
                           children: findVehicle.map((vehicle) {
+                        int index = findVehicle.indexOf(vehicle);
+                        Color borderLeftColor = Colors.red;
+                        if (index % 2 == 0) {
+                          borderLeftColor = Colors
+                              .green; // Update border color based on condition
+                        } else {
+                          borderLeftColor = Colors
+                              .blue; // Update border color for the else case
+                        }
                         return Container(
                           height: screenHeight * 0.1,
+                          padding: const EdgeInsets.only(
+                            left: 10,
+                            right: 10,
+                          ),
                           child: InkWell(
                             onTap: (() {
                               Navigator.push(
@@ -207,51 +240,66 @@ class _VehicleOnstockState extends State<VehicleOnstock> {
                             }),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Card(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Row(children: [
-                                    Container(
-                                      width: screenWidth * 0.25,
-                                      child: Text(
-                                        " " + vehicle['vehicleName'],
-                                        style: const TextStyle(
-                                            fontFamily: "Nunito",
-                                            fontSize: 12,
-                                            color: Colors.black),
-                                      ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(6.0),
+                                  bottomLeft: Radius.circular(6.0),
+                                ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border(
+                                      left: BorderSide(
+                                          color: borderLeftColor, width: 6),
                                     ),
-                                    Container(
-                                      width: screenWidth * 0.25,
-                                      margin: EdgeInsets.only(left: 5),
-                                      child: Text(
-                                        vehicle['plateNumber'],
-                                        style: const TextStyle(
-                                            // fontWeight: FontWeight.bold,
-                                            fontFamily: "Nunito",
-                                            fontSize: 12,
-                                            color: Colors.black),
-                                      ),
-                                    ),
-                                    Container(
-                                        height: screenHeight * 0.03,
-                                        width: screenWidth * 0.25,
-                                        // decoration: BoxDecoration(
-                                        //   borderRadius: BorderRadius.circular(6),
-                                        //   color: kPrimaryColor,
-                                        // ),
-                                        child: Center(
+                                  ),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: screenWidth * 0.25,
                                           child: Text(
-                                            " " + vehicle['status'],
+                                            " " + vehicle['vehicleName'],
+                                            textAlign: TextAlign.left,
+                                            overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
-                                                // fontWeight: FontWeight.bold,
-                                                fontFamily: "Nunito",
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black),
+                                              fontFamily: 'Nunito',
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            ),
                                           ),
-                                        ))
-                                  ]),
+                                        ),
+                                        Container(
+                                          width: screenWidth * 0.3,
+                                          margin: EdgeInsets.only(left: 5),
+                                          child: Text(
+                                            vehicle['plateNumber'],
+                                            textAlign: TextAlign.center,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontFamily: 'Nunito',
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                            height: screenHeight * 0.03,
+                                            width: screenWidth * 0.25,
+                                            child: Center(
+                                              child: Text(
+                                                " " + vehicle['status'],
+                                                textAlign: TextAlign.left,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  fontFamily: 'Nunito',
+                                                  fontSize: 14,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            ))
+                                      ]),
                                 ),
                               ),
                             ),

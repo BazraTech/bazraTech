@@ -138,13 +138,13 @@ class _activeWorkState extends State<activeWork> {
         child: Column(
           children: [
             Container(
-              color: Color.fromRGBO(85, 164, 240, 1),
+              color: kPrimaryColor,
               width: screenWidth,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    color: Color.fromRGBO(85, 164, 240, 1),
+                    color: kPrimaryColor,
                     padding: EdgeInsets.zero,
                     margin: EdgeInsets.only(
                         top: screenHeight * 0.08, right: screenWidth * 0.4),
@@ -154,7 +154,7 @@ class _activeWorkState extends State<activeWork> {
                       },
                       icon: Icon(
                         Ionicons.arrow_back,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -167,7 +167,7 @@ class _activeWorkState extends State<activeWork> {
                   height: screenHeight * 0.15,
                   // margin: EdgeInsets.only(bottom: 40),
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(85, 164, 240, 1),
+                      color: kPrimaryColor,
                       borderRadius: BorderRadius.vertical(
                         bottom: Radius.circular(30),
                       )),

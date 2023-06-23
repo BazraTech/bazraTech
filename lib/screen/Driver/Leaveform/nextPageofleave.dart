@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ionicons/ionicons.dart';
 
 import '../../../Theme/TextInput.dart';
 
@@ -21,8 +22,35 @@ class _nextleavePageState extends State<nextleavePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Container(
+              margin: EdgeInsets.only(top: screenHeight * 0.05),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Ionicons.arrow_back)),
+                  // Align(
+                  //   alignment: Alignment.center,
+                  //   child: Container(
+                  //       child: Text(
+                  //     'Leave form',
+                  //     textAlign: TextAlign.left,
+                  //     overflow: TextOverflow.ellipsis,
+                  //     style: const TextStyle(
+                  //         fontFamily: 'Nunito',
+                  //         fontSize: AppFonts.mediumFontSize,
+                  //         color: Colors.black,
+                  //         fontWeight: FontWeight.bold),
+                  //   )),
+                  // ),
+                ],
+              ),
+            ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(12.0),
               child: Container(
                 width: screenWidth,
                 height: screenHeight,
@@ -478,7 +506,7 @@ class _nextleavePageState extends State<nextleavePage> {
                   Row(
                     children: [
                       Container(
-                        width: screenWidth - 20,
+                        width: screenWidth - 24,
                         height: screenHeight * 0.1,
                         child: TextField(
                           decoration: InputDecoration(
@@ -505,7 +533,7 @@ class _nextleavePageState extends State<nextleavePage> {
                   Row(
                     children: [
                       Container(
-                        width: screenWidth - 20,
+                        width: screenWidth - 24,
                         height: screenHeight * 0.06,
                         child: ElevatedButton(
                             onPressed: () {},

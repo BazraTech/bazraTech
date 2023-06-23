@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:bazralogin/Route/Routes.dart';
 import 'package:bazralogin/config/APIService.dart';
 import 'package:bazralogin/controller/Localization.dart';
@@ -7,6 +8,7 @@ import 'package:bazralogin/screen/Owner/Profile/profileEdit/languageOptions.dart
 import 'package:bazralogin/screen/Owner/Profile/profileEdit/updateOwnerprofile.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:get/get.dart';
@@ -18,6 +20,8 @@ import '../../../controller/apiController.dart';
 import '../../Loging/changePassword.dart';
 import '../../../../const/constant.dart';
 import '../../Owner/Driver/assignDriver.dart';
+import '../Leaveform/leavePage.dart';
+import 'Languagefordriver.dart';
 import 'profileUpdate.dart';
 
 class driverProfile extends StatefulWidget {
@@ -30,6 +34,7 @@ class driverProfile extends StatefulWidget {
 class _driverProfileState extends State<driverProfile> {
   String ownerpic = "";
   bool _isLoading = true;
+  DateTime? currentBackPressTime;
   Map<String, dynamic>? Result;
   Map<String, dynamic>? findVehicle;
   String? ownername;
@@ -86,9 +91,35 @@ class _driverProfileState extends State<driverProfile> {
     } else {}
   }
 
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    if (ModalRoute.of(context)?.isCurrent == true) {
+      if (currentBackPressTime == null ||
+          DateTime.now().difference(currentBackPressTime!) >
+              Duration(seconds: 2)) {
+        // Show a Snackbar at the bottom indicating to press back again to exit
+
+        currentBackPressTime = DateTime.now();
+        return true; // Stop the default back button event
+      } else {
+        // Close the app when back button is pressed again
+        SystemNavigator.pop();
+        return true; // Stop the default back button event
+      }
+    } else {
+      Navigator.pop(context); // Navigate back to the home page
+      return true; // Stop the default back button event
+    }
+  }
+
   void initState() {
     fetchDriverinfo();
+    BackButtonInterceptor.add(myInterceptor);
     super.initState();
+  }
+
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
   }
 
   @override
@@ -192,12 +223,11 @@ class _driverProfileState extends State<driverProfile> {
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10),
                     )),
-                height: screenHeight * 0.28,
+                height: screenHeight * 0.25,
                 width: screenWidth,
                 child: Column(children: [
                   SizedBox(
-                    height: screenHeight * 0.28,
-
+                    height: screenHeight * 0.25,
                     child: _isLoading
                         ? Container()
                         : ListView.builder(
@@ -410,61 +440,129 @@ class _driverProfileState extends State<driverProfile> {
                               );
                             },
                           ),
-                    
                   ),
                 ]),
               ),
               SizedBox(
                 height: 20,
               ),
-              Container(
-                height: screenHeight * 0.1,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                    )),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                              height: screenWidth * 0.08,
-                              width: screenWidth * 0.08,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(252, 221, 244, 1),
-                                  borderRadius: BorderRadius.circular(6)),
-                              child: Icon(Icons.language_sharp)),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                                width: screenWidth -
-                                    (screenWidth * 0.08 +
-                                        screenWidth * 0.03 +
-                                        76),
-                                child: Text(
-                                  TranslationUtil.text("Language"),
-                                  textAlign: TextAlign.left,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      fontFamily: 'Nunito',
-                                      fontSize: AppFonts.smallFontSize,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal),
-                                )),
-                          ),
-                          Container(
-                              child: Icon(Ionicons.chevron_forward_outline)),
-                        ],
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => languageOptionFordriver()));
+                },
+                child: Container(
+                  height: screenHeight * 0.07,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      )),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                                height: screenWidth * 0.08,
+                                width: screenWidth * 0.08,
+                                decoration: BoxDecoration(
+                                    color: Color.fromRGBO(252, 221, 244, 1),
+                                    borderRadius: BorderRadius.circular(6)),
+                                child: Icon(Icons.language_sharp)),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  width: screenWidth -
+                                      (screenWidth * 0.08 +
+                                          screenWidth * 0.03 +
+                                          76),
+                                  child: Text(
+                                    TranslationUtil.text("Language"),
+                                    textAlign: TextAlign.left,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        fontFamily: 'Nunito',
+                                        fontSize: AppFonts.smallFontSize,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.normal),
+                                  )),
+                            ),
+                            Container(
+                                child: Icon(Ionicons.chevron_forward_outline)),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => leavepremmissionPage()));
+                },
+                child: Container(
+                  height: screenHeight * 0.07,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      )),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                                height: screenWidth * 0.08,
+                                width: screenWidth * 0.08,
+                                decoration: BoxDecoration(
+                                    color: Color.fromRGBO(252, 221, 244, 1),
+                                    borderRadius: BorderRadius.circular(6)),
+                                child: Icon(Ionicons.calendar_number)),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  width: screenWidth -
+                                      (screenWidth * 0.08 +
+                                          screenWidth * 0.03 +
+                                          76),
+                                  child: Text(
+                                    "Leave Request",
+                                    textAlign: TextAlign.left,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        fontFamily: 'Nunito',
+                                        fontSize: AppFonts.smallFontSize,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.normal),
+                                  )),
+                            ),
+                            Container(
+                                child: Icon(Ionicons.chevron_forward_outline)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -479,7 +577,7 @@ class _driverProfileState extends State<driverProfile> {
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10),
                     )),
-                height: screenHeight * 0.3,
+                height: screenHeight * 0.24,
                 width: screenWidth,
                 child: Column(
                   children: [
@@ -488,7 +586,7 @@ class _driverProfileState extends State<driverProfile> {
                       child: Row(
                         children: [
                           Container(
-                              height: screenWidth * 0.08,
+                              height: screenWidth * 0.06,
                               width: screenWidth * 0.08,
                               decoration: BoxDecoration(
                                   color: Color.fromRGBO(201, 252, 248, 1),
@@ -535,7 +633,7 @@ class _driverProfileState extends State<driverProfile> {
                       child: Row(
                         children: [
                           Container(
-                              height: screenWidth * 0.08,
+                              height: screenWidth * 0.05,
                               width: screenWidth * 0.08,
                               decoration: BoxDecoration(
                                   color: Color.fromRGBO(255, 245, 210, 1),
@@ -573,7 +671,7 @@ class _driverProfileState extends State<driverProfile> {
                         children: [
                           Container(
                               height: screenWidth * 0.08,
-                              width: screenWidth * 0.08,
+                              width: screenWidth * 0.06,
                               decoration: BoxDecoration(
                                   color: Color.fromRGBO(201, 252, 248, 1),
                                   borderRadius: BorderRadius.circular(8)),

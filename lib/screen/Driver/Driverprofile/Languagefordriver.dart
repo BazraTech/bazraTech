@@ -5,14 +5,15 @@ import 'package:ionicons/ionicons.dart';
 
 import '../../../../../controller/Localization.dart';
 
-class languageOption extends StatefulWidget {
-  const languageOption({super.key});
+class languageOptionFordriver extends StatefulWidget {
+  const languageOptionFordriver({super.key});
 
   @override
-  State<languageOption> createState() => _languageOptionState();
+  State<languageOptionFordriver> createState() =>
+      _languageOptionFordriverState();
 }
 
-class _languageOptionState extends State<languageOption> {
+class _languageOptionFordriverState extends State<languageOptionFordriver> {
   TextEditingController englishcontoller = TextEditingController();
   TextEditingController amahariccontoller = TextEditingController();
   TextEditingController afanoromocontoller = TextEditingController();

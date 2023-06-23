@@ -65,7 +65,7 @@ class _CreateAlertState extends State {
         _toDoListLocation.add(chooseAlertType);
       });
       _textEditingController.clear();
-      _saveToDoList();
+    
     }
   }
 
@@ -73,7 +73,7 @@ class _CreateAlertState extends State {
     setState(() {
       _toDoListLocation.removeAt(index);
     });
-    _saveToDoList();
+   
   }
 
   _loadToDoList() async {
@@ -87,11 +87,7 @@ class _CreateAlertState extends State {
     }
   }
 
-  _saveToDoList() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList('toDoList', _toDoListLocation.cast());
-  }
-
+  
   void Create_Alert() async {
     final storage = new FlutterSecureStorage();
     var value = await storage.read(key: 'jwt');

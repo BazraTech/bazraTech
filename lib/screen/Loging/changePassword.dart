@@ -6,8 +6,6 @@ import 'package:flutter/src/widgets/container.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-
-
 import '../../../Theme/TextInput.dart';
 import '../Bottom/Bottom.dart';
 
@@ -159,7 +157,6 @@ class _ChangePasswordState extends State<ChangePassword> {
     print("${currentPassword.text}");
 
     return Scaffold(
-      bottomSheet: ConfirmPassword(),
       backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
         child: Container(
@@ -169,9 +166,7 @@ class _ChangePasswordState extends State<ChangePassword> {
             children: [
               Container(
                 margin: EdgeInsets.only(
-                    top: screenHeight * 0.1,
-                    left: screenHeight * 0.01,
-                    bottom: screenHeight * 0.07),
+                    top: screenHeight * 0.1, bottom: screenHeight * 0.07),
                 child: Row(
                   children: [
                     Container(
@@ -181,7 +176,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                           Navigator.pop(context);
                         },
                         icon: Icon(
-                          Icons.arrow_back_ios_new,
+                          Icons.arrow_back,
                           size: 30,
                         ),
                       ),
@@ -190,7 +185,13 @@ class _ChangePasswordState extends State<ChangePassword> {
                         margin: EdgeInsets.only(left: screenWidth * 0.14),
                         child: Text(
                           "Change password",
-                          style: TextStyle(fontSize: 23),
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: AppFonts.mediumFontSize,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal),
                         )),
                   ],
                 ),
@@ -200,7 +201,18 @@ class _ChangePasswordState extends State<ChangePassword> {
                 child: Container(
                   margin: EdgeInsets.only(top: screenHeight * 0.03),
                   child: Row(
-                    children: [Text(" Current  password")],
+                    children: [
+                      Text(
+                        " Current  password",
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontFamily: 'Nunito',
+                            fontSize: AppFonts.smallFontSize,
+                            color: Colors.black,
+                            fontWeight: FontWeight.normal),
+                      )
+                    ],
                   ),
                 ),
               ),
@@ -222,7 +234,18 @@ class _ChangePasswordState extends State<ChangePassword> {
                 child: Container(
                   // margin: EdgeInsets.only(top: screenHeight * 0.09),
                   child: Row(
-                    children: [Text(" New password")],
+                    children: [
+                      Text(
+                        " New password",
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontFamily: 'Nunito',
+                            fontSize: AppFonts.smallFontSize,
+                            color: Colors.black,
+                            fontWeight: FontWeight.normal),
+                      )
+                    ],
                   ),
                 ),
               ),
@@ -242,9 +265,19 @@ class _ChangePasswordState extends State<ChangePassword> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  margin: EdgeInsets.only(top: screenHeight * 0.03),
                   child: Row(
-                    children: [Text(" Confirm  password")],
+                    children: [
+                      Text(
+                        " Confirm  password",
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontFamily: 'Nunito',
+                            fontSize: AppFonts.smallFontSize,
+                            color: Colors.black,
+                            fontWeight: FontWeight.normal),
+                      )
+                    ],
                   ),
                 ),
               ),
@@ -259,6 +292,34 @@ class _ChangePasswordState extends State<ChangePassword> {
                           decoration: ThemeHelper().textInputDecoration(),
                         )),
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        width: MediaQuery.of(context).size.width - 20,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            ChangePasswords();
+                          },
+                          child: const Text(
+                            "Confrim",
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontFamily: 'Nunito',
+                                fontSize: AppFonts.smallFontSize,
+                                color: Colors.white,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          style: ThemeHelper().buttonStyle(),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               )
             ],
@@ -266,37 +327,5 @@ class _ChangePasswordState extends State<ChangePassword> {
         ),
       ),
     );
-  }
-
-  Widget ConfirmPassword() {
-    return Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.15,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(0), topRight: Radius.circular(0))),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
-              width: MediaQuery.of(context).size.width - 30,
-              child: ElevatedButton(
-                onPressed: () {
-                  ChangePasswords();
-                },
-                child: const Text(
-                  "Confrim",
-                  style: TextStyle(
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
-                ),
-                style: ThemeHelper().buttonStyle(),
-              ),
-            ),
-          ],
-        ));
   }
 }
