@@ -11,6 +11,54 @@ import swal from "sweetalert";
 export default function Market_Progress() {
 
     
+    const {
+        register,
+        handleSubmit,
+        watch, 
+        formState: { errors }, 
+    } = useForm();
+    const onSubmit = (data) => {
+        console.log(data);
+        handleClick();
+    };
+
+
+    const handleClick = async () => {
+        console.log('Im on submit function');
+        const options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
+           
+        };
+        const url =`http://64.226.104.50:9090/Api/Admin/AcceptedCargo/${id}`; 
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            console.log(result);
+            localStorage.setItem("message", JSON.stringify(result["message"])); 
+            const mess = localStorage.getItem("message");
+            console.log(mess);
+            if (response.ok) {
+                console.log("Posted successful");
+                swal("Successfully Posted to cargo owner", `${mess}`, "success", {
+                    button: true,
+                    timer: 60000,
+                });
+               
+            } else {
+                console.log("failed");
+                swal(`Failed To Post ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
 
     const [state, setState] = useState(false);
 
@@ -38,7 +86,7 @@ export default function Market_Progress() {
       
     };
     const { id } = useParams()
-    const url2 = `http://64.226.104.50:9090/Api/Admin/All/CargosBy/ACCEPT`;
+    const url2 = `http://64.226.104.50:9090/Api/Admin/All/CargoDrivers/${id}`;
 
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
@@ -46,8 +94,8 @@ export default function Market_Progress() {
         fetch(url2, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource(data)
-                console.log(dataSource)
+                setDataSource(data.cargoDriversINFs)
+                console.log(dataSource.cargoDriversINFs)
                 // setLoading(false);
             })
     }, [])
@@ -72,12 +120,7 @@ console.log(dataSource1);
     const goBack = () => {
         navigate(-1);
     }
-    const onSubmit =  (e) => {
-        
-        // console.log(isPost)
-        e.preventDefault()
-
-    };
+  
    let percent = 75;
 
     return (
@@ -130,35 +173,35 @@ console.log(dataSource1);
               <table className={styles.vehicle_table} id="myTable">
                                             <thead>
                                                 <tr>
-                                                <th>Id</th>
+                                                <th>cargo Id</th>
                                                     <th>vihicle owner Name</th>
-                                                    <th>driver</th>
-                                                    <th>price</th>
+                                                    <th>Driver Name</th>
+                                                    <th>Plate number</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                              
-                                                    <tr className={styles.active_row}>
-                                                        <td>{dataSource.id}</td>
-                                                        <td>{dataSource.cargoOwner}</td>
-                                                        <td>{dataSource.packaging}</td>
-                                                        <td>{dataSource.weight}</td>
+                                              {dataSource.map(item =>(
+                                                    <tr className={styles.active_row} key={item.id}>
+                                                        <td>{item.cargo}</td>
+                                                        <td>{item.vehicleOwner}</td>
+                                                        <td>{item.driver}</td>
+                                                        <td>{item.plateNumber}</td>
                                                                                                              
                                                     </tr>
-                                              
+                                              ))}
                                             </tbody>
                                         </table>
             </div>
             <div className={styles.page}>
-              {/* <Pagination */}
-                {/* // onChange={(page) => setCurentPage(page)}
-                // pageSize={postPerPage}
-                // current={page}
-                // total={totalPages}
-              // showQuickJumper
-              // showSizeChanger
-              // onShowSizeChange={onShowSizeChange} */}
-              {/* /> */}
+              {/* <Pagination 
+                onChange={(page) => setCurentPage(page)}
+                pageSize={postPerPage}
+                current={page}
+                total={totalPages}
+              showQuickJumper
+              showSizeChanger
+              onShowSizeChange={onShowSizeChange} 
+               /> */}
            
                  
             </div>

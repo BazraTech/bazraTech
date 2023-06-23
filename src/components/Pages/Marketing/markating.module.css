@@ -1,29 +1,71 @@
 /* ------------------ search ------------------- */
-.main_content{
-    position: absolute;
-     width: calc(100% - 100px); 
-     left: 100px; 
-     min-height: calc(100vh -75px);
-     opacity: var(--black2);
-     color: var(--black1);
-     top: 75px;
-     /* background-color: rgb(228, 114, 114); */
-     /* z-index: -1;   */
- }
+/* .company_container{
+    border: 2px solid yellow;
+    } 
+     */
+.main_content {
+    position: relative;
+    width: calc(100% - 100px);
+    left: 100px;
+    height:100vh;
+    min-height: calc(100vh -75px);
+    background-color: rgb(238, 238, 238);
+    color: var(--black1);
+    top: 75px;
+    padding: 5%;
+    padding-top: 2px;
+    padding-bottom: 3%;
+    
+  
+  }
+  .company_individual_header {
+    display: grid;
+    grid-template-columns: 25% 25%;
+    gap: 8%;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    text-decoration: none;
+    color: var(--white);
+  }
+  
+.company_individual_header .companyHeader {
+    background-color: rgb(255, 255, 255);
+    color: rgb(20, 132, 0);
+    margin-bottom: -40px;
+    border: 8px solid rgb(238, 238, 238);
+    z-index: -1;
+    text-transform: none;
+    padding: 25px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  
+  .company_individual_header p h1 {
+    color: rgb(0, 0, 0);
+    display: inline-block;
+    border-radius: 8px;
+    border: none;
+    font-size: 1.6vw;
+  }.allDiv {
+    background-color: rgb(255, 255, 255);
+    padding: 5%;
+    border-radius: 10px 10px 10px 10px;
+    z-index: 1;
+  }
 
 /* -------------------Place for map --------------------- */
-.mapAndSearch {
-    display: grid;
-    grid-template-columns: 65% 30%;
-    justify-content: center; 
-    column-gap: 10px;
-    margin-top: 50px;
-}
-
 .search{
-    display: flex;
-    justify-content: right;
+    text-align: right;
+    width: 50%;
+    margin: 0 0  0 auto;
 }
+/* .search{
+   
+    text-align: right;
+    border: 2px solid red;
+
+} */
 .search input{
     margin-bottom: 10px;
     /* margin-left: 25px; */
@@ -49,13 +91,6 @@
     margin-left: -1px;
 }
 
-/* .map {
-    box-shadow: 0px 0px 11px -1px #000000;
-    border-radius: 5px;
-    margin-left: 3%;
-    height: 500px;
-    width: 90%;
-} */
 
 /* ------------------- Table --------------------- */
 
@@ -63,7 +98,8 @@
     overflow-x: scroll;
     background-color: rgb(252, 250, 250);
     border-radius: 5px;
-    width: 80vw;
+    width:90%;
+    margin: 0 auto;
 }
 .outer_vehicle_table p {
     color: #009879;
@@ -78,10 +114,11 @@
     /* background-color: red; */
     /* margin-left: 4%; */
     border-collapse: collapse;
-    width: 100%;
+    width: 90%;
     border-radius: 5px 5px 0px 0px;
     overflow: hidden;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    margin: 0 auto;
 }
 
 .vehicle_table thead {

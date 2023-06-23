@@ -10,7 +10,7 @@ import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
 
-export default function () {
+export default function FinishedWorks () {
 
  
   const [popup, setPop1] = useState(false);
@@ -97,8 +97,8 @@ export default function () {
 <section className={styles.main_content}>
 
     <div className={styles.company_individual_header}>
-        <p ><Link style={{ textDecoration: 'none' }} to="#"><h1 className={styles.companyHeader}>Available Works</h1></Link></p>
-        <p><Link style={{ textDecoration: 'none' }} to="/FinishedWorks"><h1>Finished Works</h1></Link></p>
+        <p ><Link style={{ textDecoration: 'none' }} to="/marketing"><h1 >Available Works</h1></Link></p>
+        <p><Link style={{ textDecoration: 'none' }} to="#"><h1 className={styles.companyHeader}>FINISHED WORKS</h1></Link></p>
     </div>
     <div className={styles.allDiv}>
 
@@ -118,7 +118,6 @@ export default function () {
               <table className={styles.vehicle_table} id="myTable">
                                             <thead>
                                                 <tr>
-                                                  <th>Name</th>
                                                     <th>Name</th>
                                                     <th>packaging</th>
                                                     <th>weight</th>
@@ -129,7 +128,6 @@ export default function () {
                                             <tbody>
                                                 {searchResult.map(item => (
                                                     <tr className={styles.active_row} key = {item.id}>
-                                                      <td>{item.id}</td>
                                                         <td>{item.cargoOwner}</td>
                                                         <td>{item.packaging}</td>
                                                         <td>{item.weight}</td>
@@ -137,7 +135,7 @@ export default function () {
                                                        {/* <td><Link to={`/cargo/${item.id}`}>
                                                             <button>Detail</button></Link>
                                                             </td> */}
-                                                         <td>{item.status != 'NEW' ?<Link to={`/Market_Progress/${item.id}`}><button>Progress</button></Link>:
+                                                         <td>{item.status == 'ACTIVE' ?<Link to={`/Market_Progress/${item.id}`}><button>Progress</button></Link>:
                                                          <Link to={`/Post_market/${item.id}`}><button>Detail</button></Link>}</td>
                                                         
                                                     </tr>

@@ -100,6 +100,17 @@ export default function () {
                 setLoading(false);
             })
     }, [])
+    // const url6 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/UNASSIGNED";
+    // const [Unassigned, setUnassigned] = useState([])
+    // useEffect(() => {
+    //     setLoading(true);
+    //     fetch(url4, options)
+    //         .then(respnse => respnse.json()) 
+    //         .then(data => {
+    //             Unassigned(data.unassigned)
+    //             setLoading(false);
+    //         })
+    // }, [])
 
     const [page, setCurentPage] = useState(1);
     const [postPerPage, setpostPerPage] = useState(5);
@@ -113,7 +124,7 @@ export default function () {
 
     const [color, setColor] = useState("green");
     const [margin, setMargin] = useState("");
-    
+
     const [filteredRows, setFilteredRows] = useState([]);
     const [searchValue, setSearchValue] = useState('');
 
@@ -139,7 +150,7 @@ export default function () {
         setFilteredRows(filteredData);
       };
     const searchResult = searchValue === '' ? currentPage : filteredRows;
-
+console.log(searchResult)
     return (
 
         <div className="vehicle_container">
@@ -199,7 +210,6 @@ export default function () {
                             </div>
                         </Link>
                     </div>
-
                 </div>
 
                 {/* --------------- search --------------- */}
@@ -254,8 +264,8 @@ export default function () {
                                             <td>{item.status}</td>
                                             <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td>
                                             <td><Link to="/tracking"><button>Tracking</button></Link></td>
-                                           { item.driverName == "null" ? <td><Link to={`/AssignDriver/${item.plateNumber}`}><button>Assaign</button></Link></td>:
-                                            <td><Link to={`/AssignDriver/${item.plateNumber}`}><button style={{backgroundColor:"green", width:'12em'}}>Change driver</button></Link></td>}
+                                           { item.driverName == "null" ? <td><Link to={`/AssignDriver/${item.plateNumber}/${item.ownerID}`}><button>Assaign</button></Link></td>:
+                                            <td><Link to={`/ChangeDriver/${item.plateNumber}/${item.ownerID}`}><button style={{backgroundColor:"green", width:'12em'}}>Change driver</button></Link></td>}
                                         </tr>
                                     ))}
                                 </tbody>
