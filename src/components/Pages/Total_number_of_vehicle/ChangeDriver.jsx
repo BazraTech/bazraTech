@@ -86,10 +86,9 @@ export default function () {
             })
     }, [])
 
-    const [LicenseNumber, setLicenseNumber] = useState();
+    const [driver, setDriverName] = useState();
 
-    const driver = LicenseNumber;
-    console.log(LicenseNumber);
+   
 
     const {
         register,
@@ -117,7 +116,7 @@ export default function () {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Vehicle/AssignDriver";
+        const url = "http://64.226.104.50:9090/Api/Vehicle/ChangeAssignedDriver";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -135,7 +134,7 @@ export default function () {
                 });
             } else {
                 console.log("failed");
-                swal("Failed", "Failnd To Assigne", "error");
+                swal("Failed", "Failed To Change", "error");
             }
         } catch (error) {
             console.log(error + "error");
@@ -201,7 +200,7 @@ export default function () {
                                             <td>
                                                 <button onClick={() => {
                                                     handleClickopen()
-                                                    setLicenseNumber(item.licenseNumber)
+                                                    setDriverName(item.licenseNumber)
                                                 }}>Select</button>
                                             </td>
                                         </tr>
@@ -226,8 +225,8 @@ export default function () {
                                         <form onSubmit={handleSubmit(onSubmit)}>
                                             <div className={styles.assignetDiver}>
                                                 <lable className={styles.lable}>Assign Driver</lable>
-                                                <lable >Licence number</lable>
-                                                <input value={LicenseNumber}></input>
+                                                <lable >Driver Name</lable>
+                                                <input value={driver}></input>
                                                 <lable >Plate number</lable>
                                                 <input value={plateNumber}></input>
                                                 <button>Assign</button>

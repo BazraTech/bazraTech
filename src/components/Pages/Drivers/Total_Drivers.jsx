@@ -20,15 +20,16 @@ import { FaUserSecret } from "react-icons/fa";
 import { FaUserCheck } from "react-icons/fa";
 import { FaUserTimes } from "react-icons/fa";
 import { FaUserMinus } from "react-icons/fa";
+import swal from "sweetalert";
 
 export default function () {
 
    
 
     let [state, setState] = useState("false");
-    const [popup, setPop] = useState(false);
+    const [popUp, setPop] = useState(false);
     const handleClickopen = () => {
-        setPop(!popup);
+        setPop(!popUp);
     }
 
     const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
@@ -40,7 +41,7 @@ export default function () {
             "Authorization": `Bearer ${jwt}`
         },
     };
-
+const [refresh, serRefresh] = useState(false)
     const [Loading, setLoading] = useState([]);
     const url = "http://64.226.104.50:9090/Api/Admin/All/Drivers";
     const [dataSource, setDataSource] = useState([])
@@ -54,7 +55,7 @@ export default function () {
                 setLoading(false);
 
             })
-    }, [])
+    }, [refresh])
 
     const [totalPages, setTotalPage] = useState(1);
     const url2 = "http://64.226.104.50:9090/Api/Admin/Drivers/ONROUTE";
@@ -109,6 +110,16 @@ export default function () {
             })
     }, [])
 
+    const statusUrl = "http://64.226.104.50:9090/Api/Admin/DriverStatus/All"
+    const [status, setStatus] = useState([])
+    useEffect(() => {
+        fetch(statusUrl, options)
+        .then(response => response.json())
+        .then(data =>{
+            setStatus(data.driverStatus)
+            console.log(status)
+        })
+    },[])
 
     const [page, setCurentPage] = useState(1);
     const [postPerPage, setpostPerPage] = useState(5);
@@ -127,7 +138,6 @@ export default function () {
     const [popup1, setPop1] = useState(false);
 
     const [id, setId] = useState();
-console.log(id);
 
     const [edit, setEdit] = useState("");
     let [active, setActive] = useState(false);
@@ -136,7 +146,58 @@ console.log(id);
     function changeName(show) {
         setShow(show);
     }
+/**********************pop */
+const [pop,setpop] = useState(false)
+const [driverLicense, setdriverLicense] = useState('')
+const [driverName,setdriverName] = useState('')
+const [driverStatus, setdriverStatus] = useState('')
+const handleSubmit =(e)=>{
+    e.preventDefault();
+    console.log('on submit')
+    console.log(driverStatus)
+    updateStatus()
+}
+const handleChange =(e)=>{
+setdriverStatus(e.target.value);
 
+}
+async function updateStatus(){
+    let item =
+    {
+        driverStatus,
+        driverLicense,
+    };
+    const options = {
+        method: "PUT",
+        headers: {'Content-Type': 'application/json',
+         "Accept": "application/json",
+          "Authorization": `Bearer ${jwt}`
+        },
+        body: JSON.stringify(item),
+    };
+    const url = "http://64.226.104.50:9090/Api/Vehicle/ChangeDriverStatus";
+    try {
+                const response = await fetch(url, options);
+                const result = await response.json();
+                console.log(result);
+                localStorage.setItem("message", JSON.stringify(result["message"]));
+                const mess = localStorage.getItem("message");
+                console.log(mess);
+                if (response.ok) {
+                    swal("Successful", `${mess}`, "success", {
+                        buttons: false,
+                        timer: 2000,
+                    });
+                    serRefresh(!refresh)
+                } else {
+                    swal(`Failed To update ${mess}`, "", "error");
+                }
+    } catch (error)
+        {
+        console.error(error);
+        }
+}
+/****************search */
     
     const [filteredRows, setFilteredRows] = useState([]);
     const [searchValue, setSearchValue] = useState('');
@@ -162,7 +223,7 @@ console.log(id);
       };
     const searchResult = searchValue === '' ? currentPage : filteredRows;
 
-
+console.log(searchResult)
     return (
 
         <div className="vehicle_container">
@@ -261,7 +322,7 @@ console.log(id);
                                         <th>Status</th>
                                         <th>Owner</th>
                                         <th>Detail</th>
-                                        <th>Tracking</th> 
+                                        <th>Manage</th> 
                                        
                                     </tr>
                                 </thead>
@@ -280,7 +341,13 @@ console.log(id);
                                                 setId(item.id) 
                                                 setShow("true")
                                             }}>Detail</button></td>
-                                            <td><button>Manage</button></td>
+                                            <td><button onClick={() => {
+                                                    handleClickopen()
+                                                    setdriverLicense(item.licenseNumber)
+                                                    setdriverName(item.driverName)
+                                                    setdriverStatus(item.status)
+                                                    }}>
+                                                        Manage</button></td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -303,6 +370,42 @@ console.log(id);
 
                 }
                 {show === "true" && <Driver_detail id={id} changeName={changeName} />}
+
+
+                {popUp ?
+                    <div>
+                        <div className={styles.popup}>
+                            <div className={styles.popupInner}>
+                                <div className={styles.ewq}>
+                                    <button className={styles.closeBtn} onClick={()=>{setPop(!popUp)}}>X</button>
+                                    <div>
+                                        <form onSubmit={handleSubmit}>
+                                            <div className={styles.assignetDiver}>
+                                                <lable className={styles.lable}>Change Status for Driver</lable>
+                                                <lable >Licence number</lable>
+                                                <input value={driverLicense}></input>
+                                                <label>Driver name</label>
+                                                <input value={driverName}></input>
+                                                <label>Status</label>
+                                                <select className='select' value={driverStatus} onChange={handleChange}>
+                                                    <option  value="">Select Driver status</option>
+                                                    {
+                                                        status.map(item => {
+                                                            return <option>{item.driverStatus}</option>
+                                                        })
+                                                    }
+                                                </select>
+                                                <button>Assign</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div> : ""}
+
+
 
             </div>
 

@@ -304,7 +304,112 @@
     padding: 10px;
 }
 
+/* ---------------------- popup --------------------- */
 
+.popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2; 
+}
+
+.popupInner{
+    position: relative;
+    padding: 2px;
+    padding-top: 5%;
+    padding-bottom: 20px;
+    width: 100%;
+    max-width: 700px;
+    background-color: rgb(230, 230, 230);
+    border-radius: 4px;
+}
+.popupInner .closeBtn{
+    position: absolute;
+    top: 20px ;
+    right: 26px;
+    background-color: red;
+    padding: 2px;
+    padding-left: 2%;
+    padding-right: 2%;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    
+}
+
+.assignetDiver{
+    display: grid;
+    gap: 10px;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: -20px;
+    /* margin-bottom: 20px; */
+    padding-bottom: 40px;
+    background-color: white;
+    padding-left: 100px;
+    padding-right: 100px;
+    border-radius: 6px;
+}
+.assignetDiver .lable{
+    background-color: rgb(255, 255, 255);
+    border: 8px solid rgb(231, 231, 231);
+    border-radius: 6px;
+    text-align: center;
+    margin-top: -40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 24px;
+    color: green;
+    margin-bottom: 30px;
+    font-weight: 700;
+} 
+.assignetDiver input{
+    height: 40px;
+    outline: none;
+    border-radius: 6px;
+    padding: 0 15px;
+    background-color: rgb(242, 242, 242);
+    border: 1px solid rgb(202, 202, 202);
+    text-align: center;
+}
+
+.assignetDiver button{
+    height: 40px;
+    outline: none;
+    border-radius: 6px;
+    background-color: rgb(46, 46, 46);
+    border: 1px solid rgb(202, 202, 202);
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    font-size: 15px;
+    width: 50%;
+    margin-left: 24%;
+    margin-top: 10px;
+    margin-bottom: -30px;
+    
+}
+.select {
+    position: relative;
+    height: 40px;
+    width: 100%;
+    outline: none;
+    background-color: rgb(234, 234, 234);
+    border: none;
+    border-radius: 6px;
+    padding: 0 15px;
+    border: 1px solid rgb(188, 188, 188);
+  }
+  .select:focus {
+    box-shadow: 0px 0px 2px 1px rgba(21, 113, 146, 0.4);
+    border: 1px solid rgba(21, 113, 146, 0.4);
+  
+  }
 /* ------------------ Responsivness ------------------- */
 
 @media screen and (max-width: 1120px) {

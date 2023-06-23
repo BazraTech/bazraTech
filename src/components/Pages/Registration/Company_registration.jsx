@@ -45,6 +45,7 @@ export default function Company_registration() {
     const [plateNumber, setPlateNumber] = useState("");
     const [manufactureDate, setmanufactureDate] = useState("");
     const [deviceID, setdeviceId] = useState("");
+    const [capacity, setcapacity] = useState("");
 
     const [mess, setMEesaa] = useState("");
     const handleClick = (e) => {
@@ -86,6 +87,7 @@ export default function Company_registration() {
                     plateNumber,
                     manufactureDate,
                     deviceID,
+                    capacity,
                 },
 
             ]
@@ -587,7 +589,17 @@ export default function Company_registration() {
                                     {deviceID <= 0 && errors.deviceID && <span className={styles.validate_text}>{errors.deviceID.message}</span>}
                                 </div>
 
+                                <div>
+                                    <p>Capacity <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                    <input name='capacity' type="text"
+                                        {...register("capacity", { required: '*Capacity is required' })}
+                                        placeholder='Enter Capacity'
+                                        onChange={(e) => setcapacity(e.target.value)} ></input>
+                                    {deviceID <= 0 && errors.capacity && <span className={styles.validate_text}>{errors.capacity.message}</span>}
+                                </div>
+
                             </div>
+                            
 
                         </div>
 

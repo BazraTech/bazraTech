@@ -45,11 +45,9 @@ export default function Users_edit() {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource(data)
-                console.log(dataSource)
-                // setLoading(false);
             })
     }, [])
-console.log(dataSource);
+
     const [selecttag, setSelectTag] = useState(false)
     const [inputtag, setinputTag] = useState(true)
     const select = () => {
@@ -89,17 +87,74 @@ console.log(dataSource);
             console.log(status)
         })
     },[])
+    const [updatedData, setUpdatedData] = useState(dataSource)
+ 
+    const handleUpdateChange = (e) => {
+        console.log('handleUpdateChange')
+        const { name, value } = e.target;
+        setUpdatedData((prevData) => ({
+          ...prevData,
+          [name]: value || prevData[name],// Keep the existing value if the input is empty
+        }));
+        console.log(updatedData)
+      };
 
-
-    const navigate = useNavigate();
-    const goBack = () => {
-        navigate(-1);
+    
+    const onSubmit =(e)=>{
+        
+        e.preventDefault();
+        update()
     }
-    const onSubmit = (e) => {
-        e.preventDefault()
-    };
-    const plateNumber = dataSource.plateNumber;
-    console.log(plateNumber)
+        async function update(){
+
+        const options = {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
+            body: JSON.stringify(updatedData),
+        };
+        const url = `http://64.226.104.50:9090/Api/Admin/UpdateVehicleInfo/${id}`;
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            console.log(result);
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const mess = localStorage.getItem("message");
+            console.log(mess);
+            if (response.ok) {
+                console.log("updated successful");
+                swal("Successful", `${mess}`, "success", {
+                    buttons: false,
+                    timer: 2000,
+                });
+               
+            } else {
+                console.log("failed");
+                swal(`Failed To update ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+      
+
+    // const onSubmit = (e) =>{
+
+    // }
+        console.log(dataSource)
+       
+
+            const navigate = useNavigate();
+            const goBack = () => {
+                navigate(-1);
+            }
+            
+    
+        const plateNumber = dataSource.plateNumber;
+        console.log(plateNumber)
 
     async function addToMaintenance(status){
                                         let item =
@@ -151,7 +206,7 @@ console.log(dataSource);
                     <div className={styles.addToMaintenance}>
                         <p onClick={() => { 
                             {dataSource.status != "MAINTAINING" && addToMaintenance("MAINTAINING")}
-                            }}> {dataSource.status != "MAINTAINING" ? 'Add to Maintenance':'On Maintainance'}</p>
+                            }}> {dataSource.status != "MAINTAINING" ? 'Add to Maintenance':'It is On Maintainance'}</p>
                     </div>
 
                     <form onSubmit={(onSubmit)}>
@@ -160,31 +215,23 @@ console.log(dataSource);
 
                             <div>
                                 <p>Vehicle Catagory</p>
-                                {inputtag ? <input Value={dataSource.vehicleCatagory} className='select' disabled={diabled}></input> : ""}
-                                {selecttag ?
-                                    <select className='select' placeholder='Select Vecicle Catagory'
-                                        name="vehicleCatagory"
-
-                                    >
-                                        <option value="" >Select Vecicle Catagory</option>
-                                        {
-                                            dataSource5.map(item => {
-                                                return <option >{item.catagory}</option>
-                                            })
-                                        }
-                                    </select>
-
-                                    : ""}
+                                <input Value={dataSource.vehicleCatagory} className='select' disabled="true"></input>
+                                
                             </div>
 
                             <div>
                                 <p>Vehicle Name </p>
-                                <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.vehicleName} type="text" disabled={diabled}></input>
+                              <input
+                                 name ='vehicleName' 
+                                onChange={handleUpdateChange} 
+                                defaultValue={dataSource.vehicleName} 
+                                type="text" disabled={diabled}
+                                 ></input>
                             </div>
                             <div>
                                 <p>Vehicle Condition </p>
-                                {inputtag ? <input Value={dataSource.vehicleCondition} className='select' disabled={diabled}></input> : ""}
-                                {selecttag ?
+                                 <input Value={dataSource.vehicleCondition} className='select' disabled={diabled}></input>
+                                {/* {selecttag ?
                                     <select className='select' name='conditionName'
 
                                     >
@@ -194,26 +241,27 @@ console.log(dataSource);
                                                 return <option>{item.conditionName}</option>
                                             })
                                         }
-                                    </select> : ""}
+                                    </select> : ""} */}
                             </div>
                             <div>
                                 <p>Plate Number </p>
-                                <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.plateNumber} type="text" disabled={diabled}></input>
+                                <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.plateNumber} type="text" disabled="true"></input>
                             </div>
 
                             <div>
                                 <p>Manufacture Date </p>
-                                <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.manufactureDate} type="Date" disabled={diabled}></input>
+                                <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.manufactureDate} type="Date" disabled="true"></input>
+
                             </div>
                             <div>
                                 <p>Device ID</p>
-                                <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.deviceID} type="text" disabled={diabled}></input>
+                                <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.deviceID} type="text" disabled="true"></input>
                             </div>
                             <div>
                                 <p>Status</p>
                                 {/* <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.status} type="text" disabled={diabled}></input> */}
-                                {inputtag ? <input Value={dataSource.status} className='select' disabled={diabled}></input> : ""}
-                                {selecttag ?
+                                <input Value={dataSource.status} className='select' disabled="true"></input> 
+                                {/* {selecttag ?
                                     <select className='select' name='status'
 
                                     >
@@ -223,13 +271,21 @@ console.log(dataSource);
                                                 return <option>{item.driverStatus}</option>
                                             })
                                         }
-                                    </select> : ""}
+                                    </select> : ""} */}
                             </div>
                             <div>
-                                <p>Vehicle owuner</p>
-                                <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.vehicleOwner} type="text" disabled={diabled}></input>
+                                <p>Vehicle owner</p>
+                                <input value={dataSource.vehicleOwner} type="text" disabled="true"></input>
                             </div>
-
+                            <div>
+                                <p>Capacity</p>
+                                <input  
+                                name ='capacity' 
+                                onChange={handleUpdateChange} 
+                                defaultValue={dataSource.capacity} 
+                                type="text" disabled={diabled}
+                                ></input>
+                            </div>
                         </div>
                         <div className={styles.setButton}>
                             <p className={state ? styles.button : styles.button2} onClick={() => {
@@ -249,4 +305,5 @@ console.log(dataSource);
         </div>
 
     )
+                        
 }

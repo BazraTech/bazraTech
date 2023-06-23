@@ -47,8 +47,10 @@ import UnAssigned_Driver from './components/Pages/Drivers/UnAssigned_Driver';
 import Permit from './components/Pages/Drivers/Permit';
 import SignIn from './components/Pages/Sign in page/SignIn';
 import AssigneDriver from './components/Pages/Total_number_of_vehicle/AssigneDriver';
+import ChangeDriver from  './components/Pages/Total_number_of_vehicle/ChangeDriver'
 import Vehicle_Detail from './components/Pages/Users/Vehicle_Table';
 import Market_Progress from './components/Pages/Marketing/Market_Progress'
+import FinishedWorks from './components/Pages/Marketing/FinishedWorks'
 import Settingtable from './components/Pages/Settings/Settingtable';
 
 class App extends Component{
@@ -68,6 +70,7 @@ class App extends Component{
         <Route path="/tracking" element={<Tracking />}></Route>
         <Route path="/marketing" element={<Marketing />}></Route>
         <Route path="/Market_Progress/:id" element={<Market_Progress/>}></Route>
+        <Route path="/FinishedWorks" element={<FinishedWorks/>}></Route>
         <Route path="Post_market/:id" element={<Post_market/>}></Route>
         <Route path="/off_road" element={<Off_road />}></Route>
         <Route path="/vehicle_detail" element={<Vehicle_detail />}></Route>
@@ -102,7 +105,9 @@ class App extends Component{
         <Route path="/Assigned_Driver" element={<Assigned_Driver />}></Route> 
         <Route path="/UnAssigned_Driver" element={<UnAssigned_Driver />}></Route> 
         <Route path="/Permit" element={<Permit />}></Route>
-        <Route path="/AssignDriver/:plateNumber" element={<AssigneDriver />}></Route> 
+        <Route path="/AssignDriver/:plateNumber/:ownerId" element={<AssigneDriver />}></Route> 
+        <Route path="/ChangeDriver/:plateNumber/:ownerId" element={<ChangeDriver />}></Route> 
+
       </Routes>
     </div>
     

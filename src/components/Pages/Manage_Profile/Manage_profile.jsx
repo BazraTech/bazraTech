@@ -202,15 +202,13 @@ export default function () {
                                     <button>Search</button>
                                 </p>
                             </div>
-                            <p>Total Vehicle</p>
+                            <p>Total Vehicle Owner</p>
 
                             <table className={styles.vehicle_table} id="myTable">
                                 <thead>
                                     <tr>
                                         <th>Full Name</th>
                                         <th>Role</th>
-                                        <th>Email</th>
-                                        <th>Status</th>
                                         <th>Assign Role</th>
                                         <th>Profile</th>
                                         <th>Change Password</th>
@@ -219,11 +217,9 @@ export default function () {
                                 </thead>
                                 <tbody>
                                     {currentPage.map(item => (
-                                       <tr className={styles.active_row}>
+                                       <tr className={styles.active_row} key={item.id}>
                                             <td>{item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`}</td>
                                             <td>{item.role}</td>
-                                            <td>username@gmail.com</td>
-                                            <td>Active</td>
                                             <td><Link style={{ textDecoration: 'none' }} to={`/user_edit/${item.role}/${item.id}/${item.companyId}`}>
                                                 <button className={styles.mangProfileButton}>Assign</button></Link></td>
                                             <td><Link style={{ textDecoration: 'none' }} to={`/user_edit/${item.role}/${item.id}/${item.companyId}`}>
