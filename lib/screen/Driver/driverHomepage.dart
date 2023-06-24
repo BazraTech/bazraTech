@@ -7,14 +7,10 @@ import 'package:bazralogin/screen/Driver/avilablelMarket_Fordriver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:get/get.dart';
-
 import 'package:ionicons/ionicons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../config/APIService.dart';
 import '../../../controller/Localization.dart';
-import '../../../Theme/verticalDash.dart';
 import '../../../const/constant.dart';
 import 'package:http/http.dart' as http;
 import '../../Theme/clippbox.dart';
@@ -208,10 +204,8 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 5,
-                    ),
                     Container(
+                      margin: EdgeInsets.only(top: 15),
                       child: SizedBox(
                           height: screenHeight * 0.08,
                           child: SizedBox(
@@ -233,19 +227,21 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                             child: Image.network(
                                                 snapshot.data.toString())),
                                         Container(
-                                          width: screenWidth * 0.16,
+                                          width: screenWidth * 0.4,
                                           height: screenHeight * 0.04,
                                           child: Result?['driverName'] == null
                                               ? Container()
                                               : Text(
                                                   Result?['driverName'],
                                                   textAlign: TextAlign.center,
-                                                  style: TextStyle(
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
                                                       fontFamily: 'Nunito',
-                                                      fontSize: 13,
+                                                      fontSize: 12,
                                                       color: Colors.black,
                                                       fontWeight:
-                                                          FontWeight.normal),
+                                                          FontWeight.bold),
                                                 ),
                                         )
                                       ],
@@ -308,7 +304,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
               Container(
                 child: Stack(children: [
                   Container(
-                    height: screenHeight * 0.2,
+                    height: screenHeight * 0.25,
                     // margin: EdgeInsets.only(bottom: 40),
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -321,31 +317,31 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                         borderRadius: BorderRadius.vertical(
                           bottom: Radius.circular(30),
                         )),
-                    child: Padding(
-                      padding: EdgeInsets.all(0),
-                      child: Row(
-                        children: [],
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 20),
+                        child: Text(
+                          "Today work shudule",
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: AppFonts.smallFontSize,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal),
+                        ),
                       ),
                     ),
                   ),
                   Positioned(
                       child: Column(
                     children: [
-                      Center(
-                          child: Text(
-                        "Today work shudule",
-                        style: TextStyle(
-                          fontFamily: "Nuinto",
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 17,
-                        ),
-                      )),
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Container(
                           height: screenHeight * 0.16,
-                          margin: EdgeInsets.only(top: 60),
+                          margin: EdgeInsets.only(top: 100),
                           child: _isLoading
                               ? Text("")
                               : ListView.builder(
@@ -435,14 +431,21 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                                                       0.15),
                                                           child: Text(
                                                             Result!["status"],
-                                                            style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: 12,
-                                                            ),
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: const TextStyle(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: AppFonts
+                                                                    .smallFontSize,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal),
                                                           ),
                                                         ),
                                                       ),
@@ -459,14 +462,22 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                                                 0.26,
                                                             child: Text(
                                                               Result!["status"],
-                                                              style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize: 12,
-                                                              ),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: const TextStyle(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: AppFonts
+                                                                      .smallFontSize,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal),
                                                             ),
                                                           ))
                                                     ],
@@ -489,7 +500,6 @@ class _Driver_HompageState extends State<Driver_Hompage> {
               Flexible(
                 child: Container(
                   padding: EdgeInsets.all(10),
-                  height: screenHeight * 0.3,
                   child: GridView(
                     // ignore: sort_child_properties_last
                     children: [
@@ -542,12 +552,16 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                     Container(
                                       margin: EdgeInsets.only(top: 8),
                                       child: Text(
-                                          TranslationUtil.text(
-                                              "Available Market"),
-                                          style: TextStyle(
-                                              color: Colors.blue,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 13)),
+                                        TranslationUtil.text(
+                                            "Available Market"),
+                                        textAlign: TextAlign.left,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                            fontFamily: 'Nunito',
+                                            fontSize: AppFonts.smallFontSize,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal),
+                                      ),
                                     ),
                                   ],
                                 )),
@@ -603,11 +617,16 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(top: 6),
-                                    child: Text("Active work",
-                                        style: TextStyle(
-                                            color: Colors.blue,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14)),
+                                    child: Text(
+                                      "Active work",
+                                      textAlign: TextAlign.left,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                          fontFamily: 'Nunito',
+                                          fontSize: AppFonts.smallFontSize,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal),
+                                    ),
                                   ),
                                 ],
                               )),
@@ -658,11 +677,16 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(top: 8),
-                                    child: Text(TranslationUtil.text("Report"),
-                                        style: TextStyle(
-                                            color: Colors.blue,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14)),
+                                    child: Text(
+                                      TranslationUtil.text("Report"),
+                                      textAlign: TextAlign.left,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                          fontFamily: 'Nunito',
+                                          fontSize: AppFonts.smallFontSize,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal),
+                                    ),
                                   ),
                                 ],
                               )),
@@ -721,11 +745,15 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                   Container(
                                     margin: EdgeInsets.only(top: 8),
                                     child: Text(
-                                        TranslationUtil.text("Create Alert"),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.blue,
-                                            fontSize: 13)),
+                                      TranslationUtil.text("Create Alert"),
+                                      textAlign: TextAlign.left,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                          fontFamily: 'Nunito',
+                                          fontSize: AppFonts.smallFontSize,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal),
+                                    ),
                                   ),
                                 ],
                               )),
@@ -733,8 +761,8 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                       ),
                     ],
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      childAspectRatio: screenHeight / (screenWidth * 1.2),
-                      maxCrossAxisExtent: 200,
+                      childAspectRatio: screenHeight / (screenWidth * 1.4),
+                      maxCrossAxisExtent: 260,
                       crossAxisSpacing: 5,
                       mainAxisSpacing: 5,
                     ),

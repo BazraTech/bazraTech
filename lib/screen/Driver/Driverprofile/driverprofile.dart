@@ -19,7 +19,6 @@ import 'package:http/http.dart' as http;
 import '../../../controller/apiController.dart';
 import '../../Loging/changePassword.dart';
 import '../../../../const/constant.dart';
-import '../../Owner/Driver/assignDriver.dart';
 import '../Leaveform/leavePage.dart';
 import 'Languagefordriver.dart';
 import 'profileUpdate.dart';
@@ -151,7 +150,7 @@ class _driverProfileState extends State<driverProfile> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => driverprofileUpadate(
-                                      image: Result!["phoneNumber"],
+                                      image: Result!["licensePic"],
                                       email: "abu@gmail.com",
                                       phone: Result!["phoneNumber"].toString(),
                                       datebirth:
@@ -512,7 +511,9 @@ class _driverProfileState extends State<driverProfile> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => leavepremmissionPage()));
+                          builder: (context) => leavepremmissionPage(
+                                title: '',
+                              )));
                 },
                 child: Container(
                   height: screenHeight * 0.07,

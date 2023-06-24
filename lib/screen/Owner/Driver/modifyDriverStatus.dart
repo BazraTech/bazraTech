@@ -303,15 +303,7 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
                                   fontWeight: FontWeight.bold),
                             ),
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        VehicleOnstock(
-                                          licenseNumber:
-                                              '${widget.driverLicense}',
-                                        )),
-                              );
+                              UpdateStatus();
                             },
                           ),
                         )

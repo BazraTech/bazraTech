@@ -149,7 +149,7 @@ class _ProfileState extends State<Profile> {
                             MaterialPageRoute(
                                 builder: (context) => ownerprofileUpadate(
                                       image: "${ownerpic}",
-                                      email: owneremail,
+                                      email: Result!['email'].toString(),
                                       phone: ownerphone,
                                       datebirth: "12/4/000",
                                       name: ownername,

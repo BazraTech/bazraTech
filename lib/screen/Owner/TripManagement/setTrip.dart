@@ -88,6 +88,10 @@ class _SettripsState extends State<Settrips> {
           String alertContent = decodedResponse["message"];
           alertutils.showMyDialog(context, "Alert", alertContent);
         } else {
+          var decodedResponse = json.decode(response.body);
+          String alertContent = decodedResponse["message"];
+
+          alertutils.showMyDialog(context, "Alert", alertContent);
           setState(() {
             isLoading = true;
           });

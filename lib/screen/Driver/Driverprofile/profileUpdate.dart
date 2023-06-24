@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bazralogin/Theme/Alert.dart';
 import 'package:bazralogin/Theme/TextInput.dart';
 import 'package:bazralogin/const/constant.dart';
 
@@ -9,6 +10,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
+
+import '../../Owner/Driver/assignDriver.dart';
 
 class driverprofileUpadate extends StatefulWidget {
   String? image;
@@ -35,6 +38,7 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController password = TextEditingController();
   bool isHiddenPassword = true;
+  bool isLoading = false;
   String Logoavtar = "";
   String ownerpic = "";
   PickedFile? _pickedImage;
@@ -52,6 +56,44 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
     );
     setState(() {
       _pickedImage = pickedFile;
+    });
+  }
+
+  void performAction() {
+    setState(() {
+      isLoading = true;
+    });
+
+    // Simulate an asynchronous action
+    Future.delayed(Duration(seconds: 15), () async {
+      var value = await storage.read(key: 'jwt');
+      Map data = {
+        "region": "ksdiweoi",
+        "subCity": "sfwrwe",
+        "specificLocation": "sffsdf",
+        "city": "fwrfwerwe",
+        "woreda": "kiseiwr",
+        "houseNumber": "sfsfs",
+        "notificationmedia": "SMS",
+        "serviceRequired": "EXCELLENT"
+      };
+      var response = await http.put(
+          Uri.parse("http://64.226.104.50:9090/Api/Driver/UpdateInfo"),
+          body: json.encode(data),
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": "Bearer $value",
+          });
+
+      if (response.statusCode == 200) {
+        var decodedResponse = json.decode(response.body);
+        String alertContent = decodedResponse["message"];
+        alertutilsfordriver.showMyDialog(context, "Alert", alertContent);
+      }
+      setState(() {
+        isLoading = false;
+      });
     });
   }
 
@@ -400,20 +442,51 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
             ),
             SizedBox(height: height * 0.03),
             Container(
-              width: width - 32,
+              width: width - 20,
+              margin: EdgeInsets.only(bottom: 20),
               height: height * 0.06,
               child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Save",
-                    style: TextStyle(
-                      fontFamily: "Nunito",
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
+                  onPressed: isLoading ? null : performAction,
+                  child: Container(
+                    height: 55,
+                    width: width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        isLoading
+                            ? SizedBox(
+                                height: 24,
+                                width: 24,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white),
+                                ),
+                              )
+                            : SizedBox(), // Empty SizedBox if not loading
+                        SizedBox(width: 8),
+                        Text(
+                          isLoading ? 'Please Wait' : 'Update',
+                          style: TextStyle(
+                              fontFamily: "Nunito",
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        )
+                      ],
                     ),
                   ),
-                  style: ThemeHelper().buttonStyle()),
-            )
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith((states) {
+                        if (states.contains(MaterialState.pressed)) {
+                          return Color.fromRGBO(255, 148, 165, 223);
+                        }
+                        // 98, 172, 181
+                        return Colors.lightBlue;
+                      }),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6))))),
+            ),
           ],
         ),
       ),

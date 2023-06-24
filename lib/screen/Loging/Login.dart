@@ -14,6 +14,7 @@ import '../../Model/driverCount.dart';
 import '../../Model/loginRequestModel.dart';
 import '../../Route/Routes.dart';
 import '../../Model/ApiConfig.dart';
+import '../../const/constant.dart';
 import '../Bottom/Bottom.dart';
 
 class Login extends StatefulWidget {
@@ -119,12 +120,10 @@ class _LoginState extends State<Login> {
     APIService.ownername = "";
   }
 
- 
-
   @override
   void initState() {
     super.initState();
-    
+
     Total_Drivers();
     vehicleFetch();
     //futureWelcome = fetchWelcome();
@@ -236,8 +235,11 @@ class _LoginState extends State<Login> {
                                             color: Colors.white),
                                         decoration: InputDecoration(
                                           labelText: "Phone Number",
-                                          labelStyle: const TextStyle(
-                                              color: Colors.white),
+                                          labelStyle: TextStyle(
+                                              fontFamily: 'Nunito',
+                                              fontSize: AppFonts.smallFontSize,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.normal),
                                           border: OutlineInputBorder(
                                             borderSide: const BorderSide(
                                                 color: Color.fromRGBO(
@@ -278,8 +280,12 @@ class _LoginState extends State<Login> {
                                               color: Colors.white),
                                           obscureText: isHiddenPassword,
                                           decoration: InputDecoration(
-                                            labelStyle: const TextStyle(
-                                                color: Colors.white),
+                                            labelStyle: TextStyle(
+                                                fontFamily: 'Nunito',
+                                                fontSize:
+                                                    AppFonts.smallFontSize,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.normal),
                                             labelText: "Password",
                                             suffixIcon: IconButton(
                                               onPressed: () {
@@ -326,11 +332,13 @@ class _LoginState extends State<Login> {
                                         },
                                         child: const Text(
                                           " Forget Password",
-                                          style: TextStyle(
-                                            color: Colors.blue,
-                                            fontFamily: "Nunito",
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                          textAlign: TextAlign.left,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              fontFamily: 'Nunito',
+                                              fontSize: AppFonts.smallFontSize,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.normal),
                                         ),
                                       ),
                                     ),
@@ -388,14 +396,21 @@ class _LoginState extends State<Login> {
                                                             isLoading
                                                                 ? 'Please Wait'
                                                                 : 'Sign IN',
-                                                            style: TextStyle(
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: const TextStyle(
                                                                 fontFamily:
-                                                                    "Nunito",
+                                                                    'Nunito',
+                                                                fontSize: AppFonts
+                                                                    .smallFontSize,
+                                                                color: Colors
+                                                                    .white,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .white),
+                                                                        .normal),
                                                           )
                                                         ],
                                                       ),
@@ -438,12 +453,15 @@ class _LoginState extends State<Login> {
                                           children: [
                                             Text(
                                               'New User! ',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 17,
-                                                fontFamily: "Nunito",
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                              textAlign: TextAlign.left,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  fontFamily: 'Nunito',
+                                                  fontSize:
+                                                      AppFonts.smallFontSize,
+                                                  color: Colors.white,
+                                                  fontWeight:
+                                                      FontWeight.normal),
                                             ),
                                             Container(
                                               child: GestureDetector(
@@ -451,13 +469,19 @@ class _LoginState extends State<Login> {
                                                   // Navigator.of(context).pushNamed(
                                                   //     AppRoutes.authRegister);
                                                 },
-                                                child: Text('SIGN UP',
-                                                    style: TextStyle(
-                                                      fontFamily: "Nunito",
+                                                child: Text(
+                                                  'SIGN UP',
+                                                  textAlign: TextAlign.left,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: AppFonts
+                                                          .smallFontSize,
+                                                      color: Colors.blue,
                                                       fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.lightBlue,
-                                                    )),
+                                                          FontWeight.normal),
+                                                ),
                                               ),
                                             )
                                           ],

@@ -65,7 +65,6 @@ class _CreateAlertState extends State {
         _toDoListLocation.add(chooseAlertType);
       });
       _textEditingController.clear();
-    
     }
   }
 
@@ -73,7 +72,6 @@ class _CreateAlertState extends State {
     setState(() {
       _toDoListLocation.removeAt(index);
     });
-   
   }
 
   _loadToDoList() async {
@@ -87,7 +85,6 @@ class _CreateAlertState extends State {
     }
   }
 
-  
   void Create_Alert() async {
     final storage = new FlutterSecureStorage();
     var value = await storage.read(key: 'jwt');
@@ -212,12 +209,13 @@ class _CreateAlertState extends State {
           margin: EdgeInsets.only(left: screenWidth * 0.15),
           child: Text(
             "Create Alert ",
-            style: TextStyle(
-              fontFamily: "Nunito",
-              fontSize: 17,
-              color: Colors.white,
-              fontStyle: FontStyle.normal,
-            ),
+            textAlign: TextAlign.left,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+                fontFamily: 'Nunito',
+                fontSize: AppFonts.mediumFontSize,
+                color: Colors.white,
+                fontWeight: FontWeight.bold),
           ),
         ),
       ),
@@ -320,13 +318,19 @@ class _CreateAlertState extends State {
                                                           top: 5),
                                                       child: Text(
                                                         type[index],
-                                                        style: TextStyle(
-                                                          fontFamily: "Nunito",
-                                                          fontSize: 15,
-                                                          color: Colors.black,
-                                                          fontStyle:
-                                                              FontStyle.normal,
-                                                        ),
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: const TextStyle(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            fontSize: AppFonts
+                                                                .smallFontSize,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal),
                                                       ),
                                                     )
                                                   ],
@@ -384,8 +388,18 @@ class _CreateAlertState extends State {
                         children: [
                           Container(
                               margin: EdgeInsets.only(top: 10, bottom: 20),
-                              child:
-                                  isalert ? Text('__') : Text('${alertType}')),
+                              child: isalert
+                                  ? Text('__')
+                                  : Text(
+                                      '${alertType}',
+                                      textAlign: TextAlign.left,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                          fontFamily: 'Nunito',
+                                          fontSize: AppFonts.smallFontSize,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal),
+                                    )),
                           Row(
                             children: [
                               Container(
@@ -420,13 +434,16 @@ class _CreateAlertState extends State {
                                           MediaQuery.of(context).size.height *
                                               0.06,
                                       child: Center(
-                                        child: Text(" Create Alert",
-                                            style: TextStyle(
-                                              fontFamily: "Nunito",
-                                              fontSize: 15,
+                                        child: Text(
+                                          " Create Alert",
+                                          textAlign: TextAlign.left,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              fontFamily: 'Nunito',
+                                              fontSize: AppFonts.smallFontSize,
                                               color: Colors.black,
-                                              fontStyle: FontStyle.normal,
-                                            )),
+                                              fontWeight: FontWeight.normal),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -469,12 +486,13 @@ class _CreateAlertState extends State {
                                       child: const Center(
                                         child: Text(
                                           " Finish Alert",
-                                          style: TextStyle(
-                                            fontFamily: "Nunito",
-                                            fontSize: 15,
-                                            color: Colors.black,
-                                            fontStyle: FontStyle.normal,
-                                          ),
+                                          textAlign: TextAlign.left,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              fontFamily: 'Nunito',
+                                              fontSize: AppFonts.smallFontSize,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal),
                                         ),
                                       ),
                                     ),

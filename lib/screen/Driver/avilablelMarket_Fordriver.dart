@@ -1,12 +1,10 @@
-import 'dart:async';
 import 'dart:convert';
-import 'package:bazralogin/controller/Localization.dart';
 
-import 'package:bazralogin/config/APIService.dart';
+import 'package:bazralogin/Theme/Alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:ionicons/ionicons.dart';
+
 import 'package:lottie/lottie.dart';
 
 import '../../../../Theme/clippbox.dart';
@@ -48,37 +46,13 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
     final Map jsonResponse = json.decode(response.body);
     if (response.statusCode == 200) {
       // String alertContent = jsonResponse["message"];
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: Text('API Response'),
-          content: Text("Successfully Accept work"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
+      String alertContent = jsonResponse["message"];
+
+      alertutilsfordriver.showMyDialog(context, "Alert", alertContent);
     } else {
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: Text(''),
-          content: Text("no"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
+      String alertContent = jsonResponse["message"];
+
+      alertutilsfordriver.showMyDialog(context, "Alert", alertContent);
     }
   }
 
