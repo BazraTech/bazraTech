@@ -126,10 +126,6 @@ class _driverProfileState extends State<driverProfile> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     final TranslationController controller = Get.put(TranslationController());
-    final ApiControllerfordriver _apiController =
-        Get.put(ApiControllerfordriver());
-
-    print(_apiController.data);
 
     return Scaffold(
       backgroundColor: kBackgroundColor,

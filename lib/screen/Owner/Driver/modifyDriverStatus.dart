@@ -29,7 +29,13 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
   Offset distance = isPressed ? Offset(10, 10) : Offset(28, 28);
   double blur = isPressed ? 5.0 : 30.0;
   List<String> location = ["Select Status", "UNASSIGNED", 'ONROUTE', 'PERMIT'];
-
+  List<String> other = [
+    "Select Status",
+    "UNASSIGNED",
+    'ONROUTE',
+    'PERMIT',
+    "ASSIGNED"
+  ];
   List<String> unassigndsatus = ["ASSIGNED", "Select Status"];
   List<String> onroute = ['PERMIT', "Select Status"];
 
@@ -263,6 +269,43 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
                                       ThemeHelper().textInputDecoration(),
                                   value: selectedItem,
                                   items: onroute
+                                      .map((item) => DropdownMenuItem<String>(
+                                          value: item,
+                                          child: Text(
+                                            item,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 15),
+                                          )))
+                                      .toList(),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please Enter  Plate Number';
+                                    }
+                                  },
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedItem = newValue;
+                                    });
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      else
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: screenWidth - 65,
+                                height: screenHeight * 0.08,
+                                child: DropdownButtonFormField<String>(
+                                  decoration:
+                                      ThemeHelper().textInputDecoration(),
+                                  value: selectedItem,
+                                  items: other
                                       .map((item) => DropdownMenuItem<String>(
                                           value: item,
                                           child: Text(

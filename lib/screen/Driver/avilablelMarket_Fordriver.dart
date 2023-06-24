@@ -46,9 +46,9 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
     final Map jsonResponse = json.decode(response.body);
     if (response.statusCode == 200) {
       // String alertContent = jsonResponse["message"];
-      String alertContent = jsonResponse["message"];
+      // String alertContent = jsonResponse["message"];
 
-      alertutilsfordriver.showMyDialog(context, "Alert", alertContent);
+      alertutilsfordriver.showMyDialog(context, "Alert", "");
     } else {
       String alertContent = jsonResponse["message"];
 

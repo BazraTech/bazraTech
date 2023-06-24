@@ -192,105 +192,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
     String tdata;
     return Scaffold(
         backgroundColor: Color.fromRGBO(236, 240, 243, 1),
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          backgroundColor: Colors.white,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: screenWidth - 32,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 15),
-                      child: SizedBox(
-                          height: screenHeight * 0.08,
-                          child: SizedBox(
-                            height: screenHeight * 0.5,
-                            width: screenWidth * 0.13,
-                            child: FutureBuilder(
-                              future: _fetchLogo(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<String> snapshot) {
-                                if (snapshot.connectionState !=
-                                    ConnectionState.done) return Text("");
-                                return SizedBox(
-                                    height: screenHeight * 0.2,
-                                    width: screenWidth * 0.9,
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                            height: screenHeight * 0.04,
-                                            child: Image.network(
-                                                snapshot.data.toString())),
-                                        Container(
-                                          width: screenWidth * 0.4,
-                                          height: screenHeight * 0.04,
-                                          child: Result?['driverName'] == null
-                                              ? Container()
-                                              : Text(
-                                                  Result?['driverName'],
-                                                  textAlign: TextAlign.center,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Nunito',
-                                                      fontSize: 12,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                        )
-                                      ],
-                                    ));
-                              },
-                            ),
-                          )),
-                    ),
-                    SizedBox(
-                      width: screenWidth * 0.6,
-                    ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Container(
-                        height: screenHeight * 0.2,
-                        width: screenWidth * 0.09,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: MaterialButton(
-                            onPressed: () async {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          drivernotificationPage()));
-                            },
 
-                            child: Material(
-                              color: Colors.transparent,
-                              child: Center(
-                                child: Icon(
-                                  Ionicons.notifications,
-                                  size: 27,
-                                  color: Colors.blue,
-                                ),
-                              ),
-                            ),
-
-                            //use this class Circleborder() for circle shape.
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
         //ScrollConfiguration to remove glow effect
         body: Container(
           decoration: const BoxDecoration(
@@ -317,21 +219,114 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                         borderRadius: BorderRadius.vertical(
                           bottom: Radius.circular(30),
                         )),
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        margin: EdgeInsets.only(top: 20),
-                        child: Text(
-                          "Today work shudule",
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              fontFamily: 'Nunito',
-                              fontSize: AppFonts.smallFontSize,
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Container(
+                                margin: EdgeInsets.only(top: 46),
+                                child: SizedBox(
+                                  height: screenHeight * 0.1,
+                                  width: screenWidth * 0.13,
+                                  child: FutureBuilder(
+                                    future: _fetchLogo(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<String> snapshot) {
+                                      if (snapshot.connectionState !=
+                                          ConnectionState.done) return Text("");
+                                      return SizedBox(
+                                          height: screenHeight * 0.2,
+                                          width: screenWidth * 0.9,
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                  height: screenHeight * 0.04,
+                                                  child: Image.network(snapshot
+                                                      .data
+                                                      .toString())),
+                                              Container(
+                                                width: screenWidth * 0.4,
+                                                height: screenHeight * 0.04,
+                                                child: Result?['driverName'] ==
+                                                        null
+                                                    ? Container()
+                                                    : Text(
+                                                        Result?['driverName'],
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: const TextStyle(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            fontSize: 12,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                              )
+                                            ],
+                                          ));
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: Container(
+                                height: screenHeight * 0.1,
+                                margin: EdgeInsets.only(right: 22),
+                                width: screenWidth * 0.09,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: MaterialButton(
+                                    onPressed: () async {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  drivernotificationPage()));
+                                    },
+
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      child: Center(
+                                        child: Icon(
+                                          Ionicons.notifications,
+                                          size: 27,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                    ),
+
+                                    //use this class Circleborder() for circle shape.
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            child: Text(
+                              "Today work shudule",
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: AppFonts.smallFontSize,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Positioned(
@@ -340,13 +335,14 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Container(
-                          height: screenHeight * 0.16,
-                          margin: EdgeInsets.only(top: 100),
+                          height: screenHeight * 0.23,
+                          margin: EdgeInsets.only(top: 150),
                           child: _isLoading
                               ? Text("")
                               : ListView.builder(
                                   itemCount: 1,
                                   physics: NeverScrollableScrollPhysics(),
+                                  padding: EdgeInsets.zero,
                                   itemBuilder: (context, index) {
                                     return Row(
                                       children: [
@@ -361,8 +357,8 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                             width: screenWidth - 42,
                                             child: Container(
                                               margin: EdgeInsets.only(
-                                                  top: screenWidth * 0.05,
-                                                  bottom: screenWidth * 0.05),
+                                                top: screenWidth * 0.05,
+                                              ),
                                               child: Column(
                                                 children: [
                                                   Row(
@@ -572,15 +568,23 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                         padding: const EdgeInsets.all(10),
                         child: GestureDetector(
                           onTap: () {
-                            if (Result!["status"] == "ONROUTE") {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => activeWork()));
-                            } else {
-                              alertutilsfordriver.showMyDialog(
-                                  context, "Alert", "Driver not accept job");
-                            }
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => activeWork()));
+                            // if (Result!.isEmpty) {
+                            //   fetchActivework();
+
+                            //   if (Result!["status"] == "ONROUTE") {
+                            //     Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //             builder: (context) => activeWork()));
+                            //   }
+                            // } else {
+                            //   alertutilsfordriver.showMyDialog(
+                            //       context, "Alert", "Driver not accept job");
+                            // }
                           },
                           child: AnimatedContainer(
                               duration: Duration(milliseconds: 100),
@@ -768,6 +772,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                     ),
                     //scrollDirection: Axis.vertical,
                     shrinkWrap: true,
+                    padding: EdgeInsets.zero,
                     physics: NeverScrollableScrollPhysics(),
                   ),
                 ),
