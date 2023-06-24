@@ -226,15 +226,20 @@ class alertutilsfordriver {
               ),
               padding: EdgeInsets.all(10),
               child: Center(
-                child: Container(
-                  height: 20,
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 20,
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
