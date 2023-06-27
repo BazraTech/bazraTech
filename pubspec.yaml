@@ -57,6 +57,7 @@ dependencies:
   printing: ^5.11.0
   pdf: ^3.10.4
   modern_form_esys_flutter_share: ^1.1.2
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:

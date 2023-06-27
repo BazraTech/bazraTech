@@ -11,6 +11,7 @@ import 'package:cargo/views/usermanagement/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,6 +76,15 @@ class _Cargo_loginState extends State<Cargo_login> {
       print(
           'No internet connection found, please check your internet settings.');
       // Define this function to show an alert
+      Fluttertoast.showToast(
+          msg:
+              'No internet connection found, please check your internet settings.',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 14.0);
       return;
     }
     try {
@@ -111,31 +121,26 @@ class _Cargo_loginState extends State<Cargo_login> {
           print(newToken);
           context.read<NavigationBloc>().add(NavigateTo('/bottomNav'));
         } else {
-          _showSweetAlert(context);
+          Fluttertoast.showToast(
+              msg: "Invaild Phone Number or User Name",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.yellow,
+              textColor: Colors.white,
+              fontSize: 14.0);
         }
       }
     } catch (error) {
-      _showSweetAlert(context);
+      Fluttertoast.showToast(
+          msg: "Check your internet Connection and try again",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 14.0);
     }
-  }
-
-  void _showSweetAlert(BuildContext context) {
-    Alert(
-      context: context,
-      type: AlertType.warning,
-      desc: "Invalid User Name Or Passowrd.",
-      buttons: [
-        DialogButton(
-          child: Text(
-            "OK",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Cargo_login())),
-          width: 180,
-        )
-      ],
-    ).show();
   }
 
   @override

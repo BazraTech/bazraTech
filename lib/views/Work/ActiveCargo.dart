@@ -56,7 +56,7 @@ class _ActiveCargoState extends State<ActiveCargo> {
         Alert(
           context: context,
           title: "Error",
-          desc: "Failed to fetch data",
+          desc: "Server error",
           type: AlertType.error,
         ).show();
         Navigator.push(
@@ -302,29 +302,19 @@ class _ActiveCargoState extends State<ActiveCargo> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  trailing: Container(
-                                    width: 80,
-                                    height: 25,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Color.fromARGB(255, 252, 216, 214),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        AppLocalizations.of(context)!
-                                                .translate(driver.status) ??
-                                            driver.status,
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          color:
-                                              Color.fromARGB(255, 255, 86, 74),
-                                          fontFamily: 'Roboto',
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                  trailing: SizedBox(
+                                    width: screenWidth * 0.22,
+                                    child: Text(
+                                      driver.status,
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.amber,
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),

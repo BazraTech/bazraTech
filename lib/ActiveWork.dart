@@ -1,5 +1,8 @@
+import 'dart:io';
 
 import 'package:cargo/shared/storage_hepler.dart';
+import 'package:cargo/views/Bottom_Navigation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:cargo/views/Work/ActiveCargo.dart';
@@ -46,6 +49,7 @@ class _VehicleCargoState extends State<VehicleCargo> {
           return CargoDriver(
             id: cargoDriverData['id'],
             driver: cargoDriverData['driver'],
+            driverID: cargoDriverData['driverID'],
             cargo: cargoDriverData['cargo'],
             vehicleOwner: cargoDriverData['vehicleOwner'],
             plateNumber: cargoDriverData['plateNumber'],
@@ -54,35 +58,28 @@ class _VehicleCargoState extends State<VehicleCargo> {
         return cargoDrivers;
       } // Handle connection timeout error
       else {
-        Alert(
-          context: context,
-          title: "Error",
-          desc: "Failed to fetch data",
-          type: AlertType.error,
-        ).show();
-        onCancelPressed:
-        () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CargoOWnerHomePage()));
-        };
+        Fluttertoast.showToast(
+            msg: "Failed To load...",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 14.0);
+
         Navigator.of(context, rootNavigator: true).pop();
         return [];
       }
     } catch (e) {
       print('Error in _fetchCargoDrivers(): $e');
-      Alert(
-        context: context,
-        title: "Error",
-        desc: "Failed to fetch data",
-        type: AlertType.error,
-      ).show();
-      onClosePressed:
-      () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => CargoOWnerHomePage()));
-      };
-      Navigator.of(context, rootNavigator: true).pop();
-      return [];
+      Fluttertoast.showToast(
+          msg: "Failed To load...",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 14.0);
     }
   }
 
@@ -102,20 +99,6 @@ class _VehicleCargoState extends State<VehicleCargo> {
     });
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   futureCargoDrivers = fetchCargoDrivers().then((value) {
-  //     setState(() {
-  //       _cargoDrivers = value;
-  //     });
-  //   }).catchError((error) {
-  //     print(error);
-  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //       content: Text('Failed to fetch data'),
-  //     ));
-  //   });
-  // }
   TextEditingController searchController = TextEditingController();
   Future searchCargosByOwnerName(String status) async {
     try {
@@ -126,7 +109,14 @@ class _VehicleCargoState extends State<VehicleCargo> {
           .toList();
       return filteredCargos;
     } catch (e) {
-      throw Exception('Failed to search cargos by driver name');
+      throw Fluttertoast.showToast(
+          msg: "Failed to search cargos by driver name",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 14.0);
     }
   }
 
@@ -140,6 +130,70 @@ class _VehicleCargoState extends State<VehicleCargo> {
       return true;
     }
     return false;
+  }
+
+  bool isPressed = true;
+  Future<void> confirmDriverState(BuildContext context) async {
+    try {
+      // Fetch cargo drivers
+      List<CargoDriver> cargoDrivers = await fetchCargos();
+
+      // Loop through each cargo driver and confirm the driver state
+      for (CargoDriver cargoDriver in cargoDrivers) {
+        int driverId = cargoDriver.driverID;
+        print('Confirming driver state for driver ID $driverId');
+
+        // Call the endpoint to confirm the driver state
+        StorageHelper storageHelper = StorageHelper();
+        String? accessToken = await storageHelper.getToken();
+        final response = await http.post(
+            Uri.parse(
+                'http://64.226.104.50:9090/Api/Cargo/ConfirmDriverState/$driverId'),
+            headers: {
+              "Content-Type": "application/json",
+              'Accept': 'application/json',
+              "Authorization": "Bearer $accessToken",
+            });
+        print(response.toString());
+        if (response.statusCode == 200) {
+          Map<String, dynamic> body = jsonDecode(response.body);
+          String message = body['message'];
+          Fluttertoast.showToast(
+              msg: message,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+              fontSize: 14.0);
+        } else {
+          String errorMessage = "Failed to confirm driver state";
+          try {
+            Map<String, dynamic> body = jsonDecode(response.body);
+            errorMessage = body['message'];
+          } catch (e) {
+            print('Error decoding response body: $e');
+          }
+          Fluttertoast.showToast(
+              msg: errorMessage,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 14.0);
+        }
+      }
+    } catch (e) {
+      print('Error in confirming driver state: $e');
+      // Handle error as needed
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Failed to confirm driver state"),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   @override
@@ -407,10 +461,320 @@ class _VehicleCargoState extends State<VehicleCargo> {
                                                       height:
                                                           screenHeight * 0.5,
                                                       child: Container(
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                                  top: 10),
-                                                          child: Status()),
+                                                        margin: EdgeInsets.only(
+                                                            top: 10),
+                                                        child: GridView(
+                                                          // ignore: sort_child_properties_last
+                                                          children: [
+                                                            Container(
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                      left: 10,
+                                                                      right:
+                                                                          10),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child:
+                                                                  InkResponse(
+                                                                onTap: (() {
+                                                                  confirmDriverState(
+                                                                      context);
+                                                                }),
+                                                                child: Ink(
+                                                                  child:
+                                                                      Container(
+                                                                    decoration: BoxDecoration(
+                                                                        color: Color.fromARGB(255, 252, 254, 250),
+                                                                        borderRadius: BorderRadius.circular(6),
+                                                                        boxShadow: isPressed
+                                                                            ? [
+                                                                                BoxShadow(
+                                                                                  color: Colors.grey.shade300,
+                                                                                  offset: Offset(4, 4),
+                                                                                  blurRadius: 15,
+                                                                                  spreadRadius: 1,
+                                                                                ),
+                                                                              ]
+                                                                            : null),
+                                                                    child:
+                                                                        Container(
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .center,
+                                                                      child:
+                                                                          Text(
+                                                                        "Load",
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                14,
+                                                                            color: Colors
+                                                                                .grey.shade600,
+                                                                            fontFamily:
+                                                                                'Roboto',
+                                                                            letterSpacing:
+                                                                                1,
+                                                                            fontWeight:
+                                                                                FontWeight.bold),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                      left: 10,
+                                                                      right:
+                                                                          10),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child:
+                                                                  InkResponse(
+                                                                onTap: (() {
+                                                                  confirmDriverState(
+                                                                      context);
+                                                                }),
+                                                                child: Ink(
+                                                                  child:
+                                                                      Container(
+                                                                    decoration: BoxDecoration(
+                                                                        color: Color.fromARGB(255, 252, 254, 250),
+                                                                        borderRadius: BorderRadius.circular(6),
+                                                                        boxShadow: isPressed
+                                                                            ? [
+                                                                                BoxShadow(
+                                                                                  color: Colors.grey.shade300,
+                                                                                  offset: Offset(4, 4),
+                                                                                  blurRadius: 15,
+                                                                                  spreadRadius: 1,
+                                                                                ),
+                                                                                const BoxShadow(
+                                                                                  color: Colors.white,
+                                                                                  offset: Offset(-4, -4),
+                                                                                  blurRadius: 25,
+                                                                                  spreadRadius: 1,
+                                                                                ),
+                                                                              ]
+                                                                            : null),
+                                                                    child:
+                                                                        Container(
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .center,
+                                                                      child:
+                                                                          Text(
+                                                                        "UnLoad",
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                14,
+                                                                            color: Colors
+                                                                                .grey.shade600,
+                                                                            fontFamily:
+                                                                                'Roboto',
+                                                                            letterSpacing:
+                                                                                1,
+                                                                            fontWeight:
+                                                                                FontWeight.bold),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                      left: 10,
+                                                                      right:
+                                                                          10),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child:
+                                                                  InkResponse(
+                                                                onTap: (() {
+                                                                  confirmDriverState(
+                                                                      context);
+                                                                }),
+                                                                child: Ink(
+                                                                  child:
+                                                                      Container(
+                                                                    decoration: BoxDecoration(
+                                                                        color: Color.fromARGB(255, 252, 254, 250),
+                                                                        borderRadius: BorderRadius.circular(6),
+                                                                        boxShadow: isPressed
+                                                                            ? [
+                                                                                BoxShadow(
+                                                                                  color: Colors.grey.shade300,
+                                                                                  offset: Offset(4, 4),
+                                                                                  blurRadius: 15,
+                                                                                  spreadRadius: 1,
+                                                                                ),
+                                                                              ]
+                                                                            : null),
+                                                                    child:
+                                                                        Container(
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .center,
+                                                                      child:
+                                                                          Text(
+                                                                        "DepArrived",
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                14,
+                                                                            color: Colors
+                                                                                .grey.shade600,
+                                                                            fontFamily:
+                                                                                'Roboto',
+                                                                            letterSpacing:
+                                                                                1,
+                                                                            fontWeight:
+                                                                                FontWeight.bold),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                      left: 10,
+                                                                      right:
+                                                                          10),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child:
+                                                                  InkResponse(
+                                                                onTap: () {
+                                                                  try {
+                                                                    confirmDriverState(
+                                                                        context);
+                                                                  } catch (e) {
+                                                                    print(
+                                                                        'Error confirming driver state: $e');
+                                                                  }
+                                                                },
+                                                                child: Ink(
+                                                                  child:
+                                                                      Container(
+                                                                    decoration: BoxDecoration(
+                                                                        color: Color.fromARGB(255, 252, 254, 250),
+                                                                        borderRadius: BorderRadius.circular(6),
+                                                                        boxShadow: isPressed
+                                                                            ? [
+                                                                                BoxShadow(
+                                                                                  color: Colors.grey.shade300,
+                                                                                  offset: Offset(4, 4),
+                                                                                  blurRadius: 15,
+                                                                                  spreadRadius: 1,
+                                                                                ),
+                                                                              ]
+                                                                            : null),
+                                                                    child:
+                                                                        Container(
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .center,
+                                                                      child:
+                                                                          Text(
+                                                                        "DestArrived",
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                14,
+                                                                            color: Colors
+                                                                                .grey.shade600,
+                                                                            fontFamily:
+                                                                                'Roboto',
+                                                                            letterSpacing:
+                                                                                1,
+                                                                            fontWeight:
+                                                                                FontWeight.bold),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                      left: 10,
+                                                                      right:
+                                                                          10),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              child:
+                                                                  InkResponse(
+                                                                onTap: (() {
+                                                                  confirmDriverState(
+                                                                      context);
+                                                                  // print("Confirm Driver State");
+                                                                }),
+                                                                child: Ink(
+                                                                  child:
+                                                                      Container(
+                                                                    decoration: BoxDecoration(
+                                                                        color: Color.fromARGB(255, 250, 250, 250),
+                                                                        borderRadius: BorderRadius.circular(6),
+                                                                        boxShadow: isPressed
+                                                                            ? [
+                                                                                BoxShadow(
+                                                                                  color: Colors.grey.shade300,
+                                                                                  offset: Offset(3, 3),
+                                                                                  blurRadius: 10,
+                                                                                  spreadRadius: 1,
+                                                                                ),
+                                                                              ]
+                                                                            : null),
+                                                                    child:
+                                                                        Container(
+                                                                      alignment:
+                                                                          Alignment
+                                                                              .center,
+                                                                      child:
+                                                                          Text(
+                                                                        "Departure",
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                14,
+                                                                            color: Colors
+                                                                                .grey.shade600,
+                                                                            fontFamily:
+                                                                                'Roboto',
+                                                                            letterSpacing:
+                                                                                1,
+                                                                            fontWeight:
+                                                                                FontWeight.bold),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                          gridDelegate:
+                                                              SliverGridDelegateWithMaxCrossAxisExtent(
+                                                            childAspectRatio: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width /
+                                                                (MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .height /
+                                                                    4.5),
+                                                            maxCrossAxisExtent:
+                                                                200,
+                                                          ),
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
                                                   Positioned(
@@ -487,73 +851,40 @@ class _VehicleCargoState extends State<VehicleCargo> {
                                       FloatingActionButton(
                                         onPressed: () async {
                                           final pdf = pw.Document();
-                                          pdf.addPage(pw.Page(
-                                            pageFormat: PdfPageFormat.a4,
-                                            build: (pw.Context context) {
-                                              return pw.Column(
-                                                crossAxisAlignment:
-                                                    pw.CrossAxisAlignment.start,
-                                                children: List.generate(
-                                                  snapshot.data!.length,
-                                                  (index) {
-                                                    final cargo =
-                                                        snapshot.data![index];
-                                                    return pw.Column(
-                                                      crossAxisAlignment: pw
-                                                          .CrossAxisAlignment
-                                                          .start,
-                                                      children: [
-                                                        pw.Row(
-                                                          mainAxisAlignment: pw
-                                                              .MainAxisAlignment
-                                                              .spaceBetween,
-                                                          children: [
-                                                            pw.Text(
-                                                              'Vehicle Owner Name',
-                                                              style: pw.TextStyle(
-                                                                  fontWeight: pw
-                                                                      .FontWeight
-                                                                      .bold),
-                                                            ),
-                                                            pw.Text(
-                                                              cargo
-                                                                  .vehicleOwner,
-                                                              style: pw.TextStyle(
-                                                                  fontWeight: pw
-                                                                      .FontWeight
-                                                                      .bold),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        pw.Row(
-                                                          mainAxisAlignment: pw
-                                                              .MainAxisAlignment
-                                                              .spaceBetween,
-                                                          children: [
-                                                            pw.Text(
-                                                              'Driver Name:',
-                                                              style: pw.TextStyle(
-                                                                  fontWeight: pw
-                                                                      .FontWeight
-                                                                      .bold),
-                                                            ),
-                                                            pw.Text(
-                                                              cargo.driver,
-                                                              style: pw.TextStyle(
-                                                                  fontWeight: pw
-                                                                      .FontWeight
-                                                                      .bold),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        pw.SizedBox(height: 8),
-                                                      ],
-                                                    );
-                                                  },
+                                          pdf.addPage(
+                                            pw.MultiPage(
+                                              pageFormat: PdfPageFormat.a4,
+                                              build: (pw.Context context) => [
+                                                pw.Header(
+                                                    text: 'My Cargos',
+                                                    level: 0),
+                                                pw.Table.fromTextArray(
+                                                  headers: [
+                                                    '#',
+                                                    'Vehicle Owner Name',
+                                                    'Driver Name',
+                                                    'Plate Number'
+                                                  ],
+                                                  data: List<
+                                                      List<String>>.generate(
+                                                    snapshot.data!.length > 5
+                                                        ? 5
+                                                        : snapshot.data!.length,
+                                                    (index) => [
+                                                      (index + 1).toString(),
+                                                      snapshot.data![index]
+                                                          .vehicleOwner,
+                                                      snapshot
+                                                          .data![index].driver,
+                                                      snapshot.data![index]
+                                                          .plateNumber,
+                                                    ],
+                                                  ),
                                                 ),
-                                              );
-                                            },
-                                          ));
+                                              ],
+                                            ),
+                                          );
+
                                           final bytes = await pdf.save();
                                           await Share.file(
                                             'My Cargos',

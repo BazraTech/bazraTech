@@ -8,10 +8,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../localization/app_localizations.dart';
 import '../../shared/custom-form.dart';
 import '../../shared/customButton.dart';
-import '../../shared/failAlert.dart';
-import '../../shared/storage_hepler.dart';
-import '../../shared/succussAlert.dart';
-import '../Bottom_Navigation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -46,6 +43,20 @@ class _SignupState extends State<Signup> {
       type: alertType,
       title: title,
       desc: description,
+      style: AlertStyle(
+        descStyle: TextStyle(fontSize: 14),
+        isOverlayTapDismiss: false,
+        overlayColor: Colors.black54,
+        animationType: AnimationType.grow,
+        alertBorder: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        titleStyle: TextStyle(
+          color: alertType == AlertType.error ? Colors.red : Colors.blue,
+        ),
+        alertAlignment: Alignment.center,
+        alertElevation: 10,
+      ),
       buttons: [
         DialogButton(
           child: Text(
@@ -62,7 +73,7 @@ class _SignupState extends State<Signup> {
               Navigator.pop(context);
             }
           },
-          width: 120,
+          width: 200,
         ),
       ],
     ).show();
@@ -105,18 +116,38 @@ class _SignupState extends State<Signup> {
         final Map jsonResponse = json.decode(response.body);
 
         if (response.statusCode == 200) {
-          _showSweetAlert(
-              context, AlertType.success, 'Success', jsonResponse['message']);
-
-          ;
+          Fluttertoast.showToast(
+              msg: jsonResponse['message'],
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+              fontSize: 14.0);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Cargo_login()),
+          );
         } else {
-          _showSweetAlert(
-              context, AlertType.error, 'Error', jsonResponse['message']);
+          Fluttertoast.showToast(
+              msg: jsonResponse['message'],
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 14.0);
         }
       }
     } catch (e) {
-      _showSweetAlert(context, AlertType.error, 'Error',
-          'An error occurred, please check your internet connection.');
+      Fluttertoast.showToast(
+          msg: 'An error occurred, please check your internet connection.',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 14.0);
     }
   }
 

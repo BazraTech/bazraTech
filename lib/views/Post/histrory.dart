@@ -247,7 +247,7 @@ class _CargoHistoryState extends State {
                                                   ),
                                                 ),
                                                 Container(
-                                                  width: screenWidth * 0.25,
+                                                  width: screenWidth * 0.2,
                                                   child: const Stack(
                                                     alignment: Alignment.center,
                                                     children: [
@@ -341,25 +341,15 @@ class _CargoHistoryState extends State {
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            trailing: Container(
-                                              width: 70,
-                                              height: 25,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                color: Color.fromARGB(
-                                                    255, 252, 216, 214),
-                                              ),
-                                              child: Center(
-                                                child: Text(
-                                                  cargo.status,
-                                                  style: const TextStyle(
-                                                    fontSize: 15,
-                                                    color: Color.fromARGB(
-                                                        255, 255, 86, 74),
-                                                    fontFamily: 'Roboto',
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                                            trailing: SizedBox(
+                                              width: screenWidth * 0.22,
+                                              child: Text(
+                                                cargo.status,
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.amber,
+                                                  fontFamily: 'Roboto',
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                             ),
