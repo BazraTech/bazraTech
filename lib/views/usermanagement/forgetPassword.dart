@@ -19,7 +19,7 @@ import '../../shared/storage_hepler.dart';
 import '../../shared/succussAlert.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-import 'changePassword.dart';
+import 'resetPassword.dart';
 
 class Forget extends StatefulWidget {
   const Forget({super.key});
@@ -70,7 +70,7 @@ class _ForgetState extends State<Forget> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (BuildContext context) => ChangePassword()),
+                  builder: (BuildContext context) => ResetPassword()),
             )
           },
           width: 120,

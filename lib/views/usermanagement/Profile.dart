@@ -8,6 +8,8 @@ import '../../localization/localization_bloc.dart';
 import '../../localization/localization_event.dart';
 import '../../shared/constant.dart';
 import '../../shared/storage_hepler.dart';
+import 'ProfileEdit.dart';
+import 'changePassword.dart';
 import 'languages.dart';
 
 class Profile extends StatefulWidget {
@@ -101,6 +103,7 @@ class _ProfileState extends State<Profile> {
         child: Container(
           margin: EdgeInsets.only(top: 40),
           child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
             child: Column(children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -108,7 +111,13 @@ class _ProfileState extends State<Profile> {
                   Container(
                     margin: EdgeInsets.only(left: screenWidth * 0.8),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfileEdit()),
+                        );
+                      },
                       icon: Icon(
                         Icons.edit_document,
                         color: Colors.red,
@@ -414,38 +423,47 @@ class _ProfileState extends State<Profile> {
                 width: screenWidth,
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Row(
-                        children: [
-                          Container(
-                              height: screenWidth * 0.08,
-                              width: screenWidth * 0.08,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(201, 252, 248, 1),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Icon(Icons.lock_outline)),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                                width: screenWidth * 0.36,
-                                child: Text(
-                                  'Change password',
-                                  style: TextStyle(
-                                    fontFamily: "Nunito",
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )),
-                          ),
-                          Container(
-                              margin: EdgeInsets.only(
-                                  left:
-                                      MediaQuery.of(context).size.width * 0.23),
-                              child: InkWell(
-                                  onTap: () {},
-                                  child: Icon(Icons.keyboard_arrow_right))),
-                        ],
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChangePassword()),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          children: [
+                            Container(
+                                height: screenWidth * 0.08,
+                                width: screenWidth * 0.08,
+                                decoration: BoxDecoration(
+                                    color: Color.fromRGBO(201, 252, 248, 1),
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: Icon(Icons.lock_outline)),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  width: screenWidth * 0.36,
+                                  child: Text(
+                                    'Change password',
+                                    style: TextStyle(
+                                      fontFamily: "Nunito",
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )),
+                            ),
+                            Container(
+                                margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width *
+                                        0.23),
+                                child: InkWell(
+                                    onTap: () {},
+                                    child: Icon(Icons.keyboard_arrow_right))),
+                          ],
+                        ),
                       ),
                     ),
                     Padding(

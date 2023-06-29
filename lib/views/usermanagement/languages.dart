@@ -70,6 +70,7 @@ class LanguageListItem extends StatelessWidget {
               )),
           margin: EdgeInsets.only(left: 20, right: 20, top: 30),
           child: ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: languages.length,
             itemBuilder: (BuildContext context, int index) {

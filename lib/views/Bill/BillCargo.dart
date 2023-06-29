@@ -5,6 +5,7 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:http/http.dart' as http;
+import '../../Components/Noglow.dart';
 import '../../localization/app_localizations.dart';
 import '../../model/cargo.dart';
 import '../../shared/storage_hepler.dart';
@@ -126,147 +127,152 @@ class _CargoBillState extends State<CargoBill> {
             future: fetchCargos(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return ListView.builder(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      Cargo driver = snapshot.data![index];
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Bill_Detail()));
-                        },
-                        // onTap: () {
-                        //   setState(() {});
-                        // },
-                        child: Column(
-                          children: [
-                            Card(
+                return ScrollConfiguration(
+                  behavior: NoGlowScrollBehavior(),
+                  child: ListView.builder(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).padding.bottom + 100),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        Cargo driver = snapshot.data![index];
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Bill_Detail()));
+                          },
+                          // onTap: () {
+                          //   setState(() {});
+                          // },
+                          child: Column(
+                            children: [
+                              Card(
+                                  child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey.shade200
+                                            .withOpacity(0.7),
+                                        blurRadius: 8.0,
+                                        spreadRadius: 2.0,
+                                        offset: const Offset(
+                                          6, // Move to right 7.0 horizontally
+                                          8, // Move to bottom 8.0 Vertically
+                                        ))
+                                  ],
+                                ),
+                                height: screenHeight * 0.2,
                                 child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color:
-                                          Colors.grey.shade200.withOpacity(0.7),
-                                      blurRadius: 8.0,
-                                      spreadRadius: 2.0,
-                                      offset: const Offset(
-                                        6, // Move to right 7.0 horizontally
-                                        8, // Move to bottom 8.0 Vertically
-                                      ))
-                                ],
-                              ),
-                              height: screenHeight * 0.2,
-                              child: Container(
-                                margin: EdgeInsets.only(left: 5),
-                                child: Column(children: [
-                                  ListTile(
-                                    title: Row(
-                                      children: [
-                                        Text(
-                                          driver.pickUp,
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            color: Color.fromARGB(
-                                                255, 123, 129, 236),
-                                            fontFamily: 'Roboto',
-                                            fontWeight: FontWeight.bold,
+                                  margin: EdgeInsets.only(left: 5),
+                                  child: Column(children: [
+                                    ListTile(
+                                      title: Row(
+                                        children: [
+                                          Text(
+                                            driver.pickUp,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Color.fromARGB(
+                                                  255, 123, 129, 236),
+                                              fontFamily: 'Roboto',
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                            left: 8,
-                                          ),
-                                          child: const Icon(
-                                            Icons.trip_origin,
-                                            size: 15,
-                                            color: Color.fromARGB(
-                                                255, 123, 129, 236),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: screenWidth * 0.2,
-                                          child: const Stack(
-                                            alignment: Alignment.center,
-                                            children: [
-                                              DottedLine(
-                                                lineThickness: 1.0,
-                                                dashLength: 4.0,
-                                                dashColor: Colors.grey,
-                                                dashGapRadius: 2.0,
-                                              ),
-                                              Icon(
-                                                Icons.local_shipping,
-                                                color: Color.fromARGB(
-                                                    255, 123, 129, 236),
-                                                size: 20,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(right: 8),
-                                          alignment: Alignment.centerLeft,
-                                          child: Icon(Icons.location_on,
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              left: 8,
+                                            ),
+                                            child: const Icon(
+                                              Icons.trip_origin,
                                               size: 15,
-                                              color: Colors.grey.shade300),
-                                        ),
-                                        Text(
-                                          driver.dropOff,
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.grey.shade600,
-                                            fontFamily: 'Roboto',
-                                            fontWeight: FontWeight.bold,
+                                              color: Color.fromARGB(
+                                                  255, 123, 129, 236),
+                                            ),
                                           ),
+                                          Container(
+                                            width: screenWidth * 0.2,
+                                            child: const Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                DottedLine(
+                                                  lineThickness: 1.0,
+                                                  dashLength: 4.0,
+                                                  dashColor: Colors.grey,
+                                                  dashGapRadius: 2.0,
+                                                ),
+                                                Icon(
+                                                  Icons.local_shipping,
+                                                  color: Color.fromARGB(
+                                                      255, 123, 129, 236),
+                                                  size: 20,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(right: 8),
+                                            alignment: Alignment.centerLeft,
+                                            child: Icon(Icons.location_on,
+                                                size: 15,
+                                                color: Colors.grey.shade300),
+                                          ),
+                                          Text(
+                                            driver.dropOff,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey.shade600,
+                                              fontFamily: 'Roboto',
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top: 20,
+                                      ),
+                                      child: const DottedLine(
+                                        lineThickness: 1.0,
+                                        dashLength: 4.0,
+                                        dashColor: Colors.grey,
+                                        dashGapRadius: 2.0,
+                                      ),
+                                    ),
+                                    ListTile(
+                                      title: Text(
+                                        AppLocalizations.of(context)
+                                                ?.translate("Status") ??
+                                            "Status",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.grey.shade500,
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      top: 20,
-                                    ),
-                                    child: const DottedLine(
-                                      lineThickness: 1.0,
-                                      dashLength: 4.0,
-                                      dashColor: Colors.grey,
-                                      dashGapRadius: 2.0,
-                                    ),
-                                  ),
-                                  ListTile(
-                                    title: Text(
-                                      AppLocalizations.of(context)
-                                              ?.translate("Status") ??
-                                          "Status",
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.grey.shade500,
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      trailing: Text(
+                                        driver.status,
+                                        style: const TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.amber,
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
-                                    trailing: Text(
-                                      driver.status,
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.amber,
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ]),
-                              ),
-                            )),
-                          ],
-                        ),
-                      );
-                    });
+                                  ]),
+                                ),
+                              )),
+                            ],
+                          ),
+                        );
+                      }),
+                );
               }
               return Center(
                 child: FutureBuilder(

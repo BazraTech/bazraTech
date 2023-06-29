@@ -14,8 +14,25 @@ import 'navigate/mainNavigation.dart';
 import 'navigate/navigateBloc.dart';
 import 'navigate/navigatestateEvent.dart';
 
+class NoGlowScrollBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
+  }
+}
+
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    builder: (context, child) {
+      return ScrollConfiguration(
+        behavior: NoGlowScrollBehavior(),
+        child: child!,
+      );
+    },
+    home: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {

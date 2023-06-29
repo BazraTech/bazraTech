@@ -5,6 +5,7 @@ import '../../model/cargo.dart';
 import '../../shared/checkConnection.dart';
 import '../../shared/storage_hepler.dart';
 import 'Post_Navigation.dart';
+import 'histrory.dart';
 
 class cargoHistoryDetail extends StatefulWidget {
   final int? cargoId;
@@ -61,7 +62,7 @@ class _cargoHistoryDetailState extends State<cargoHistoryDetail> {
         leading: InkWell(
           onTap: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Post_BottomNav()));
+                MaterialPageRoute(builder: (context) => CargoHistory()));
           },
           child: const Icon(
             Icons.arrow_back_ios,

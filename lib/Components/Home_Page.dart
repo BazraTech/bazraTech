@@ -22,6 +22,7 @@ import '../views/Post/Post_Navigation.dart';
 import '../views/Notification/Notification.dart';
 import '../views/Report/Report.dart';
 import '../views/Work/ActiveCargo.dart';
+import '../views/usermanagement/Profile.dart';
 
 class CargoOWnerHomePage extends StatefulWidget {
   int? index;
@@ -141,20 +142,28 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                         top: 15,
                         bottom: 10,
                       ),
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundColor: Colors.white,
-                        child: ClipOval(
-                          child: FutureBuilder(
-                            future: fetchImage(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<String> snapshot) {
-                              if (snapshot.connectionState !=
-                                  ConnectionState.done) return Text("");
-                              return Image.network(
-                                snapshot.data.toString(),
-                              );
-                            },
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Profile()));
+                        },
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundColor: Colors.white,
+                          child: ClipOval(
+                            child: FutureBuilder(
+                              future: fetchImage(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<String> snapshot) {
+                                if (snapshot.connectionState !=
+                                    ConnectionState.done) return Text("");
+                                return Image.network(
+                                  snapshot.data.toString(),
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),
@@ -268,6 +277,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                       EdgeInsets.only(left: 25, right: 25, bottom: 25, top: 20),
                   child: GridView(
                     padding: EdgeInsets.zero,
+                    physics: const NeverScrollableScrollPhysics(),
                     // ignore: sort_child_properties_last
                     children: [
                       Padding(

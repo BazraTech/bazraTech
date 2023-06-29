@@ -11,16 +11,16 @@ import '../../shared/custom-form.dart';
 import '../../shared/customButton.dart';
 import 'login.dart';
 
-class ChangePassword extends StatefulWidget {
-  const ChangePassword({super.key});
+class ResetPassword extends StatefulWidget {
+  const ResetPassword({super.key});
 
   @override
-  State<ChangePassword> createState() => _ChangePasswordState();
+  State<ResetPassword> createState() => _ResetPasswordState();
 }
 
 TextEditingController from = TextEditingController();
 
-class _ChangePasswordState extends State<ChangePassword> {
+class _ResetPasswordState extends State<ResetPassword> {
   final _username = TextEditingController();
   final _pin = TextEditingController();
   final _passwordController = TextEditingController();
@@ -134,37 +134,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                   ),
                   CustomTextFieldForm(
                     hintText: AppLocalizations.of(context)
-                            ?.translate('Current Password') ??
-                        "Current Password",
-                    textController: _passwordController,
-                    isPassword: true,
-                    hintTextStyle: TextStyle(
-                      letterSpacing: 1.0,
-                      wordSpacing: 2.0,
-                      color: _isFocus ? Colors.red : Colors.grey,
-                      // ... other styles
-                    ),
-                    textStyle: TextStyle(fontSize: 16),
-                    onChanged: (value) {
-                      print("password changed: $value");
-                    },
-                    obscureText: true,
-                    showSuffixIcon: true,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return AppLocalizations.of(context)
-                                ?.translate('Please enter Current password') ??
-                            "Please enter Current password";
-                      }
-                      return PasswordMatchValidator.validate(
-                          value!, _confirmPasswordController.text);
-                    },
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CustomTextFieldForm(
-                    hintText: AppLocalizations.of(context)
                             ?.translate('New Password') ??
                         "New Password",
                     textController: _passwordController,
@@ -181,6 +150,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     },
                     obscureText: true,
                     showSuffixIcon: true,
+                    
                     validator: (value) {
                       if (value!.isEmpty) {
                         return AppLocalizations.of(context)
@@ -212,6 +182,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     },
                     obscureText: true,
                     showSuffixIcon: true,
+                    
                     validator: (value) {
                       if (value!.isEmpty) {
                         return AppLocalizations.of(context)
@@ -225,6 +196,70 @@ class _ChangePasswordState extends State<ChangePassword> {
                   const SizedBox(
                     height: 20,
                   ),
+                  CustomTextFieldForm(
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.normal),
+                    hintText: AppLocalizations.of(context)
+                            ?.translate("Phone Number") ??
+                        "Phone Number",
+                    textController: _username,
+                    obscureText: false,
+                    hintTextStyle: TextStyle(
+                      letterSpacing: 1.0,
+                      wordSpacing: 2.0,
+                      color: _isFocus ? Colors.red : Colors.grey,
+                      // ... other styles
+                    ),
+                    
+                    onChanged: (value) {},
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return AppLocalizations.of(context)
+                                ?.translate("Please enter your phone number") ??
+                            "Please enter your phone number";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CustomTextFieldForm(
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.normal),
+                    hintText:
+                        AppLocalizations.of(context)?.translate("Pin Number") ??
+                            "Pin Number",
+                    textController: _pin,
+                    obscureText: false,
+                    hintTextStyle: TextStyle(
+                      letterSpacing: 1.0,
+                      wordSpacing: 2.0,
+                      color: _isFocus ? Colors.red : Colors.grey,
+                      // ... other styles
+                    ),
+                    
+                    onChanged: (value) {},
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return AppLocalizations.of(context)
+                                ?.translate('Please enter pin number') ??
+                            "Please enter pin number";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   CustomButton(
                     onPressed: () async {
                       await registerCargo(
@@ -235,8 +270,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                       );
                     },
                     text: AppLocalizations.of(context)
-                            ?.translate('Change Password') ??
-                        "Change Password",
+                            ?.translate('Reset Password') ??
+                        "Reset Password",
                   ),
                 ],
               ),
