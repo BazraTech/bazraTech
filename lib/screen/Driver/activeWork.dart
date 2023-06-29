@@ -110,13 +110,20 @@ class _activeWorkState extends State<activeWork> {
       body: Column(
         children: [
           Container(
-            color: kPrimaryColor,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(95, 112, 247, 1),
+                  Color.fromRGBO(163, 163, 234, 1),
+                ],
+                // stops: [0.4, 0.4],
+              ),
+            ),
             width: screenWidth,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  color: kPrimaryColor,
                   padding: EdgeInsets.zero,
                   margin: EdgeInsets.only(
                       top: screenHeight * 0.08, right: screenWidth * 0.4),
@@ -139,7 +146,13 @@ class _activeWorkState extends State<activeWork> {
                 height: screenHeight * 0.15,
                 // margin: EdgeInsets.only(bottom: 40),
                 decoration: BoxDecoration(
-                    color: kPrimaryColor,
+                    gradient: LinearGradient(
+                      colors: [
+                        Color.fromRGBO(95, 112, 247, 1),
+                        Color.fromRGBO(163, 163, 234, 1),
+                      ],
+                      // stops: [0.4, 0.4],
+                    ),
                     borderRadius: BorderRadius.vertical(
                       bottom: Radius.circular(30),
                     )),

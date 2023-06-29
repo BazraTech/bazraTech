@@ -128,7 +128,7 @@ class _CreateAlertState extends State {
         final Result = data['activeAlerts'];
         setState(() {
           final Result = data["activeAlerts"];
-          int Resultsm = data["activeAlerts"][0]['id'];
+          Resultsm = data["activeAlerts"][0]['id'];
           print(Resultsm);
         });
 
@@ -150,8 +150,8 @@ class _CreateAlertState extends State {
       "alertType": alertType,
       "location": "ADDIS ABABA",
     };
-    final url =
-        Uri.parse("http://64.226.104.50:9090/Api/Driver/FinishAlert/96");
+    final url = Uri.parse(
+        "http://64.226.104.50:9090/Api/Driver/FinishAlert/$Resultsm ");
     http.post(url, body: json.encode(data), headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
@@ -190,7 +190,6 @@ class _CreateAlertState extends State {
     return Scaffold(
       backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       appBar: AppBar(
-        toolbarHeight: 80,
         elevation: 1,
         leading: Container(
           margin: EdgeInsets.only(top: 5),
@@ -206,7 +205,6 @@ class _CreateAlertState extends State {
         ),
         backgroundColor: kPrimaryColor,
         title: Container(
-          margin: EdgeInsets.only(left: screenWidth * 0.15),
           child: Text(
             "Create Alert ",
             textAlign: TextAlign.left,

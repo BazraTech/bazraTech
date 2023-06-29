@@ -115,8 +115,6 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
     }
   }
 
-  void showMyAlert(BuildContext context, String title, String message) {}
-
   void initState() {
     super.initState();
   }

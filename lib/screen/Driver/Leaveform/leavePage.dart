@@ -43,6 +43,7 @@ class _leavepremmissionPageState extends State {
     "Sick",
     "Other",
   ];
+  List<String> day = ["hours", "Days", "Hours"];
   List<String> date = [
     "Start date",
     "End date",
@@ -223,326 +224,435 @@ class _leavepremmissionPageState extends State {
           ),
         ),
       ),
-      body: Container(
+      body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ListTile(
-              title: Container(
+            Container(
+                height: screenHeight * 0.12,
+                width: screenWidth * 0.9,
                 margin: EdgeInsets.only(
-                  bottom: 30,
+                  top: screenHeight * 0.01,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      height: screenHeight * 0.2,
-                      child: ListView.builder(
-                        itemCount: type.length - 2,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Row(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black
+                                    .withOpacity(0.3), // Shadow color
+                                blurRadius: 5, // Spread radius
+                                offset:
+                                    Offset(0, 3), // Offset in (x,y) coordinates
+                              ),
+                            ],
+                            color: Color.fromRGBO(236, 240, 243, 1),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Color.fromRGBO(
+                                  255, 255, 255, 1), // Set the border color
+                              width: 2.5,
+                            )),
+                        height: screenHeight * 0.07,
+                        width: screenWidth * 0.9,
+                        child: Padding(
+                          padding: const EdgeInsets.all(9.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                margin: EdgeInsets.only(
-                                  top: screenHeight * 0.01,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      child: Column(children: [
-                                        Column(
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.black
-                                                          .withOpacity(
-                                                              0.3), // Shadow color
-                                                      blurRadius:
-                                                          5, // Spread radius
-                                                      offset: Offset(0,
-                                                          3), // Offset in (x,y) coordinates
-                                                    ),
-                                                  ],
-                                                  color: Color.fromRGBO(
-                                                      236, 240, 243, 1),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  border: Border.all(
-                                                    color: Color.fromRGBO(
-                                                        255,
-                                                        255,
-                                                        255,
-                                                        1), // Set the border color
-                                                    width: 2.5,
-                                                  )),
-                                              height: screenHeight * 0.09,
-                                              width: screenWidth * 0.9,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(9.0),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                      height:
-                                                          screenHeight * 0.02,
-                                                      width: screenWidth * 0.2,
-                                                      child: Text(date[index]),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Container(
-                                                        height:
-                                                            screenHeight * 0.03,
-                                                        margin: EdgeInsets.only(
-                                                            top: 5),
-                                                        child: Icon(
-                                                          Ionicons.calendar,
-                                                        ))
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ]),
-                                    ),
-                                  ],
+                                height: screenHeight * 0.03,
+                                margin: EdgeInsets.only(top: 5),
+                                child: Text(
+                                  "Leave Request For",
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontFamily: 'Nunito',
+                                      fontSize: AppFonts.smallFontSize,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.normal),
                                 ),
                               ),
                             ],
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 12,
-            ),
-            ListTile(
-              title: Container(
-                margin: EdgeInsets.only(
-                  bottom: 30,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      height: screenHeight * 0.4,
-                      child: ListView.builder(
-                        itemCount: type.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Row(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                  top: screenHeight * 0.01,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      child: Column(children: [
-                                        Column(
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.black
-                                                          .withOpacity(
-                                                              0.3), // Shadow color
-                                                      blurRadius:
-                                                          5, // Spread radius
-                                                      offset: Offset(0,
-                                                          3), // Offset in (x,y) coordinates
-                                                    ),
-                                                  ],
-                                                  color: Color.fromRGBO(
-                                                      236, 240, 243, 1),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  border: Border.all(
-                                                    color: Color.fromRGBO(
-                                                        255,
-                                                        255,
-                                                        255,
-                                                        1), // Set the border color
-                                                    width: 2.5,
-                                                  )),
-                                              height: screenHeight * 0.07,
-                                              width: screenWidth * 0.9,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(9.0),
-                                                child: Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Container(
-                                                      height:
-                                                          screenHeight * 0.02,
-                                                      width: screenWidth * 0.04,
-                                                      child: Transform.scale(
-                                                        scale: 1.1,
-                                                        child: Radio(
-                                                          value: index,
-                                                          groupValue:
-                                                              selectedIndex,
-                                                          onChanged: (value) {
-                                                            setState(() {
-                                                              selectedIndex =
-                                                                  value!;
-                                                              alertType =
-                                                                  type[index];
-                                                              isalert = false;
-                                                            });
-                                                          },
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Container(
-                                                      height:
-                                                          screenHeight * 0.03,
-                                                      margin: EdgeInsets.only(
-                                                          top: 5),
-                                                      child: Text(
-                                                        type[index],
-                                                        textAlign:
-                                                            TextAlign.left,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: const TextStyle(
-                                                            fontFamily:
-                                                                'Nunito',
-                                                            fontSize: AppFonts
-                                                                .smallFontSize,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .normal),
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ]),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 1,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color:
-                                Colors.black.withOpacity(0.3), // Shadow color
-                            blurRadius: 5, // Spread radius
-                            offset: Offset(0, 3), // Offset in (x,y) coordinates
                           ),
-                        ],
-                        color: Color.fromRGBO(236, 240, 243, 1),
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border.all(
-                          color: Color.fromRGBO(
-                              255, 255, 255, 1), // Set the border color
-                          width: 2.5,
-                        )),
-                    width: MediaQuery.of(context).size.width * 0.525,
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    margin: EdgeInsets.only(bottom: 20, right: 20, left: 20),
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      tileColor: Colors.white,
-                      title: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                  ],
+                )),
+            Container(
+                height: screenHeight * 0.12,
+                width: screenWidth * 0.9,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black
+                                    .withOpacity(0.3), // Shadow color
+                                blurRadius: 5, // Spread radius
+                                offset:
+                                    Offset(0, 3), // Offset in (x,y) coordinates
+                              ),
+                            ],
+                            color: Color.fromRGBO(236, 240, 243, 1),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Color.fromRGBO(
+                                  255, 255, 255, 1), // Set the border color
+                              width: 2.5,
+                            )),
+                        height: screenHeight * 0.07,
+                        width: screenWidth * 0.9,
+                        child: Padding(
+                          padding: const EdgeInsets.all(9.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                child: ElevatedButton(
-                                  onPressed: () => {},
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.resolveWith(
-                                              (states) {
-                                        if (states
-                                            .contains(MaterialState.pressed)) {
-                                          return Color.fromRGBO(
-                                              255, 148, 165, 223);
-                                        }
-                                        // 98, 172, 181
-                                        return Colors.white;
-                                      }),
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30)))),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Create_Alert();
+                                height: screenHeight * 0.02,
+                                width: screenWidth * 0.04,
+                                child: Transform.scale(
+                                  scale: 1.1,
+                                  child: Radio(
+                                    value: 1,
+                                    groupValue: selectedIndex,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedIndex = value!;
+                                        alertType = day[1];
+                                        isalert = false;
+                                      });
                                     },
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.4,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.06,
-                                      child: Center(
-                                        child: Text(
-                                          'Request Leave',
-                                          textAlign: TextAlign.left,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                              fontFamily: 'Nunito',
-                                              fontSize: AppFonts.smallFontSize,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      ),
-                                    ),
                                   ),
                                 ),
                               ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                height: screenHeight * 0.03,
+                                margin: EdgeInsets.only(top: 5),
+                                child: Text(
+                                  "Hour",
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontFamily: 'Nunito',
+                                      fontSize: AppFonts.smallFontSize,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ),
+                              SizedBox(
+                                width: screenWidth * 0.3,
+                              ),
+                              Container(
+                                height: screenHeight * 0.02,
+                                width: screenWidth * 0.04,
+                                child: Transform.scale(
+                                  scale: 1.1,
+                                  child: Radio(
+                                    value: 1,
+                                    groupValue: selectedIndex,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedIndex = value!;
+                                        alertType = day[1];
+                                        isalert = false;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                height: screenHeight * 0.03,
+                                margin: EdgeInsets.only(top: 5),
+                                child: Text(
+                                  "Day",
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontFamily: 'Nunito',
+                                      fontSize: AppFonts.smallFontSize,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              )
                             ],
                           ),
-                        ],
+                        ),
                       ),
+                    ),
+                  ],
+                )),
+            Container(
+              height: screenHeight * 0.2,
+              child: ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
+                itemCount: type.length - 2,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    margin: EdgeInsets.only(
+                      top: screenHeight * 0.01,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black
+                                      .withOpacity(0.3), // Shadow color
+                                  blurRadius: 5, // Spread radius
+                                  offset: Offset(
+                                      0, 3), // Offset in (x,y) coordinates
+                                ),
+                              ],
+                              color: Color.fromRGBO(236, 240, 243, 1),
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: Color.fromRGBO(
+                                    255, 255, 255, 1), // Set the border color
+                                width: 2.5,
+                              )),
+                          height: screenHeight * 0.09,
+                          width: screenWidth * 0.9,
+                          child: Padding(
+                            padding: const EdgeInsets.all(9.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: screenHeight * 0.02,
+                                      width: screenWidth * 0.2,
+                                      child: Text(date[index]),
+                                    ),
+                                    Text("2011/3/3")
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                    height: screenHeight * 0.03,
+                                    margin: EdgeInsets.only(top: 5),
+                                    child: Icon(
+                                      Ionicons.calendar,
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 },
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                bottom: 30,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    height: screenHeight * 0.4,
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: type.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                top: screenHeight * 0.01,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    child: Column(children: [
+                                      Column(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.black
+                                                        .withOpacity(
+                                                            0.3), // Shadow color
+                                                    blurRadius:
+                                                        5, // Spread radius
+                                                    offset: Offset(0,
+                                                        3), // Offset in (x,y) coordinates
+                                                  ),
+                                                ],
+                                                color: Color.fromRGBO(
+                                                    236, 240, 243, 1),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                border: Border.all(
+                                                  color: Color.fromRGBO(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      1), // Set the border color
+                                                  width: 2.5,
+                                                )),
+                                            height: screenHeight * 0.07,
+                                            width: screenWidth * 0.9,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(9.0),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    height: screenHeight * 0.02,
+                                                    width: screenWidth * 0.04,
+                                                    child: Transform.scale(
+                                                      scale: 1.1,
+                                                      child: Radio(
+                                                        value: index,
+                                                        groupValue:
+                                                            selectedIndex,
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            selectedIndex =
+                                                                value!;
+                                                            alertType =
+                                                                type[index];
+                                                            isalert = false;
+                                                          });
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Container(
+                                                    height: screenHeight * 0.03,
+                                                    margin:
+                                                        EdgeInsets.only(top: 5),
+                                                    child: Text(
+                                                      type[index],
+                                                      textAlign: TextAlign.left,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: const TextStyle(
+                                                          fontFamily: 'Nunito',
+                                                          fontSize: AppFonts
+                                                              .smallFontSize,
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight
+                                                              .normal),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ]),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3), // Shadow color
+                      blurRadius: 5, // Spread radius
+                      offset: Offset(0, 3), // Offset in (x,y) coordinates
+                    ),
+                  ],
+                  color: Color.fromRGBO(236, 240, 243, 1),
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(
+                    color: Color.fromRGBO(
+                        255, 255, 255, 1), // Set the border color
+                    width: 2.5,
+                  )),
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.height * 0.1,
+              margin: EdgeInsets.only(bottom: 20, right: 20, left: 20),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 15),
+                        child: ElevatedButton(
+                          onPressed: () => {},
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith((states) {
+                                if (states.contains(MaterialState.pressed)) {
+                                  return Color.fromRGBO(255, 148, 165, 223);
+                                }
+                                // 98, 172, 181
+                                return Colors.white;
+                              }),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(30)))),
+                          child: GestureDetector(
+                            onTap: () {
+                              Create_Alert();
+                            },
+                            child: Container(
+                              width: screenWidth * 0.4,
+                              height: screenHeight * 0.06,
+                              child: Center(
+                                child: Text(
+                                  'Request Leave',
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontFamily: 'Nunito',
+                                      fontSize: AppFonts.smallFontSize,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],

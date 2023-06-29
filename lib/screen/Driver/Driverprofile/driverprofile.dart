@@ -1,11 +1,9 @@
 import 'dart:convert';
 
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import 'package:bazralogin/Route/Routes.dart';
+
 import 'package:bazralogin/config/APIService.dart';
 import 'package:bazralogin/controller/Localization.dart';
-import 'package:bazralogin/screen/Owner/Profile/profileEdit/languageOptions.dart';
-import 'package:bazralogin/screen/Owner/Profile/profileEdit/updateOwnerprofile.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -95,12 +93,9 @@ class _driverProfileState extends State<driverProfile> {
       if (currentBackPressTime == null ||
           DateTime.now().difference(currentBackPressTime!) >
               Duration(seconds: 2)) {
-        // Show a Snackbar at the bottom indicating to press back again to exit
-
         currentBackPressTime = DateTime.now();
-        return true; // Stop the default back button event
+        return true;
       } else {
-        // Close the app when back button is pressed again
         SystemNavigator.pop();
         return true; // Stop the default back button event
       }
@@ -591,21 +586,31 @@ class _driverProfileState extends State<driverProfile> {
                               child: Icon(Icons.lock_outline)),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                                width: screenWidth -
-                                    (screenWidth * 0.08 +
-                                        screenWidth * 0.03 +
-                                        76),
-                                child: Text(
-                                  TranslationUtil.text('Change password'),
-                                  textAlign: TextAlign.left,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      fontFamily: 'Nunito',
-                                      fontSize: AppFonts.smallFontSize,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal),
-                                )),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          ChangePassword()),
+                                );
+                              },
+                              child: Container(
+                                  width: screenWidth -
+                                      (screenWidth * 0.08 +
+                                          screenWidth * 0.03 +
+                                          76),
+                                  child: Text(
+                                    TranslationUtil.text('Change password'),
+                                    textAlign: TextAlign.left,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        fontFamily: 'Nunito',
+                                        fontSize: AppFonts.smallFontSize,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.normal),
+                                  )),
+                            ),
                           ),
                           Align(
                             alignment: Alignment.topRight,

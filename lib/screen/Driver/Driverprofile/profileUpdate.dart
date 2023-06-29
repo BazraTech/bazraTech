@@ -7,6 +7,7 @@ import 'package:bazralogin/const/constant.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
@@ -38,11 +39,12 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController password = TextEditingController();
   bool isHiddenPassword = true;
-  bool isLoading = false;
+
   String Logoavtar = "";
   String ownerpic = "";
   PickedFile? _pickedImage;
   final ImagePicker _picker = ImagePicker();
+  String? owneriamg;
 
   void isPasswordView() {
     setState(() {
@@ -51,50 +53,53 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
   }
 
   void takePicture(ImageSource source) async {
-    final pickedFile = await _picker.getImage(
-      source: source,
-    );
+    final XFile? image =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
     setState(() {
-      _pickedImage = pickedFile;
+      owneriamg = File(image!.path).path;
     });
+
+    print(owneriamg);
   }
 
-  void performAction() {
-    setState(() {
-      isLoading = true;
-    });
+  registerDriver(String? pickedImage) async {
+    var value = await storage.read(key: 'jwt');
 
-    // Simulate an asynchronous action
-    Future.delayed(Duration(seconds: 15), () async {
-      var value = await storage.read(key: 'jwt');
-      Map data = {
-        "region": "ksdiweoi",
-        "subCity": "sfwrwe",
-        "specificLocation": "sffsdf",
-        "city": "fwrfwerwe",
-        "woreda": "kiseiwr",
-        "houseNumber": "sfsfs",
-        "notificationmedia": "SMS",
-        "serviceRequired": "EXCELLENT"
-      };
-      var response = await http.put(
-          Uri.parse("http://64.226.104.50:9090/Api/Driver/UpdateInfo"),
-          body: json.encode(data),
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization": "Bearer $value",
-          });
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": "Bearer $value",
+    };
 
-      if (response.statusCode == 200) {
-        var decodedResponse = json.decode(response.body);
-        String alertContent = decodedResponse["message"];
-        alertutilsfordriver.showMyDialog(context, "Alert", alertContent);
-      }
-      setState(() {
-        isLoading = false;
-      });
-    });
+    final formData = http.MultipartRequest(
+      'PUT',
+      Uri.parse("http://64.226.104.50:9090/Api/Driver/UpdateInfo"),
+    );
+    formData.headers['Authorization'] = "Bearer $value";
+
+    formData.files.add(
+      await http.MultipartFile.fromPath('driverPic', pickedImage!),
+    );
+    print("yared12222 992900");
+    print(
+        "/data/user/0/com.example.bazralogin/cache/0e681c23-32a7-4b98-9dbd-ba18c4f8e2c6/Screenshot_20230502-041436.png");
+
+    final response = await formData.send();
+    var responseData = await response.stream.bytesToString();
+    var decodedResponse = json.decode(responseData);
+
+    if (response.statusCode == 200) {
+      String alertContent = decodedResponse["message"];
+
+      alertutilsfordriver.showMyDialog(context, "Alert", alertContent);
+    } else {
+      // String alertContent = decodedResponse["message"];
+
+      // throw Exception(
+      //     'Failed load data with status code ${response.statusCode}');
+      print("no");
+    }
   }
 
   Future<String> _fetchLogo() async {
@@ -169,9 +174,9 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
                                 backgroundColor: Colors.blueGrey,
                                 child: CircleAvatar(
                                   radius: 48,
-                                  backgroundImage: _pickedImage == null
-                                      ? NetworkImage("${widget.image}")
-                                      : FileImage(File(_pickedImage!.path))
+                                  backgroundImage: owneriamg == null
+                                      ? null
+                                      : FileImage(File(owneriamg.toString()))
                                           as ImageProvider,
                                 ),
                               ),
@@ -446,26 +451,19 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
               margin: EdgeInsets.only(bottom: 20),
               height: height * 0.06,
               child: ElevatedButton(
-                  onPressed: isLoading ? null : performAction,
+                  onPressed: () {
+                    registerDriver(owneriamg!);
+                  },
                   child: Container(
                     height: 55,
                     width: width,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        isLoading
-                            ? SizedBox(
-                                height: 24,
-                                width: 24,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white),
-                                ),
-                              )
-                            : SizedBox(), // Empty SizedBox if not loading
-                        SizedBox(width: 8),
+                        // Empty SizedBox if not loading
+
                         Text(
-                          isLoading ? 'Please Wait' : 'Update',
+                          'Update',
                           style: TextStyle(
                               fontFamily: "Nunito",
                               fontWeight: FontWeight.bold,

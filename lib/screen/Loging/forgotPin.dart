@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:bazralogin/Route/Routes.dart';
+import 'package:bazralogin/Theme/Alert.dart';
+import 'package:bazralogin/main.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
@@ -10,9 +12,13 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Theme/TextInput.dart';
+import '../../config/APIService.dart';
 import '../Bottom/Bottom.dart';
+import '../Driver/driverBottomnav.dart';
+import '../Owner/Driver/assignDriver.dart';
 
 class forgotPin extends StatefulWidget {
   String? phone;
@@ -28,6 +34,30 @@ class _forgotPinState extends State<forgotPin> {
   TextEditingController Confirmpass = TextEditingController();
   TextEditingController resetpin = TextEditingController();
   bool isLoading = false;
+  Map<String, dynamic>? findVehicle;
+  Map<String, dynamic>? Result;
+
+  ownerinfo() async {
+    var token = await storage.read(key: 'jwt');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var response =
+        await http.get(Uri.parse(ApIConfig.ownerInfo), headers: requestHeaders);
+    if (response.statusCode == 200) {
+      var mapResponse = json.decode(response.body) as Map<String, dynamic>;
+      Map<String, dynamic> results = mapResponse['ownerINF'];
+
+      setState(() {
+        Result = results;
+        findVehicle = Result;
+      });
+      return Result;
+    } else {}
+  }
+
   ChangePasswords() async {
     try {
       final storage = new FlutterSecureStorage();
@@ -52,14 +82,22 @@ class _forgotPinState extends State<forgotPin> {
       });
 
       if (response.statusCode == 200) {
-        Get.offAllNamed("/home");
+        
+        var decodedResponse = json.decode(response.body);
+        String alertContent = decodedResponse["message"];
+      alertutils.showMyDialog(context, "Alert", alertContent);
       } else {
         print('noooo');
       }
     } catch (e) {
       print(e);
-      throw e;
     }
+  }
+
+  void initState() {
+    super.initState();
+
+    ownerinfo();
   }
 
   @override
@@ -222,27 +260,23 @@ class _forgotPinState extends State<forgotPin> {
                         height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width - 30,
                         child: ElevatedButton(
-                            onPressed: isLoading ? null : ChangePasswords,
+                            onPressed: () {
+                              ChangePasswords();
+                            },
                             child: Container(
                               height: 55,
                               width: screenWidth,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  isLoading
-                                      ? SizedBox(
-                                          height: 24,
-                                          width: 24,
-                                          child: CircularProgressIndicator(
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                                    Colors.white),
-                                          ),
-                                        )
-                                      : SizedBox(), // Empty SizedBox if not loading
-                                  SizedBox(width: 8),
+                                  SizedBox(
+                                    height: 24,
+                                    width: 24,
+                                  )
+                                  // Empty SizedBox if not loading
+                                  ,
                                   Text(
-                                    isLoading ? 'Please Wait' : 'Save',
+                                    'Save',
                                     style: TextStyle(
                                         fontFamily: "Nunito",
                                         fontWeight: FontWeight.bold,

@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Model/driverCount.dart';
 import '../../Model/loginRequestModel.dart';
 import '../../Route/Routes.dart';
@@ -102,9 +103,11 @@ class _LoginState extends State<Login> {
         isLoading = true;
       });
       APIService.loginFetch(model).then((response) async {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('phone_number', phoneController.text);
         if (APIService.ownername == "DRIVER") {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => driverBottomn()));
+              MaterialPageRoute(builder: (context) => BottomTabBarPage()));
         } else if (APIService.ownername == "OWNER") {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => BottomNav()));

@@ -99,7 +99,7 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
         final continer = driver['weight'].toLowerCase();
         final inputName = enterKeyboard.toLowerCase();
         final inputLicense = enterKeyboard.toLowerCase();
-        return name.contains(inputName) || continer.contains(inputName);
+        return name.contains(inputName) || continer.contains(inputLicense);
       }).toList();
     });
     setState(() {
@@ -199,7 +199,7 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
                         )
                       else
                         Column(
-                            children: Result.map((driver) {
+                            children: findVehicle.map((driver) {
                           return Column(
                             children: [
                               InkWell(

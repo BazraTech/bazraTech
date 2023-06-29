@@ -48,10 +48,9 @@ class DriverStatus extends StatelessWidget {
               isScrollable: true,
               labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
               indicatorSize: TabBarIndicatorSize.label,
-              indicatorWeight: 4,
-              labelColor: kPrimaryColor,
-              indicatorPadding: EdgeInsets.all(4),
-              indicatorColor: Colors.white,
+              indicatorWeight: 5,
+              labelColor: Colors.black,
+              indicatorColor: Colors.blue,
               overlayColor:
                   MaterialStateColor.resolveWith((Set<MaterialState> states) {
                 if (states.contains(MaterialState.pressed)) {
@@ -78,16 +77,15 @@ class DriverStatus extends StatelessWidget {
                         return SizedBox(
                             height: screenHeight * 0.03,
                             width: width * 0.06,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.red[400],
-                              radius: 10,
-                              child: Text(
-                                snapshot.data.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize:
-                                        AppFonts.driverandvehiclefontsize),
-                              ),
+                            child: Text(
+                              snapshot.data.toString(),
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: AppFonts.smallFontSize,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ));
                       },
                     ),
@@ -105,16 +103,15 @@ class DriverStatus extends StatelessWidget {
                           return SizedBox(
                               height: screenHeight * 0.03,
                               width: width * 0.07,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.red[400],
-                                radius: 8,
-                                child: Text(
-                                  snapshot.data.toString(),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: AppFonts.driverandvehiclefontsize,
-                                  ),
-                                ),
+                              child: Text(
+                                snapshot.data.toString(),
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
                               ));
                         },
                       ),
@@ -131,16 +128,15 @@ class DriverStatus extends StatelessWidget {
                         return SizedBox(
                             height: screenHeight * 0.03,
                             width: width * 0.07,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.red[400],
-                              radius: 8,
-                              child: Text(
-                                snapshot.data.toString(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: AppFonts.driverandvehiclefontsize,
-                                ),
-                              ),
+                            child: Text(
+                              snapshot.data.toString(),
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ));
                       },
                     ),
@@ -158,22 +154,23 @@ class DriverStatus extends StatelessWidget {
                           return SizedBox(
                               height: screenHeight * 0.03,
                               width: width * 0.07,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.red[400],
-                                radius: 8,
-                                child: Text(
-                                  snapshot.data.toString(),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10,
-                                  ),
-                                ),
+                              child: Text(
+                                snapshot.data.toString(),
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
                               ));
                         },
                       ),
                     )),
                 Tab(
-                    text: TranslationUtil.text("OnRoute Drivers"),
+                    text: TranslationUtil.text(
+                      "OnRoute Drivers",
+                    ),
                     icon: Container(
                       child: FutureBuilder(
                         future: _onroutedriver(),
@@ -184,16 +181,15 @@ class DriverStatus extends StatelessWidget {
                           return SizedBox(
                               height: screenHeight * 0.03,
                               width: width * 0.07,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.red[400],
-                                radius: 8,
-                                child: Text(
-                                  snapshot.data.toString(),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10,
-                                  ),
-                                ),
+                              child: Text(
+                                snapshot.data.toString(),
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
                               ));
                         },
                       ),

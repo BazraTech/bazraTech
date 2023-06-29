@@ -26,7 +26,7 @@ class _drivernotificationPageState extends State<drivernotificationPage> {
       'Authorization': 'Bearer $token',
     };
     var response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/Alerts/ByStatus'),
+        Uri.parse('http://64.226.104.50:9090/Api/Driver/Alerts/ByStatus'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {

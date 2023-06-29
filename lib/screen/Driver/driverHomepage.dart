@@ -15,9 +15,9 @@ import '../../../const/constant.dart';
 import 'package:http/http.dart' as http;
 import '../../Theme/clippbox.dart';
 import 'Notification/driverNotification.dart';
+import 'Reportfordriver/driverReportstatus.dart';
 import 'activeWork.dart';
 import 'create_alert.dart';
-import 'driverReportstatus.dart';
 
 class Driver_Hompage extends StatefulWidget {
   const Driver_Hompage({
@@ -221,95 +221,144 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                         )),
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Container(
-                                margin: EdgeInsets.only(top: 46),
-                                child: SizedBox(
-                                  height: screenHeight * 0.1,
-                                  width: screenWidth * 0.13,
-                                  child: FutureBuilder(
-                                    future: _fetchLogo(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<String> snapshot) {
-                                      if (snapshot.connectionState !=
-                                          ConnectionState.done) return Text("");
-                                      return SizedBox(
-                                          height: screenHeight * 0.2,
-                                          width: screenWidth * 0.9,
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                  height: screenHeight * 0.04,
-                                                  child: Image.network(snapshot
-                                                      .data
-                                                      .toString())),
-                                              Container(
-                                                width: screenWidth * 0.4,
-                                                height: screenHeight * 0.04,
-                                                child: Result?['driverName'] ==
-                                                        null
-                                                    ? Container()
-                                                    : Text(
-                                                        Result?['driverName'],
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: const TextStyle(
-                                                            fontFamily:
-                                                                'Nunito',
-                                                            fontSize: 12,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Container(
+                                  margin: EdgeInsets.only(top: 46),
+                                  child: SizedBox(
+                                    height: screenHeight * 0.1,
+                                    width: screenWidth - 80,
+                                    child: FutureBuilder(
+                                      future: _fetchLogo(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<String> snapshot) {
+                                        if (snapshot.connectionState !=
+                                            ConnectionState.done)
+                                          return Text("");
+                                        return SizedBox(
+                                            height: screenHeight * 0.2,
+                                            width: screenWidth * 0.9,
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                    height: screenHeight * 0.1,
+                                                    child: Image.network(
+                                                        snapshot.data
+                                                            .toString())),
+                                                Container(
+                                                  margin:
+                                                      EdgeInsets.only(top: 30),
+                                                  child: Column(
+                                                    children: [
+                                                      Container(
+                                                        width:
+                                                            screenWidth * 0.17,
+                                                        child: Text(
+                                                          "Well back ",
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: const TextStyle(
+                                                              fontFamily:
+                                                                  'Nunito',
+                                                              fontSize: AppFonts
+                                                                  .smallFontSize,
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
                                                       ),
-                                              )
-                                            ],
-                                          ));
-                                    },
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 4),
+                                                        width:
+                                                            screenWidth * 0.17,
+                                                        child:
+                                                            Result?['driverName'] ==
+                                                                    null
+                                                                ? Container()
+                                                                : Text(
+                                                                    Result?[
+                                                                        'driverName'],
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    style: const TextStyle(
+                                                                        fontFamily:
+                                                                            'Nunito',
+                                                                        fontSize:
+                                                                            14,
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ));
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: Container(
-                                height: screenHeight * 0.1,
-                                margin: EdgeInsets.only(right: 22),
-                                width: screenWidth * 0.09,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: MaterialButton(
-                                    onPressed: () async {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  drivernotificationPage()));
-                                    },
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                drivernotificationPage()));
+                                  },
+                                  child: Container(
+                                    height: screenHeight * 0.1,
+                                    margin: EdgeInsets.only(right: 22, top: 10),
+                                    width: screenWidth * 0.09,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: MaterialButton(
+                                        onPressed: () async {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      drivernotificationPage()));
+                                        },
 
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      child: Center(
-                                        child: Icon(
-                                          Ionicons.notifications,
-                                          size: 27,
-                                          color: Colors.blue,
+                                        child: Material(
+                                          color: Colors.transparent,
+                                          child: Center(
+                                            child: Icon(
+                                              Ionicons.notifications,
+                                              size: 27,
+                                              color: Colors.white,
+                                            ),
+                                          ),
                                         ),
+
+                                        //use this class Circleborder() for circle shape.
                                       ),
                                     ),
-
-                                    //use this class Circleborder() for circle shape.
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         Align(
                           alignment: Alignment.topCenter,
@@ -321,7 +370,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                               style: const TextStyle(
                                   fontFamily: 'Nunito',
                                   fontSize: AppFonts.smallFontSize,
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.normal),
                             ),
                           ),
@@ -335,7 +384,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Container(
-                          height: screenHeight * 0.23,
+                          height: screenHeight * 0.24,
                           margin: EdgeInsets.only(top: 150),
                           child: _isLoading
                               ? Text("")
@@ -381,14 +430,22 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                                         painter:
                                                             DashLinePainter(),
                                                       ),
-                                                      Container(
-                                                        height:
-                                                            screenHeight * 0.07,
-                                                        width:
-                                                            screenWidth * 0.07,
-                                                        child: Icon(
-                                                          Icons.local_shipping,
-                                                          color: Colors.red,
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .bottomCenter,
+                                                        child: Container(
+                                                          height: screenHeight *
+                                                              0.09,
+                                                          width: screenWidth *
+                                                              0.09,
+                                                          child: Container(
+                                                            child: Icon(
+                                                              Icons
+                                                                  .local_shipping,
+                                                              color:
+                                                                  Colors.blue,
+                                                            ),
+                                                          ),
                                                         ),
                                                       ),
                                                       CustomPaint(
@@ -540,7 +597,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                       //height: 70,
                                       width: MediaQuery.of(context).size.width,
                                       child: Icon(
-                                        Icons.calendar_month,
+                                        Icons.work,
                                         size: 35,
                                         color: Colors.blue,
                                       ),
