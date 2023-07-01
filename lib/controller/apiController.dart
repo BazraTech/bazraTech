@@ -1,52 +1,65 @@
 import 'dart:convert';
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
 import '../config/APIService.dart';
-import '../screen/Owner/Driver/assignDriver.dart';
-
 class ApiController extends GetxController {
-  // Define an observable variable to hold the fetched data
-  var data = <String, dynamic>{}.obs;
+  List<dynamic> dataList = [];
 
-  // Fetch data from the API
-  fetchData() async {
-    try {
-      var token = await storage.read(key: 'jwt');
-      Map<String, String> requestHeaders = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-      };
-      var response = await http.get(
-          Uri.parse("http://64.226.104.50:9090/Api/Vehicle/Owner/Info"),
-          headers: requestHeaders);
-      if (response.statusCode == 200) {
-        var mapResponse = json.decode(response.body) as Map<String, dynamic>;
-        Map<String, dynamic> results = mapResponse["ownerINF"];
-        print("yes");
-        print(results);
-        data.value = results;
-        return results;
-      } else {
-        // Handle error
-        print('Failed to fetch data: ${response.statusCode}');
-      }
-    } catch (e) {
-      // Handle error
-      print('Failed to fetch data: $e');
+  @override
+  void onInit() {
+    super.onInit();
+    fetchData();
+  }
+
+  void fetchData() async {
+    final storage = new FlutterSecureStorage();
+    var token = await storage.read(key: 'jwt');
+    var client = http.Client();
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.driverApi);
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode == 200) {
+      // Parse the response body and store the
+      var data = json.decode(response.body);
+      dataList = data['drivers'];
+      update();
     }
   }
 }
 
-//fetch driver info
-class ApiControllerfordriver extends GetxController {
-  // Define an observable variable to hold the fetched data
-  var data = <String, dynamic>{}.obs;
-  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
-  String? drivername;
-  // Fetch data from the API
+// fetch vehicle
+class ApiControllerforvehicle extends GetxController {
+  List<dynamic> dataList = [];
 
+  @override
+  void onInit() {
+    super.onInit();
+    fetchData();
+  }
+
+  void fetchData() async {
+    final storage = new FlutterSecureStorage();
+    var token = await storage.read(key: 'jwt');
+    var client = http.Client();
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var response = await http.get(Uri.parse(ApIConfig.allvehicle),
+        headers: requestHeaders);
+
+    if (response.statusCode == 200) {
+      // Parse the response body and store the
+      var data = json.decode(response.body);
+      dataList = data['vehiclesINF'];
+      update();
+    }
+  }
 }

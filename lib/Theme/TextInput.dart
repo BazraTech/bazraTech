@@ -4,7 +4,6 @@ class ThemeHelper {
   InputDecoration textInputDecoration(
       [String lableText = "", String hintText = "", Widget? icon1]) {
     return InputDecoration(
-      labelText: lableText,
       hintText: hintText,
       hintStyle: TextStyle(
           fontFamily: 'Nunito',
@@ -20,7 +19,7 @@ class ThemeHelper {
       ),
       // Specify border color and width
       disabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.grey),
+        borderSide: BorderSide(color: Colors.grey.shade400),
       ),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: Colors.grey.shade400, width: 2),

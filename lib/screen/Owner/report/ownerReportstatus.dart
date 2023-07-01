@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import '../../../const/constant.dart';
 import '../Vehicle/vehicleStatus.dart';
 import 'toggelReport.dart';
 
@@ -25,7 +25,17 @@ class _ownerReportstatusState extends State<ownerReportstatus> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: TabBarView(
-          children: [MyScreen(), MyScreen(), MyScreen()],
+          children: [
+            MyScreen(
+              time: "Daily",
+            ),
+            MyScreen(
+              time: "Weekly",
+            ),
+            MyScreen(
+              time: "Monthly",
+            )
+          ],
         ),
         bottomNavigationBar: Container(
           height: screenHeight * 0.08,
@@ -59,6 +69,19 @@ class _ownerReportstatusState extends State<ownerReportstatus> {
                     Container(
                       width: screenWidth * 0.23,
                       child: Tab(
+                        icon: Container(
+                          child: SizedBox(
+                            height: screenHeight * 0.03,
+                            width: screenWidth * 0.05,
+                            child: Text("10",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontSize: AppFonts.smallFontSize,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal)),
+                          ),
+                        ),
                         text: "Daily Report",
                       ),
                     ),
@@ -66,11 +89,37 @@ class _ownerReportstatusState extends State<ownerReportstatus> {
                       width: screenWidth * 0.23,
                       child: Tab(
                         text: "Weekly Report ",
+                        icon: Container(
+                          child: SizedBox(
+                            height: screenHeight * 0.03,
+                            width: screenWidth * 0.05,
+                            child: Text("10",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontSize: AppFonts.smallFontSize,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal)),
+                          ),
+                        ),
                       ),
                     ),
                     Container(
                       width: screenWidth * 0.26,
                       child: Tab(
+                        icon: Container(
+                          child: SizedBox(
+                            height: screenHeight * 0.03,
+                            width: screenWidth * 0.05,
+                            child: Text("10",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontSize: AppFonts.smallFontSize,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal)),
+                          ),
+                        ),
                         text: "Monthly Report",
                       ),
                     ),

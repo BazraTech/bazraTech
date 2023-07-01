@@ -110,7 +110,7 @@ class _LoginState extends State<Login> {
               MaterialPageRoute(builder: (context) => BottomTabBarPage()));
         } else if (APIService.ownername == "OWNER") {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => BottomNav()));
+              context, MaterialPageRoute(builder: (context) => BottomTabBarPageforowner()));
         } else if (APIService.owner! == "${phoneController.text}") {
           AlertDialoug.showMyDialog(
               context, "Error", "Error: User does not exist!");

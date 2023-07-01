@@ -48,7 +48,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
               child: const Text('Ok'),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BottomNav()));
+                    MaterialPageRoute(builder: (context) => BottomTabBarPageforowner()));
               },
             ),
           ],

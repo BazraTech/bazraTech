@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'package:bazralogin/Theme/clippbox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 import '../../../../const/constant.dart';
 import 'alertComponet/alertComponetforowner.dart';
 
 class MyScreen extends StatefulWidget {
+  String? time;
+  MyScreen({this.time});
   @override
   _MyScreenState createState() => _MyScreenState();
 }
@@ -18,6 +21,7 @@ class _MyScreenState extends State<MyScreen> {
   bool showList1 = false;
   bool showList2 = false;
   dynamic fetchedData;
+
   final ScrollController _scrollController = ScrollController();
   List<String> yourList = []; // Your initial list of data
   int currentPage = 1;
@@ -38,14 +42,77 @@ class _MyScreenState extends State<MyScreen> {
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       final mydata = data["inactiveAlerts"];
-      setState(() {
-        fetchedData = mydata;
-        currentPage++;
-      });
-      alertComponentforowner(
-        data: mydata,
-        scrollController: _scrollController,
-      );
+      List results = [];
+      String? Daily = "Daily";
+      String? Weekly = "Weekly";
+      if (Daily == "${widget.time}") {
+        var output = <String>[];
+        DateTime startDate = DateTime.parse(DateFormat('yyyy-MM-dd HH')
+            .format(DateTime.now().subtract(Duration(hours: 168))));
+        DateTime endDate = DateTime.parse(DateFormat('yyyy-MM-dd HH')
+            .format(DateTime.now().subtract(Duration(hours: 24))));
+        for (var i = 0; i < mydata.length; i += 1) {
+          List filteredDataList = mydata.where((data) {
+            DateTime date = DateTime.parse(mydata[i]["alertstart"]);
+            return date.isBefore(endDate);
+          }).toList();
+          // mydata[i]["alertstart"];
+          // print(mydata[i]["alertstart"]);
+
+          // if (mydata[i]["alertstart"].compareTo(
+          //             DateFormat('yyyy-MM-dd HH').format(DateTime.now())) <=
+          //         0 &&
+          //     mydata[i]["alertstart"].compareTo(DateFormat('yyyy-MM-dd HH')
+          //             .format(DateTime.now().subtract(Duration(hours: 24)))) <=
+          //         0) {
+          //   output.add(mydata[i]["alertstart"]);
+          // }
+          print(filteredDataList);
+        }
+
+        setState(() {
+          fetchedData = mydata;
+          currentPage++;
+        });
+        alertComponentforowner(
+          data: mydata,
+          scrollController: _scrollController,
+        );
+      }
+      // } else if (Weekly == "${widget.time}") {
+      //   var output = <String>[];
+      //   DateTime startDate = DateTime.parse(DateFormat('yyyy-MM-dd HH')
+      //       .format(DateTime.now().subtract(Duration(hours: 168))));
+      //   DateTime endDate = DateTime.parse(DateFormat('yyyy-MM-dd HH')
+      //       .format(DateTime.now().subtract(Duration(hours: 24))));
+      //   for (var i = 0; i < mydata.length; i += 1) {
+      //     List filteredDataList = mydata.where((data) {
+      //       DateTime date = DateTime.parse(mydata[i]["alertstart"]);
+      //       return date.isAfter(startDate) && date.isBefore(endDate);
+      //     }).toList();
+      //     // mydata[i]["alertstart"];
+      //     // print(mydata[i]["alertstart"]);
+
+      //     // if (mydata[i]["alertstart"].compareTo(
+      //     //             DateFormat('yyyy-MM-dd HH').format(DateTime.now())) <=
+      //     //         0 &&
+      //     //     mydata[i]["alertstart"].compareTo(DateFormat('yyyy-MM-dd HH')
+      //     //             .format(DateTime.now().subtract(Duration(hours: 24)))) <=
+      //     //         0) {
+      //     //   output.add(mydata[i]["alertstart"]);
+      //     // }
+      //     print(filteredDataList);
+      //   }
+
+      //   setState(() {
+      //     fetchedData = mydata;
+      //     currentPage++;
+      //   });
+      //   alertComponentforowner(
+      //     data: mydata,
+      //     scrollController: _scrollController,
+      //   );
+      // }
     } else {
       throw Exception('Failed to fetch data');
     }
@@ -109,25 +176,14 @@ class _MyScreenState extends State<MyScreen> {
         ),
         backgroundColor: kPrimaryColor,
         title: Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(right: screenWidth * 0.12),
-          height: 40,
-          color: Colors.white,
-          child: Center(
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Cargo type or Package.',
-                helperStyle: TextStyle(
-                  fontFamily: 'Nunito',
-                  fontSize: 14,
-                  color: Colors.black,
-                ),
-                border: InputBorder.none,
-                errorBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                prefixIcon: Icon(Icons.search),
-              ),
+          child: Text(
+            "Report",
+            textAlign: TextAlign.left,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontFamily: 'Nunito',
+              fontSize: AppFonts.mediumFontSize,
+              color: Colors.white,
             ),
           ),
         ),
@@ -1131,7 +1187,7 @@ class _MyScreenState extends State<MyScreen> {
                                     EdgeInsets.only(left: screenWidth * 0.34),
                                 child: Align(
                                     alignment: Alignment.topLeft,
-                                    child: Text("Alert Report"))),
+                                    child: Text("Work Report"))),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

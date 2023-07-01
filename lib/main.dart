@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -17,6 +18,7 @@ void main() async {
   phone = prefs.getString('phone_number');
   translationController.loadTranslations('en_us');
   runApp(const MyApp());
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 }
 
 var phone;
@@ -41,7 +43,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => SplashScreen()),
-        GetPage(name: '/home', page: () => BottomNav()),
+        GetPage(name: '/home', page: () => BottomTabBarPageforowner()),
         GetPage(name: '/drivehome', page: () => BottomTabBarPage()),
       ],
     );

@@ -16,8 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Theme/TextInput.dart';
 import '../../config/APIService.dart';
-import '../Bottom/Bottom.dart';
-import '../Driver/driverBottomnav.dart';
+
 import '../Owner/Driver/assignDriver.dart';
 
 class forgotPin extends StatefulWidget {
@@ -82,10 +81,9 @@ class _forgotPinState extends State<forgotPin> {
       });
 
       if (response.statusCode == 200) {
-        
         var decodedResponse = json.decode(response.body);
         String alertContent = decodedResponse["message"];
-      alertutils.showMyDialog(context, "Alert", alertContent);
+        alertutilsforgetpin.showMyDialog(context, "Alert", alertContent);
       } else {
         print('noooo');
       }
@@ -107,23 +105,6 @@ class _forgotPinState extends State<forgotPin> {
     print("${currentPassword.text}");
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Change password",
-          style: TextStyle(color: Colors.black),
-        ),
-        elevation: 0,
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-        ),
-        backgroundColor: kBackgroundColor,
-      ),
       backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
         child: Container(
@@ -131,6 +112,37 @@ class _forgotPinState extends State<forgotPin> {
           color: kBackgroundColor,
           child: Column(
             children: [
+              Container(
+                margin: EdgeInsets.only(top: screenHeight * 0.08),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(
+                        width: screenWidth * 0.06,
+                      ),
+                      Text(
+                        "Reset password",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontFamily: "Nunito",
+                          color: Colors.black,
+                          fontSize: AppFonts.mediumFontSize,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Container(
@@ -140,6 +152,7 @@ class _forgotPinState extends State<forgotPin> {
                   ),
                   height: screenHeight * 0.09,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -152,7 +165,14 @@ class _forgotPinState extends State<forgotPin> {
                       ),
                       Container(
                         child: Text(
-                            "OTP is alread send  to your phone\n ${widget.phone}"),
+                          "OTP is alread send  to your phone\n ${widget.phone}",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontFamily: "Nunito",
+                            color: Colors.black,
+                            fontSize: AppFonts.smallFontSize,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -161,14 +181,17 @@ class _forgotPinState extends State<forgotPin> {
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Container(
-                  margin: EdgeInsets.only(top: screenHeight * 0.09),
+                  margin: EdgeInsets.only(
+                      top: screenHeight * 0.09, left: screenWidth * 0.013),
                   child: Row(
                     children: [
                       Text(
-                        " New Pin",
+                        "New Pin",
+                        textAlign: TextAlign.left,
                         style: TextStyle(
                           fontFamily: "Nunito",
-                          fontSize: 15,
+                          color: Colors.black,
+                          fontSize: AppFonts.smallFontSize,
                         ),
                       )
                     ],
@@ -194,11 +217,17 @@ class _forgotPinState extends State<forgotPin> {
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Container(
+                  margin: EdgeInsets.only(left: screenWidth * 0.013),
                   child: Row(
                     children: [
                       Text(
-                        " New Password",
-                        style: TextStyle(fontFamily: "Nunito", fontSize: 15),
+                        "New Password",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontFamily: "Nunito",
+                          color: Colors.black,
+                          fontSize: AppFonts.smallFontSize,
+                        ),
                       )
                     ],
                   ),
@@ -220,14 +249,17 @@ class _forgotPinState extends State<forgotPin> {
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Container(
-                  margin: EdgeInsets.only(top: screenHeight * 0.03),
+                  margin: EdgeInsets.only(
+                      top: screenHeight * 0.03, left: screenWidth * 0.013),
                   child: Row(
                     children: [
                       Text(
-                        " Confirm  Password",
+                        "Confirm  Password",
+                        textAlign: TextAlign.left,
                         style: TextStyle(
                           fontFamily: "Nunito",
-                          fontSize: 15,
+                          color: Colors.black,
+                          fontSize: AppFonts.smallFontSize,
                         ),
                       )
                     ],
@@ -276,11 +308,13 @@ class _forgotPinState extends State<forgotPin> {
                                   // Empty SizedBox if not loading
                                   ,
                                   Text(
-                                    'Save',
+                                    'Reset password',
+                                    textAlign: TextAlign.left,
                                     style: TextStyle(
-                                        fontFamily: "Nunito",
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
+                                      fontFamily: "Nunito",
+                                      color: Colors.white,
+                                      fontSize: AppFonts.smallFontSize,
+                                    ),
                                   )
                                 ],
                               ),

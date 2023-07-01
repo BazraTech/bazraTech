@@ -24,6 +24,7 @@ class Profile extends StatefulWidget {
 }
 
 Map<String, dynamic>? Result;
+Map<String, dynamic>? Addressinfo;
 String? driverstate;
 
 String? namedriver;
@@ -77,6 +78,7 @@ class _ProfileState extends State<Profile> {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;
       Map<String, dynamic> results = mapResponse['ownerINF'];
 
+      Addressinfo = mapResponse['ownerINF'];
       setState(() {
         _isLoading = false;
         Result = results;
@@ -127,8 +129,6 @@ class _ProfileState extends State<Profile> {
     final TranslationController controller = Get.put(TranslationController());
     final ApiController _apiController = Get.put(ApiController());
 
-    print(_apiController.data);
-
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: Padding(
@@ -137,37 +137,43 @@ class _ProfileState extends State<Profile> {
           margin: EdgeInsets.only(top: 28),
           child: SingleChildScrollView(
             child: Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: screenWidth * 0.8),
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ownerprofileUpadate(
-                                      image: "${ownerpic}",
-                                      email: Result!['email'].toString(),
-                                      phone: ownerphone,
-                                      datebirth: "12/4/000",
-                                      name: ownername,
-                                      gender: "Male",
-                                      woreda: Result!["woreda"],
-                                      houseNumber: Result!["houseNum"],
-                                      notificationmedia:
-                                          Result!["notificationMedium"],
-                                    )));
-                      },
-                      icon: Icon(
-                        Ionicons.pencil,
-                        color: Colors.red,
-                      ),
+              _isLoading
+                  ? Container()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: screenWidth * 0.8),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ownerprofileUpadate(
+                                            image: "${ownerpic}",
+                                            email: Result!['email'].toString(),
+                                            phone: Result!["phoneNumber"],
+                                            datebirth: "12/4/000",
+                                            name: Result!["firstName"],
+                                            gender: "Male",
+                                            woredas:
+                                                Result!["companyAddressINF"]
+                                                    ["woreda"],
+                                            houseNumbers:
+                                                Result!["companyAddressINF"]
+                                                    ["houseNum"],
+                                            notificationmedia:
+                                                Result!["notificationMedium"],
+                                          )));
+                            },
+                            icon: Icon(
+                              Ionicons.pencil,
+                              color: Colors.red,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
               SizedBox(
                 height: 5,
               ),
@@ -202,9 +208,18 @@ class _ProfileState extends State<Profile> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ownername == null
+                          Result?["firstName"] == null
                               ? Container()
-                              : Text(ownername.toString())
+                              : Text(
+                                  Result!["firstName"],
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontFamily: 'Nunito',
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
                         ],
                       ),
                     ],

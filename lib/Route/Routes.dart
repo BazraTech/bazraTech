@@ -28,7 +28,7 @@ class AppRoutes {
   static String getUpdateprofile() => updateProfiles;
 
   static List<GetPage> routes = [
-    GetPage(name: home, page: () => BottomNav()),
+    GetPage(name: home, page: () => BottomTabBarPageforowner()),
     GetPage(name: login, page: () => Login()),
     GetPage(name: driverpage, page: () => communicate_screen()),
     GetPage(name: '/Alert', page: () => notificationPage()),

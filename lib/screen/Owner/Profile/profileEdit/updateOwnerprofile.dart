@@ -3,14 +3,12 @@ import 'dart:io';
 
 import 'package:bazralogin/Theme/Alert.dart';
 import 'package:bazralogin/Theme/TextInput.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../../config/APIService.dart';
 import '../../Driver/assignDriver.dart';
 
 class ownerprofileUpadate extends StatefulWidget {
@@ -20,24 +18,41 @@ class ownerprofileUpadate extends StatefulWidget {
   String? datebirth;
   String? gender;
   String? name;
-  String? woreda;
+  String? woredas;
   String? notificationmedia;
-  String? houseNumber;
-  ownerprofileUpadate(
-      {super.key,
-      this.image,
-      this.email,
-      this.datebirth,
-      this.woreda,
-      this.houseNumber,
-      this.notificationmedia,
-      this.gender,
-      this.name,
-      this.phone});
+  String? houseNumbers;
+  ownerprofileUpadate({
+    super.key,
+    this.image,
+    this.email,
+    this.phone,
+    this.datebirth,
+    this.name,
+    this.gender,
+    this.woredas,
+    this.houseNumbers,
+    this.notificationmedia,
+  });
 
   @override
   State<ownerprofileUpadate> createState() => _ownerprofileUpadateState();
 }
+
+List<String> list = <String>[
+  "Addis Ababa",
+  "Afar",
+  "Amhara",
+  "Benishangul-Gumuz",
+  "Dire Dawa",
+  "Gambela",
+  "Harari",
+  "Oromia",
+  "Sidama",
+  "Somali",
+  "Southern Nations, Nationalities, and Peoples' Region (SNNPR)",
+  "Tigray"
+];
+String dropdownValue = "Addis Ababa";
 
 class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -47,6 +62,9 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
   String ownerpic = "";
   bool isLoading = false;
   PickedFile? _pickedImage;
+  final housenumber = TextEditingController();
+  final woreda = TextEditingController();
+  final notificationmidia = TextEditingController();
   final ImagePicker _picker = ImagePicker();
 
   void isPasswordView() {
@@ -77,9 +95,9 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
         "subCity": "sfwrwe",
         "specificLocation": "sffsdf",
         "city": "fwrfwerwe",
-        "woreda": "kiseiwr",
-        "houseNumber": "sfsfs",
-        "notificationmedia": "SMS",
+        "woreda": "${dropdownValue}",
+        "houseNumber": "${housenumber.text}",
+        "notificationmedia": "${notificationmidia.text}",
         "serviceRequired": "EXCELLENT"
       };
       var response = await http.put(
@@ -135,6 +153,7 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
     String date = "${widget.datebirth}";
     String genderowner = "${widget.gender}";
     String phonenumber = "${widget.phone}";
+    print("${widget.houseNumbers}");
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -464,13 +483,52 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                    width: width - 32,
-                    height: height * 0.07,
-                    child: TextFormField(
-                        enabled: false,
-                        controller:
-                            TextEditingController(text: "${widget.woreda}"),
-                        decoration: ThemeHelper().textInputDecoration())),
+                  width: width - 32,
+                  height: height * 0.07,
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                    child: DropdownButtonFormField<String>(
+                      value: dropdownValue,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.grey),
+                      isExpanded: true,
+                      borderRadius: BorderRadius.circular(20),
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        // contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.grey.shade400, width: 2),
+                        ),
+                        // Specify border color and width
+                        disabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey.shade400),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.grey.shade400, width: 2),
+                          borderRadius: BorderRadius.circular(6.0),
+                        ), // Hide the underline
+                      ),
+                      onChanged: (String? newValue) {
+                        // This is called when the user selects an item.
+                        if (newValue != null) {
+                          // Update the selected value when an option is chosen
+                          dropdownValue = newValue;
+                        }
+                      },
+                      items: list.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 5),
@@ -496,9 +554,7 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
                     width: width - 32,
                     height: height * 0.08,
                     child: TextFormField(
-                        enabled: false,
-                        controller: TextEditingController(
-                            text: "${widget.notificationmedia}"),
+                        controller: notificationmidia,
                         decoration: ThemeHelper().textInputDecoration(""))),
               ],
             ),
@@ -525,9 +581,9 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
                     width: width - 32,
                     height: height * 0.08,
                     child: TextFormField(
-                        controller: TextEditingController(
-                            text: "${widget.houseNumber}"),
-                        decoration: ThemeHelper().textInputDecoration())),
+                        controller: housenumber,
+                        decoration: ThemeHelper()
+                            .textInputDecoration("${widget.houseNumbers}"))),
               ],
             ),
             SizedBox(height: height * 0.03),

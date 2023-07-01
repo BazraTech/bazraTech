@@ -83,7 +83,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   ),
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => BottomNav()));
+                        MaterialPageRoute(builder: (context) =>BottomTabBarPageforowner()));
                   },
                 ),
               ),

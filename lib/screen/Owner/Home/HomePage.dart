@@ -3,17 +3,17 @@ import 'dart:ui';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:bazralogin/controller/Localization.dart';
 import 'package:bazralogin/screen/Owner/Alert/Notification.dart';
+import 'package:bazralogin/screen/Owner/Driver/assignDriver.dart';
 import 'package:bazralogin/screen/Owner/market/avilabelMarketforowner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
+import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import '../../../Model/ApiConfig.dart';
-import '../../../Model/driverCount.dart';
 import '../../../const/constant.dart';
 import 'package:http/http.dart' as http;
-
+import '../../../controller/apiController.dart';
+import '../../../controller/ownerinfocontroller.dart';
 import '../Driver/driversPage.dart';
 import '../TripManagement/setGuzo.dart';
 import '../Vehicle/vehicleStatus.dart';
@@ -32,9 +32,6 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
   bool _isMounted = false;
   DateTime pre_backprees = DateTime.now();
   static bool isPressed = true;
-  bool _showExitSnackbar = false;
-
-  late Future<String> _imageUrl;
   Offset distance = isPressed ? Offset(10, 10) : Offset(28, 28);
   double blur = isPressed ? 5.0 : 30.0;
   String Logoavtar = "";
@@ -43,7 +40,9 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
   bool showExitSnackbar = false;
   String? phoneNumber;
   DateTime? currentBackPressTime;
-
+  bool _isLoading = true;
+  Map<String, dynamic>? Result;
+  Map<String, dynamic>? findVehicle;
   double _padding = 6.0;
   String query = '';
 
@@ -147,78 +146,22 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-
+    final ApiController controller = Get.put(ApiController());
+    final ApiControllerforvehicle _controller =
+        Get.put(ApiControllerforvehicle());
+    final ApiControllerforowner _ownerinfo = Get.put(ApiControllerforowner());
     return Scaffold(
         backgroundColor: kBackgroundColor,
         body: Column(
           children: [
-            Container(
-              height: screenHeight * 0.07,
-              margin: EdgeInsets.only(top: screenHeight * 0.055),
-              // color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      child: SizedBox(
-                          height: screenHeight * 0.08,
-                          width: screenWidth * 0.1,
-                          child: ClipOval(
-                              child: SizedBox(
-                            height: screenHeight * 0.5,
-                            width: screenWidth * 0.09,
-                            child: FutureBuilder(
-                              future: fetchImage(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<String> snapshot) {
-                                if (snapshot.connectionState !=
-                                    ConnectionState.done) return Text("");
-                                return ClipOval(
-                                  child: SizedBox(
-                                      height: screenHeight * 0.4,
-                                      width: screenWidth * 0.9,
-                                      child: Image.network(
-                                          snapshot.data.toString())),
-                                );
-                              },
-                            ),
-                          ))),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: screenWidth * 0.13,
-                      height: screenHeight * 0.08,
-                      margin: EdgeInsets.only(left: screenWidth * 0.26),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    notificationPage()),
-                          );
-                        },
-                        child: Icon(
-                          Ionicons.notifications,
-                          size: 28,
-                          color: Color.fromRGBO(85, 164, 240, 1),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
             Stack(
               children: [
                 Container(
                   decoration: BoxDecoration(
                     // borderRadius: BorderRadius.circular(20),
-
+                    borderRadius: BorderRadius.vertical(
+                      bottom: Radius.circular(30),
+                    ),
                     gradient: LinearGradient(
                       colors: [
                         Color.fromRGBO(95, 112, 247, 1),
@@ -228,83 +171,166 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                     ),
                   ),
                   padding: EdgeInsets.all(8.0),
-                  height: screenHeight * 0.23,
-                  child: Column(children: [
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: screenWidth * 0.45,
-                          child: Text(
-                            " Good morning",
-                            textAlign: TextAlign.start,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 13,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(left: screenWidth * 0.1),
-                            child: Row(
-                              children: [
-                                Text(
-                                  " Selem" + ",",
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 15,
+                  height: screenHeight * 0.28,
+                  child: Container(
+                    margin: EdgeInsets.only(top: screenHeight * 0.04),
+                    child: Column(children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Container(
+                                child: SizedBox(
+                                  height: screenHeight * 0.1,
+                                  width: screenWidth - 120,
+                                  child: FutureBuilder(
+                                    future: _fetchLogo(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<String> snapshot) {
+                                      if (snapshot.connectionState !=
+                                          ConnectionState.done) return Text("");
+                                      return SizedBox(
+                                          height: screenHeight * 0.2,
+                                          width: screenWidth * 0.28,
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                  height: screenHeight * 0.1,
+                                                  child: Image.network(snapshot
+                                                      .data
+                                                      .toString())),
+                                              Container(
+                                                margin:
+                                                    EdgeInsets.only(top: 30),
+                                                child: Column(
+                                                  children: [
+                                                    Container(
+                                                      width: screenWidth * 0.25,
+                                                      child: Text(
+                                                        "Good mourning ",
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: const TextStyle(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            fontSize: AppFonts
+                                                                .smallFontSize,
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      margin: EdgeInsets.only(
+                                                          left: 4),
+                                                      width: screenWidth * 0.17,
+                                                      child: SizedBox(
+                                                        height: 20,
+                                                        width:
+                                                            screenWidth * 0.3,
+                                                        child: Center(
+                                                          child: GetBuilder<
+                                                              ApiControllerforowner>(
+                                                            builder:
+                                                                (_ownerinfo) =>
+                                                                    ListView
+                                                                        .builder(
+                                                              itemCount: 1,
+                                                              itemBuilder:
+                                                                  (context,
+                                                                      index) {
+                                                                return Container(
+                                                                  child: Center(
+                                                                    child: _ownerinfo.dataList ==
+                                                                            null
+                                                                        ? Container()
+                                                                        : Text(
+                                                                            "${_ownerinfo.dataList!["firstName"]}",
+                                                                            textAlign:
+                                                                                TextAlign.left,
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontFamily: "Nunito",
+                                                                              color: Colors.white,
+                                                                              fontSize: AppFonts.smallFontSize,
+                                                                            ),
+                                                                          ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ));
+                                    },
                                   ),
                                 ),
-                                SizedBox(
-                                  width: screenWidth * 0.37,
-                                  child: Text(
-                                    APIService.owner.toString(),
-                                    textAlign: TextAlign.start,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              notificationPage()));
+                                },
+                                child: Container(
+                                  height: screenHeight * 0.1,
+                                  margin: EdgeInsets.only(right: 42, top: 0),
+                                  width: screenWidth * 0.06,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: MaterialButton(
+                                      onPressed: () async {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    notificationPage()));
+                                      },
+
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: Center(
+                                          child: Icon(
+                                            Ionicons.notifications,
+                                            size: 27,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+
+                                      //use this class Circleborder() for circle shape.
                                     ),
                                   ),
                                 ),
-                              ],
-                            )),
-                        Container(
-                          margin: EdgeInsets.only(left: screenWidth * 0.07),
-                          child: FutureBuilder(
-                            future: _fetchLogo(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<String> snapshot) {
-                              if (snapshot.connectionState !=
-                                  ConnectionState.done) return Text("");
-                              return ClipOval(
-                                child: SizedBox(
-                                    height: screenHeight * 0.05,
-                                    width: screenWidth * 0.09,
-                                    child: Image.network(
-                                        snapshot.data.toString())),
-                              );
-                            },
-                          ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ]),
+                      ),
+                    ]),
+                  ),
                 ),
                 Positioned(
                   child: Container(
                     margin: EdgeInsets.only(
-                        top: screenHeight * 0.13, left: 30, right: 30),
+                        top: screenHeight * 0.19, left: 30, right: 30),
                     height: 100,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
@@ -328,22 +354,51 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                       ),
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: kPrimaryColor,
+                                        color: Colors.blue,
                                       ),
-                                      child: Text(
-                                        CountDrivers.totalDrivers.toString(),
-                                        style: TextStyle(
-                                          color: Colors.white,
+                                      child: SizedBox(
+                                        height: 20,
+                                        width: 30,
+                                        child: Center(
+                                          child: GetBuilder<ApiController>(
+                                            builder: (controller) =>
+                                                ListView.builder(
+                                              itemCount: 1,
+                                              itemBuilder: (context, index) {
+                                                return Container(
+                                                  child: Center(
+                                                    child: controller
+                                                            .dataList.isEmpty
+                                                        ? Container()
+                                                        : Text(
+                                                            "${controller.dataList.length}",
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  "Nunito",
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: AppFonts
+                                                                  .smallFontSize,
+                                                            ),
+                                                          ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       padding: EdgeInsets.all(11),
                                     ),
                                     Text(
                                       TranslationUtil.text('Driver'),
+                                      textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        color: kPrimaryColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 13,
+                                        fontFamily: "Nunito",
+                                        color: Colors.black,
+                                        fontSize: AppFonts.smallFontSize,
                                       ),
                                     )
                                   ],
@@ -366,25 +421,54 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                       ),
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: kPrimaryColor,
+                                        color: Colors.blue,
                                       ),
 
-                                      child: Text(
-                                        APIService.totalVehicle.toString(),
-                                        style: TextStyle(
-                                          color: Colors.white,
+                                      child: SizedBox(
+                                        height: 20,
+                                        width: 30,
+                                        child: Center(
+                                          child: GetBuilder<
+                                              ApiControllerforvehicle>(
+                                            builder: (_controller) =>
+                                                ListView.builder(
+                                              itemCount: 1,
+                                              itemBuilder: (context, index) {
+                                                return Container(
+                                                  child: Center(
+                                                    child: _controller
+                                                            .dataList.isEmpty
+                                                        ? Container()
+                                                        : Text(
+                                                            "${_controller.dataList.length}",
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  "Nunito",
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: AppFonts
+                                                                  .smallFontSize,
+                                                            ),
+                                                          ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       padding: EdgeInsets.all(11),
-
                                       //use this class Circleborder() for circle shape.
                                     ),
                                     Text(
                                       TranslationUtil.text("Vehicle"),
+                                      textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        color: kPrimaryColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 13,
+                                        fontFamily: "Nunito",
+                                        color: Colors.black,
+                                        fontSize: AppFonts.smallFontSize,
                                       ),
                                     ),
                                   ],
@@ -399,15 +483,6 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                 )
               ],
             ),
-            // Container(
-            //   height: screenHeight * 0.05,
-            //   decoration: BoxDecoration(
-            //     color: kBackgroundColor,
-            //     borderRadius: BorderRadius.only(
-            //         topLeft: Radius.circular(10),
-            //         topRight: Radius.circular(10)),
-            //   ),
-            // ),
             Flexible(
               child: Container(
                 padding:
@@ -459,15 +534,19 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                     width: MediaQuery.of(context).size.width,
                                     child: Image.asset(
                                       "assets/images/driver.png",
-                                      color: kPrimaryColor,
+                                      color: Colors.blue,
                                     ),
                                   ),
                                   Container(
-                                    child: Text(TranslationUtil.text("Driver"),
-                                        style: TextStyle(
-                                            color: kPrimaryColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14)),
+                                    child: Text(
+                                      TranslationUtil.text("Driver"),
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontFamily: "Nunito",
+                                        color: Colors.black,
+                                        fontSize: AppFonts.smallFontSize,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               )),
@@ -513,16 +592,17 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   child: Icon(
                                     Icons.local_shipping,
                                     size: 50,
-                                    color: kPrimaryColor,
+                                    color: Colors.blue,
                                   ),
                                 ),
                                 Container(
                                   child: Text(
                                     TranslationUtil.text("Vehicle"),
+                                    textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
+                                      fontFamily: "Nunito",
+                                      color: Colors.black,
+                                      fontSize: AppFonts.smallFontSize,
                                     ),
                                   ),
                                 ),
@@ -571,17 +651,18 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   width: MediaQuery.of(context).size.width,
                                   child: Image.asset(
                                     "assets/images/profit-report.png",
-                                    color: kPrimaryColor,
+                                    color: Colors.blue,
                                   ),
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(top: 8),
                                   child: Text(
                                     TranslationUtil.text("Report"),
+                                    textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
+                                      fontFamily: "Nunito",
+                                      color: Colors.black,
+                                      fontSize: AppFonts.smallFontSize,
                                     ),
                                   ),
                                 ),
@@ -632,17 +713,18 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   width: MediaQuery.of(context).size.width,
                                   child: Image.asset(
                                     "assets/images/available.png",
-                                    color: kPrimaryColor,
+                                    color: Colors.blue,
                                   ),
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(top: 8),
                                   child: Text(
                                     TranslationUtil.text("Available Market"),
+                                    textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
+                                      fontFamily: "Nunito",
+                                      color: Colors.black,
+                                      fontSize: AppFonts.smallFontSize,
                                     ),
                                   ),
                                 ),
@@ -691,17 +773,18 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   width: MediaQuery.of(context).size.width,
                                   child: Image.asset(
                                     "assets/images/travel.png",
-                                    color: kPrimaryColor,
+                                    color: Colors.blue,
                                   ),
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(top: 5),
                                   child: Text(
                                     TranslationUtil.text('Trip management'),
+                                    textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
+                                      fontFamily: "Nunito",
+                                      color: Colors.black,
+                                      fontSize: AppFonts.smallFontSize,
                                     ),
                                   ),
                                 ),

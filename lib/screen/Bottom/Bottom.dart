@@ -1,108 +1,76 @@
-import 'package:bazralogin/controller/Localization.dart';
-
-import 'package:bazralogin/const/constant.dart';
-import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-
-import '../Driver/Driverprofile/driverprofile.dart';
+import 'package:ionicons/ionicons.dart';
 import '../Owner/Communication/communicationPage.dart';
 import '../Owner/Home/HomePage.dart';
 import '../Owner/Profile/Profile.dart';
-import '../Owner/Tracking/caronMap.dart';
 
-class BottomNav extends StatelessWidget {
-  BottomNav({super.key});
+class BottomTabBarPageforowner extends StatefulWidget {
+  @override
+  _BottomTabBarPageforownerState createState() =>
+      _BottomTabBarPageforownerState();
+}
+
+class _BottomTabBarPageforownerState extends State<BottomTabBarPageforowner> {
+  int _currentIndex = 0;
+
+  List<Widget> _contentWidgets = [
+    OwenerHomepage(),
+    Communication(),
+    Communication(),
+    Profile()
+  ];
+
+  List<BottomNavigationBarItem> _bottomNavBarItems = [
+    BottomNavigationBarItem(
+      icon: Icon(
+        Icons.home,
+        size: 30,
+      ),
+      label: '',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(
+        Ionicons.location,
+        size: 30,
+      ),
+      label: '',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(
+        Icons.messenger,
+        size: 30,
+      ),
+      label: '',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(
+        Icons.person,
+        size: 30,
+      ),
+      label: '',
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: DefaultTabController(
-          length: 4,
-          child: Scaffold(
-            backgroundColor: Colors.white,
-            body: TabBarView(
-              children: [
-                OwenerHomepage(),
-                Communication(),
-                Communication(),
-                Profile()
-              ],
-            ),
-            bottomNavigationBar: Container(
-              height: screenHeight * 0.1,
-              decoration: const BoxDecoration(color: Colors.white),
-              child: Container(
-                width: screenWidth,
-                child: TabBar(
-                  indicatorSize: TabBarIndicatorSize.label,
-                  indicatorPadding: EdgeInsets.all(12),
-                  indicatorColor: Colors.white,
-                  isScrollable: true,
-                  indicatorWeight: 3,
-                  labelPadding:
-                      EdgeInsets.symmetric(horizontal: screenWidth * 0.055),
-                  tabs: [
-                    Tab(
-                      icon: Icon(
-                        Icons.home,
-                        color: Colors.black,
-                      ),
-                      child: Text(
-                        TranslationUtil.text("Home"),
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                    ),
-                    Tab(
-                      icon: Icon(
-                        Icons.location_on,
-                        color: Colors.black,
-                      ),
-                      child: Text(
-                        TranslationUtil.text("GPS Tracking"),
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                    ),
-                    Tab(
-                      icon: Icon(
-                        Icons.messenger,
-                        color: Colors.black,
-                      ),
-                      child: Text(
-                        TranslationUtil.text("Communication"),
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                    ),
-                    Tab(
-                      icon: Icon(
-                        Icons.person,
-                        color: Colors.black,
-                      ),
-                      child: Text(
-                        TranslationUtil.text("Profile"),
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ));
+    return Scaffold(
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _contentWidgets,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        showSelectedLabels: false, // hide selected labels
+        showUnselectedLabels: false,
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        items: _bottomNavBarItems,
+      ),
+    );
   }
 }

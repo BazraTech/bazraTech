@@ -158,7 +158,7 @@ class alertutils {
                   onPressed: () {
                     Navigator.of(context).pop(); // Close the dialog
                     Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => BottomNav()),
+                      MaterialPageRoute(builder: (context) => BottomTabBarPageforowner()),
                       (route) => false,
                     ); //
 
