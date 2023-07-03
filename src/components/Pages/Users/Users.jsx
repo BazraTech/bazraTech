@@ -15,7 +15,7 @@ import { useForm } from 'react-hook-form';
 import swal from "sweetalert";
 import { Pagination } from 'antd';
 import axios from "axios";
-
+import AllApiData from '../../../AllApiData';
 
 export default function () {
 
@@ -23,35 +23,14 @@ export default function () {
 
     {/*---------------- handle submit values ----------------- */ }
 
-    function tableSearch() {
-
-        let input, filter, table, tr, td, txtValue, errors;
-        //Intialising Variables
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-
-        for (let i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-
+    
     const closePopup5 = () => {
         setPop1(false);
         setPop(false);
     }
 
     const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
-
+    const ApiData = JSON.parse(localStorage.getItem('ApiData'));
     const options = {
 
         headers: {
@@ -78,42 +57,6 @@ export default function () {
     }, [])
 
 
-    const [dataSource2, setDataSource2] = useState([])
-    // const [Loading, setLoading] = useState([])
-    const url2 = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/Role/owner";
-    useEffect(() => {
-        setLoading(true)
-        fetch(url2, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource2(data.totalusers)
-                setLoading(false)
-            })
-    }, [])
-
-    const [dataSource3, setDataSource3] = useState([])
-    // const [Loading, setLoading] = useState([])
-    const url3 = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/Role/individual";
-    useEffect(() => {
-        setLoading(true)
-        fetch(url3, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource3(data.totalusers)
-                setLoading(false)
-            })
-    }, [])
-    const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoOwners";
-    const [cargo, setCargo] = useState([])
-    useEffect(() => {
-        fetch(cargourl, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setCargo(data.cargoOwners)
-                console.log(cargo)
-            })
-    }, [])
-
     const [popup, setPop] = useState(false);
     const [popup1, setPop1] = useState(false);
     const handleClickopen = () => {
@@ -135,9 +78,7 @@ export default function () {
     const [manufactureDate, setmanufactureDate] = useState("");
     const [deviceID, setdeviceId] = useState("");
     const [ownerPhone, setOwnerPhone] = useState();
-
-    const [error, setError] = useState(false);
-    const [error1, setError1] = useState(false);
+    const [capacity, setcapacity]= useState()
     console.log(ownerPhone);
 
     const handlechange = (e) => {
@@ -155,7 +96,6 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource5(data.vehicleCatagories)
-                console.log(dataSource3)
             })
     }, [])
 
@@ -188,6 +128,7 @@ export default function () {
             manufactureDate,
             deviceID,
             ownerPhone,
+            capacity
         };
 
         const options = {
@@ -220,6 +161,7 @@ export default function () {
                 setPlateNumber("");
                 setmanufactureDate("");
                 setdeviceId("")
+                setcapacity('')
 
             } else {
                 console.log("failed");
@@ -293,6 +235,7 @@ export default function () {
                 setSelectedFile("");
                 setImgData(null);
                 setSelectedFile();
+                
             })
             .catch(function (error) {
                 if (error.response) {
@@ -347,12 +290,39 @@ export default function () {
         }
     };
     const [color, setColor] = useState("green");
+/*************************Search************/
+
+    const [filteredRows, setFilteredRows] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
+
+
+    const handleSearch = (e) => {
+        const value = e.target.value;
+        setSearchValue(value);
+    
+       
+        const filteredData = currentPage.filter((item) => {
+          // Customize the conditions as per your search requirements
+          return (
+            item.roles.toLowerCase().includes(value.toLowerCase()) ||
+            item.email.toString().includes(value)||
+            item.totalDrivers.toString().includes(value)||
+            item.totalVehicles.toString().includes(value)
+            
+          );
+        });
+    
+        setFilteredRows(filteredData);
+      };
+    const searchResult = searchValue === '' ? currentPage : filteredRows;
+
 
     return (
 
         <div className="containerr">
 
             {/*---------------navigation---------------*/}
+            <AllApiData/>
             <Navigation path="/users" title="Users"></Navigation>
 
             {/* --------------- header --------------- */}
@@ -369,7 +339,7 @@ export default function () {
                             <div className={styles.innerContents1}>
                                 <h4>Total Users</h4>
                                 <div>
-                                    <p><FaUsers size="2.2rem"></FaUsers><b>{dataSource.length + cargo.length + dataSource3}</b></p>
+                                    <p><FaUsers size="2.2rem"></FaUsers><b>{ApiData.CargoOwner + ApiData.CompanyOwner + ApiData.IndividualOwner}</b></p>
                                 </div>
                             </div>
                         </Link>
@@ -379,7 +349,7 @@ export default function () {
                             <div className={styles.innerContents}>
                                 <h4>Company</h4>
                                 <div>
-                                    <p><FaWarehouse size="2.2rem" color='black'></FaWarehouse><b>{dataSource2}</b></p>
+                                    <p><FaWarehouse size="2.2rem" color='black'></FaWarehouse><b>{ApiData.CompanyOwner}</b></p>
                                 </div>
                             </div>
                         </Link>
@@ -389,7 +359,7 @@ export default function () {
                             <div className={styles.innerContents}>
                                 <h4>Individual</h4>
                                 <div>
-                                    <p><FaUserAlt size="2rem"></FaUserAlt><b>{dataSource3}</b></p>
+                                    <p><FaUserAlt size="2rem"></FaUserAlt><b>{ApiData.IndividualOwner}</b></p>
                                 </div>
                             </div>
                         </Link>
@@ -399,7 +369,7 @@ export default function () {
                             <div className={styles.innerContents}>
                                 <h4>Cargo</h4>
                                 <div>
-                                    <p><FaUserAlt size="2rem"></FaUserAlt><b>{cargo.length}</b></p>
+                                    <p><FaUserAlt size="2rem"></FaUserAlt><b>{ApiData.CargoOwner}</b></p>
                                 </div>
                             </div>
                         </Link>
@@ -412,7 +382,7 @@ export default function () {
                 <div className={styles.vehicle_search}>
                     <p title='search'>
                         <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                        <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                        <input type="text" id="myInput" value={searchValue} onChange={handleSearch} placeholder="Search"></input>
                         <button>Search</button>
                     </p>
                 </div>
@@ -449,7 +419,7 @@ export default function () {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {currentPage.map(item => (
+                                                {searchResult.map(item => (
                                                     <tr className={styles.active_row}>
                                                         <td>{item.roles == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`}</td>
                                                         <td>{item.roles}</td>
@@ -558,7 +528,15 @@ export default function () {
                                                                             onChange={(e) => setdeviceId(e.target.value)} ></input>
                                                                         {deviceID <= 0 && errors.deviceID && <span className={styles.validate_text}>{errors.deviceID.message}</span>}
                                                                     </div> 
-
+                                                                    <div className={styles.input}>
+                                                                        <lable>Capacity <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></lable>
+                                                                        <input name='capacity' type="text"
+                                                                            value={capacity}
+                                                                            {...register("capacity", { required: '*Capacity is required' })}
+                                                                            placeholder='Enter Capacity'
+                                                                            onChange={(e) => setcapacity(e.target.value)} ></input>
+                                                                        {capacity <= 0 && errors.capacity && <span className={styles.validate_text}>{errors.capacity.message}</span>}
+                                                                    </div> 
                                                                 </div>
                                                                 <div className={styles.addButton}>
                                                                     <button>Submit </button>

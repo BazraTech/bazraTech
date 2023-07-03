@@ -23,30 +23,8 @@ export default function () {
 
     {/*---------------- handle submit values ----------------- */ }
 
-    function tableSearch() {
-
-        let input, filter, table, tr, td, txtValue, errors;
-        //Intialising Variables
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-
-        for (let i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-
-    let [active, setActive] = useState("total_users");
-    let [state, setState] = useState("false");
+    
+   
 
     const closePopup5 = () => {
         setPop1(false);
@@ -54,7 +32,7 @@ export default function () {
     }
 
     const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
-
+    const ApiData = JSON.parse(localStorage.getItem('ApiData'));
     const options = {
 
         headers: {
@@ -65,20 +43,7 @@ export default function () {
     };
 
     const [totalPages, setTotalPage] = useState(1);
-    const [dataSource, setDataSource] = useState([])
     const [Loading, setLoading] = useState([])
-    const url = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/";
-    useEffect(() => {
-        setLoading(true)
-        fetch(url, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource(data.vehicleOwnerINF)
-                console.log(dataSource)
-                setLoading(false)
-            })
-    }, [])
-
 
     const [dataSource2, setDataSource2] = useState([])
     const [dataSource02, setDataSource02] = useState([])
@@ -96,18 +61,7 @@ export default function () {
             })
     }, [])
 
-    const [dataSource3, setDataSource3] = useState([])
-    // const [Loading, setLoading] = useState([])
-    const url3 = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/Role/individual";
-    useEffect(() => {
-        setLoading(true)
-        fetch(url3, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource3(data.totalusers)
-                setLoading(false)
-            })
-    }, [])
+   
 
 
     const [popup, setPop] = useState(false);
@@ -151,7 +105,6 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource5(data.vehicleCatagories)
-                console.log(dataSource3)
             })
     }, [])
 
@@ -166,16 +119,7 @@ export default function () {
             })
     }, [])
 
-    const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoOwners";
-    const [cargo, setCargo] = useState([])
-    useEffect(() => {
-        fetch(cargourl, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setCargo(data.cargoOwners.length)
-                console.log(cargo)
-            })
-    }, [])
+   
 
     const onSubmit = (data) => {
         console.log(data);
@@ -353,6 +297,35 @@ export default function () {
     };
     const [color, setColor] = useState("green");
 
+
+    /*************************Search************/
+
+    const [filteredRows, setFilteredRows] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
+
+
+    const handleSearch = (e) => {
+        const value = e.target.value;
+        setSearchValue(value);
+    
+       
+        const filteredData = currentPage.filter((item) => {
+          // Customize the conditions as per your search requirements
+          return (
+            item.companyName.toLowerCase().includes(value.toLowerCase()) ||
+            item.roles.toLowerCase().includes(value.toLowerCase()) ||
+            item.email.toLowerCase().includes(value.toLowerCase())||
+            item.totalDrivers.toString().includes(value)||
+            item.totalVehicles.toString().includes(value)
+            
+          );
+        });
+    
+        setFilteredRows(filteredData);
+      };
+    const searchResult = searchValue === '' ? currentPage : filteredRows;
+
+
     return (
 
         <div className="containerr">
@@ -374,7 +347,7 @@ export default function () {
                             <div className={styles.innerContents}>
                                 <h4>Total Users</h4>
                                 <div>
-                                    <p><FaUsers size="2.2rem"></FaUsers><b>{dataSource.length}</b></p>
+                                    <p><FaUsers size="2.2rem"></FaUsers><b>{ApiData.CompanyOwner + ApiData.IndividualOwner + ApiData.CargoOwner}</b></p>
                                 </div>
                             </div>
                         </Link>
@@ -384,7 +357,7 @@ export default function () {
                             <div className={styles.innerContents1}>
                                 <h4>Company</h4>
                                 <div>
-                                    <p><FaWarehouse size="2.2rem"></FaWarehouse><b>{dataSource02}</b></p>
+                                    <p><FaWarehouse size="2.2rem"></FaWarehouse><b>{ApiData.CompanyOwner}</b></p>
                                 </div>
                             </div>
                         </Link>
@@ -394,7 +367,7 @@ export default function () {
                             <div className={styles.innerContents}>
                                 <h4>Individual</h4>
                                 <div>
-                                    <p><FaUserAlt size="2rem"></FaUserAlt><b>{dataSource3}</b></p>
+                                    <p><FaUserAlt size="2rem"></FaUserAlt><b>{ApiData.IndividualOwner}</b></p>
                                 </div>
                             </div>
                         </Link>
@@ -404,7 +377,7 @@ export default function () {
                             <div className={styles.innerContents}>
                                 <h4>cargo</h4>
                                 <div>
-                                    <p><FaUserAlt size="2rem"></FaUserAlt><b>{cargo}</b></p>
+                                    <p><FaUserAlt size="2rem"></FaUserAlt><b>{ApiData.CargoOwner}</b></p>
                                 </div>
                             </div>
                         </Link>
@@ -417,7 +390,7 @@ export default function () {
                 <div className={styles.vehicle_search}>
                     <p title='search'>
                         <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                        <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                        <input type="text" id="myInput" value={searchValue} onChange={handleSearch}  placeholder="Search"></input>
                         <button>Search</button>
                     </p>
                 </div>
@@ -456,7 +429,7 @@ export default function () {
                                             <tbody>
                                                 {currentPage.map(item => (
                                                     <tr className={styles.active_row}>
-                                                        <td>{item.roles == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`}</td>
+                                                        <td>{item.companyName}</td>
                                                         <td>{item.roles}</td>
                                                         <td>{item.email}</td>
                                                         <td>{item.totalVehicles}</td>
@@ -467,13 +440,14 @@ export default function () {
                                                             <button onClick={() => {
                                                                 handleClickopen()
                                                                 setOwnerPhone(item.phoneNumber)
-                                                            }}>Add</button></Link></td>
+                                                            }}> Add </button></Link></td>
                                                         <td><Link to="#"><button onClick={() => {
                                                             handleClickopen1()
                                                             setOwnerPhone(item.phoneNumber)
                                                         }}>Add</button></Link></td>
                                                     </tr>
-                                                ))}
+                                                ))
+                                            }
                                             </tbody>
                                         </table>
 

@@ -83,14 +83,20 @@ export default function (props) {
 
                                         <div className={styles.input}>
                                             <lable>Driver Licence Picture</lable>
-                                            <input name='licensePic' type="text"
-                                            ></input>
+                                            <a href={dataSource.licensePic} target="_blank" rel="noopener noreferrer">
+                                            <img src={dataSource.licensePic} 
+                                            alt={`${dataSource.driverName}`} 
+                                             />
+                                             </a>
                                         </div>
 
                                         <div className={styles.input}>
                                             <lable>Driver Picture</lable>
-                                            <input name='driverPic' type="text"
-                                            ></input>
+                                            <a href={dataSource.driverPic} target="_blank" rel="noopener noreferrer">
+                                            <img src={dataSource.driverPic} 
+                                            alt={`${dataSource.driverName}`} 
+                                             />
+                                             </a>
                                         </div>
 
                                         <div className={styles.input}>

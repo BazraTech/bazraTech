@@ -15,35 +15,13 @@ import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
 import SyncLoader from "react-spinners/SyncLoader";
+import AllApiData from '../../../AllApiData';
 
 
 export default function () {
 
-    function tableSearch() {
-
-        let input, filter, table, tr, td, txtValue, errors;
-
-        //Intialising Variables
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-
-        for (let i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[4];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-
-    let [active, setActive] = useState("total_vehicle");
-    let [state, setState] = useState("false");
+   
+    const [Loading,setLoading] = useState(false)
     // const color = () => {
     //     setState(state);
     // }
@@ -53,7 +31,7 @@ export default function () {
     }
 
     const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
-
+    const ApiData = JSON.parse(localStorage.getItem('ApiData'));
     const options = {
 
         headers: {
@@ -64,23 +42,10 @@ export default function () {
 
     };
 
-    const [Loading, setLoading] = useState([])
-    const [totalPages, setTotalPage] = useState(1);
-    const url2 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles";
-    const [dataSource2, setDataSource2] = useState([])
-    useEffect(() => {
-        setLoading(true);
-        fetch(url2, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource2(data.vehiclesINF)
-                setLoading(false);
-
-            })
-    }, [])
-
+   
     const url = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/ONROUTE";
     const [dataSource, setDataSource] = useState([])
+    const [totalPages, setTotalPage]=useState('')
     useEffect(() => {
         setLoading(true);
         fetch(url, options)
@@ -93,47 +58,6 @@ export default function () {
             })
     }, [])
 
-    const url3 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/INSTOCK";
-    const [dataSource3, setDataSource3] = useState([])
-    useEffect(() => {
-        setLoading(true);
-        fetch(url3, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource3(data.stockedList)
-                setLoading(false);
-
-            })
-    }, [])
-
-    const url5 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/PARKED";
-    const [dataSource5, setDataSource5] = useState([])
-    useEffect(() => {
-        setLoading(true);
-        fetch(url5, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource5(data.parkedList)
-                setLoading(false);
-
-            })
-    }, [])
-
-    const url4 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/MAINTAINING";
-    const [dataSource4, setDataSource4] = useState([])
-    useEffect(() => {
-        setLoading(true);
-        fetch(url4, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource4(data.maintainingList)
-                setLoading(false);
-
-            })
-    }, [])
-
-    const [list, setList] = useState([dataSource]);
-    const [total, setTotal] = useState(dataSource.length);
     const [page, setCurentPage] = useState(1);
     const [postPerPage, setpostPerPage] = useState(5);
 
@@ -148,13 +72,39 @@ export default function () {
     const [color, setColor] = useState("green");
     const [margin, setMargin] = useState("");
 
+    const [filteredRows, setFilteredRows] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
+
+
+    const handleSearch = (e) => {
+        const value = e.target.value;
+        setSearchValue(value);
+    
+       
+        const filteredData = currentPage.filter((item) => {
+          // Customize the conditions as per your search requirements
+         return (
+            item.companyName.toLowerCase().includes(value.toLowerCase()) ||
+            item.vehicleName.toLowerCase().includes(value.toLowerCase()) ||
+            item.driverName.toLowerCase().includes(value.toLowerCase()) ||
+            item.vehicleCatagory.toLowerCase().includes(value.toLowerCase())||
+            item.plateNumber.toString().includes(value)||
+            item.status.toLowerCase().includes(value.toLowerCase())
+            
+          );
+        });
+    
+        setFilteredRows(filteredData);
+      };
+    const searchResult = searchValue === '' ? currentPage : filteredRows;
+console.log(searchResult)
 
     return (
 
         <div className="vehicle_container">
 
             {/*---------------navigation---------------*/}
-
+            <AllApiData/>
             <Navigation path="/Total_number_of_vehicle" title="On Route"></Navigation>
 
             {/* --------------- header --------------- */}
@@ -170,7 +120,7 @@ export default function () {
                             <div className={styles.innerContents}>
                                 <h4>Total Vehicle</h4>
                                 <div className={styles.icon}>
-                                    <p><AiFillCar size="2.2rem"></AiFillCar><b>{dataSource2.length}</b></p>
+                                    <p><AiFillCar size="2.2rem"></AiFillCar><b>{ApiData.allvehicles}</b></p>
                                 </div>
                             </div>
                         </Link>
@@ -180,7 +130,7 @@ export default function () {
                         <Link to="/on_route" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents1}>
                                 <h4>On Route</h4>
-                                <p><FaRoute size="2rem" ></FaRoute><b>{dataSource.length}</b></p>
+                                <p><FaRoute size="2rem" ></FaRoute><b>{ApiData.onRoute}</b></p>
                             </div>
                         </Link>
                     </div>
@@ -189,7 +139,7 @@ export default function () {
                         <Link to="/on_stock" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents}>
                                 <h4>In Stock</h4>
-                                <p><FaParking size="2rem" ></FaParking><b>{dataSource3.length}</b></p>
+                                <p><FaParking size="2rem" ></FaParking><b>{ApiData.inStock}</b></p>
                             </div>
                         </Link>
                     </div>
@@ -198,7 +148,7 @@ export default function () {
                         <Link to="/parked" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents}>
                                 <h4>Parked</h4>
-                                <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{dataSource5.length}</b></p>
+                                <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{ApiData.parked}</b></p>
                             </div>
                         </Link>
                     </div>
@@ -207,7 +157,7 @@ export default function () {
                         <Link to="/maintenance" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents}>
                                 <h4>Maintenance</h4>
-                                <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{dataSource4.length}</b></p>
+                                <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{ApiData.Maintaining}</b></p>
                             </div>
                         </Link>
                     </div>
@@ -234,7 +184,7 @@ export default function () {
                             <div className={styles.vehicle_search}>
                                 <p title='search'>
                                     <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                                    <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                                    <input type="text" id="myInput" value={searchValue} onChange={handleSearch} placeholder="Search"></input>
                                     <button>Search</button>
                                 </p>
                             </div>
@@ -256,7 +206,7 @@ export default function () {
                                 </thead>
 
                                 <tbody>
-                                    {currentPage.map(item => (
+                                    {searchResult.map(item => (
                                         <tr className={styles.active_row}>
                                             <td>{item.companyName}</td>
                                             <td>{item.vehicleName}</td>

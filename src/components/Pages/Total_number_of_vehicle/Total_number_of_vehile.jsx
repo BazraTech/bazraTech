@@ -1,94 +1,55 @@
 import React from 'react'
-import { FaHome } from 'react-icons/fa';
 import { AiFillCar } from "react-icons/ai";
 import { FaRoute } from "react-icons/fa";
 import { BsSearch } from "react-icons/bs";
-import { AiFillFilter } from "react-icons/ai";
 import { FaParking } from "react-icons/fa";
-import { GrSettingsOption } from "react-icons/gr";
 import { IoSettingsOutline } from "react-icons/io5";
 import styles from './total_vehicle.module.css';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react'; 
-import { useLocation } from 'react-router-dom';
-import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
 import SyncLoader from "react-spinners/SyncLoader";
+import AllApiData from '../../../AllApiData';
 
 
 export default function () {
-    
-    
-
-    let [active, setActive] = useState("total_vehicle");
-    let [state, setState] = useState("false");
+   
     const [popup, setPop] = useState(false);
-    const handleClickopen = () => {
-        setPop(!popup);
-    }
-    const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
 
+
+    const ApiData =JSON.parse(localStorage.getItem('ApiData'))
+    console.log(ApiData)
+    const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
     const options = {
+
         headers: {
             'Content-Type': 'application/json',
             "Accept": "application/json",
             "Authorization": `Bearer ${jwt}`
         },
     };
+    const handleClickopen = () => {
+        setPop(!popup);
+    }
 
     const [Loading, setLoading] = useState([])
     const [totalPages, setTotalPage] = useState(1);
     const url2 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles";
-    const [dataSource2, setDataSource2] = useState([])
+    const [AllVehicles, setAllVehicles] = useState([])
     useEffect(() => {
         setLoading(true); 
         fetch(url2, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource2(data.vehiclesINF)
+                setAllVehicles(data.vehiclesINF)
                 setTotalPage(data.totalVehicles);
                 setLoading(false);
 
             })
     }, [])
 
-    const url = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/ONROUTE";
-    const [dataSource, setDataSource] = useState([])
-    useEffect(() => {
-        setLoading(true);
-        fetch(url, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource(data.inRoutelist)
-                setLoading(false);
-            })
-    }, [])
-
-    const url3 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/INSTOCK";
-    const [dataSource3, setDataSource3] = useState([])
-    useEffect(() => {
-        setLoading(true);
-        fetch(url3, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource3(data.stockedList)
-                setLoading(false);
-            })
-    }, [])
-
-    const url5 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/PARKED";
-    const [dataSource5, setDataSource5] = useState([])
-    useEffect(() => {
-        setLoading(true);
-        fetch(url5, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource5(data.parkedList)
-                setLoading(false);
-            })
-    }, [])
-
+   
     const url4 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/MAINTAINING";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
@@ -100,23 +61,12 @@ export default function () {
                 setLoading(false);
             })
     }, [])
-    // const url6 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/UNASSIGNED";
-    // const [Unassigned, setUnassigned] = useState([])
-    // useEffect(() => {
-    //     setLoading(true);
-    //     fetch(url4, options)
-    //         .then(respnse => respnse.json()) 
-    //         .then(data => {
-    //             Unassigned(data.unassigned)
-    //             setLoading(false);
-    //         })
-    // }, [])
-
+    
     const [page, setCurentPage] = useState(1);
     const [postPerPage, setpostPerPage] = useState(5);
     const indexOfLastPage = page * postPerPage;
     const indexOfFirstPage = indexOfLastPage - postPerPage;
-    const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
+    const currentPage = AllVehicles.slice(indexOfFirstPage, indexOfLastPage);
 
     const onShowSizeChange = (current, pageSize) => {
         setpostPerPage(pageSize);
@@ -156,7 +106,7 @@ console.log(searchResult)
         <div className="vehicle_container">
 
             {/*---------------navigation---------------*/}
-
+                <AllApiData/>
             {/* <Navigation path="/Total_number_of_vehicle"></Navigation> */}
             <Navigation path="/Total_number_of_vehicle" title="Total Vehicles"></Navigation>
 
@@ -169,7 +119,7 @@ console.log(searchResult)
                             <div className={styles.innerContents1}>
                                 <h4>Total Vehicle</h4>
                                 <div className={styles.icon}>
-                                    <p><AiFillCar size="2.2rem"></AiFillCar><b>{dataSource2.length}</b></p>
+                                    <p><AiFillCar size="2.2rem"></AiFillCar><b>{totalPages}</b></p>
                                 </div>
                             </div>
                         </Link>
@@ -179,7 +129,7 @@ console.log(searchResult)
                         <Link to="/on_route" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents}>
                                 <h4>On Route</h4>
-                                <p><FaRoute size="2rem" ></FaRoute><b>{dataSource.length}</b></p>
+                                <p><FaRoute size="2rem" ></FaRoute><b>{ApiData.onRoute}</b></p>
                             </div>
                         </Link>
                     </div>
@@ -188,7 +138,7 @@ console.log(searchResult)
                         <Link to="/on_stock" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents}>
                                 <h4>In Stock</h4>
-                                <p><FaParking size="2rem" ></FaParking><b>{dataSource3.length}</b></p>
+                                <p><FaParking size="2rem" ></FaParking><b>{ApiData.inStock}</b></p>
                             </div>
                         </Link> 
                     </div>
@@ -197,7 +147,7 @@ console.log(searchResult)
                         <Link to="/parked" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents}>
                                 <h4>Parked</h4>
-                                <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{dataSource5.length}</b></p>
+                                <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{ApiData.parked}</b></p>
                             </div>
                         </Link>
                     </div>
@@ -206,7 +156,7 @@ console.log(searchResult)
                         <Link to="/maintenance" style={{ textDecoration: 'none' }}>
                             <div className={styles.innerContents}>
                                 <h4>Maintenance</h4>
-                                <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{dataSource4.length}</b></p>
+                                <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{ApiData.Maintaining}</b></p>
                             </div>
                         </Link>
                     </div>

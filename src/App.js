@@ -52,6 +52,8 @@ import Vehicle_Detail from './components/Pages/Users/Vehicle_Table';
 import Market_Progress from './components/Pages/Marketing/Market_Progress'
 import FinishedWorks from './components/Pages/Marketing/FinishedWorks'
 import Settingtable from './components/Pages/Settings/Settingtable';
+import ForgateConfirm from './components/Pages/Sign in page/ForgateConfirm'; 
+import Confirm from './components/Pages/Sign in page/Confirm'; 
 
 class App extends Component{
   render(){
@@ -60,6 +62,8 @@ class App extends Component{
       
       <Routes>
         <Route path='/' element={<SignIn />}></Route>  
+        <Route path='/ForgateConfirm' element={<ForgateConfirm/>}></Route>
+        <Route path='/Confirm' element={<Confirm/>}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route> 
         <Route path="/users" element={<Users />}></Route>
         <Route path="/vehicle_detail/:id" element={<Vehicle_detail></Vehicle_detail>}></Route> 

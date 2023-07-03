@@ -74,17 +74,17 @@ export default function () {
     };
 
     const url = `http://64.226.104.50:9090/Api/Admin/Drivers/All/${ownerId}`;
-    const [dataSource, setDataSource] = useState([])
+    const [unassignedDriver, setunassignedDriver] = useState([])
     const [Loading, setLoading] = useState([])
     useEffect(() => {
         setLoading(true);
         fetch(url, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource(data.drivers.filter(item => item.status == 'UNASSIGNED'))
+                setunassignedDriver(data.drivers.filter(item => item.status == 'UNASSIGNED'))
                 setLoading(false);
             })
-    }, [])
+    }, [unassignedDriver.status])
 
     const [LicenseNumber, setLicenseNumber] = useState();
 
@@ -193,7 +193,7 @@ export default function () {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {dataSource.map(item => (
+                                    {unassignedDriver.map(item => (
                                          <tr className={styles.active_row}>
                                             <td>{item.id}</td>
                                             <td>{item.driverName}</td>

@@ -10,7 +10,7 @@ import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
 
-export default function () {
+export default function FinishedWorks () {
 
  
   const [popup, setPop1] = useState(false);
@@ -31,7 +31,7 @@ export default function () {
   };
   const [Loading, setLoading] = useState([])
   const [totalPages, setTotalPage] = useState(1);
-  const url2 = "http://64.226.104.50:9090/Api/Admin/All/Cargos";
+  const url2 = "http://64.226.104.50:9090/Api/Admin/All/CargosBy/FINISHED";
   const [dataSource2, setDataSource2] = useState([])
   useEffect(() => {
     setLoading(true);
@@ -50,7 +50,7 @@ export default function () {
 
   const indexOfLastPage = page * postPerPage;
   const indexOfFirstPage = indexOfLastPage - postPerPage;
-  const currentPage = dataSource2 && dataSource2.slice(indexOfFirstPage, indexOfLastPage);
+  const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
 
   const onShowSizeChange = (current, pageSize) => {
     setpostPerPage(pageSize);
@@ -72,9 +72,7 @@ export default function () {
           item.cargoOwner.toLowerCase().includes(value.toLowerCase()) ||
           item.packaging.toLowerCase().includes(value.toLowerCase()) ||
           item.weight.toString().toLowerCase().includes(value.toLowerCase())||
-          item.status.toLowerCase().includes(value.toLowerCase())||
-          item.pickUp.toLowerCase().includes(value.toLowerCase())||
-          item.dropOff.toLowerCase().includes(value.toLowerCase())
+          item.status.toLowerCase().includes(value.toLowerCase())
           
         );
       });
@@ -99,8 +97,8 @@ export default function () {
 <section className={styles.main_content}>
 
     <div className={styles.company_individual_header}>
-        <p ><Link style={{ textDecoration: 'none' }} to="#"><h1 className={styles.companyHeader}>Available Works</h1></Link></p>
-        <p><Link style={{ textDecoration: 'none' }} to="/FinishedWorks"><h1>Finished Works</h1></Link></p>
+        <p ><Link style={{ textDecoration: 'none' }} to="/marketing"><h1 >Available Works</h1></Link></p>
+        <p><Link style={{ textDecoration: 'none' }} to="#"><h1 className={styles.companyHeader}>FINISHED WORKS</h1></Link></p>
     </div>
     <div className={styles.allDiv}>
 
@@ -122,26 +120,18 @@ export default function () {
                                                 <tr>
                                                     <th>Name</th>
                                                     <th>packaging</th>
-                                                    <th>Trips from to</th>
                                                     <th>weight</th>
                                                     <th>Status</th>
-                                                    <th>Detail/progress</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {searchResult && searchResult.map(item => (
+                                                {searchResult.map(item => (
                                                     <tr className={styles.active_row} key = {item.id}>
                                                         <td>{item.cargoOwner}</td>
                                                         <td>{item.packaging}</td>
-                                                        <td>{item.pickUp +' => '+ item.dropOff }</td>
                                                         <td>{item.weight}</td>
                                                         <td>{item.status}</td>
-                                                       {/* <td><Link to={`/cargo/${item.id}`}>
-                                                            <button>Detail</button></Link>
-                                                            </td> */}
-                                                         <td>{item.status != 'NEW' ?<Link to={`/Market_Progress/${item.id}`}><button>Progress</button></Link>:
-                                                         <Link to={`/Post_market/${item.id}`}><button>Detail</button></Link>}</td>
-                                                        
+                                                       
                                                     </tr>
                                                 ))}
                                             </tbody>
