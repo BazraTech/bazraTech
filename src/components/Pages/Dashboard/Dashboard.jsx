@@ -16,23 +16,15 @@ import { useState, useEffect } from 'react';
 import styles from './dashboard.module.css';
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
-
+import AllApiData from '../../../AllApiData';
 export default function Dashboard() {
 
     const userlogin = localStorage.getItem("username");
     const user = JSON.parse(localStorage.getItem("user"));
-
-    const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
-    const options = {
-
-        headers: {
-            'Content-Type': 'application/json',
-            "Accept": "application/json",
-            "Authorization": `Bearer ${jwt}`
-        },
-    };
-
-
+    const ApiData =JSON.parse(localStorage.getItem('ApiData'))
+console.log(ApiData)
+useEffect(() => {
+}, [ApiData != null]);
     const [popup, setPop] = useState(false);
     const handleClickopen = () => {
         setPop(!popup);
@@ -42,96 +34,12 @@ export default function Dashboard() {
         setPop1(!popup1);
     }
 
-    const url1 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles";
-    const [dataSource1, setDataSource1] = useState([])
-    useEffect(() => {
-        fetch(url1, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource1(data.vehiclesINF)
-            })
-    }, [])
-
-    const [Loading, setLoading] = useState([]);
-    const url2 = "http://64.226.104.50:9090/Api/Admin/All/Drivers";
-    const [dataSource2, setDataSource2] = useState([])
-    useEffect(() => {
-        setLoading(true);
-        fetch(url2, options) 
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource2(data.drivers)
-                setLoading(false);
-
-            })
-    }, [])
-
-    const url = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/";
-    const [dataSource3, setDataSource3] = useState([])
-    useEffect(() => {
-        fetch(url, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource3(data.vehicleOwnerINF) 
-            })
-    }, [])
-    const [dataSourcein, setDataSourcein] = useState([])
-    const urin = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/Role/individual";
-    useEffect(() => {
-        setLoading(true)
-        fetch(urin, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSourcein(data.totalusers)
-                setLoading(false)
-            })
-    }, [])
-    const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoOwners";
-    const [cargo, setCargo] = useState([])
-    useEffect(() => {
-        fetch(cargourl, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setCargo(data.cargoOwners)
-                console.log(cargo)
-            })
-    }, [])
-
-
-    const url3 = "http://64.226.104.50:9090/Api/Admin/Alerts/OFFROAD";
-    const [dataSource, setDataSource] = useState([])
-    useEffect(() => {
-        fetch(url3, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource(data.activeAlerts) 
-            })
-    }, [])
-
-    const url4 = "http://64.226.104.50:9090/Api/Message/All";
-    const [dataSource4, setDataSource4] = useState([])
-    useEffect(() => {
-        fetch(url4, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource4(data.messages)
-            })
-    }, [])
-    const url5 = "http://64.226.104.50:9090/Api/Admin/All/Cargos";
-    const [dataSource5, setDataSource5] = useState([])
-    useEffect(() => {
-        fetch(url5, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource5(data.cargos)
-                console.log(data)
-            })
-    }, [])
-    const users = dataSource3 && dataSource3.length + dataSourcein +  cargo && cargo.length
+    
     return (
 
         <div>
 
+        <AllApiData/>
             <Navigation path="/dashboard" title="Dashboard"></Navigation>
 
             {/* ---------------header--------------- */}
@@ -148,7 +56,7 @@ export default function Dashboard() {
                             <h4>Total Vehicles </h4>
                             <div className={styles.innerCard}>
                                 <AiFillCar size="2.6rem" ></AiFillCar>
-                                <p>{dataSource1 && dataSource1.length}</p>
+                                <p>{ApiData ? ApiData.allvehicles : 0}</p>
                             </div>
                         </Link>
                     </div>
@@ -158,7 +66,7 @@ export default function Dashboard() {
                             <h4>Total Driver </h4>
                             <div className={styles.innerCard}>
                                 <ImUserTie size="2.4rem"></ImUserTie>
-                                <p>{dataSource2 && dataSource2.length}</p>
+                                <p>{ApiData ? ApiData.allDrivers : 0}</p>
                             </div> 
                         </Link>
                     </div>
@@ -169,7 +77,7 @@ export default function Dashboard() {
                             <h4>Communication </h4>
                             <div className={styles.innerCard2}>
                                 <BsFillChatDotsFill size="2.4rem" ></BsFillChatDotsFill>
-                                <p>{dataSource4 && dataSource4.length}</p>
+                                <p>{ApiData ? ApiData.allMessage : 0}</p>
                                 {/* <p>Message</p>  */}
                             </div>
                         </Link>
@@ -180,7 +88,7 @@ export default function Dashboard() {
                             <h4>Total Users</h4>
                             <div className={styles.innerCard3}>
                                 <FaUsers size="2.5rem" color='#002e4d'></FaUsers>
-                                <p>{users}</p>
+                                <p>{ApiData ? ApiData.allCargoOwner : 0}</p>
                             </div>
                         </Link>
                     </div>
@@ -217,7 +125,7 @@ export default function Dashboard() {
                             <h4>Alerts </h4>
                             <div className={styles.innerCard7}>
                                 <HiBellAlert size="2.6rem" color='#F80404'></HiBellAlert>
-                                <p>{dataSource && dataSource.length}</p>
+                                <p>{ApiData ? ApiData.alertOffroad : 0}</p>
                             </div>
                         </Link>
                     </div>
@@ -235,7 +143,7 @@ export default function Dashboard() {
                             <h4>Marketing </h4>
                             <div className={styles.innerCard3}>
                                 <BsFillBriefcaseFill  size="2.5rem" color='#5959b1'></BsFillBriefcaseFill >
-                                <p>{dataSource5 && dataSource5.length}</p>
+                                <p>{ ApiData ? ApiData.allMarket : 0}</p>
                             </div>
                         </Link>
                     </div>

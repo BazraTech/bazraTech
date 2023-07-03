@@ -6,6 +6,7 @@ import { HiMenuAlt1 } from "react-icons/hi";
 import { useState, useEffect } from 'react';
 import { Pagination } from 'antd';
 import Driver_detail from '../Drivers/Driver_detail';
+import swal from "sweetalert";
 
 export default function Driver_Table({ id, role, title }) {
 
@@ -128,7 +129,68 @@ export default function Driver_Table({ id, role, title }) {
     function changeName(name) {
         setName(name);
     }
+/****************** */
+const [driverLicense, setdriverLicense] = useState('')
+const [driverName,setdriverName] = useState('')
+const [driverStatus, setdriverStatus] = useState('')
+const [refresh, serRefresh] = useState(false)
 
+const handleSubmit =(e)=>{
+    e.preventDefault();
+    console.log('on submit')
+    console.log(driverStatus)
+    updateStatus()
+}
+const handleStatusChange =(e)=>{
+setdriverStatus(e.target.value);
+
+}
+async function updateStatus(){
+    let item =
+    {
+        driverStatus,
+        driverLicense,
+    };
+    const options = {
+        method: "PUT",
+        headers: {'Content-Type': 'application/json',
+         "Accept": "application/json",
+          "Authorization": `Bearer ${jwt}`
+        },
+        body: JSON.stringify(item),
+    };
+    const url = "http://64.226.104.50:9090/Api/Vehicle/ChangeDriverStatus";
+    try {
+                const response = await fetch(url, options);
+                const result = await response.json();
+                console.log(result);
+                localStorage.setItem("message", JSON.stringify(result["message"]));
+                const mess = localStorage.getItem("message");
+                console.log(mess);
+                if (response.ok) {
+                    swal("Successful", `${mess}`, "success", {
+                        buttons: false,
+                        timer: 2000,
+                    });
+                    serRefresh(!refresh)
+                } else {
+                    swal(`Failed To update ${mess}`, "", "error");
+                }
+    } catch (error)
+        {
+        console.error(error);
+        }
+     }
+     const statusUrl = "http://64.226.104.50:9090/Api/Admin/DriverStatus/All"
+    const [status, setStatus] = useState([])
+    useEffect(() => {
+        fetch(statusUrl, options)
+        .then(response => response.json())
+        .then(data =>{
+            setStatus(data.driverStatus)
+            console.log(status)
+        })
+    },[])
     return (
         <>
             <div className={styles.outer_vehicle_table} id='myTable'>
@@ -148,7 +210,7 @@ export default function Driver_Table({ id, role, title }) {
                             <th>Company</th>
                             <th>Id</th>
                             <th>Detail</th>
-                            <th>Tracking</th>
+                            <th>Manage</th>
                         </tr>
                     </thead>
 
@@ -167,12 +229,49 @@ export default function Driver_Table({ id, role, title }) {
                                     setEdit(item.id)
                                     setName("true")
                                 }}>Detail</button></td>
-                                <td><button>Manage</button></td>
+                                <td><button onClick={() => {
+                                                    handleClickopen()
+                                                    setdriverLicense(item.licenseNumber)
+                                                    setdriverName(item.driverName)
+                                                    setdriverStatus(item.status)
+                                                    }}>Manage</button></td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
+            {popup1 ?
+                    <div>
+                        <div className={styles.popup}>
+                            <div className={styles.popupInner}>
+                                <div className={styles.ewq}>
+                                    <button className={styles.closeBtn} onClick={()=>{setPop1(!popup1)}}>X</button>
+                                    <div>
+                                        <form onSubmit={handleSubmit}>
+                                            <div className={styles.assignetDiver}>
+                                                <lable className={styles.lable}>Change Status for Driver</lable>
+                                                <lable >Licence number</lable>
+                                                <input value={driverLicense}></input>
+                                                <label>Driver name</label>
+                                                <input value={driverName}></input>
+                                                <label>Status</label>
+                                                <select className='select' value={driverStatus} onChange={handleStatusChange}>
+                                                    <option  value="">Select Driver status</option>
+                                                    {
+                                                        status.map(item => {
+                                                            return <option>{item.driverStatus}</option>
+                                                        })
+                                                    }
+                                                </select>
+                                                <button>Assign</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div> : ""}
 
             <div className={styles.page}>
                 <Pagination

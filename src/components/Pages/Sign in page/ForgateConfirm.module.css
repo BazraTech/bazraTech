@@ -35,8 +35,15 @@
 
 .signForm {
     display: grid;
+    color: red;
 }
-
+.message{
+    margin: 2em 0;
+    color : red;
+    width: 100%;
+    height: 50px;
+    border: 2px solid red;
+}
 .signForm label {
     font-size: 20px;
     font-weight: 600;

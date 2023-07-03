@@ -378,7 +378,7 @@ export default function () {
                             <div className={styles.innerContents}>
                                 <h4>Total Users</h4>
                                 <div>
-                                    <p><FaUsers size="2.2rem"></FaUsers><b>{dataSource.length}</b></p>
+                                    <p><FaUsers size="2.2rem"></FaUsers><b>{dataSource2 + cargoData + dataSource03}</b></p>
                                 </div>
                             </div>
                         </Link>

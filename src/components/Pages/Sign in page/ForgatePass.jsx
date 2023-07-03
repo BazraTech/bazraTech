@@ -7,16 +7,14 @@ import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import Swal from 'sweetalert2'
 import 'animate.css';
-import ForgateConfirm from './ForgateConfirm';
-import AllApiData from '../../../AllApiData';
+
 export default function () {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [data, setdata] = useState("");
     const [error, setError] = useState(false);
-    const [forgate, setForgate] = useState(false)
-   
+    
 
     const validation = (e) => {
         e.preventDefault();
@@ -28,15 +26,9 @@ export default function () {
             login();
         }
     }
-   
-      
-      
-    let mess
-    let isMessage = false
-    
-    
+  
     useEffect(() => {
-    }, [isMessage]);
+    }, []);
 
     async function login() {
 
@@ -58,18 +50,15 @@ export default function () {
             localStorage.setItem("user", JSON.stringify(users));
 
             if (response.ok) {
-                
                 console.log("Login successful");
                 const zz = localStorage.getItem("tuser");
                 setdata(zz);
                 swal("Successful", "Welcome To Admin DashBoard", "success", { buttons: false, timer: 2000, })
                     .then((value) => {
-                        <AllApiData/>
                         localStorage.setItem("user", JSON.stringify(result["user"]));
                         localStorage.getItem("user");
                         localStorage.setItem("jwt", JSON.stringify(result["jwt"]));
                         localStorage.getItem("jwt");
-                        setTimeout(()=>{console.log('Hi')},1000)
                         window.location.href = "/dashboard";
                     })
             } else {
@@ -117,8 +106,8 @@ export default function () {
 
                 {/*-------------- Right side ---------------*/}
                 <div className={styles.right_login}>
-                    <form className={styles.signup_right} onSubmit={ validation }>
-                     <div className={styles.signForm}>
+                    <form className={styles.signup_right} onSubmit={forgate ? handleForgate : validation}>
+                       <div className={styles.signForm}>
                             <p className={styles.loginHeader}>Welcome To Bazra</p>
                             <label>User Name</label>
                             <input type="username" placeholder="Username" onChange={e => setUsername(e.target.value)} name="username"></input>
@@ -126,7 +115,7 @@ export default function () {
                             <label>Password</label>
                             <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} name="password"></input>
                             {error && password.length <= 0 ? <span className={styles.validateText}>please enter your password</span> : ""}
-                            <Link to='/ForgateConfirm'><p type='button' onClick={()=>setForgate(true)}>Forget Password?</p> </Link>
+                            <Link path='/ForgatePass'><p type='button' >Forget Password?</p> </Link>
                             <button className=''>Sign In</button>
                         </div>
                     </form>

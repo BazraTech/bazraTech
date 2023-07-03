@@ -9,7 +9,7 @@ import axios from "axios";
 import swal from "sweetalert";
 
 export default function Market_Progress() {
-
+const send = false
     
     const {
         register,
@@ -17,13 +17,15 @@ export default function Market_Progress() {
         watch, 
         formState: { errors }, 
     } = useForm();
-    const onSubmit = (data) => {
-        console.log(data);
+    
+    const onSubmit = (e) => {
+        e.preventDefault();
         handleClick();
     };
 
 
     const handleClick = async () => {
+        
         console.log('Im on submit function');
         const options = {
             method: "POST",
@@ -161,7 +163,7 @@ console.log(dataSource1);
                                  </div>
                                                       
                         </div>  
-                        <button className={styles.button3}>Send to Cargo Owner</button>
+                       {dataSource1.status == 'ACCEPTED' ? <p  className={styles.button3}>already send to cargo owner</p>: <button className={styles.button3}>Send to Cargo Owner</button>}
                     </form>
                  </div>
 
