@@ -52,10 +52,20 @@ class _SplashScreenState extends State<SplashScreen> {
         fit: StackFit.expand,
         children: [
           _isloading
-              ? SizedBox(
-                  height: 100,
-                  width: 100,
-                  child: Center(child: CircularProgressIndicator()))
+              ? Container(
+                  child: SizedBox(
+                    child: Container(
+                        child: SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: Image.asset(
+                        "assets/images/R.png",
+                        width: 60,
+                        height: 60,
+                      ),
+                    )),
+                  ),
+                )
               : Align(
                   alignment: Alignment.center,
                   child: Column(

@@ -4,7 +4,11 @@ import '../Vehicle/vehicleStatus.dart';
 import 'toggelReport.dart';
 
 class ownerReportstatus extends StatefulWidget {
-  ownerReportstatus({super.key});
+  String? dailytotal;
+  String? weeklytotal;
+  String? monthlytotal;
+  ownerReportstatus(
+      {super.key, this.dailytotal, this.weeklytotal, this.monthlytotal});
   static bool isPressed = true;
 
   @override

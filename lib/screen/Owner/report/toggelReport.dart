@@ -23,7 +23,9 @@ class _MyScreenState extends State<MyScreen> {
   dynamic fetchedData;
 
   final ScrollController _scrollController = ScrollController();
-  List<String> yourList = []; // Your initial list of data
+  List<String> yourList = [];
+  // Your initial list of data
+  List filteredDataList = [];
   int currentPage = 1;
   fetchData() async {
     final storage = new FlutterSecureStorage();
@@ -47,72 +49,81 @@ class _MyScreenState extends State<MyScreen> {
       String? Weekly = "Weekly";
       if (Daily == "${widget.time}") {
         var output = <String>[];
-        DateTime startDate = DateTime.parse(DateFormat('yyyy-MM-dd HH')
-            .format(DateTime.now().subtract(Duration(hours: 168))));
+        DateTime startDate =
+            DateTime.parse(DateFormat('yyyy-MM-dd HH').format(DateTime.now()));
         DateTime endDate = DateTime.parse(DateFormat('yyyy-MM-dd HH')
             .format(DateTime.now().subtract(Duration(hours: 24))));
         for (var i = 0; i < mydata.length; i += 1) {
-          List filteredDataList = mydata.where((data) {
-            DateTime date = DateTime.parse(mydata[i]["alertstart"]);
-            return date.isBefore(endDate);
-          }).toList();
-          // mydata[i]["alertstart"];
-          // print(mydata[i]["alertstart"]);
-
-          // if (mydata[i]["alertstart"].compareTo(
-          //             DateFormat('yyyy-MM-dd HH').format(DateTime.now())) <=
-          //         0 &&
-          //     mydata[i]["alertstart"].compareTo(DateFormat('yyyy-MM-dd HH')
-          //             .format(DateTime.now().subtract(Duration(hours: 24)))) <=
-          //         0) {
-          //   output.add(mydata[i]["alertstart"]);
-          // }
-          print(filteredDataList);
+          DateTime date = DateTime.parse(mydata[i]["alertstart"]);
+          int filteredData = date.compareTo(endDate);
+          if (filteredData > 0) {
+            filteredDataList.add(mydata[i]);
+            print(mydata[i]["alertstart"]);
+          }
+          
         }
 
         setState(() {
-          fetchedData = mydata;
+          fetchedData = filteredDataList;
           currentPage++;
         });
         alertComponentforowner(
-          data: mydata,
+          data: filteredDataList,
+          scrollController: _scrollController,
+        );
+      } else if (Weekly == "${widget.time}") {
+        var output = <String>[];
+        DateTime startDate = DateTime.parse(DateFormat('yyyy-MM-dd HH')
+            .format(DateTime.now().subtract(Duration(hours: 24))));
+        DateTime endDate = DateTime.parse(DateFormat('yyyy-MM-dd HH')
+            .format(DateTime.now().subtract(Duration(hours: 168))));
+        for (var i = 0; i < mydata.length; i += 1) {
+          DateTime date = DateTime.parse(mydata[i]["alertstart"]);
+          int filteredData = date.compareTo(endDate);
+          int filteredData1 = date.compareTo(startDate);
+          if (filteredData > 0 && filteredData1 < 0) {
+            filteredDataList.add(mydata[i]);
+
+            print(mydata[i]["alertstart"]);
+          }
+         
+        }
+
+        setState(() {
+          fetchedData = filteredDataList;
+          currentPage++;
+        });
+        alertComponentforowner(
+          data: filteredDataList,
+          scrollController: _scrollController,
+        );
+      } else {
+        var output = <String>[];
+        DateTime startDate = DateTime.parse(DateFormat('yyyy-MM-dd HH')
+            .format(DateTime.now().subtract(Duration(hours: 720))));
+        DateTime endDate = DateTime.parse(DateFormat('yyyy-MM-dd HH')
+            .format(DateTime.now().subtract(Duration(hours: 169))));
+        for (var i = 0; i < mydata.length; i += 1) {
+          DateTime date = DateTime.parse(mydata[i]["alertstart"]);
+          int filteredData = date.compareTo(endDate);
+          int filteredData1 = date.compareTo(startDate);
+          if (filteredData1 > 0 && filteredData < 0) {
+            filteredDataList.add(mydata[i]);
+            print(mydata[i]["alertstart"]);
+
+           
+          }
+        }
+
+        setState(() {
+          fetchedData = filteredDataList;
+          currentPage++;
+        });
+        alertComponentforowner(
+          data: filteredDataList,
           scrollController: _scrollController,
         );
       }
-      // } else if (Weekly == "${widget.time}") {
-      //   var output = <String>[];
-      //   DateTime startDate = DateTime.parse(DateFormat('yyyy-MM-dd HH')
-      //       .format(DateTime.now().subtract(Duration(hours: 168))));
-      //   DateTime endDate = DateTime.parse(DateFormat('yyyy-MM-dd HH')
-      //       .format(DateTime.now().subtract(Duration(hours: 24))));
-      //   for (var i = 0; i < mydata.length; i += 1) {
-      //     List filteredDataList = mydata.where((data) {
-      //       DateTime date = DateTime.parse(mydata[i]["alertstart"]);
-      //       return date.isAfter(startDate) && date.isBefore(endDate);
-      //     }).toList();
-      //     // mydata[i]["alertstart"];
-      //     // print(mydata[i]["alertstart"]);
-
-      //     // if (mydata[i]["alertstart"].compareTo(
-      //     //             DateFormat('yyyy-MM-dd HH').format(DateTime.now())) <=
-      //     //         0 &&
-      //     //     mydata[i]["alertstart"].compareTo(DateFormat('yyyy-MM-dd HH')
-      //     //             .format(DateTime.now().subtract(Duration(hours: 24)))) <=
-      //     //         0) {
-      //     //   output.add(mydata[i]["alertstart"]);
-      //     // }
-      //     print(filteredDataList);
-      //   }
-
-      //   setState(() {
-      //     fetchedData = mydata;
-      //     currentPage++;
-      //   });
-      //   alertComponentforowner(
-      //     data: mydata,
-      //     scrollController: _scrollController,
-      //   );
-      // }
     } else {
       throw Exception('Failed to fetch data');
     }

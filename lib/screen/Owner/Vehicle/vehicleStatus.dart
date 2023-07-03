@@ -81,19 +81,15 @@ class _VehicleStatusState extends State<VehicleStatus> {
                         if (snapshot.connectionState != ConnectionState.done)
                           return Text("");
                         return SizedBox(
-                            height: screenHeight * 0.03,
-                            width: screenWidth * 0.04,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.red[400],
-                              radius: 10,
-                              child: Text(
-                                total,
-                                style: const TextStyle(
-                                    fontFamily: 'Nunito',
-                                    fontSize: AppFonts.smallFontSize,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                            height: screenHeight * 0.04,
+                            width: screenWidth * 0.06,
+                            child: Text(
+                              total,
+                              style: const TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: AppFonts.smallFontSize,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ));
                       },
                     ),
@@ -110,19 +106,15 @@ class _VehicleStatusState extends State<VehicleStatus> {
                         if (snapshot.connectionState != ConnectionState.done)
                           return Text("");
                         return SizedBox(
-                            height: screenHeight * 0.03,
-                            width: screenWidth * 0.04,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.red[400],
-                              radius: 10,
-                              child: Text(
-                                snapshot.data.toString(),
-                                style: const TextStyle(
-                                    fontFamily: 'Nunito',
-                                    fontSize: AppFonts.smallFontSize,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                            height: screenHeight * 0.04,
+                            width: screenWidth * 0.06,
+                            child: Text(
+                              snapshot.data.toString(),
+                              style: const TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: AppFonts.smallFontSize,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ));
                       },
                     ),
@@ -139,19 +131,15 @@ class _VehicleStatusState extends State<VehicleStatus> {
                         if (snapshot.connectionState != ConnectionState.done)
                           return Text("");
                         return SizedBox(
-                            height: screenHeight * 0.03,
-                            width: screenWidth * 0.04,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.red[400],
-                              radius: 8,
-                              child: Text(
-                                snapshot.data.toString(),
-                                style: const TextStyle(
-                                    fontFamily: 'Nunito',
-                                    fontSize: AppFonts.smallFontSize,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                            height: screenHeight * 0.04,
+                            width: screenWidth * 0.06,
+                            child: Text(
+                              snapshot.data.toString(),
+                              style: const TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: AppFonts.smallFontSize,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ));
                       },
                     ),
@@ -168,19 +156,15 @@ class _VehicleStatusState extends State<VehicleStatus> {
                         if (snapshot.connectionState != ConnectionState.done)
                           return Text("");
                         return SizedBox(
-                            height: screenHeight * 0.03,
-                            width: screenWidth * 0.04,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.red[400],
-                              radius: 8,
-                              child: Text(
-                                snapshot.data.toString(),
-                                style: const TextStyle(
-                                    fontFamily: 'Nunito',
-                                    fontSize: AppFonts.smallFontSize,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                            height: screenHeight * 0.04,
+                            width: screenWidth * 0.06,
+                            child: Text(
+                              snapshot.data.toString(),
+                              style: const TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: AppFonts.smallFontSize,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ));
                       },
                     ),
@@ -197,19 +181,15 @@ class _VehicleStatusState extends State<VehicleStatus> {
                         if (snapshot.connectionState != ConnectionState.done)
                           return Text("");
                         return SizedBox(
-                            height: screenHeight * 0.03,
-                            width: screenWidth * 0.04,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.red[400],
-                              radius: 8,
-                              child: Text(
-                                snapshot.data.toString(),
-                                style: const TextStyle(
-                                    fontFamily: 'Nunito',
-                                    fontSize: AppFonts.smallFontSize,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                            height: screenHeight * 0.04,
+                            width: screenWidth * 0.06,
+                            child: Text(
+                              snapshot.data.toString(),
+                              style: const TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: AppFonts.smallFontSize,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ));
                       },
                     ),
