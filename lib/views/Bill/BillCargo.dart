@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:connectivity/connectivity.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:http/http.dart' as http;
 import '../../Components/Noglow.dart';
@@ -48,6 +49,44 @@ class _CargoBillState extends State<CargoBill> {
         return [];
       }
     } catch (e) {
+      if (e is http.ClientException &&
+          e.message.contains('Connection reset by peer')) {
+        Fluttertoast.showToast(
+          msg: "Connection reset by peer",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 14.0,
+        );
+        // Display an error message to the user or retry the operation
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text('Connection reset by peer. Please try again.'),
+              actions: [
+                ElevatedButton(
+                  child: Text('Retry'),
+                  onPressed: () {
+                    // Retry the operation
+                    fetchCargos();
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ElevatedButton(
+                  child: Text('Cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
       print('Error in _fetchCargoDrivers(): $e');
       Alert(
         context: context,

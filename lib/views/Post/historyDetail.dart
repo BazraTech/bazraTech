@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../../model/cargo.dart';
@@ -33,8 +34,15 @@ class _cargoHistoryDetailState extends State<cargoHistoryDetail> {
       Map cargoJson = json.decode(response.body);
       return Cargo.fromJson(cargoJson);
     } else {
-      throw Exception(
-          'Failed load data with status code ${response.statusCode}');
+           Fluttertoast.showToast(
+          msg:  'Failed load data with status code ${response.statusCode}',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 14.0,
+        );
     }
   }
 

@@ -1,8 +1,11 @@
 import 'package:cargo/views/Bottom_Navigation.dart';
+import 'package:cargo/views/usermanagement/Profile.dart';
 import 'package:cargo/views/usermanagement/login.dart';
+import 'package:cargo/views/usermanagement/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 import 'Components/Home_Page.dart';
 import 'localization/app_localizations.dart';
 import 'localization/localization_bloc.dart';
@@ -83,9 +86,9 @@ class _MyAppState extends State<MyApp> {
                   const Locale('am', ''),
                 ],
                 locale: localeState.locale,
-                home: MainApp(
-                  locale: localeState.locale,
-                  routeName: navigationState.routeName,
+                home: Scaffold(
+                  body:
+                      Profile(), // Place Cargo_login under the Provider<LocaleBloc>
                 ),
               );
             },

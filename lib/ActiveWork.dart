@@ -110,7 +110,7 @@ class _VehicleCargoState extends State<VehicleCargo> {
           .toList();
       return filteredCargos;
     } catch (e) {
-      throw Fluttertoast.showToast(
+      Fluttertoast.showToast(
           msg: "Failed to search cargos by driver name",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
@@ -186,6 +186,44 @@ class _VehicleCargoState extends State<VehicleCargo> {
         }
       }
     } catch (e) {
+      if (e is http.ClientException &&
+          e.message.contains('Connection reset by peer')) {
+        Fluttertoast.showToast(
+          msg: "Connection reset by peer",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 14.0,
+        );
+        // Display an error message to the user or retry the operation
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text('Connection reset by peer. Please try again.'),
+              actions: [
+                ElevatedButton(
+                  child: Text('Retry'),
+                  onPressed: () {
+                    // Retry the operation
+                    confirmDriverState(context);
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ElevatedButton(
+                  child: Text('Cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
       print('Error in confirming driver state: $e');
       // Handle error as needed
       ScaffoldMessenger.of(context).showSnackBar(

@@ -2,29 +2,37 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
+import '../../Components/Noglow.dart';
 import '../../localization/localization_bloc.dart';
 import '../../localization/localization_event.dart';
+import '../../shared/cargoInfo.dart';
+import '../../shared/cargoInfo.dart';
+import '../../shared/cargoPhone.dart';
 import '../../shared/constant.dart';
 import '../../shared/storage_hepler.dart';
 import 'ProfileEdit.dart';
 import 'changePassword.dart';
 import 'languages.dart';
+import 'login.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({super.key});
+  String? companyName;
+  Profile({super.key, this.companyName});
 
   @override
   State<Profile> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
-  Future<String> fetchImage() async {
+  String ownerPic = "";
+  Future<String> _fetchLogo() async {
     var client = http.Client();
+    final storage = new FlutterSecureStorage();
     StorageHelper storageHelper = StorageHelper();
     String? accessToken = await storageHelper.getToken();
-
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -36,10 +44,72 @@ class _ProfileState extends State<Profile> {
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
       Map<String, dynamic> data = json.decode(response.body);
-      return data["logo"];
+      await storage.write(key: "ownerpic", value: data["avatar"].toString());
+
+      ownerPic = (await storage.read(key: 'ownerpic'))!;
+      return data["avatar"];
     } else {
       throw Exception('Failed to load image');
     }
+  }
+
+  String name = '';
+  String phone = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getCargoInfo();
+    getPhoneNumber();
+  }
+
+  Future<void> getCargoInfo() async {
+    CargoInfo cargoInfo = CargoInfo();
+    String? cargoName = await cargoInfo.getCargoInfo();
+
+    setState(() {
+      name = cargoName ?? '';
+    });
+    print("namemasdfffffffff $name");
+  }
+
+  Future<void> getPhoneNumber() async {
+    CargoPhoneNumber phoneNum = CargoPhoneNumber();
+    String? cargoPhone = await phoneNum.getCargoPhoneNumber();
+
+    setState(() {
+      phone = cargoPhone ?? '';
+    });
+    print("Cargooooooooooooooooo $phone");
+  }
+
+  void _showLogoutConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm Logout'),
+          content: Text('Are you sure you want to logout?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Cargo_login()),
+                );
+              },
+              child: Text('Logout'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Widget buildLanguageDropdown(BuildContext context) {
@@ -101,337 +171,234 @@ class _ProfileState extends State<Profile> {
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Container(
-          margin: EdgeInsets.only(top: 40),
-          child: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: screenWidth * 0.8),
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ProfileEdit()),
-                        );
-                      },
-                      icon: Icon(
-                        Icons.edit_document,
-                        color: Colors.red,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      Container(
-                        child: FutureBuilder(
-                          future: fetchImage(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<String> snapshot) {
-                            if (snapshot.connectionState !=
-                                ConnectionState.done) return Text("");
-                            return Container(
-                              height: screenHeight * 0.09,
-                              width: screenWidth * 0.18,
-                              child: ClipOval(
-                                child: Container(
-                                  child: SizedBox(
-                                      height: screenHeight * 0.06,
-                                      width: screenWidth * 0.05,
-                                      child: Image.network(
-                                          snapshot.data.toString())),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Alex"),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                    )),
-                height: screenHeight * 0.26,
-                width: screenWidth,
-                child: Column(children: [
-                  SizedBox(
-                    // height: screenHeight * 0.06,
-                    // width: screenWidth * 0.85,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border(
-                          bottom: BorderSide(
-                            color: Colors.grey,
-                            width: 0.2,
-                          ),
-                        )),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Container(
-                                margin: EdgeInsets.only(left: 10),
-                                width: screenWidth * 0.2,
-                                child: Text(
-                                  "Email",
-                                  style: TextStyle(
-                                    fontFamily: "Roboto",
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Container(
-                                width: screenWidth * 0.60,
-                                height: screenHeight * 0.06,
-                                child: Container(
-                                  margin:
-                                      EdgeInsets.only(left: screenWidth * 0.12),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "abushj12@gmail.com",
-                                        style: TextStyle(
-                                          fontFamily: "Nunito",
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: screenWidth * 0.05,
-                                      ),
-                                      Icon(Icons.keyboard_arrow_right)
-                                    ],
-                                  ),
-                                )),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border(
-                        bottom: BorderSide(
-                          color: Colors.grey,
-                          width: 0.3,
-                        ),
-                      )),
-                      child: Row(
-                        children: [
-                          Container(
-                              width: screenWidth * 0.25,
-                              height: screenHeight * 0.06,
-                              margin: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Date of Birth",
-                                style: TextStyle(
-                                  fontFamily: "Nunito",
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
-                          Container(
-                              width: screenWidth * 0.54,
-                              child: Container(
-                                margin:
-                                    EdgeInsets.only(left: screenWidth * 0.1),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          left: screenWidth * 0.07),
-                                      child: Text(
-                                        "2022-12-2",
-                                        style: TextStyle(
-                                          fontFamily: "Nunito",
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                        margin: EdgeInsets.only(
-                                            left: screenWidth * 0.12),
-                                        child: Icon(Icons.keyboard_arrow_right))
-                                  ],
-                                ),
-                              )),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border(
-                        bottom: BorderSide(
-                          color: Colors.grey,
-                          width: 0.2,
-                        ),
-                      )),
-                      child: Row(
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(left: 10),
-                              width: screenWidth * 0.2,
-                              height: screenHeight * 0.03,
-                              child: Text(
-                                "Gender",
-                                style: TextStyle(
-                                  fontFamily: "Nunito",
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
-                          Container(
-                              width: screenWidth * 0.6,
-                              child: Container(
-                                child: Row(
-                                  children: [
-                                    Container(
-                                        margin: EdgeInsets.only(
-                                            left: screenWidth * 0.21),
-                                        child: Center(
-                                            child: Text(
-                                          "Male",
-                                          style: TextStyle(
-                                            fontFamily: "Nunito",
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                        ))),
-                                    Container(
-                                        margin: EdgeInsets.only(
-                                            left: screenWidth * 0.22),
-                                        child: Icon(Icons.keyboard_arrow_right))
-                                  ],
-                                ),
-                              )),
-                        ],
-                      ),
-                    ),
-                  ),
-                ]),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LanguageListItem()),
-                  );
-                },
-                child: Card(
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth * 0.04,
-                      vertical:
-                          screenHeight * 0.035, // Increase the vertical padding
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          margin: EdgeInsets.only(top: 70),
+          child: ScrollConfiguration(
+            behavior: NoGlowScrollBehavior(),
+            child: SingleChildScrollView(
+              child: Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
                       children: [
+                        Container(
+                          child: FutureBuilder(
+                            future: _fetchLogo(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<String> snapshot) {
+                              if (snapshot.connectionState !=
+                                  ConnectionState.done) return Text("");
+                              return CircleAvatar(
+                                radius: 58,
+                                child: ClipOval(
+                                  child: Image.network(
+                                    snapshot.data.toString(),
+                                    fit: BoxFit
+                                        .cover, // Adjust the fit property to your desired value
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                              height: screenWidth * 0.08,
-                              width: screenWidth * 0.08,
-                              decoration: BoxDecoration(
-                                color: Color.fromRGBO(252, 221, 244, 1),
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Icon(Icons.language_sharp),
-                            ),
-                            SizedBox(width: screenWidth * 0.04),
+                            Text("$name"),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      )),
+                  height: screenHeight * 0.2,
+                  width: screenWidth,
+                  child: Column(children: [
+                    SizedBox(
+                      // height: screenHeight * 0.06,
+                      // width: screenWidth * 0.85,
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfileEdit(
+                                      companyName: name,
+                                      ownerAvatar: ownerPic,
+                                    )),
+                          );
+                        },
+                        leading: Container(
+                          height: screenWidth * 0.08,
+                          width: screenWidth * 0.08,
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.black,
+                          ),
+                        ),
+                        title: const Text(
+                          'Edit Profile',
+                          style: TextStyle(
+                            fontFamily: "Nunito",
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        trailing: Icon(Icons.keyboard_arrow_right),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Card(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: Colors.grey, width: 0.3),
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                      child: ListTile(
+                        title: const Text(
+                          "Phone Number",
+                          style: TextStyle(
+                            fontFamily: "Nunito",
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
                             Text(
-                              'Language',
+                              "$phone",
                               style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: screenWidth * 0.05,
+                                fontFamily: "Nunito",
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],
                         ),
-                        Icon(Icons.keyboard_arrow_right),
-                      ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                  ]),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => LanguageListItem()),
+                    );
+                  },
+                  child: Card(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.04,
+                        vertical: screenHeight *
+                            0.035, // Increase the vertical padding
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: screenWidth * 0.08,
+                                width: screenWidth * 0.08,
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(252, 221, 244, 1),
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Icon(Icons.language_sharp),
+                              ),
+                              SizedBox(width: screenWidth * 0.04),
+                              Text(
+                                'Language',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: screenWidth * 0.05,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Icon(Icons.keyboard_arrow_right),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                    )),
-                height: screenHeight * 0.3,
-                width: screenWidth,
-                child: Column(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ChangePassword()),
-                        );
-                      },
-                      child: Padding(
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      )),
+                  height: screenHeight * 0.3,
+                  width: screenWidth,
+                  child: Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ChangePassword()),
+                          );
+                        },
+                        child: ListTile(
+                          onTap: () {},
+                          leading: Container(
+                            height: screenWidth * 0.08,
+                            width: screenWidth * 0.08,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(201, 252, 248, 1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Icon(Icons.lock_outline),
+                          ),
+                          title: const Text(
+                            'Change password',
+                            style: TextStyle(
+                              fontFamily: "Nunito",
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          trailing: Icon(
+                            Icons.keyboard_arrow_right,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Row(
                           children: [
@@ -439,15 +406,15 @@ class _ProfileState extends State<Profile> {
                                 height: screenWidth * 0.08,
                                 width: screenWidth * 0.08,
                                 decoration: BoxDecoration(
-                                    color: Color.fromRGBO(201, 252, 248, 1),
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Icon(Icons.lock_outline)),
+                                    color: Color.fromRGBO(255, 245, 210, 1),
+                                    borderRadius: BorderRadius.circular(6)),
+                                child: Icon(Icons.help)),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                  width: screenWidth * 0.36,
-                                  child: Text(
-                                    'Change password',
+                                  width: screenWidth * 0.3,
+                                  child: const Text(
+                                    "Help",
                                     style: TextStyle(
                                       fontFamily: "Nunito",
                                       fontSize: 15,
@@ -458,82 +425,72 @@ class _ProfileState extends State<Profile> {
                             Container(
                                 margin: EdgeInsets.only(
                                     left: MediaQuery.of(context).size.width *
-                                        0.23),
-                                child: InkWell(
-                                    onTap: () {},
-                                    child: Icon(Icons.keyboard_arrow_right))),
+                                        0.37),
+                                child: Icon(Icons.keyboard_arrow_right)),
                           ],
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Row(
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          children: [
+                            Container(
+                                height: screenWidth * 0.08,
+                                width: screenWidth * 0.08,
+                                decoration: BoxDecoration(
+                                    color: Color.fromRGBO(201, 252, 248, 1),
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: Icon(Icons.settings)),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  width: screenWidth * 0.3,
+                                  child: const Text(
+                                    "Setting",
+                                    style: TextStyle(
+                                      fontFamily: "Nunito",
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )),
+                            ),
+                            Container(
+                                margin:
+                                    EdgeInsets.only(left: screenWidth * 0.37),
+                                child: Icon(Icons.keyboard_arrow_right)),
+                          ],
+                        ),
+                      ),
+                      Row(
                         children: [
-                          Container(
-                              height: screenWidth * 0.08,
-                              width: screenWidth * 0.08,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(255, 245, 210, 1),
-                                  borderRadius: BorderRadius.circular(6)),
-                              child: Icon(Icons.help)),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
+                          // Other widgets in the row
+                          Expanded(
                             child: Container(
-                                width: screenWidth * 0.3,
-                                child: Text(
-                                  "Help",
-                                  style: TextStyle(
-                                    fontFamily: "Nunito",
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )),
+                              margin: EdgeInsets.only(left: 20),
+                              child: const Text(
+                                'Logout',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
-                          Container(
-                              margin: EdgeInsets.only(
-                                  left:
-                                      MediaQuery.of(context).size.width * 0.3),
-                              child: Icon(Icons.keyboard_arrow_right)),
+                          Expanded(
+                            child: IconButton(
+                              icon: Icon(Icons.logout),
+                              onPressed: () {
+                                _showLogoutConfirmationDialog(context);
+                              },
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Row(
-                        children: [
-                          Container(
-                              height: screenWidth * 0.08,
-                              width: screenWidth * 0.08,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(201, 252, 248, 1),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Icon(Icons.settings)),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                                width: screenWidth * 0.3,
-                                child: Text(
-                                  "Setting",
-                                  style: TextStyle(
-                                    fontFamily: "Nunito",
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )),
-                          ),
-                          Container(
-                              margin: EdgeInsets.only(
-                                  left:
-                                      MediaQuery.of(context).size.width * 0.3),
-                              child: Icon(Icons.keyboard_arrow_right)),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ]),
+                    ],
+                  ),
+                )
+              ]),
+            ),
           ),
         ),
       ),

@@ -9,6 +9,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../localization/app_localizations.dart';
 import '../../shared/custom-form.dart';
 import '../../shared/customButton.dart';
+import 'Profile.dart';
 import 'login.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -106,30 +107,53 @@ class _ChangePasswordState extends State<ChangePassword> {
   bool _isFocus = false;
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 80,
+          elevation: 0,
+          leading: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Profile()));
+            },
+            child: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.grey,
+            ),
+          ),
+          backgroundColor: Colors.white,
+          title: Container(
+            width: double.infinity,
+            margin: EdgeInsets.only(right: screenWidth * 0.12),
+            height: 40,
+            child: Center(
+              child: Text(
+                AppLocalizations.of(context)
+                        ?.translate("Password change page") ??
+                    "Password change page",
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+          ),
+        ),
         backgroundColor: kBackgroundColor,
         body: Container(
           padding: const EdgeInsets.all(20),
-          margin: const EdgeInsets.only(top: 100),
+          margin: const EdgeInsets.only(top: 50),
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
               child: Column(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 20, bottom: 20),
-                    child: Text(
-                      AppLocalizations.of(context)
-                              ?.translate("Change Your Password") ??
-                          "Change Your Password",
-                      style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.black54,
-                        letterSpacing: 2.0,
-                        wordSpacing: 1.0,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.bold,
-                      ),
+                    margin: EdgeInsets.only(bottom: 45),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.blue,
+                      radius: 60,
+                      child: Icon(Icons.lock, color: Colors.white, size: 70),
                     ),
                   ),
                   CustomTextFieldForm(

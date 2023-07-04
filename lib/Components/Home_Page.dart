@@ -3,6 +3,7 @@ import 'package:cargo/localization/localization_event.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,19 +40,38 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
     StorageHelper storageHelper = StorageHelper();
     String? accessToken = await storageHelper.getToken();
 
-    Map<String, String> requestHeaders = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    };
-    final response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
-        headers: requestHeaders);
-    if (response.statusCode == 200) {
-      // If the server returns a 200 OK response, parse the JSON.
-      Map<String, dynamic> data = json.decode(response.body);
-      return data["logo"];
-    } else {
-      throw Exception('Failed to load image');
+    try {
+      Map<String, String> requestHeaders = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      };
+      final response = await http.get(
+          Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+          headers: requestHeaders);
+
+      if (response.statusCode == 200) {
+        // If the server returns a 200 OK response, parse the JSON.
+        Map<String, dynamic> data = json.decode(response.body);
+        return data["logo"];
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to load image'),
+          ),
+        );
+        return '';
+      }
+    } on Exception catch (e) {
+      Fluttertoast.showToast(
+          msg: "Check your internet Connection and try again",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 14.0);
+      print('Error occurred: $e');
+      return '';
     }
   }
 
@@ -92,22 +112,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular((6))),
-                  boxShadow: isPressed
-                      ? [
-                          BoxShadow(
-                            color: Colors.grey.shade400,
-                            offset: Offset(4, 4),
-                            blurRadius: 15,
-                            spreadRadius: 1,
-                          ),
-                          const BoxShadow(
-                            color: Colors.white,
-                            offset: Offset(-4, -4),
-                            blurRadius: 25,
-                            spreadRadius: 1,
-                          ),
-                        ]
-                      : null,
+                 
                 ),
                 child: Center(
                   child: Text(

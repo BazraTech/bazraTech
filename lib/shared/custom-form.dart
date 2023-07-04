@@ -11,7 +11,8 @@ class CustomTextFieldForm extends StatefulWidget {
   final bool obscureText;
   final bool showSuffixIcon;
   final TextStyle hintTextStyle;
-  final Function(bool)? onFocusChange; // added onFocusChange callback
+  final Function(bool)? onFocusChange;
+   // added onFocusChange callback
   const CustomTextFieldForm({
     super.key,
     this.isPassword = false,
@@ -24,7 +25,8 @@ class CustomTextFieldForm extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     required this.onChanged,
     required this.obscureText,
-    this.onFocusChange,
+    this.onFocusChange, 
+
   });
 
   @override

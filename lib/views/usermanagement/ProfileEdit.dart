@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:cargo/views/usermanagement/Profile.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -11,8 +12,12 @@ import '../../shared/custom-form.dart';
 import '../../shared/customButton.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'package:image_picker/image_picker.dart';
+
 class ProfileEdit extends StatefulWidget {
-  const ProfileEdit({super.key});
+  String? companyName;
+  String? ownerAvatar;
+  ProfileEdit({super.key, this.companyName, required this.ownerAvatar});
 
   @override
   State<ProfileEdit> createState() => _ProfileEditState();
@@ -22,16 +27,28 @@ TextEditingController from = TextEditingController();
 
 class _ProfileEditState extends State<ProfileEdit> {
   final _companyController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _genderController = TextEditingController();
+  final _emailController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  PickedFile? _pickedImage;
+  final ImagePicker _picker = ImagePicker();
+
+  void takePicture(ImageSource source) async {
+    final XFile? pickedFile = await _picker.pickImage(
+      source: source,
+    );
+    setState(() {
+      _pickedImage = pickedFile != null ? PickedFile(pickedFile.path) : null;
+    });
+  }
+
   @override
   void dispose() {
     // Clean up the controllers when the widget is disposed
 
-    _phoneController.dispose();
-    _passwordController.dispose();
+    _genderController.dispose();
+    _emailController.dispose();
     // _confirmPasswordController.dispose();
 
     super.dispose();
@@ -80,16 +97,14 @@ class _ProfileEditState extends State<ProfileEdit> {
     ).show();
   }
 
-  registerCargo(
-      String company, String phone, String pass, String confirmPass) async {
+  registerCargo(String company, String gender, String email) async {
     const url = 'http://64.226.104.50:9090/Api/SignUp/Cargo';
 
     // Define your request data as a Map
     Map requestData = {
       'companyName': "${company}",
-      'phone': "${phone}",
-      'password': "${pass}",
-      'confirmPassword': "${confirmPass}",
+      'phone': "${gender}",
+      'confirmPassword': "${email}",
     };
     print(requestData);
 
@@ -156,7 +171,9 @@ class _ProfileEditState extends State<ProfileEdit> {
   bool _isFocus = false;
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
         backgroundColor: kBackgroundColor,
         appBar: AppBar(
@@ -188,26 +205,168 @@ class _ProfileEditState extends State<ProfileEdit> {
         ),
         body: Container(
           padding: const EdgeInsets.all(20),
-          margin: const EdgeInsets.only(top: 100),
+          margin: const EdgeInsets.only(top: 30),
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
               child: Column(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 20, bottom: 20),
-                    child: Text(
-                      AppLocalizations.of(context)
-                              ?.translate("Profile Update ") ??
-                          "Profile Update",
-                      style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.black54,
-                        letterSpacing: 2.0,
-                        wordSpacing: 1.0,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.bold,
-                      ),
+                    height: screenHeight * 0.15,
+                    margin: const EdgeInsets.only(bottom: 30),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                            left: screenWidth * 0.3,
+                            height: screenHeight * 0.15,
+                            child: Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 60,
+                                      backgroundColor: Colors.blueGrey,
+                                      child: CircleAvatar(
+                                        radius: 58,
+                                        backgroundImage: _pickedImage == null
+                                            ? NetworkImage(
+                                                "${widget.ownerAvatar}")
+                                            : FileImage(
+                                                    File(_pickedImage!.path))
+                                                as ImageProvider,
+                                      ),
+                                    ),
+                                    Positioned(
+                                      left: 62,
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            top: screenHeight * 0.07),
+                                        child: RawMaterialButton(
+                                          onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder: (BuildContext contex) {
+                                                  return AlertDialog(
+                                                    title: Text('Choose Option',
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color:
+                                                              Colors.lightBlue,
+                                                        )),
+                                                    content:
+                                                        SingleChildScrollView(
+                                                      child: ListBody(
+                                                          children: [
+                                                            InkWell(
+                                                                onTap: () {
+                                                                  takePicture(
+                                                                      ImageSource
+                                                                          .camera);
+                                                                },
+                                                                splashColor: Colors
+                                                                    .lightBlue,
+                                                                child: Row(
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              8.0),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .camera,
+                                                                        color: Colors
+                                                                            .lightBlue,
+                                                                      ),
+                                                                    ),
+                                                                    Text(
+                                                                        'Camera',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            color: Colors.grey[500]))
+                                                                  ],
+                                                                )),
+                                                            InkWell(
+                                                                onTap: () {
+                                                                  takePicture(
+                                                                      ImageSource
+                                                                          .gallery);
+                                                                },
+                                                                splashColor: Colors
+                                                                    .lightBlue,
+                                                                child: Row(
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              8.0),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .browse_gallery,
+                                                                        color: Colors
+                                                                            .lightBlue,
+                                                                      ),
+                                                                    ),
+                                                                    Text(
+                                                                        'Galley',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            color: Colors.grey[500]))
+                                                                  ],
+                                                                )),
+                                                            InkWell(
+                                                                onTap: () {},
+                                                                splashColor: Colors
+                                                                    .lightBlue,
+                                                                child: Row(
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              8.0),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .remove_circle,
+                                                                        color: Colors
+                                                                            .red,
+                                                                      ),
+                                                                    ),
+                                                                    Text(
+                                                                        'Remove',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            color: Colors.grey[500]))
+                                                                  ],
+                                                                )),
+                                                          ]),
+                                                    ),
+                                                  );
+                                                });
+                                          },
+                                          elevation: 10,
+                                          fillColor: Colors.lightBlue,
+                                          child: Icon(Icons.add_a_photo),
+                                          shape: CircleBorder(),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            )),
+                      ],
                     ),
                   ),
                   CustomTextFieldForm(
@@ -240,20 +399,26 @@ class _ProfileEditState extends State<ProfileEdit> {
                   const SizedBox(
                     height: 20,
                   ),
-                  CustomTextFieldForm(
-                    textStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.normal),
-                    hintText: AppLocalizations.of(context)
-                            ?.translate("Company Name") ??
-                        "Company Name",
-                    textController: _phoneController,
-                    obscureText: false,
-                    hintTextStyle: TextStyle(
-                      letterSpacing: 1.0,
-                      wordSpacing: 2.0,
-                      color: _isFocus ? Colors.red : Colors.grey,
-                      // ... other styles
+                  TextFormField(
+                    controller: _companyController,
+                    readOnly: true,
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      hintText: '${widget.companyName}',
+                      labelStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.normal),
+                      filled: true,
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 1.5),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 1.5),
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red, width: 1.5),
+                      ),
+                      focusedErrorBorder: const OutlineInputBorder(),
                     ),
                     onChanged: (value) {},
                     validator: (value) {
@@ -264,6 +429,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                       }
                       return null;
                     },
+                    // validator: _validateDate,
                   ),
                   SizedBox(
                     height: 20,
@@ -275,7 +441,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     hintText:
                         AppLocalizations.of(context)?.translate("Email") ??
                             "Email",
-                    textController: _phoneController,
+                    textController: _emailController,
                     obscureText: false,
                     hintTextStyle: TextStyle(
                       letterSpacing: 1.0,
@@ -303,7 +469,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     hintText:
                         AppLocalizations.of(context)?.translate("Gender") ??
                             "Gender",
-                    textController: _phoneController,
+                    textController: _genderController,
                     obscureText: false,
                     hintTextStyle: TextStyle(
                       letterSpacing: 1.0,
@@ -326,12 +492,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                   ),
                   CustomButton(
                     onPressed: () async {
-                      await registerCargo(
-                        _companyController.text,
-                        _phoneController.text,
-                        _passwordController.text,
-                        _confirmPasswordController.text,
-                      );
+                      await registerCargo(_companyController.text,
+                          _genderController.text, _emailController.text);
                     },
                     text: AppLocalizations.of(context)?.translate('Update') ??
                         "Update",

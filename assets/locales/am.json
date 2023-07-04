@@ -1,6 +1,7 @@
 {
   "hello World": "ሰላም ልዑል!",
   "Phone Number": "ስልክ ቁጥር",
+  "Mobile Number": "ስልክ ቁጥር",
   "Please enter your phone number":"እባክዎን ስልክ ቁጥሮን ያስገቡ",
   "Password": "የዪለፍ ቃል",
   "Please enter a company name": "እባክዎ የኩባንያ ስም ያስገቡ",
@@ -64,6 +65,11 @@
   "Addis Ababa":"አዲስ አበባ",
   "ACTIVE":"ንቁ",
   "Language":"ቋንቋ",
-  "Engilish":"እንግሊዝኛ",
-  "Amharic":"አማርኛ"
+  "English":"እንግሊዘኛ",
+  "Amharic":"አማርኛ",
+  "Change Your Password":"የይለፍ ቃልህን ቀይር",
+  "Current Password":"የአሁኑ ሚስጥራዊ ማለፊያ ቁልፍ",
+  "Please enter Current password":"እባክህ የአሁኑን የይለፍ ቃል አስገባ",
+  "Password change page":"የይለፍ ቃል መለወጫ ገጽ"
+  
 }

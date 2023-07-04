@@ -10,6 +10,7 @@ import 'package:cargo/views/Bottom_Navigation.dart';
 import 'package:cargo/views/usermanagement/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../shared/custom-form.dart';
@@ -31,26 +32,45 @@ class Forget extends StatefulWidget {
 class _ForgetState extends State<Forget> {
   final _formKey = GlobalKey<FormState>();
   final _phoneController = TextEditingController();
-  // Future<String> fetchImage() async {
-  //   var client = http.Client();
-  //   StorageHelper storageHelper = StorageHelper();
-  //   String? accessToken = await storageHelper.getToken();
+  Future<String> fetchImage() async {
+    var client = http.Client();
+    StorageHelper storageHelper = StorageHelper();
+    String? accessToken = await storageHelper.getToken();
 
-  //   Map<String, String> requestHeaders = {
-  //     'Content-Type': 'application/json',
-  //     'Accept': 'application/json',
-  //   };
-  //   final response = await http.get(
-  //       Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
-  //       headers: requestHeaders);
-  //   if (response.statusCode == 200) {
-  //     // If the server returns a 200 OK response, parse the JSON.
-  //     Map<String, dynamic> data = json.decode(response.body);
-  //     return data["logo"];
-  //   } else {
-  //     throw Exception('Failed to load image');
-  //   }
-  // }
+    try {
+      Map<String, String> requestHeaders = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      };
+      final response = await http.get(
+          Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+          headers: requestHeaders);
+
+      if (response.statusCode == 200) {
+        // If the server returns a 200 OK response, parse the JSON.
+        Map<String, dynamic> data = json.decode(response.body);
+        return data["logo"];
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to load image'),
+          ),
+        );
+        return '';
+      }
+    } on Exception catch (e) {
+      Fluttertoast.showToast(
+          msg: "Check your internet Connection and try again",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 14.0);
+      print('Error occurred: $e');
+      return '';
+    }
+  }
 
   bool _isFocus = false;
   void _showSweetAlert(BuildContext context, AlertType alertType, String title,
@@ -139,28 +159,28 @@ class _ForgetState extends State<Forget> {
           child: Form(
             key: _formKey,
             child: Column(children: [
-              // Container(
-              //   margin: EdgeInsets.only(left: 20, bottom: 30),
-              //   padding: const EdgeInsets.all(2.0),
-              //   child: CircleAvatar(
-              //     radius: 65,
-              //     backgroundColor: Colors.white,
-              //     child: FutureBuilder(
-              //       future: fetchImage(),
-              //       builder:
-              //           (BuildContext context, AsyncSnapshot<String> snapshot) {
-              //         if (snapshot.connectionState != ConnectionState.done)
-              //           return Text("");
-              //         return ClipOval(
-              //           child: SizedBox(
-              //               height: screenHeight * 0.4,
-              //               width: screenWidth * 0.9,
-              //               child: Image.network(snapshot.data.toString())),
-              //         );
-              //       },
-              //     ),
-              //   ),
-              // ),
+              Container(
+                margin: EdgeInsets.only(left: 20, bottom: 30),
+                padding: const EdgeInsets.all(2.0),
+                child: CircleAvatar(
+                  radius: 65,
+                  backgroundColor: Colors.white,
+                  child: FutureBuilder(
+                    future: fetchImage(),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      if (snapshot.connectionState != ConnectionState.done)
+                        return Text("");
+                      return ClipOval(
+                        child: SizedBox(
+                            height: screenHeight * 0.4,
+                            width: screenWidth * 0.9,
+                            child: Image.network(snapshot.data.toString())),
+                      );
+                    },
+                  ),
+                ),
+              ),
               Center(
                 child: Text(
                   AppLocalizations.of(context)?.translate("Forget Password") ??
