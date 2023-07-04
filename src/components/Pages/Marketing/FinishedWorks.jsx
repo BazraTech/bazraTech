@@ -121,6 +121,7 @@ export default function FinishedWorks () {
                                                     <th>Name</th>
                                                     <th>packaging</th>
                                                     <th>weight</th>
+                                                    <th>Trip From To</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
@@ -130,6 +131,7 @@ export default function FinishedWorks () {
                                                         <td>{item.cargoOwner}</td>
                                                         <td>{item.packaging}</td>
                                                         <td>{item.weight}</td>
+                                                        <td>{item.pickUp +' => '+ item.dropOff }</td>
                                                         <td>{item.status}</td>
                                                        
                                                     </tr>

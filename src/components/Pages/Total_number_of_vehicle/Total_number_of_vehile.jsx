@@ -35,6 +35,7 @@ export default function () {
 
     const [Loading, setLoading] = useState([])
     const [totalPages, setTotalPage] = useState(1);
+    const [totalVehicles, setTotalVehicles] = useState([])
     const url2 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles";
     const [AllVehicles, setAllVehicles] = useState([])
     useEffect(() => {
@@ -44,6 +45,8 @@ export default function () {
             .then(data => {
                 setAllVehicles(data.vehiclesINF)
                 setTotalPage(data.totalVehicles);
+                setTotalVehicles(data.totalVehicles)
+
                 setLoading(false);
 
             })
@@ -119,7 +122,7 @@ console.log(searchResult)
                             <div className={styles.innerContents1}>
                                 <h4>Total Vehicle</h4>
                                 <div className={styles.icon}>
-                                    <p><AiFillCar size="2.2rem"></AiFillCar><b>{totalPages}</b></p>
+                                    <p><AiFillCar size="2.2rem"></AiFillCar><b>{totalVehicles}</b></p>
                                 </div>
                             </div>
                         </Link>

@@ -130,6 +130,10 @@ export default function () {
             console.error(error);
         }
     }
+    const [totalPages, setTotalPage] = useState(1);
+    const [page, setCurentPage] = useState(1);
+    const [postPerPage, setpostPerPage] = useState(5);
+
 
     const url2 = "http://64.226.104.50:9090/Api/Admin/Trip/All";
     const [dataSource2, setDataSource2] = useState([])
@@ -137,14 +141,10 @@ export default function () {
         fetch(url2, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource2(data.activeTrips)
-                setTotalPage(data.activeTrips.length)
+                setDataSource2(data.setTrips)
+                setTotalPage(data && data.setTrips.length)
             })
     }, [])
-
-    const [totalPages, setTotalPage] = useState(1);
-    const [page, setCurentPage] = useState(1);
-    const [postPerPage, setpostPerPage] = useState(5);
 
     const indexOfLastPage = page * postPerPage;
     const indexOfFirstPage = indexOfLastPage - postPerPage;
