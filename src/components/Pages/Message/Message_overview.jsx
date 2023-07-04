@@ -11,6 +11,8 @@ import { BsSearch } from "react-icons/bs";
 import swal from "sweetalert";
 import { useForm } from 'react-hook-form';
 import { Pagination } from 'antd';
+import SyncLoader from "react-spinners/SyncLoader";
+
 // import { useForm } from 'react-hook-form';
 
 {/*---------
@@ -57,8 +59,8 @@ export default function () {
             .then(respnse => respnse.json())
             .then(data => {
                
-                ( data != null) ? setDataSource2(data.messages) : setDataSource2([])
-               ( data != null) && setTotalPage(data.messages.length)
+              setDataSource2(  data && data.messages)
+               setTotalPage( data && data.messages.length)
                 setLoading(false)
             })
     }, [])
@@ -92,13 +94,15 @@ export default function () {
     }, []);
 
     {/*---------------Selecting item from the table ----------------*/ }
+   const [singleChecked, setSingleChecked] = useState('false')
     const handleCheck = (id, phoneNumbers) => {
         if (id == 'selectall') {
             dataSource.map(item => !allChecked ? item.checked = true : item.checked = false);
             setAllChecked(!allChecked);
             setReceipientPhone([dataSource.map(item => item.phoneNumber)]);
         } else {
-
+            setSingleChecked(!singleChecked)
+            
             console.log(id);
             console.log(phoneNumbers);
             dataSource.map(item => item.id == id ? item.checked = !item.checked : null);
@@ -163,8 +167,8 @@ export default function () {
         }
     }
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = (e) => {
+        e.preventDefault()
         SendMessage();
     };
 
@@ -172,6 +176,7 @@ export default function () {
     }, []);
 
     async function SendMessage() {
+        console.log('onSubmit')
         let item =
         {
             message,
@@ -187,9 +192,9 @@ export default function () {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://198.199.67.201:9090/Api/Message/CreateMessage";
+        console.log(item)
         try {
-            const response = await fetch(url, options);
+            const response = await fetch('http://64.226.104.50:9090/Api/Message/CreateMessage', options);
             const result = await response.json();
             console.log(result);
             localStorage.setItem("message", JSON.stringify(result["message"]));
@@ -212,7 +217,7 @@ export default function () {
             console.error(error);
         }
     }
-
+console.log(!allChecked)
     return (
         <div className="messageOverview_container">
 
@@ -237,7 +242,19 @@ export default function () {
 
                     <p>Message</p>
 
-                    <table className={styles.vehicle_table} id="myTable">
+                    {Loading ?
+                    <p className={styles.loading} >
+                        <SyncLoader
+                            color={color}
+                            Left={margin}
+                            loading={Loading}
+                            size={10}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                        /></p>
+                    :
+                        
+                        <table className={styles.vehicle_table} id="myTable">
                         <thead>
                             <tr>
                                 <th>Select All
@@ -250,6 +267,7 @@ export default function () {
                                 <th>User</th>
                                 <th>User Catagory</th>
                                 <th>Owner Name</th>
+                                <th>Message</th>
 
                             </tr>
                         </thead>
@@ -260,7 +278,7 @@ export default function () {
                                     return <tr>
 
                                         <td><Checkbox
-                                            // onClick={setReceipientPhone(item.phoneNumber)}
+                                            
                                             id={item.id}
                                             phoneNumbers={item.phoneNumber}
                                             checked={item.checked}
@@ -269,31 +287,43 @@ export default function () {
                                         <td>{item.firstName}</td>
                                         <td>{item.role}</td>
                                         <td>{item.phoneNumber}</td>
-
+                                        <td><button onClick={handleClickopen} disabled={allChecked}className={styles.messageOverviewText}>Text</button></td>
+                                        {/* disabled ={allChecked == 'true' ? 'false' : 'true'}  */}
                                     </tr>
                                 })
                             }
                         </tbody>
                     </table>
-                </div>
+}                </div>
                 {/*----------className- messageOverview-button is a button which redirect to the popup menu---------*/}
-                <div className={styles.messageOverviewbBtton}>
+                {allChecked && <div className={styles.messageOverviewbBtton}>
                     <button onClick={handleClickopen} className={styles.messageOverviewText}>Text</button>
-                </div>
+                </div>}
 
 
 
                 <div className={styles.outer_vehicle_table} id='myTable' style={{ marginTop: '100px ' }}>
                     <div className={styles.vehicle_search}>
                         <p title='search'>
-                            <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
-                            <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                           <input type="text" id="myInput" onKeyUp={tableSearch} placeholder="Search"></input>
+                             <BsSearch className={styles.icn} size="1.5rem" color='rgb(63, 63, 63)'></BsSearch>
                             <button>Search</button>
                         </p>
                     </div>
                     <p>Sent Messages</p>
 
-                    <table className={styles.vehicle_table} id="myTable">
+                    { Loading ?
+                    <p className={styles.loading} >
+                        <SyncLoader
+                            color={color}
+                            Left={margin}
+                            loading={Loading}
+                            size={10}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                        /></p>
+                    :
+                        <table className={styles.vehicle_table} id="myTable">
                         <thead>
                             <tr>
                                 <th>From</th>
@@ -306,7 +336,7 @@ export default function () {
                         <tbody>
                             {
 
-(dataSource2 != null) ?  currentPage.map(item => {
+                                currentPage.map(item => {
                                     return <tr>
                                         <td>{item.from}</td>
                                         <td>{item.to}</td>
@@ -314,18 +344,11 @@ export default function () {
                                         <td>{item.status}</td>
 
                                     </tr>
-                                }):
-                                 <tr>
-                                        <td> - </td>
-                                        <td> - </td>
-                                        <td> - </td>
-                                        <td> - </td>
-
-                                    </tr>
+                                })
                             }
                         </tbody>
-                    </table>
-                </div>
+                    </table>}
+                </div> 
                 <div className={styles.page}>
                     <Pagination
                         onChange={(page) => setCurentPage(page)}
@@ -338,38 +361,50 @@ export default function () {
                     />
                 </div>
 
+
                 <div>
 
                     {popup ?
 
                         <div className={styles.mainPopup}>
-                            <form onSubmit={handleSubmit(onSubmit)}>
+                            <form onSubmit={onSubmit}>
                                 {/*------- className - main-popup - a class for the popup display part----------*/}
                                 <div className={styles.holdingForMssage}>
 
                                     <div className='animate__animated animate__slideInDown'>
-                                        <div className={styles.xButton}>
-                                            <button className={styles.xPress} onClick={closePopup}>X</button>
-                                        </div>
+                                        
                                         <div className={styles.messageBoxs}>
+                                            <div className={styles.xButton}>
+                                                <button className={styles.xPress} onClick={closePopup}>X</button>
+                                            </div>
+                                                {/*------ className - message-boxs------- a message writing part--------*/}
+                                               {/* <CKEditor
+                                                    editor={ClassicEditor}
+                                                    // data={"Send Message here...."}
+                                                    className={styles.CKcustom}
+                                                    value={message}
+                                                    onChange={(event, editor) => {
+                                                        setMessage(editor.getData());
+                                                        console.log(message)
+                                                    }}
+                                                />  */}
+                                                <div className={styles.textbox}>
+                                                    <h1 className={styles.message}>Message</h1>
+                                                <textarea
+                                                        className={styles.textarea}
+                                                        placeholder="Enter your message"
+                                                        onChange={e => setMessage(e.target.value)}
+                                                        value={message}
+                                                        ></textarea>
+                                                        </div>
 
-                                            {/*------ className - message-boxs------- a message writing part--------*/}
-                                            <CKEditor
-                                                editor={ClassicEditor}
-                                                // data={"Send Message here...."}
-                                                className={styles.CKcustom}
-                                                value={message}
-                                                onChange={(event, editor) => {
-                                                    setMessage(editor.getData());
-                                                    console.log(message)
-                                                }}
-                                            />
+                                            <div className={styles.sendButton}>
+                                                <button className={styles.editSend}>Send</button>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div className={styles.sendButton}>
-                                        <button className={styles.editSend}>Send</button>
-                                    </div>
+                                    
                                 </div>
                             </form>
 

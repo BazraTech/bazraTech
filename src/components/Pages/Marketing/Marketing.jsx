@@ -38,7 +38,7 @@ export default function () {
     fetch(url2, options)
       .then(respnse => respnse.json())
       .then(data => {
-        setDataSource2(data.cargos)
+        setDataSource2(data && data.cargos.filter(item => item.status != 'FINISHED'))
         setTotalPage(data.cargos); 
         setLoading(false);
 

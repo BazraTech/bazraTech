@@ -28,7 +28,7 @@
     margin-top: 8px;
     margin-right: -42px;
     margin-left: 20px;
-    z-index: 2;
+    /* z-index: 1; */
 }
 
 .vehicle_search input {
@@ -180,6 +180,11 @@
     background-color: #000000;
 
 }
+.messageOverviewText:disabled{
+    background-color: white;
+    color: black;
+    /* display: none; */
+}
 
 .messageOverviewbBtton .messageOverviewText:hover {
     transform: scale(1.03);
@@ -209,9 +214,30 @@
     padding-bottom: 2%;
 }
 .messageBoxs{
-    box-shadow: 0px 0px 0px 10000px rgba(0, 0, 0, 0.75);
+    
+    box-shadow: 0px 0px 0px 10000px rgba(85, 87, 22, 0.75);
     overflow: hidden;
+    background-color: #fffefe;
+    z-index: 1000;
+    border-radius: 2em;
 
+}
+.textbox{
+ 
+    height: 200px;
+}
+.textarea
+{
+    border-radius: 1em;
+    padding: 1em;
+    width: 80%;
+    height: 100px;
+    margin:2em 5em;
+}
+.message{
+    padding: 1em;
+    margin: 2em 5em;
+    color: red;
 }
 .xButton {
     margin-top: 1%;
@@ -229,6 +255,7 @@
     padding-top: 2px;
     padding-bottom: 2px;
     border-radius: 3px;
+    margin: 1em;
     color: white;
     border: none;
     background-color: #ff0000;
@@ -243,6 +270,7 @@
     margin-right: 4.5%;
     display: flex;
     text-align: end;
+    color: whitesmoke;
     justify-content: end;
 
 }
@@ -253,6 +281,7 @@
     padding-bottom: 5px;
     border-radius: 5px;
     color: white;
+    z-index: 1000;
     background-color: #000000;
 }
 
