@@ -63,17 +63,18 @@ class _vehicleDetialState extends State<vehicleDetial> {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
-            title: Text("Detial Information"),
-            leading: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
+          title: Text("Detial Information"),
+          leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
             ),
-            backgroundColor: kPrimaryColor),
+          ),
+          backgroundColor: Color.fromRGBO(178, 142, 22, 1),
+        ),
         backgroundColor: kBackgroundColor,
         body: SingleChildScrollView(
             child: SizedBox(

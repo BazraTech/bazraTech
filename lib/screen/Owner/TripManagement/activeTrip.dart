@@ -103,7 +103,7 @@ class _ActiveTripState extends State<ActiveTrip> {
               color: Colors.white,
             ),
           ),
-          backgroundColor: kPrimaryColor,
+          backgroundColor: Color.fromRGBO(178, 142, 22, 1),
           title: Container(
             margin: EdgeInsets.only(right: screenWidth * 0.12),
             width: double.infinity,

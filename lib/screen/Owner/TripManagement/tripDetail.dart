@@ -45,7 +45,7 @@ class _TripDetailState extends State<TripDetail> {
       }
     } catch (e) {
       print(e);
-      throw e;
+      
     }
   }
 
@@ -62,17 +62,26 @@ class _TripDetailState extends State<TripDetail> {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
+            title: Text(
+              "Active trip detial ",
+              textAlign: TextAlign.left,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  fontFamily: 'Nunito',
+                  fontSize: AppFonts.mediumFontSize,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            ),
             leading: InkWell(
               onTap: () {
                 Navigator.pop(context);
               },
               child: const Icon(
-                Icons.arrow_back_ios,
+                Icons.arrow_back,
                 color: Colors.white,
               ),
             ),
-            toolbarHeight: 100,
-            backgroundColor: kPrimaryColor),
+            backgroundColor: Color.fromRGBO(178, 142, 22, 1)),
         backgroundColor: kBackgroundColor,
         body: SingleChildScrollView(
             child: SizedBox(

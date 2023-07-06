@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../../const/constant.dart';
 import '../../Driver/assignDriver.dart';
 
 class ownerprofileUpadate extends StatefulWidget {
@@ -555,7 +556,8 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
                     height: height * 0.08,
                     child: TextFormField(
                         controller: notificationmidia,
-                        decoration: ThemeHelper().textInputDecoration(""))),
+                        decoration: ThemeHelper().textInputDecoration(
+                            "${widget.notificationmedia}"))),
               ],
             ),
             SizedBox(height: 5),
@@ -613,9 +615,11 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
                         Text(
                           isLoading ? 'Please Wait' : 'Update',
                           style: TextStyle(
+                              color: Colors.black,
                               fontFamily: "Nunito",
                               fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                              fontStyle: FontStyle.normal,
+                              fontSize: AppFonts.smallFontSize),
                         )
                       ],
                     ),
@@ -627,7 +631,7 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
                           return Color.fromRGBO(255, 148, 165, 223);
                         }
                         // 98, 172, 181
-                        return Colors.lightBlue;
+                        return Color.fromRGBO(178, 142, 22, 1);
                       }),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(

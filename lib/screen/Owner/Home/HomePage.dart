@@ -3,12 +3,13 @@ import 'dart:ui';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:bazralogin/controller/Localization.dart';
 import 'package:bazralogin/screen/Owner/Alert/Notification.dart';
-import 'package:bazralogin/screen/Owner/Driver/assignDriver.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:bazralogin/screen/Owner/market/avilabelMarketforowner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:ionicons/ionicons.dart';
 import '../../../const/constant.dart';
 import 'package:http/http.dart' as http;
@@ -35,16 +36,45 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
   Offset distance = isPressed ? Offset(10, 10) : Offset(28, 28);
   double blur = isPressed ? 5.0 : 30.0;
   String Logoavtar = "";
+  bool? newnotification;
   String ownerpic = "";
   String bazralogo = "";
   bool showExitSnackbar = false;
   String? phoneNumber;
+  List newtotalnotification = [];
+  List oldtotalnotification = [];
+  List Temp = [];
+  List dataList = [];
   DateTime? currentBackPressTime;
   bool _isLoading = true;
   Map<String, dynamic>? Result;
   Map<String, dynamic>? findVehicle;
   double _padding = 6.0;
   String query = '';
+  void updateDataInHive(int index) async {
+    final box = await Hive.openBox('dataBox'); // Open the Hive box
+
+    final dataList = box.get('dataList'); // Retrieve the data list from Hive
+
+    if (dataList != null) {
+      setState(() {
+        dataList[index]['status'] =
+            "old"; // Set the isFlagged value to true for the desired item
+
+        box.put('dataList', dataList);
+      });
+    }
+  }
+
+  List<dynamic> addBoolValueToList(List<dynamic> Result) {
+    return Result.map((item) {
+      return {
+        ...item,
+        'isFlagged': false,
+        'status': "new" // Add the boolean value to each item
+      };
+    }).toList();
+  }
 
   Future<String> fetchImage() async {
     var client = http.Client();
@@ -68,6 +98,31 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
     } else {
       throw Exception('Failed to load image');
     }
+  }
+
+  Future<void> fetchDataFromHive() async {
+    final box = await Hive.openBox('dataBox'); // Open the Hive box
+
+    final dataListFromHive = box.get('dataList');
+
+    setState(() {
+      dataList =
+          dataListFromHive != null ? List<dynamic>.from(dataListFromHive) : [];
+
+      for (var i = 0; i < dataList.length; i += 1) {
+        newnotification = dataList.contains(dataList[i]['status']) == "new";
+
+        if (newnotification == true) {
+          newtotalnotification = dataList
+              .where((element) => element['status'].contains("new"))
+              .toList();
+        } else {
+          oldtotalnotification = dataList;
+        }
+      }
+
+      // Retrieve the data list from Hive
+    });
   }
 
   void myAsyncMethod() {
@@ -132,6 +187,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
   void initState() {
     _isMounted = true;
     super.initState();
+    fetchDataFromHive();
 
     BackButtonInterceptor.add(myInterceptor);
   }
@@ -164,8 +220,8 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                     ),
                     gradient: LinearGradient(
                       colors: [
-                        Color.fromRGBO(95, 112, 247, 1),
-                        Color.fromRGBO(163, 163, 234, 1),
+                        Color.fromRGBO(178, 142, 22, 1),
+                        Color.fromRGBO(226, 193, 121, 1),
                       ],
                       // stops: [0.4, 0.4],
                     ),
@@ -208,7 +264,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                                 child: Column(
                                                   children: [
                                                     Container(
-                                                      width: screenWidth * 0.25,
+                                                      width: screenWidth * 0.29,
                                                       child: Text(
                                                         "Good mourning ",
                                                         textAlign:
@@ -279,43 +335,66 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                 ),
                               ),
                             ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              notificationPage()));
-                                },
-                                child: Container(
-                                  height: screenHeight * 0.1,
-                                  margin: EdgeInsets.only(right: 42, top: 0),
-                                  width: screenWidth * 0.06,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: MaterialButton(
-                                      onPressed: () async {
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            notificationPage()));
+                                if (newtotalnotification == true) {
+                                  // Set the isFlagged value to true for the desired item
+                                  for (var i = 0;
+                                      i < newtotalnotification.length;
+                                      i += 1) {
+                                    updateDataInHive(i);
+                                  }
+                                }
+                              },
+                              child: Container(
+                                height: screenHeight * 0.1,
+                                margin: EdgeInsets.only(right: 15, top: 0),
+                                width: screenWidth * 0.06,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: badges.Badge(
+                                    badgeStyle: badges.BadgeStyle(
+                                      badgeColor: Colors.black,
+                                    ),
+                                    position: badges.BadgePosition.topEnd(
+                                        top: -10, end: -27),
+                                    showBadge: true,
+                                    ignorePointer: false,
+                                    badgeContent: newnotification == true
+                                        ? Text(
+                                            "${newtotalnotification.length}",
+                                            style: TextStyle(
+                                              fontFamily: "Nunito",
+                                              color: Colors.white,
+                                              fontSize: AppFonts.smallFontSize,
+                                            ),
+                                          )
+                                        : Text(
+                                            "0",
+                                            style: TextStyle(
+                                              fontFamily: "Nunito",
+                                              color: Colors.white,
+                                              fontSize: AppFonts.smallFontSize,
+                                            ),
+                                          ),
+                                    child: InkWell(
+                                      onTap: () {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     notificationPage()));
                                       },
-
-                                      child: Material(
-                                        color: Colors.transparent,
-                                        child: Center(
-                                          child: Icon(
-                                            Ionicons.notifications,
-                                            size: 27,
-                                            color: Colors.white,
-                                          ),
-                                        ),
+                                      child: Icon(
+                                        Ionicons.notifications,
+                                        size: 27,
+                                        color: Colors.white,
                                       ),
-
-                                      //use this class Circleborder() for circle shape.
                                     ),
                                   ),
                                 ),
@@ -330,7 +409,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                 Positioned(
                   child: Container(
                     margin: EdgeInsets.only(
-                        top: screenHeight * 0.19, left: 30, right: 30),
+                        top: screenHeight * 0.19, left: 38, right: 35),
                     height: 100,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
@@ -344,7 +423,6 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                             children: [
                               Container(
                                 width: screenWidth * 0.35,
-                                margin: EdgeInsets.only(right: 30),
                                 child: Column(
                                   children: [
                                     Container(
@@ -354,7 +432,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                       ),
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: Colors.blue,
+                                        color: Color.fromRGBO(178, 142, 22, 1),
                                       ),
                                       child: SizedBox(
                                         height: 20,
@@ -421,7 +499,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                       ),
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: Colors.blue,
+                                        color: Color.fromRGBO(178, 142, 22, 1),
                                       ),
 
                                       child: SizedBox(
@@ -534,7 +612,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                     width: MediaQuery.of(context).size.width,
                                     child: Image.asset(
                                       "assets/images/driver.png",
-                                      color: Colors.blue,
+                                      color: Color.fromRGBO(178, 142, 22, 1),
                                     ),
                                   ),
                                   Container(
@@ -592,7 +670,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   child: Icon(
                                     Icons.local_shipping,
                                     size: 50,
-                                    color: Colors.blue,
+                                    color: Color.fromRGBO(178, 142, 22, 1),
                                   ),
                                 ),
                                 Container(
@@ -651,7 +729,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   width: MediaQuery.of(context).size.width,
                                   child: Image.asset(
                                     "assets/images/profit-report.png",
-                                    color: Colors.blue,
+                                    color: Color.fromRGBO(178, 142, 22, 1),
                                   ),
                                 ),
                                 Container(
@@ -713,7 +791,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   width: MediaQuery.of(context).size.width,
                                   child: Image.asset(
                                     "assets/images/available.png",
-                                    color: Colors.blue,
+                                    color: Color.fromRGBO(178, 142, 22, 1),
                                   ),
                                 ),
                                 Container(
@@ -773,7 +851,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                   width: MediaQuery.of(context).size.width,
                                   child: Image.asset(
                                     "assets/images/travel.png",
-                                    color: Colors.blue,
+                                    color: Color.fromRGBO(178, 142, 22, 1),
                                   ),
                                 ),
                                 Container(

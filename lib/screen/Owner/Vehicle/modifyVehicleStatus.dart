@@ -2,9 +2,6 @@ import 'dart:convert';
 import 'package:bazralogin/Theme/Alert.dart';
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -28,7 +25,8 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
   double blur = isPressed ? 5.0 : 30.0;
   List<String> location = ["Select Status", "MAINTAINING", 'ONROUTE', 'PARKED'];
   List<String> maintaince = ["Select Status", 'INSTOCK', 'ONROUTE', 'PARKED'];
-  List<String> parked = ["Select Status", 
+  List<String> parked = [
+    "Select Status",
     'INSTOCK',
     'ONROUTE',
   ];
@@ -71,7 +69,6 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: AppBar(
-        toolbarHeight: 80,
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back,
@@ -80,7 +77,7 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: kPrimaryColor,
+        backgroundColor: Color.fromRGBO(178, 142, 22, 1),
         title: Text(
           "Modify Vehicle Status",
           style: TextStyle(
@@ -109,7 +106,7 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.3), // Shadow color
-                          blurRadius: 5, // Spread radius
+                          blurRadius: 3, // Spread radius
                           offset: Offset(0, 3), // Offset in (x,y) coordinates
                         ),
                       ],
@@ -176,7 +173,7 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.2), // Shadow color
-                        blurRadius: 5, // Spread radius
+                        blurRadius: 3, // Spread radius
                         offset: Offset(0, 2), // Offset in (x,y) coordinates
                       ),
                     ],
@@ -188,7 +185,7 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
                           BoxShadow(
                             color:
                                 Colors.black.withOpacity(0.3), // Shadow color
-                            blurRadius: 5, // Spread radius
+                            blurRadius: 3, // Spread radius
                             offset: Offset(0, 2), // Offset in (x,y) coordinates
                           ),
                         ],
@@ -352,21 +349,21 @@ class _ModifyVehileStatusState extends State<ModifyVehileStatus> {
                                       fontFamily: "Nunito",
                                       fontWeight: FontWeight.bold,
                                       fontStyle: FontStyle.normal,
-                                      fontSize: 15),
+                                      fontSize: AppFonts.smallFontSize),
                                 ),
                                 style: ButtonStyle(
                                   shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderRadius: BorderRadius.circular(6.0),
                                     ),
                                   ),
                                   minimumSize:
                                       MaterialStateProperty.all(Size(5, 5)),
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.white),
-                                  shadowColor:
-                                      MaterialStateProperty.all(Colors.white),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Color.fromRGBO(178, 142, 22, 1)),
+                                  shadowColor: MaterialStateProperty.all(
+                                      Color.fromRGBO(178, 142, 22, 1)),
                                 )),
                           ),
                         ],

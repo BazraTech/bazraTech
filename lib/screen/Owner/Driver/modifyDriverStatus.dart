@@ -85,15 +85,15 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: kPrimaryColor,
+        backgroundColor: Color.fromRGBO(178, 142, 22, 1),
         title: Text(
           "Modify Drivers Status",
           style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: "Nunito",
               fontWeight: FontWeight.bold,
               fontStyle: FontStyle.normal,
-              fontSize: 17),
+              fontSize: AppFonts.smallFontSize),
         ),
       ),
       body: SingleChildScrollView(
@@ -361,9 +361,11 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
                             child: Text(
                               "Update Status",
                               style: TextStyle(
+                                  color: Colors.black,
                                   fontFamily: "Nunito",
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.normal,
+                                  fontSize: AppFonts.smallFontSize),
                             ),
                             onPressed: () {
                               Navigator.push(
@@ -389,9 +391,11 @@ class _ModifyDriverStatusState extends State<ModifyDriverStatus> {
                             child: Text(
                               "Update Status",
                               style: TextStyle(
+                                  color: Colors.black,
                                   fontFamily: "Nunito",
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.normal,
+                                  fontSize: AppFonts.smallFontSize),
                             ),
                             onPressed: () {
                               UpdateStatus();

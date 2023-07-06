@@ -74,7 +74,7 @@ class _Driver_DetialState extends State<Driver_Detial> {
               ),
             ),
           ),
-          backgroundColor: kPrimaryColor,
+          backgroundColor: Color.fromRGBO(178, 142, 22, 1),
           title: Text(
             "Driver Detail Information",
             style: TextStyle(

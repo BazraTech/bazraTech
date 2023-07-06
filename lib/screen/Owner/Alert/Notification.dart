@@ -22,12 +22,6 @@ class _notificationPageState extends State<notificationPage> {
     Colors.white,
     Color.fromRGBO(195, 215, 233, 1),
   ];
-  //add new data into list
-  void insertData(List<dynamic> newData) {
-    setState(() {
-      Result.add(newData);
-    });
-  }
 
   List<dynamic> addBoolValueToList(List<dynamic> Result) {
     return Result.map((item) {
@@ -138,11 +132,13 @@ class _notificationPageState extends State<notificationPage> {
                 children: [
                   Text(
                     "Alerts",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 23,
-                    ),
+                    textAlign: TextAlign.left,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontFamily: 'Nunito',
+                        fontSize: AppFonts.smallFontSize,
+                        color: Colors.black,
+                        fontWeight: FontWeight.normal),
                   )
                 ],
               ),
@@ -234,14 +230,22 @@ class _notificationPageState extends State<notificationPage> {
                                                                       ["driver"]
                                                                   .substring(
                                                                       0, 1),
-                                                              style: TextStyle(
-                                                                color:
-                                                                    kPrimaryColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 12,
-                                                              ),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: const TextStyle(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: AppFonts
+                                                                      .smallFontSize,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal),
                                                             ),
                                                           )),
                                                     ),
@@ -262,14 +266,21 @@ class _notificationPageState extends State<notificationPage> {
                                                           child: Text(
                                                             dataList[index][
                                                                 'alertocation'],
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 13,
-                                                            ),
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: const TextStyle(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: AppFonts
+                                                                    .smallFontSize,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal),
                                                           ),
                                                         ),
                                                         Container(
@@ -280,14 +291,21 @@ class _notificationPageState extends State<notificationPage> {
                                                           child: Text(
                                                             dataList[index]
                                                                 ['alertType'],
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .normal,
-                                                              fontSize: 13,
-                                                            ),
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: const TextStyle(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: AppFonts
+                                                                    .smallFontSize,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal),
                                                           ),
                                                         ),
                                                       ],
@@ -296,11 +314,22 @@ class _notificationPageState extends State<notificationPage> {
                                                 ),
                                               ),
                                               Container(
-                                                width: screenWidth * 0.18,
+                                                width: screenWidth * 0.22,
                                                 margin: EdgeInsets.only(
-                                                    left: screenWidth * 0.2),
-                                                child: Text(dataList[index]
-                                                    ['alertstart']),
+                                                    left: screenWidth * 0.15),
+                                                child: Text(
+                                                  dataList[index]['alertstart'],
+                                                  textAlign: TextAlign.left,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: AppFonts
+                                                          .smallFontSize,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.normal),
+                                                ),
                                               ),
                                               SizedBox(
                                                 width: 4,
@@ -353,14 +382,22 @@ class _notificationPageState extends State<notificationPage> {
                                                                       ["driver"]
                                                                   .substring(
                                                                       0, 1),
-                                                              style: TextStyle(
-                                                                color:
-                                                                    kPrimaryColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 12,
-                                                              ),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: const TextStyle(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: AppFonts
+                                                                      .smallFontSize,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal),
                                                             ),
                                                           )),
                                                     ),
@@ -381,14 +418,21 @@ class _notificationPageState extends State<notificationPage> {
                                                           child: Text(
                                                             dataList[index][
                                                                 'alertocation'],
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 13,
-                                                            ),
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: const TextStyle(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: AppFonts
+                                                                    .smallFontSize,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal),
                                                           ),
                                                         ),
                                                         Container(
@@ -399,14 +443,21 @@ class _notificationPageState extends State<notificationPage> {
                                                           child: Text(
                                                             dataList[index]
                                                                 ['alertType'],
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .normal,
-                                                              fontSize: 13,
-                                                            ),
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: const TextStyle(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: AppFonts
+                                                                    .smallFontSize,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal),
                                                           ),
                                                         ),
                                                       ],
@@ -415,11 +466,22 @@ class _notificationPageState extends State<notificationPage> {
                                                 ),
                                               ),
                                               Container(
-                                                width: screenWidth * 0.18,
+                                                width: screenWidth * 0.22,
                                                 margin: EdgeInsets.only(
-                                                    left: screenWidth * 0.24),
-                                                child: Text(dataList[index]
-                                                    ['alertstart']),
+                                                    left: screenWidth * 0.15),
+                                                child: Text(
+                                                  dataList[index]['alertstart'],
+                                                  textAlign: TextAlign.left,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: AppFonts
+                                                          .smallFontSize,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.normal),
+                                                ),
                                               )
                                             ],
                                           )),

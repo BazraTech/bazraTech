@@ -116,7 +116,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                   Navigator.pop(context);
                 },
               ),
-              backgroundColor: kPrimaryColor,
+              backgroundColor: Color.fromRGBO(178, 142, 22, 1),
               title: Container(
                 width: double.infinity,
                 margin: EdgeInsets.only(right: screenWidth * 0.12),

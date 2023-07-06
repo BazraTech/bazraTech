@@ -134,7 +134,7 @@ class _SettripsState extends State<Settrips> {
               ),
             ),
           ),
-          backgroundColor: kPrimaryColor,
+          backgroundColor: Color.fromRGBO(178, 142, 22, 1),
           title: const Text(
             " Set Trip",
             textAlign: TextAlign.left,
@@ -420,7 +420,7 @@ class _SettripsState extends State<Settrips> {
                                   return Color.fromRGBO(255, 148, 165, 223);
                                 }
                                 // 98, 172, 181
-                                return Colors.lightBlue;
+                                return Color.fromRGBO(178, 142, 22, 1);
                               }),
                               shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(

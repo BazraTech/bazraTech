@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:back_button_interceptor/back_button_interceptor.dart';
@@ -18,6 +19,7 @@ import 'Notification/driverNotification.dart';
 import 'Reportfordriver/driverReportstatus.dart';
 import 'activeWork.dart';
 import 'create_alert.dart';
+import 'package:badges/badges.dart' as badges;
 
 class Driver_Hompage extends StatefulWidget {
   const Driver_Hompage({
@@ -132,15 +134,16 @@ class _Driver_HompageState extends State<Driver_Hompage> {
       'Authorization': 'Bearer $token',
     };
     final response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+        Uri.parse('http://64.226.104.50:9090/Api/Driver/Info'),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
       Map<String, dynamic> data = json.decode(response.body);
-      await storage.write(key: "ownerpic", value: data["avatar"].toString());
+
+      await storage.write(key: "ownerpic", value: data["driverPic"].toString());
 
       ownerpic = (await storage.read(key: 'ownerpic'))!;
-      return data["avatar"];
+      return data["driverPic"];
     } else {
       throw Exception('Failed to load image');
     }
@@ -211,8 +214,8 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Color.fromRGBO(95, 112, 247, 1),
-                            Color.fromRGBO(163, 163, 234, 1),
+                            Color.fromRGBO(178, 142, 22, 1),
+                            Color.fromRGBO(226, 193, 121, 1),
                           ],
                           // stops: [0.4, 0.4],
                         ),
@@ -234,124 +237,128 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                     height: screenHeight * 0.1,
                                     width: screenWidth - 80,
                                     child: FutureBuilder(
-                                      future: _fetchLogo(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<String> snapshot) {
-                                        if (snapshot.connectionState !=
-                                            ConnectionState.done)
-                                          return Text("");
-                                        return SizedBox(
-                                            height: screenHeight * 0.2,
-                                            width: screenWidth * 0.9,
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                    height: screenHeight * 0.1,
-                                                    child: Image.network(
-                                                        snapshot.data
-                                                            .toString())),
-                                                Container(
-                                                  margin:
-                                                      EdgeInsets.only(top: 30),
-                                                  child: Column(
-                                                    children: [
-                                                      Container(
-                                                        width:
-                                                            screenWidth * 0.17,
-                                                        child: Text(
-                                                          "Well back ",
-                                                          textAlign:
-                                                              TextAlign.left,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: const TextStyle(
-                                                              fontFamily:
-                                                                  'Nunito',
-                                                              fontSize: AppFonts
-                                                                  .smallFontSize,
-                                                              color:
-                                                                  Colors.white,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
+                                        future: _fetchLogo(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot<String> snapshot) {
+                                          if (snapshot.connectionState !=
+                                              ConnectionState.done)
+                                            return Text("");
+                                          return SizedBox(
+                                              height: screenHeight * 0.2,
+                                              width: screenWidth * 0.9,
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                      height:
+                                                          screenHeight * 0.1,
+                                                      child: Image.file(
+                                                          File(ownerpic))),
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        top: 30),
+                                                    child: Column(
+                                                      children: [
+                                                        Container(
+                                                          width:
+                                                              screenWidth * 0.3,
+                                                          child: Text(
+                                                            "Well back ",
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: const TextStyle(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: AppFonts
+                                                                    .smallFontSize,
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
                                                         ),
-                                                      ),
-                                                      Container(
-                                                        margin: EdgeInsets.only(
-                                                            left: 4),
-                                                        width:
-                                                            screenWidth * 0.17,
-                                                        child:
-                                                            Result?['driverName'] ==
-                                                                    null
-                                                                ? Container()
-                                                                : Text(
-                                                                    Result?[
-                                                                        'driverName'],
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .left,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                    style: const TextStyle(
-                                                                        fontFamily:
-                                                                            'Nunito',
-                                                                        fontSize:
-                                                                            14,
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontWeight:
-                                                                            FontWeight.bold),
-                                                                  ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ));
-                                      },
-                                    ),
+                                                        Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  left: 4),
+                                                          width:
+                                                              screenWidth * 0.3,
+                                                          child:
+                                                              Result?['driverName'] ==
+                                                                      null
+                                                                  ? Container()
+                                                                  : Text(
+                                                                      Result?[
+                                                                          'driverName'],
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .left,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                      style: const TextStyle(
+                                                                          fontFamily:
+                                                                              'Nunito',
+                                                                          fontSize:
+                                                                              14,
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontWeight:
+                                                                              FontWeight.bold),
+                                                                    ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              ));
+                                        }),
                                   ),
                                 ),
                               ),
-                              Align(
-                                alignment: Alignment.topRight,
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                drivernotificationPage()));
-                                  },
-                                  child: Container(
-                                    height: screenHeight * 0.1,
-                                    margin: EdgeInsets.only(right: 22, top: 10),
-                                    width: screenWidth * 0.09,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: MaterialButton(
-                                        onPressed: () async {
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              drivernotificationPage()));
+                                },
+                                child: Container(
+                                  height: screenHeight * 0.1,
+                                  margin: EdgeInsets.only(right: 35, top: 0),
+                                  width: screenWidth * 0.06,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: badges.Badge(
+                                      position: badges.BadgePosition.topEnd(
+                                          top: -10, end: -33),
+                                      showBadge: true,
+                                      ignorePointer: false,
+                                      badgeContent: Text(
+                                        "20",
+                                        style: TextStyle(
+                                          fontFamily: "Nunito",
+                                          color: Colors.white,
+                                          fontSize: AppFonts.smallFontSize,
+                                        ),
+                                      ),
+                                      child: InkWell(
+                                        onTap: () {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       drivernotificationPage()));
                                         },
-
-                                        child: Material(
-                                          color: Colors.transparent,
-                                          child: Center(
-                                            child: Icon(
-                                              Ionicons.notifications,
-                                              size: 27,
-                                              color: Colors.white,
-                                            ),
-                                          ),
+                                        child: Icon(
+                                          Ionicons.notifications,
+                                          size: 27,
+                                          color: Colors.white,
                                         ),
-
-                                        //use this class Circleborder() for circle shape.
                                       ),
                                     ),
                                   ),

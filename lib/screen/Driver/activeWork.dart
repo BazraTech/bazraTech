@@ -109,82 +109,73 @@ class _activeWorkState extends State<activeWork> {
       backgroundColor: kBackgroundColor,
       body: Column(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromRGBO(95, 112, 247, 1),
-                  Color.fromRGBO(163, 163, 234, 1),
-                ],
-                // stops: [0.4, 0.4],
-              ),
-            ),
-            width: screenWidth,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.zero,
-                  margin: EdgeInsets.only(
-                      top: screenHeight * 0.08, right: screenWidth * 0.4),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(
-                      Ionicons.arrow_back,
-                      color: Colors.white,
-                    ),
+          Stack(children: [
+            Container(
+              height: screenHeight * 0.15,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromRGBO(95, 112, 247, 1),
+                      Color.fromRGBO(163, 163, 234, 1),
+                    ],
+                    // stops: [0.4, 0.4],
                   ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            child: Stack(children: [
-              Container(
-                height: screenHeight * 0.15,
-                // margin: EdgeInsets.only(bottom: 40),
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color.fromRGBO(95, 112, 247, 1),
-                        Color.fromRGBO(163, 163, 234, 1),
-                      ],
-                      // stops: [0.4, 0.4],
-                    ),
-                    borderRadius: BorderRadius.vertical(
-                      bottom: Radius.circular(30),
-                    )),
-                child: Padding(
-                  padding: EdgeInsets.all(0),
-                  child: Row(
-                    children: [],
-                  ),
-                ),
-              ),
-              Positioned(
-                  child: Column(
-                children: [
-                  Center(
-                      child: Text(
-                    "Active Work",
-                    textAlign: TextAlign.left,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        fontFamily: 'Nunito',
-                        fontSize: AppFonts.mediumFontSize,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(30),
                   )),
-                  Container(
-                      height: screenHeight * 0.22,
-                      margin: EdgeInsets.only(top: 10),
-                      child: _isLoading ? Text("") : Container()),
-                ],
-              ))
-            ]),
-          ),
+              child: Padding(
+                padding: EdgeInsets.all(0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.zero,
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(
+                          Ionicons.arrow_back,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      " Manage Active Work",
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontFamily: 'Nunito',
+                          fontSize: AppFonts.mediumFontSize,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+                child: Column(
+              children: [
+                // Container(
+                //     margin: EdgeInsets.only(top: 60),
+                //     child: Text(
+                //       "Active Work",
+                //       textAlign: TextAlign.left,
+                //       overflow: TextOverflow.ellipsis,
+                //       style: const TextStyle(
+                //           fontFamily: 'Nunito',
+                //           fontSize: AppFonts.smallFontSize,
+                //           color: Colors.white,
+                //           fontWeight: FontWeight.bold),
+                //     )),
+                Container(
+                    height: screenHeight * 0.22,
+                    margin: EdgeInsets.only(top: 10),
+                    child: _isLoading ? Text("") : Container()),
+              ],
+            ))
+          ]),
           Container(
             height: screenHeight * 0.55,
             child: Column(

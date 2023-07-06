@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:hive/hive.dart';
 
 import 'package:http/http.dart' as http;
 import '../../../../const/constant.dart';
@@ -16,6 +17,16 @@ class drivernotificationPage extends StatefulWidget {
 class _drivernotificationPageState extends State<drivernotificationPage> {
   bool _isLoading = true;
   List Result = [];
+  List alertList = [];
+  List<dynamic> addBoolValueToList(List<dynamic> Result) {
+    return Result.map((item) {
+      return {
+        ...item,
+        'isFlagged': false, // Add the boolean value to each item
+      };
+    }).toList();
+  }
+
   void MessageHistory() async {
     var client = http.Client();
     final storage = new FlutterSecureStorage();
@@ -34,10 +45,9 @@ class _drivernotificationPageState extends State<drivernotificationPage> {
 
       List results = mapResponse['activeAlerts'];
 
-      setState(() {
-        _isLoading = false;
-        Result = results;
-      });
+      final box = await Hive.openBox('dataBox'); // Open the Hive box
+      final modifiedDataList = addBoolValueToList(results);
+      box.put('alertList', modifiedDataList);
 
       print(results);
     } else {
@@ -45,9 +55,36 @@ class _drivernotificationPageState extends State<drivernotificationPage> {
     }
   }
 
+  void updateDataInHive(int index) async {
+    final box = await Hive.openBox('dataBox'); // Open the Hive box
+
+    final alertList = box.get('alertList'); // Retrieve the data list from Hive
+
+    if (alertList != null) {
+      setState(() {
+        alertList[index]['isFlagged'] =
+            true; // Set the isFlagged value to true for the desired item
+
+        box.put('alertList', alertList);
+      });
+    }
+  }
+
+  Future<void> fetchDataFromHive() async {
+    final box = await Hive.openBox('dataBox'); // Open the Hive box
+
+    final dataListFromHive =
+        box.get('alertList'); // Retrieve the data list from Hive
+
+    setState(() {
+      alertList =
+          dataListFromHive != null ? List<dynamic>.from(dataListFromHive) : [];
+    });
+  }
+
   void initState() {
     super.initState();
-    // MessageHistory();
+    fetchDataFromHive();
   }
 
   @override
@@ -100,93 +137,205 @@ class _drivernotificationPageState extends State<drivernotificationPage> {
               child: ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
-                itemCount: 2,
+                itemCount: alertList.length,
                 itemBuilder: (context, index) {
+                  bool doesNotExist =
+                      Result.contains(alertList[index]['isFlagged']) == false;
                   return Column(
                     children: [
-                      Container(
-                        height: screenHeight * 0.1,
-                        decoration: BoxDecoration(
-                          color: kBackgroundColor,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.shade400.withOpacity(0.2),
-                              spreadRadius: -1,
-                              blurRadius: 1,
-                              offset:
-                                  Offset(0, -3), // horizontal, vertical offset
-                            ),
+                      GestureDetector(
+                        onTap: () {
+                          if (doesNotExist == true) {
+                            // Set the isFlagged value to true for the desired item
+                            updateDataInHive(index);
+                          }
+                        },
+                        child: Column(
+                          children: [
+                            if (alertList[index]['isFlagged'] == false)
+                              Container(
+                                height: screenHeight * 0.1,
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(212, 233, 253, 1),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Colors.grey.shade400.withOpacity(0.2),
+                                      spreadRadius: -1,
+                                      blurRadius: 1,
+                                      offset: Offset(
+                                          0, -3), // horizontal, vertical offset
+                                    ),
+                                  ],
+                                ),
+                                width: screenWidth,
+                                child: Container(
+                                    child: Row(
+                                  children: [
+                                    Container(
+                                      child: SizedBox(
+                                        height: screenHeight * 0.08,
+                                        width: screenWidth * 0.1,
+                                        child: CircleAvatar(
+                                          backgroundColor: kBackgroundColor,
+                                          child: SizedBox(
+                                              height: screenHeight * 0.06,
+                                              child: Center(
+                                                child: Text(
+                                                  alertList[index]["driver"]
+                                                      .substring(0, 1),
+                                                  style: TextStyle(
+                                                    color: kPrimaryColor,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                              )),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: screenHeight * 0.08,
+                                      width: screenWidth * 0.4,
+                                      margin: EdgeInsets.only(
+                                        top: screenHeight * 0.03,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Column(
+                                            children: [
+                                              Container(
+                                                child: Text(
+                                                  alertList[index]
+                                                      ['alertocation'],
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13,
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                    right: screenWidth * 0.07),
+                                                child: Text(
+                                                  alertList[index]['alertType'],
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    fontSize: 13,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: screenWidth * 0.18,
+                                      margin: EdgeInsets.only(
+                                          left: screenWidth * 0.24),
+                                      child:
+                                          Text(alertList[index]['alertstart']),
+                                    )
+                                  ],
+                                )),
+                              )
+                            else
+                              Container(
+                                height: screenHeight * 0.1,
+                                decoration: BoxDecoration(
+                                  color: kBackgroundColor,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Colors.grey.shade400.withOpacity(0.2),
+                                      spreadRadius: -1,
+                                      blurRadius: 1,
+                                      offset: Offset(
+                                          0, -3), // horizontal, vertical offset
+                                    ),
+                                  ],
+                                ),
+                                width: screenWidth,
+                                child: Container(
+                                    child: Row(
+                                  children: [
+                                    Container(
+                                      child: SizedBox(
+                                        height: screenHeight * 0.08,
+                                        width: screenWidth * 0.1,
+                                        child: CircleAvatar(
+                                          backgroundColor: kBackgroundColor,
+                                          child: SizedBox(
+                                              height: screenHeight * 0.06,
+                                              child: Center(
+                                                child: Text(
+                                                  alertList[index]["driver"]
+                                                      .substring(0, 1),
+                                                  style: TextStyle(
+                                                    color: kPrimaryColor,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                              )),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: screenHeight * 0.08,
+                                      width: screenWidth * 0.4,
+                                      margin: EdgeInsets.only(
+                                        top: screenHeight * 0.03,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Column(
+                                            children: [
+                                              Container(
+                                                child: Text(
+                                                  alertList[index]
+                                                      ['alertocation'],
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 13,
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                    right: screenWidth * 0.07),
+                                                child: Text(
+                                                  alertList[index]['alertType'],
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    fontSize: 13,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: screenWidth * 0.18,
+                                      margin: EdgeInsets.only(
+                                          left: screenWidth * 0.24),
+                                      child:
+                                          Text(alertList[index]['alertstart']),
+                                    )
+                                  ],
+                                )),
+                              ),
                           ],
                         ),
-                        width: screenWidth,
-                        child: Container(
-                            child: Row(
-                          children: [
-                            Container(
-                              child: SizedBox(
-                                height: screenHeight * 0.08,
-                                width: screenWidth * 0.1,
-                                child: CircleAvatar(
-                                  backgroundColor: kBackgroundColor,
-                                  child: SizedBox(
-                                      height: screenHeight * 0.06,
-                                      child: Center(
-                                        child: Text(
-                                          "Gonder".substring(0, 1),
-                                          style: TextStyle(
-                                            color: kPrimaryColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      )),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: screenHeight * 0.08,
-                              width: screenWidth * 0.4,
-                              margin: EdgeInsets.only(
-                                top: screenHeight * 0.03,
-                              ),
-                              child: Column(
-                                children: [
-                                  Column(
-                                    children: [
-                                      Container(
-                                        child: Text(
-                                          "Addisa   ,Tulu",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 13,
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            right: screenWidth * 0.07),
-                                        child: Text(
-                                          "Offf road",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.normal,
-                                            fontSize: 13,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: screenWidth * 0.18,
-                              margin: EdgeInsets.only(left: screenWidth * 0.24),
-                              child: Text("adama"),
-                            )
-                          ],
-                        )),
                       ),
                     ],
                   );

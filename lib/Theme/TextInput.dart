@@ -5,6 +5,7 @@ class ThemeHelper {
       [String lableText = "", String hintText = "", Widget? icon1]) {
     return InputDecoration(
       hintText: hintText,
+      labelText: lableText,
       hintStyle: TextStyle(
           fontFamily: 'Nunito',
           fontSize: 14,
@@ -63,8 +64,12 @@ class ThemeHelper {
         ),
       ),
       minimumSize: MaterialStateProperty.all(Size(5, 5)),
-      backgroundColor: MaterialStateProperty.all(Colors.lightBlue),
-      shadowColor: MaterialStateProperty.all(Colors.lightBlue),
+      backgroundColor: MaterialStateProperty.all(
+        Color.fromRGBO(178, 142, 22, 1),
+      ),
+      shadowColor: MaterialStateProperty.all(
+        Color.fromRGBO(178, 142, 22, 1),
+      ),
     );
   }
 

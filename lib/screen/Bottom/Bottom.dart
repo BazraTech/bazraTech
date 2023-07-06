@@ -1,3 +1,4 @@
+import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import '../Owner/Communication/communicationPage.dart';
@@ -67,7 +68,7 @@ class _BottomTabBarPageforownerState extends State<BottomTabBarPageforowner> {
         },
         showSelectedLabels: false, // hide selected labels
         showUnselectedLabels: false,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Color.fromRGBO(226, 193, 121, 1),
         unselectedItemColor: Colors.grey,
         items: _bottomNavBarItems,
       ),

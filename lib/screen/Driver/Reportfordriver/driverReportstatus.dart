@@ -80,9 +80,9 @@ class _driverReportstatusState extends State<driverReportstatus> {
                   }),
                   tabs: [
                     Container(
-                      width: screenWidth * 0.2,
+                      width: screenWidth * 0.24,
                       child: Tab(
-                        text: "Daily",
+                        text: "Daily Report",
                         icon: Container(
                           child: SizedBox(
                             height: screenHeight * 0.03,
@@ -103,9 +103,9 @@ class _driverReportstatusState extends State<driverReportstatus> {
                       ),
                     ),
                     Container(
-                      width: screenWidth * 0.2,
+                      width: screenWidth * 0.24,
                       child: Tab(
-                        text: "Weekly ",
+                        text: "Weekly Report ",
                         icon: Container(
                           child: SizedBox(
                             height: screenHeight * 0.03,
@@ -126,9 +126,9 @@ class _driverReportstatusState extends State<driverReportstatus> {
                       ),
                     ),
                     Container(
-                      width: screenWidth * 0.2,
+                      width: screenWidth * 0.24,
                       child: Tab(
-                        text: " Monthly",
+                        text: " Monthly Report",
                         icon: Container(
                           child: SizedBox(
                             height: screenHeight * 0.03,

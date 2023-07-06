@@ -13,13 +13,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:ionicons/ionicons.dart';
+
 import '../../../Theme/TextInput.dart';
-import '../../../Theme/customAppBar.dart';
+
 import '../../../Model/ApiConfig.dart';
 import '../../../const/constant.dart';
-import 'assignDriver.dart';
-import 'driversPage.dart';
 
 class DriversFormOwner extends StatefulWidget {
   const DriversFormOwner({super.key});
@@ -145,9 +143,9 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: kPrimaryColor,
+        backgroundColor: Color.fromRGBO(178, 142, 22, 1),
         title: Text(
-          "Driver page",
+          "Driver Registration",
           style: TextStyle(color: Colors.white),
         ),
         leading: IconButton(
@@ -479,9 +477,13 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
                               height: MediaQuery.of(context).size.height * 0.06,
                               child: Center(
                                 child: const Text(
-                                  " SAVE",
+                                  " Register",
                                   style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
+                                      color: Colors.black,
+                                      fontFamily: "Nunito",
+                                      fontWeight: FontWeight.bold,
+                                      fontStyle: FontStyle.normal,
+                                      fontSize: AppFonts.smallFontSize),
                                 ),
                               ),
                             ),

@@ -37,10 +37,10 @@ packages:
     dependency: "direct main"
     description:
       name: badges
-      sha256: "727580d938b7a1ff47ea42df730d581415606b4224cfa708671c10287f8d3fe6"
+      sha256: "6e7f3ec561ec08f47f912cfe349d4a1707afdc8dda271e17b046aa6d42c89e77"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.3"
+    version: "3.1.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -994,14 +994,6 @@ packages:
     description:
       name: syncfusion_flutter_datepicker
       sha256: e4d4794d54f3a315046031d431a27e0d7350544b1bef0bcd1d2acf58f940dd37
-      url: "https://pub.dev"
-    source: hosted
-    version: "20.4.54"
-  syncfusion_flutter_maps:
-    dependency: "direct main"
-    description:
-      name: syncfusion_flutter_maps
-      sha256: "1c95924e2dee5bbad922c2d2f1d5fb1b13ce4548c34a6d30fe6bf8821dfcfcd6"
       url: "https://pub.dev"
     source: hosted
     version: "20.4.54"

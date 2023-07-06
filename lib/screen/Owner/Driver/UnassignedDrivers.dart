@@ -101,7 +101,7 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                   color: Colors.white,
                 ),
               ),
-              backgroundColor: kPrimaryColor,
+              backgroundColor: Color.fromRGBO(178, 142, 22, 1),
               title: Container(
                 margin: EdgeInsets.only(right: screenWidth * 0.12),
                 width: double.infinity,
@@ -126,7 +126,7 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
             body: _isLoading
                 ? Center(child: CircularProgressIndicator())
                 : SingleChildScrollView(
-                  child: Column(
+                    child: Column(
                       children: [
                         if (findVehicle == null || findVehicle.isEmpty)
                           Center(
@@ -177,7 +177,8 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                                                 child: const Text(
                                                   "Drivers",
                                                   textAlign: TextAlign.left,
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: const TextStyle(
                                                     fontFamily: 'Nunito',
                                                     fontSize: 14,
@@ -190,7 +191,8 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                                                 child: const Text(
                                                   "Phone Number ",
                                                   textAlign: TextAlign.left,
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: const TextStyle(
                                                     fontFamily: 'Nunito',
                                                     fontSize: 14,
@@ -203,7 +205,8 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                                                 child: const Text(
                                                   "Status",
                                                   textAlign: TextAlign.left,
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: const TextStyle(
                                                     fontFamily: 'Nunito',
                                                     fontSize: 14,
@@ -242,11 +245,12 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (BuildContext context) =>
-                                                    VehicleOnstock(
-                                                      licenseNumber:
-                                                          driver['licenseNumber'],
-                                                    )),
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        VehicleOnstock(
+                                                          licenseNumber: driver[
+                                                              'licenseNumber'],
+                                                        )),
                                           );
                                         }),
                                         child: Padding(
@@ -268,11 +272,14 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                                                 color: Colors.white,
                                                 child: Row(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.center,
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Container(
-                                                        width: screenWidth * 0.25,
-                                                        margin: EdgeInsets.only(),
+                                                        width:
+                                                            screenWidth * 0.25,
+                                                        margin:
+                                                            EdgeInsets.only(),
                                                         child: Text(
                                                           " " +
                                                               driver['driverName']
@@ -281,8 +288,10 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                                                               TextAlign.left,
                                                           overflow: TextOverflow
                                                               .ellipsis,
-                                                          style: const TextStyle(
-                                                            fontFamily: 'Nunito',
+                                                          style:
+                                                              const TextStyle(
+                                                            fontFamily:
+                                                                'Nunito',
                                                             fontSize: 14,
                                                             color: Colors.black,
                                                           ),
@@ -291,8 +300,9 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                                                       driver['phoneNumber'] !=
                                                               null
                                                           ? Container(
-                                                              width: screenWidth *
-                                                                  0.3,
+                                                              width:
+                                                                  screenWidth *
+                                                                      0.3,
                                                               child: Text(
                                                                 driver[
                                                                     'phoneNumber'],
@@ -312,8 +322,9 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                                                                 ),
                                                               ))
                                                           : Container(
-                                                              width: screenWidth *
-                                                                  0.25,
+                                                              width:
+                                                                  screenWidth *
+                                                                      0.25,
                                                               child: const Text(
                                                                 "Unknown",
                                                                 textAlign:
@@ -334,12 +345,12 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                                                             ),
                                                       driver['status'] != null
                                                           ? Container(
-                                                              height:
-                                                                  screenHeight *
-                                                                      0.038,
-                                                              width: screenWidth *
-                                                                  0.28,
-                
+                                                              height: screenHeight *
+                                                                  0.038,
+                                                              width:
+                                                                  screenWidth *
+                                                                      0.28,
+
                                                               // decoration: BoxDecoration(
                                                               //   borderRadius:
                                                               //       BorderRadius.circular(6),
@@ -360,7 +371,8 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                                                                       const TextStyle(
                                                                     fontFamily:
                                                                         'Nunito',
-                                                                    fontSize: 14,
+                                                                    fontSize:
+                                                                        14,
                                                                     color: Colors
                                                                         .black,
                                                                   ),
@@ -370,8 +382,9 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                                                               height:
                                                                   screenHeight *
                                                                       0.038,
-                                                              width: screenWidth *
-                                                                  0.28,
+                                                              width:
+                                                                  screenWidth *
+                                                                      0.28,
                                                               decoration:
                                                                   BoxDecoration(
                                                                 borderRadius:
@@ -381,7 +394,8 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                                                                 color:
                                                                     kPrimaryColor,
                                                               ),
-                                                              child: const Center(
+                                                              child:
+                                                                  const Center(
                                                                 child: Text(
                                                                   "UnAssigned",
                                                                   textAlign:
@@ -394,7 +408,8 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                                                                       const TextStyle(
                                                                     fontFamily:
                                                                         'Nunito',
-                                                                    fontSize: 14,
+                                                                    fontSize:
+                                                                        14,
                                                                     color: Colors
                                                                         .black,
                                                                   ),
@@ -414,6 +429,6 @@ class _UnassignedDriversState extends State<UnassignedDrivers> {
                           )
                       ],
                     ),
-                )));
+                  )));
   }
 }

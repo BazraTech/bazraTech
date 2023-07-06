@@ -218,7 +218,7 @@ class _ProfileState extends State<Profile> {
                                       fontFamily: 'Nunito',
                                       fontSize: 14,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.normal),
                                 ),
                         ],
                       ),

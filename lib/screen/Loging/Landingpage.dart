@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
-
 import 'Login.dart';
-
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -56,14 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: SizedBox(
                     child: Container(
                         child: SizedBox(
-                      height: 100,
-                      width: 100,
-                      child: Image.asset(
-                        "assets/images/R.png",
-                        width: 60,
-                        height: 60,
-                      ),
-                    )),
+                            height: 100, width: 100, child: Container())),
                   ),
                 )
               : Align(

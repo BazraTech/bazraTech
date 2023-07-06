@@ -20,7 +20,7 @@ class communicate_screen extends StatelessWidget {
       backgroundColor: kBackgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: kPrimaryColor,
+        backgroundColor: Color.fromRGBO(178, 142, 22, 1),
         title: Text(
           "Driver page",
           style: TextStyle(color: Colors.white),
