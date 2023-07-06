@@ -203,7 +203,7 @@ class _CreateAlertState extends State {
             ),
           ),
         ),
-        backgroundColor: kPrimaryColor,
+        backgroundColor: Color.fromRGBO(178, 142, 22, 1),
         title: Container(
           child: Text(
             "Create Alert ",

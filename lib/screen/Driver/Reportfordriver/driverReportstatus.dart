@@ -37,7 +37,7 @@ class _driverReportstatusState extends State<driverReportstatus> {
               color: Colors.white,
             ),
           ),
-          backgroundColor: kPrimaryColor,
+          backgroundColor: Color.fromRGBO(178, 142, 22, 1),
           title: Container(
               child: Text("Report ",
                   textAlign: TextAlign.left,

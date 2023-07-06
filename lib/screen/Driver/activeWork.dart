@@ -6,7 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 
-import '../../Theme/clippbox.dart';
+
 import '../../config/APIService.dart';
 
 class activeWork extends StatefulWidget {
@@ -115,8 +115,8 @@ class _activeWorkState extends State<activeWork> {
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Color.fromRGBO(95, 112, 247, 1),
-                      Color.fromRGBO(163, 163, 234, 1),
+                      Color.fromRGBO(178, 142, 22, 1),
+                      Color.fromRGBO(226, 193, 121, 1),
                     ],
                     // stops: [0.4, 0.4],
                   ),
@@ -140,16 +140,16 @@ class _activeWorkState extends State<activeWork> {
                         ),
                       ),
                     ),
-                    Text(
-                      " Manage Active Work",
-                      textAlign: TextAlign.left,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontFamily: 'Nunito',
-                          fontSize: AppFonts.mediumFontSize,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    )
+                    // Text(
+                    //   " Manage Active Work",
+                    //   textAlign: TextAlign.left,
+                    //   overflow: TextOverflow.ellipsis,
+                    //   style: const TextStyle(
+                    //       fontFamily: 'Nunito',
+                    //       fontSize: AppFonts.mediumFontSize,
+                    //       color: Colors.white,
+                    //       fontWeight: FontWeight.bold),
+                    // )
                   ],
                 ),
               ),

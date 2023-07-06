@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:back_button_interceptor/back_button_interceptor.dart';
@@ -8,6 +7,8 @@ import 'package:bazralogin/screen/Driver/avilablelMarket_Fordriver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../config/APIService.dart';
@@ -15,6 +16,7 @@ import '../../../controller/Localization.dart';
 import '../../../const/constant.dart';
 import 'package:http/http.dart' as http;
 import '../../Theme/clippbox.dart';
+import '../../controller/driverimage.dart';
 import 'Notification/driverNotification.dart';
 import 'Reportfordriver/driverReportstatus.dart';
 import 'activeWork.dart';
@@ -133,9 +135,8 @@ class _Driver_HompageState extends State<Driver_Hompage> {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    final response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Driver/Info'),
-        headers: requestHeaders);
+    final response =
+        await http.get(Uri.parse(ApIConfig.logo), headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
       Map<String, dynamic> data = json.decode(response.body);
@@ -143,7 +144,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
       await storage.write(key: "ownerpic", value: data["driverPic"].toString());
 
       ownerpic = (await storage.read(key: 'ownerpic'))!;
-      return data["driverPic"];
+      return data["avatar"];
     } else {
       throw Exception('Failed to load image');
     }
@@ -191,6 +192,8 @@ class _Driver_HompageState extends State<Driver_Hompage> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+    final ApiControllerdriverimage controller =
+        Get.put(ApiControllerdriverimage());
 
     String tdata;
     return Scaffold(
@@ -251,8 +254,9 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                                   Container(
                                                       height:
                                                           screenHeight * 0.1,
-                                                      child: Image.file(
-                                                          File(ownerpic))),
+                                                      child: Image.network(
+                                                          snapshot.data
+                                                              .toString())),
                                                   Container(
                                                     margin: EdgeInsets.only(
                                                         top: 30),
@@ -334,6 +338,9 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: badges.Badge(
+                                      badgeStyle: badges.BadgeStyle(
+                                        badgeColor: Colors.black,
+                                      ),
                                       position: badges.BadgePosition.topEnd(
                                           top: -10, end: -33),
                                       showBadge: true,
@@ -422,14 +429,10 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                                         MainAxisAlignment
                                                             .center,
                                                     children: [
-                                                      Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Icon(
-                                                            Icons.trip_origin,
-                                                            color: Colors.green,
-                                                          )),
+                                                      Icon(
+                                                        Icons.trip_origin,
+                                                        color: Colors.green,
+                                                      ),
                                                       CustomPaint(
                                                         size: Size(
                                                             screenWidth * 0.14,
@@ -462,14 +465,9 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                                         painter:
                                                             DashLinePainter(),
                                                       ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Icon(
-                                                          Icons.trip_origin,
-                                                          color: Colors.red,
-                                                        ),
+                                                      Icon(
+                                                        Icons.trip_origin,
+                                                        color: Colors.red,
                                                       )
                                                     ],
                                                   ),
@@ -478,68 +476,88 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                                         MainAxisAlignment
                                                             .center,
                                                     children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Container(
-                                                          width: screenWidth *
-                                                              0.26,
-                                                          margin: EdgeInsets.only(
-                                                              left:
-                                                                  screenWidth *
-                                                                      0.15),
-                                                          child: Text(
-                                                            Result!["status"],
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            style: const TextStyle(
-                                                                fontFamily:
-                                                                    'Nunito',
-                                                                fontSize: AppFonts
-                                                                    .smallFontSize,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal),
+                                                      Container(
+                                                        child: SizedBox(
+                                                          height: 20,
+                                                          width:
+                                                              screenWidth * 0.3,
+                                                          child: Center(
+                                                            child: GetBuilder<
+                                                                ApiControllerdriverimage>(
+                                                              builder:
+                                                                  (_ownerinfo) =>
+                                                                      ListView
+                                                                          .builder(
+                                                                itemCount: 1,
+                                                                itemBuilder:
+                                                                    (context,
+                                                                        index) {
+                                                                  return Container(
+                                                                    child:
+                                                                        Center(
+                                                                      child: _ownerinfo.dataList ==
+                                                                              null
+                                                                          ? Container()
+                                                                          : Text(
+                                                                              "${_ownerinfo.dataList!["status"]}",
+                                                                              textAlign: TextAlign.center,
+                                                                              style: TextStyle(
+                                                                                fontFamily: "Nunito",
+                                                                                color: Colors.black,
+                                                                                fontSize: AppFonts.smallFontSize,
+                                                                              ),
+                                                                            ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                       SizedBox(
                                                         width:
-                                                            screenWidth * 0.1,
+                                                            screenWidth * 0.12,
                                                       ),
-                                                      Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(4.0),
-                                                          child: Container(
-                                                            width: screenWidth *
-                                                                0.26,
-                                                            child: Text(
-                                                              Result!["status"],
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .left,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: const TextStyle(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize: AppFonts
-                                                                      .smallFontSize,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal),
+                                                      Container(
+                                                        child: SizedBox(
+                                                          height: 20,
+                                                          width:
+                                                              screenWidth * 0.3,
+                                                          child: Center(
+                                                            child: GetBuilder<
+                                                                ApiControllerdriverimage>(
+                                                              builder:
+                                                                  (_ownerinfo) =>
+                                                                      ListView
+                                                                          .builder(
+                                                                itemCount: 1,
+                                                                itemBuilder:
+                                                                    (context,
+                                                                        index) {
+                                                                  return Container(
+                                                                    child:
+                                                                        Center(
+                                                                      child: _ownerinfo.dataList ==
+                                                                              null
+                                                                          ? Container()
+                                                                          : Text(
+                                                                              "${_ownerinfo.dataList!["status"]}",
+                                                                              textAlign: TextAlign.center,
+                                                                              style: TextStyle(
+                                                                                fontFamily: "Nunito",
+                                                                                color: Colors.black,
+                                                                                fontSize: AppFonts.smallFontSize,
+                                                                              ),
+                                                                            ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ),
                                                             ),
-                                                          ))
+                                                          ),
+                                                        ),
+                                                      )
                                                     ],
                                                   ),
                                                 ],

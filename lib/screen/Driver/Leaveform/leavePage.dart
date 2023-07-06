@@ -6,12 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:http/http.dart' as http;
-
-import '../../../Theme/TextInput.dart';
 import '../../../config/APIService.dart';
 import '../../../const/constant.dart';
 
@@ -195,7 +191,6 @@ class _leavepremmissionPageState extends State {
     return Scaffold(
       backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       appBar: AppBar(
-        toolbarHeight: 80,
         elevation: 1,
         leading: Container(
           margin: EdgeInsets.only(top: 5),
@@ -209,7 +204,7 @@ class _leavepremmissionPageState extends State {
             ),
           ),
         ),
-        backgroundColor: kPrimaryColor,
+        backgroundColor: Color.fromRGBO(178, 142, 22, 1),
         title: Container(
           margin: EdgeInsets.only(left: screenWidth * 0.15),
           child: Text(
