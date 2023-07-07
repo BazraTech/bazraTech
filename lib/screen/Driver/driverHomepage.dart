@@ -141,7 +141,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
       // If the server returns a 200 OK response, parse the JSON.
       Map<String, dynamic> data = json.decode(response.body);
 
-      await storage.write(key: "ownerpic", value: data["driverPic"].toString());
+      // await storage.write(key: "ownerpic", value: data["driverPic"].toString());
 
       ownerpic = (await storage.read(key: 'ownerpic'))!;
       return data["avatar"];

@@ -32,36 +32,6 @@ class _notificationPageState extends State<notificationPage> {
     }).toList();
   }
 
-  void MessageHistory() async {
-    var client = http.Client();
-    final storage = new FlutterSecureStorage();
-    var token = await storage.read(key: 'jwt');
-    Map<String, String> requestHeaders = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-    var response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/Alerts/ByStatus'),
-        headers: requestHeaders);
-
-    if (response.statusCode == 200) {
-      var mapResponse = json.decode(response.body) as Map<String, dynamic>;
-
-      List results = mapResponse['activeAlerts'];
-
-      final box = await Hive.openBox('dataBox'); // Open the Hive box
-      final modifiedDataList = addBoolValueToList(results);
-      box.put('dataList', modifiedDataList);
-
-      print(results);
-    } else {
-      throw Exception('not loaded ');
-    }
-  }
-
-// fetch from hive database
-
   void updateDataInHive(int index) async {
     final box = await Hive.openBox('dataBox'); // Open the Hive box
 
@@ -74,6 +44,45 @@ class _notificationPageState extends State<notificationPage> {
 
         box.put('dataList', dataList);
       });
+    }
+  }
+
+  Future<void> fetchDataFromApiAndStoreInHive() async {
+    final storage = new FlutterSecureStorage();
+    var token = await storage.read(key: 'jwt');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var response = await http.get(
+        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/Alerts/ByStatus'),
+        headers: requestHeaders);
+    if (response.statusCode == 200) {
+      var mapResponse = json.decode(response.body);
+
+      List results = mapResponse['activeAlerts'];
+      final Box<dynamic> box = await Hive.openBox<dynamic>('dataBox');
+
+      setState(() {
+        final int lastIndex = box.isEmpty ? 0 : box.length;
+        for (var i = 0; i < results.length; i++) {
+          final item = results[i];
+
+          final existingData = box.values.contains(
+            (data) => data["alertstart"] == item["alertstart"],
+          );
+
+          if (existingData == null) {
+            final modifiedDataList = addBoolValueToList(results);
+            box.put('dataList', modifiedDataList);
+          }
+        }
+      });
+
+      print(results);
+    } else {
+      throw Exception('not loaded ');
     }
   }
 
@@ -91,7 +100,7 @@ class _notificationPageState extends State<notificationPage> {
 
   void initState() {
     super.initState();
-
+    fetchDataFromApiAndStoreInHive();
     fetchDataFromHive();
   }
 
