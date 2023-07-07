@@ -21,6 +21,13 @@ export default function Users_edit() {
         setPop(!diabled);
     }
 
+    /************reload page******** */
+    const [reloadKey, setReloadKey] = useState(0);
+
+    const handleReload = () => {
+        setReloadKey((prevKey) => prevKey + 1);
+        };
+        
     const [popup, setPop1] = useState(false);
     const handleClickopen = () => {
         setPop1(!popup);
@@ -35,6 +42,7 @@ export default function Users_edit() {
         },
 
     };
+    const [updated,setUpdated]=useState(false)
     const { id } = useParams()
     const url2 = `http://64.226.104.50:9090/Api/Admin/All/Vehicles/${id}`;
 
@@ -45,8 +53,9 @@ export default function Users_edit() {
             .then(respnse => respnse.json())
             .then(data => {
                 setDataSource(data)
+                console.log(dataSource)
             })
-    }, [])
+    }, [reloadKey])
 
     const [selecttag, setSelectTag] = useState(false)
     const [inputtag, setinputTag] = useState(true)
@@ -130,7 +139,9 @@ export default function Users_edit() {
                     buttons: false,
                     timer: 2000,
                 });
-               
+                setTimeout(() => {
+                    handleReload();
+                  }, 2500);
             } else {
                 console.log("failed");
                 swal(`Failed To update ${mess}`, "Error", "error");
@@ -189,7 +200,7 @@ export default function Users_edit() {
                                             console.error(error);
                                             }
     }
-
+console.log(updated)
     return (
 
         <div>
@@ -230,48 +241,42 @@ export default function Users_edit() {
                             </div>
                             <div>
                                 <p>Vehicle Condition </p>
-                                 <input Value={dataSource.vehicleCondition} className='select' disabled={diabled}></input>
-                                {/* {selecttag ?
-                                    <select className='select' name='conditionName'
+                                {!selecttag ?  <input defaultValue={dataSource.vehicleCondition} className='select' disabled={diabled}></input>:
+                                
+                                    <select className='select' name='vehicleCondition' 
+                                    defaultValue={dataSource.vehicleCondition} 
+                                     onChange={handleUpdateChange} 
 
                                     >
-                                        <option value="">Select Vecicle Condition</option>
+                                      <option defaultValue=" " >Select Vehicle Condition</option>
+
                                         {
                                             dataSource4.map(item => {
-                                                return <option>{item.conditionName}</option>
+                                                return <option key={item.conditionName}>{item.conditionName}</option>
                                             })
                                         }
-                                    </select> : ""} */}
+                                    </select> }
                             </div>
                             <div>
                                 <p>Plate Number </p>
-                                <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.plateNumber} type="text" disabled="true"></input>
+                                <input  value={dataSource.plateNumber} type="text" disabled="true"></input>
                             </div>
 
                             <div>
                                 <p>Manufacture Date </p>
-                                <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.manufactureDate} type="Date" disabled="true"></input>
+                                <input  value={dataSource.manufactureDate} type="Date" disabled="true"></input>
 
                             </div>
                             <div>
                                 <p>Device ID</p>
-                                <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.deviceID} type="text" disabled="true"></input>
+                                <input  value={dataSource.deviceID} type="text" disabled="true"></input>
                             </div>
                             <div>
                                 <p>Status</p>
-                                {/* <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.status} type="text" disabled={diabled}></input> */}
-                                <input Value={dataSource.status} className='select' disabled="true"></input> 
-                                {/* {selecttag ?
-                                    <select className='select' name='status'
-
-                                    >
-                                        <option value="">Select status Condition</option>
-                                        {
-                                            status.map(item => {
-                                                return <option>{item.driverStatus}</option>
-                                            })
-                                        }
-                                    </select> : ""} */}
+                                {/* <input  value={dataSource.status} type="text" disabled={diabled}></input> */}
+                           <input value={dataSource.status} className='select' disabled="true"></input> 
+                                
+                                   
                             </div>
                             <div>
                                 <p>Vehicle owner</p>
@@ -293,7 +298,7 @@ export default function Users_edit() {
                                 toggle()
                                 select()
                             }}>{state ? "Cancle" : "Edit"}</p>
-                            <button className={state ? styles.button3 : styles.button4} type='submit' disabled={diabled}>Update</button>
+                            <button className={state ? styles.button3 : styles.button4} type='submit' onClick={()=>setUpdated(!updated)} disabled={diabled}>Update</button>
                         </div>
 
                     </form>

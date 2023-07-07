@@ -43,7 +43,7 @@ export default function () {
         setLoading(false);
 
       })
-  }, [])
+  }, [dataSource2.status])
 
   const [page, setCurentPage] = useState(1);
   const [postPerPage, setpostPerPage] = useState(7);

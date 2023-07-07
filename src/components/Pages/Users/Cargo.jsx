@@ -455,6 +455,7 @@ export default function () {
                                                     <th>Phone Number</th>
                                                     <th>enabled</th>
                                                     <th>roles name</th>
+                                                    <th>Detail</th>
                                                     </tr>
                                             </thead>
                                             <tbody>
@@ -465,9 +466,9 @@ export default function () {
                                                         <td>{item.phoneNumber}</td>
                                                         <td>{item.enabled ? 'Enabled' : 'Disabled'}</td>
                                                         <td>{item.roles[0].name}</td>
-                                                        {/* <td><Link to={`/cargo/${item.id}`}>
+                                                        <td><Link to={`/cargo/${item.id}`}>
                                                             <button>Detail</button></Link>
-                                                            </td> */}
+                                                            </td>
                                                         
                                                     </tr>
                                                 ))}

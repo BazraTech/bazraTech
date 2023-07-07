@@ -19,7 +19,7 @@ import { FaRoute } from "react-icons/fa";
 import { BsSearch } from "react-icons/bs";
 import { AiFillFilter } from "react-icons/ai";
 import { FaParking } from "react-icons/fa";
-import { GrSettingsOption } from "react-icons/gr";
+import swal from "sweetalert";
 import { IoSettingsOutline } from "react-icons/io5";
 import { FaUserSecret } from "react-icons/fa";
 import { FaUserCheck } from "react-icons/fa";
@@ -45,6 +45,7 @@ export default function Users_edit() {
     const handleClickopen = () => {
         setPop1(!popup1);
     }
+    const [reloadKey, setReloadKey] = useState(0);
 
     const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
 
@@ -78,6 +79,7 @@ export default function Users_edit() {
 
     const [Loading, setLoading] = useState([]);
     const { id, role, companyID } = useParams();
+    const [updateVehicleInfo, setUpdateVehicleInfo] = useState({});
 
     let url;
 
@@ -108,8 +110,30 @@ export default function Users_edit() {
 
                 setTotalPage2(json.ownerINF.drivers.length);
                 setLoading(false)
+
+ 
+  const   oldVehicleOwnerInformation = {
+      companyName: json.ownerINF.companyName,
+      companyType: json.ownerINF.companyType,
+      companySector: json.ownerINF.companySector,
+      region: json.ownerINF.companyAddressINF.region,
+      subCity: json.ownerINF.companyAddressINF.subcity,
+      specificLocation: json.ownerINF.companyAddressINF.specificLocation,
+      city: json.ownerINF.companyAddressINF.city,
+      woreda: json.ownerINF.companyAddressINF.woreda,
+      houseNumber: json.ownerINF.companyAddressINF.houseNum,
+      firstName: json.ownerINF.firstName,
+      lastName: json.ownerINF.lastName,
+      ownerPhoneNumber:"",
+      email: json.ownerINF.email,
+      notificationmedia: json.ownerINF.notificationMedium,
+      serviceRequired: json.ownerINF.serviceNeeded
+    };
+
+    setUpdateVehicleInfo(oldVehicleOwnerInformation);
+ 
             });
-    }, [])
+    }, [reloadKey])
 
     const [selecttag, setSelectTag] = useState(false)
     const [inputtag, setinputTag] = useState(true)
@@ -117,7 +141,104 @@ export default function Users_edit() {
         setSelectTag(!selecttag);
         setinputTag(!inputtag);
     } 
+/*************************************** */
+const comSector = "http://64.226.104.50:9090/Api/Admin/All/CompanySector/";
+const [companySector, setcompanySector] = useState([])
+useEffect(() => {
+    fetch(comSector, options)
+        .then(respnse => respnse.json())
+        .then(data => {
+            setcompanySector(data.companySectors)
+        })
+}, [])
+const comUrl = "http://64.226.104.50:9090/Api/Admin/All/CompanyType/";
+const [companyType, setcompany] = useState([])
+useEffect(() => {
+    fetch(comUrl, options)
+        .then(respnse => respnse.json())
+        .then(data => {
+            setcompany(data.companyTypes)
+        })
+}, [])
+    const notUrl = " http://64.226.104.50:9090/Api/Admin/All/NotificationMedium";
+    const [notification, setNotification] = useState([])
+    useEffect(() => {
+        setLoading(true)
+        fetch(notUrl, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setNotification(data.notificationMedias)
+            })
+    }, [])
+    const serUrl = "http://64.226.104.50:9090/Api/Admin/All/Services";
+    const [service, setService] = useState([])
+    useEffect(() => {
+        fetch(serUrl, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setService(data.service)
+            })
+    }, [])
+/************reload the page******* */
 
+const handleReload = () => {
+setReloadKey((prevKey) => prevKey + 1);
+};
+
+/*********************************update vehicle owner information************* */
+
+console.log(updateVehicleInfo)
+const handleUpdateChange = (e) => {
+    console.log('handleUpdateChange')
+    const { name, value } = e.target;
+    setUpdateVehicleInfo((prevData) => ({
+      ...prevData,
+      [name]: value || prevData[name],// Keep the existing value if the input is empty
+    }));
+    console.log(updateVehicleInfo)
+  };
+
+  const onSubmit =(e)=>{
+        
+    e.preventDefault();
+    update()
+}
+    async function update(){
+
+    const options = {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+            "Accept": "application/json",
+            "Authorization": `Bearer ${jwt}`
+        },
+        body: JSON.stringify(updateVehicleInfo),
+    };
+    const url = `http://64.226.104.50:9090/Api/Admin/UpdateInfo/VehicleOwner/${id}`;
+    try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        console.log(result);
+        localStorage.setItem("message", JSON.stringify(result["message"]));
+        const mess = localStorage.getItem("message");
+        console.log(mess);
+        if (response.ok) {
+            console.log("updated successful");
+            swal("Successful", `${mess}`, "success", {
+                buttons: false,
+                timer: 2000,
+            });
+          setTimeout(() => {
+            handleReload();
+          }, 2500);  
+        } else {
+            console.log("failed");
+            swal(`Failed To update ${mess}`, "Error", "error");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
     return (
         <div>
             <div className="users_edit_container">
@@ -138,7 +259,7 @@ export default function Users_edit() {
                         <p ><h1 className={styles.companyHeader}>Company Detail</h1></p>
                         <p ><h4 className={styles.vehicleDetail}>Name : {dataSource.role} <br /> User ID : {dataSource.id}</h4></p>
                     </div>
-                    <form className='form'>
+                    <form className='form' onSubmit={(onSubmit)}>
                         {/* {dataSource.map(item => { */}
 
                         <div className={styles.allDiv}>
@@ -149,28 +270,68 @@ export default function Users_edit() {
                                         <div className={styles.company_information}>
                                             <div>
                                                 <p>Company Name </p>
-                                                <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.companyName} type="text" disabled={diabled}></input>
+                                                <input 
+                                                 name ='companyName' 
+                                                 onChange={handleUpdateChange} 
+                                                defaultValue={dataSource.companyName} 
+                                                type="text" disabled={diabled}></input>
                                             </div>
                                             <div>
                                                 <p>Company type</p>
-                                                {inputtag ? <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.companyType} className='select' disabled={diabled}></input> : ""}
-                                                {selecttag ? <select className='select' disabled={diabled}>
-                                                    <option value='plc'>Set Company Type</option>
-                                                    <option value='plc'>Public Llimited Company</option>
-                                                    <option value='plc'>Public Llimited Company</option>
-                                                </select> : ""}
+                                                {/* {!selecttag ?<input defaultValue={dataSource.companyType} className='select' disabled={diabled}></input> : */}
+                                               {
+                                                !selecttag ? (
+                                                  <input
+                                                    defaultValue={dataSource.companyType}
+                                                    className='select'
+                                                    disabled={diabled}
+                                                  />
+                                                ) : (
+                                                  <select
+                                                    className='select'
+                                                    name='companyType'
+                                                    defaultValue={dataSource.companyType}
+                                                    onChange={handleUpdateChange}
+                                                  >
+                                                    <option value="">{dataSource.companyType}</option>
+                                                    {companyType.map((item) => (
+                                                      <option key={item.companyType}>
+                                                        {item.companyType}
+                                                      </option>
+                                                    ))}
+                                                  </select>
+                                                )
+                                              }
+                                              
                                                 {/* <input onChange={(e) => setDataSource(e.target.value)} value={dataSource2.companyType} type="text" disabled={diabled}></input> */}
                                             </div>
                                             <div>
                                                 <p>Company Sector </p>
 
-                                                {inputtag ? <input Value={dataSource.companySector} className='select' disabled={diabled}></input> : ""}
-                                                {selecttag ? <select className='select' disabled={diabled}>
-                                                    <option value='plc'>Selecet Company Sector</option>
-                                                    <option value='plc'>Government</option>
-                                                    <option value='plc'>Public Llimited Company</option>
-                                                    <option value='plc'>Public Llimited Company</option>
-                                                </select> : ""}
+                                                {
+                                                        !selecttag ? (
+                                                            <input
+                                                            defaultValue={dataSource.companySector}
+                                                            className='select'
+                                                            disabled={diabled}
+                                                            />
+                                                        ) : (
+                                                            <select
+                                                            className='select'
+                                                            name='companySector'
+                                                            defaultValue={dataSource.companySector}
+                                                            onChange={handleUpdateChange}
+                                                            >
+                                                            <option value="">Select Vehicle Condition</option>
+                                                            {companySector.map((item) => (
+                                                                <option key={item.sectorName}>
+                                                                {item.sectorName}
+                                                                </option>
+                                                            ))}
+                                                            </select>
+                                                        )
+                                                        }
+
                                             </div>
                                         </div>
                                     </div>
@@ -182,31 +343,60 @@ export default function Users_edit() {
                                     <div className={styles.company_Address}>
                                         <div>
                                             <p>Region </p>
-                                            <input onChange={(e) => setDataSource2(e.target.value)} value={dataSource2.region} disabled={diabled}></input>
+                                            <input 
+                                            name ='region' 
+                                            onChange={handleUpdateChange} 
+                                            type="text"
+                                            defaultValue={dataSource2.region} 
+                                            disabled={diabled}>
+                                            </input>
                                         </div>
                                         <div>
                                             <p>Sub City </p>
-                                            <input onChange={(e) => setDataSource2(e.target.value)} value={dataSource2.subcity} disabled={diabled}></input>
+                                            <input 
+                                             name ='subCity' 
+                                             onChange={handleUpdateChange} 
+                                             type="text"
+                                             defaultValue={dataSource2.subcity} disabled={diabled}></input>
                                         </div>
                                         <div>
                                             <p>Specfic Location </p>
-                                            <input onChange={(e) => setDataSource2(e.target.value)} value={dataSource2.specificLocation} type="text" disabled={diabled}></input>
+                                            <input 
+                                            name ='specificLocation' 
+                                            onChange={handleUpdateChange} 
+                                            type="text"
+                                            defaultValue={dataSource2.specificLocation} 
+                                           disabled={diabled}></input>
                                         </div>
                                         <div>
                                             <p>City </p>
-                                            <input onChange={(e) => setDataSource2(e.target.value)} value={dataSource2.city} disabled={diabled}></input>
+                                            <input 
+                                            name ='city' 
+                                            onChange={handleUpdateChange} 
+                                            type="text"
+                                           defaultValue={dataSource2.city} disabled={diabled}></input>
                                         </div>
                                         <div>
                                             <p>Woreda </p>
-                                            <input onChange={(e) => setDataSource2(e.target.value)} value={dataSource2.woreda} type="text" disabled={diabled}></input>
+                                            <input 
+                                             name ='woreda' 
+                                             onChange={handleUpdateChange} 
+                                             type="text"
+                                            defaultValue={dataSource2.woreda} 
+                                            disabled={diabled}></input>
                                         </div>
                                         <div>
                                             <p>House Number </p>
-                                            <input onChange={(e) => setDataSource2(e.target.value)} value={dataSource2.houseNum} type="text" disabled={diabled}></input>
+                                            <input 
+                                             name ='houseNumber' 
+                                             onChange={handleUpdateChange} 
+                                             type="text"
+                                            defaultValue={dataSource2.houseNum} disabled={diabled}></input>
                                         </div>
                                         <div>
                                             <p>Phone Number </p>
-                                            <input onChange={(e) => setDataSource2(e.target.value)} value={dataSource2.phone} disabled type="text" ></input>
+                                            <input  
+                                            defaultValue={dataSource2.phone} disabled='true' type="text" ></input>
                                         </div>
                                     </div>
                                 </div>
@@ -216,20 +406,32 @@ export default function Users_edit() {
                                     <div className={styles.owner_information}>
                                         <div>
                                             <p>First Name</p>
-                                            <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.firstName} type="text" disabled={diabled}></input>
+                                            <input
+                                            name ='firstName' 
+                                            onChange={handleUpdateChange} 
+                                            defaultValue={dataSource.firstName} type="text" disabled={diabled}></input>
                                         </div>
                                         <div>
                                             <p>Last Name </p>
-                                            <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.lastName} type="text" disabled={diabled}></input>
+                                            <input
+                                             name ='firstName' 
+                                             onChange={handleUpdateChange} 
+                                            defaultValue={dataSource.lastName} type="text" disabled={diabled}></input>
 
                                         </div>
                                         <div>
                                             <p>Phone Number</p>
-                                            <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.phoneNumber} type="text" disabled></input>
+                                            <input
+                                             name ='lastName' 
+                                             onChange={handleUpdateChange} 
+                                            defaultValue={dataSource.phoneNumber} type="text"  disabled={diabled}></input>
                                         </div>
                                         <div>
                                             <p>Email </p>
-                                            <input onChange={(e) => setDataSource(e.target.value)} value={dataSource.email} type="email" disabled></input>
+                                            <input 
+                                              name ='email' 
+                                              onChange={handleUpdateChange} 
+                                            defaultValue={dataSource.email} type="email"  disabled={diabled}></input>
                                         </div>
                                     </div>
                                 </div>
@@ -239,12 +441,30 @@ export default function Users_edit() {
                                     <div className={styles.additional_information}>
                                         <div>
                                             <p>Notification Pereference</p>
-                                            <input className='select' value={dataSource.notificationMedium} disabled></input>
+                                            <input className='select'
+                                             name ='notificationmedia' 
+                                             onChange={handleUpdateChange} 
+                                             defaultValue={dataSource.notificationMedium}  disabled></input>
                                         </div>
                                         <div>
                                             <p>Service Neded </p>
-                                            <input value={dataSource.serviceNeeded} className='select' disabled>
-                                            </input>
+                                             <input
+                                            
+                                             defaultValue={dataSource.serviceNeeded} className='select'  disabled={diabled}>
+                                            </input> 
+                                            {/* {!selecttag ? :
+                                                <select className='select' name ='serviceRequired' 
+                                                onChange={handleUpdateChange}  defaultValue={dataSource.serviceNeeded}
+                                                >
+                                                <option defaultValue=" " >Select Vehicle Condition</option>
+
+                                                    {
+                                                        notification.map(item => {
+                                                            return <option>{item.conditionName}</option>
+                                                        })
+                                                    }
+                                                </select> } */}
+
                                         </div>
                                     </div>
                                 </div>

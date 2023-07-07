@@ -58,7 +58,7 @@
     padding-right: 40px;
   }
   
-  .tripHeader p h1 {
+  .tripHeader vehicleName {
     color: rgb(0, 0, 0);
     display: inline-block;
     border-radius: 8px;
@@ -66,20 +66,20 @@
     font-size: 1.6vw;
   }
   
-  .tripHeader p h4 {
+  .tripHeader h4 {
     color: green;
     border-radius: 8px;
     border: none;
     font-size: 1.2vw;
     font-weight: 700;
-    margin-top: 20px;
+    margin: 20px 0 20px 50px;
     background-color: rgb(255, 255, 255);
     padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 80%;
-    margin-left: 20%;
+   
   }
   
   .forms {
@@ -309,11 +309,12 @@
       row-gap: 10px;
     }
   
-    .tripHeader p h1 {
+    .tripHeader h1 {
       font-size: 2.2vw;
+
     }
   
-    .tripHeader p h4 {
+    .tripHeader h4 {
       font-size: 1.5vw;
       margin-top: 70px;
       padding: 10px;
