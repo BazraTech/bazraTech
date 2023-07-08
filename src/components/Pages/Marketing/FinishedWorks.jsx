@@ -123,6 +123,7 @@ export default function FinishedWorks () {
                                                     <th>weight</th>
                                                     <th>Trip From To</th>
                                                     <th>Status</th>
+                                                    <th>Detail</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -133,6 +134,7 @@ export default function FinishedWorks () {
                                                         <td>{item.weight}</td>
                                                         <td>{item.pickUp +' => '+ item.dropOff }</td>
                                                         <td>{item.status}</td>
+                                                        <td><Link to={`/FinishedMarketDetail/${item.id}`}><button>Detail</button></Link></td>
                                                        
                                                     </tr>
                                                 ))}

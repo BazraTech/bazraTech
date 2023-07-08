@@ -11,10 +11,11 @@ import styles from './mangeProfile.module.css';
 import { Link, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import Header from '../../Header/Header';
+import swal from "sweetalert";
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
 import SyncLoader from "react-spinners/SyncLoader";
+import { useForm } from 'react-hook-form';
 
 
 
@@ -42,7 +43,7 @@ export default function () {
             }
         }
     }
-
+    const [error, setError] = useState(false);
     let [active, setActive] = useState("total_vehicle");
     let [state, setState] = useState("false");
     // const color = () => {
@@ -54,7 +55,7 @@ export default function () {
     }
 
     const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
-
+    const user = JSON.parse(localStorage.getItem('user'))
     const options = {
 
         headers: {
@@ -109,7 +110,127 @@ export default function () {
     const [color, setColor] = useState("green");
     const [margin, setMargin] = useState("");
 
+/******************************Generate pin********************* */
 
+    async function handleChange(phoneNumber) {
+        let item =
+        {
+            phoneNumber,
+        };
+        console.log(item)
+        const options = {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json', 
+            "Accept": "application/json"},
+            body: JSON.stringify(item),
+        };
+        const url = "http://64.226.104.50:9090/Api/User/GeneratePIN";
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            localStorage.setItem("message", JSON.stringify(result["message"]));
+            const  mess = localStorage.getItem("message");
+            if (response.ok) {
+                console.log(mess)
+                swal("Get your Pin beffore it's to late ", `${mess}`, "success", { buttons: false, timer: 5000, });
+                
+            } else {
+                console.log("failed");
+                swal(`Failed To Register ${mess}`, "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    /****************Enable and disable user********** */
+    const enableDisable = async (enable) => {
+        console.log('Im on submit function');
+        const options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": "application/json",
+                "Authorization": `Bearer ${jwt}`
+            },
+           
+        };
+        const url =`http://64.226.104.50:9090/Api/User/disable/${enable}`; 
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            console.log(result);
+            localStorage.setItem("message", JSON.stringify(result["message"])); 
+            const mess = localStorage.getItem("message");
+            console.log(mess);
+            if (response.ok) {
+                swal("Successfully", `${mess}`, "success", {
+                    button: true,
+                    timer: 60000,
+                });
+            } else {
+                console.log("failed");
+                swal(`Failed To ${mess}`, "Error", "error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+/************handle popup********* */
+const handlePoup = () => {
+    setPop(!popup);
+}
+const closePopup5 = () => {
+    setPop(false);
+}
+
+/************handleConfirm************ */
+const [username, setusername] = useState(user.username);
+const [pin, setpin]= useState("")
+const [newpassword, setnewpassword] =useState("")
+const [confirmPassword, setconfirmpassword]= useState("")
+const {
+    
+    handleSubmit,
+    formState: { errors },
+} = useForm();
+const onSubmit = (data) => {
+    console.log(data);
+    handleConfirm();
+};
+async function handleConfirm() {
+
+    let item = { 
+                newpassword,
+               confirmPassword,
+               username,
+               pin
+             }
+                 console.log(item)
+     const options = {
+         method: "POST",
+         headers: { "Content-Type": "application/json", Accept: "application/json", Authorization: `Bearer`, },
+         body: JSON.stringify(item),
+     };
+     const url = "http://64.226.104.50:9090/Api/User/SetPin";
+     try {
+         const response = await fetch(url, options);
+         const result = await response.json();
+         localStorage.setItem("message", JSON.stringify(result["message"]));
+       const  mess = localStorage.getItem("message");
+       console.log(mess)
+         if (response.ok) {
+             console.log(mess)
+             swal("Successful",`${mess}`, "success", { buttons: false, timer: 2000, })
+         } else {
+            swal(`Failed To Change ${mess}`, "Error", "error");
+         }
+     } catch (error) {
+         console.log(error + "error");
+         console.error(error)
+         // window.location.href = "/dashboard"; 
+     }
+ }
+    console.log(currentPage)
     return (
 
         <div className="vehicle_container">
@@ -140,27 +261,26 @@ export default function () {
                             <table className={styles.vehicle_table} id="myTable">
                                 <thead>
                                     <tr>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
+                                        <th>Phone</th>
                                         <th>Role</th>
-                                        <th>Email</th>
-                                        <th>Status</th>
                                         <th>Profile</th>
                                         <th>Change Password</th>
+                                        <th>Confirm password</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr className={styles.active_row}>
-                                        <td>{dataSource.role == "OWNER" ? `${dataSource.companyName}` : `${dataSource.firstName}` + " " + `${dataSource.lastName}`}</td>
-                                        <td>Last Name</td>
-                                        <td>{dataSource.role}</td>
-                                        <td>{dataSource.totalVehicles}</td>
-                                        <td>Active</td>
-                                        <td><Link to={`/user_edit/${dataSource.role}/${dataSource.id}/${dataSource.companyId}`}>
+                                        <td>{user.username}</td>
+                                        <td>{user.role}</td>
+                                        <td><Link to='#'>
                                             <button>Detail</button></Link></td>
                                         <td><Link style={{ textDecoration: 'none' }} to="#">
-                                            <lable className={styles.mangProfileButton} onClick={() => {
-                                            }}>Change Password</lable></Link></td>
+                                            <lable className={styles.mangProfileButton} onClick={() => { handleChange(user.username) }}>
+                                                Change Password</lable></Link></td>
+                                        <td><button onClick={() => {
+                                                    handlePoup()
+                                                   }}>Confirm</button></td>
                                     </tr>
 
                                 </tbody>
@@ -179,7 +299,34 @@ export default function () {
                         </div>
                     </>
                 }
+                    {popup ?
+                                        <div>
+                                            <div className={styles.popup}>
+                                                <div className={styles.popupInner}>
+                                                    <div className={styles.ewq}>
+                                                        <button className={styles.closeBtn} onClick={closePopup5}>X</button>
+                                                        <div>
+                                                            <form onSubmit={handleSubmit(onSubmit)}>
+                                                                <div className={styles.assignetDiver}>
+                                                                    <lable className={styles.lable}>New Password</lable>
+                                                                    <label>Pin</label>
+                                                                    <input type="text" placeholder="PIN" onChange={e => setpin(e.target.value)} name="pin"></input>
+                                                                    {error && pin.length <= 0 ? <span className={styles.validateText}>please enter your password</span> : ""}
+                                                                    <label>New Password</label>
+                                                                    <input type="password" placeholder="Password" onChange={e =>setnewpassword(e.target.value)} name="newpassword"></input>
+                                                                    {error && newpassword.length <= 0 ? <span className={styles.validateText}>please enter your password</span> : ""}
+                                                                    <label>Confirm Password</label>
+                                                                    <input type="password" placeholder="Confirm Password" onChange={e => setconfirmpassword(e.target.value)} name='confirmpassword'></input>
+                                                                    {error && confirmPassword !== newpassword ? <span className={styles.validateText}>Your password is not identical</span> : ""}
+                                                                    <button >Confirm</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
 
+                                                </div>
+                                            </div>
+                                        </div> : ""}
 
                 {Loading ?
                     <p className={styles.loading} >
@@ -202,6 +349,7 @@ export default function () {
                                     <button>Search</button>
                                 </p>
                             </div>
+                            
                             <p>Total Vehicle Owner</p>
 
                             <table className={styles.vehicle_table} id="myTable">
@@ -209,7 +357,7 @@ export default function () {
                                     <tr>
                                         <th>Full Name</th>
                                         <th>Role</th>
-                                        <th>Assign Role</th>
+                                        {/* <th>Assign Role</th> */}
                                         <th>Profile</th>
                                         <th>Change Password</th>
                                         <th>Account</th>
@@ -218,16 +366,15 @@ export default function () {
                                 <tbody>
                                     {currentPage.map(item => (
                                        <tr className={styles.active_row} key={item.id}>
-                                            <td>{item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`}</td>
-                                            <td>{item.role}</td>
-                                            <td><Link style={{ textDecoration: 'none' }} to={`/user_edit/${item.role}/${item.id}/${item.companyId}`}>
-                                                <button className={styles.mangProfileButton}>Assign</button></Link></td>
-                                            <td><Link style={{ textDecoration: 'none' }} to={`/user_edit/${item.role}/${item.id}/${item.companyId}`}>
+                                            <td>{item.roles == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`}</td>
+                                            <td>{item.roles}</td>
+                                            {/* <td><Link style={{ textDecoration: 'none' }} to={`/user_edit/${item.role}/${item.id}/${item.companyId}`}>
+                                                <button className={styles.mangProfileButton}>Assign</button></Link></td> */}
+                                            <td><Link style={{ textDecoration: 'none' }} to={`/user_edit/${item.roles}/${item.id}/${item.companyId}`}>
                                                 <button className={styles.mangProfileButton}>Detail</button></Link></td>
                                             <td><Link style={{ textDecoration: 'none' }} to="#">
-                                                <lable className={styles.mangProfileButton} onClick={() => {
-                                                }}>Change Password</lable></Link></td>
-                                            <td><Link style={{ textDecoration: 'none' }} to="#"><lable className={styles.DeleteProfileButton}>Lock</lable></Link></td>
+                                                <lable className={styles.mangProfileButton} onClick={() => {handleChange(item.phoneNumber)  }}>Change Password</lable></Link></td>
+                                            <td><Link style={{ textDecoration: 'none' }} to="#"><lable className={styles.DeleteProfileButton} onClick={() => {enableDisable(item.id)}} >Lock</lable></Link></td>
                                         </tr>
                                     ))}
                                 </tbody>

@@ -54,7 +54,7 @@ import FinishedWorks from './components/Pages/Marketing/FinishedWorks'
 import Settingtable from './components/Pages/Settings/Settingtable';
 import ForgateConfirm from './components/Pages/Sign in page/ForgateConfirm'; 
 import Confirm from './components/Pages/Sign in page/Confirm'; 
-
+import FinishedMarketDetail from './components/Pages/Marketing/FinishedMarketDetail'
 class App extends Component{
   render(){
   return (
@@ -75,6 +75,7 @@ class App extends Component{
         <Route path="/marketing" element={<Marketing />}></Route>
         <Route path="/Market_Progress/:id" element={<Market_Progress/>}></Route>
         <Route path="/FinishedWorks" element={<FinishedWorks/>}></Route>
+        <Route path="/FinishedMarketDetail/:id" element={<FinishedMarketDetail/>}></Route>
         <Route path="Post_market/:id" element={<Post_market/>}></Route>
         <Route path="/off_road" element={<Off_road />}></Route>
         <Route path="/vehicle_detail" element={<Vehicle_detail />}></Route>

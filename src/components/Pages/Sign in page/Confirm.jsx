@@ -24,10 +24,10 @@ export default function () {
     const [username, setusername] = useState("");
     const [pin, setpin]= useState("")
     const [newpassword, setnewpassword] =useState("")
-    const [confirmpassword, setconfirmpassword]= useState("")
+    const [confirmPassword, setconfirmpassword]= useState("")
     
     useEffect(() => {
-    }, [isConfirm,isConfirmed]);
+    }, []);
     function onSubmit(e)
     {
         e.preventDefault()
@@ -40,7 +40,7 @@ export default function () {
 
    let item = { 
                newpassword,
-              confirmpassword,
+              confirmPassword,
               username,
               pin
             }
@@ -60,7 +60,7 @@ export default function () {
         if (response.ok) {
             console.log(mess)
             swal("Successful",`${mess}`, "success", { buttons: false, timer: 2000, })
-              setTimeout(()=>{console.log("yay")}, 1000)
+              setTimeout(()=>{setisConfirmed(!isConfirmed)}, 1000)
         } else {
             Swal.fire({
                 title: "Failed To Change?",
@@ -123,8 +123,10 @@ return (
 
                                 <label>Confirm Password</label>
                                 <input type="password" placeholder="Confirm Password" onChange={e => setconfirmpassword(e.target.value)} name='confirmpassword'></input>
-                                {error && confirmpassword !== newpassword ? <span className={styles.validateText}>Your password is not identical</span> : ""}
+                                {error && confirmPassword !== newpassword ? <span className={styles.validateText}>Your password is not identical</span> : ""}
                                 <button>Confirm</button>
+                                {isConfirmed && <Link to='/'><p type='button' >Sign in page</p> </Link>}
+
                         </div> 
                            
                     </form>

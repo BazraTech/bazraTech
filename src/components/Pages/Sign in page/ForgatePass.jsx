@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { useForm } from 'react-hook-form';
 import { Routes, Route, Link, Navigate, Router } from "react-router-dom";
-import styles from './signin.module.css';
+import styles from './ForgatePass.module';
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
@@ -107,7 +107,7 @@ export default function () {
                 {/*-------------- Right side ---------------*/}
                 <div className={styles.right_login}>
                     <form className={styles.signup_right} onSubmit={forgate ? handleForgate : validation}>
-                       <div className={styles.signForm}>
+                       <div className={styles.Forgate}>
                             <p className={styles.loginHeader}>Welcome To Bazra</p>
                             <label>User Name</label>
                             <input type="username" placeholder="Username" onChange={e => setUsername(e.target.value)} name="username"></input>
