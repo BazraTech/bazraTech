@@ -2,6 +2,9 @@ import 'package:bazralogin/Route/Routes.dart';
 import 'package:bazralogin/screen/Driver/driverBottomnav.dart';
 import 'package:bazralogin/screen/Loging/Login.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import '../controller/ownerinfocontroller.dart';
 import '../screen/Bottom/Bottom.dart';
 
 class AlertDialoug {
@@ -156,9 +159,13 @@ class alertutils {
                         fontWeight: FontWeight.bold),
                   ),
                   onPressed: () {
+                    final ApiControllerforowner _ownerinfo =
+                        Get.put(ApiControllerforowner());
                     Navigator.of(context).pop(); // Close the dialog
+                    _ownerinfo.fetchData();
                     Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => BottomTabBarPageforowner()),
+                      MaterialPageRoute(
+                          builder: (context) => BottomTabBarPageforowner()),
                       (route) => false,
                     ); //
 

@@ -1,27 +1,18 @@
 import 'dart:convert';
-
-import 'package:bazralogin/Route/Routes.dart';
 import 'package:bazralogin/Theme/Alert.dart';
-import 'package:bazralogin/main.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../Theme/TextInput.dart';
 import '../../config/APIService.dart';
-
 import '../Owner/Driver/assignDriver.dart';
 
 class forgotPin extends StatefulWidget {
   String? phone;
-  forgotPin({super.key, this.phone});
+  String? newpin;
+  forgotPin({super.key, this.phone, this.newpin});
 
   @override
   State<forgotPin> createState() => _forgotPinState();
@@ -66,7 +57,7 @@ class _forgotPinState extends State<forgotPin> {
         "newpassword": "${newpass.text}",
         "confirmPassword": "${Confirmpass.text}",
         "username": "${widget.phone}",
-        "pin": "${resetpin.text}"
+        "pin": "${widget.newpin}",
       };
       var response = await http.post(
           Uri.parse('http://64.226.104.50:9090/Api/User/SetPin'),
@@ -206,7 +197,9 @@ class _forgotPinState extends State<forgotPin> {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: TextField(
-                        controller: resetpin,
+                        enabled: false,
+                        controller:
+                            TextEditingController(text: "${widget.newpin}"),
                         decoration: ThemeHelper().textInputDecoration(),
                       )),
                 ],

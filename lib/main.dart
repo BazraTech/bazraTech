@@ -2,13 +2,11 @@ import 'package:bazralogin/controller/Localization.dart';
 import 'package:bazralogin/screen/Bottom/Bottom.dart';
 import 'package:bazralogin/screen/Driver/driverBottomnav.dart';
 import 'package:bazralogin/screen/Loging/Landingpage.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:shared_preferences/shared_preferences.dart';

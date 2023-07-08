@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:bazralogin/Theme/Alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:lottie/lottie.dart';
 
 import '../../../../Theme/clippbox.dart';
 import '../../../../const/constant.dart';
+import '../../controller/driverimage.dart';
 
 class availabelMarketfordriver extends StatefulWidget {
   availabelMarketfordriver({super.key});
@@ -44,7 +46,7 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
     });
     final Map jsonResponse = json.decode(response.body);
     if (response.statusCode == 200) {
-      String alertContent = jsonResponse["message"];
+      String alertContent = "Accept";
       alertutilsfordriver.showMyDialog(context, "Alert", alertContent);
     } else {
       String alertContent = jsonResponse["message"];

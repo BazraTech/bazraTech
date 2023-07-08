@@ -30,6 +30,8 @@ class OwenerHomepage extends StatefulWidget {
 }
 
 class _OwenerHomepageState extends State<OwenerHomepage> {
+  final ApiControllerforvehicle _controller =
+      Get.put(ApiControllerforvehicle());
   bool _isMounted = false;
   DateTime pre_backprees = DateTime.now();
   static bool isPressed = true;
@@ -203,8 +205,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     final ApiController controller = Get.put(ApiController());
-    final ApiControllerforvehicle _controller =
-        Get.put(ApiControllerforvehicle());
+
     final ApiControllerforowner _ownerinfo = Get.put(ApiControllerforowner());
     return Scaffold(
         backgroundColor: kBackgroundColor,
@@ -506,34 +507,35 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                         height: 20,
                                         width: 30,
                                         child: Center(
-                                          child: GetBuilder<
-                                              ApiControllerforvehicle>(
-                                            builder: (_controller) =>
-                                                ListView.builder(
-                                              itemCount: 1,
-                                              itemBuilder: (context, index) {
-                                                return Container(
-                                                  child: Center(
-                                                    child: _controller
-                                                            .dataList.isEmpty
-                                                        ? Container()
-                                                        : Text(
-                                                            "${_controller.dataList.length}",
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: TextStyle(
-                                                              fontFamily:
-                                                                  "Nunito",
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: AppFonts
-                                                                  .smallFontSize,
-                                                            ),
-                                                          ),
+                                          child: FutureBuilder<dynamic>(
+                                            future: _controller.fetchData(),
+                                            builder: (context, snapshot) {
+                                              if (snapshot.connectionState ==
+                                                  ConnectionState.waiting) {
+                                                return Center(
+                                                    child: Container());
+                                              } else if (snapshot.hasError) {
+                                                return Center(
+                                                    child: Text(
+                                                        'Error: ${snapshot.error}'));
+                                              } else {
+                                                List<dynamic>? data =
+                                                    snapshot.data;
+                                                int dataLength =
+                                                    data?.length ?? 0;
+                                                return Center(
+                                                    child: Text(
+                                                  "$dataLength",
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                    fontFamily: "Nunito",
+                                                    color: Colors.white,
+                                                    fontSize:
+                                                        AppFonts.smallFontSize,
                                                   ),
-                                                );
-                                              },
-                                            ),
+                                                ));
+                                              }
+                                            },
                                           ),
                                         ),
                                       ),

@@ -2,22 +2,21 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:bazralogin/Theme/Alert.dart';
-import 'package:bazralogin/screen/Bottom/Bottom.dart';
-
-import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../Theme/TextInput.dart';
-
 import '../../../Model/ApiConfig.dart';
 import '../../../const/constant.dart';
+import '../../../controller/apiController.dart';
+import '../../../controller/ownerinfocontroller.dart';
 
 class DriversFormOwner extends StatefulWidget {
   const DriversFormOwner({super.key});
@@ -99,9 +98,10 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
     final response = await formData.send();
     var responseData = await response.stream.bytesToString();
     var decodedResponse = json.decode(responseData);
-
+    final ApiController controller = Get.put(ApiController());
     if (response.statusCode == 200) {
       String alertContent = decodedResponse["message"];
+      controller.fetchData();
 
       alertutils.showMyDialog(context, "Alert", alertContent);
     } else {
@@ -138,6 +138,7 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+
     print("${driverName}");
 
     return Scaffold(

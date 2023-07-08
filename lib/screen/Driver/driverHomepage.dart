@@ -194,6 +194,9 @@ class _Driver_HompageState extends State<Driver_Hompage> {
     double screenWidth = MediaQuery.of(context).size.width;
     final ApiControllerdriverimage controller =
         Get.put(ApiControllerdriverimage());
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      controller.fetchData();
+    });
 
     String tdata;
     return Scaffold(

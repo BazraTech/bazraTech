@@ -75,12 +75,15 @@ class _LoginState extends State<Login> {
         var data = jsonDecode(response.body);
         await storage.write(key: "jwt", value: data["message"]);
         var value = await storage.read(key: 'jwt');
+        String alertContent = data["message"];
+
         print(value);
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => forgotPin(
                       phone: phoneController.text,
+                      newpin: alertContent.substring(alertContent.length - 6),
                     )));
       } else {
         print('noooo');
