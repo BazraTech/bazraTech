@@ -95,6 +95,7 @@ export default function () {
 
     {/*---------------Selecting item from the table ----------------*/ }
    const [singleChecked, setSingleChecked] = useState('false')
+   const [checkedId,setCheckedId] = useState(0) 
     const handleCheck = (id, phoneNumbers) => {
         if (id == 'selectall') {
             dataSource.map(item => !allChecked ? item.checked = true : item.checked = false);
@@ -104,6 +105,7 @@ export default function () {
             setSingleChecked(!singleChecked)
             
             console.log(id);
+            setCheckedId(id)
             console.log(phoneNumbers);
             dataSource.map(item => item.id == id ? item.checked = !item.checked : null);
             setList([...dataSource]);
@@ -217,7 +219,7 @@ export default function () {
             console.error(error);
         }
     }
-console.log(!allChecked)
+console.log(checkedId)
     return (
         <div className="messageOverview_container">
 
@@ -285,9 +287,10 @@ console.log(!allChecked)
                                             handleCheck={handleCheck}
                                         /></td>
                                         <td>{item.firstName}</td>
-                                        <td>{item.role}</td>
+                                        <td>{item.id}</td>
                                         <td>{item.phoneNumber}</td>
-                                        <td><button onClick={handleClickopen} disabled={allChecked}className={styles.messageOverviewText}>Text</button></td>
+                                        <td><button onClick={handleClickopen} 
+                                        disabled={receipientPhone != item.phoneNumber} className={styles.messageOverviewText}>Text</button></td>
                                         {/* disabled ={allChecked == 'true' ? 'false' : 'true'}  */}
                                     </tr>
                                 })
