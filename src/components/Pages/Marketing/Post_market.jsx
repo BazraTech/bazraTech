@@ -63,6 +63,7 @@ export default function Post_market()
             })
     }, [])
 console.log(dataSource);
+const [price, setPrice]=useState(0)
 
 
 
@@ -75,6 +76,7 @@ console.log(dataSource);
 
     const handleClick = async () => {
         console.log('Im on submit function');
+       const item = {price}
         const options = {
             method: "POST",
             headers: {
@@ -82,7 +84,7 @@ console.log(dataSource);
                 "Accept": "application/json",
                 "Authorization": `Bearer ${jwt}`
             },
-           
+            body: JSON.stringify(item),
         };
         const url =`http://64.226.104.50:9090/Api/Admin/PostCargo/${id}`; 
         try {
@@ -155,6 +157,10 @@ console.log(dataSource);
                                 <div>
                                     <p>weight</p>
                                     <input  value={dataSource.weight} type="text" disabled={diabled}></input>
+                                </div>
+                                <div>
+                                    <p>Price</p>
+                                    <input  placeholder='Enter your price' type="text" onChange={(e)=>setPrice(e.target.value)}></input>
                                 </div>
 
                             <div className={styles.setButton}>
