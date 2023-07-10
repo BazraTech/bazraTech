@@ -126,7 +126,7 @@ const [price, setPrice]=useState(0)
 
                 <div className={styles.tripHeader}>
                     <p><h1 className={styles.avaliableVehicles}>Post cargo Detail</h1></p>
-                    <p ><h4>Cargo Owner Name : {dataSource.cargoOwner} <br /> Pakaging : {dataSource.packaging}</h4></p>
+                    <p ><h4>Cargo Owner Name : {dataSource.cargoOwner} - {dataSource.id} <br /> Pakaging : {dataSource.packaging}</h4></p>
                 </div>
                 <div className={styles.allDiv}>
                     
