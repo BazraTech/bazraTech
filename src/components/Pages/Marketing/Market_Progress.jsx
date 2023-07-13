@@ -98,17 +98,34 @@ const send = false
     const { id } = useParams()
     const url2 = `http://64.226.104.50:9090/Api/Admin/All/CargoDrivers/${id}`;
 
-    const [dataSource, setDataSource] = useState([])
+    const [dataSource, setDataSource] = useState([]);
+    const [error, setError] = useState(null);
+    
     useEffect(() => {
-        // setLoading(true);
-        fetch(url2, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource(data.cargoDriversINFs)
-                console.log(dataSource.cargoDriversINFs)
-                // setLoading(false);
-            })
-    }, [reloadKey])
+      fetch(url2, options)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Failed to get the drivers');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setDataSource(data && data.cargoDriversINFs);
+          console.log(dataSource.cargoDriversINFs);
+        })
+        .catch(error => {
+
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
+    }, [reloadKey]);
+    
+    // if (error) {
+    //   return <div>Error: {error}</div>;
+    // }
+    
+    // Rest of your component rendering logic
+    
  console.log(dataSource);
  const url1 = `http://64.226.104.50:9090/Api/Admin/All/Cargos/${id}`;
 
@@ -119,13 +136,13 @@ const send = false
          .then(respnse => respnse.json())
          .then(data => {
              setDataSource1(data)
-             console.log(dataSource1)
+            //  console.log(data.status)
              // setLoading(false);
          })
  }, [reloadKey])
-console.log(dataSource1);
+// console.log(JSON.stringify(dataSource1.status));
 
-
+const trueorFalse = dataSource1.status == 'ACCEPT' ? 'false' :'true'
     const navigate = useNavigate();
     const goBack = () => {
         navigate(-1);
@@ -137,7 +154,7 @@ console.log(dataSource1);
 
         <div>
 
-          {dataSource.status ='ACTIVE' ?<Navigation path="/marketing" title="Post progress" link="/marketing" past="marketing"></Navigation>:
+          {dataSource1.status ='ACTIVE' ?<Navigation path="/marketing" title="Post progress" link="/marketing" past="marketing"></Navigation>:
            <Navigation path="/marketing" title="Post progress" link={`/Post_market/${id}`} past="post marketing"></Navigation>}
 
             <div className={styles.main_content}>
@@ -173,7 +190,7 @@ console.log(dataSource1);
                                                       
                         </div>  
                        {dataSource1.status == 'ACCEPTED' ? <button disabled='true' style={{background:'gray'}} className={styles.button3}>already send to cargo owner</button>: 
-                       <button  disabled={dataSource1.status != 'ACCEPT' && 'true'}className={styles.button3}>Send to Cargo Owner</button>}
+                       <button  disabled={trueorFalse} className={styles.button3}>Send to Cargo Owner</button>}
                     </form>
                  </div>
 

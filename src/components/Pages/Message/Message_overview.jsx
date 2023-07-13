@@ -96,32 +96,50 @@ export default function () {
     {/*---------------Selecting item from the table ----------------*/ }
    const [singleChecked, setSingleChecked] = useState('false')
    const [checkedId,setCheckedId] = useState(0) 
-    const handleCheck = (id, phoneNumbers) => {
+    const[multiple, setMultiple] = useState('false')
+    const handleCheck = (id, checked) => {
         if (id == 'selectall') {
             dataSource.map(item => !allChecked ? item.checked = true : item.checked = false);
             setAllChecked(!allChecked);
             setReceipientPhone([dataSource.map(item => item.phoneNumber)]);
         } else {
             setSingleChecked(!singleChecked)
-            
-            console.log(id);
+            setMultiple(!multiple)
+            // console.log(id);
             setCheckedId(id)
-            console.log(phoneNumbers);
+            // console.log(checked);
+
             dataSource.map(item => item.id == id ? item.checked = !item.checked : null);
             setList([...dataSource]);
             dataSource.filter(item => item.checked).length == dataSource.length ? setAllChecked(true) : setAllChecked(false);
             if (dataSource.filter(item => item.checked).length == dataSource.length) {
                 dataSource.map(item => setReceipientPhone([item.phoneNumber]))
             }
-            if (phoneNumbers == true) {
+            if (checked == true) {
                 dataSource.map(item => item.id == id ? setReceipientPhone([
                     ...receipientPhone,
                     item.phoneNumber
-                ]) : null);
+                ]) : receipientPhone);
             }
-            else {
-                dataSource.map(item => item.id == id ? setReceipientPhone("") : null);
+            // else if (checked == false) {
+            //    setReceipientPhone(dataSource.filter(item => item.checked && item.phoneNumber))
+            // }
+        }
+         if (receipientPhone.length > 1)
+        {
+            setSingleChecked('false')
+            setMultiple(!multiple)
+
+            if (checked == true) {
+                dataSource.map(item => item.id == id ? setReceipientPhone([
+                    ...receipientPhone,
+                    item.phoneNumber
+                ]) : receipientPhone);
             }
+            else if (checked == false) {
+                const filteredPhone = dataSource.filter(item => item.checked && item.phoneNumber)
+               setReceipientPhone(filteredPhone.map(item => item.phoneNumber))
+            } 
         }
     }
 
@@ -299,7 +317,7 @@ console.log(checkedId)
                     </table>
 }                </div>
                 {/*----------className- messageOverview-button is a button which redirect to the popup menu---------*/}
-                {allChecked && <div className={styles.messageOverviewbBtton}>
+                {(allChecked || multiple) && <div className={styles.messageOverviewbBtton}>
                     <button onClick={handleClickopen} className={styles.messageOverviewText}>Text</button>
                 </div>}
 

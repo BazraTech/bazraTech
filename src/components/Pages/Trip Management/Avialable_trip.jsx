@@ -16,6 +16,7 @@ import SyncLoader from "react-spinners/SyncLoader";
 import { Pagination } from 'antd';
 import { BsSearch } from "react-icons/bs";
 import Table from './Table';
+import { ToggleContext } from "./Toggle"
 
 export default function () {
 
@@ -62,16 +63,16 @@ export default function () {
         },
     };
 
-    const urlFour = "http://64.226.104.50:9090/Api/SignIn/Admin";
-    const [dataSource4, setDataSource4] = useState([])
-    useEffect(() => {
-        fetch(urlFour, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource4(data)
-                console.log(dataSource4)
-            })
-    }, [])
+    // const urlFour = "http://64.226.104.50:9090/Api/SignIn/Admin";
+    // const [dataSource4, setDataSource4] = useState([])
+    // useEffect(() => {
+    //     fetch(urlFour, options)
+    //         .then(respnse => respnse.json())
+    //         .then(data => {
+    //             setDataSource4(data)
+    //             console.log(dataSource4)
+    //         })
+    // }, [])
 
     const [popup, setPop] = useState(false);
     const [state, setState] = useState("");
@@ -82,24 +83,6 @@ export default function () {
 
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
-    const [popup1, setPop1] = useState(true);
-
-    const [totalPages, setTotalPage] = useState(1);
-
-    // const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
-    // const [dataSource2, setDataSource2] = useState([])
-    // useEffect(() => {
-    //     setLoading(true);
-    //     fetch(url2, options)
-    //         .then(respnse => respnse.json())
-    //         .then(data => {
-    //             setDataSource2(data.vehicles)
-    //             setTotalPage(data.totalVehicles);
-    //             // console.log(dataSource2)
-    //             setLoading(false);
-
-    //         })
-    // }, [])
 
     const [id, setId] = useState("");
     const [role, setRole] = useState("");
@@ -109,28 +92,16 @@ export default function () {
 
     // let url2;
 
-    const displaylist = () => {
-        setVisible2();
-    }
+   
     const setVisible2 = () => {
         console.log(role)
         setVisible(!visible);
     }
-
-    // const url2 = "http://198.199.67.201:9090/Api/Admin/All/Vehicles";
-    // const [dataSource2, setDataSource2] = useState([])
-    // useEffect(() => {
-    //     setLoading(true);
-    //     fetch(url2, options)
-    //         .then(respnse => respnse.json())
-    //         .then(data => {
-    //             setDataSource2(data.vehicles)
-    //             setTotalPage(data.totalVehicles);
-    //             setLoading(false);
-
-    //         })
-    // }, [])
-
+/***************************Toggle****************** */
+// const {on, toggle} = React.useContext(ToggleContext)
+const displaylist = () => {
+    // toggle()
+}
     const [dataSource, setDataSource] = useState([])
     // const [Loading, setLoading] = useState([])
     const url = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners";
@@ -139,12 +110,17 @@ export default function () {
         fetch(url, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource(data.vehicleOwnerINF)
+                const modifiedData = data.vehicleOwnerINF.map(old => ({ ...old, on: false }));
+                console.log(modifiedData)
+                setDataSource(modifiedData)
                 console.log(dataSource)
                 setLoading(false)
             })
     }, [])
-
+    
+    const handleData = (id) =>{
+        setDataSource(old => old.map(prev =>({ ...prev, on: prev.id == id && !prev.on })))
+    }
     const [page, setCurentPage] = useState(1);
     const [postPerPage, setpostPerPage] = useState(5);
     const indexOfLastPage = page * postPerPage;
@@ -184,7 +160,7 @@ export default function () {
                                     <button>Search</button>
                                 </p>
                             </div>
-                            <h1 className={styles.greentrip}>List Of Owuners</h1>
+                            <h1 className={styles.greentrip}>List Of Owners</h1>
                             {
 
                                 loading ?
@@ -202,23 +178,16 @@ export default function () {
                                             dataSource.map(item => ( 
                                                 <>
                                                     <div className={styles.companyList}
-                                                        onClick={() => {
-                                                            displaylist()
-                                                            setvisiblelist(item.id)
-                                                            setId(item.id)
-                                                            setRole(item.roles)
-                                                        }} >
+                                                        onClick={()=>handleData(item.id)}
+                                                        key={item.id}
+                                                         >
                                                         <p>Company Name : <b className='green'>{item.roles == "OWNER" ? `${item.companyName}` : `${item.firstName}`}</b></p>
                                                         <label>Available Vehicle : <b className='green'>{item.totalVehicles}</b></label>
-                                                        <p className={styles.dropdownVehicle}>{visible && item.id == visiblelist ? <AiOutlineMinus top="10px" size="1rem" color='White' onChange={displaylist}></AiOutlineMinus> :
-                                                            <BsPlusLg size="1rem" color='White' onClick={() => {
-                                                                displaylist()
-                                                                setId(item.id)
-                                                                setRole(item.roles)
-                                                                setvisiblelist(item.id)
-                                                            }}></BsPlusLg>}</p>
+                                                        <p className={styles.dropdownVehicle}>{item.on ? <AiOutlineMinus top="10px" size="1rem" color='White' onChange={displaylist}></AiOutlineMinus> :
+                                                            <BsPlusLg size="1rem" color='White'></BsPlusLg>}</p>
                                                     </div>
-                                                    {visible && item.id == visiblelist && <Table style={{ transition: "0.5s" }} role={role} id={id} name={item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`} from={"availavleCars"} />}
+                                                    {item.on && <Table style={{ transition: "0.5s" }} role={item.roles} id={item.id} 
+                                                    name={item.role == "OWNER" ? `${item.companyName}` : `${item.firstName}` + " " + `${item.lastName}`} from={"availavleCars"} />}
 
                                                 </>
                                             ))
