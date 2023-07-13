@@ -234,9 +234,8 @@ console.log(updated)
                                 <p>Vehicle Name </p>
                               <input
                                  name ='vehicleName' 
-                                onChange={handleUpdateChange} 
                                 defaultValue={dataSource.vehicleName} 
-                                type="text" disabled={diabled}
+                                type="text" disabled
                                  ></input>
                             </div>
                             <div>
@@ -259,7 +258,11 @@ console.log(updated)
                             </div>
                             <div>
                                 <p>Plate Number </p>
-                                <input  value={dataSource.plateNumber} type="text" disabled="true"></input>
+                                <input 
+                                 defaultValue={dataSource.plateNumber} 
+                                 name='plateNumber' type="text" 
+                                 onChange={handleUpdateChange} 
+                                 disabled={diabled}></input>
                             </div>
 
                             <div>
@@ -269,13 +272,14 @@ console.log(updated)
                             </div>
                             <div>
                                 <p>Device ID</p>
-                                <input  value={dataSource.deviceID} type="text" disabled="true"></input>
+                                <input  value={dataSource.deviceID} type="text" disabled={diabled}></input>
                             </div>
                             <div>
                                 <p>Status</p>
-                                {/* <input  value={dataSource.status} type="text" disabled={diabled}></input> */}
-                           <input value={dataSource.status} className='select' disabled="true"></input> 
+                          <input value={dataSource.status} className='select' disabled></input>:
                                 
+                        
+                               
                                    
                             </div>
                             <div>

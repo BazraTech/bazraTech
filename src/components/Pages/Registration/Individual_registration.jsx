@@ -252,7 +252,7 @@ export default function Individual_registration() {
                     {/* --------------- Company Address- -------------- */}
                     <div className={styles.allDiv}>
                         <div className='first_div'>
-                            <h1>Owuner Information</h1>
+                            <h1>Owner Information</h1>
                             <div className={styles.company_Address}>
                                 <div>
                                     <p>First Name <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
@@ -362,7 +362,7 @@ export default function Individual_registration() {
                                 </div>
 
                                 <div>
-                                    <p>Phone Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                    <p>Office Phone Number <FaStarOfLife className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
                                     <input name='phoneNumber' type="text"
                                         value={phoneNumber}
                                         {...register("phoneNumber", { required: "*please fill your company number" })}

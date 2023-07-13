@@ -80,7 +80,7 @@ export default function Users_edit() {
     const [Loading, setLoading] = useState([]);
     const { id, role, companyID } = useParams();
     const [updateVehicleInfo, setUpdateVehicleInfo] = useState({});
-
+    const [updateVehicleInfoIndividual, setupdateVehicleInfoIndividual]=useState({})
     let url;
 
     if (role === "OWNER") {
@@ -111,7 +111,7 @@ export default function Users_edit() {
                 setTotalPage2(json.ownerINF.drivers.length);
                 setLoading(false)
 
- 
+ console.log(json.ownerINF)
   const   oldVehicleOwnerInformation = {
       companyName: json.ownerINF.companyName,
       companyType: json.ownerINF.companyType,
@@ -129,9 +129,25 @@ export default function Users_edit() {
       notificationmedia: json.ownerINF.notificationMedium,
       serviceRequired: json.ownerINF.serviceNeeded
     };
+    const   oldVehicleOwnerIndividualInformation = {
+       
+        region: json.ownerINF.companyAddressINF.region,
+        subCity: json.ownerINF.companyAddressINF.subcity,
+        specificLocation: json.ownerINF.companyAddressINF.specificLocation,
+        city: json.ownerINF.companyAddressINF.city,
+        woreda: json.ownerINF.companyAddressINF.woreda,
+        houseNumber: json.ownerINF.companyAddressINF.houseNum,
+        phoneNumber: json.ownerINF.companyAddressINF.phone,
+        firstName: json.ownerINF.firstName,
+        lastName: json.ownerINF.lastName,
+        ownerPhoneNumber:json.ownerINF.phoneNumber,
+        email: json.ownerINF.email,
+        notificationmedia: json.ownerINF.notificationMedium,
+        serviceRequired: json.ownerINF.serviceNeeded
+      };
 
     setUpdateVehicleInfo(oldVehicleOwnerInformation);
- 
+    setupdateVehicleInfoIndividual(oldVehicleOwnerIndividualInformation)
             });
     }, [reloadKey])
 
@@ -179,6 +195,7 @@ useEffect(() => {
                 setService(data.service)
             })
     }, [])
+    console.log(notification,service)
 /************reload the page******* */
 
 const handleReload = () => {
@@ -187,16 +204,26 @@ setReloadKey((prevKey) => prevKey + 1);
 
 /*********************************update vehicle owner information************* */
 
-console.log(updateVehicleInfo)
+console.log(role === "OWNER" ? updateVehicleInfo : updateVehicleInfoIndividual)
 const handleUpdateChange = (e) => {
-    console.log('handleUpdateChange')
-    const { name, value } = e.target;
-    setUpdateVehicleInfo((prevData) => ({
-      ...prevData,
-      [name]: value || prevData[name],// Keep the existing value if the input is empty
-    }));
-    console.log(updateVehicleInfo)
-  };
+        console.log('handleUpdateChange')
+        const { name, value } = e.target;
+        if(role === "OWNER"){
+                setUpdateVehicleInfo((prevData) => ({
+                ...prevData,
+                [name]: value || prevData[name],// Keep the existing value if the input is empty
+                }));
+                console.log(updateVehicleInfo)
+            
+    }else
+    {
+            setupdateVehicleInfoIndividual((prevData) => ({
+                ...prevData,
+                [name]: value || prevData[name],// Keep the existing value if the input is empty
+            }));
+            console.log(updateVehicleInfoIndividual)
+    };
+}
 
   const onSubmit =(e)=>{
         
@@ -212,11 +239,13 @@ const handleUpdateChange = (e) => {
             "Accept": "application/json",
             "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(updateVehicleInfo),
+        body: JSON.stringify((role === "OWNER") ? updateVehicleInfo : updateVehicleInfoIndividual),
     };
-    const url = `http://64.226.104.50:9090/Api/Admin/UpdateInfo/VehicleOwner/${id}`;
+    let urll
+    if (role === "OWNER") urll = `http://64.226.104.50:9090/Api/Admin/UpdateInfo/VehicleOwner/${id}`;
+    else if(role === "INDIVIDUAL") urll = `http://64.226.104.50:9090/Api/Admin/UpdateInfo/Individual/${id}`;
     try {
-        const response = await fetch(url, options);
+        const response = await fetch(urll, options);
         const result = await response.json();
         console.log(result);
         localStorage.setItem("message", JSON.stringify(result["message"]));
@@ -293,7 +322,7 @@ const handleUpdateChange = (e) => {
                                                     defaultValue={dataSource.companyType}
                                                     onChange={handleUpdateChange}
                                                   >
-                                                    <option value="">{dataSource.companyType}</option>
+                                                    <option value="">Select Company type</option>
                                                     {companyType.map((item) => (
                                                       <option key={item.companyType}>
                                                         {item.companyType}
@@ -330,7 +359,7 @@ const handleUpdateChange = (e) => {
                                                             ))}
                                                             </select>
                                                         )
-                                                        }
+                                                }
 
                                             </div>
                                         </div>
@@ -396,7 +425,11 @@ const handleUpdateChange = (e) => {
                                         <div>
                                             <p>Phone Number </p>
                                             <input  
-                                            defaultValue={dataSource2.phone} disabled='true' type="text" ></input>
+                                            defaultValue={dataSource2.phone} 
+                                            name='phoneNumber'
+                                            onChange={handleUpdateChange} 
+                                            disabled={diabled}
+                                            type="text" ></input>
                                         </div>
                                     </div>
                                 </div>
@@ -414,7 +447,7 @@ const handleUpdateChange = (e) => {
                                         <div>
                                             <p>Last Name </p>
                                             <input
-                                             name ='firstName' 
+                                             name ='lastName' 
                                              onChange={handleUpdateChange} 
                                             defaultValue={dataSource.lastName} type="text" disabled={diabled}></input>
 
@@ -422,7 +455,7 @@ const handleUpdateChange = (e) => {
                                         <div>
                                             <p>Phone Number</p>
                                             <input
-                                             name ='lastName' 
+                                             name ='ownerPhoneNumber' 
                                              onChange={handleUpdateChange} 
                                             defaultValue={dataSource.phoneNumber} type="text"  disabled={diabled}></input>
                                         </div>
@@ -439,32 +472,56 @@ const handleUpdateChange = (e) => {
                                 <div className='Third_div'>
                                     <h1>Additional Information</h1>
                                     <div className={styles.additional_information}>
+                                  
                                         <div>
-                                            <p>Notification Pereference</p>
-                                            <input className='select'
-                                             name ='notificationmedia' 
-                                             onChange={handleUpdateChange} 
-                                             defaultValue={dataSource.notificationMedium}  disabled></input>
+                                        <p>Notification Priference</p>
+                                            {   !selecttag ? (
+                                                            <input
+                                                            defaultValue={dataSource.notificationMedium}
+                                                            className='select'
+                                                            disabled
+                                                            />
+                                                        ) : (
+                                                            <select
+                                                            className='select'
+                                                            name='notificationmedia'
+                                                            defaultValue={dataSource.notificationMedium}
+                                                            onChange={handleUpdateChange}
+                                                            >
+                                                            <option value="">Select Notification priference</option>
+                                                            {notification.map((item) => (
+                                                                <option key={item.medium}>
+                                                                {item.medium}
+                                                                </option>
+                                                            ))}
+                                                            </select>
+                                                        )
+                                            }
                                         </div>
                                         <div>
                                             <p>Service Neded </p>
-                                             <input
-                                            
-                                             defaultValue={dataSource.serviceNeeded} className='select'  disabled={diabled}>
-                                            </input> 
-                                            {/* {!selecttag ? :
-                                                <select className='select' name ='serviceRequired' 
-                                                onChange={handleUpdateChange}  defaultValue={dataSource.serviceNeeded}
-                                                >
-                                                <option defaultValue=" " >Select Vehicle Condition</option>
-
-                                                    {
-                                                        notification.map(item => {
-                                                            return <option>{item.conditionName}</option>
-                                                        })
-                                                    }
-                                                </select> } */}
-
+                                              {   !selecttag ? (
+                                                            <input
+                                                            defaultValue={dataSource.serviceNeeded}
+                                                            className='select'
+                                                            disabled={diabled}
+                                                            />
+                                                        ) : (
+                                                            <select
+                                                            className='select'
+                                                            name='serviceRequired'
+                                                            defaultValue={dataSource.serviceNeeded}
+                                                            onChange={handleUpdateChange}
+                                                            >
+                                                            <option value="">Select Service Neded</option>
+                                                            {service.map((item) => (
+                                                                <option key={item.service}>
+                                                                {item.service}
+                                                                </option>
+                                                            ))}
+                                                            </select>
+                                                        )
+                                            }
                                         </div>
                                     </div>
                                 </div>

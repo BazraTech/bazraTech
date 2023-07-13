@@ -383,7 +383,7 @@ export default function Cargo_registration() {
                                         {
                                             dataSourc6.map(item => {
                                                 return <>
-                                                    <option>{item.businessType}</option>
+                                                    <option key={item.businessType}>{item.businessType}</option>
                                                 </>
                                             })
                                         }
@@ -401,7 +401,7 @@ export default function Cargo_registration() {
                                         {
                                             dataSource.map(item => {
                                                 return <>
-                                                    <option>{item.businessSector}</option>
+                                                    <option key={item.businessSector}>{item.businessSector}</option>
                                                 </>
                                             })
                                         }
@@ -461,43 +461,6 @@ export default function Cargo_registration() {
                                 </div>
                             </div>
                         </div>
-
-
-                        {/* --------------- vehicle information- -------------- */}
-
-                        {/* <div className='second_div'>
-                            <h1>Agreement</h1>
-                            <div className={styles.vehicle_information}>
-                                
-
-                                <div>
-                                    <p>Agreement scanned document<FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <input name='vehicleName' type="file"
-                                        value={vehicleName}
-                                        {...register("vehicleName", { required: true })}
-                                        placeholder='Enter Vehicle Name'
-                                        onChange={(e) => setvehicleName(e.target.value)} ></input>
-                                    {vehicleName <= 0 && errors.vehicleName?.type === "required" && <span className={styles.validate_text}>*please enter vehicle name</span>}
-                                </div>
-
-                                <div>
-                                    <p>Payment information <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
-                                    <div className='plate_numbera'>
-                                        <input placeholder='Please Enter Plate Number' name='conditionName'
-                                            value={plateNumber}
-                                            {...register("plateNumber", { required: '*please choose service needed' })}
-                                            onChange={(e) => setPlateNumber(e.target.value)} >
-                                        </input>
-                                        {plateNumber <= 0 && errors.plateNumber && <span className={styles.validate_text}>{errors.plateNumber.message}</span>}
-                                    </div>
-
-                                </div>
-
-                               
-                            </div>
-
-                        </div> */}
-
                         <div className={styles.company_button}>
                             <button className={styles.add}>Register</button>
                         </div>

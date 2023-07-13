@@ -90,8 +90,8 @@ export default function () {
         fetch(url2, options)
             .then(respnse => respnse.json())
             .then(data => {
-                setDataSource2(data.vehicleOwnerINF)
-                setTotalPage(data.vehicleOwnerINF.length);
+                setDataSource2(data && data.vehicleOwnerINF)
+                setTotalPage(data ? data.vehicleOwnerINF.length : 0);
                 setLoading(false);
 
             })
@@ -101,7 +101,7 @@ export default function () {
     const [postPerPage, setpostPerPage] = useState(5);
     const indexOfLastPage = page * postPerPage;
     const indexOfFirstPage = indexOfLastPage - postPerPage;
-    const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
+    const currentPage = dataSource2 && dataSource2.slice(indexOfFirstPage, indexOfLastPage);
     // const currentPage2 = dataSource3.slice(indexOfFirstPage, indexOfLastPage);
 
     const onShowSizeChange = (current, pageSize) => {
@@ -142,6 +142,19 @@ export default function () {
             console.error(error);
         }
     }
+    /********cargo owners***** */
+    const urlCargo = "http://64.226.104.50:9090/Api/Admin/All/CargoOwners";
+    const [cargo,setCargo]= useState('')
+    useEffect(() => {
+        fetch(urlCargo, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setCargo(data.cargoOwners)
+             
+            })
+    }, [])
+
+
     /****************Enable and disable user********** */
     const enableDisable = async (enable) => {
         console.log('Im on submit function');
@@ -231,6 +244,8 @@ async function handleConfirm() {
      }
  }
     console.log(currentPage)
+    const allusers = [...currentPage, ...cargo ]
+    console.log(allusers)
     return (
 
         <div className="vehicle_container">
@@ -374,7 +389,9 @@ async function handleConfirm() {
                                                 <button className={styles.mangProfileButton}>Detail</button></Link></td>
                                             <td><Link style={{ textDecoration: 'none' }} to="#">
                                                 <lable className={styles.mangProfileButton} onClick={() => {handleChange(item.phoneNumber)  }}>Change Password</lable></Link></td>
-                                            <td><Link style={{ textDecoration: 'none' }} to="#"><lable className={styles.DeleteProfileButton} onClick={() => {enableDisable(item.id)}} >Lock</lable></Link></td>
+                                            <td><Link style={{ textDecoration: 'none' }} to="#"><lable className={styles.DeleteProfileButton} 
+                                            onClick={() => {enableDisable(item.id)}} style={{background: item.enabled == false ?'green':'red'}} >{item.enabled ==false ? 'Enable' : 'Disable'}</lable></Link></td>
+
                                         </tr>
                                     ))}
                                 </tbody>

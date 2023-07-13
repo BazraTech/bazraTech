@@ -123,7 +123,8 @@ console.log(dataSource1);
         navigate(-1);
     }
   
-   let percent = 75;
+    const remaining = dataSource1.remaining == dataSource1.weight ? 0 : dataSource1.remaining == 0 ? dataSource1.weight : dataSource1.remaining
+    let percent = (remaining/dataSource1.weight) * 100;
 
     return (
 
@@ -144,13 +145,13 @@ console.log(dataSource1);
 
 
                         <div className={styles.forms}>
-                                <div>
-                                        <p>20 ton </p>
-                                        <input  value={dataSource1.cargoOwner} type="text" disabled={diabled}></input>
+                        <div>
+                                        <p>Neded</p>
+                                        <input  value={dataSource1.weight} type="text" disabled={diabled}></input>
                                 </div> 
                                 <div>
-                                    <p>40 ton </p>
-                                        <input  value={dataSource1.packaging} type="text" disabled={diabled}></input>
+                                    <p>Remaining</p>
+                                        <input  value={dataSource1.remaining} type="text" disabled={diabled}></input>
                                 </div>
                                 
                                     <div className={styles.progressBar}>

@@ -62,16 +62,16 @@ export default function ({ id, role, name, from }) {
         },
     };
 
-    const urlFour = "http://64.226.104.50:9090/Api/SignIn/Admin";
-    const [dataSource4, setDataSource4] = useState([])
-    useEffect(() => {
-        fetch(urlFour, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource4(data)
-                console.log(dataSource4)
-            })
-    }, [])
+    // const urlFour = "http://64.226.104.50:9090/Api/SignIn/Admin";
+    // const [dataSource4, setDataSource4] = useState([])
+    // useEffect(() => {
+    //     fetch(urlFour, options)
+    //         .then(respnse => respnse.json())
+    //         .then(data => {
+    //             setDataSource4(data)
+    //             console.log(dataSource4)
+    //         })
+    // }, [])
 
     const [popup, setPop] = useState(false);
     const [state, setState] = useState("");
