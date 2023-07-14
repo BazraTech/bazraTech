@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 import '../../../controller/apiController.dart';
@@ -259,7 +258,7 @@ class _ProfileState extends State<Profile> {
                                                 border: Border(
                                               bottom: BorderSide(
                                                 color: Colors.grey,
-                                                width: 0.2,
+                                                width: 0.3,
                                               ),
                                             )),
                                             child: Row(
@@ -293,7 +292,7 @@ class _ProfileState extends State<Profile> {
                                                   children: [
                                                     Container(
                                                       margin: EdgeInsets.only(
-                                                          right: 20),
+                                                          right: 24),
                                                       child: Result!['email'] ==
                                                               null
                                                           ? Container()
@@ -332,7 +331,7 @@ class _ProfileState extends State<Profile> {
                                                 border: Border(
                                               bottom: BorderSide(
                                                 color: Colors.grey,
-                                                width: 0.3,
+                                                width: 0.2,
                                               ),
                                             )),
                                             child: Row(
@@ -465,18 +464,7 @@ class _ProfileState extends State<Profile> {
                                   );
                                 },
                               ),
-                            )
-
-                      // child: _isLoading
-                      //     ? Container()
-                      //     : ListView.builder(
-                      //         itemCount: 1,
-                      //         padding: EdgeInsets.zero,
-                      //         itemBuilder: (context, index) {
-                      //           return
-                      //         },
-                      //       ),
-                      ),
+                            )),
                 ]),
               ),
               SizedBox(
@@ -499,44 +487,37 @@ class _ProfileState extends State<Profile> {
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10),
                       )),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                                height: screenWidth * 0.08,
-                                width: screenWidth * 0.08,
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(252, 221, 244, 1),
-                                    borderRadius: BorderRadius.circular(6)),
-                                child: Icon(Icons.language_sharp)),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                  width: screenWidth -
-                                      (screenWidth * 0.08 +
-                                          screenWidth * 0.03 +
-                                          76),
-                                  child: Text(
-                                    TranslationUtil.text("Language"),
-                                    textAlign: TextAlign.left,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                        fontFamily: 'Nunito',
-                                        fontSize: AppFonts.smallFontSize,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.normal),
-                                  )),
-                            ),
-                            Container(
-                                child: Icon(Ionicons.chevron_forward_outline)),
-                          ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                            height: screenWidth * 0.08,
+                            width: screenWidth * 0.08,
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(252, 221, 244, 1),
+                                borderRadius: BorderRadius.circular(6)),
+                            child: Icon(Icons.language_sharp)),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                              child: Text(
+                            TranslationUtil.text("Language"),
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontFamily: 'Nunito',
+                                fontSize: AppFonts.smallFontSize,
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal),
+                          )),
                         ),
-                      ),
-                    ],
+                        Spacer(),
+                        Container(
+                            child: Icon(Ionicons.chevron_forward_outline)),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -557,7 +538,7 @@ class _ProfileState extends State<Profile> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
                           Container(
@@ -570,21 +551,18 @@ class _ProfileState extends State<Profile> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                                width: screenWidth -
-                                    (screenWidth * 0.08 +
-                                        screenWidth * 0.03 +
-                                        76),
                                 child: Text(
-                                  TranslationUtil.text('Change password'),
-                                  textAlign: TextAlign.left,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      fontFamily: 'Nunito',
-                                      fontSize: AppFonts.smallFontSize,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal),
-                                )),
+                              TranslationUtil.text('Change password'),
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: AppFonts.smallFontSize,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal),
+                            )),
                           ),
+                          Spacer(),
                           Align(
                             alignment: Alignment.topRight,
                             child: Container(
@@ -604,7 +582,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
                           Container(
@@ -616,22 +594,18 @@ class _ProfileState extends State<Profile> {
                               child: Icon(Ionicons.help)),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                                width: screenWidth -
-                                    (screenWidth * 0.08 +
-                                        screenWidth * 0.03 +
-                                        76),
-                                child: Text(
-                                  TranslationUtil.text("Help"),
-                                  textAlign: TextAlign.left,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      fontFamily: 'Nunito',
-                                      fontSize: AppFonts.smallFontSize,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal),
-                                )),
+                            child: Text(
+                              TranslationUtil.text("Help"),
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: AppFonts.smallFontSize,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal),
+                            ),
                           ),
+                          Spacer(),
                           Align(
                             alignment: Alignment.topRight,
                             child: Container(
@@ -641,7 +615,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
                           Container(
@@ -653,22 +627,18 @@ class _ProfileState extends State<Profile> {
                               child: Icon(Ionicons.settings)),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                                width: screenWidth -
-                                    (screenWidth * 0.08 +
-                                        screenWidth * 0.03 +
-                                        76),
-                                child: Text(
-                                  TranslationUtil.text("Setting"),
-                                  textAlign: TextAlign.left,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      fontFamily: 'Nunito',
-                                      fontSize: AppFonts.smallFontSize,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal),
-                                )),
+                            child: Text(
+                              TranslationUtil.text("Setting"),
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: AppFonts.smallFontSize,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal),
+                            ),
                           ),
+                          Spacer(),
                           Align(
                             alignment: Alignment.topRight,
                             child: Container(

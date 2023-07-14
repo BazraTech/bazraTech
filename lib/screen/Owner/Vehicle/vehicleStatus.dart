@@ -45,6 +45,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
           ],
         ),
         bottomNavigationBar: Container(
+          margin: EdgeInsets.only(bottom: 20),
           height: screenHeight * 0.08,
           decoration: const BoxDecoration(
             color: Colors.white,

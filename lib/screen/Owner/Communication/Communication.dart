@@ -371,7 +371,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
                             child: Row(
                               children: [
                                 Container(
-                                  height: 60,
+                                  height: 70,
                                   width: screenWidth - 29,
                                   child: Column(
                                     children: <Widget>[
@@ -385,11 +385,13 @@ class _CommunicationPageState extends State<CommunicationPage> {
                                                   top: 10, bottom: 10),
                                               child: Text(
                                                 " " + driver['driverName'],
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 13,
-                                                ),
+                                                 textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontFamily: 'Nunito',
+                                fontSize: AppFonts.smallFontSize,
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal),
                                               ),
                                             ),
                                           ),
@@ -399,11 +401,13 @@ class _CommunicationPageState extends State<CommunicationPage> {
                                               " " +
                                                   driver['phoneNumber']
                                                       .toString(),
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12,
-                                              ),
+                                               textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontFamily: 'Nunito',
+                                fontSize: AppFonts.smallFontSize,
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal),
                                             ),
                                           ),
                                           Padding(

@@ -18,6 +18,8 @@ class APIService {
   static String? totalMaintainingVehicles;
   static String? totalinRouteVehiclesVehicles;
   static String? totalparkedVehicle;
+  static String? responsbody;
+
   // fetch list of car avilable
   static InStock() async {
     var client = http.Client();
@@ -205,6 +207,7 @@ class APIService {
 
   static Future<bool> loginFetch(
     LoginRequestModel model,
+    
   ) async {
     final storage = new FlutterSecureStorage();
     var client = http.Client();
@@ -218,6 +221,7 @@ class APIService {
     print(response.body);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
+      responsbody = data["message"];
 
       await storage.write(key: "jwt", value: data["jwt"]);
       await storage.write(key: "user", value: data["user"]["username"]);

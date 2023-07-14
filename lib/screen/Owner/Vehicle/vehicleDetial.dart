@@ -238,6 +238,25 @@ class _vehicleDetialState extends State<vehicleDetial> {
                           ),
                         ),
                       ),
+                      Card(
+                        elevation: 5,
+                        child: ListTile(
+                          title: const Text(
+                            "Vehicle Capcity",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 15),
+                          ),
+                          trailing: Text(
+                            results!['capacity'].toString(),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 15),
+                          ),
+                          leading: const Icon(
+                            Icons.person_pin,
+                            color: kPrimaryColor,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

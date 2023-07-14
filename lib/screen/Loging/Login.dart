@@ -46,6 +46,9 @@ class _LoginState extends State<Login> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   // UserController userController = UserController();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   Future Total_Drivers() async {
     final totalDrivers = await CountDrivers.TotalDrivers();
   }
@@ -114,9 +117,8 @@ class _LoginState extends State<Login> {
               context,
               MaterialPageRoute(
                   builder: (context) => BottomTabBarPageforowner()));
-        } else if (APIService.owner! == "${phoneController.text}") {
-          AlertDialoug.showMyDialog(
-              context, "Error", "Error: User does not exist!");
+        } else {
+          showErrorSnackbar(context);
           setState(() {
             isLoading = false;
           });
@@ -587,4 +589,56 @@ class _LoginState extends State<Login> {
   }
 
   // ignore: non_constant_identifier_names
+  void showErrorSnackbar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Center(
+            child: Row(
+          children: [
+            Icon(
+              Icons.warning,
+              color: Colors.white,
+              size: 28,
+            ),
+            Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(right: 33),
+                  child: Text(
+                    "Error",
+                    textAlign: TextAlign.left,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontFamily: 'Nunito',
+                        fontSize: AppFonts.smallFontSize,
+                        color: Colors.black,
+                        fontWeight: FontWeight.normal),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    margin: EdgeInsets.only(left: 32),
+                    child: Text(
+                      "Bad credentials",
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontFamily: 'Nunito',
+                          fontSize: AppFonts.smallFontSize,
+                          color: Colors.black,
+                          fontWeight: FontWeight.normal),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        )),
+        backgroundColor: Colors.red,
+        behavior: SnackBarBehavior.floating,
+        duration: Duration(seconds: 3),
+      ),
+    );
+  }
 }

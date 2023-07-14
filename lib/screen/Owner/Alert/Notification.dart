@@ -16,6 +16,8 @@ class notificationPage extends StatefulWidget {
 class _notificationPageState extends State<notificationPage> {
   bool _isLoading = true;
   List Result = [];
+  List existingData = [];
+  List results = [];
   List Temp = [];
   List dataList = [];
   List<Color> colors = [
@@ -33,21 +35,21 @@ class _notificationPageState extends State<notificationPage> {
   }
 
   void updateDataInHive(int index) async {
-    final box = await Hive.openBox('dataBox'); // Open the Hive box
+    final box = await Hive.openBox('datalist'); // Open the Hive box
 
-    final dataList = box.get('dataList'); // Retrieve the data list from Hive
+    final dataList = box.get('datalist'); // Retrieve the data list from Hive
 
     if (dataList != null) {
       setState(() {
         dataList[index]['isFlagged'] =
             true; // Set the isFlagged value to true for the desired item
 
-        box.put('dataList', dataList);
+        box.put('datalist', dataList);
       });
     }
   }
 
-  Future<void> fetchDataFromApiAndStoreInHive() async {
+  Future<List<dynamic>> fetchDataFromApiAndStoreInHive() async {
     final storage = new FlutterSecureStorage();
     var token = await storage.read(key: 'jwt');
     Map<String, String> requestHeaders = {
@@ -61,47 +63,79 @@ class _notificationPageState extends State<notificationPage> {
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body);
 
-      List results = mapResponse['activeAlerts'];
-      final Box<dynamic> box = await Hive.openBox<dynamic>('dataBox');
+      results = mapResponse['activeAlerts'];
+      final Box<dynamic> box = await Hive.openBox<dynamic>('listdata');
 
-      setState(() {
-        final int lastIndex = box.isEmpty ? 0 : box.length;
-        for (var i = 0; i < results.length; i++) {
-          final item = results[i];
+      if (!box.containsKey('listdata')) {
+        // Data doesn't exist, store it in Hive
+        final modifiedDataList = addBoolValueToList(results);
+        setState(() {
+          box.put('dataList', modifiedDataList);
+          dataList = modifiedDataList;
+        });
+        return dataList; // Store the data in Hive
+      } else {
+        // Data already exists in Hive, retrieve it
 
-          final existingData = box.values.contains(
-            (data) => data["alertstart"] == item["alertstart"],
-          );
+        setState(() {
+          dataList = box.get('listdata');
+        });
 
-          if (existingData == null) {
-            final modifiedDataList = addBoolValueToList(results);
+        // Compare the existing data with the new data
+        if (_isDataEqual(dataList, results)) {
+          // New data is the same as existing data, return the existing data
+          return dataList;
+        } else {
+          // New data is different, update the data in Hive
+          // Store the new data in Hive
+          final modifiedDataList = addBoolValueToList(results);
+          setState(() {
             box.put('dataList', modifiedDataList);
-          }
+            dataList = modifiedDataList;
+            box.put('listdata', modifiedDataList);
+          });
+          return dataList;
         }
-      });
-
-      print(results);
+      }
     } else {
-      throw Exception('not loaded ');
+      throw Exception('Failed to fetch data from API');
     }
+
+    // setState(() {
+    //   final int lastIndex = box.isEmpty ? 0 : box.length;
+    //   for (var i = 0; i < results.length; i++) {
+    //     final item = results[i];
+
+    //     final existingData = box.values.contains(
+    //       (data) => data["alertstart"] == item["alertstart"],
+    //     );
+
+    //     if (existingData == null) {
+
+    //     }
+    //   }
+    // });
   }
 
-  Future<void> fetchDataFromHive() async {
-    final box = await Hive.openBox('dataBox'); // Open the Hive box
+  // Future<void> fetchDataFromHive() async {
+  //   final box = await Hive.openBox('dataBox'); // Open the Hive box
 
-    final dataListFromHive =
-        box.get('dataList'); // Retrieve the data list from Hive
+  //   final dataListFromHive =
+  //       box.get('dataList'); // Retrieve the data list from Hive
 
-    setState(() {
-      dataList =
-          dataListFromHive != null ? List<dynamic>.from(dataListFromHive) : [];
-    });
+  //   setState(() {
+  //     dataList =
+  //         dataListFromHive != null ? List<dynamic>.from(dataListFromHive) : [];
+  //   });
+  // }
+
+  bool _isDataEqual(List<dynamic> existingData, List<dynamic> newData) {
+    return existingData.length == newData.length;
   }
 
   void initState() {
     super.initState();
     fetchDataFromApiAndStoreInHive();
-    fetchDataFromHive();
   }
 
   @override
@@ -185,7 +219,7 @@ class _notificationPageState extends State<notificationPage> {
                         itemCount: dataList.length,
                         itemBuilder: (context, index) {
                           bool doesNotExist =
-                              Result.contains(dataList[index]['isFlagged']) ==
+                              dataList.contains(dataList[index]['isFlagged']) ==
                                   false;
                           return Column(
                             children: [
@@ -352,7 +386,8 @@ class _notificationPageState extends State<notificationPage> {
                                             ],
                                           )),
                                         )
-                                      else
+                                      else if (dataList[index]['isFlagged'] ==
+                                          true)
                                         Container(
                                           height: screenHeight * 0.1,
                                           width: screenWidth,

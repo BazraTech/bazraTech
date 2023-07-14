@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bazralogin/controller/Localization.dart';
 import 'package:bazralogin/screen/Bottom/Bottom.dart';
 import 'package:bazralogin/screen/Driver/driverBottomnav.dart';
@@ -14,6 +16,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+
+  await Hive.openBox<dynamic>('items');
+  await Hive.openBox<int>('count');
+
   final translationController = Get.put(TranslationController());
   final prefs = await SharedPreferences.getInstance();
   phone = prefs.getString('phone_number');

@@ -1,14 +1,12 @@
 import 'dart:convert';
 import 'dart:ui';
-
+import 'dart:async';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import 'package:bazralogin/Theme/Alert.dart';
 import 'package:bazralogin/screen/Driver/avilablelMarket_Fordriver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../config/APIService.dart';
@@ -35,6 +33,7 @@ class Driver_Hompage extends StatefulWidget {
 class _Driver_HompageState extends State<Driver_Hompage> {
   static bool isPressed = true;
   Offset distance = isPressed ? Offset(10, 10) : Offset(28, 28);
+
   double blur = isPressed ? 5.0 : 30.0;
   String Logoavtar = "";
   String? plateNumber;
@@ -69,7 +68,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
     return 'Good Evening';
   }
 
-  Future fetchDriverinfo() async {
+  Future<Map<String, dynamic>> fetchDriverinfo() async {
     final storage = new FlutterSecureStorage();
     var token = await storage.read(key: 'jwt');
     var client = http.Client();
@@ -82,22 +81,10 @@ class _Driver_HompageState extends State<Driver_Hompage> {
     var response = await client.get(url, headers: requestHeaders);
     final Map jsonResponse = json.decode(response.body);
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
-      await storage.write(
-          key: "totalVehicles", value: data["state"].toString());
-
-      driverstate = await storage.read(key: 'totalVehicles');
-      await storage.write(
-          key: "totalVehicle", value: data["driverName"].toString());
-
-      namedriver = await storage.read(key: 'totalVehicle');
-      setState(() {
-        _isLoading = false;
-        Result = data;
-      });
-
-      return Result;
-    } else {}
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to fetch data');
+    }
   }
 
   //fetch driver status
@@ -174,6 +161,29 @@ class _Driver_HompageState extends State<Driver_Hompage> {
     // Return true to stop the default back button event
   }
 
+  Stream<Map<String, dynamic>> fetchData() async* {
+    while (true) {
+      final storage = new FlutterSecureStorage();
+      var token = await storage.read(key: 'jwt');
+      var client = http.Client();
+      Map<String, String> requestHeaders = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      var url = Uri.http(ApIConfig.urlAPI, ApIConfig.drverInfo);
+      var response = await client.get(url, headers: requestHeaders);
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        yield data;
+      } else {
+        throw Exception('Failed to fetch data');
+      }
+      await Future.delayed(
+          Duration(seconds: 5)); // Delay for 5 seconds before fetching again
+    }
+  }
+
   @override
   void dispose() {
     BackButtonInterceptor.remove(myInterceptor);
@@ -183,6 +193,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
   @override
   void initState() {
     BackButtonInterceptor.add(myInterceptor);
+
     fetchDriverinfo();
 
     super.initState();
@@ -235,96 +246,78 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 46),
-                                  child: SizedBox(
-                                    height: screenHeight * 0.1,
-                                    width: screenWidth - 80,
-                                    child: FutureBuilder(
-                                        future: _fetchLogo(),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot<String> snapshot) {
-                                          if (snapshot.connectionState !=
-                                              ConnectionState.done)
-                                            return Text("");
-                                          return SizedBox(
-                                              height: screenHeight * 0.2,
-                                              width: screenWidth * 0.9,
-                                              child: Row(
-                                                children: [
-                                                  Container(
-                                                      height:
-                                                          screenHeight * 0.1,
-                                                      child: Image.network(
-                                                          snapshot.data
-                                                              .toString())),
-                                                  Container(
-                                                    margin: EdgeInsets.only(
-                                                        top: 30),
-                                                    child: Column(
-                                                      children: [
-                                                        Container(
-                                                          width:
-                                                              screenWidth * 0.3,
-                                                          child: Text(
-                                                            "Well back ",
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            style: const TextStyle(
-                                                                fontFamily:
-                                                                    'Nunito',
-                                                                fontSize: AppFonts
-                                                                    .smallFontSize,
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                                  left: 4),
-                                                          width:
-                                                              screenWidth * 0.3,
-                                                          child:
-                                                              Result?['driverName'] ==
-                                                                      null
-                                                                  ? Container()
-                                                                  : Text(
-                                                                      Result?[
-                                                                          'driverName'],
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .left,
-                                                                      overflow:
-                                                                          TextOverflow
-                                                                              .ellipsis,
-                                                                      style: const TextStyle(
-                                                                          fontFamily:
-                                                                              'Nunito',
-                                                                          fontSize:
-                                                                              14,
-                                                                          color: Colors
-                                                                              .white,
-                                                                          fontWeight:
-                                                                              FontWeight.bold),
-                                                                    ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )
-                                                ],
-                                              ));
-                                        }),
+                              Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                          top: 30, left: screenWidth * 0.06),
+                                      child: SizedBox(
+                                        height: screenHeight * 0.1,
+                                        child:
+                                            FutureBuilder<Map<String, dynamic>>(
+                                          future: fetchDriverinfo(),
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot<
+                                                      Map<String, dynamic>>
+                                                  snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return Container(); // Show a loading indicator while data is being fetched
+                                            } else if (snapshot.hasError) {
+                                              return Text(
+                                                  'Error: ${snapshot.error}'); // Show an error message if an error occurs
+                                            } else {
+                                              // Access the fetched data using snapshot.data and display it
+                                              final data = snapshot.data;
+
+                                              // Display the data in your desired format
+                                              return Image.network(
+                                                  data!["driverPic"]);
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Container(
+                                    width: screenWidth * 0.3,
+                                    margin: EdgeInsets.only(left: 23),
+                                    child: FutureBuilder<Map<String, dynamic>>(
+                                      future: fetchDriverinfo(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<Map<String, dynamic>>
+                                              snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return Container(); // Show a loading indicator while data is being fetched
+                                        } else if (snapshot.hasError) {
+                                          return Text(
+                                              'Error: ${snapshot.error}'); // Show an error message if an error occurs
+                                        } else {
+                                          // Access the fetched data using snapshot.data and display it
+                                          final data = snapshot.data;
+
+                                          // Display the data in your desired format
+                                          return SizedBox(
+                                            height: 30,
+                                            child: Text(
+                                              "${data!["driverName"]}",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontFamily: "Nunito",
+                                                color: Colors.black,
+                                                fontSize:
+                                                    AppFonts.smallFontSize,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                               InkWell(
                                 onTap: () {
@@ -377,21 +370,21 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                             ],
                           ),
                         ),
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            child: Text(
-                              "Today work shudule",
-                              textAlign: TextAlign.left,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  fontFamily: 'Nunito',
-                                  fontSize: AppFonts.smallFontSize,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                        ),
+                        // Align(
+                        //   alignment: Alignment.topCenter,
+                        //   child: Container(
+                        //     child: Text(
+                        //       "Today work shudule",
+                        //       textAlign: TextAlign.left,
+                        //       overflow: TextOverflow.ellipsis,
+                        //       style: const TextStyle(
+                        //           fontFamily: 'Nunito',
+                        //           fontSize: AppFonts.smallFontSize,
+                        //           color: Colors.white,
+                        //           fontWeight: FontWeight.normal),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -402,175 +395,143 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                         padding: const EdgeInsets.all(10.0),
                         child: Container(
                           height: screenHeight * 0.24,
-                          margin: EdgeInsets.only(top: 150),
-                          child: _isLoading
-                              ? Text("")
-                              : ListView.builder(
-                                  itemCount: 1,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  padding: EdgeInsets.zero,
-                                  itemBuilder: (context, index) {
-                                    return Row(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                            height: screenHeight * 0.19,
-                                            width: screenWidth - 42,
-                                            child: Container(
-                                              margin: EdgeInsets.only(
-                                                top: screenWidth * 0.05,
-                                              ),
-                                              child: Column(
+                          margin: EdgeInsets.only(top: 130),
+                          child: ListView.builder(
+                              itemCount: 1,
+                              physics: NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.zero,
+                              itemBuilder: (context, index) {
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                        height: screenHeight * 0.19,
+                                        width: screenWidth - 42,
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                            top: screenWidth * 0.05,
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
                                                 children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Icon(
-                                                        Icons.trip_origin,
-                                                        color: Colors.green,
-                                                      ),
-                                                      CustomPaint(
-                                                        size: Size(
-                                                            screenWidth * 0.14,
-                                                            2),
-                                                        painter:
-                                                            DashLinePainter(),
-                                                      ),
-                                                      Align(
-                                                        alignment: Alignment
-                                                            .bottomCenter,
-                                                        child: Container(
-                                                          height: screenHeight *
-                                                              0.09,
-                                                          width: screenWidth *
-                                                              0.09,
-                                                          child: Container(
-                                                            child: Icon(
-                                                              Icons
-                                                                  .local_shipping,
-                                                              color:
-                                                                  Colors.blue,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      CustomPaint(
-                                                        size: Size(
-                                                            screenWidth * 0.14,
-                                                            2),
-                                                        painter:
-                                                            DashLinePainter(),
-                                                      ),
-                                                      Icon(
-                                                        Icons.trip_origin,
-                                                        color: Colors.red,
-                                                      )
-                                                    ],
+                                                  Icon(
+                                                    Icons.trip_origin,
+                                                    color: Colors.green,
                                                   ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Container(
-                                                        child: SizedBox(
-                                                          height: 20,
-                                                          width:
-                                                              screenWidth * 0.3,
-                                                          child: Center(
-                                                            child: GetBuilder<
-                                                                ApiControllerdriverimage>(
-                                                              builder:
-                                                                  (_ownerinfo) =>
-                                                                      ListView
-                                                                          .builder(
-                                                                itemCount: 1,
-                                                                itemBuilder:
-                                                                    (context,
-                                                                        index) {
-                                                                  return Container(
-                                                                    child:
-                                                                        Center(
-                                                                      child: _ownerinfo.dataList ==
-                                                                              null
-                                                                          ? Container()
-                                                                          : Text(
-                                                                              "${_ownerinfo.dataList!["status"]}",
-                                                                              textAlign: TextAlign.center,
-                                                                              style: TextStyle(
-                                                                                fontFamily: "Nunito",
-                                                                                color: Colors.black,
-                                                                                fontSize: AppFonts.smallFontSize,
-                                                                              ),
-                                                                            ),
-                                                                    ),
-                                                                  );
-                                                                },
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width:
-                                                            screenWidth * 0.12,
-                                                      ),
-                                                      Container(
-                                                        child: SizedBox(
-                                                          height: 20,
-                                                          width:
-                                                              screenWidth * 0.3,
-                                                          child: Center(
-                                                            child: GetBuilder<
-                                                                ApiControllerdriverimage>(
-                                                              builder:
-                                                                  (_ownerinfo) =>
-                                                                      ListView
-                                                                          .builder(
-                                                                itemCount: 1,
-                                                                itemBuilder:
-                                                                    (context,
-                                                                        index) {
-                                                                  return Container(
-                                                                    child:
-                                                                        Center(
-                                                                      child: _ownerinfo.dataList ==
-                                                                              null
-                                                                          ? Container()
-                                                                          : Text(
-                                                                              "${_ownerinfo.dataList!["status"]}",
-                                                                              textAlign: TextAlign.center,
-                                                                              style: TextStyle(
-                                                                                fontFamily: "Nunito",
-                                                                                color: Colors.black,
-                                                                                fontSize: AppFonts.smallFontSize,
-                                                                              ),
-                                                                            ),
-                                                                    ),
-                                                                  );
-                                                                },
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ],
+                                                  CustomPaint(
+                                                    size: Size(
+                                                        screenWidth * 0.14, 2),
+                                                    painter: DashLinePainter(),
                                                   ),
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    child: Container(
+                                                      height:
+                                                          screenHeight * 0.09,
+                                                      width: screenWidth * 0.09,
+                                                      child: Container(
+                                                        child: Icon(
+                                                          Icons.local_shipping,
+                                                          color: Colors.blue,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  CustomPaint(
+                                                    size: Size(
+                                                        screenWidth * 0.14, 2),
+                                                    painter: DashLinePainter(),
+                                                  ),
+                                                  Icon(
+                                                    Icons.trip_origin,
+                                                    color: Colors.red,
+                                                  )
                                                 ],
                                               ),
-                                            ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                      height: 30,
+                                                      child: Center(
+                                                        child: StreamBuilder<
+                                                            Map<String,
+                                                                dynamic>>(
+                                                          stream: fetchData(),
+                                                          builder: (context,
+                                                              snapshot) {
+                                                            if (snapshot
+                                                                .hasData) {
+                                                              final Map<String,
+                                                                      dynamic>
+                                                                  data =
+                                                                  snapshot
+                                                                      .data!;
+                                                              // Render your UI with the data
+                                                              return Text(data[
+                                                                  "status"]);
+                                                            } else if (snapshot
+                                                                .hasError) {
+                                                              return Text(
+                                                                  'Error: ${snapshot.error}');
+                                                            } else {
+                                                              return Container();
+                                                            }
+                                                          },
+                                                        ),
+                                                      )),
+                                                  SizedBox(
+                                                    width: screenWidth * 0.25,
+                                                  ),
+                                                  Container(
+                                                    height: 30,
+                                                    child: Center(
+                                                      child: StreamBuilder<
+                                                          Map<String, dynamic>>(
+                                                        stream: fetchData(),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          if (snapshot
+                                                              .hasData) {
+                                                            final Map<String,
+                                                                    dynamic>
+                                                                data =
+                                                                snapshot.data!;
+                                                            // Render your UI with the data
+                                                            return Text(
+                                                                data["status"]);
+                                                          } else if (snapshot
+                                                              .hasError) {
+                                                            return Text(
+                                                                'Error: ${snapshot.error}');
+                                                          } else {
+                                                            return Container();
+                                                          }
+                                                        },
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    );
-                                  }),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }),
                         ),
                       ),
                     ],
@@ -615,36 +576,46 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                             ),
                                           ]
                                         : null),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
+                                child: Align(
+                                  child: Container(
+                                    height: screenHeight * 0.1,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
                                               0.04,
-                                      margin: EdgeInsets.only(top: 12),
-                                      //height: 70,
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Icon(
-                                        Icons.work,
-                                        size: 35,
-                                        color: Colors.blue,
-                                      ),
+                                          margin: EdgeInsets.only(top: 12),
+                                          //height: 70,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: Icon(
+                                            Icons.work,
+                                            size: 35,
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.only(top: 8),
+                                          child: Text(
+                                            TranslationUtil.text(
+                                                "Available Market"),
+                                            textAlign: TextAlign.left,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                                fontFamily: 'Nunito',
+                                                fontSize:
+                                                    AppFonts.smallFontSize,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    Container(
-                                      margin: EdgeInsets.only(top: 8),
-                                      child: Text(
-                                        TranslationUtil.text(
-                                            "Available Market"),
-                                        textAlign: TextAlign.left,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                            fontFamily: 'Nunito',
-                                            fontSize: AppFonts.smallFontSize,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 )),
                           ),
                         ),
@@ -692,32 +663,40 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                           ),
                                         ]
                                       : null),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(top: 5),
-                                    // height: 70,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Icon(
-                                      Icons.work,
-                                      size: 35,
-                                      color: Colors.blue,
-                                    ),
+                              child: Align(
+                                child: Container(
+                                  height: screenHeight * 0.1,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(top: 5),
+                                        // height: 70,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: Icon(
+                                          Icons.work,
+                                          size: 35,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(top: 6),
+                                        child: Text(
+                                          "Active work",
+                                          textAlign: TextAlign.left,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              fontFamily: 'Nunito',
+                                              fontSize: AppFonts.smallFontSize,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 6),
-                                    child: Text(
-                                      "Active work",
-                                      textAlign: TextAlign.left,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                          fontFamily: 'Nunito',
-                                          fontSize: AppFonts.smallFontSize,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               )),
                         ),
                       ),
@@ -752,32 +731,40 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                           ),
                                         ]
                                       : null),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(top: 5),
-                                    // height: 70,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Icon(
-                                      Icons.insert_drive_file_rounded,
-                                      size: 35,
-                                      color: Colors.blue,
-                                    ),
+                              child: Align(
+                                child: Container(
+                                  height: screenHeight * 0.1,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(top: 5),
+                                        // height: 70,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: Icon(
+                                          Icons.insert_drive_file_rounded,
+                                          size: 35,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(top: 8),
+                                        child: Text(
+                                          TranslationUtil.text("Report"),
+                                          textAlign: TextAlign.left,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              fontFamily: 'Nunito',
+                                              fontSize: AppFonts.smallFontSize,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 8),
-                                    child: Text(
-                                      TranslationUtil.text("Report"),
-                                      textAlign: TextAlign.left,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                          fontFamily: 'Nunito',
-                                          fontSize: AppFonts.smallFontSize,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               )),
                         ),
                       ),
@@ -785,17 +772,12 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                         padding: const EdgeInsets.all(10),
                         child: GestureDetector(
                           onTap: (() {
-                            if (Result!["plateNumber"] == null) {
-                              alertutils.showMyDialog(
-                                  context, "Alert", "Driver not onroute");
-                            } else {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CreateAlert(
-                                            title: '',
-                                          )));
-                            }
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CreateAlert(
+                                          title: '',
+                                        )));
                           }),
                           child: AnimatedContainer(
                               //padding: EdgeInsets.only(bottom: _padding),
@@ -819,32 +801,39 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                           ),
                                         ]
                                       : null),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(top: 5),
-                                    // height: 70,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Icon(
-                                      Ionicons.alert,
-                                      size: 35,
-                                      color: Colors.blue,
-                                    ),
+                              child: Align(
+                                child: Container(
+                                  height: screenHeight * 0.1,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        // height: 70,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: Icon(
+                                          Ionicons.alert,
+                                          size: 35,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(top: 8),
+                                        child: Text(
+                                          TranslationUtil.text("Create Alert"),
+                                          textAlign: TextAlign.left,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              fontFamily: 'Nunito',
+                                              fontSize: AppFonts.smallFontSize,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 8),
-                                    child: Text(
-                                      TranslationUtil.text("Create Alert"),
-                                      textAlign: TextAlign.left,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                          fontFamily: 'Nunito',
-                                          fontSize: AppFonts.smallFontSize,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               )),
                         ),
                       ),
@@ -867,3 +856,6 @@ class _Driver_HompageState extends State<Driver_Hompage> {
         ));
   }
 }
+
+// fetch  all driver info
+

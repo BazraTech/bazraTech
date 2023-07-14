@@ -11,10 +11,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
-import '../../../controller/apiController.dart';
+
 import '../../Loging/changePassword.dart';
 import '../../../../const/constant.dart';
 import '../Leaveform/leavePage.dart';
@@ -37,32 +36,27 @@ class _driverProfileState extends State<driverProfile> {
   String? ownername;
   String? ownerphone;
   String? owneremail;
-  Future<String> _fetchLogo() async {
-    var client = http.Client();
+  Future<Map<String, dynamic>> fetchDriverinfo() async {
     final storage = new FlutterSecureStorage();
     var token = await storage.read(key: 'jwt');
+    var client = http.Client();
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    final response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
-        headers: requestHeaders);
+    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.drverInfo);
+    var response = await client.get(url, headers: requestHeaders);
+    final Map jsonResponse = json.decode(response.body);
     if (response.statusCode == 200) {
-      // If the server returns a 200 OK response, parse the JSON.
-      Map<String, dynamic> data = json.decode(response.body);
-      await storage.write(key: "ownerpic", value: data["avatar"].toString());
-
-      ownerpic = (await storage.read(key: 'ownerpic'))!;
-      return data["avatar"];
+      return json.decode(response.body);
     } else {
-      throw Exception('Failed to load image');
+      throw Exception('Failed to fetch data');
     }
   }
 
 // fetch driver ifo
-  Future fetchDriverinfo() async {
+  Future fetchDriverinfos() async {
     final storage = new FlutterSecureStorage();
     var token = await storage.read(key: 'jwt');
     var client = http.Client();
@@ -106,7 +100,7 @@ class _driverProfileState extends State<driverProfile> {
   }
 
   void initState() {
-    fetchDriverinfo();
+    fetchDriverinfos();
     BackButtonInterceptor.add(myInterceptor);
     super.initState();
   }
@@ -167,26 +161,28 @@ class _driverProfileState extends State<driverProfile> {
                   Column(
                     children: [
                       Container(
-                        child: FutureBuilder(
-                          future: _fetchLogo(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<String> snapshot) {
-                            if (snapshot.connectionState !=
-                                ConnectionState.done) return Text("");
-                            return Container(
-                              height: screenHeight * 0.09,
-                              width: screenWidth * 0.18,
-                              child: ClipOval(
-                                child: Container(
-                                  child: SizedBox(
-                                      height: screenHeight * 0.06,
-                                      width: screenWidth * 0.05,
-                                      child: Image.network(
-                                          snapshot.data.toString())),
-                                ),
-                              ),
-                            );
-                          },
+                        child: SizedBox(
+                          height: screenHeight * 0.1,
+                          width: screenWidth - 80,
+                          child: FutureBuilder<Map<String, dynamic>>(
+                            future: fetchDriverinfo(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<Map<String, dynamic>> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Container(); // Show a loading indicator while data is being fetched
+                              } else if (snapshot.hasError) {
+                                return Text(
+                                    'Error: ${snapshot.error}'); // Show an error message if an error occurs
+                              } else {
+                                // Access the fetched data using snapshot.data and display it
+                                final data = snapshot.data;
+
+                                // Display the data in your desired format
+                                return Image.network(data!["driverPic"]);
+                              }
+                            },
+                          ),
                         ),
                       ),
                       _isLoading
@@ -453,10 +449,10 @@ class _driverProfileState extends State<driverProfile> {
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10),
                       )),
-                  child: Row(
+                  child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(12.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -485,6 +481,7 @@ class _driverProfileState extends State<driverProfile> {
                                         fontWeight: FontWeight.normal),
                                   )),
                             ),
+                            Spacer(),
                             Container(
                                 child: Icon(Ionicons.chevron_forward_outline)),
                           ],
@@ -516,15 +513,14 @@ class _driverProfileState extends State<driverProfile> {
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10),
                       )),
-                  child: Row(
+                  child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(12.0),
+                        padding: const EdgeInsets.all(.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                                height: screenWidth * 0.08,
+                                height: screenWidth * 0.1,
                                 width: screenWidth * 0.08,
                                 decoration: BoxDecoration(
                                     color: Color.fromRGBO(252, 221, 244, 1),
@@ -533,23 +529,24 @@ class _driverProfileState extends State<driverProfile> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                  width: screenWidth -
-                                      (screenWidth * 0.08 +
-                                          screenWidth * 0.03 +
-                                          76),
                                   child: Text(
-                                    "Leave Request",
-                                    textAlign: TextAlign.left,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                        fontFamily: 'Nunito',
-                                        fontSize: AppFonts.smallFontSize,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.normal),
-                                  )),
+                                "Leave Request",
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontSize: AppFonts.smallFontSize,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              )),
                             ),
-                            Container(
-                                child: Icon(Ionicons.chevron_forward_outline)),
+                            Spacer(),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Container(
+                                  child:
+                                      Icon(Ionicons.chevron_forward_outline)),
+                            ),
                           ],
                         ),
                       ),
@@ -574,7 +571,7 @@ class _driverProfileState extends State<driverProfile> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Row(
                         children: [
                           Container(
@@ -596,22 +593,19 @@ class _driverProfileState extends State<driverProfile> {
                                 );
                               },
                               child: Container(
-                                  width: screenWidth -
-                                      (screenWidth * 0.08 +
-                                          screenWidth * 0.03 +
-                                          76),
                                   child: Text(
-                                    TranslationUtil.text('Change password'),
-                                    textAlign: TextAlign.left,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                        fontFamily: 'Nunito',
-                                        fontSize: AppFonts.smallFontSize,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.normal),
-                                  )),
+                                TranslationUtil.text('Change password'),
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontSize: AppFonts.smallFontSize,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              )),
                             ),
                           ),
+                          Spacer(),
                           Align(
                             alignment: Alignment.topRight,
                             child: Container(
@@ -631,7 +625,7 @@ class _driverProfileState extends State<driverProfile> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
                           Container(
@@ -644,21 +638,18 @@ class _driverProfileState extends State<driverProfile> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                                width: screenWidth -
-                                    (screenWidth * 0.08 +
-                                        screenWidth * 0.03 +
-                                        76),
                                 child: Text(
-                                  TranslationUtil.text("Help"),
-                                  textAlign: TextAlign.left,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      fontFamily: 'Nunito',
-                                      fontSize: AppFonts.smallFontSize,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal),
-                                )),
+                              TranslationUtil.text("Help"),
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: AppFonts.smallFontSize,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal),
+                            )),
                           ),
+                          Spacer(),
                           Align(
                             alignment: Alignment.topRight,
                             child: Container(
@@ -668,7 +659,7 @@ class _driverProfileState extends State<driverProfile> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
                           Container(
@@ -681,21 +672,18 @@ class _driverProfileState extends State<driverProfile> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                                width: screenWidth -
-                                    (screenWidth * 0.08 +
-                                        screenWidth * 0.03 +
-                                        76),
                                 child: Text(
-                                  TranslationUtil.text("Setting"),
-                                  textAlign: TextAlign.left,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      fontFamily: 'Nunito',
-                                      fontSize: AppFonts.smallFontSize,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal),
-                                )),
+                              TranslationUtil.text("Setting"),
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontFamily: 'Nunito',
+                                  fontSize: AppFonts.smallFontSize,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal),
+                            )),
                           ),
+                          Spacer(),
                           Align(
                             alignment: Alignment.topRight,
                             child: Container(

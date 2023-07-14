@@ -364,9 +364,12 @@ class alertutilsforgetpin {
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text(
-                    message,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  Center(
+                    child: Text(
+                      message,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                    ),
                   ),
                 ],
               ),

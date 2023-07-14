@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:bazralogin/config/APIService.dart';
-import 'package:bazralogin/domian/secure_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
@@ -71,9 +69,7 @@ class CountDrivers {
       print(totalAssigned);
 
       return results;
-    } else {
-     
-    }
+    } else {}
   }
   // fetch  parked car
 
@@ -147,8 +143,7 @@ class CountDrivers {
       'Authorization': 'Bearer $token',
     };
     var response = await http.get(
-        Uri.parse(
-            'http://64.226.104.50:9090/Api/Vehicle/Owner/Drivers/PERMIT'),
+        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/Owner/Drivers/PERMIT'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {

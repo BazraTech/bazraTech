@@ -15,6 +15,7 @@ import '../../../const/constant.dart';
 import 'package:http/http.dart' as http;
 import '../../../controller/apiController.dart';
 import '../../../controller/ownerinfocontroller.dart';
+
 import '../Driver/driversPage.dart';
 import '../TripManagement/setGuzo.dart';
 import '../Vehicle/vehicleStatus.dart';
@@ -46,6 +47,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
   List newtotalnotification = [];
   List oldtotalnotification = [];
   List Temp = [];
+
   List dataList = [];
   DateTime? currentBackPressTime;
   bool _isLoading = true;
@@ -53,20 +55,9 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
   Map<String, dynamic>? findVehicle;
   double _padding = 6.0;
   String query = '';
-  void updateDataInHive(int index) async {
-    final box = await Hive.openBox('dataBox'); // Open the Hive box
 
-    final dataList = box.get('dataList'); // Retrieve the data list from Hive
-
-    if (dataList != null) {
-      setState(() {
-        dataList[index]['status'] =
-            "old"; // Set the isFlagged value to true for the desired item
-
-        box.put('dataList', dataList);
-      });
-    }
-  }
+  // fetch notification
+  // final Box<dynamic> itemsBox = Hive.box<dynamic>('items');
 
   List<dynamic> addBoolValueToList(List<dynamic> Result) {
     return Result.map((item) {
@@ -102,31 +93,6 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
     }
   }
 
-  Future<void> fetchDataFromHive() async {
-    final box = await Hive.openBox('dataBox'); // Open the Hive box
-
-    final dataListFromHive = box.get('dataList');
-
-    setState(() {
-      dataList =
-          dataListFromHive != null ? List<dynamic>.from(dataListFromHive) : [];
-
-      for (var i = 0; i < dataList.length; i += 1) {
-        newnotification = dataList.contains(dataList[i]['status']) == "new";
-
-        if (newnotification == true) {
-          newtotalnotification = dataList
-              .where((element) => element['status'].contains("new"))
-              .toList();
-        } else {
-          oldtotalnotification = dataList;
-        }
-      }
-
-      // Retrieve the data list from Hive
-    });
-  }
-
   void myAsyncMethod() {
     // Perform asynchronous operation
     Future.delayed(Duration(seconds: 2), () {
@@ -136,6 +102,26 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
         );
       }
     });
+  }
+
+  Future<List<dynamic>> fetchData() async {
+    final storage = new FlutterSecureStorage();
+    var token = await storage.read(key: 'jwt');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    final response = await http.get(
+        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/Alerts/ByStatus'),
+        headers: requestHeaders);
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+      List items = jsonData["activeAlerts"];
+      return items;
+    } else {
+      throw Exception('Failed to fetch data');
+    }
   }
 
   Future<String> _fetchLogo() async {
@@ -186,10 +172,45 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
     return false;
   }
 
+  int newItemCount = 0;
+  Future<void> fetchAndStoreData() async {
+    final Box<dynamic> itemsBox = await Hive.openBox<dynamic>('items');
+    final fetchedData = await fetchData();
+    final storedData = itemsBox.values.toList();
+
+    newItemCount = 0;
+    List<dynamic> newData = fetchedData.where((item) {
+      return !storedData.contains(item);
+    }).toList();
+
+    print(newData.length);
+
+    for (final item in fetchedData) {
+      if (!storedData.contains(item)) {
+        itemsBox.add(item);
+
+        newItemCount++;
+      }
+    }
+    //
+
+    setState(() {}); // Trigger rebuild to update the UI
+    print('New items count: $newItemCount');
+  }
+
+  void clearItemCount() {
+    setState(() {
+      newItemCount = 0;
+    });
+    // Trigger rebuild to update the UI
+  }
+
   void initState() {
-    _isMounted = true;
     super.initState();
-    fetchDataFromHive();
+    fetchData();
+
+    fetchAndStoreData();
+    _isMounted = true;
 
     BackButtonInterceptor.add(myInterceptor);
   }
@@ -205,6 +226,12 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     final ApiController controller = Get.put(ApiController());
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      controller.fetchData();
+    });
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      _controller.fetchData();
+    });
 
     final ApiControllerforowner _ownerinfo = Get.put(ApiControllerforowner());
     return Scaffold(
@@ -338,19 +365,12 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                             ),
                             InkWell(
                               onTap: () {
+                                clearItemCount();
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             notificationPage()));
-                                if (newtotalnotification == true) {
-                                  // Set the isFlagged value to true for the desired item
-                                  for (var i = 0;
-                                      i < newtotalnotification.length;
-                                      i += 1) {
-                                    updateDataInHive(i);
-                                  }
-                                }
                               },
                               child: Container(
                                 height: screenHeight * 0.1,
@@ -366,23 +386,14 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                         top: -10, end: -27),
                                     showBadge: true,
                                     ignorePointer: false,
-                                    badgeContent: newnotification == true
-                                        ? Text(
-                                            "${newtotalnotification.length}",
-                                            style: TextStyle(
-                                              fontFamily: "Nunito",
-                                              color: Colors.white,
-                                              fontSize: AppFonts.smallFontSize,
-                                            ),
-                                          )
-                                        : Text(
-                                            "0",
-                                            style: TextStyle(
-                                              fontFamily: "Nunito",
-                                              color: Colors.white,
-                                              fontSize: AppFonts.smallFontSize,
-                                            ),
-                                          ),
+                                    badgeContent: Text(
+                                      '$newItemCount',
+                                      style: TextStyle(
+                                        fontFamily: "Nunito",
+                                        color: Colors.white,
+                                        fontSize: AppFonts.smallFontSize,
+                                      ),
+                                    ),
                                     child: InkWell(
                                       onTap: () {
                                         Navigator.push(

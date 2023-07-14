@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-
+import '../../controller/driverimage.dart';
 import 'Commicationfordriver/getmessage.dart';
 import 'Driverprofile/driverprofile.dart';
 import 'driverHomepage.dart';
@@ -45,6 +46,11 @@ class _BottomTabBarPageState extends State<BottomTabBarPage> {
 
   @override
   Widget build(BuildContext context) {
+    final ApiControllerdriverimage controller =
+        Get.put(ApiControllerdriverimage());
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      controller.fetchData();
+    });
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,

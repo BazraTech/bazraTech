@@ -27,7 +27,7 @@ class DriverStatus extends StatelessWidget {
     return DefaultTabController(
       length: 5,
       child: Scaffold(
-        backgroundColor: kBackgroundColor,
+        backgroundColor: Colors.white,
         body: TabBarView(
           children: [
             Container(color: Colors.red, child: OwnersDriver()),
@@ -48,6 +48,7 @@ class DriverStatus extends StatelessWidget {
           ],
         ),
         bottomNavigationBar: Container(
+          margin: EdgeInsets.only(bottom: 20),
           height: screenHeight * 0.08,
           decoration: const BoxDecoration(
             color: Colors.white,
