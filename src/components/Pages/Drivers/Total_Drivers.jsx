@@ -146,6 +146,25 @@ const [refresh, serRefresh] = useState(false)
     function changeName(show) {
         setShow(show);
     }
+    /*************************Total vehicles***************/
+    const VehUrl = "http://64.226.104.50:9090/Api/Admin/All/Vehicles";
+    const [AllVehicles, setAllVehicles] = useState([])
+    useEffect(() => {
+        setLoading(true); 
+        fetch(VehUrl, options)
+            .then(respnse => respnse.json())
+            .then(data => {
+                setAllVehicles(data.vehiclesINF)
+
+            })
+    }, [])
+    const [selectVehicles, setSelect] =useState(false)
+    const [plateNumber,setPlateNumber] =useState('')
+    const handlePlateChange = (e) =>{
+        setPlateNumber(e.target.value)
+    }
+    console.log(AllVehicles)
+
 /**********************pop */
 const [pop,setpop] = useState(false)
 const [driverLicense, setdriverLicense] = useState('')
@@ -386,6 +405,20 @@ console.log(searchResult)
                                                 <input value={driverLicense}></input>
                                                 <label>Driver name</label>
                                                 <input value={driverName}></input>
+                                                <button type='button' onClick={()=>{setSelect(!selectVehicles)}}
+                                                 style={{background:'yellow'}}>Select Vehicle</button>
+                                                 {selectVehicles &&
+                                                 <div className={styles.vehicleOption}> <label>Vehicles</label>
+                                                  <select className='select' value={plateNumber} onChange={handlePlateChange}>
+                                                      <option  value="">Select Vehicles</option>
+                                                      {
+                                                          AllVehicles.map(item => {
+                                                              return <option>{item.plateNumber}</option>
+                                                          })
+                                                      }
+                                                  </select>
+                                                  </div>
+                                                  }
                                                 <label>Status</label>
                                                 <select className='select' value={driverStatus} onChange={handleChange}>
                                                     <option  value="">Select Driver status</option>

@@ -403,12 +403,22 @@
     border: none;
     border-radius: 6px;
     padding: 0 15px;
-    border: 1px solid rgb(188, 188, 188);
+    border: 3px solid rgb(233, 31, 31);
   }
   .select:focus {
     box-shadow: 0px 0px 2px 1px rgba(21, 113, 146, 0.4);
     border: 1px solid rgba(21, 113, 146, 0.4);
   
+  }
+  .vehicleOption{
+/* border: 3px solid red; */
+display:flex;
+flex-direction: column;
+/* justify-content: r; */
+  }
+  .vehicleOption select{
+    border: 2px solid green;
+    border-radius: 2px;
   }
 /* ------------------ Responsivness ------------------- */
 
