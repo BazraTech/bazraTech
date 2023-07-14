@@ -140,7 +140,7 @@ export default function Company_registration() {
                 setPlateNumber("");
                 setmanufactureDate("");
                 setdeviceId("");
-
+                setcapacity("")
             } else {
                 console.log("failed");
                 swal(`Failed To Register ${mess}`, "Error", "error");

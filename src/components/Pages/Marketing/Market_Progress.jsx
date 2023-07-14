@@ -103,7 +103,7 @@ const send = false
     
     useEffect(() => {
       fetch(url2, options)
-        .then(response => {
+            .then(response => {
           if (!response.ok) {
             throw new Error('Failed to get the drivers');
           }
