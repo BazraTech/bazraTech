@@ -3,13 +3,13 @@
   "Phone Number": "ስልክ ቁጥር",
   "Mobile Number": "ስልክ ቁጥር",
   "Please enter your phone number":"እባክዎን ስልክ ቁጥሮን ያስገቡ",
-  "Password": "የዪለፍ ቃል",
+  "Password": "የይለፍ ቃል",
   "Please enter a company name": "እባክዎ የኩባንያ ስም ያስገቡ",
   "Forgot Password?":"መክፈቻ ቁልፉን ረሳኽው",
   "Forget Password":"መክፈቻ ቁልፉን ረሳኽው",
   "Login":"ግባ",
   "Don't have an account?":"መለያ የለዎትም",
-  "Sign Up":"ዪመዝገቡ",
+  "Sign Up":"ይመዝገቡ",
   "Welcome Back ":"እንኳን ደህና መጡ",
   "Post Cargo Work":" የጭነት ሥራ ለጥፍ",
   "Bill":"ቢል",
@@ -30,9 +30,9 @@
   "Company Name":"የድርጅት ስም",
   "Please enter your company name":"እባክዎን የድርጅ ቁጥርዎን ያስገቡ",
   "Please enter your phone number":"እባክዎን ስልክ ቁጥርዎን ያስገቡ",
-  "Confirm Password":"የዪለፍ ቃልዎን ያረጋግጡ" ,
-  "Please Enter Password":"እባክዎን የዪለፍ ቃልዎን ያስገቡ",
-  "Please Confirm Password":"እባክዎን የዪለፍ ቃልዎን ያረጋግጡ",
+  "Confirm Password":"የይለፍ ቃልዎን ያረጋግጡ" ,
+  "Please Enter Password":"እባክዎን የይለፍ ቃልዎን ያስገቡ",
+  "Please Confirm Password":"እባክዎን የይለፍ ቃልዎን ያረጋግጡ",
   "Already have an account?":"መለያ አለህ?",
   "Enter your phone number to get a verification code.":"የማረጋገጫ ኮድ ለማግኘት ስልክ ቁጥርዎን ያስገቡ።",
   "You will receive a 5 digit verification code.":"ባለ 5 አሃዝ የማረጋገጫ ኮድ ይደርስዎታል።",
@@ -70,6 +70,7 @@
   "Change Your Password":"የይለፍ ቃልህን ቀይር",
   "Current Password":"የአሁኑ ሚስጥራዊ ማለፊያ ቁልፍ",
   "Please enter Current password":"እባክህ የአሁኑን የይለፍ ቃል አስገባ",
-  "Password change page":"የይለፍ ቃል መለወጫ ገጽ"
+  "Password change page":"የይለፍ ቃል መለወጫ ገጽ",
+  "Please Wait":"ትንሽ ይጠብቁ"
   
 }

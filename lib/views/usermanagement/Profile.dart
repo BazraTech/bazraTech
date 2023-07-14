@@ -365,7 +365,7 @@ class _ProfileState extends State<Profile> {
                   width: screenWidth,
                   child: Column(
                     children: [
-                      InkWell(
+                      ListTile(
                         onTap: () {
                           Navigator.pushReplacement(
                             context,
@@ -373,29 +373,26 @@ class _ProfileState extends State<Profile> {
                                 builder: (context) => ChangePassword()),
                           );
                         },
-                        child: ListTile(
-                          onTap: () {},
-                          leading: Container(
-                            height: screenWidth * 0.08,
-                            width: screenWidth * 0.08,
-                            decoration: BoxDecoration(
-                              color: Color.fromRGBO(201, 252, 248, 1),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Icon(Icons.lock_outline),
+                        leading: Container(
+                          height: screenWidth * 0.08,
+                          width: screenWidth * 0.08,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(201, 252, 248, 1),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          title: const Text(
-                            'Change password',
-                            style: TextStyle(
-                              fontFamily: "Nunito",
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          child: Icon(Icons.lock_outline),
+                        ),
+                        title: const Text(
+                          'Change password',
+                          style: TextStyle(
+                            fontFamily: "Nunito",
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
                           ),
-                          trailing: Icon(
-                            Icons.keyboard_arrow_right,
-                            color: Colors.black,
-                          ),
+                        ),
+                        trailing: Icon(
+                          Icons.keyboard_arrow_right,
+                          color: Colors.black,
                         ),
                       ),
                       Padding(

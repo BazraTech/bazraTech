@@ -1,11 +1,10 @@
 import 'package:cargo/views/Bottom_Navigation.dart';
-import 'package:cargo/views/usermanagement/Profile.dart';
 import 'package:cargo/views/usermanagement/login.dart';
-import 'package:cargo/views/usermanagement/logo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 import 'Components/Home_Page.dart';
 import 'localization/app_localizations.dart';
 import 'localization/localization_bloc.dart';
@@ -26,6 +25,7 @@ class NoGlowScrollBehavior extends ScrollBehavior {
 }
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     builder: (context, child) {
@@ -37,6 +37,8 @@ void main() {
     home: MyApp(),
   ));
 }
+
+configLoading() {}
 
 class MyApp extends StatefulWidget {
   @override
@@ -64,6 +66,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<LocaleBloc>.value(value: _localeBloc),
@@ -86,9 +93,9 @@ class _MyAppState extends State<MyApp> {
                   const Locale('am', ''),
                 ],
                 locale: localeState.locale,
-                home: Scaffold(
-                  body:
-                      Profile(), // Place Cargo_login under the Provider<LocaleBloc>
+                home: MainApp(
+                  locale: localeState.locale,
+                  routeName: navigationState.routeName,
                 ),
               );
             },

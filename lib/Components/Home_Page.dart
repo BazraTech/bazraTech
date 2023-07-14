@@ -1,32 +1,25 @@
 import 'dart:convert';
-import 'package:cargo/localization/localization_event.dart';
-import 'package:dotted_line/dotted_line.dart';
+
+import 'package:cargo/Components/statePost.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../ActiveWork.dart';
 
 import '../localization/app_localizations.dart';
-import '../localization/localization_bloc.dart';
-import '../navigate/navigateBloc.dart';
-import '../navigate/navigatestateEvent.dart';
+import 'package:hive/hive.dart';
 import '../shared/cargoInfo.dart';
-import '../shared/constant.dart';
-
 import '../shared/storage_hepler.dart';
 import '../views/Bill/BillCargo.dart';
 import '../views/Post/Post_Navigation.dart';
 import '../views/Notification/Notification.dart';
 import '../views/Report/Report.dart';
-import '../views/Work/ActiveCargo.dart';
-import '../views/usermanagement/Profile.dart';
+import '../views/Work/Work_Navigation.dart';
 
 class CargoOWnerHomePage extends StatefulWidget {
   int? index;
+
   CargoOWnerHomePage({super.key, this.index});
 
   @override
@@ -35,6 +28,17 @@ class CargoOWnerHomePage extends StatefulWidget {
 
 class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
   DateTime pre_backprees = DateTime.now();
+  // Initialize Hive and open the logoBox
+  Box<String>? logoBox;
+  Future<void> initHive() async {
+    final appDocumentDir = await getApplicationDocumentsDirectory();
+    Hive.init(appDocumentDir.path);
+    await Hive.openBox<String>('logoBox');
+    logoBox = Hive.box<String>('logoBox');
+  }
+
+// Call initHive before using the fetchImage function
+
   Future<String> fetchImage() async {
     var client = http.Client();
     StorageHelper storageHelper = StorageHelper();
@@ -62,16 +66,36 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
         return '';
       }
     } on Exception catch (e) {
-      Fluttertoast.showToast(
-          msg: "Check your internet Connection and try again",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 14.0);
+      if (e is ArgumentError) {
+        Fluttertoast.showToast(
+            msg: "Check your internet Connection and try again",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 14.0);
+      }
       print('Error occurred: $e');
       return '';
+    }
+  }
+
+  Future<void> storeImageInHive() async {
+    await Hive.openBox<String>('imageBox');
+    final imageBox = Hive.box<String>('imageBox');
+    final imageUrl = await fetchImage();
+    imageBox.put('imageUrl', imageUrl);
+  }
+
+  Future<void> storeLogoToHive() async {
+    String logo = await fetchImage();
+
+    if (logo.isNotEmpty) {
+      logoBox?.put('logo', logo);
+      print('Logo stored in Hive: $logo');
+    } else {
+      print('Failed to store logo in Hive');
     }
   }
 
@@ -81,6 +105,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
   void initState() {
     super.initState();
     getCargoInfo();
+    initHive();
   }
 
   Future<void> getCargoInfo() async {
@@ -112,7 +137,6 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular((6))),
-                 
                 ),
                 child: Center(
                   child: Text(
@@ -142,33 +166,27 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                 // color: Colors.white,
                 child: Row(
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                        top: 15,
-                        bottom: 10,
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Profile()));
-                        },
+                    Center(
+                      child: Container(
+                        margin: EdgeInsets.only(top: 20),
                         child: CircleAvatar(
-                          radius: 50,
+                          radius: 55,
                           backgroundColor: Colors.white,
-                          child: ClipOval(
-                            child: FutureBuilder(
-                              future: fetchImage(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<String> snapshot) {
-                                if (snapshot.connectionState !=
-                                    ConnectionState.done) return Text("");
+                          child: FutureBuilder(
+                            future: storeLogoToHive(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<void> snapshot) {
+                              if (snapshot.connectionState !=
+                                  ConnectionState.done) return Text("");
+                              String? logo = logoBox?.get('logo');
+                              if (logo != null) {
                                 return Image.network(
-                                  snapshot.data.toString(),
+                                  logo,
                                 );
-                              },
-                            ),
+                              } else {
+                                return Text('Logo not available');
+                              }
+                            },
                           ),
                         ),
                       ),
@@ -268,8 +286,11 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                           color: Colors.white,
                           child: SizedBox(
                               height: screenHeight * 0.12,
-                              child: Icon(Icons.local_shipping_rounded,
-                                  size: 60, color: kPrimaryColor)),
+                              child: Icon(
+                                Icons.arrow_downward,
+                                size: 60,
+                                color: Color.fromRGBO(178, 142, 22, 1),
+                              )),
                         ),
                       ),
                     ),
@@ -326,7 +347,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                                     child: const Icon(
                                       Icons.local_shipping,
                                       size: 50,
-                                      color: kPrimaryColor,
+                                      color: Color.fromRGBO(178, 142, 22, 1),
                                     ),
                                   ),
                                   Container(
@@ -336,7 +357,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                                               ?.translate("Post Cargo Work") ??
                                           "Post Cargo Work",
                                       style: const TextStyle(
-                                        color: kPrimaryColor,
+                                        color: Color.fromRGBO(178, 142, 22, 1),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 13,
                                       ),
@@ -385,7 +406,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                                     child: const Icon(
                                       Icons.attach_money_rounded,
                                       size: 50,
-                                      color: kPrimaryColor,
+                                      color: Color.fromRGBO(178, 142, 22, 1),
                                     ),
                                   ),
                                   Container(
@@ -395,7 +416,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                                               ?.translate("Bill") ??
                                           "Bill",
                                       style: const TextStyle(
-                                        color: kPrimaryColor,
+                                        color: Color.fromRGBO(178, 142, 22, 1),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 13,
                                       ),
@@ -412,7 +433,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ActiveCargo()));
+                                    builder: (context) => Work_BottomNav()));
                           }),
                           child: Ink(
                             child: Container(
@@ -448,7 +469,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                                       child: const Icon(
                                         Icons.work,
                                         size: 50,
-                                        color: kPrimaryColor,
+                                        color: Color.fromRGBO(178, 142, 22, 1),
                                       ),
                                     ),
                                     Container(
@@ -458,7 +479,8 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                                                   ?.translate("Active Work") ??
                                               "Active Work",
                                           style: const TextStyle(
-                                              color: kPrimaryColor,
+                                              color: Color.fromRGBO(
+                                                  178, 142, 22, 1),
                                               fontWeight: FontWeight.bold,
                                               fontSize: 14)),
                                     ),
@@ -508,7 +530,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                                     width: MediaQuery.of(context).size.width,
                                     child: const Icon(
                                       Icons.insert_chart_outlined_rounded,
-                                      color: kPrimaryColor,
+                                      color: Color.fromRGBO(178, 142, 22, 1),
                                       size: 50,
                                     ),
                                   ),
@@ -519,7 +541,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                                               ?.translate('Report') ??
                                           "Report",
                                       style: const TextStyle(
-                                        color: kPrimaryColor,
+                                        color: Color.fromRGBO(178, 142, 22, 1),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 13,
                                       ),

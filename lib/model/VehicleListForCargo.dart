@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class CargoDriver {
+class Cargo_Vehicle {
   final int id;
   final String driver;
   final String cargo;
@@ -8,7 +8,7 @@ class CargoDriver {
   final String plateNumber;
   final int driverID;
 
-  CargoDriver({
+  Cargo_Vehicle({
     required this.id,
     required this.driver,
     required this.cargo,
@@ -17,8 +17,8 @@ class CargoDriver {
     required this.driverID,
   });
 
-  factory CargoDriver.fromJson(Map<String, dynamic> json) {
-    return CargoDriver(
+  factory Cargo_Vehicle.fromJson(Map<String, dynamic> json) {
+    return Cargo_Vehicle(
       id: json['id'],
       driver: json['driver'],
       cargo: json['cargo'],

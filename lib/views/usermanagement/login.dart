@@ -1,12 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:hive/hive.dart';
-import 'package:cargo/Components/Home_Page.dart';
-import 'package:cargo/config/APIConfig.dart';
 import 'package:cargo/shared/constant.dart';
-import 'package:cargo/shared/customButton.dart';
-import 'package:cargo/shared/logoStorage.dart';
-import 'package:cargo/views/Bottom_Navigation.dart';
 import 'package:cargo/views/usermanagement/signup.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -14,20 +9,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../localization/app_localizations.dart';
 import '../../localization/localization_bloc.dart';
 import '../../localization/localization_event.dart';
 import '../../navigate/navigateBloc.dart';
 import '../../navigate/navigatestateEvent.dart';
-import '../../shared/ImageHelper.dart';
 import '../../shared/checkConnection.dart';
 import '../../shared/custom-form.dart';
-import '../../shared/failAlert.dart';
-import '../../shared/logo.dart';
 import '../../shared/storage_hepler.dart';
-import '../../shared/succussAlert.dart';
+import 'package:path_provider/path_provider.dart';
 import 'forgetPassword.dart';
 
 class Cargo_login extends StatefulWidget {
@@ -42,6 +33,7 @@ class _Cargo_loginState extends State<Cargo_login> {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   String? ownerPic;
+  Box<String>? logoBox;
   bool _isLoading = true;
   List<String> _data = [];
   String? phoneNumber;
@@ -65,6 +57,9 @@ class _Cargo_loginState extends State<Cargo_login> {
       'username': "${phone}",
       'password': "${pass}",
     };
+    setState(() {
+      isLoading = true;
+    });
 
     print(requestData);
 
@@ -136,6 +131,9 @@ class _Cargo_loginState extends State<Cargo_login> {
         }
       }
     } catch (error) {
+      setState(() {
+        isLoading = false;
+      });
       if (error is http.ClientException &&
           error.message.contains('Connection reset by peer')) {
         Fluttertoast.showToast(
@@ -152,8 +150,9 @@ class _Cargo_loginState extends State<Cargo_login> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Error'),
-              content: Text('Connection reset by peer. Please try again.'),
+              title: const Text('Error'),
+              content:
+                  const Text('Connection reset by peer. Please try again.'),
               actions: [
                 ElevatedButton(
                   child: Text('Retry'),
@@ -195,7 +194,18 @@ class _Cargo_loginState extends State<Cargo_login> {
         _phoneController.text = phoneNumber ?? '';
       });
     });
+    initHive();
   }
+
+// Initialize Hive and open the logoBox
+  Future<void> initHive() async {
+    final appDocumentDir = await getApplicationDocumentsDirectory();
+    Hive.init(appDocumentDir.path);
+    await Hive.openBox<String>('logoBox');
+    logoBox = Hive.box<String>('logoBox');
+  }
+
+// Call initHive before using the fetchImage function
 
   Future<String> fetchImage() async {
     var client = http.Client();
@@ -246,6 +256,18 @@ class _Cargo_loginState extends State<Cargo_login> {
     imageBox.put('imageUrl', imageUrl);
   }
 
+  Future<void> storeLogoToHive() async {
+    String logo = await fetchImage();
+
+    if (logo.isNotEmpty) {
+      logoBox?.put('logo', logo);
+      print('Logo stored in Hive: $logo');
+    } else {
+      print('Failed to store logo in Hive');
+    }
+  }
+
+  bool isLoading = false;
   Widget buildLanguageDropdown(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
@@ -258,42 +280,10 @@ class _Cargo_loginState extends State<Cargo_login> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(6)),
-        boxShadow: isPressed
-            ? [
-                BoxShadow(
-                  color: Colors.grey.shade200,
-                  offset: Offset(4, 4),
-                  blurRadius: 15,
-                  spreadRadius: 1,
-                ),
-                const BoxShadow(
-                  color: Colors.white,
-                  offset: Offset(-4, -4),
-                  blurRadius: 25,
-                  spreadRadius: 1,
-                ),
-              ]
-            : null,
       ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
-          boxShadow: isPressed
-              ? [
-                  BoxShadow(
-                    color: Colors.grey.shade200,
-                    offset: Offset(4, 4),
-                    blurRadius: 15,
-                    spreadRadius: 1,
-                  ),
-                  const BoxShadow(
-                    color: Colors.white,
-                    offset: Offset(-4, -4),
-                    blurRadius: 25,
-                    spreadRadius: 1,
-                  ),
-                ]
-              : null,
         ),
         child: DropdownButton2<Locale>(
           hint: Text(
@@ -305,6 +295,7 @@ class _Cargo_loginState extends State<Cargo_login> {
               localeBloc.add(ChangeLocale(newLocale));
             }
           },
+          underline: null,
           items: [
             DropdownMenuItem(
               child: Text(
@@ -340,21 +331,29 @@ class _Cargo_loginState extends State<Cargo_login> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Container(
+                margin: EdgeInsets.only(top: 50, left: 250),
+                child: buildLanguageDropdown(context)),
             Center(
               child: Container(
-                margin: EdgeInsets.only(top: 80),
+                margin: EdgeInsets.only(top: 20),
                 child: CircleAvatar(
                   radius: 55,
                   backgroundColor: Colors.white,
                   child: FutureBuilder(
-                    future: fetchImage(),
+                    future: storeLogoToHive(),
                     builder:
-                        (BuildContext context, AsyncSnapshot<String> snapshot) {
+                        (BuildContext context, AsyncSnapshot<void> snapshot) {
                       if (snapshot.connectionState != ConnectionState.done)
                         return Text("");
-                      return Image.network(
-                        snapshot.data.toString(),
-                      );
+                      String? logo = logoBox?.get('logo');
+                      if (logo != null) {
+                        return Image.network(
+                          logo,
+                        );
+                      } else {
+                        return Text('Bazra Technology Group');
+                      }
                     },
                   ),
                 ),
@@ -376,18 +375,29 @@ class _Cargo_loginState extends State<Cargo_login> {
                   key: _formKey,
                   child: Column(children: [
                     Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(left: 10, bottom: 40),
-                      child: Text(
-                        AppLocalizations.of(context)?.translate(" Login ") ??
-                            "Login",
-                        style: TextStyle(
-                          fontFamily: "Roboto",
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(left: 10, bottom: 40),
+                        child: Container(
+                          margin: EdgeInsets.only(
+                              top:
+                                  5.0), // Adjust the top margin of the underline
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 40),
+                            child: Text(
+                              "Login".toUpperCase(),
+                              style: TextStyle(
+                                fontFamily: "Roboto",
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Color.fromRGBO(178, 142, 22,
+                                    1), // Replace with your desired color
+                                decorationThickness:
+                                    2.0, // Adjust the thickness of the underline
+                              ),
+                            ),
+                          ),
+                        )),
                     Container(
                       alignment: Alignment.topLeft,
                       margin: EdgeInsets.only(left: 10, bottom: 10),
@@ -469,7 +479,7 @@ class _Cargo_loginState extends State<Cargo_login> {
                             );
                           },
                           child: Container(
-                            margin: EdgeInsets.only(right: 25),
+                            margin: EdgeInsets.only(right: 25, bottom: 10),
                             child: Text(
                               AppLocalizations.of(context)
                                       ?.translate("Forgot Password?") ??
@@ -483,14 +493,55 @@ class _Cargo_loginState extends State<Cargo_login> {
                             ),
                           ),
                         )),
-                    CustomButton(
-                        onPressed: () async {
-                          await loginCargo(
-                              _phoneController.text, _passwordController.text);
-                        },
-                        text:
-                            AppLocalizations.of(context)?.translate("Login") ??
-                                "Login"),
+                    ElevatedButton(
+                      onPressed: () async {
+                        isLoading
+                            ? null
+                            : await loginCargo(_phoneController.text,
+                                _passwordController.text);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).primaryColor,
+                        onPrimary: Colors.white,
+                        textStyle: TextStyle(fontSize: 20.0),
+                        padding: EdgeInsets.all(16.0),
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          isLoading
+                              ? SizedBox(
+                                  height: 24,
+                                  width: 24,
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white),
+                                  ),
+                                )
+                              : SizedBox(), // Empty SizedBox if not loading
+                          SizedBox(width: 8),
+                          Text(
+                            isLoading
+                                ? AppLocalizations.of(context)
+                                        ?.translate('Please Wait') ??
+                                    "Please Wait"
+                                : AppLocalizations.of(context)
+                                        ?.translate('Login')
+                                        ?.toUpperCase() ??
+                                    "Login".toUpperCase(),
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontFamily: 'Roboto',
+                                color: Colors.white,
+                                fontWeight: FontWeight.normal),
+                          )
+                        ],
+                      ),
+                    ),
                     Container(
                       margin: EdgeInsets.only(top: 5),
                       child: Row(
@@ -522,7 +573,7 @@ class _Cargo_loginState extends State<Cargo_login> {
                               child: Text(
                                 AppLocalizations.of(context)
                                         ?.translate("Sign Up") ??
-                                    "Sigun up",
+                                    "Sign up",
                                 style: const TextStyle(
                                   fontSize: 15,
                                   letterSpacing: 1.5,

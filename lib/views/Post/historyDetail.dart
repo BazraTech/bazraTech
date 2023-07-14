@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../model/cargo.dart';
 import '../../shared/checkConnection.dart';
 import '../../shared/storage_hepler.dart';
-import 'Post_Navigation.dart';
 import 'histrory.dart';
 
 class cargoHistoryDetail extends StatefulWidget {
@@ -34,15 +33,15 @@ class _cargoHistoryDetailState extends State<cargoHistoryDetail> {
       Map cargoJson = json.decode(response.body);
       return Cargo.fromJson(cargoJson);
     } else {
-           Fluttertoast.showToast(
-          msg:  'Failed load data with status code ${response.statusCode}',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 14.0,
-        );
+      Fluttertoast.showToast(
+        msg: 'Failed load data with status code ${response.statusCode}',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 14.0,
+      );
     }
   }
 
@@ -69,8 +68,7 @@ class _cargoHistoryDetailState extends State<cargoHistoryDetail> {
         elevation: 0,
         leading: InkWell(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CargoHistory()));
+            Navigator.of(context).pop();
           },
           child: const Icon(
             Icons.arrow_back_ios,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cargo/shared/constant.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
 import '../Bottom_Navigation.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 
 class CargoType {
   int id;
@@ -38,88 +41,109 @@ class Posts extends StatefulWidget {
 }
 
 class _PostsState extends State<Posts> {
-  bool _isMounted = false;
   final _from = TextEditingController();
   final _to = TextEditingController();
-  final _date = TextEditingController();
   final _cargoType = TextEditingController();
   final _packaging = TextEditingController();
   final _weight = TextEditingController();
   final _price = TextEditingController();
-
-  registerCargo(String from, String to, String date, String cargoType,
-      String packaging, String weight, String price) async {
-    // Define your request data as a Map
-    Map requestData = {
-      'from': "${from}",
-      'to': "${to}",
-      'date': "${date}",
-      'cargoType': "${cargoType}",
-      'packaging': "${packaging}",
-      'weight': "${weight}",
-      'price': "${price}",
-    };
-    String body = json.encode(requestData);
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Future<void> registerCargo(String fileName) async {
     StorageHelper storageHelper = StorageHelper();
     String? accessToken = await storageHelper.getToken();
-    print(requestData);
-
-    print("********************************");
-    print('accessToken: $accessToken');
-    print("********************************");
     try {
-      // Make the request and handle the response
+      const url = 'http://64.226.104.50:9090/Api/Cargo/PostCargo';
       if (_formKey.currentState!.validate()) {
         _formKey.currentState?.save();
-        final response = await http.post(
-            Uri.parse('http://64.226.104.50:9090/Api/Cargo/PostCargo'),
-            body: body,
-            headers: {
-              "Content-Type": "application/json",
-              'Accept': 'application/json',
-              "Authorization": "Bearer $accessToken",
-            });
-
-        print(response.body);
-        print(response.statusCode);
-        final Map jsonResponse = json.decode(response.body);
-
-        if (response.statusCode == 200) {
-          if (response.statusCode == 200) {
-            Fluttertoast.showToast(
-                msg: jsonResponse['message'],
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.green,
-                textColor: Colors.white,
-                fontSize: 14.0);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => BottomNav()),
-            );
-          }
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+        request.headers['Authorization'] = 'Bearer $accessToken';
+        request.fields['from'] = _from.text;
+        request.fields['to'] = _to.text;
+        request.fields['date'] = _dateController.text;
+        // Check  cargo type is not null or empty
+        if (_cargoType.text != null && _cargoType.text.isNotEmpty) {
+          request.fields['cargoType'] = _cargoType.text;
         } else {
           Fluttertoast.showToast(
-              msg: jsonResponse['message'],
+            msg: 'Cargo type cannot be empty.',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 14.0,
+          );
+          return;
+        }
+        request.fields['packaging'] = _packaging.text;
+        request.fields['weight'] = _weight.text;
+        request.fields['price'] = _price.text;
+        // Check the file name is not null or empty
+        if (fileName != null && fileName.isNotEmpty) {
+          File file = File(fileName);
+          print('File path: ${file.path}');
+          if (await file.exists()) {
+            request.files.add(
+              await http.MultipartFile.fromPath(
+                'billOfLoading',
+                file.path,
+              ),
+            );
+          } else {
+            Fluttertoast.showToast(
+              msg: 'The file does not exist.',
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.CENTER,
               timeInSecForIosWeb: 1,
               backgroundColor: Colors.red,
               textColor: Colors.white,
-              fontSize: 14.0);
+              fontSize: 14.0,
+            );
+            return;
+          }
+        }
+        final response = await request.send();
+        final responseBody = await response.stream.bytesToString();
+        print('Response status code: ${response.statusCode}');
+        print('Response body: $responseBody');
+        if (response.statusCode == 200) {
+          final jsonResponse = json.decode(responseBody);
+          Fluttertoast.showToast(
+            msg: jsonResponse['message'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 14.0,
+          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => BottomNav()),
+          );
+        } else {
+          Fluttertoast.showToast(
+            msg: 'Failed to register cargo.',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Color.fromRGBO(178, 142, 22, 1),
+            textColor: Colors.white,
+            fontSize: 14.0,
+          );
         }
       }
     } catch (e) {
+      print(e.toString());
       Fluttertoast.showToast(
-          msg: 'An error occurred, please check your internet connection.',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 14.0);
+        msg: 'An error occurred while registering cargo.',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 14.0,
+      );
     }
   }
 
@@ -190,24 +214,17 @@ class _PostsState extends State<Posts> {
   bool _isFocus = false;
   TextEditingController cargoTypeController = TextEditingController();
   final TextEditingController _fileController = TextEditingController();
-  var dropdownvalue;
-  final _formKey = GlobalKey<FormState>();
 //e a function to pick a file
-  void updateControllerWithFile(PlatformFile file) {
-    _fileController.text = file.name;
-  }
-
-  Future pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-
+  Future<void> pickFile() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.any);
     if (result != null) {
-      PlatformFile file = result.files.first;
-      updateControllerWithFile(file);
-      print("File name: ${file.name}");
-      print("File size: ${file.size}");
-      print("File path: ${file.path}");
-    } else {
-      // User canceled the picker.
+      String? filePath = result.files.single.path;
+      if (filePath != null) {
+        setState(() {
+          _fileController.text = filePath;
+        });
+      }
     }
   }
 
@@ -387,10 +404,10 @@ class _PostsState extends State<Posts> {
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal),
                     filled: true,
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white, width: 1.5),
                     ),
-                    enabledBorder: OutlineInputBorder(
+                    enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white, width: 1.5),
                     ),
                     errorBorder: OutlineInputBorder(
@@ -426,8 +443,9 @@ class _PostsState extends State<Posts> {
                       },
                     ),
                     labelStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.normal),
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.normal,
+                    ),
                     filled: true,
                     focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white, width: 1.5),
@@ -448,7 +466,6 @@ class _PostsState extends State<Posts> {
                     }
                     return null;
                   },
-                  // validator: _validateDate,
                 ),
                 const SizedBox(
                   height: 20,
@@ -508,14 +525,7 @@ class _PostsState extends State<Posts> {
                 ),
                 CustomButton(
                   onPressed: () {
-                    registerCargo(
-                        _from.text,
-                        _to.text,
-                        _dateController.text,
-                        _cargoType.text,
-                        _packaging.text,
-                        _weight.text,
-                        _price.text);
+                    registerCargo(_fileController.text);
                   },
                   text:
                       AppLocalizations.of(context)?.translate("Post") ?? "Post",

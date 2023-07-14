@@ -2,47 +2,47 @@ import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class Driver {
-  int id;
+  int? id;
   String licenseNumber;
-  String licensePic;
-  String driverPic;
+  String ?licensePic;
+  String? driverPic;
   String driverName;
-  String status;
-  String phoneNumber;
-  DateTime birthDate;
-  String experience;
-  String licenseGrade;
-  String gender;
-  DateTime licenseIssueDate;
-  DateTime licenseExpireDate;
-  String vehicleOwner;
-  String roles;
+  String? status;
+  String ?phoneNumber;
+  DateTime? birthDate;
+  String? experience;
+  String? licenseGrade;
+  String? gender;
+  DateTime ?licenseIssueDate;
+  DateTime? licenseExpireDate;
+  String? vehicleOwner;
+  String? roles;
   String plateNumber;
-  bool statMessage;
-  String driverstate;
-  dynamic vehicleCondition;
-  dynamic vehicleCatagory;
+  bool? statMessage;
+  String? driverstate;
+  dynamic? vehicleCondition;
+  dynamic? vehicleCatagory;
   Driver({
-    required this.id,
+   this.id,
     required this.licenseNumber,
-    required this.licensePic,
-    required this.driverPic,
+   this.licensePic,
+    this.driverPic,
     required this.driverName,
-    required this.status,
-    required this.phoneNumber,
-    required this.birthDate,
-    required this.experience,
-    required this.licenseGrade,
-    required this.gender,
-    required this.licenseIssueDate,
-    required this.licenseExpireDate,
-    required this.vehicleOwner,
-    required this.roles,
+   this.status,
+   this.phoneNumber,
+   this.birthDate,
+   this.experience,
+   this.licenseGrade,
+   this.gender,
+   this.licenseIssueDate,
+   this.licenseExpireDate,
+   this.vehicleOwner,
+   this.roles,
     required this.plateNumber,
-    required this.statMessage,
-    required this.driverstate,
-    required this.vehicleCondition,
-    required this.vehicleCatagory,
+   this.statMessage,
+   this.driverstate,
+   this.vehicleCondition,
+   this.vehicleCatagory,
   });
 
   Map<String, dynamic> toMap() {
@@ -54,12 +54,12 @@ class Driver {
       'driverName': driverName,
       'status': status,
       'phoneNumber': phoneNumber,
-      'birthDate': birthDate.millisecondsSinceEpoch,
+      'birthDate': birthDate!.millisecondsSinceEpoch,
       'experience': experience,
       'licenseGrade': licenseGrade,
       'gender': gender,
-      'licenseIssueDate': licenseIssueDate.millisecondsSinceEpoch,
-      'licenseExpireDate': licenseExpireDate.millisecondsSinceEpoch,
+      'licenseIssueDate': licenseIssueDate!.millisecondsSinceEpoch,
+      'licenseExpireDate': licenseExpireDate!.millisecondsSinceEpoch,
       'vehicleOwner': vehicleOwner,
       'roles': roles,
       'plateNumber': plateNumber,

@@ -7,8 +7,6 @@ import 'package:cargo/views/Bottom_Navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../model/VehicleListForCargo.dart';
-import 'Work/CargoType/Actions.dart';
-
 class ExpandableListView extends StatefulWidget {
   @override
   _ExpandableListViewState createState() => _ExpandableListViewState();
@@ -18,8 +16,8 @@ class _ExpandableListViewState extends State {
   bool isPressed = true;
   TextEditingController searchController = TextEditingController();
   List _data = generateItems(5);
-  List<CargoDriver> _cargoDrivers = [];
-  Future<List<CargoDriver>> _fetchCargoDrivers() async {
+  List<Cargo_Vehicle> _Cargos = [];
+  Future<List<Cargo_Vehicle>> _fetchCargoDrivers() async {
     StorageHelper storageHelper = StorageHelper();
     String? accessToken = await storageHelper.getToken();
     print("Access Token: $accessToken");
@@ -36,10 +34,10 @@ class _ExpandableListViewState extends State {
       if (response.body.isNotEmpty &&
           response.body.contains('cargoDriversINFs')) {
         final jsonData = jsonDecode(response.body);
-        List<CargoDriver> cargoDrivers = []; // <-- Explicitly Declare as List
+        List<Cargo_Vehicle> cargoDrivers = []; // <-- Explicitly Declare as List
         if (jsonData['cargoDriversINFs'] != null) {
           for (var item in jsonData['cargoDriversINFs']) {
-            cargoDrivers.add(CargoDriver.fromJson(item));
+            cargoDrivers.add(Cargo_Vehicle.fromJson(item));
           }
         }
         return cargoDrivers;
@@ -59,7 +57,7 @@ class _ExpandableListViewState extends State {
     super.initState();
     futureCargoDrivers = _fetchCargoDrivers().then((value) {
       setState(() {
-        _cargoDrivers = value;
+       // cargo = value;
       });
     }).catchError((error) {
       print(error);

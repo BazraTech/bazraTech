@@ -33,6 +33,8 @@ class _BottomNavState extends State<BottomNav>
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+    final backgroundColor = Color.fromRGBO(178, 142, 22, 1);
+    final textColor = determineTextColor(backgroundColor);
     return WillPopScope(
       onWillPop: () async {
         if (_tabController!.index > 0) {
@@ -54,7 +56,7 @@ class _BottomNavState extends State<BottomNav>
         ),
         bottomNavigationBar: Container(
           height: screenHeight * 0.1,
-          decoration: const BoxDecoration(color: kPrimaryColor),
+          decoration: BoxDecoration(color: backgroundColor),
           child: Container(
             width: screenWidth,
             child: Center(
@@ -63,7 +65,7 @@ class _BottomNavState extends State<BottomNav>
                 indicatorSize: TabBarIndicatorSize.label,
                 indicatorPadding: EdgeInsets.all(12),
                 indicatorColor: Colors.white,
-                isScrollable: true,
+                isScrollable: false,
                 indicatorWeight: 3,
                 labelPadding:
                     EdgeInsets.symmetric(horizontal: screenWidth * 0.055),
@@ -73,10 +75,9 @@ class _BottomNavState extends State<BottomNav>
                     child: Text(
                       AppLocalizations.of(context)?.translate("Home") ?? "Home",
                       style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 13,
                         color: Colors.white,
                         fontFamily: 'Roboto',
-                        letterSpacing: 2.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -87,10 +88,9 @@ class _BottomNavState extends State<BottomNav>
                       AppLocalizations.of(context)?.translate("Tracking") ??
                           "Tracking",
                       style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 13,
                         color: Colors.white,
                         fontFamily: 'Roboto',
-                        letterSpacing: 2.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -98,10 +98,10 @@ class _BottomNavState extends State<BottomNav>
                   Tab(
                     icon: Icon(Icons.messenger),
                     child: Text(
-                      AppLocalizations.of(context)?.translate("Communicate") ??
-                          "Communicate",
+                      AppLocalizations.of(context)?.translate("Message") ??
+                          "Message",
                       style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 13,
                         color: Colors.white,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.bold,
@@ -117,7 +117,6 @@ class _BottomNavState extends State<BottomNav>
                         fontSize: 13,
                         color: Colors.white,
                         fontFamily: 'Roboto',
-                        letterSpacing: 2.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -130,4 +129,15 @@ class _BottomNavState extends State<BottomNav>
       ),
     );
   }
+}
+
+Color determineTextColor(Color backgroundColor) {
+  // Calculate the luminance of the background color
+  final luminance = (0.299 * backgroundColor.red +
+          0.587 * backgroundColor.green +
+          0.114 * backgroundColor.blue) /
+      255;
+
+  // If the luminance is greater than 0.5, use black text color, otherwise use white text color
+  return luminance > 0.5 ? Colors.black : Colors.white;
 }

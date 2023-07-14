@@ -445,11 +445,11 @@ class _SignupState extends State<Signup> {
                                   )),
                               GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute<void>(
-                                          builder: (BuildContext context) =>
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
                                               const Cargo_login()),
+                                      (route) => false,
                                     );
                                   },
                                   child: Text(

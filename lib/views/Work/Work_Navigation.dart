@@ -1,3 +1,4 @@
+// ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,10 +7,14 @@ import '../../localization/localization_bloc.dart';
 import '../../localization/localization_state.dart';
 import '../../shared/constant.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'Posts.dart';
-import 'histrory.dart';
-class Post_BottomNav extends StatelessWidget {
-  Post_BottomNav({super.key});
+
+import 'AcceptedCargo.dart';
+import 'Active.dart';
+import 'FinishedCargo.dart';
+
+class Work_BottomNav extends StatelessWidget {
+  // ignore: prefer_const_constructors_in_immutables
+  Work_BottomNav({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,33 +24,40 @@ class Post_BottomNav extends StatelessWidget {
       builder: (context, localeState) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          localizationsDelegates: [
+          localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: [
-            const Locale('en', ''),
-            const Locale('am', ''),
+          supportedLocales: const[
+             Locale('en', ''),
+             Locale('am', ''),
           ],
           locale: localeState.locale,
           home: DefaultTabController(
-            length: 2,
+            length: 3,
             child: Scaffold(
               backgroundColor: Colors.white,
               body: TabBarView(
                 children: [
                   BlocBuilder<LocaleBloc, LocaleState>(
                     builder: (context, localeState) {
-                      return Posts(
+                      return ActiveCargo(
                         localizations: AppLocalizations.of(context),
                       );
                     },
                   ),
                   BlocBuilder<LocaleBloc, LocaleState>(
                     builder: (context, localeState) {
-                      return CargoHistory(  
+                      return AcceptedCargo(
+                        localizations: AppLocalizations.of(context),
+                      );
+                    },
+                  ),
+                  BlocBuilder<LocaleBloc, LocaleState>(
+                    builder: (context, localeState) {
+                      return FinishedCargo(
                         localizations: AppLocalizations.of(context),
                       );
                     },
@@ -68,11 +80,25 @@ class Post_BottomNav extends StatelessWidget {
                             horizontal: screenWidth * 0.055),
                         tabs: [
                           Tab(
-                            icon: Icon(Icons.add),
+                            icon: Icon(Icons.remove_circle_outline),
                             child: Text(
                               AppLocalizations.of(context)
-                                      ?.translate("Post Cargo") ??
-                                  "Post Cargo",
+                                      ?.translate("Active") ??
+                                  "Active",
+                              style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white,
+                                  fontFamily: 'Roboto',
+                                  letterSpacing: 1,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Tab(
+                            icon: Icon(Icons.thumb_up),
+                            child: Text(
+                              AppLocalizations.of(context)
+                                      ?.translate("Accepted") ??
+                                  "Accepted",
                               style: const TextStyle(
                                   fontSize: 13,
                                   color: Colors.white,
@@ -82,11 +108,11 @@ class Post_BottomNav extends StatelessWidget {
                             ),
                           ),
                           Tab(
-                            icon: Icon(Icons.history_edu),
+                            icon: Icon(Icons.verified),
                             child: Text(
                               AppLocalizations.of(context)
-                                      ?.translate("Cargo History") ??
-                                  "Cargo History",
+                                      ?.translate(" Finished") ??
+                                  "Finished",
                               style: const TextStyle(
                                   fontSize: 13,
                                   color: Colors.white,

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../views/Post/Posts.dart';
-import '../views/Post/histrory.dart';
-import '../views/Work/CargoType/cargo_type.dart';
 import 'constant.dart';
 
 class TabNavigate extends StatefulWidget {

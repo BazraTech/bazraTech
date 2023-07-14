@@ -17,17 +17,17 @@ import '../../localization/app_localizations.dart';
 import '../../model/cargo.dart';
 import '../../shared/constant.dart';
 
-class ActiveCargo extends StatefulWidget {
+class AcceptedCargo extends StatefulWidget {
   final AppLocalizations? localizations;
   final int? id;
   @override
-  const ActiveCargo({Key? key, this.localizations, this.id}) : super(key: key);
+  const AcceptedCargo({Key? key, this.localizations, this.id}) : super(key: key);
 
   @override
-  _ActiveCargoState createState() => _ActiveCargoState();
+  _AcceptedCargoState createState() => _AcceptedCargoState();
 }
 
-class _ActiveCargoState extends State<ActiveCargo> {
+class _AcceptedCargoState extends State<AcceptedCargo> {
   Future? futureCargoDrivers;
   List activeCargoStatus = [];
   List _searchResults = [];
@@ -68,8 +68,8 @@ class _ActiveCargoState extends State<ActiveCargo> {
         return [];
       }
     } catch (e) {
-          // Handle other errors
-     if (e is http.ClientException &&
+      // Handle other errors
+      if (e is http.ClientException &&
           e.message.contains('Connection reset by peer')) {
         Fluttertoast.showToast(
           msg: "Connection reset by peer",
@@ -142,16 +142,15 @@ class _ActiveCargoState extends State<ActiveCargo> {
           .toList();
       return filteredCargos;
     } catch (e) {
-       Fluttertoast.showToast(
-          msg: "Failed to search cargos by destination",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 14.0,
-        );
-
+      Fluttertoast.showToast(
+        msg: "Failed to search cargos by destination",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 14.0,
+      );
     }
   }
 
@@ -226,13 +225,13 @@ class _ActiveCargoState extends State<ActiveCargo> {
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data!.isNotEmpty) {
               return ScrollConfiguration(
-          behavior: NoGlowScrollBehavior(),
+                behavior: NoGlowScrollBehavior(),
                 child: ListView.builder(
                   itemCount: snapshot.data!.length,
                   padding: EdgeInsets.only(
                       bottom: MediaQuery.of(context).padding.bottom + 100),
                   itemBuilder: (context, index) {
-                    Cargo driver = snapshot.data![index];
+                    Cargo cargo = snapshot.data![index];
                     return InkWell(
                       onTap: () {
                         setState(() {});
@@ -245,7 +244,7 @@ class _ActiveCargoState extends State<ActiveCargo> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        VehicleCargo(id: driver.id)));
+                                        VehicleCargo(id: cargo.id)));
                           }),
                           child: Card(
                             child: Container(
@@ -266,13 +265,14 @@ class _ActiveCargoState extends State<ActiveCargo> {
                                 ],
                               ),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   ListTile(
                                     title: Row(
                                       children: [
                                         Text(
-                                          driver.pickUp,
+                                          cargo.pickUp,
                                           style: const TextStyle(
                                             fontSize: 14,
                                             color: Color.fromARGB(
@@ -321,8 +321,8 @@ class _ActiveCargoState extends State<ActiveCargo> {
                                         ),
                                         Text(
                                           AppLocalizations.of(context)!
-                                                  .translate(driver.dropOff) ??
-                                              driver.dropOff,
+                                                  .translate(cargo.dropOff) ??
+                                              cargo.dropOff,
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.grey.shade600,
@@ -359,7 +359,7 @@ class _ActiveCargoState extends State<ActiveCargo> {
                                     trailing: SizedBox(
                                       width: screenWidth * 0.22,
                                       child: Text(
-                                        driver.status,
+                                        cargo.status,
                                         style: const TextStyle(
                                           fontSize: 15,
                                           color: Colors.amber,

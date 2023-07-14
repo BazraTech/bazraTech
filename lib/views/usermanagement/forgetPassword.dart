@@ -1,25 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
-
-import 'package:cargo/Components/Home_Page.dart';
-import 'package:cargo/config/APIConfig.dart';
 import 'package:cargo/localization/app_localizations.dart';
 import 'package:cargo/shared/constant.dart';
 import 'package:cargo/shared/customButton.dart';
-import 'package:cargo/views/Bottom_Navigation.dart';
-import 'package:cargo/views/usermanagement/signup.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../shared/custom-form.dart';
-import '../../shared/failAlert.dart';
-import '../../shared/logo.dart';
+import 'package:hive/hive.dart';
 import '../../shared/storage_hepler.dart';
-import '../../shared/succussAlert.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-
+import 'package:path_provider/path_provider.dart';
 import 'resetPassword.dart';
 
 class Forget extends StatefulWidget {
@@ -30,8 +21,19 @@ class Forget extends StatefulWidget {
 }
 
 class _ForgetState extends State<Forget> {
+  Box<String>? logoBox;
   final _formKey = GlobalKey<FormState>();
   final _phoneController = TextEditingController();
+// Initialize Hive and open the logoBox
+  Future<void> initHive() async {
+    final appDocumentDir = await getApplicationDocumentsDirectory();
+    Hive.init(appDocumentDir.path);
+    await Hive.openBox<String>('logoBox');
+    logoBox = Hive.box<String>('logoBox');
+  }
+
+// Call initHive before using the fetchImage function
+
   Future<String> fetchImage() async {
     var client = http.Client();
     StorageHelper storageHelper = StorageHelper();
@@ -59,17 +61,42 @@ class _ForgetState extends State<Forget> {
         return '';
       }
     } on Exception catch (e) {
-      Fluttertoast.showToast(
-          msg: "Check your internet Connection and try again",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 14.0);
+      if (e is ArgumentError) {
+        Fluttertoast.showToast(
+            msg: "Check your internet Connection and try again",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 14.0);
+      }
       print('Error occurred: $e');
       return '';
     }
+  }
+
+  Future<void> storeImageInHive() async {
+    await Hive.openBox<String>('imageBox');
+    final imageBox = Hive.box<String>('imageBox');
+    final imageUrl = await fetchImage();
+    imageBox.put('imageUrl', imageUrl);
+  }
+
+  Future<void> storeLogoToHive() async {
+    String logo = await fetchImage();
+
+    if (logo.isNotEmpty) {
+      logoBox?.put('logo', logo);
+      print('Logo stored in Hive: $logo');
+    } else {
+      print('Failed to store logo in Hive');
+    }
+  }
+
+  void initState() {
+    super.initState();
+    initHive();
   }
 
   bool _isFocus = false;
@@ -159,25 +186,29 @@ class _ForgetState extends State<Forget> {
           child: Form(
             key: _formKey,
             child: Column(children: [
-              Container(
-                margin: EdgeInsets.only(left: 20, bottom: 30),
-                padding: const EdgeInsets.all(2.0),
-                child: CircleAvatar(
-                  radius: 65,
-                  backgroundColor: Colors.white,
-                  child: FutureBuilder(
-                    future: fetchImage(),
-                    builder:
-                        (BuildContext context, AsyncSnapshot<String> snapshot) {
-                      if (snapshot.connectionState != ConnectionState.done)
-                        return Text("");
-                      return ClipOval(
-                        child: SizedBox(
-                            height: screenHeight * 0.4,
-                            width: screenWidth * 0.9,
-                            child: Image.network(snapshot.data.toString())),
-                      );
-                    },
+              Center(
+                child: Container(
+                  color: Colors.white,
+                  margin: EdgeInsets.only(top: 20),
+                  child: CircleAvatar(
+                    radius: 55,
+                    backgroundColor: Colors.white,
+                    child: FutureBuilder(
+                      future: storeLogoToHive(),
+                      builder:
+                          (BuildContext context, AsyncSnapshot<void> snapshot) {
+                        if (snapshot.connectionState != ConnectionState.done)
+                          return Text("");
+                        String? logo = logoBox?.get('logo');
+                        if (logo != null) {
+                          return Image.network(
+                            logo,
+                          );
+                        } else {
+                          return Text('Bazra Technology Group');
+                        }
+                      },
+                    ),
                   ),
                 ),
               ),

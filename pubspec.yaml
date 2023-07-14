@@ -63,6 +63,7 @@ dependencies:
   dropdown_below: ^1.0.3
   image_picker: ^1.0.0
   hive: ^2.2.3
+  flutter_easyloading: ^3.0.5
 
 dev_dependencies:
   flutter_test:
