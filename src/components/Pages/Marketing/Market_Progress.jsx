@@ -104,14 +104,16 @@ const send = false
     useEffect(() => {
       fetch(url2, options)
             .then(response => {
-          if (!response.ok) {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
             throw new Error('Failed to get the drivers');
           }
           return response.json();
         })
         .then(data => {
           setDataSource(data && data.cargoDriversINFs);
-          console.log(dataSource.cargoDriversINFs);
         })
         .catch(error => {
 
