@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:connectivity/connectivity.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,8 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:http/http.dart' as http;
 import '../../Components/Noglow.dart';
 import '../../localization/app_localizations.dart';
-import '../../model/cargo.dart';
+import '../../model/bill.dart';
+import '../../shared/loading.dart';
 import '../../shared/storage_hepler.dart';
 import '../Bottom_Navigation.dart';
 import 'billDetail.dart';
@@ -27,26 +27,28 @@ class _CargoBillState extends State<CargoBill> {
       StorageHelper storageHelper = StorageHelper();
       String? accessToken = await storageHelper.getToken();
       final response = await http.get(
-          Uri.parse('http://64.226.104.50:9090/Api/Cargo/All/Cargos'),
+          Uri.parse('http://64.226.104.50:9090/Api/Payment/CargOwner/Status'),
           headers: {
             "Content-Type": "application/json",
             'Accept': 'application/json',
             "Authorization": "Bearer $accessToken",
           });
       print(response);
-
       if (response.statusCode == 200) {
-        List cargoJson = json.decode(response.body)['cargos'];
-        return cargoJson.map((cargo) => Cargo.fromJson(cargo)).toList();
+        List cargoJson = json.decode(response.body)['unPaidCargos'];
+        return cargoJson.map((cargo) => Cargo_Bill.fromJson(cargo)).toList();
       } // Handle connection timeout error
       else {
-        Alert(
-          context: context,
-          title: "Error",
-          desc: "Failed to fetch data",
-          type: AlertType.error,
-        ).show();
-        return [];
+        final message = json.decode(response.body)['error'];
+        Fluttertoast.showToast(
+          msg: message,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 14.0,
+        );
       }
     } catch (e) {
       if (e is http.ClientException &&
@@ -65,11 +67,12 @@ class _CargoBillState extends State<CargoBill> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Error'),
-              content: Text('Connection reset by peer. Please try again.'),
+              title: const Text('Error'),
+              content:
+                  const Text('Connection reset by peer. Please try again.'),
               actions: [
                 ElevatedButton(
-                  child: Text('Retry'),
+                  child: const Text('Retry'),
                   onPressed: () {
                     // Retry the operation
                     fetchCargos();
@@ -77,7 +80,7 @@ class _CargoBillState extends State<CargoBill> {
                   },
                 ),
                 ElevatedButton(
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -87,7 +90,6 @@ class _CargoBillState extends State<CargoBill> {
           },
         );
       }
-      print('Error in _fetchCargoDrivers(): $e');
       Alert(
         context: context,
         title: "Error",
@@ -140,7 +142,7 @@ class _CargoBillState extends State<CargoBill> {
               color: Color.fromARGB(255, 162, 162, 162),
             ),
           ),
-          backgroundColor: Color.fromARGB(255, 252, 254, 250),
+          backgroundColor: const Color.fromARGB(255, 252, 254, 250),
           title: Container(
             width: double.infinity,
             margin: EdgeInsets.only(right: screenWidth * 0.12),
@@ -156,7 +158,7 @@ class _CargoBillState extends State<CargoBill> {
                   errorBorder: InputBorder.none,
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
                 ),
               ),
             ),
@@ -173,25 +175,22 @@ class _CargoBillState extends State<CargoBill> {
                           bottom: MediaQuery.of(context).padding.bottom + 100),
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
-                        Cargo driver = snapshot.data![index];
+                        Cargo_Bill bill = snapshot.data![index];
                         return InkWell(
                           onTap: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Bill_Detail()));
+                                    builder: (context) => const Bill_Detail()));
                           },
-                          // onTap: () {
-                          //   setState(() {});
-                          // },
                           child: Column(
                             children: [
                               Card(
                                   child: Container(
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
                                   boxShadow: [
                                     BoxShadow(
                                         color: Colors.grey.shade200
@@ -206,13 +205,13 @@ class _CargoBillState extends State<CargoBill> {
                                 ),
                                 height: screenHeight * 0.2,
                                 child: Container(
-                                  margin: EdgeInsets.only(left: 5),
+                                  margin: const EdgeInsets.only(left: 5),
                                   child: Column(children: [
                                     ListTile(
                                       title: Row(
                                         children: [
                                           Text(
-                                            driver.pickUp,
+                                            bill.pickUp,
                                             style: const TextStyle(
                                               fontSize: 14,
                                               color: Color.fromARGB(
@@ -222,7 +221,7 @@ class _CargoBillState extends State<CargoBill> {
                                             ),
                                           ),
                                           Container(
-                                            margin: EdgeInsets.only(
+                                            margin: const EdgeInsets.only(
                                               left: 8,
                                             ),
                                             child: const Icon(
@@ -232,7 +231,7 @@ class _CargoBillState extends State<CargoBill> {
                                                   255, 123, 129, 236),
                                             ),
                                           ),
-                                          Container(
+                                          SizedBox(
                                             width: screenWidth * 0.2,
                                             child: const Stack(
                                               alignment: Alignment.center,
@@ -253,14 +252,15 @@ class _CargoBillState extends State<CargoBill> {
                                             ),
                                           ),
                                           Container(
-                                            margin: EdgeInsets.only(right: 8),
+                                            margin:
+                                                const EdgeInsets.only(right: 8),
                                             alignment: Alignment.centerLeft,
                                             child: Icon(Icons.location_on,
                                                 size: 15,
                                                 color: Colors.grey.shade300),
                                           ),
                                           Text(
-                                            driver.dropOff,
+                                            bill.dropOff,
                                             style: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey.shade600,
@@ -285,8 +285,8 @@ class _CargoBillState extends State<CargoBill> {
                                     ListTile(
                                       title: Text(
                                         AppLocalizations.of(context)
-                                                ?.translate("Status") ??
-                                            "Status",
+                                                ?.translate("Payment Status") ??
+                                            "Payment Status",
                                         style: TextStyle(
                                           fontSize: 15,
                                           color: Colors.grey.shade500,
@@ -295,7 +295,7 @@ class _CargoBillState extends State<CargoBill> {
                                         ),
                                       ),
                                       trailing: Text(
-                                        driver.status,
+                                        bill.payment,
                                         style: const TextStyle(
                                           fontSize: 15,
                                           color: Colors.amber,
@@ -315,11 +315,11 @@ class _CargoBillState extends State<CargoBill> {
               }
               return Center(
                 child: FutureBuilder(
-                  future: Future.delayed(
-                      Duration(seconds: 10), () => _checkInternetConnection()),
+                  future: Future.delayed(const Duration(seconds: 10),
+                      () => _checkInternetConnection()),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
+                      return TikTokLoadingSpinner();
                     } else {
                       return Container(
                           alignment: Alignment.center,
@@ -327,7 +327,8 @@ class _CargoBillState extends State<CargoBill> {
                           width: screenWidth * 0.7,
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
                             boxShadow: [
                               BoxShadow(
                                   color: Colors.grey.shade200.withOpacity(0.7),
@@ -342,7 +343,7 @@ class _CargoBillState extends State<CargoBill> {
                           child: Column(
                             children: [
                               Container(
-                                margin: EdgeInsets.only(top: 10),
+                                margin: const EdgeInsets.only(top: 10),
                                 child: Text('Network Error',
                                     style: TextStyle(
                                       fontSize: 15,

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../Components/Communicate.dart';
 import 'usermanagement/Profile.dart';
 import '../Components/Tracking.dart';
-import '../shared/constant.dart';
 import '../Components/Home_Page.dart';
 
 class BottomNav extends StatefulWidget {
@@ -34,7 +33,6 @@ class _BottomNavState extends State<BottomNav>
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     final backgroundColor = Color.fromRGBO(178, 142, 22, 1);
-    final textColor = determineTextColor(backgroundColor);
     return WillPopScope(
       onWillPop: () async {
         if (_tabController!.index > 0) {
@@ -49,29 +47,30 @@ class _BottomNavState extends State<BottomNav>
           controller: _tabController,
           children: [
             CargoOWnerHomePage(),
-            Tracking(),
-            Communicate(),
+            const Tracking(),
+            const Communicate(),
             Profile(),
           ],
         ),
         bottomNavigationBar: Container(
           height: screenHeight * 0.1,
           decoration: BoxDecoration(color: backgroundColor),
-          child: Container(
+          child: SizedBox(
             width: screenWidth,
             child: Center(
               child: TabBar(
                 controller: _tabController,
                 indicatorSize: TabBarIndicatorSize.label,
-                indicatorPadding: EdgeInsets.all(12),
+                indicatorPadding:
+                    const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
                 indicatorColor: Colors.white,
-                isScrollable: false,
+                isScrollable: true,
                 indicatorWeight: 3,
-                labelPadding:
-                    EdgeInsets.symmetric(horizontal: screenWidth * 0.055),
+                enableFeedback: true,
+                mouseCursor: SystemMouseCursors.click,
                 tabs: [
                   Tab(
-                    icon: Icon(Icons.home),
+                    icon: const Icon(Icons.home),
                     child: Text(
                       AppLocalizations.of(context)?.translate("Home") ?? "Home",
                       style: const TextStyle(
@@ -82,16 +81,18 @@ class _BottomNavState extends State<BottomNav>
                       ),
                     ),
                   ),
-                  Tab(
-                    icon: Icon(Icons.location_on),
-                    child: Text(
-                      AppLocalizations.of(context)?.translate("Tracking") ??
-                          "Tracking",
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.white,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.bold,
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    child: Tab(
+                      icon: Icon(Icons.location_on),
+                      child: Text(
+                        "Tracking",
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.white,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -101,7 +102,7 @@ class _BottomNavState extends State<BottomNav>
                       AppLocalizations.of(context)?.translate("Message") ??
                           "Message",
                       style: const TextStyle(
-                        fontSize: 13,
+                        fontSize: 12,
                         color: Colors.white,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.bold,
@@ -129,15 +130,4 @@ class _BottomNavState extends State<BottomNav>
       ),
     );
   }
-}
-
-Color determineTextColor(Color backgroundColor) {
-  // Calculate the luminance of the background color
-  final luminance = (0.299 * backgroundColor.red +
-          0.587 * backgroundColor.green +
-          0.114 * backgroundColor.blue) /
-      255;
-
-  // If the luminance is greater than 0.5, use black text color, otherwise use white text color
-  return luminance > 0.5 ? Colors.black : Colors.white;
 }

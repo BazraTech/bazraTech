@@ -17,6 +17,7 @@ import '../../navigate/navigateBloc.dart';
 import '../../navigate/navigatestateEvent.dart';
 import '../../shared/checkConnection.dart';
 import '../../shared/custom-form.dart';
+import '../../shared/loading.dart';
 import '../../shared/storage_hepler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'forgetPassword.dart';
@@ -83,6 +84,7 @@ class _Cargo_loginState extends State<Cargo_login> {
           fontSize: 14.0);
       return;
     }
+
     try {
       String body = json.encode(requestData);
 
@@ -119,7 +121,14 @@ class _Cargo_loginState extends State<Cargo_login> {
           await storage.write(key: 'phoneNumber', value: phoneNumber);
           print(newToken);
           context.read<NavigationBloc>().add(NavigateTo('/bottomNav'));
+        } else if (response.statusCode == 500) {
+          setState(() {
+            isLoading = false;
+          });
         } else {
+          setState(() {
+            isLoading = false;
+          });
           Fluttertoast.showToast(
               msg: "Invaild Phone Number or User Name",
               toastLength: Toast.LENGTH_SHORT,
@@ -327,12 +336,13 @@ class _Cargo_loginState extends State<Cargo_login> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-                margin: EdgeInsets.only(top: 50, left: 250),
+                margin: EdgeInsets.only(top: 50, left: 240),
                 child: buildLanguageDropdown(context)),
             Center(
               child: Container(
@@ -361,9 +371,9 @@ class _Cargo_loginState extends State<Cargo_login> {
             ),
             Container(
               height: screenHeight - 30,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: kBackgroundColor,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(60),
                 ),
               ),
@@ -378,14 +388,14 @@ class _Cargo_loginState extends State<Cargo_login> {
                         alignment: Alignment.center,
                         margin: EdgeInsets.only(left: 10, bottom: 40),
                         child: Container(
-                          margin: EdgeInsets.only(
+                          margin: const EdgeInsets.only(
                               top:
                                   5.0), // Adjust the top margin of the underline
                           child: Container(
                             margin: EdgeInsets.only(bottom: 40),
                             child: Text(
                               "Login".toUpperCase(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontFamily: "Roboto",
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -567,7 +577,7 @@ class _Cargo_loginState extends State<Cargo_login> {
                                   context,
                                   MaterialPageRoute<void>(
                                       builder: (BuildContext context) =>
-                                          const Signup()),
+                                          TikTokLoadingSpinner()),
                                 );
                               },
                               child: Text(

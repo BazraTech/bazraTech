@@ -188,11 +188,11 @@ class _ForgetState extends State<Forget> {
             child: Column(children: [
               Center(
                 child: Container(
-                  color: Colors.white,
+                  color: kBackgroundColor,
                   margin: EdgeInsets.only(top: 20),
                   child: CircleAvatar(
                     radius: 55,
-                    backgroundColor: Colors.white,
+                    backgroundColor: kBackgroundColor,
                     child: FutureBuilder(
                       future: storeLogoToHive(),
                       builder:

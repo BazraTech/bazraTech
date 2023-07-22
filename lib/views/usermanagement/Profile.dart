@@ -59,8 +59,11 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
+    if(mounted){
     getCargoInfo();
     getPhoneNumber();
+    }
+    
   }
 
   Future<void> getCargoInfo() async {
@@ -70,7 +73,6 @@ class _ProfileState extends State<Profile> {
     setState(() {
       name = cargoName ?? '';
     });
-    print("namemasdfffffffff $name");
   }
 
   Future<void> getPhoneNumber() async {
@@ -80,7 +82,6 @@ class _ProfileState extends State<Profile> {
     setState(() {
       phone = cargoPhone ?? '';
     });
-    print("Cargooooooooooooooooo $phone");
   }
 
   void _showLogoutConfirmationDialog(BuildContext context) {
@@ -99,9 +100,9 @@ class _ProfileState extends State<Profile> {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Cargo_login()),
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const Cargo_login()),
+                  (route) => false,
                 );
               },
               child: Text('Logout'),
@@ -113,7 +114,6 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget buildLanguageDropdown(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     final localeBloc = context.read<LocaleBloc>();
     bool isPressed = true;
@@ -181,25 +181,24 @@ class _ProfileState extends State<Profile> {
                   children: [
                     Column(
                       children: [
-                        Container(
-                          child: FutureBuilder(
-                            future: _fetchLogo(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<String> snapshot) {
-                              if (snapshot.connectionState !=
-                                  ConnectionState.done) return Text("");
-                              return CircleAvatar(
-                                radius: 58,
-                                child: ClipOval(
-                                  child: Image.network(
-                                    snapshot.data.toString(),
-                                    fit: BoxFit
-                                        .cover, // Adjust the fit property to your desired value
-                                  ),
+                        FutureBuilder(
+                          future: _fetchLogo(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            if (snapshot.connectionState !=
+                                ConnectionState.done) return Text("");
+                            return CircleAvatar(
+                              radius: 58,
+                              backgroundColor: Colors.white,
+                              child: ClipOval(
+                                child: Image.network(
+                                  snapshot.data.toString(),
+                                  fit: BoxFit
+                                      .cover, // Adjust the fit property to your desired value
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            );
+                          },
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -227,8 +226,6 @@ class _ProfileState extends State<Profile> {
                   width: screenWidth,
                   child: Column(children: [
                     SizedBox(
-                      // height: screenHeight * 0.06,
-                      // width: screenWidth * 0.85,
                       child: ListTile(
                         onTap: () {
                           Navigator.pushReplacement(
@@ -349,7 +346,7 @@ class _ProfileState extends State<Profile> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
@@ -361,7 +358,7 @@ class _ProfileState extends State<Profile> {
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10),
                       )),
-                  height: screenHeight * 0.3,
+                  height: screenHeight * 0.35,
                   width: screenWidth,
                   child: Column(
                     children: [
@@ -390,7 +387,7 @@ class _ProfileState extends State<Profile> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        trailing: Icon(
+                        trailing: const Icon(
                           Icons.keyboard_arrow_right,
                           color: Colors.black,
                         ),

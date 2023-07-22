@@ -1,3 +1,4 @@
+import 'package:cargo/shared/loading.dart';
 import 'package:cargo/views/Bottom_Navigation.dart';
 import 'package:cargo/views/usermanagement/login.dart';
 import 'package:flutter/material.dart';
@@ -40,30 +41,7 @@ void main() {
 
 configLoading() {}
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  late LocaleBloc _localeBloc;
-  late NavigationBloc _navigationBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _localeBloc = LocaleBloc();
-    _navigationBloc = NavigationBloc();
-    _localeBloc.stream.listen((state) => setState(() {}));
-  }
-
-  @override
-  void dispose() {
-    _localeBloc.close();
-    _navigationBloc.close();
-    super.dispose();
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -73,8 +51,8 @@ class _MyAppState extends State<MyApp> {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider<LocaleBloc>.value(value: _localeBloc),
-        BlocProvider<NavigationBloc>.value(value: _navigationBloc),
+        BlocProvider<LocaleBloc>(create: (_) => LocaleBloc()),
+        BlocProvider<NavigationBloc>(create: (_) => NavigationBloc()),
       ],
       child: BlocBuilder<LocaleBloc, LocaleState>(
         builder: (context, localeState) {
@@ -97,6 +75,12 @@ class _MyAppState extends State<MyApp> {
                   locale: localeState.locale,
                   routeName: navigationState.routeName,
                 ),
+                routes: {
+                  '/login': (BuildContext context) => TikTokLoadingSpinner(),
+                  '/bottomNav': (BuildContext context) => BottomNav(),
+                  '/home': (BuildContext context) => CargoOWnerHomePage(),
+                  // Add more pages here
+                },
               );
             },
           );

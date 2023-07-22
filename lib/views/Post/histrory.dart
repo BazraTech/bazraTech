@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:cargo/shared/constant.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,6 +10,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../shared/loading.dart';
 import '../../shared/storage_hepler.dart';
 import '../Bottom_Navigation.dart';
 import 'historyDetail.dart';
@@ -40,6 +39,17 @@ class _CargoHistoryState extends State {
       if (response.statusCode == 200) {
         List cargoJson = json.decode(response.body)['cargos'];
         return cargoJson.map((cargo) => Cargo.fromJson(cargo)).toList();
+      } else {
+        final message = json.decode(response.body)['error'];
+        Fluttertoast.showToast(
+          msg: message,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 14.0,
+        );
       } // Handle connection timeout error
     } on SocketException catch (_) {
       // Handle connection timeout error
@@ -62,11 +72,12 @@ class _CargoHistoryState extends State {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Error'),
-              content: Text('Connection reset by peer. Please try again.'),
+              title: const Text('Error'),
+              content:
+                  const Text('Connection reset by peer. Please try again.'),
               actions: [
                 ElevatedButton(
-                  child: Text('Retry'),
+                  child: const Text('Retry'),
                   onPressed: () {
                     // Retry the operation
                     fetchCargos();
@@ -74,7 +85,7 @@ class _CargoHistoryState extends State {
                   },
                 ),
                 ElevatedButton(
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -98,12 +109,13 @@ class _CargoHistoryState extends State {
   @override
   void initState() {
     super.initState();
-    fetchCargos().then((cargos) {
-      setState(() {
-        _allCargos = cargos;
-      });
+    futureCargos = fetchCargos().then((cargos) {
+      if (mounted) {
+        setState(() {
+          _allCargos = cargos;
+        });
+      }
     });
-    futureCargos = fetchCargos();
   }
 
   Future searchCargosByOwnerName(String status) async {
@@ -164,7 +176,7 @@ class _CargoHistoryState extends State {
             backgroundColor: Colors.white,
             title: Container(
               width: double.infinity,
-              margin: EdgeInsets.only(right: screenWidth * 0.12),
+              margin: EdgeInsets.only(right: screenWidth * 0.1),
               height: 40,
               color: Colors.white,
               child: Center(
@@ -196,7 +208,7 @@ class _CargoHistoryState extends State {
             child: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
               child: Container(
-                margin: EdgeInsets.only(top: 30),
+                margin: const EdgeInsets.only(top: 30),
                 height: screenHeight,
                 child: FutureBuilder(
                   future: searchCargosByOwnerName(searchController.text),
@@ -205,7 +217,7 @@ class _CargoHistoryState extends State {
                         searchController.text.isNotEmpty) {
                       if (searchController.text.length < 3 ||
                           searchController.text.contains('dummy')) {
-                        Container(
+                        SizedBox(
                           height: double.infinity,
                           child: Center(
                             child: Lottie.asset(
@@ -231,8 +243,8 @@ class _CargoHistoryState extends State {
                           itemBuilder: (context, index) {
                             Cargo cargo = snapshot.data![index];
                             return ListTile(
-                              title: Container(
-                                height: screenHeight * 0.2,
+                              title: SizedBox(
+                                height: screenHeight * 0.22,
                                 child: GestureDetector(
                                   onTap: () {
                                     Navigator.push(
@@ -248,8 +260,8 @@ class _CargoHistoryState extends State {
                                       child: Container(
                                     decoration: BoxDecoration(
                                       color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
                                       boxShadow: [
                                         BoxShadow(
                                             color: Colors.grey.shade200
@@ -262,28 +274,33 @@ class _CargoHistoryState extends State {
                                             ))
                                       ],
                                     ),
-                                    height: screenHeight * 0.18,
                                     child: ListTile(
                                       title: Container(
-                                        margin: EdgeInsets.only(left: 5),
+                                        alignment: Alignment.topLeft,
                                         child: Column(
                                           children: [
                                             ListTile(
                                               title: Row(
                                                 children: [
-                                                  Text(
-                                                    cargo.pickUp,
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
-                                                      color: Color.fromARGB(
-                                                          255, 123, 129, 236),
-                                                      fontFamily: 'Roboto',
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                  SizedBox(
+                                                    width: screenWidth * 0.25,
+                                                    child: Text(
+                                                      cargo.pickUp,
+                                                      style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Color.fromARGB(
+                                                            255, 123, 129, 236),
+                                                        fontFamily: 'Roboto',
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                     ),
                                                   ),
                                                   Container(
-                                                    margin: EdgeInsets.only(
+                                                    margin:
+                                                        const EdgeInsets.only(
                                                       left: 8,
                                                     ),
                                                     child: const Icon(
@@ -293,8 +310,8 @@ class _CargoHistoryState extends State {
                                                           255, 123, 129, 236),
                                                     ),
                                                   ),
-                                                  Container(
-                                                    width: screenWidth * 0.2,
+                                                  SizedBox(
+                                                    width: screenWidth * 0.1,
                                                     child: const Stack(
                                                       alignment:
                                                           Alignment.center,
@@ -319,8 +336,9 @@ class _CargoHistoryState extends State {
                                                     ),
                                                   ),
                                                   Container(
-                                                    margin: EdgeInsets.only(
-                                                        right: 8),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            right: 8),
                                                     alignment:
                                                         Alignment.centerLeft,
                                                     child: Icon(
@@ -329,23 +347,27 @@ class _CargoHistoryState extends State {
                                                         color: Colors
                                                             .grey.shade300),
                                                   ),
-                                                  Text(
-                                                    cargo.dropOff,
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      color:
-                                                          Colors.grey.shade600,
-                                                      fontFamily: 'Roboto',
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                  SizedBox(
+                                                    width: screenWidth * 0.25,
+                                                    child: Text(
+                                                      cargo.dropOff,
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors
+                                                            .grey.shade600,
+                                                        fontFamily: 'Roboto',
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                               subtitle: Row(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                      MainAxisAlignment.start,
                                                   children: [
                                                     Text(
                                                       cargo.date,
@@ -358,28 +380,13 @@ class _CargoHistoryState extends State {
                                                             FontWeight.bold,
                                                       ),
                                                     ),
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: 30),
-                                                      child: Text(
-                                                        cargo.date,
-                                                        style: TextStyle(
-                                                          fontSize: 10,
-                                                          color: Colors
-                                                              .grey.shade600,
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                    ),
                                                   ]),
                                             ),
                                             Container(
-                                              margin: EdgeInsets.only(
+                                              margin: const EdgeInsets.only(
                                                 top: 15,
                                               ),
-                                              child: DottedLine(
+                                              child: const DottedLine(
                                                 lineThickness: 1.0,
                                                 dashLength: 4.0,
                                                 dashColor: Colors.grey,
@@ -428,12 +435,12 @@ class _CargoHistoryState extends State {
 
                     return Center(
                       child: FutureBuilder(
-                        future: Future.delayed(Duration(seconds: 10),
+                        future: Future.delayed(const Duration(seconds: 10),
                             () => _checkInternetConnection()),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return CircularProgressIndicator();
+                            return TikTokLoadingSpinner();
                           } else {
                             return Container(
                                 alignment: Alignment.center,
@@ -441,8 +448,8 @@ class _CargoHistoryState extends State {
                                 width: screenWidth * 0.7,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
                                   boxShadow: [
                                     BoxShadow(
                                         color: Colors.grey.shade200
@@ -458,7 +465,7 @@ class _CargoHistoryState extends State {
                                 child: Column(
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.only(top: 10),
+                                      margin: const EdgeInsets.only(top: 10),
                                       child: Text('Network Error',
                                           style: TextStyle(
                                             fontSize: 15,

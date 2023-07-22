@@ -225,9 +225,10 @@ class _ProfileEditState extends State<ProfileEdit> {
                                   children: [
                                     CircleAvatar(
                                       radius: 60,
-                                      backgroundColor: Colors.blueGrey,
+                                      backgroundColor: Colors.white,
                                       child: CircleAvatar(
                                         radius: 58,
+                                        backgroundColor: Colors.white,
                                         backgroundImage: _pickedImage == null
                                             ? NetworkImage(
                                                 "${widget.ownerAvatar}")

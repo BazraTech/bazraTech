@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:cargo/Components/statePost.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
@@ -282,15 +283,13 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                         color: Colors.white,
                       ),
                       child: Center(
-                        child: Container(
-                          color: Colors.white,
-                          child: SizedBox(
-                              height: screenHeight * 0.12,
-                              child: Icon(
-                                Icons.arrow_downward,
-                                size: 60,
-                                color: Color.fromRGBO(178, 142, 22, 1),
-                              )),
+                        child: SizedBox(
+                          height: screenHeight * 0.12,
+                          child: FaIcon(
+                            FontAwesomeIcons.boxOpen,
+                            size: 60,
+                            color: Color.fromRGBO(178, 142, 22, 1),
+                          ),
                         ),
                       ),
                     ),

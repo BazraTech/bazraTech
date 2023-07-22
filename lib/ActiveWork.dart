@@ -1,9 +1,9 @@
 import 'package:cargo/shared/customButton.dart';
 import 'package:cargo/shared/storage_hepler.dart';
+import 'package:cargo/views/Bottom_Navigation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:cargo/views/Work/AcceptedCargo.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -162,28 +162,17 @@ class _VehicleCargoState extends State<VehicleCargo> {
       });
       final responseJson = jsonDecode(putResponse.body);
       final message = responseJson['message'];
+      print("Status code: ${putResponse.statusCode}");
       if (putResponse.statusCode == 200) {
-        print('$message');
-      } else if (putResponse.statusCode == 200) {
-        Color backgroundColor;
-        if (message == "This Driver has already been confirmed!") {
-          backgroundColor = Colors.yellow;
-        } else if (message == "Driver state updated successfully") {
-          backgroundColor = Colors.green;
-        } else {
-          backgroundColor = Colors.red;
-        }
-        print('Response Message: $message');
         Fluttertoast.showToast(
           msg: message,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
-          backgroundColor: backgroundColor,
+          backgroundColor: Colors.amber.shade200,
           textColor: Colors.white,
           fontSize: 14.0,
         );
-        // Handle the case when the driver has already been confirmed
       } else {
         throw Exception('Failed to update driver state');
       }
@@ -199,14 +188,12 @@ class _VehicleCargoState extends State<VehicleCargo> {
     return Scaffold(
         backgroundColor: kBackgroundColor,
         appBar: AppBar(
-          toolbarHeight: 80,
+          toolbarHeight: 100,
           elevation: 0,
           leading: InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const AcceptedCargo()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => BottomNav()));
             },
             child: const Icon(
               Icons.arrow_back_ios,
@@ -216,8 +203,8 @@ class _VehicleCargoState extends State<VehicleCargo> {
           backgroundColor: const Color.fromARGB(255, 252, 254, 250),
           title: Container(
             width: double.infinity,
-            margin: EdgeInsets.only(right: screenWidth * 0.12),
-            height: 40,
+            margin: EdgeInsets.only(right: screenWidth * 0.1),
+            height: 80,
             color: const Color.fromARGB(255, 252, 254, 250),
             child: Center(
               child: Row(
@@ -253,48 +240,39 @@ class _VehicleCargoState extends State<VehicleCargo> {
                             AsyncSnapshot<int> snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Container(
-                              width: screenWidth * 0.07,
-                              height: screenHeight * 0.08,
-                              margin: EdgeInsets.only(
-                                left: screenWidth * 0.6,
-                              ),
-                            );
+                            return Container();
                           } else if (snapshot.hasError) {
                             return const Text('');
                           } else {
                             int driversLength = snapshot.data ?? 0;
-                            return Stack(
-                              children: [
-                                Positioned(
-                                  right: 0,
-                                  top: 0,
-                                  child: Container(
-                                    padding: const EdgeInsets.all(2),
+                            return SizedBox(
+                              height: screenHeight * 0.4,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: screenHeight * 0.05,
                                     decoration: const BoxDecoration(
-                                      color: Colors.red,
                                       shape: BoxShape.circle,
+                                      color: Color.fromRGBO(178, 142, 22, 1),
                                     ),
-                                    constraints: const BoxConstraints(
-                                      minWidth: 16,
-                                      minHeight: 16,
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          driversLength.toString(),
-                                          style: const TextStyle(
-                                            color: Colors.white,
+                                    padding: const EdgeInsets.all(11),
+                                    child: Text(driversLength.toString(),
+                                        style: const TextStyle(
                                             fontSize: 10,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      const  Text("Need Approve"),
-                                      ],
-                                    ),
+                                            fontWeight: FontWeight.bold)),
                                   ),
-                                ),
-                              ],
+                                  const Text(
+                                    "Confirm",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      fontFamily: "Nunito",
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
+                                  )
+                                ],
+                              ),
                             );
                           }
                         },
@@ -307,7 +285,7 @@ class _VehicleCargoState extends State<VehicleCargo> {
           ),
         ),
         body: Container(
-            margin: EdgeInsets.only(left: 5, right: 5, top: 30),
+            margin: const EdgeInsets.only(left: 5, right: 5, top: 30),
             child: FutureBuilder(
                 future: searchCargosByOwnerName(searchController.text),
                 builder: (context, snapshot) {

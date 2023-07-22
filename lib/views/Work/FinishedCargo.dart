@@ -15,6 +15,7 @@ import '../../Components/Noglow.dart';
 import '../../localization/app_localizations.dart';
 import '../../model/cargo.dart';
 import '../../shared/constant.dart';
+import '../../shared/loading.dart';
 import '../Post/historyDetail.dart';
 import 'Work_Navigation.dart';
 
@@ -57,17 +58,16 @@ class _FinishedCargoState extends State<FinishedCargo> {
             .toList();
         return activeCargos;
       } else {
-        Alert(
-          context: context,
-          title: "Error",
-          desc: "Server error",
-          type: AlertType.error,
-        ).show();
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => CargoOWnerHomePage()),
+        final message = json.decode(response.body)['error'];
+        Fluttertoast.showToast(
+          msg: message,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 14.0,
         );
-        return [];
       }
     } catch (e) {
       // Handle other errors
@@ -127,11 +127,13 @@ class _FinishedCargoState extends State<FinishedCargo> {
   @override
   void initState() {
     super.initState();
-    fetchActiveCargos().then((cargos) {
-      setState(() {
-        _allCargos = cargos;
+    if (mounted) {
+      fetchActiveCargos().then((cargos) {
+        setState(() {
+          _allCargos = cargos;
+        });
       });
-    });
+    }
   }
 
   TextEditingController searchController = TextEditingController();
@@ -180,7 +182,7 @@ class _FinishedCargoState extends State<FinishedCargo> {
         leading: InkWell(
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Work_BottomNav()));
+                context, MaterialPageRoute(builder: (context) => BottomNav()));
           },
           child: const Icon(
             Icons.arrow_back_ios,
@@ -393,7 +395,7 @@ class _FinishedCargoState extends State<FinishedCargo> {
                     Duration(seconds: 10), () => _checkInternetConnection()),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return TikTokLoadingSpinner();
                   } else {
                     return Container(
                         alignment: Alignment.center,

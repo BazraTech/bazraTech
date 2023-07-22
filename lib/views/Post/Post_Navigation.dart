@@ -1,108 +1,101 @@
-
+import 'package:cargo/views/Post/histrory.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../localization/app_localizations.dart';
-import '../../localization/localization_bloc.dart';
-import '../../localization/localization_state.dart';
-import '../../shared/constant.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Posts.dart';
-import 'histrory.dart';
-class Post_BottomNav extends StatelessWidget {
+
+class Post_BottomNav extends StatefulWidget {
   Post_BottomNav({super.key});
+
+  @override
+  _Post_BottomNavState createState() => _Post_BottomNavState();
+}
+
+class _Post_BottomNavState extends State<Post_BottomNav>
+    with SingleTickerProviderStateMixin {
+  TabController? _tabController;
+  @override
+  void dispose() {
+    _tabController?.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    return BlocBuilder<LocaleBloc, LocaleState>(
-      builder: (context, localeState) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
+    const backgroundColor = Color.fromRGBO(178, 142, 22, 1);
+    return WillPopScope(
+      onWillPop: () async {
+        if (_tabController!.index > 0) {
+          _tabController!.animateTo(0);
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            const Posts(),
+            CargoHistory(),
           ],
-          supportedLocales: [
-            const Locale('en', ''),
-            const Locale('am', ''),
-          ],
-          locale: localeState.locale,
-          home: DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              backgroundColor: Colors.white,
-              body: TabBarView(
-                children: [
-                  BlocBuilder<LocaleBloc, LocaleState>(
-                    builder: (context, localeState) {
-                      return Posts(
-                        localizations: AppLocalizations.of(context),
-                      );
-                    },
-                  ),
-                  BlocBuilder<LocaleBloc, LocaleState>(
-                    builder: (context, localeState) {
-                      return CargoHistory(  
-                        localizations: AppLocalizations.of(context),
-                      );
-                    },
-                  ),
-                ],
-              ),
-              bottomNavigationBar: Container(
-                height: screenHeight * 0.1,
-                decoration: const BoxDecoration(color: kPrimaryColor),
-                child: Container(
-                  width: screenWidth,
-                  child: Center(
-                    child: TabBar(
-                        indicatorSize: TabBarIndicatorSize.label,
-                        indicatorPadding: EdgeInsets.all(12),
-                        indicatorColor: Colors.white,
-                        isScrollable: false,
-                        indicatorWeight: 3,
-                        labelPadding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.055),
-                        tabs: [
-                          Tab(
-                            icon: Icon(Icons.add),
-                            child: Text(
-                              AppLocalizations.of(context)
-                                      ?.translate("Post Cargo") ??
-                                  "Post Cargo",
-                              style: const TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.white,
-                                  fontFamily: 'Roboto',
-                                  letterSpacing: 1,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Tab(
-                            icon: Icon(Icons.history_edu),
-                            child: Text(
-                              AppLocalizations.of(context)
-                                      ?.translate("Cargo History") ??
-                                  "Cargo History",
-                              style: const TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.white,
-                                  fontFamily: 'Roboto',
-                                  letterSpacing: 1,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ]),
-                  ),
-                ),
-              ),
+        ),
+        bottomNavigationBar: Container(
+          height: screenHeight * 0.1,
+          decoration: const BoxDecoration(color: backgroundColor),
+          child: SizedBox(
+            width: screenWidth,
+            child: Center(
+              child: TabBar(
+                  controller: _tabController,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  indicatorPadding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
+                  indicatorColor: Colors.white,
+                  isScrollable: true,
+                  indicatorWeight: 3,
+                  enableFeedback: true,
+                  mouseCursor: SystemMouseCursors.click,
+                  tabs: [
+                    Tab(
+                      icon: const Icon(Icons.add),
+                      child: Text(
+                        AppLocalizations.of(context)?.translate("Post Cargo") ??
+                            "Post Cargo",
+                        style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontFamily: 'Roboto',
+                            letterSpacing: 1,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Tab(
+                      icon: const Icon(Icons.history_edu),
+                      child: Text(
+                        AppLocalizations.of(context)
+                                ?.translate("Cargo History") ??
+                            "Cargo History",
+                        style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontFamily: 'Roboto',
+                            letterSpacing: 1,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ]),
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

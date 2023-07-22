@@ -1,4 +1,4 @@
-import 'package:cargo/views/Bill/Bill.dart';
+
 import 'package:flutter/material.dart';
 import '../../model/bill_details.dart';
 import '../../shared/customAppbar.dart';
