@@ -28,24 +28,37 @@ class DriverStatus extends StatelessWidget {
       length: 5,
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: TabBarView(
-          children: [
-            Container(color: Colors.red, child: OwnersDriver()),
-            Container(
+        body: Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade600.withOpacity(0.3),
+                spreadRadius: -1,
+                blurRadius: 1,
+                offset: Offset(0, -6), // horizontal, vertical offset
+              ),
+            ],
+          ),
+          child: TabBarView(
+            children: [
+              Container(color: Colors.red, child: OwnersDriver()),
+              Container(
+                  color: Colors.red,
+                  child: getDriversBystatus(
+                      driverStatus: 'ASSIGNED', driverList: 'drivers')),
+              Container(
                 color: Colors.red,
                 child: getDriversBystatus(
-                    driverStatus: 'ASSIGNED', driverList: 'drivers')),
-            Container(
-              color: Colors.red,
-              child: getDriversBystatus(
-                  driverStatus: 'UNASSIGNED', driverList: 'drivers'),
-            ),
-            Container(
-                color: Colors.red,
-                child: getDriversBystatus(
-                    driverStatus: 'PERMIT', driverList: 'drivers')),
-            getDriversBystatus(driverStatus: 'ONROUTE', driverList: 'drivers'),
-          ],
+                    driverStatus: 'UNASSIGNED', driverList: 'drivers'),
+              ),
+              Container(
+                  color: Colors.red,
+                  child: getDriversBystatus(
+                      driverStatus: 'PERMIT', driverList: 'drivers')),
+              getDriversBystatus(
+                  driverStatus: 'ONROUTE', driverList: 'drivers'),
+            ],
+          ),
         ),
         bottomNavigationBar: Container(
           margin: EdgeInsets.only(bottom: 20),

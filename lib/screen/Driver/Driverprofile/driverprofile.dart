@@ -163,7 +163,6 @@ class _driverProfileState extends State<driverProfile> {
                       Container(
                         child: SizedBox(
                           height: screenHeight * 0.1,
-                          width: screenWidth - 80,
                           child: FutureBuilder<Map<String, dynamic>>(
                             future: fetchDriverinfo(),
                             builder: (BuildContext context,
@@ -179,7 +178,14 @@ class _driverProfileState extends State<driverProfile> {
                                 final data = snapshot.data;
 
                                 // Display the data in your desired format
-                                return Image.network(data!["driverPic"]);
+                                return ClipOval(
+                                    child: SizedBox(
+                                        height: screenHeight * 0.03,
+                                        width: screenWidth * 0.2,
+                                        child: Image.network(
+                                          data!["driverPic"],
+                                          fit: BoxFit.cover,
+                                        )));
                               }
                             },
                           ),
@@ -516,7 +522,7 @@ class _driverProfileState extends State<driverProfile> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: [
                             Container(

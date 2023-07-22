@@ -34,15 +34,27 @@ class _VehicleStatusState extends State<VehicleStatus> {
       length: 5,
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: TabBarView(
-          children: [
-            OwnersVehicle(),
-            getvehicleBystatus(route: 'ONROUTE', onroute: 'inRoutelist'),
-            getvehicleBystatus(route: 'PARKED', onroute: 'parkedList'),
-            getvehicleBystatus(route: 'INSTOCK', onroute: 'stockedList'),
-            getvehicleBystatus(
-                route: 'MAINTAINING', onroute: 'maintainingList'),
-          ],
+        body: Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade600.withOpacity(0.3),
+                spreadRadius: -1,
+                blurRadius: 1,
+                offset: Offset(0, -6), // horizontal, vertical offset
+              ),
+            ],
+          ),
+          child: TabBarView(
+            children: [
+              OwnersVehicle(),
+              getvehicleBystatus(route: 'ONROUTE', onroute: 'inRoutelist'),
+              getvehicleBystatus(route: 'PARKED', onroute: 'parkedList'),
+              getvehicleBystatus(route: 'INSTOCK', onroute: 'stockedList'),
+              getvehicleBystatus(
+                  route: 'MAINTAINING', onroute: 'maintainingList'),
+            ],
+          ),
         ),
         bottomNavigationBar: Container(
           margin: EdgeInsets.only(bottom: 20),
@@ -54,7 +66,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
             child: TabBar(
               isScrollable: true,
               labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
-              labelColor: kPrimaryColor,
+              labelColor: Colors.black,
               indicatorPadding: EdgeInsets.all(4),
               overlayColor:
                   MaterialStateColor.resolveWith((Set<MaterialState> states) {

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:ui';
-import 'package:bazralogin/Theme/Alert.dart';
 import 'package:bazralogin/screen/Driver/driverBottomnav.dart';
 import 'package:bazralogin/screen/Loging/forgotPin.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -118,7 +117,7 @@ class _LoginState extends State<Login> {
               MaterialPageRoute(
                   builder: (context) => BottomTabBarPageforowner()));
         } else {
-          showErrorSnackbar(context);
+          showErrorSnackbar(context, "Unauthorized");
           setState(() {
             isLoading = false;
           });
@@ -520,10 +519,10 @@ class _LoginState extends State<Login> {
                                                                         AppFonts
                                                                             .smallFontSize,
                                                                     color: Colors
-                                                                        .white,
+                                                                        .black,
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .normal),
+                                                                            .bold),
                                                               )
                                                             ],
                                                           ),
@@ -589,55 +588,16 @@ class _LoginState extends State<Login> {
   }
 
   // ignore: non_constant_identifier_names
-  void showErrorSnackbar(BuildContext context) {
+  void showErrorSnackbar(BuildContext context, String errorMessage) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Center(
-            child: Row(
-          children: [
-            Icon(
-              Icons.warning,
-              color: Colors.white,
-              size: 28,
-            ),
-            Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(right: 33),
-                  child: Text(
-                    "Error",
-                    textAlign: TextAlign.left,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        fontFamily: 'Nunito',
-                        fontSize: AppFonts.smallFontSize,
-                        color: Colors.black,
-                        fontWeight: FontWeight.normal),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Container(
-                    margin: EdgeInsets.only(left: 32),
-                    child: Text(
-                      "Bad credentials",
-                      textAlign: TextAlign.left,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontFamily: 'Nunito',
-                          fontSize: AppFonts.smallFontSize,
-                          color: Colors.black,
-                          fontWeight: FontWeight.normal),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        )),
-        backgroundColor: Colors.red,
-        behavior: SnackBarBehavior.floating,
+        content: Center(child: Text(errorMessage)),
+        backgroundColor:
+            Colors.blue, // You can customize the background color here
         duration: Duration(seconds: 3),
+        behavior: SnackBarBehavior.floating, // Use a floating behavior
+        margin: EdgeInsets.only(
+            top: 70.0), // Adjust the duration as per your preference
       ),
     );
   }

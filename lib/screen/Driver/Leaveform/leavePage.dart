@@ -214,7 +214,7 @@ class _leavepremmissionPageState extends State {
             style: const TextStyle(
                 fontFamily: 'Nunito',
                 fontSize: AppFonts.mediumFontSize,
-                color: Colors.white,
+                color: Colors.black,
                 fontWeight: FontWeight.bold),
           ),
         ),
@@ -255,10 +255,9 @@ class _leavepremmissionPageState extends State {
                         child: Padding(
                           padding: const EdgeInsets.all(9.0),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                height: screenHeight * 0.03,
                                 margin: EdgeInsets.only(top: 5),
                                 child: Text(
                                   "Leave Request For",
@@ -282,7 +281,7 @@ class _leavepremmissionPageState extends State {
                 height: screenHeight * 0.12,
                 width: screenWidth * 0.9,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       child: Container(

@@ -1,19 +1,12 @@
-
 import 'package:flutter/material.dart';
-
-
 import '../../../../Theme/clippbox.dart';
 import '../../../../const/constant.dart';
 
 class alertComponent extends StatefulWidget {
   final List<dynamic> data;
 
-
-  
   alertComponent({
     required this.data,
-   
-   
   });
 
   @override

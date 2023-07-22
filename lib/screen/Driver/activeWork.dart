@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:bazralogin/Theme/Alert.dart';
+
 import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -84,11 +84,11 @@ class _activeWorkState extends State<activeWork> {
       if (response.statusCode == 200) {
         String alertContent = jsonResponse["message"];
 
-        alertutilsfordriver.showMyDialog(context, "Alert", alertContent);
+        showErrorSnackbar(context, alertContent);
       } else {
         String alertContent = jsonResponse["message"];
 
-        alertutilsfordriver.showMyDialog(context, "Alert", alertContent);
+        showErrorSnackbar(context, alertContent);
       }
     } catch (e) {
       print(e);
@@ -209,7 +209,18 @@ class _activeWorkState extends State<activeWork> {
                           height: screenHeight * 0.1,
                           child: ElevatedButton(
                             onPressed: () {
-                              Unloadandloadcar("DEPARRIVE");
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => YesNoDialog(
+                                  title: 'Confirmation',
+                                  message: 'Do you want to accept job?',
+                                  onYesPressed: () async {
+                                    Unloadandloadcar("DEPARRIVE");
+                                    // Navigator.of(context).pop();
+                                  },
+                                ),
+                              );
+
                               setActiveButton(false);
                             },
                             style: ButtonStyle(
@@ -271,7 +282,18 @@ class _activeWorkState extends State<activeWork> {
                           height: screenHeight * 0.1,
                           child: ElevatedButton(
                             onPressed: () {
-                              Unloadandloadcar("LOAD");
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => YesNoDialog(
+                                  title: 'Confirmation',
+                                  message: 'Do you want to accept job?',
+                                  onYesPressed: () async {
+                                    Unloadandloadcar("LOAD");
+                                    // Navigator.of(context).pop();
+                                  },
+                                ),
+                              );
+
                               setActiveButton2(true);
                             },
                             child: Text(
@@ -343,7 +365,17 @@ class _activeWorkState extends State<activeWork> {
                           child: ElevatedButton(
                             onPressed: () {
                               setActiveButton(false);
-                              Unloadandloadcar("DESTARRIVE");
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => YesNoDialog(
+                                  title: 'Confirmation',
+                                  message: 'Do you want to accept job?',
+                                  onYesPressed: () async {
+                                    Unloadandloadcar("DESTARRIVE");
+                                    // Navigator.of(context).pop();
+                                  },
+                                ),
+                              );
                             },
                             style: ButtonStyle(
                               backgroundColor:
@@ -404,7 +436,17 @@ class _activeWorkState extends State<activeWork> {
                           height: screenHeight * 0.1,
                           child: ElevatedButton(
                             onPressed: () {
-                              Unloadandloadcar("UNLOAD");
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => YesNoDialog(
+                                  title: 'Confirmation',
+                                  message: 'Do you want to accept job?',
+                                  onYesPressed: () async {
+                                    Unloadandloadcar("UNLOAD");
+                                    // Navigator.of(context).pop();
+                                  },
+                                ),
+                              );
                               setActiveButton2(false);
                             },
                             child: Text(
@@ -519,6 +561,89 @@ class _activeWorkState extends State<activeWork> {
           ),
         ],
       ),
+    );
+  }
+}
+
+void showErrorSnackbar(BuildContext context, String errorMessage) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Center(child: Text(errorMessage)),
+      backgroundColor:
+          Colors.blue, // You can customize the background color here
+      duration: Duration(seconds: 3),
+      behavior: SnackBarBehavior.floating, // Use a floating behavior
+      margin: EdgeInsets.only(
+          top: 70.0), // Adjust the duration as per your preference
+    ),
+  );
+}
+
+// alert diagloug
+class YesNoDialog extends StatefulWidget {
+  final String title;
+  final String message;
+  final Function onYesPressed;
+
+  YesNoDialog({
+    required this.title,
+    required this.message,
+    required this.onYesPressed,
+  });
+
+  @override
+  State<YesNoDialog> createState() => _YesNoDialogState();
+}
+
+class _YesNoDialogState extends State<YesNoDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(widget.title),
+      content: Text(widget.message),
+      actions: <Widget>[
+        ElevatedButton(
+          onPressed: () async {
+            widget.onYesPressed();
+            Navigator.pop(context);
+          },
+          child: Text(
+            'Yes',
+            style: TextStyle(
+                fontFamily: 'Nunito',
+                fontSize: AppFonts.smallFontSize,
+                color: Colors.black,
+                fontWeight: FontWeight.normal),
+          ),
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+            ),
+            minimumSize: MaterialStateProperty.all(Size(5, 5)),
+            backgroundColor: MaterialStateProperty.all(
+              Color.fromRGBO(178, 142, 22, 1),
+            ),
+            shadowColor: MaterialStateProperty.all(
+              Color.fromRGBO(178, 142, 22, 1),
+            ),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(
+            'No',
+            style: TextStyle(
+                fontFamily: 'Nunito',
+                fontSize: AppFonts.smallFontSize,
+                color: Colors.black,
+                fontWeight: FontWeight.normal),
+          ),
+        ),
+      ],
     );
   }
 }

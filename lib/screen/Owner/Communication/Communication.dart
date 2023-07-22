@@ -185,8 +185,8 @@ class _CommunicationPageState extends State<CommunicationPage> {
                     child: Text(
                       TranslationUtil.text('Message'),
                       style: TextStyle(
-                        color: kPrimaryColor,
-                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontWeight: FontWeight.normal,
                         fontSize: 23,
                       ),
                     ),
@@ -385,13 +385,15 @@ class _CommunicationPageState extends State<CommunicationPage> {
                                                   top: 10, bottom: 10),
                                               child: Text(
                                                 " " + driver['driverName'],
-                                                 textAlign: TextAlign.left,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontFamily: 'Nunito',
-                                fontSize: AppFonts.smallFontSize,
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal),
+                                                textAlign: TextAlign.left,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                    fontFamily: 'Nunito',
+                                                    fontSize:
+                                                        AppFonts.smallFontSize,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.normal),
                                               ),
                                             ),
                                           ),
@@ -401,13 +403,15 @@ class _CommunicationPageState extends State<CommunicationPage> {
                                               " " +
                                                   driver['phoneNumber']
                                                       .toString(),
-                                               textAlign: TextAlign.left,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontFamily: 'Nunito',
-                                fontSize: AppFonts.smallFontSize,
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal),
+                                              textAlign: TextAlign.left,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  fontFamily: 'Nunito',
+                                                  fontSize:
+                                                      AppFonts.smallFontSize,
+                                                  color: Colors.black,
+                                                  fontWeight:
+                                                      FontWeight.normal),
                                             ),
                                           ),
                                           Padding(

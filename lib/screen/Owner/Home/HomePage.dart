@@ -14,6 +14,7 @@ import 'package:ionicons/ionicons.dart';
 import '../../../const/constant.dart';
 import 'package:http/http.dart' as http;
 import '../../../controller/apiController.dart';
+import '../../../controller/driverimage.dart';
 import '../../../controller/ownerinfocontroller.dart';
 
 import '../Driver/driversPage.dart';
@@ -47,7 +48,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
   List newtotalnotification = [];
   List oldtotalnotification = [];
   List Temp = [];
-
+  int newItemCount = 0;
   List dataList = [];
   DateTime? currentBackPressTime;
   bool _isLoading = true;
@@ -104,26 +105,6 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
     });
   }
 
-  Future<List<dynamic>> fetchData() async {
-    final storage = new FlutterSecureStorage();
-    var token = await storage.read(key: 'jwt');
-    Map<String, String> requestHeaders = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-    final response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/Alerts/ByStatus'),
-        headers: requestHeaders);
-    if (response.statusCode == 200) {
-      final jsonData = jsonDecode(response.body);
-      List items = jsonData["activeAlerts"];
-      return items;
-    } else {
-      throw Exception('Failed to fetch data');
-    }
-  }
-
   Future<String> _fetchLogo() async {
     var client = http.Client();
     final storage = new FlutterSecureStorage();
@@ -172,44 +153,61 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
     return false;
   }
 
-  int newItemCount = 0;
-  Future<void> fetchAndStoreData() async {
-    final Box<dynamic> itemsBox = await Hive.openBox<dynamic>('items');
-    final fetchedData = await fetchData();
-    final storedData = itemsBox.values.toList();
-
-    newItemCount = 0;
-    List<dynamic> newData = fetchedData.where((item) {
-      return !storedData.contains(item);
-    }).toList();
-
-    print(newData.length);
-
-    for (final item in fetchedData) {
-      if (!storedData.contains(item)) {
-        itemsBox.add(item);
-
-        newItemCount++;
-      }
-    }
-    //
-
-    setState(() {}); // Trigger rebuild to update the UI
-    print('New items count: $newItemCount');
+  Future<void> clearDataFromHiveBox() async {
+    setState(() {
+      Temp.clear();
+    });
   }
 
-  void clearItemCount() {
-    setState(() {
-      newItemCount = 0;
-    });
-    // Trigger rebuild to update the UI
+  Future<void> fetchDataFromApiAndStoreInHive() async {
+    // Fetch data from the API
+    final storage = new FlutterSecureStorage();
+    var token = await storage.read(key: 'jwt');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    final response = await http.get(
+        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/Alerts/ByStatus'),
+        headers: requestHeaders);
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      List items = responseData["activeAlerts"];
+      // Get the Hive box
+      final box = Hive.box('dataBox');
+      final String lastStoredId = box.get('lastId', defaultValue: 0);
+
+      // Store only new data in Hive
+      for (var data in items) {
+        String id = data["id"]
+            .toString(); // Assuming 'id' is the unique identifier in the API response
+        print(data["id"]);
+        // Check if the data already exists in Hive
+        bool istrue = !box.containsKey(id);
+        print(istrue);
+        if (istrue == true) {
+          box.put(id, data);
+          
+          setState(() {
+            newItemCount++;
+          });
+        }
+      }
+      if (items.isNotEmpty) {
+        final lastItem = items.last;
+        final String lastItemId = lastItem['alertstart'];
+        box.put('lastId', lastItemId);
+      }
+    }
   }
 
   void initState() {
     super.initState();
-    fetchData();
+    // fetchData();
+    fetchDataFromApiAndStoreInHive();
 
-    fetchAndStoreData();
     _isMounted = true;
 
     BackButtonInterceptor.add(myInterceptor);
@@ -232,8 +230,10 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       _controller.fetchData();
     });
+    final DataController dataController = Get.put(DataController());
 
     final ApiControllerforowner _ownerinfo = Get.put(ApiControllerforowner());
+    print(Temp.length);
     return Scaffold(
         backgroundColor: kBackgroundColor,
         body: Column(
@@ -304,7 +304,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                                                 'Nunito',
                                                             fontSize: AppFonts
                                                                 .smallFontSize,
-                                                            color: Colors.white,
+                                                            color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .bold),
@@ -341,7 +341,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                                                             style:
                                                                                 TextStyle(
                                                                               fontFamily: "Nunito",
-                                                                              color: Colors.white,
+                                                                              color: Colors.black,
                                                                               fontSize: AppFonts.smallFontSize,
                                                                             ),
                                                                           ),
@@ -365,7 +365,10 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                             ),
                             InkWell(
                               onTap: () {
-                                clearItemCount();
+                                setState(() {
+                                  // Clear the new items count after displaying it
+                                  newItemCount = 0;
+                                });
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -419,19 +422,20 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                   ),
                 ),
                 Positioned(
-                  child: Container(
-                    margin: EdgeInsets.only(
-                        top: screenHeight * 0.19, left: 38, right: 35),
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      color: Colors.white,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Row(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      margin: EdgeInsets.only(
+                          top: screenHeight * 0.19, left: 35, right: 35),
+                      height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        color: Colors.white,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
                             children: [
                               Container(
                                 width: screenWidth * 0.35,
@@ -488,6 +492,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                       style: TextStyle(
                                         fontFamily: "Nunito",
                                         color: Colors.black,
+                                        fontWeight: FontWeight.bold,
                                         fontSize: AppFonts.smallFontSize,
                                       ),
                                     )
@@ -496,79 +501,81 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                               ),
                             ],
                           ),
-                        ),
-                        Container(
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: screenWidth * 0.35,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                        top: 13,
-                                        bottom: 13,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Color.fromRGBO(178, 142, 22, 1),
-                                      ),
+                          Container(
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: screenWidth * 0.35,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                          top: 13,
+                                          bottom: 13,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color:
+                                              Color.fromRGBO(178, 142, 22, 1),
+                                        ),
 
-                                      child: SizedBox(
-                                        height: 20,
-                                        width: 30,
-                                        child: Center(
-                                          child: FutureBuilder<dynamic>(
-                                            future: _controller.fetchData(),
-                                            builder: (context, snapshot) {
-                                              if (snapshot.connectionState ==
-                                                  ConnectionState.waiting) {
-                                                return Center(
-                                                    child: Container());
-                                              } else if (snapshot.hasError) {
-                                                return Center(
-                                                    child: Text(
-                                                        'Error: ${snapshot.error}'));
-                                              } else {
-                                                List<dynamic>? data =
-                                                    snapshot.data;
-                                                int dataLength =
-                                                    data?.length ?? 0;
-                                                return Center(
-                                                    child: Text(
-                                                  "$dataLength",
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                    fontFamily: "Nunito",
-                                                    color: Colors.white,
-                                                    fontSize:
-                                                        AppFonts.smallFontSize,
-                                                  ),
-                                                ));
-                                              }
-                                            },
+                                        child: SizedBox(
+                                          height: 20,
+                                          width: 30,
+                                          child: Center(
+                                            child: FutureBuilder<dynamic>(
+                                              future: _controller.fetchData(),
+                                              builder: (context, snapshot) {
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return Center(
+                                                      child: Container());
+                                                } else if (snapshot.hasError) {
+                                                  return Center(
+                                                      child: Text(
+                                                          'Error: ${snapshot.error}'));
+                                                } else {
+                                                  List<dynamic>? data =
+                                                      snapshot.data;
+                                                  int dataLength =
+                                                      data?.length ?? 0;
+                                                  return Center(
+                                                      child: Text(
+                                                    "$dataLength",
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                      fontFamily: "Nunito",
+                                                      color: Colors.white,
+                                                      fontSize: AppFonts
+                                                          .smallFontSize,
+                                                    ),
+                                                  ));
+                                                }
+                                              },
+                                            ),
                                           ),
                                         ),
+                                        padding: EdgeInsets.all(11),
+                                        //use this class Circleborder() for circle shape.
                                       ),
-                                      padding: EdgeInsets.all(11),
-                                      //use this class Circleborder() for circle shape.
-                                    ),
-                                    Text(
-                                      TranslationUtil.text("Vehicle"),
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontFamily: "Nunito",
-                                        color: Colors.black,
-                                        fontSize: AppFonts.smallFontSize,
+                                      Text(
+                                        TranslationUtil.text("Vehicle"),
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontFamily: "Nunito",
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: AppFonts.smallFontSize,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 )
@@ -633,6 +640,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                       TranslationUtil.text("Driver"),
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
+                                        fontWeight: FontWeight.bold,
                                         fontFamily: "Nunito",
                                         color: Colors.black,
                                         fontSize: AppFonts.smallFontSize,
@@ -691,6 +699,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                     TranslationUtil.text("Vehicle"),
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
+                                      fontWeight: FontWeight.bold,
                                       fontFamily: "Nunito",
                                       color: Colors.black,
                                       fontSize: AppFonts.smallFontSize,
@@ -751,6 +760,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                     TranslationUtil.text("Report"),
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
+                                      fontWeight: FontWeight.bold,
                                       fontFamily: "Nunito",
                                       color: Colors.black,
                                       fontSize: AppFonts.smallFontSize,
@@ -815,6 +825,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                     style: TextStyle(
                                       fontFamily: "Nunito",
                                       color: Colors.black,
+                                      fontWeight: FontWeight.bold,
                                       fontSize: AppFonts.smallFontSize,
                                     ),
                                   ),
@@ -876,6 +887,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                       fontFamily: "Nunito",
                                       color: Colors.black,
                                       fontSize: AppFonts.smallFontSize,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),

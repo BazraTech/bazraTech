@@ -2,19 +2,22 @@ import 'dart:convert';
 import 'dart:ui';
 import 'dart:async';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
+import 'package:bazralogin/Theme/Alert.dart';
 import 'package:bazralogin/screen/Driver/avilablelMarket_Fordriver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../config/APIService.dart';
 import '../../../controller/Localization.dart';
 import '../../../const/constant.dart';
 import 'package:http/http.dart' as http;
 import '../../Theme/clippbox.dart';
 import '../../controller/driverimage.dart';
+import '../Owner/Driver/assignDriver.dart';
 import 'Notification/driverNotification.dart';
 import 'Reportfordriver/driverReportstatus.dart';
 import 'activeWork.dart';
@@ -41,10 +44,14 @@ class _Driver_HompageState extends State<Driver_Hompage> {
   String ownerpic = "";
   Map<String, dynamic>? Result;
   String? driverstate;
+  String? driverstatus;
   String? startpalce;
   String? endplace;
   String? namedriver;
+  int newItemCount = 0;
   bool _isLoading = true;
+  List<dynamic> newalert = [];
+  String? driverworkstatus;
   List Listactivework = [];
   void buttonState() {
     setState(() {
@@ -53,20 +60,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
     });
   }
 
-  int _current = 0;
-  Map? jsonResponse;
-  SharedPreferences? localStorage;
-  //String? phoneNumber;
-  String greeting() {
-    var hour = DateTime.now().hour;
-    if (hour < 12) {
-      return 'Good Morning';
-    }
-    if (hour < 17) {
-      return 'Good Afternoon';
-    }
-    return 'Good Evening';
-  }
+  // fetch  alert notifaction
 
   Future<Map<String, dynamic>> fetchDriverinfo() async {
     final storage = new FlutterSecureStorage();
@@ -88,30 +82,6 @@ class _Driver_HompageState extends State<Driver_Hompage> {
   }
 
   //fetch driver status
-  Future fetchActivework() async {
-    final storage = new FlutterSecureStorage();
-    var token = await storage.read(key: 'jwt');
-    var client = http.Client();
-    Map<String, String> requestHeaders = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.corgaStatus);
-    var response = await client.get(url, headers: requestHeaders);
-
-    if (response.statusCode == 200) {
-      var data = json.decode(response.body);
-
-      endplace = await storage.read(key: 'totalVehicle');
-      setState(() {
-        _isLoading = false;
-        List Results = data["cargos"];
-      });
-
-      return Result;
-    } else {}
-  }
 
   Future<String> _fetchLogo() async {
     var client = http.Client();
@@ -161,6 +131,104 @@ class _Driver_HompageState extends State<Driver_Hompage> {
     // Return true to stop the default back button event
   }
 
+  Stream<List<dynamic>>? fetchDataStream() async* {
+    // Open Hive box here
+
+    while (true) {
+      await Future.delayed(Duration(seconds: 5)); // Fetch data every 10 seconds
+      final Box<dynamic> box = await Hive.openBox<dynamic>('your_data_box');
+      // Replace with the URL of your API
+
+      try {
+        var token = await storage.read(key: 'jwt');
+        var client = http.Client();
+        Map<String, String> requestHeaders = {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        };
+        var url = Uri.http(ApIConfig.urlAPI, ApIConfig.getalert);
+        var response = await client.get(url, headers: requestHeaders);
+        if (response.statusCode == 200) {
+          var alert = jsonDecode(response.body);
+
+          List<dynamic> newData = alert["activeAlerts"];
+          var box = Hive.box('your_data_box');
+
+          // Update the local data in Hive only with new or updated data
+          final storedData = box.values.toList();
+
+          print(storedData);
+
+          for (int i = 0; i < storedData.length; i++) {
+            if (storedData == null || storedData[i]['id'] != newData[0]['id']) {
+              setState(() {
+                newalert = newData;
+              });
+            } else {
+              setState(() {
+                newalert.clear();
+              });
+            }
+          }
+
+          // Save the current time as the last update time
+
+          yield newData; // Emit the new data to the Stream
+        } else {
+          // Handle API error
+          print(
+              'Failed to fetch data from API. Status code: ${response.statusCode}');
+        }
+      } catch (error) {
+        // Handle other errors
+        print('Error fetching data from API: $error');
+      }
+    }
+  }
+
+  Future<void> fetchDataFromApiAndStoreInHive() async {
+    // Fetch data from the API
+    var client = http.Client();
+    final storage = new FlutterSecureStorage();
+    var token = await storage.read(key: 'jwt');
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.getalert);
+    var response = await client.get(url, headers: requestHeaders);
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      List items = responseData["activeAlerts"];
+      // Get the Hive box
+      final box = Hive.box('dataBox');
+      final String lastStoredId = box.get('lastId', defaultValue: 0);
+
+      // Store only new data in Hive
+      for (var data in items) {
+        String id = data["id"]
+            .toString(); // Assuming 'id' is the unique identifier in the API response
+        print(data["id"]);
+        // Check if the data already exists in Hive
+        bool istrue = !box.containsKey(id);
+        print(istrue);
+        if (istrue == true) {
+          box.put(id, data);
+          setState(() {
+            newItemCount++;
+          });
+        }
+      }
+      if (items.isNotEmpty) {
+        final lastItem = items.last;
+        final String lastItemId = lastItem['alertstart'];
+        box.put('lastId', lastItemId);
+      }
+    }
+  }
+
   Stream<Map<String, dynamic>> fetchData() async* {
     while (true) {
       final storage = new FlutterSecureStorage();
@@ -195,7 +263,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
     BackButtonInterceptor.add(myInterceptor);
 
     fetchDriverinfo();
-
+    fetchDataFromApiAndStoreInHive();
     super.initState();
   }
 
@@ -273,8 +341,18 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                               final data = snapshot.data;
 
                                               // Display the data in your desired format
-                                              return Image.network(
-                                                  data!["driverPic"]);
+                                              return SizedBox(
+                                                child: ClipOval(
+                                                  child: SizedBox(
+                                                    height: screenHeight * 0.03,
+                                                    width: screenWidth * 0.2,
+                                                    child: Image.network(
+                                                      data!["driverPic"],
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
                                             }
                                           },
                                         ),
@@ -321,6 +399,10 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                               ),
                               InkWell(
                                 onTap: () {
+                                  setState(() {
+                                    // Clear the new items count after displaying it
+                                    newItemCount = 0;
+                                  });
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -338,16 +420,12 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                         badgeColor: Colors.black,
                                       ),
                                       position: badges.BadgePosition.topEnd(
-                                          top: -10, end: -33),
+                                          top: -10, end: -29),
                                       showBadge: true,
                                       ignorePointer: false,
                                       badgeContent: Text(
-                                        "20",
-                                        style: TextStyle(
-                                          fontFamily: "Nunito",
-                                          color: Colors.white,
-                                          fontSize: AppFonts.smallFontSize,
-                                        ),
+                                        "$newItemCount",
+                                        style: TextStyle(color: Colors.white),
                                       ),
                                       child: InkWell(
                                         onTap: () {
@@ -478,13 +556,15 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                                                   data =
                                                                   snapshot
                                                                       .data!;
+                                                              driverworkstatus =
+                                                                  data[
+                                                                      "workStatus"];
                                                               // Render your UI with the data
                                                               return Text(data[
                                                                   "status"]);
                                                             } else if (snapshot
                                                                 .hasError) {
-                                                              return Text(
-                                                                  'Error: ${snapshot.error}');
+                                                              return Container();
                                                             } else {
                                                               return Container();
                                                             }
@@ -508,13 +588,15 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                                                     dynamic>
                                                                 data =
                                                                 snapshot.data!;
+                                                            driverstatus =
+                                                                data["status"];
+
                                                             // Render your UI with the data
                                                             return Text(
                                                                 data["status"]);
                                                           } else if (snapshot
                                                               .hasError) {
-                                                            return Text(
-                                                                'Error: ${snapshot.error}');
+                                                            return Container();
                                                           } else {
                                                             return Container();
                                                           }
@@ -624,23 +706,16 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                         padding: const EdgeInsets.all(10),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => activeWork()));
-                            // if (Result!.isEmpty) {
-                            //   fetchActivework();
-
-                            //   if (Result!["status"] == "ONROUTE") {
-                            //     Navigator.push(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //             builder: (context) => activeWork()));
-                            //   }
-                            // } else {
-                            //   alertutilsfordriver.showMyDialog(
-                            //       context, "Alert", "Driver not accept job");
-                            // }
+                            if (driverworkstatus == "ACCEPTED" ||
+                                driverworkstatus == "ACCEPT") {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => activeWork()));
+                            } else {
+                              alertutilsfordriver.showMyDialog(
+                                  context, "Alert", "Driver not accept job");
+                            }
                           },
                           child: AnimatedContainer(
                               duration: Duration(milliseconds: 100),
@@ -772,12 +847,17 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                         padding: const EdgeInsets.all(10),
                         child: GestureDetector(
                           onTap: (() {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CreateAlert(
-                                          title: '',
-                                        )));
+                            if (driverstatus == "ONROUTE") {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CreateAlert(
+                                            title: '',
+                                          )));
+                            } else {
+                              alertutilsfordriver.showMyDialog(
+                                  context, "Alert", "Driver not onroute");
+                            }
                           }),
                           child: AnimatedContainer(
                               //padding: EdgeInsets.only(bottom: _padding),

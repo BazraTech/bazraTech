@@ -49,7 +49,7 @@ class _getMessageState extends State<getMessage> {
       });
       return Result;
     } else {
-      throw Exception('not loaded ');
+      // throw Exception('not loaded ');
     }
   }
 

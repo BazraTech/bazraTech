@@ -1,11 +1,7 @@
 import 'package:bazralogin/const/constant.dart';
-
 import 'package:flutter/material.dart';
-
-import '../../../../../Model/ApiConfig.dart';
 import '../../Owner/Vehicle/vehicleStatus.dart';
 import 'driverReport.dart';
-
 class driverReportstatus extends StatefulWidget {
   driverReportstatus({super.key});
   static bool isPressed = true;
@@ -38,14 +34,16 @@ class _driverReportstatusState extends State<driverReportstatus> {
             ),
           ),
           backgroundColor: Color.fromRGBO(178, 142, 22, 1),
-          title: Container(
-              child: Text("Report ",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      fontFamily: 'Nunito',
-                      fontSize: AppFonts.mediumFontSize,
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal))),
+          title: Center(
+            child: Container(
+                child: Text("Report ",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontSize: AppFonts.mediumFontSize,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold))),
+          ),
         ),
         backgroundColor: Color.fromRGBO(236, 240, 243, 1),
         body: TabBarView(

@@ -26,6 +26,7 @@ class tripHistory extends StatelessWidget {
           ],
         ),
         bottomNavigationBar: Container(
+          margin: EdgeInsets.only(bottom: 20),
           height: screenHeight * 0.08,
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -33,7 +34,7 @@ class tripHistory extends StatelessWidget {
           child: Container(
             child: TabBar(
               indicatorSize: TabBarIndicatorSize.label,
-              labelPadding: EdgeInsets.only(bottom: 10),
+              labelPadding: EdgeInsets.only(bottom: 0),
               tabs: const [
                 Tab(
                   child: Text(

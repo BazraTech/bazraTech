@@ -79,18 +79,18 @@ class _CommunicationState extends State<Communication> {
                   child: Text(
                     "Communicate Driver",
                     style: TextStyle(
-                        color: kPrimaryColor,
+                        color: Colors.black,
                         fontSize: 14,
-                        fontWeight: FontWeight.bold),
+                        fontWeight: FontWeight.normal),
                   ),
                 ),
                 Tab(
                   child: Text(
                     "Communication History",
                     style: TextStyle(
-                        color: kPrimaryColor,
+                        color: Colors.black,
                         fontSize: 14,
-                        fontWeight: FontWeight.bold),
+                        fontWeight: FontWeight.normal),
                   ),
                 ),
               ],
