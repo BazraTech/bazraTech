@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'package:bazralogin/Theme/customAppBar.dart';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -43,7 +41,7 @@ class _VehicleOnstockState extends State<VehicleOnstock> {
       'Authorization': 'Bearer $token',
     };
     var response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/All/Driver'),
+        Uri.parse('http://164.90.174.113:9090/Api/Vehicle/All/Driver'),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;
