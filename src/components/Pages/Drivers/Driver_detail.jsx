@@ -31,7 +31,7 @@ export default function (props) {
     }
 
     const [dataSource, setDataSource] = useState([])
-    const url = `http://64.226.104.50:9090/Api/Admin/All/Drivers/${props.id}`;
+    const url = `http://164.90.174.113:9090/Api/Admin/All/Drivers/${props.id}`;
     useEffect(() => {
         fetch(url, options)
             .then(respnse => respnse.json())

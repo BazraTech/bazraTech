@@ -13,7 +13,7 @@ const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from lo
         },
     };
 
-    const url1 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles";
+    const url1 = "http://164.90.174.113:9090/Api/Admin/All/Vehicles";
     const [allvehicles, setAllvehicles] = useState([])
     useEffect(() => {
         fetch(url1, options)
@@ -24,7 +24,7 @@ const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from lo
             })
     }, [allvehicles])
 
-    const url2 = "http://64.226.104.50:9090/Api/Admin/All/Drivers";
+    const url2 = "http://164.90.174.113:9090/Api/Admin/All/Drivers";
     const [allDrivers, setAllDrivers] = useState([])
     useEffect(() => {
         fetch(url2, options) 
@@ -35,7 +35,7 @@ const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from lo
             })
     }, [allDrivers])
 
-    const url = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/";
+    const url = "http://164.90.174.113:9090/Api/Admin/All/VehicleOwners/";
     const [allVehiclwOwner, setAllVehiclwOwner] = useState([])
     useEffect(() => {
         fetch(url, options)
@@ -47,7 +47,7 @@ const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from lo
             })
     }, [])
     const [individualVOwner, setindividualVOwner] = useState([])
-    const urin = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/Role/individual";
+    const urin = "http://164.90.174.113:9090/Api/Admin/All/VehicleOwners/Role/individual";
     useEffect(() => {
         fetch(urin, options)
             .then(respnse => respnse.json())
@@ -56,7 +56,7 @@ const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from lo
                
             })
     }, [individualVOwner])
-    const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoOwners";
+    const cargourl = "http://164.90.174.113:9090/Api/Admin/All/CargoOwners";
     const [allCargoOwner, setallCargoOwner] = useState([])
     useEffect(() => {
         fetch(cargourl, options)
@@ -68,7 +68,7 @@ const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from lo
     }, [])
 
 
-    const url3 = "http://64.226.104.50:9090/Api/Admin/Alerts/OFFROAD";
+    const url3 = "http://164.90.174.113:9090/Api/Admin/Alerts/OFFROAD";
     const [alertOffroad, setalertOffroad] = useState([])
     useEffect(() => {
         fetch(url3, options)
@@ -79,7 +79,7 @@ const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from lo
             })
     }, [])
 
-    const url4 = "http://64.226.104.50:9090/Api/Message/All";
+    const url4 = "http://164.90.174.113:9090/Api/Message/All";
     const [allMessage, setallMessage] = useState([])
     useEffect(() => {
         fetch(url4, options)
@@ -89,7 +89,7 @@ const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from lo
                
             })
     }, [])
-    const url5 = "http://64.226.104.50:9090/Api/Admin/All/Cargos";
+    const url5 = "http://164.90.174.113:9090/Api/Admin/All/Cargos";
     const [allMarket, setallMarket] = useState([])
     useEffect(() => {
         fetch(url5, options)
@@ -105,7 +105,7 @@ const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from lo
 
 /**************Vihichels********************* */
 
-const onRouteUrl = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/ONROUTE";
+const onRouteUrl = "http://164.90.174.113:9090/Api/Admin/All/Vehicles/Status/ONROUTE";
     const [onRoute, setonRoute] = useState([])
     useEffect(() => {
         fetch(onRouteUrl, options)
@@ -115,7 +115,7 @@ const onRouteUrl = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/ONRO
             })
     }, [onRoute])
 
-    const inStockUrl = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/INSTOCK";
+    const inStockUrl = "http://164.90.174.113:9090/Api/Admin/All/Vehicles/Status/INSTOCK";
     const [inStock, setinStock] = useState([])
     useEffect(() => {
         fetch(inStockUrl, options)
@@ -126,7 +126,7 @@ const onRouteUrl = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/ONRO
             })
     }, [inStock])
 
-    const parkedUrl = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/PARKED";
+    const parkedUrl = "http://164.90.174.113:9090/Api/Admin/All/Vehicles/Status/PARKED";
     const [parked, setparked] = useState([])
     useEffect(() => {
         fetch(parkedUrl, options)
@@ -137,7 +137,7 @@ const onRouteUrl = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/ONRO
             })
     }, [parked])
 
-    const MaintainigUrl = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/MAINTAINING";
+    const MaintainigUrl = "http://164.90.174.113:9090/Api/Admin/All/Vehicles/Status/MAINTAINING";
     const [Maintaining, setMaintainig] = useState([])
     useEffect(() => {
         fetch(MaintainigUrl, options)
@@ -148,7 +148,7 @@ const onRouteUrl = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/ONRO
             })
     }, [Maintaining])
 /***************************Users ******************/
-const VehicleOwnersUrl = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners";
+const VehicleOwnersUrl = "http://164.90.174.113:9090/Api/Admin/All/VehicleOwners";
 const [VehicleOwners,setVehicleOwners]= useState([])
 useEffect(() => {
     fetch(VehicleOwnersUrl, options)
@@ -156,7 +156,7 @@ useEffect(() => {
         .then(data => {
             setVehicleOwners(data.totalusers)        })
 }, [])
-const CompanyUrl = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/Role/owner";
+const CompanyUrl = "http://164.90.174.113:9090/Api/Admin/All/VehicleOwners/Role/owner";
 const [CompanyOwner, setCompanyOwner] = useState([])
 useEffect(() => {
     fetch(CompanyUrl, options)
@@ -165,7 +165,7 @@ useEffect(() => {
             setCompanyOwner(data.totalusers)
         })
 }, [])
-const IndividualUrl = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/Role/individual";
+const IndividualUrl = "http://164.90.174.113:9090/Api/Admin/All/VehicleOwners/Role/individual";
 const [IndividualOwner, setIndividual] = useState([])
     useEffect(() => {
         fetch(IndividualUrl, options)
@@ -174,7 +174,7 @@ const [IndividualOwner, setIndividual] = useState([])
                 setIndividual(data.totalusers)
             })
     }, [])
-    const cargoOwnerurl = "http://64.226.104.50:9090/Api/Admin/All/CargoOwners";
+    const cargoOwnerurl = "http://164.90.174.113:9090/Api/Admin/All/CargoOwners";
     const [CargoOwner, setCargoOwner] = useState([])
     useEffect(() => {
         fetch(cargoOwnerurl, options)

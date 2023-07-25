@@ -41,7 +41,7 @@ export default function () {
             headers: { "Content-Type": "application/json", Accept: "application/json", Authorization: `Bearer`, },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/SignIn/Admin";
+        const url = "http://164.90.174.113:9090/Api/SignIn/Admin";
         try {
             const response = await fetch(url, options);
             const result = await response.json();

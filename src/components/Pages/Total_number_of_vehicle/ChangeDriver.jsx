@@ -73,7 +73,7 @@ export default function () {
         },
     };
 
-    const url = `http://64.226.104.50:9090/Api/Admin/Drivers/All/${ownerId}`;
+    const url = `http://164.90.174.113:9090/Api/Admin/Drivers/All/${ownerId}`;
     const [dataSource, setDataSource] = useState([])
     const [Loading, setLoading] = useState([])
     useEffect(() => {
@@ -116,7 +116,7 @@ export default function () {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Vehicle/ChangeAssignedDriver";
+        const url = "http://164.90.174.113:9090/Api/Vehicle/ChangeAssignedDriver";
         try {
             const response = await fetch(url, options);
             const result = await response.json();

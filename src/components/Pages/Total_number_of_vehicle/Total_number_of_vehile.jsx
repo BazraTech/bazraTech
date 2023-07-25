@@ -36,7 +36,7 @@ export default function () {
     const [Loading, setLoading] = useState([])
     const [totalPages, setTotalPage] = useState(1);
     const [totalVehicles, setTotalVehicles] = useState([])
-    const url2 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles";
+    const url2 = "http://164.90.174.113:9090/Api/Admin/All/Vehicles";
     const [AllVehicles, setAllVehicles] = useState([])
     useEffect(() => {
         setLoading(true); 
@@ -53,7 +53,7 @@ export default function () {
     }, [])
 
    
-    const url4 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/MAINTAINING";
+    const url4 = "http://164.90.174.113:9090/Api/Admin/All/Vehicles/Status/MAINTAINING";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         setLoading(true);

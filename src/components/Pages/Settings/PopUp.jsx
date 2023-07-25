@@ -162,7 +162,7 @@ let isAvatar = false;
             },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Admin/CreateRole";
+        const url = "http://164.90.174.113:9090/Api/Admin/CreateRole";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -193,7 +193,7 @@ let isAvatar = false;
             },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Admin/CreateDriverStatus";
+        const url = "http://164.90.174.113:9090/Api/Admin/CreateDriverStatus";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -222,7 +222,7 @@ let isAvatar = false;
             },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Admin/CreateAlertType";
+        const url = "http://164.90.174.113:9090/Api/Admin/CreateAlertType";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -249,7 +249,7 @@ let isAvatar = false;
             headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Admin/CreateTripType";
+        const url = "http://164.90.174.113:9090/Api/Admin/CreateTripType";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -277,7 +277,7 @@ let isAvatar = false;
             headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Admin/CreateCompanySector";
+        const url = "http://164.90.174.113:9090/Api/Admin/CreateCompanySector";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -306,7 +306,7 @@ let isAvatar = false;
             },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Admin/CreateNotificationMedium";
+        const url = "http://164.90.174.113:9090/Api/Admin/CreateNotificationMedium";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -333,7 +333,7 @@ let isAvatar = false;
             headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Admin/CreateVehicleCondition";
+        const url = "http://164.90.174.113:9090/Api/Admin/CreateVehicleCondition";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -360,7 +360,7 @@ let isAvatar = false;
             headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Admin/CreateVehicleCatagory";
+        const url = "http://164.90.174.113:9090/Api/Admin/CreateVehicleCatagory";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -392,7 +392,7 @@ let isAvatar = false;
             },
             body: JSON.stringify(item),
         };
-        const url1 = "http://64.226.104.50:9090/Api/Admin/CreateCompanyType";
+        const url1 = "http://164.90.174.113:9090/Api/Admin/CreateCompanyType";
         try {
             const response = await fetch(url1, options);
             const result = await response.json();
@@ -422,7 +422,7 @@ let isAvatar = false;
             headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Admin/CreateServiceNeeded";
+        const url = "http://164.90.174.113:9090/Api/Admin/CreateServiceNeeded";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -454,7 +454,7 @@ let isAvatar = false;
             headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Admin/CreateCargoType";
+        const url = "http://164.90.174.113:9090/Api/Admin/CreateCargoType";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -484,7 +484,7 @@ let isAvatar = false;
             headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Admin/CreateBusinessType";
+        const url = "http://164.90.174.113:9090/Api/Admin/CreateBusinessType";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -514,7 +514,7 @@ let isAvatar = false;
             headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Admin/CreateBusinessSector";
+        const url = "http://164.90.174.113:9090/Api/Admin/CreateBusinessSector";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -544,7 +544,7 @@ let isAvatar = false;
             headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
             body: JSON.stringify(item),
         };
-        // const url = "http://64.226.104.50:9090/Api/Admin/CreateDriverState";
+        // const url = "http://164.90.174.113:9090/Api/Admin/CreateDriverState";
         try {
             const response = await fetch(stateurl, options);
             const result = await response.json();
@@ -578,7 +578,7 @@ let isAvatar = false;
     
         try {
           const response = await axios.post(
-            'http://64.226.104.50:9090/Api/Admin/AddLogoAvatar',
+            'http://164.90.174.113:9090/Api/Admin/AddLogoAvatar',
             formData,
             {
               headers: {

@@ -43,7 +43,7 @@ export default function () {
     };
 
    
-    const url = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/ONROUTE";
+    const url = "http://164.90.174.113:9090/Api/Admin/All/Vehicles/Status/ONROUTE";
     const [dataSource, setDataSource] = useState([])
     const [totalPages, setTotalPage]=useState('')
     useEffect(() => {

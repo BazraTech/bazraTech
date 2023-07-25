@@ -200,6 +200,8 @@ export default function () {
                                             <th>Plate Number</th>
                                             <th>Alert Location</th>
                                             <th>Alert Type</th>
+                                            <th>Start</th>
+                                            <th>Finish</th>
                                             <th>Owner</th>
                                         </tr>
                                     </thead>
@@ -213,6 +215,8 @@ export default function () {
                                                 <td>{item.plateNumber}</td>
                                                 <td>{item.alertocation}</td>
                                                 <td>{item.alertType}</td>
+                                                <td>{item.alertstart}</td>
+                                                <td>{item.alertfinish}</td>
                                                 <td>{item.owner}</td>
                                             </tr>
                                         ))}

@@ -150,7 +150,7 @@ let isAvatar = false;
     
         try {
           const response = await axios.post(
-            'http://64.226.104.50:9090/Api/Admin/AddLogoAvatar',
+            'http://164.90.174.113:9090/Api/Admin/AddLogoAvatar',
             formData,
             {
               headers: {

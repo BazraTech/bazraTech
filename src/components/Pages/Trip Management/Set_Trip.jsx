@@ -66,7 +66,7 @@ export default function () {
     const [startDate, setStartDate] = useState("");
 
     const [loading, setLoading] = useState(false)
-    const url10 = "http://64.226.104.50:9090/Api/Admin/TripType/All";
+    const url10 = "http://164.90.174.113:9090/Api/Admin/TripType/All";
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -103,7 +103,7 @@ export default function () {
             body: JSON.stringify(item),
         };
 
-        const url = "http://64.226.104.50:9090/Api/Admin/CreateTrip";
+        const url = "http://164.90.174.113:9090/Api/Admin/CreateTrip";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -135,7 +135,7 @@ export default function () {
     const [postPerPage, setpostPerPage] = useState(5);
 
 
-    const url2 = "http://64.226.104.50:9090/Api/Admin/Trip/All";
+    const url2 = "http://164.90.174.113:9090/Api/Admin/Trip/All";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         fetch(url2, options)

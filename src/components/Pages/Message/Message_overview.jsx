@@ -40,7 +40,7 @@ export default function () {
     const [totalPages, setTotalPage] = useState(1);
     const [dataSource, setDataSource] = useState([])
     const [Loading, setLoading] = useState([])
-    const url = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/";
+    const url = "http://164.90.174.113:9090/Api/Admin/All/VehicleOwners/";
     useEffect(() => {
         setLoading(true)
         fetch(url, options)
@@ -52,7 +52,7 @@ export default function () {
             })
     }, [])
     const [dataSource2, setDataSource2] = useState([])
-    const url2 = "http://64.226.104.50:9090/Api/Message/All";
+    const url2 = "http://164.90.174.113:9090/Api/Message/All";
     useEffect(() => {
         setLoading(true)
         fetch(url2, options)
@@ -214,7 +214,7 @@ export default function () {
         };
         console.log(item)
         try {
-            const response = await fetch('http://64.226.104.50:9090/Api/Message/CreateMessage', options);
+            const response = await fetch('http://164.90.174.113:9090/Api/Message/CreateMessage', options);
             const result = await response.json();
             console.log(result);
             localStorage.setItem("message", JSON.stringify(result["message"]));

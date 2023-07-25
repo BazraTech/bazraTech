@@ -36,7 +36,7 @@ const { id } = useParams()
             },
            
         };
-        const url =`http://64.226.104.50:9090/Api/Admin/AcceptedCargo/${id}`; 
+        const url =`http://164.90.174.113:9090/Api/Admin/AcceptedCargo/${id}`; 
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -88,7 +88,7 @@ const { id } = useParams()
       
     };
    
-    const url2 = `http://64.226.104.50:9090/Api/Admin/All/CargoDrivers/${id}`;
+    const url2 = `http://164.90.174.113:9090/Api/Admin/All/CargoDrivers/${id}`;
 
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
@@ -102,7 +102,7 @@ const { id } = useParams()
             })
     }, [])
  console.log(dataSource);
- const url1 = `http://64.226.104.50:9090/Api/Admin/All/Cargos/${id}`;
+ const url1 = `http://164.90.174.113:9090/Api/Admin/All/Cargos/${id}`;
 
  const [dataSource1, setDataSource1] = useState([])
  useEffect(() => {

@@ -68,7 +68,7 @@ export default function () {
         },
     };
 
-    const url = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/ONROUTE";
+    const url = "http://164.90.174.113:9090/Api/Admin/All/Vehicles/Status/ONROUTE";
 
     const [dataSource, setDataSource] = useState([])
     const [Loading, setLoading] = useState([])
@@ -84,7 +84,7 @@ export default function () {
             })
     }, [])
 
-    const url2 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles";
+    const url2 = "http://164.90.174.113:9090/Api/Admin/All/Vehicles";
 
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {

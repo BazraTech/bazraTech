@@ -101,10 +101,10 @@ export default function ({ id, role, name, from }) {
     let url2;
 
     if (role === "OWNER") { 
-        url2 = `http://64.226.104.50:9090/Api/Admin/All/CompanyVehicleOwner/${id}`;
+        url2 = `http://164.90.174.113:9090/Api/Admin/All/CompanyVehicleOwner/${id}`;
     }
     if (role === "INDIVIDUAL") {
-        url2 = `http://64.226.104.50:9090/Api/Admin/All/IndividualVehicleOwner/${id}`;
+        url2 = `http://164.90.174.113:9090/Api/Admin/All/IndividualVehicleOwner/${id}`;
     }
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {

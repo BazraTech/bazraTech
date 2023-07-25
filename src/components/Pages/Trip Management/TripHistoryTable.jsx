@@ -62,7 +62,7 @@ export default function ({ id, role, name}) {
         },
     };
 
-    const urlFour = "http://64.226.104.50:9090/Api/SignIn/Admin";
+    const urlFour = "http://164.90.174.113:9090/Api/SignIn/Admin";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         fetch(urlFour, options)
@@ -95,7 +95,7 @@ export default function ({ id, role, name}) {
     }
 
     const [dataSource, setDataSource] = useState([])
-    const url2 = `http://64.226.104.50:9090/Api/Admin/Trip/All/${id}`;
+    const url2 = `http://164.90.174.113:9090/Api/Admin/Trip/All/${id}`;
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         fetch(url2, options)

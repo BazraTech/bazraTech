@@ -63,7 +63,7 @@ export default function () {
         },
     };
 
-    // const urlFour = "http://64.226.104.50:9090/Api/SignIn/Admin";
+    // const urlFour = "http://164.90.174.113:9090/Api/SignIn/Admin";
     // const [dataSource4, setDataSource4] = useState([])
     // useEffect(() => {
     //     fetch(urlFour, options)
@@ -104,7 +104,7 @@ const displaylist = () => {
 }
     const [dataSource, setDataSource] = useState([])
     // const [Loading, setLoading] = useState([])
-    const url = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners";
+    const url = "http://164.90.174.113:9090/Api/Admin/All/VehicleOwners";
     useEffect(() => {
         setLoading(true)
         fetch(url, options)

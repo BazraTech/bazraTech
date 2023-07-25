@@ -150,7 +150,7 @@ export default function () {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Vehicle/AddVehicle";
+        const url = "http://164.90.174.113:9090/Api/Vehicle/AddVehicle";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -217,7 +217,7 @@ export default function () {
         formData.append("file", selectedFile);
         console.log(formData)
 
-        axios.post("http://64.226.104.50:9090/Api/Driver/AddDriver", formData, {
+        axios.post("http://164.90.174.113:9090/Api/Driver/AddDriver", formData, {
             headers: {
                 'Content-Type': 'Auto',
                 "Authorization": `Bearer ${jwt}`,

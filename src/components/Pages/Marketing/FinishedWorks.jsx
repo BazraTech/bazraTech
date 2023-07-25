@@ -31,7 +31,7 @@ export default function FinishedWorks () {
   };
   const [Loading, setLoading] = useState([])
   const [totalPages, setTotalPage] = useState(1);
-  const url2 = "http://64.226.104.50:9090/Api/Admin/All/CargosBy/FINISHED";
+  const url2 = "http://164.90.174.113:9090/Api/Admin/All/CargosBy/FINISHED";
   const [dataSource2, setDataSource2] = useState([])
   useEffect(() => {
     setLoading(true);

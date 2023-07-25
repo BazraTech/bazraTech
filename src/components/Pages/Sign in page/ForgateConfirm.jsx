@@ -44,7 +44,7 @@ export default function () {
             "Accept": "application/json"},
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/User/GeneratePIN";
+        const url = "http://164.90.174.113:9090/Api/User/GeneratePIN";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
