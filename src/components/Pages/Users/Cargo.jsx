@@ -68,7 +68,7 @@ export default function () {
     const [totalPages, setTotalPage] = useState(1);
     const [dataSource, setDataSource] = useState([])
     const [Loading, setLoading] = useState([])
-    const url = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/";
+    const url = "http://164.90.174.113:9090/Api/Admin/All/VehicleOwners/";
     useEffect(() => {
         setLoading(true)
         fetch(url, options)
@@ -83,7 +83,7 @@ export default function () {
 
     const [dataSource2, setDataSource2] = useState([])
     // const [Loading, setLoading] = useState([])
-    const url2 = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/Role/owner";
+    const url2 = "http://164.90.174.113:9090/Api/Admin/All/VehicleOwners/Role/owner";
     useEffect(() => {
         setLoading(true)
         fetch(url2, options)
@@ -96,7 +96,7 @@ export default function () {
 
     const [individual, setIndividual] = useState([])
     // const [Loading, setLoading] = useState([])
-    const url4 = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/Role/individual";
+    const url4 = "http://164.90.174.113:9090/Api/Admin/All/VehicleOwners/Role/individual";
     useEffect(() => {
         setLoading(true)
         fetch(url4, options)
@@ -109,7 +109,7 @@ export default function () {
 
     const [dataSource3, setDataSource3] = useState([])
     const [dataSource03, setDataSource03] = useState([])
-    const url3 = "http://64.226.104.50:9090/Api/Admin/All/CargoOwners";
+    const url3 = "http://164.90.174.113:9090/Api/Admin/All/CargoOwners";
     useEffect(() => {
         setLoading(true)
         fetch(url3, options)
@@ -157,7 +157,7 @@ export default function () {
         setpostPerPage(pageSize);
     }
 
-    const urlthree = "http://64.226.104.50:9090/Api/Admin/All/VehicleCatagory";
+    const urlthree = "http://164.90.174.113:9090/Api/Admin/All/VehicleCatagory";
     const [dataSource5, setDataSource5] = useState([])
     useEffect(() => {
         fetch(urlthree, options)
@@ -168,7 +168,7 @@ export default function () {
             })
     }, [])
 
-    const urlFour = "http://64.226.104.50:9090/Api/Admin/All/VehicleCondition";
+    const urlFour = "http://164.90.174.113:9090/Api/Admin/All/VehicleCondition";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         fetch(urlFour, options)
@@ -208,7 +208,7 @@ export default function () {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Vehicle/AddVehicle";
+        const url = "http://164.90.174.113:9090/Api/Vehicle/AddVehicle";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -275,7 +275,7 @@ export default function () {
         formData.append("file", selectedFile);
         console.log(formData)
 
-        axios.post("http://64.226.104.50:9090/Api/Driver/AddDriver", formData, {
+        axios.post("http://164.90.174.113:9090/Api/Driver/AddDriver", formData, {
             headers: {
                 'Content-Type': 'Auto',
                 "Authorization": `Bearer ${jwt}`,

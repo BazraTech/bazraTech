@@ -36,7 +36,7 @@ const send = false
             },
            
         };
-        const url =`http://64.226.104.50:9090/Api/Admin/AcceptedCargo/${id}`; 
+        const url =`http://164.90.174.113:9090/Api/Admin/AcceptedCargo/${id}`; 
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -96,7 +96,7 @@ const send = false
         };
 
     const { id } = useParams()
-    const url2 = `http://64.226.104.50:9090/Api/Admin/All/CargoDrivers/${id}`;
+    const url2 = `http://164.90.174.113:9090/Api/Admin/All/CargoDrivers/${id}`;
 
     const [dataSource, setDataSource] = useState([]);
     const [error, setError] = useState(null);
@@ -129,7 +129,7 @@ const send = false
     // Rest of your component rendering logic
     
  console.log(dataSource);
- const url1 = `http://64.226.104.50:9090/Api/Admin/All/Cargos/${id}`;
+ const url1 = `http://164.90.174.113:9090/Api/Admin/All/Cargos/${id}`;
 
  const [dataSource1, setDataSource1] = useState([])
  useEffect(() => {
@@ -192,7 +192,7 @@ const trueorFalse = dataSource1.status == 'ACCEPT' ? 'false' :'true'
                                                       
                         </div>  
                        {dataSource1.status == 'ACCEPTED' ? <button disabled='true' style={{background:'gray'}} className={styles.button3}>already send to cargo owner</button>: 
-                       <button  disabled={trueorFalse} className={styles.button3}>Send to Cargo Owner</button>}
+                       <button className={styles.button3}>Send to Cargo Owner</button>}
                     </form>
                  </div>
 

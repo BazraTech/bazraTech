@@ -72,6 +72,24 @@
   width: 80%;
   margin-left: 20%;
 }
+/**********toggle*********/
+.toggleDiv{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 2px solid red; */
+  width: 400px;
+}
+
+.toggleOn, .toggleOff{
+margin-left: 1em;
+}
+.toggleOff{
+  color: green;
+}
+.toggleOn{
+  color: red;
+}
 /**************Popup**********/
 .popup{
   position: fixed;

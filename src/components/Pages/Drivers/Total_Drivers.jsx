@@ -43,7 +43,7 @@ export default function () {
     };
 const [refresh, serRefresh] = useState(false)
     const [Loading, setLoading] = useState([]);
-    const url = "http://64.226.104.50:9090/Api/Admin/All/Drivers";
+    const url = "http://164.90.174.113:9090/Api/Admin/All/Drivers";
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -58,7 +58,7 @@ const [refresh, serRefresh] = useState(false)
     }, [refresh])
 
     const [totalPages, setTotalPage] = useState(1);
-    const url2 = "http://64.226.104.50:9090/Api/Admin/Drivers/ONROUTE";
+    const url2 = "http://164.90.174.113:9090/Api/Admin/Drivers/ONROUTE";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -72,7 +72,7 @@ const [refresh, serRefresh] = useState(false)
     }, [])
 
 
-    const url3 = "http://64.226.104.50:9090/Api/Admin/Drivers/ASSIGNED";
+    const url3 = "http://164.90.174.113:9090/Api/Admin/Drivers/ASSIGNED";
     const [dataSource3, setDataSource3] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -85,7 +85,7 @@ const [refresh, serRefresh] = useState(false)
             })
     }, [])
 
-    const url4 = "http://64.226.104.50:9090/Api/Admin/Drivers/UNASSIGNED";
+    const url4 = "http://164.90.174.113:9090/Api/Admin/Drivers/UNASSIGNED";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -97,7 +97,7 @@ const [refresh, serRefresh] = useState(false)
             })
     }, [])
 
-    const url5 = "http://64.226.104.50:9090/Api/Admin/Drivers/PERMIT";
+    const url5 = "http://164.90.174.113:9090/Api/Admin/Drivers/PERMIT";
     const [dataSource5, setDataSource5] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -110,7 +110,7 @@ const [refresh, serRefresh] = useState(false)
             })
     }, [])
 
-    const statusUrl = "http://64.226.104.50:9090/Api/Admin/DriverStatus/All"
+    const statusUrl = "http://164.90.174.113:9090/Api/Admin/DriverStatus/All"
     const [status, setStatus] = useState([])
     useEffect(() => {
         fetch(statusUrl, options)
@@ -147,7 +147,7 @@ const [refresh, serRefresh] = useState(false)
         setShow(show);
     }
     /*************************Total vehicles***************/
-    const VehUrl = "http://64.226.104.50:9090/Api/Admin/All/Vehicles";
+    const VehUrl = "http://164.90.174.113:9090/Api/Admin/All/Vehicles";
     const [AllVehicles, setAllVehicles] = useState([])
     useEffect(() => {
         setLoading(true); 

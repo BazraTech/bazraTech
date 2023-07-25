@@ -65,7 +65,7 @@ export default function () {
   
 
     
-    const url5 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/PARKED";
+    const url5 = "http://164.90.174.113:9090/Api/Admin/All/Vehicles/Status/PARKED";
     const [parked, setparked] = useState([])
     useEffect(() => {
         setLoading(true);

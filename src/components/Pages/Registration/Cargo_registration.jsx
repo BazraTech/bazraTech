@@ -75,7 +75,7 @@ export default function Cargo_registration() {
 
         try{
             const response = await axios.post(
-                'http://64.226.104.50:9090/Api/CargoOwner/Register',
+                'http://164.90.174.113:9090/Api/CargoOwner/Register',
                 formData,
                 {
                     headers: {
@@ -138,7 +138,7 @@ export default function Cargo_registration() {
 
     };
 
-    const url = "http://64.226.104.50:9090/Api/Admin/All/BusinessSectors";
+    const url = "http://164.90.174.113:9090/Api/Admin/All/BusinessSectors";
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
         fetch(url, options)
@@ -149,7 +149,7 @@ export default function Cargo_registration() {
             })
     }, [])
 
-    const urlTwo = " http://64.226.104.50:9090/Api/Admin/All/NotificationMedium";
+    const urlTwo = " http://164.90.174.113:9090/Api/Admin/All/NotificationMedium";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         fetch(urlTwo, options)
@@ -160,7 +160,7 @@ export default function Cargo_registration() {
             })
     }, [])
 
-    const urlthree = "http://64.226.104.50:9090/Api/Admin/All/VehicleCatagory";
+    const urlthree = "http://164.90.174.113:9090/Api/Admin/All/VehicleCatagory";
     const [dataSource3, setDataSource3] = useState([])
     useEffect(() => {
         fetch(urlthree, options)
@@ -171,7 +171,7 @@ export default function Cargo_registration() {
             })
     }, [])
 
-    const urlFour = "http://64.226.104.50:9090/Api/Admin/All/VehicleCondition";
+    const urlFour = "http://164.90.174.113:9090/Api/Admin/All/VehicleCondition";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         fetch(urlFour, options)
@@ -182,7 +182,7 @@ export default function Cargo_registration() {
             })
     }, [])
 
-    const urlFive = "http://64.226.104.50:9090/Api/Admin/All/Services";
+    const urlFive = "http://164.90.174.113:9090/Api/Admin/All/Services";
     const [dataSource5, setDataSource5] = useState([])
     useEffect(() => {
         fetch(urlFive, options)
@@ -193,7 +193,7 @@ export default function Cargo_registration() {
             })
     }, [])
 
-    const url5 = "http://64.226.104.50:9090/Api/Admin/All/BusinessTypes";
+    const url5 = "http://164.90.174.113:9090/Api/Admin/All/BusinessTypes";
     const [dataSourc6, setDataSource6] = useState([])
     useEffect(() => {
         fetch(url5, options)

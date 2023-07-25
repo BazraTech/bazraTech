@@ -83,10 +83,10 @@ export default function Users_edit() {
     let url;
 
     if (role === "OWNER") {
-        url = `http://64.226.104.50:9090/Api/Admin/All/CompanyVehicleOwner/${id}`;
+        url = `http://164.90.174.113:9090/Api/Admin/All/CompanyVehicleOwner/${id}`;
     }
     if (role === "INDIVIDUAL") {
-        url = `http://64.226.104.50:9090/Api/Admin/All/IndividualVehicleOwner/${id}`;
+        url = `http://164.90.174.113:9090/Api/Admin/All/IndividualVehicleOwner/${id}`;
     }
 
     useEffect(() => {
@@ -141,7 +141,7 @@ export default function Users_edit() {
         setinputTag(!inputtag);
     } 
 /*************************************** */
-const comSector = "http://64.226.104.50:9090/Api/Admin/All/CompanySector/";
+const comSector = "http://164.90.174.113:9090/Api/Admin/All/CompanySector/";
 const [companySector, setcompanySector] = useState([])
 useEffect(() => {
     fetch(comSector, options)
@@ -150,7 +150,7 @@ useEffect(() => {
             setcompanySector(data.companySectors)
         })
 }, [])
-const comUrl = "http://64.226.104.50:9090/Api/Admin/All/CompanyType/";
+const comUrl = "http://164.90.174.113:9090/Api/Admin/All/CompanyType/";
 const [companyType, setcompany] = useState([])
 useEffect(() => {
     fetch(comUrl, options)
@@ -159,7 +159,7 @@ useEffect(() => {
             setcompany(data.companyTypes)
         })
 }, [])
-    const notUrl = " http://64.226.104.50:9090/Api/Admin/All/NotificationMedium";
+    const notUrl = " http://164.90.174.113:9090/Api/Admin/All/NotificationMedium";
     const [notification, setNotification] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -169,7 +169,7 @@ useEffect(() => {
                 setNotification(data.notificationMedias)
             })
     }, [])
-    const serUrl = "http://64.226.104.50:9090/Api/Admin/All/Services";
+    const serUrl = "http://164.90.174.113:9090/Api/Admin/All/Services";
     const [service, setService] = useState([])
     useEffect(() => {
         fetch(serUrl, options)
@@ -208,7 +208,7 @@ const handleUpdateChange = (e) => {
         },
         body: JSON.stringify(updateVehicleInfo),
     };
-    const url = `http://64.226.104.50:9090/Api/Admin/UpdateInfo/VehicleOwner/${id}`;
+    const url = `http://164.90.174.113:9090/Api/Admin/UpdateInfo/VehicleOwner/${id}`;
     try {
         const response = await fetch(url, options);
         const result = await response.json();

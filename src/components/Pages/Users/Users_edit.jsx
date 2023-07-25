@@ -25,6 +25,7 @@ import { FaUserSecret } from "react-icons/fa";
 import { FaUserCheck } from "react-icons/fa";
 import { FaUserTimes } from "react-icons/fa";
 import { FaUserMinus } from "react-icons/fa";
+import { BsToggleOn,BsToggleOff } from "react-icons/bs"
 import Vehicle_Table from './Vehicle_Table';
 import Driver_Table from './Driver_Table';
 
@@ -84,10 +85,10 @@ export default function Users_edit() {
     let url;
 
     if (role === "OWNER") {
-        url = `http://64.226.104.50:9090/Api/Admin/All/CompanyVehicleOwner/${id}`;
+        url = `http://164.90.174.113:9090/Api/Admin/All/CompanyVehicleOwner/${id}`;
     }
     if (role === "INDIVIDUAL") {
-        url = `http://64.226.104.50:9090/Api/Admin/All/IndividualVehicleOwner/${id}`;
+        url = `http://164.90.174.113:9090/Api/Admin/All/IndividualVehicleOwner/${id}`;
     }
 
     useEffect(() => {
@@ -158,7 +159,7 @@ export default function Users_edit() {
         setinputTag(!inputtag);
     } 
 /*************************************** */
-const comSector = "http://64.226.104.50:9090/Api/Admin/All/CompanySector/";
+const comSector = "http://164.90.174.113:9090/Api/Admin/All/CompanySector/";
 const [companySector, setcompanySector] = useState([])
 useEffect(() => {
     fetch(comSector, options)
@@ -167,7 +168,7 @@ useEffect(() => {
             setcompanySector(data.companySectors)
         })
 }, [])
-const comUrl = "http://64.226.104.50:9090/Api/Admin/All/CompanyType/";
+const comUrl = "http://164.90.174.113:9090/Api/Admin/All/CompanyType/";
 const [companyType, setcompany] = useState([])
 useEffect(() => {
     fetch(comUrl, options)
@@ -176,7 +177,7 @@ useEffect(() => {
             setcompany(data.companyTypes)
         })
 }, [])
-    const notUrl = " http://64.226.104.50:9090/Api/Admin/All/NotificationMedium";
+    const notUrl = " http://164.90.174.113:9090/Api/Admin/All/NotificationMedium";
     const [notification, setNotification] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -186,7 +187,7 @@ useEffect(() => {
                 setNotification(data.notificationMedias)
             })
     }, [])
-    const serUrl = "http://64.226.104.50:9090/Api/Admin/All/Services";
+    const serUrl = "http://164.90.174.113:9090/Api/Admin/All/Services";
     const [service, setService] = useState([])
     useEffect(() => {
         fetch(serUrl, options)
@@ -205,6 +206,7 @@ setReloadKey((prevKey) => prevKey + 1);
 /*********************************update vehicle owner information************* */
 
 console.log(role === "OWNER" ? updateVehicleInfo : updateVehicleInfoIndividual)
+console.log(dataSource)
 const handleUpdateChange = (e) => {
         console.log('handleUpdateChange')
         const { name, value } = e.target;
@@ -242,8 +244,8 @@ const handleUpdateChange = (e) => {
         body: JSON.stringify((role === "OWNER") ? updateVehicleInfo : updateVehicleInfoIndividual),
     };
     let urll
-    if (role === "OWNER") urll = `http://64.226.104.50:9090/Api/Admin/UpdateInfo/VehicleOwner/${id}`;
-    else if(role === "INDIVIDUAL") urll = `http://64.226.104.50:9090/Api/Admin/UpdateInfo/Individual/${id}`;
+    if (role === "OWNER") urll = `http://164.90.174.113:9090/Api/Admin/UpdateInfo/VehicleOwner/${id}`;
+    else if(role === "INDIVIDUAL") urll = `http://164.90.174.113:9090/Api/Admin/UpdateInfo/Individual/${id}`;
     try {
         const response = await fetch(urll, options);
         const result = await response.json();
@@ -268,6 +270,45 @@ const handleUpdateChange = (e) => {
         console.error(error);
     }
 }
+/******************* */
+const enableDisable = async (enable) => {
+    console.log('Im on submit function');
+    const options = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            "Accept": "application/json",
+            "Authorization": `Bearer ${jwt}`
+        },
+       
+    };
+    const url =`http://164.90.174.113:9090/Api/User/disable/${enable}`; 
+    try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        console.log(result);
+        localStorage.setItem("message", JSON.stringify(result["message"])); 
+        const mess = localStorage.getItem("message");
+        console.log(mess);
+        if (response.ok) {
+            swal("Successfully", `${mess}`, "success", {
+                button: true,
+                timer: 6000,
+                
+            },)
+            setTimeout(() => {
+                handleReload();
+              }, 2500); 
+            
+        } else {
+            console.log("failed");
+            swal(`Failed To ${mess}`, "Error", "error");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+console.log(selecttag)
     return (
         <div>
             <div className="users_edit_container">
@@ -522,6 +563,19 @@ const handleUpdateChange = (e) => {
                                                             </select>
                                                         )
                                             }
+                                        </div>
+                                        <div>
+                                            <h1>Account </h1>
+                                            <div className={styles.toggleDiv}>
+                                            <input 
+                                              name ='enabled' 
+                                              onChange={handleUpdateChange} 
+                                              id='enable'
+                                            defaultValue={dataSource.enabled == true ? 'Enabled' : 'Disabled'} type="text"  
+                                        ></input>{selecttag  &&  dataSource.enabled ? <BsToggleOn onClick={()=>enableDisable(dataSource.id)}className={styles.toggleOn} size="3rem"></BsToggleOn> : 
+                                        <BsToggleOff onClick={()=>enableDisable(dataSource.id)}className={styles.toggleOff} size="3rem"></BsToggleOff>
+                                        }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

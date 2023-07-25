@@ -66,7 +66,7 @@ export default function () {
 
     
 
-    const url4 = "http://64.226.104.50:9090/Api/Admin/All/Vehicles/Status/MAINTAINING";
+    const url4 = "http://164.90.174.113:9090/Api/Admin/All/Vehicles/Status/MAINTAINING";
     const [maintaining, setmaintaining] = useState([])
     useEffect(() => {
         setLoading(true);

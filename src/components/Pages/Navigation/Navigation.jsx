@@ -123,7 +123,7 @@ export default function Navigation({ path, title, link, past }) {
         },
     };
 
-    const url3 = "http://64.226.104.50:9090/Api/Admin/Alerts/OFFROAD";
+    const url3 = "http://164.90.174.113:9090/Api/Admin/Alerts/OFFROAD";
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
         fetch(url3, options) 
@@ -134,7 +134,7 @@ export default function Navigation({ path, title, link, past }) {
     }, [])
 
     const [dataSource2, setDataSource2] = useState([])
-    const url2 = "http://64.226.104.50:9090/Api/Message/All";
+    const url2 = "http://164.90.174.113:9090/Api/Message/All";
     useEffect(() => {
         fetch(url2, options)
             .then(respnse => respnse.json())

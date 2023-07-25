@@ -44,7 +44,7 @@ export default function Users_edit() {
     };
     const [updated,setUpdated]=useState(false)
     const { id } = useParams()
-    const url2 = `http://64.226.104.50:9090/Api/Admin/All/Vehicles/${id}`;
+    const url2 = `http://164.90.174.113:9090/Api/Admin/All/Vehicles/${id}`;
 
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
@@ -64,7 +64,7 @@ export default function Users_edit() {
         setinputTag(!inputtag);
     }
 
-    const urlthree = "http://64.226.104.50:9090/Api/Admin/All/VehicleCatagory";
+    const urlthree = "http://164.90.174.113:9090/Api/Admin/All/VehicleCatagory";
     const [dataSource5, setDataSource5] = useState([])
     useEffect(() => {
         fetch(urlthree, options)
@@ -75,7 +75,7 @@ export default function Users_edit() {
             })
     }, [])
 
-    const urlFour = "http://64.226.104.50:9090/Api/Admin/All/VehicleCondition";
+    const urlFour = "http://164.90.174.113:9090/Api/Admin/All/VehicleCondition";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         fetch(urlFour, options)
@@ -86,7 +86,7 @@ export default function Users_edit() {
             })
     }, [])
 
-    const statusUrl = "http://64.226.104.50:9090/Api/Admin/DriverStatus/All"
+    const statusUrl = "http://164.90.174.113:9090/Api/Admin/DriverStatus/All"
     const [status, setStatus] = useState([])
     useEffect(() => {
         fetch(statusUrl, options)
@@ -125,7 +125,7 @@ export default function Users_edit() {
             },
             body: JSON.stringify(updatedData),
         };
-        const url = `http://64.226.104.50:9090/Api/Admin/UpdateVehicleInfo/${id}`;
+        const url = `http://164.90.174.113:9090/Api/Admin/UpdateVehicleInfo/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -179,7 +179,7 @@ export default function Users_edit() {
                                             },
                                             body: JSON.stringify(item),
                                         };
-                                        const url = "http://64.226.104.50:9090/Api/Vehicle/SetStatus";
+                                        const url = "http://164.90.174.113:9090/Api/Vehicle/SetStatus";
                                         try {
                                                     const response = await fetch(url, options);
                                                     const result = await response.json();

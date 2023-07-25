@@ -49,7 +49,7 @@ export default function Post_market()
 
     };
     const { id } = useParams()
-    const url2 = `http://64.226.104.50:9090/Api/Admin/All/Cargos/${id}`;
+    const url2 = `http://164.90.174.113:9090/Api/Admin/All/Cargos/${id}`;
 
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
@@ -86,7 +86,7 @@ const [price, setPrice]=useState(0)
             },
             body: JSON.stringify(item),
         };
-        const url =`http://64.226.104.50:9090/Api/Admin/PostCargo/${id}`; 
+        const url =`http://164.90.174.113:9090/Api/Admin/PostCargo/${id}`; 
         try {
             const response = await fetch(url, options);
             const result = await response.json();

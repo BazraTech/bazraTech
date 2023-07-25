@@ -100,7 +100,7 @@ export default function Individual_registration() {
             },
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/Individual/CreateIndividual";
+        const url = "http://164.90.174.113:9090/Api/Individual/CreateIndividual";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -162,7 +162,7 @@ export default function Individual_registration() {
         },
     };
 
-    const url = "http://64.226.104.50:9090/Api/Admin/All/CompanySector/";
+    const url = "http://164.90.174.113:9090/Api/Admin/All/CompanySector/";
 
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
@@ -174,7 +174,7 @@ export default function Individual_registration() {
             })
     }, [])
 
-    const urlTwo = " http://64.226.104.50:9090/Api/Admin/All/NotificationMedium";
+    const urlTwo = " http://164.90.174.113:9090/Api/Admin/All/NotificationMedium";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         fetch(urlTwo, options)
@@ -185,7 +185,7 @@ export default function Individual_registration() {
             })
     }, [])
 
-    const urlthree = "http://64.226.104.50:9090/Api/Admin/All/VehicleCatagory";
+    const urlthree = "http://164.90.174.113:9090/Api/Admin/All/VehicleCatagory";
     const [dataSource3, setDataSource3] = useState([])
     useEffect(() => {
         fetch(urlthree, options)
@@ -196,7 +196,7 @@ export default function Individual_registration() {
             })
     }, [])
 
-    const urlFour = "http://64.226.104.50:9090/Api/Admin/All/VehicleCondition";
+    const urlFour = "http://164.90.174.113:9090/Api/Admin/All/VehicleCondition";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         fetch(urlFour, options)
@@ -207,7 +207,7 @@ export default function Individual_registration() {
             })
     }, [])
 
-    const urlFive = "http://64.226.104.50:9090/Api/Admin/All/Services";
+    const urlFive = "http://164.90.174.113:9090/Api/Admin/All/Services";
     const [dataSource5, setDataSource5] = useState([])
     useEffect(() => {
         fetch(urlFive, options)

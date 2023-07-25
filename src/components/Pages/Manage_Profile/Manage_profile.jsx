@@ -71,7 +71,7 @@ export default function () {
     const [totalPages, setTotalPage] = useState(1);
     const [dataSource, setDataSource] = useState([])
     const [Loading, setLoading] = useState([])
-    const url = `http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/${phone}`;
+    const url = `http://164.90.174.113:9090/Api/Admin/All/VehicleOwners/${phone}`;
     useEffect(() => {
         setLoading(true)
         fetch(url, options)
@@ -83,7 +83,7 @@ export default function () {
             })
     }, [])
 
-    const url2 = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/";
+    const url2 = "http://164.90.174.113:9090/Api/Admin/All/VehicleOwners/";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         setLoading(true);
@@ -124,7 +124,7 @@ export default function () {
             "Accept": "application/json"},
             body: JSON.stringify(item),
         };
-        const url = "http://64.226.104.50:9090/Api/User/GeneratePIN";
+        const url = "http://164.90.174.113:9090/Api/User/GeneratePIN";
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -143,7 +143,7 @@ export default function () {
         }
     }
     /********cargo owners***** */
-    const urlCargo = "http://64.226.104.50:9090/Api/Admin/All/CargoOwners";
+    const urlCargo = "http://164.90.174.113:9090/Api/Admin/All/CargoOwners";
     const [cargo,setCargo]= useState('')
     useEffect(() => {
         fetch(urlCargo, options)
@@ -153,7 +153,30 @@ export default function () {
              
             })
     }, [])
-
+/*******************Drivers********** */
+    const urlDriver = "http://164.90.174.113:9090/Api/Admin/All/Drivers";
+    const [drivers, setDrivers] = useState([])
+    useEffect(() => {
+        setLoading(true);
+        fetch(urlDriver, options)
+            .then(response => response.json())
+            .then(response => {
+              
+                if (response.status == 500) {
+                    throw new Error('Failed to get the drivers');
+                  }
+                  return response.json();
+                })
+                .then(data => {
+                    setDrivers(data.drivers)
+                })
+                .catch(error => {
+        
+                  setError(error.message);
+                  swal(`Failed ${error}`, "Error", "error");
+                })
+            },   
+     [])
 
     /****************Enable and disable user********** */
     const enableDisable = async (enable) => {
@@ -167,7 +190,7 @@ export default function () {
             },
            
         };
-        const url =`http://64.226.104.50:9090/Api/User/disable/${enable}`; 
+        const url =`http://164.90.174.113:9090/Api/User/disable/${enable}`; 
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -224,7 +247,7 @@ async function handleConfirm() {
          headers: { "Content-Type": "application/json", Accept: "application/json", Authorization: `Bearer`, },
          body: JSON.stringify(item),
      };
-     const url = "http://64.226.104.50:9090/Api/User/SetPin";
+     const url = "http://164.90.174.113:9090/Api/User/SetPin";
      try {
          const response = await fetch(url, options);
          const result = await response.json();
@@ -244,7 +267,7 @@ async function handleConfirm() {
      }
  }
     console.log(currentPage)
-    const allusers = [...currentPage, ...cargo ]
+    const allusers = [...currentPage, ...cargo ,...drivers]
     console.log(allusers)
     return (
 

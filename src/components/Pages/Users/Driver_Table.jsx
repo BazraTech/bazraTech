@@ -52,10 +52,10 @@ export default function Driver_Table({ id, role, title }) {
     let url;
  
     if (role === "OWNER") {
-        url = `http://64.226.104.50:9090/Api/Admin/All/CompanyVehicleOwner/${id}`;
+        url = `http://164.90.174.113:9090/Api/Admin/All/CompanyVehicleOwner/${id}`;
     }
     if (role === "INDIVIDUAL") {
-        url = `http://64.226.104.50:9090/Api/Admin/All/IndividualVehicleOwner/${id}`;
+        url = `http://164.90.174.113:9090/Api/Admin/All/IndividualVehicleOwner/${id}`;
     }
 
     useEffect(() => {
@@ -116,7 +116,7 @@ export default function Driver_Table({ id, role, title }) {
     if (title == "Permit Vehicles") {
         currentPage = dataSource5.slice(indexOfFirstPage, indexOfLastPage);
     }
-
+console.log(currentPage[0].enabled)
     const onShowSizeChange = (current, pageSize) => {
         setpostPerPage(pageSize);
     }
@@ -159,7 +159,7 @@ async function updateStatus(){
         },
         body: JSON.stringify(item),
     };
-    const url = "http://64.226.104.50:9090/Api/Vehicle/ChangeDriverStatus";
+    const url = "http://164.90.174.113:9090/Api/Vehicle/ChangeDriverStatus";
     try {
                 const response = await fetch(url, options);
                 const result = await response.json();
@@ -181,7 +181,7 @@ async function updateStatus(){
         console.error(error);
         }
      }
-     const statusUrl = "http://64.226.104.50:9090/Api/Admin/DriverStatus/All"
+     const statusUrl = "http://164.90.174.113:9090/Api/Admin/DriverStatus/All"
     const [status, setStatus] = useState([])
     useEffect(() => {
         fetch(statusUrl, options)
@@ -191,6 +191,41 @@ async function updateStatus(){
             console.log(status)
         })
     },[])
+    /******************* */
+const enableDisable = async (enable) => {
+    console.log('Im on submit function');
+    const options = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            "Accept": "application/json",
+            "Authorization": `Bearer ${jwt}`
+        },
+       
+    };
+    const url =`http://164.90.174.113:9090/Api/User/disable/${enable}`; 
+    try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        console.log(result);
+        localStorage.setItem("message", JSON.stringify(result["message"])); 
+        const mess = localStorage.getItem("message");
+        console.log(mess);
+        if (response.ok) {
+            swal("Successfully", `${mess}`, "success", {
+                button: true,
+                timer: 6000,
+                
+            },) 
+            
+        } else {
+            console.log("failed");
+            swal(`Failed To ${mess}`, "Error", "error");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
     return (
         <>
             <div className={styles.outer_vehicle_table} id='myTable'>
@@ -211,6 +246,7 @@ async function updateStatus(){
                             <th>Id</th>
                             <th>Detail</th>
                             <th>Manage</th>
+                            <th>Enable/Disable</th>
                         </tr>
                     </thead>
 
@@ -235,6 +271,10 @@ async function updateStatus(){
                                                     setdriverName(item.driverName)
                                                     setdriverStatus(item.status)
                                                     }}>Manage</button></td>
+                                <td><button style={{backgroundColor: item.enabled ? 'red':'green'}}
+                                            onClick={() => {
+                                                    enableDisable(item.id)
+                                                    }}>{item.enabled ? 'Enable' : 'Disable' }</button></td>
                             </tr>
                         ))}
                     </tbody>
