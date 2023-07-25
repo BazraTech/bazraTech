@@ -148,7 +148,7 @@ export default function () {
     
         try {
           const response = await axios.put(
-            'http://64.226.104.50:9090/Api/Admin/UpdateLogo',
+            'http://164.90.174.113:9090/Api/Admin/UpdateLogo',
             formData,
             {
               headers: {
@@ -195,7 +195,7 @@ export default function () {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://64.226.104.50:9090/Api/Admin/CargoType/Update/${id}`;
+        const url = `http://164.90.174.113:9090/Api/Admin/CargoType/Update/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -223,7 +223,7 @@ async function  Update_Business_Type(id, BusinessType) {
         headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
         body: JSON.stringify(item),
     };
-    const url = `http://64.226.104.50:9090/Api/Admin/BusinessType/Update/${id}`;
+    const url = `http://164.90.174.113:9090/Api/Admin/BusinessType/Update/${id}`;
     try {
         const response = await fetch(url, options);
         const result = await response.json();
@@ -251,7 +251,7 @@ async function  Update_Business_Sector(id, businessSector) {
         headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
         body: JSON.stringify(item),
     };
-    const url = `http://64.226.104.50:9090/Api/Admin/BusinessSector/Update/${id}`;
+    const url = `http://164.90.174.113:9090/Api/Admin/BusinessSector/Update/${id}`;
     try {
         const response = await fetch(url, options);
         const result = await response.json();
@@ -279,7 +279,7 @@ async function  Update_Business_Sector(id, businessSector) {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://64.226.104.50:8090/Api/Admin/Role/${id}`;
+        const url = `http://164.90.174.113:8090/Api/Admin/Role/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -307,7 +307,7 @@ async function  Update_Business_Sector(id, businessSector) {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://64.226.104.50:9090/Api/Admin/TripType/All/${id}`;
+        const url = `http://164.90.174.113:9090/Api/Admin/TripType/All/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -335,7 +335,7 @@ async function  Update_Business_Sector(id, businessSector) {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://64.226.104.50:9090/Api/Admin/Services/Update/${id}`;
+        const url = `http://164.90.174.113:9090/Api/Admin/Services/Update/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -366,7 +366,7 @@ async function  Update_Business_Sector(id, businessSector) {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://64.226.104.50:9090/Api/Admin/AlertType/Update/${id}`;
+        const url = `http://164.90.174.113:9090/Api/Admin/AlertType/Update/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -394,7 +394,7 @@ async function  Update_Business_Sector(id, businessSector) {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://64.226.104.50:9090/Api/Admin/NotificationMedium/Update/${id}`;
+        const url = `http://164.90.174.113:9090/Api/Admin/NotificationMedium/Update/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -422,7 +422,7 @@ async function  Update_Business_Sector(id, businessSector) {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://64.226.104.50:9090/Api/Admin/VehicleCondition/Update/${id}`;
+        const url = `http://164.90.174.113:9090/Api/Admin/VehicleCondition/Update/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -450,7 +450,7 @@ async function  Update_Business_Sector(id, businessSector) {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://64.226.104.50:9090/Api/Admin/VehicleCatagory/Update/${id}`;
+        const url = `http://164.90.174.113:9090/Api/Admin/VehicleCatagory/Update/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -480,7 +480,7 @@ async function  Update_Business_Sector(id, businessSector) {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://64.226.104.50:9090/Api/Admin/CompanyType/Update/${id}`;
+        const url = `http://164.90.174.113:9090/Api/Admin/CompanyType/Update/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -509,7 +509,7 @@ async function  Update_Business_Sector(id, businessSector) {
             headers: {'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}`},
             body: JSON.stringify(item),
         };
-        const url = `http://64.226.104.50:9090/Api/Admin/CompanySector/Update/${id}`;
+        const url = `http://164.90.174.113:9090/Api/Admin/CompanySector/Update/${id}`;
         try {
             const response = await fetch(url, options);
             const result = await response.json();
@@ -539,7 +539,7 @@ async function  Update_Business_Sector(id, businessSector) {
         headers: { 'Content-Type': 'application/json', "Accept": "application/json", "Authorization": `Bearer ${jwt}` },
     };
 
-    const urlTwo = " http://64.226.104.50:9090/Api/Admin/All/NotificationMedium";
+    const urlTwo = " http://164.90.174.113:9090/Api/Admin/All/NotificationMedium";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -550,7 +550,7 @@ async function  Update_Business_Sector(id, businessSector) {
                 setLoading(false)
             })
     }, [])
-    const urlthree = "http://64.226.104.50:9090/Api/Admin/All/VehicleCatagory";
+    const urlthree = "http://164.90.174.113:9090/Api/Admin/All/VehicleCatagory";
     const [dataSource3, setDataSource3] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -561,7 +561,7 @@ async function  Update_Business_Sector(id, businessSector) {
                 setLoading(false)
             })
     }, [])
-    const urlFour = "http://64.226.104.50:9090/Api/Admin/All/VehicleCondition";
+    const urlFour = "http://164.90.174.113:9090/Api/Admin/All/VehicleCondition";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -572,7 +572,7 @@ async function  Update_Business_Sector(id, businessSector) {
                 setLoading(false)
             })
     }, [])
-    const url = "http://64.226.104.50:9090/Api/Admin/All/CompanySector/";
+    const url = "http://164.90.174.113:9090/Api/Admin/All/CompanySector/";
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
         fetch(url, options)
@@ -581,7 +581,7 @@ async function  Update_Business_Sector(id, businessSector) {
                 setDataSource(data.companySectors)
             })
     }, [])
-    const url5 = "http://64.226.104.50:9090/Api/Admin/All/CompanyType/";
+    const url5 = "http://164.90.174.113:9090/Api/Admin/All/CompanyType/";
     const [dataSourc5, setDataSource5] = useState([])
     useEffect(() => {
         fetch(url5, options)
@@ -590,7 +590,7 @@ async function  Update_Business_Sector(id, businessSector) {
                 setDataSource5(data.companyTypes)
             })
     }, [])
-    const url6 = "http://64.226.104.50:9090/Api/Admin/All/Services";
+    const url6 = "http://164.90.174.113:9090/Api/Admin/All/Services";
     const [datasource6, setDataSource6] = useState([])
     useEffect(() => {
         fetch(url6, options)
@@ -603,7 +603,7 @@ async function  Update_Business_Sector(id, businessSector) {
     useEffect(() => {
         FethData()
     }, [])
-    const url7 = "http://64.226.104.50:9090/Api/Admin/All";
+    const url7 = "http://164.90.174.113:9090/Api/Admin/All";
     const [dataSource7, setDataSource7] = useState([])
     const FethData = () => {
         setLoading(true)
@@ -616,7 +616,7 @@ async function  Update_Business_Sector(id, businessSector) {
     }
 
 
-    const url8 = "http://64.226.104.50:9090/Api/Admin/DriverStatus/All";
+    const url8 = "http://164.90.174.113:9090/Api/Admin/DriverStatus/All";
     const [dataSource8, setDataSource8] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -628,7 +628,7 @@ async function  Update_Business_Sector(id, businessSector) {
             })
     }, [])
 
-    const url9 = "http://64.226.104.50:9090/Api/Admin/AlertType/All/";
+    const url9 = "http://164.90.174.113:9090/Api/Admin/AlertType/All/";
     const [dataSource9, setDataSource9] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -640,7 +640,7 @@ async function  Update_Business_Sector(id, businessSector) {
             })
     }, [])
 
-    const url10 = "http://64.226.104.50:9090/Api/Admin/TripType/All";
+    const url10 = "http://164.90.174.113:9090/Api/Admin/TripType/All";
     const [dataSource10, setDataSource10] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -652,7 +652,7 @@ async function  Update_Business_Sector(id, businessSector) {
             })
     }, [])
     // BusinessSector and
-    const BusinessSectorurl = "http://64.226.104.50:9090/Api/Admin/All/BusinessSectors";
+    const BusinessSectorurl = "http://164.90.174.113:9090/Api/Admin/All/BusinessSectors";
     const [BusinessSector, setBusinessSector] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -663,7 +663,7 @@ async function  Update_Business_Sector(id, businessSector) {
                 setLoading(false)
             })
     }, [])
-    const BusinessTypeurl = "http://64.226.104.50:9090/Api/Admin/All/BusinessTypes";
+    const BusinessTypeurl = "http://164.90.174.113:9090/Api/Admin/All/BusinessTypes";
     const [BusinessType, setBusinessType] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -675,7 +675,7 @@ async function  Update_Business_Sector(id, businessSector) {
             })
     }, [])
 // Cargo type
-const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
+const cargourl = "http://164.90.174.113:9090/Api/Admin/All/CargoType";
     const [cargo, setCargo] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -689,7 +689,7 @@ const cargourl = "http://64.226.104.50:9090/Api/Admin/All/CargoType";
     
     //driver state
    
-const DriverStateurl = "http://64.226.104.50:9090/Api/Admin/DriverState/All";
+const DriverStateurl = "http://164.90.174.113:9090/Api/Admin/DriverState/All";
 const [DriverState, setDriverState] = useState([])
 useEffect(() => {
     setLoading(true)
@@ -701,7 +701,7 @@ useEffect(() => {
         })
 }, [])
     // logo and avatar
-    const avatarurl = "http://64.226.104.50:9090/Api/Admin/LogoandAvatar";
+    const avatarurl = "http://164.90.174.113:9090/Api/Admin/LogoandAvatar";
     const [avatar, setAvatar] = useState([])
     useEffect(() => {
         setLoading(true)
@@ -738,9 +738,9 @@ useEffect(() => {
 
 <div className={styles.dashboardContents}>
 
-    <div className={styles.totalVehicles}  onClick={(event)=>{handleClick({url:"http://64.226.104.50:9090/Api/Admin/All", 
+    <div className={styles.totalVehicles}  onClick={(event)=>{handleClick({url:"http://164.90.174.113:9090/Api/Admin/All", 
                                                                 name:"Roles Type",title:'Role Type',
-                                                                createUrl:"http://64.226.104.50:9090/Api/Admin/CreateRole"},event)}} >
+                                                                createUrl:"http://164.90.174.113:9090/Api/Admin/CreateRole"},event)}} >
             <h4>Roles </h4>
             <div className={styles.innerCard}>
                 {/* <AiFillCar size="2.6rem" ></AiFillCar> */}
@@ -749,7 +749,7 @@ useEffect(() => {
        
     </div>
 
-    <div className={styles.totalVehicles}onClick={(event)=>{handleClick({url:"http://64.226.104.50:9090/Api/Admin/DriverStatus/All", 
+    <div className={styles.totalVehicles}onClick={(event)=>{handleClick({url:"http://164.90.174.113:9090/Api/Admin/DriverStatus/All", 
                                                                 name:"Driver Status"},event)}}>
         {/* <Link to="/Settingtable" style={{ textDecoration: 'none' }} > */}
             <h4>Driver status </h4>
@@ -761,7 +761,7 @@ useEffect(() => {
     </div>
 
 
-    <div className={styles.message} onClick={(event)=>{handleClick({url:"http://64.226.104.50:9090/Api/Admin/AlertType/All/", 
+    <div className={styles.message} onClick={(event)=>{handleClick({url:"http://164.90.174.113:9090/Api/Admin/AlertType/All/", 
                                                                 name:"Alert Type"},event)}}>
         {/* <Link to="" style={{ textDecoration: 'none' }} > */}
             <h4>Alert type </h4>
@@ -773,7 +773,7 @@ useEffect(() => {
         {/* </Link> */}
     </div>
 
-    <div className={styles.users} onClick={(event)=>{handleClick({url:"http://64.226.104.50:9090/Api/Admin/TripType/All", 
+    <div className={styles.users} onClick={(event)=>{handleClick({url:"http://164.90.174.113:9090/Api/Admin/TripType/All", 
                                                                 name:"Trip type"},event)}} >
         
             <h4>Trip type</h4>
@@ -784,7 +784,7 @@ useEffect(() => {
        
     </div>
 
-    <div className={styles.registration} onClick={(event)=>{handleClick({url:"http://64.226.104.50:9090/Api/Admin/All/NotificationMedium", 
+    <div className={styles.registration} onClick={(event)=>{handleClick({url:"http://164.90.174.113:9090/Api/Admin/All/NotificationMedium", 
                                                                 name:"Notification Preference"},event)}} >
         {/* <Link to="" style={{ textDecoration: 'none' }} > */}
             <h4>Notifications </h4>
@@ -795,7 +795,7 @@ useEffect(() => {
         {/* </Link> */}
     </div>
 
-    <div className={styles.trip} onClick={(event)=>{handleClick({url:"http://64.226.104.50:9090/Api/Admin/All/VehicleCondition", 
+    <div className={styles.trip} onClick={(event)=>{handleClick({url:"http://164.90.174.113:9090/Api/Admin/All/VehicleCondition", 
                                                                 name:"Vehicle Condition"},event)}}>
         {/* <Link to="" style={{ textDecoration: 'none' }} > */}
             <h4>Vehicle Condition </h4>
@@ -807,7 +807,7 @@ useEffect(() => {
         {/* </Link> */}
     </div>
 
-    <div className={styles.report} onClick={(event)=>{handleClick({url:"http://64.226.104.50:9090/Api/Admin/All/Services", 
+    <div className={styles.report} onClick={(event)=>{handleClick({url:"http://164.90.174.113:9090/Api/Admin/All/Services", 
                                                                 name:"Service Needed"},event)}}>
         {/* <Link to="" style={{ textDecoration: 'none' }} > */}
             <h4>Service Needed </h4>
@@ -818,7 +818,7 @@ useEffect(() => {
         {/* </Link> */}
     </div>
 
-    <div className={styles.alert} onClick={(event)=>{handleClick({url:"http://64.226.104.50:9090/Api/Admin/All/VehicleCatagory", 
+    <div className={styles.alert} onClick={(event)=>{handleClick({url:"http://164.90.174.113:9090/Api/Admin/All/VehicleCatagory", 
                                                                 name:"Vehicle Category"},event)}}>
         {/* <Link to="" style={{ textDecoration: 'none' }} > */}
             <h4>Vehicle Category </h4>
@@ -829,7 +829,7 @@ useEffect(() => {
         {/* </Link> */}
     </div>
 
-    <div className={styles.tracking} onClick={(event)=>{handleClick({url:"http://64.226.104.50:9090/Api/Admin/All/CompanyType/", 
+    <div className={styles.tracking} onClick={(event)=>{handleClick({url:"http://164.90.174.113:9090/Api/Admin/All/CompanyType/", 
                                                                 name:"Company Type"},event)}}>
         {/* <Link to="" style={{ textDecoration: 'none' }} > */}
             <h4>Company Type </h4>
@@ -839,7 +839,7 @@ useEffect(() => {
             </div>
         {/* </Link> */}
     </div>
-    <div className={styles.users} onClick={(event)=>{handleClick({url:"http://64.226.104.50:9090/Api/Admin/All/CompanySector/", 
+    <div className={styles.users} onClick={(event)=>{handleClick({url:"http://164.90.174.113:9090/Api/Admin/All/CompanySector/", 
                                                                 name:"Company Sector"},event)}}>
         {/* <Link to="" style={{ textDecoration: 'none' }} > */}
             <h4>Company Sector </h4>
@@ -851,7 +851,7 @@ useEffect(() => {
     </div>
 
 
-    <div className={styles.totalVehicles} onClick={(event)=>{handleClick({url:"http://64.226.104.50:9090/Api/Admin/All/BusinessTypes", 
+    <div className={styles.totalVehicles} onClick={(event)=>{handleClick({url:"http://164.90.174.113:9090/Api/Admin/All/BusinessTypes", 
                                                                 name:"Business Type"},event)}}>
         {/* <Link to="" style={{ textDecoration: 'none' }} > */}
             <h4>Business Type </h4>
@@ -862,7 +862,7 @@ useEffect(() => {
         {/* </Link> */}
     </div>
 
-    <div className={styles.totalVehicles} onClick={()=>{handleClick({url:"http://64.226.104.50:9090/Api/Admin/All/BusinessSectors", 
+    <div className={styles.totalVehicles} onClick={()=>{handleClick({url:"http://164.90.174.113:9090/Api/Admin/All/BusinessSectors", 
                                                                 name:"Business Sector"})}}>
         {/* <Link to="" style={{ textDecoration: 'none' }} > */}
             <h4>Business Sector </h4>
@@ -874,7 +874,7 @@ useEffect(() => {
     </div>
 
 
-    <div className={styles.message} onClick={(event)=>{handleClick({url:"http://64.226.104.50:9090/Api/Admin/All/CargoType", 
+    <div className={styles.message} onClick={(event)=>{handleClick({url:"http://164.90.174.113:9090/Api/Admin/All/CargoType", 
                                                                 name:"Cargo type"},event)}}>
         {/* <Link to="" style={{ textDecoration: 'none' }} > */}
             <h4>Cargo type</h4>
@@ -886,7 +886,7 @@ useEffect(() => {
         {/* </Link> */}
     </div>
 
-    <div className={styles.users} onClick={(event)=>{handleClick({url:"http://64.226.104.50:9090/Api/Admin/LogoandAvatar", 
+    <div className={styles.users} onClick={(event)=>{handleClick({url:"http://164.90.174.113:9090/Api/Admin/LogoandAvatar", 
                                                                 name:"Avatar and Logo"},event)}}>
         {/* <Link to="" style={{ textDecoration: 'none' }} > */}
             <h4>Avatar and Logo</h4>
@@ -897,7 +897,7 @@ useEffect(() => {
         {/* </Link> */}
     </div>
 
-    <div className={styles.registration} onClick={(event)=>{handleClick({url:"http://64.226.104.50:9090/Api/Admin/DriverState/All", 
+    <div className={styles.registration} onClick={(event)=>{handleClick({url:"http://164.90.174.113:9090/Api/Admin/DriverState/All", 
                                                                 name:" "},event)}}>
         {/* <Link to="" style={{ textDecoration: 'none' }} > */}
             <h4>Driver state </h4>
