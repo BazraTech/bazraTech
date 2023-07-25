@@ -1,18 +1,14 @@
-import 'dart:convert';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
 import 'package:cargo/shared/constant.dart';
 import 'package:cargo/views/usermanagement/login.dart';
 import 'package:flutter/material.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+import '../../constant/global_variables.dart';
 import '../../localization/app_localizations.dart';
+import '../../services/api_service.dart';
 import '../../shared/custom-form.dart';
 import '../../shared/customButton.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
-
   @override
   State<Signup> createState() => _SignupState();
 }
@@ -24,182 +20,31 @@ class _SignupState extends State<Signup> {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  @override
-  void dispose() {
-    // Clean up the controllers when the widget is disposed
-
-    _phoneController.dispose();
-    _passwordController.dispose();
-    // _confirmPasswordController.dispose();
-
-    super.dispose();
-  }
-
-  void _showSweetAlert(BuildContext context, AlertType alertType, String title,
-      String description) {
-    Alert(
-      context: context,
-      type: alertType,
-      title: title,
-      desc: description,
-      style: AlertStyle(
-        descStyle: TextStyle(fontSize: 14),
-        isOverlayTapDismiss: false,
-        overlayColor: Colors.black54,
-        animationType: AnimationType.grow,
-        alertBorder: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        titleStyle: TextStyle(
-          color: alertType == AlertType.error ? Colors.red : Colors.blue,
-        ),
-        alertAlignment: Alignment.center,
-        alertElevation: 10,
-      ),
-      buttons: [
-        DialogButton(
-          child: Text(
-            'OK',
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          onPressed: () {
-            if (alertType == AlertType.success) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => Cargo_login()),
-              );
-            } else if (alertType == AlertType.error) {
-              Navigator.pop(context);
-            }
-          },
-          width: 200,
-        ),
-      ],
-    ).show();
-  }
-
-  registerCargo(
-    String company,
-    String phone,
-    String pass,
-    String confirmPass,
-  ) async {
-    const url = 'http://64.226.104.50:9090/Api/SignUp/Cargo';
-
-    // Define your request data as a Map
-    Map requestData = {
-      'companyName': "${company}",
-      'phone': "${phone}",
-      'password': "${pass}",
-      'confirmPassword': "${confirmPass}",
-    };
-    print(requestData);
-
-    print(requestData);
-
-    print("********************************");
-    print('Token: $requestData');
-    print("********************************");
-    try {
-      String body = json.encode(requestData);
-
-      // Make the request and handle the response
-      if (_formKey.currentState!.validate()) {
-        _formKey.currentState?.save();
-        final response = await http.post(
-          Uri.parse(url),
-          body: body,
-          headers: {
-            "Content-Type": "application/json",
-            'Accept': 'application/json',
-          },
-        );
-        print(response.body);
-        print(response.statusCode);
-        final Map jsonResponse = json.decode(response.body);
-
-        if (response.statusCode == 200) {
-          Fluttertoast.showToast(
-              msg: jsonResponse['message'],
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.green,
-              textColor: Colors.white,
-              fontSize: 14.0);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Cargo_login()),
-          );
-        } else {
-          Fluttertoast.showToast(
-              msg: jsonResponse['message'],
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
-              fontSize: 14.0);
-        }
-      }
-    } catch (e) {
-      if (e is http.ClientException &&
-          e.message.contains('Connection reset by peer')) {
-        Fluttertoast.showToast(
-          msg: "Connection reset by peer",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 14.0,
-        );
-        // Display an error message to the user or retry the operation
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Error'),
-              content: Text('Connection reset by peer. Please try again.'),
-              actions: [
-                ElevatedButton(
-                  child: Text('Retry'),
-                  onPressed: () {
-                    // Retry the operation
-                    registerCargo(
-                      company,
-                      phone,
-                      pass,
-                      confirmPass,
-                    );
-                    Navigator.of(context).pop();
-                  },
-                ),
-                ElevatedButton(
-                  child: Text('Cancel'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      }
-      Fluttertoast.showToast(
-          msg: 'An error occurred, please check your internet connection.',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 14.0);
+  final _signUpFormKey = GlobalKey<FormState>();
+  final AuthService authService = AuthService();
+  void signUpUser() async {
+    if (_signUpFormKey.currentState!.validate()) {
+      _signUpFormKey.currentState!.save();
+      final companyName = _companyController.text;
+      final phone = _phoneController.text;
+      final password = _passwordController.text;
+      final confirm = _confirmPasswordController.text;
+      await authService.signUpUser(
+        context: context,
+        companyName: companyName,
+        phone: phone,
+        password: password,
+        confirmPassword: confirm,
+      );
+      print('Name: $companyName');
+      print('phone: $phone');
+      print('Password: $password');
+      print('Confirm: $confirm');
     }
   }
 
   bool _isErrorVisible = false;
-  bool _isFocus = false;
+  final bool _isFocus = false;
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -211,8 +56,8 @@ class _SignupState extends State<Signup> {
             children: [
               Container(
                 height: 80,
-                margin: EdgeInsets.only(top: 40, left: 10),
-                padding: EdgeInsets.symmetric(horizontal: 16),
+                margin: const EdgeInsets.only(top: 40, left: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   children: [
                     InkWell(
@@ -220,20 +65,20 @@ class _SignupState extends State<Signup> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Cargo_login()),
+                              builder: (context) => const Cargo_login()),
                         );
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_back_ios,
                         color: Colors.grey,
                       ),
                     ),
                     Container(
                       margin: EdgeInsets.only(left: screenWidth * 0.3),
-                      child: Text(
-                        "Sign Up",
+                      child: const Text(
+                        "SIGN UP",
                         style: TextStyle(
-                            color: Colors.grey,
+                            color: GlobalVariables.primaryColor,
                             fontFamily: "Roboto",
                             fontSize: 25,
                             fontWeight: FontWeight.bold),
@@ -245,7 +90,7 @@ class _SignupState extends State<Signup> {
               Container(
                 margin: const EdgeInsets.only(top: 20),
                 height: screenHeight - 30,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: kBackgroundColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(60),
@@ -255,7 +100,7 @@ class _SignupState extends State<Signup> {
                   padding: const EdgeInsets.all(30),
                   margin: const EdgeInsets.only(top: 50),
                   child: Form(
-                    key: _formKey,
+                    key: _signUpFormKey,
                     child: Column(
                       children: [
                         CustomTextFieldForm(
@@ -272,7 +117,6 @@ class _SignupState extends State<Signup> {
                             letterSpacing: 1.0,
                             wordSpacing: 2.0,
                             color: _isFocus ? Colors.red : Colors.grey,
-                            // ... other styles
                           ),
                           onChanged: (value) {},
                           validator: (value) {
@@ -301,7 +145,6 @@ class _SignupState extends State<Signup> {
                             letterSpacing: 1.0,
                             wordSpacing: 2.0,
                             color: _isFocus ? Colors.red : Colors.grey,
-                            // ... other styles
                           ),
                           onChanged: (value) {},
                           validator: (value) {
@@ -330,11 +173,9 @@ class _SignupState extends State<Signup> {
                                 wordSpacing: 2.0,
                                 color:
                                     _isErrorVisible ? Colors.red : Colors.grey,
-                                // ... other styles
                               ),
-                              textStyle: TextStyle(fontSize: 16),
+                              textStyle: const TextStyle(fontSize: 16),
                               onChanged: (value) {
-                                print("password changed: $value");
                                 if (_isErrorVisible) {
                                   setState(() {
                                     _isErrorVisible = false;
@@ -350,7 +191,6 @@ class _SignupState extends State<Signup> {
                                               'Please Enter Password') ??
                                       "Please Enter Password";
                                 }
-
                                 final passwordRegex =
                                     RegExp(r'^(?=.*?[A-Z])(?=.*?[0-9]).{8,}$');
                                 if (!passwordRegex.hasMatch(value)) {
@@ -359,13 +199,12 @@ class _SignupState extends State<Signup> {
                                   });
                                   return " ";
                                 }
-
                                 return PasswordMatchValidator.validate(
                                     value, _confirmPasswordController.text);
                               },
                             ),
                             if (_isErrorVisible) // Only show the error message if it's visible
-                              Text(
+                              const Text(
                                 "Password must contain at least one capital letter, one number, and be at least 8 characters long",
                                 style: TextStyle(
                                   color: Colors.red,
@@ -398,39 +237,31 @@ class _SignupState extends State<Signup> {
                               letterSpacing: 1.0,
                               wordSpacing: 2.0,
                               color: _isFocus ? Colors.red : Colors.grey,
-                              // ... other styles
                             ),
                             showSuffixIcon: true,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "Please Confirm Password";
                               }
-
                               return PasswordMatchValidator.validate(
-                                  _passwordController.text, value!);
+                                  _passwordController.text, value);
                             }),
                         const SizedBox(
                           height: 30,
                         ),
                         CustomButton(
-                          onPressed: () async {
-                            await registerCargo(
-                              _companyController.text,
-                              _phoneController.text,
-                              _passwordController.text,
-                              _confirmPasswordController.text,
-                            );
-                          },
+                          onPressed: signUpUser,
                           text: AppLocalizations.of(context)
-                                  ?.translate('Sign Up') ??
-                              "Sign Up",
+                                  ?.translate('SIGN UP') ??
+                              "SIGN UP",
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: 5),
+                          margin: const EdgeInsets.only(top: 5),
                           child: Row(
                             children: [
                               Container(
-                                  margin: EdgeInsets.only(left: 40, right: 20),
+                                  margin: const EdgeInsets.only(
+                                      left: 40, right: 20),
                                   child: Text(
                                     AppLocalizations.of(context)?.translate(
                                             "Already have an account?") ??
@@ -454,11 +285,11 @@ class _SignupState extends State<Signup> {
                                   },
                                   child: Text(
                                     AppLocalizations.of(context)
-                                            ?.translate("Login") ??
-                                        "Login",
+                                            ?.translate("LOGIN") ??
+                                        "LOGIN",
                                     style: const TextStyle(
                                       fontSize: 15,
-                                      color: kPrimaryColor,
+                                      color: GlobalVariables.primaryColor,
                                       letterSpacing: 1.0,
                                       fontFamily: 'Roboto',
                                       fontWeight: FontWeight.bold,

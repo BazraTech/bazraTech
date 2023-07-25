@@ -98,7 +98,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   }
 
   registerCargo(String company, String gender, String email) async {
-    const url = 'http://64.226.104.50:9090/Api/SignUp/Cargo';
+    const url = 'http://164.90.174.113:9090/Api/SignUp/Cargo';
 
     // Define your request data as a Map
     Map requestData = {

@@ -48,7 +48,7 @@ class _Cargo_LoginState extends State<Cargo_Login> {
   }
 
   loginCargo(String phone, String pass) async {
-    const url = 'http://64.226.104.50:9090/Api/SignIn/Cargo';
+    const url = 'http://164.90.174.113:9090/Api/SignIn/Cargo';
     StorageHelper storageHelper = StorageHelper();
     String? retrievedToken = await storageHelper.getToken();
     // Define your request data as a Map
@@ -199,7 +199,7 @@ class _Cargo_LoginState extends State<Cargo_Login> {
         'Accept': 'application/json',
       };
       final response = await http.get(
-          Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+          Uri.parse('http://164.90.174.113:9090/Api/Admin/LogoandAvatar'),
           headers: requestHeaders);
 
       if (response.statusCode == 200) {

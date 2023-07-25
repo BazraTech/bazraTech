@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../../Components/Home_Page.dart';
+import '../../constant/utils.dart';
 import '../../localization/app_localizations.dart';
 import '../../navigate/navigateBloc.dart';
 import '../../navigate/navigatestateEvent.dart';
@@ -52,7 +53,8 @@ class _PostsState extends State<Posts> {
     StorageHelper storageHelper = StorageHelper();
     String? accessToken = await storageHelper.getToken();
     try {
-      const url = 'http://64.226.104.50:9090/Api/Cargo/PostCargo';
+      const url = 'http://164.90.174.113:9090/Api/Cargo/PostCargo';
+      print("Access Token: $accessToken");
       if (_formKey.currentState!.validate()) {
         _formKey.currentState?.save();
         var request = http.MultipartRequest('POST', Uri.parse(url));
@@ -157,24 +159,37 @@ class _PostsState extends State<Posts> {
   }
 
   Future<void> _fetchCargoTypes() async {
-    StorageHelper storageHelper = StorageHelper();
-    String? accessToken = await storageHelper.getToken();
-    final response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Admin/All/CargoType'),
+    try {
+      StorageHelper storageHelper = StorageHelper();
+      String? accessToken = await storageHelper.getToken();
+      print("Access Tokennnnnnnnn: $accessToken");
+      final response = await http.get(
+        Uri.parse('http://164.90.174.113:9090/Api/Admin/All/CargoType'),
         headers: {
           "Content-Type": "application/json",
           'Accept': 'application/json',
           "Authorization": "Bearer $accessToken",
+        },
+      );
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          _cargoTypes = List.from(data['cargoTypes'])
+              .map((e) => CargoType.fromJson(e))
+              .toList();
         });
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      setState(() {
-        _cargoTypes = List.from(data['cargoTypes'])
-            .map((e) => CargoType.fromJson(e))
-            .toList();
-      });
-    } else {
-      throw Exception('Failed to fetch cargo types');
+      } else {
+        final errorMessage = 'Failed to fetch cargo types';
+        showSnackBar(context, errorMessage);
+        print('Response status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print("Error occurred: $e");
+      final errorMessage = 'Failed to fetch cargo types';
+      showSnackBar(context, errorMessage);
+      print('Error details: $e');
+      // You can add more troubleshooting methods here
     }
   }
 

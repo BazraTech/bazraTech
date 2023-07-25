@@ -9,15 +9,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+import '../../constant/global_variables.dart';
+import '../../constant/utils.dart';
 import '../../localization/app_localizations.dart';
 import '../../localization/localization_bloc.dart';
 import '../../localization/localization_event.dart';
-import '../../navigate/navigateBloc.dart';
-import '../../navigate/navigatestateEvent.dart';
-import '../../shared/checkConnection.dart';
+import '../../services/api_service.dart';
 import '../../shared/custom-form.dart';
-import '../../shared/loading.dart';
 import '../../shared/storage_hepler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'forgetPassword.dart';
@@ -30,166 +28,37 @@ class Cargo_login extends StatefulWidget {
 }
 
 class _Cargo_loginState extends State<Cargo_login> {
-  final _formKey = GlobalKey<FormState>();
-  final _phoneController = TextEditingController();
+  final _signInFormKey = GlobalKey<FormState>();
+  final _username = TextEditingController();
   final _passwordController = TextEditingController();
+  final AuthService authService = AuthService();
   String? ownerPic;
   Box<String>? logoBox;
   bool _isLoading = true;
   List<String> _data = [];
   String? phoneNumber;
   bool _isFocused = false;
-  @override
-  void dispose() {
-    // Clean up the controllers when the widget is disposed
 
-    _phoneController.dispose();
-    _passwordController.dispose();
-
-    super.dispose();
-  }
-
-  loginCargo(String phone, String pass) async {
-    const url = 'http://64.226.104.50:9090/Api/SignIn/Cargo';
-    StorageHelper storageHelper = StorageHelper();
-    String? retrievedToken = await storageHelper.getToken();
-    // Define your request data as a Map
-    Map requestData = {
-      'username': "${phone}",
-      'password': "${pass}",
-    };
-    setState(() {
-      isLoading = true;
-    });
-
-    print(requestData);
-
-    print("********************************");
-    print('Token: $retrievedToken');
-    print("********************************");
-    bool isConnected = await checkInternetConnection();
-    if (!isConnected) {
-      // Show an error message
-      print(
-          'No internet connection found, please check your internet settings.');
-      // Define this function to show an alert
-      Fluttertoast.showToast(
-          msg:
-              'No internet connection found, please check your internet settings.',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 14.0);
-      return;
-    }
-
-    try {
-      String body = json.encode(requestData);
-
-      // Make the request and handle the response
-      if (_formKey.currentState!.validate()) {
-        _formKey.currentState?.save();
-        final response = await http.post(
-          Uri.parse(url),
-          body: body,
-          headers: {
-            "Content-Type": "application/json",
-            'Accept': 'application/json',
-          },
-        );
-        print(response.body);
-        print(response.statusCode);
-        final storage = FlutterSecureStorage();
-        if (response.statusCode == 200) {
-          // Parse the response
-          var jsonResponse = json.decode(response.body);
-          //Get the token from the response
-          String? newToken = jsonResponse['jwt'];
-          var name = jsonResponse['user']['name'];
-          var phoneNumber = jsonResponse['user']['PhoneNumber'];
-
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          await prefs.setString('name', name);
-          await prefs.setString('phoneNumber', phoneNumber);
-          // Save the token to storage
-          if (newToken != null) {
-            await storageHelper.setToken(newToken);
-          }
-          // Save the phone number using FlutterSecureStorage
-          await storage.write(key: 'phoneNumber', value: phoneNumber);
-          print(newToken);
-          context.read<NavigationBloc>().add(NavigateTo('/bottomNav'));
-        } else if (response.statusCode == 500) {
-          setState(() {
-            isLoading = false;
-          });
-        } else {
-          setState(() {
-            isLoading = false;
-          });
-          Fluttertoast.showToast(
-              msg: "Invaild Phone Number or User Name",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.yellow,
-              textColor: Colors.white,
-              fontSize: 14.0);
-        }
-      }
-    } catch (error) {
+  void signInUser() async {
+    if (_signInFormKey.currentState!.validate()) {
+      _signInFormKey.currentState!.save();
       setState(() {
-        isLoading = false;
+        isLoading = true;
       });
-      if (error is http.ClientException &&
-          error.message.contains('Connection reset by peer')) {
-        Fluttertoast.showToast(
-          msg: "Connection reset by peer",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 14.0,
-        );
-        // Display an error message to the user or retry the operation
-        showDialog(
+      try {
+        await authService.signInUser(
           context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Error'),
-              content:
-                  const Text('Connection reset by peer. Please try again.'),
-              actions: [
-                ElevatedButton(
-                  child: Text('Retry'),
-                  onPressed: () {
-                    // Retry the operation
-                    loginCargo(phone, pass);
-                    Navigator.of(context).pop();
-                  },
-                ),
-                ElevatedButton(
-                  child: Text('Cancel'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
+          password: _passwordController.text,
+          username: _username.text,
         );
+      } catch (e) {
+        print("Error occurred while signing in: $e");
+        showSnackBar(context, "An error occurred while signing in");
+      } finally {
+        setState(() {
+          isLoading = false;
+        });
       }
-      Fluttertoast.showToast(
-          msg: "Check your internet Connection and try again",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 14.0);
     }
   }
 
@@ -200,7 +69,7 @@ class _Cargo_loginState extends State<Cargo_login> {
     getPhoneNumberSync().then((value) {
       setState(() {
         phoneNumber = value;
-        _phoneController.text = phoneNumber ?? '';
+        _username.text = phoneNumber ?? '';
       });
     });
     initHive();
@@ -227,7 +96,7 @@ class _Cargo_loginState extends State<Cargo_login> {
         'Accept': 'application/json',
       };
       final response = await http.get(
-          Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+          Uri.parse('http://164.90.174.113:9090/Api/Admin/LogoandAvatar'),
           headers: requestHeaders);
 
       if (response.statusCode == 200) {
@@ -253,6 +122,7 @@ class _Cargo_loginState extends State<Cargo_login> {
             textColor: Colors.white,
             fontSize: 14.0);
       }
+      // ignore: avoid_print
       print('Error occurred: $e');
       return '';
     }
@@ -362,7 +232,20 @@ class _Cargo_loginState extends State<Cargo_login> {
                           logo,
                         );
                       } else {
-                        return Text('Bazra Technology Group');
+                        return const Text(
+                          'Bazra Technology Group',
+                          style: TextStyle(
+                            fontFamily: "Roboto",
+                            fontSize: 20,
+                            color: GlobalVariables.primaryColor,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                            decorationColor: Color.fromRGBO(178, 142, 22,
+                                1), // Replace with your desired color
+                            decorationThickness:
+                                2.0, // Adjust the thickness of the underline
+                          ),
+                        );
                       }
                     },
                   ),
@@ -382,7 +265,7 @@ class _Cargo_loginState extends State<Cargo_login> {
               child: Container(
                 margin: EdgeInsets.only(left: 10, top: 30),
                 child: Form(
-                  key: _formKey,
+                  key: _signInFormKey,
                   child: Column(children: [
                     Container(
                         alignment: Alignment.center,
@@ -398,6 +281,7 @@ class _Cargo_loginState extends State<Cargo_login> {
                               style: const TextStyle(
                                 fontFamily: "Roboto",
                                 fontSize: 20,
+                                color: GlobalVariables.primaryColor,
                                 fontWeight: FontWeight.bold,
                                 decoration: TextDecoration.underline,
                                 decorationColor: Color.fromRGBO(178, 142, 22,
@@ -421,7 +305,7 @@ class _Cargo_loginState extends State<Cargo_login> {
                           fontStyle: FontStyle.normal,
                           fontFamily: "Roboto"),
                       hintText: '',
-                      textController: _phoneController,
+                      textController: _username,
                       keyboardType: TextInputType.text,
                       onChanged: (value) {},
                       validator: (value) {
@@ -496,7 +380,7 @@ class _Cargo_loginState extends State<Cargo_login> {
                                   "Forgot Password",
                               style: const TextStyle(
                                 fontSize: 15,
-                                color: kPrimaryColor,
+                                color: GlobalVariables.primaryColor,
                                 fontFamily: 'Roboto',
                                 fontWeight: FontWeight.bold,
                               ),
@@ -504,20 +388,15 @@ class _Cargo_loginState extends State<Cargo_login> {
                           ),
                         )),
                     ElevatedButton(
-                      onPressed: () async {
-                        isLoading
-                            ? null
-                            : await loginCargo(_phoneController.text,
-                                _passwordController.text);
-                      },
+                      onPressed: signInUser,
                       style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).primaryColor,
+                        primary: Color.fromRGBO(178, 142, 22, 1),
                         onPrimary: Colors.white,
                         textStyle: TextStyle(fontSize: 20.0),
                         padding: EdgeInsets.all(16.0),
                         shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -528,10 +407,10 @@ class _Cargo_loginState extends State<Cargo_login> {
                                   width: 24,
                                   child: CircularProgressIndicator(
                                     valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white),
+                                        Colors.black),
                                   ),
                                 )
-                              : SizedBox(), // Empty SizedBox if not loading
+                              : SizedBox(),
                           SizedBox(width: 8),
                           Text(
                             isLoading
@@ -544,11 +423,12 @@ class _Cargo_loginState extends State<Cargo_login> {
                                     "Login".toUpperCase(),
                             textAlign: TextAlign.left,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontFamily: 'Roboto',
-                                color: Colors.white,
-                                fontWeight: FontWeight.normal),
-                          )
+                            style: TextStyle(
+                              fontFamily: 'Roboto',
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -577,17 +457,17 @@ class _Cargo_loginState extends State<Cargo_login> {
                                   context,
                                   MaterialPageRoute<void>(
                                       builder: (BuildContext context) =>
-                                          TikTokLoadingSpinner()),
+                                          const Signup()),
                                 );
                               },
                               child: Text(
                                 AppLocalizations.of(context)
-                                        ?.translate("Sign Up") ??
-                                    "Sign up",
+                                        ?.translate("SIGN UP") ??
+                                    "SIGN UP",
                                 style: const TextStyle(
                                   fontSize: 15,
                                   letterSpacing: 1.5,
-                                  color: kPrimaryColor,
+                                  color: GlobalVariables.primaryColor,
                                   fontFamily: 'Roboto',
                                   fontWeight: FontWeight.bold,
                                 ),

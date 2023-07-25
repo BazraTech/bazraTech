@@ -31,7 +31,7 @@ class _VehicleCargoState extends State<VehicleCargo> {
       String? accessToken = await storageHelper.getToken();
       final response = await http.get(
           Uri.parse(
-              'http://64.226.104.50:9090/Api/Cargo/All/CargoDrivers/${widget.id}'),
+              'http://164.90.174.113:9090/Api/Cargo/All/CargoDrivers/${widget.id}'),
           headers: {
             "Content-Type": "application/json",
             'Accept': 'application/json',
@@ -127,7 +127,7 @@ class _VehicleCargoState extends State<VehicleCargo> {
 
     final response = await http.get(
         Uri.parse(
-            'http://64.226.104.50:9090/Api/Admin/Cargo/DriversList/${widget.id}/UNLOAD'),
+            'http://164.90.174.113:9090/Api/Admin/Cargo/DriversList/${widget.id}/UNLOAD'),
         headers: {
           "Content-Type": "application/json",
           'Accept': 'application/json',
@@ -150,7 +150,7 @@ class _VehicleCargoState extends State<VehicleCargo> {
     String? accessToken = await storageHelper.getToken();
     if (drivers.isNotEmpty) {
       final url =
-          'http://64.226.104.50:9090/Api/Cargo/ConfirmDriverState/${widget.id}';
+          'http://164.90.174.113:9090/Api/Cargo/ConfirmDriverState/${widget.id}';
       final body = jsonEncode({
         'drivers': drivers,
       });

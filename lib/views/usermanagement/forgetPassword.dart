@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:cargo/constant/global_variables.dart';
 import 'package:cargo/localization/app_localizations.dart';
 import 'package:cargo/shared/constant.dart';
 import 'package:cargo/shared/customButton.dart';
@@ -45,7 +46,7 @@ class _ForgetState extends State<Forget> {
         'Accept': 'application/json',
       };
       final response = await http.get(
-          Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+          Uri.parse('http://164.90.174.113:9090/Api/Admin/LogoandAvatar'),
           headers: requestHeaders);
 
       if (response.statusCode == 200) {
@@ -127,7 +128,7 @@ class _ForgetState extends State<Forget> {
   }
 
   generatePin(String cargoOwnerPhone) async {
-    const url = 'http://64.226.104.50:9090/Api/User/GeneratePIN';
+    const url = 'http://164.90.174.113:9090/Api/User/GeneratePIN';
 
     // Define your request data as a Map
     Map requestData = {
@@ -205,7 +206,9 @@ class _ForgetState extends State<Forget> {
                             logo,
                           );
                         } else {
-                          return Text('Bazra Technology Group');
+                          return Text('Bazra Technology Group',
+                              style: TextStyle(
+                                  color: GlobalVariables.primaryColor));
                         }
                       },
                     ),
@@ -219,7 +222,7 @@ class _ForgetState extends State<Forget> {
                   style: const TextStyle(
                     fontSize: 20,
                     letterSpacing: 1,
-                    color: kPrimaryColor,
+                    color: GlobalVariables.primaryColor,
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.bold,
                   ),

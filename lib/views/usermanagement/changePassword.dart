@@ -56,7 +56,7 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   registerCargo(
       String newPass, String confirmPass, String userName, String pin) async {
-    const url = 'http://64.226.104.50:9090/Api/User/SetPin';
+    const url = 'http://164.90.174.113:9090/Api/User/SetPin';
 
     // Define your request data as a Map
     Map requestData = {

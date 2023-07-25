@@ -51,7 +51,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
         'Accept': 'application/json',
       };
       final response = await http.get(
-          Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+          Uri.parse('http://164.90.174.113:9090/Api/Admin/LogoandAvatar'),
           headers: requestHeaders);
 
       if (response.statusCode == 200) {

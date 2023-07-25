@@ -23,7 +23,7 @@ class _ExpandableListViewState extends State {
     print("Access Token: $accessToken");
     try {
       final response = await http.get(
-          Uri.parse("http://64.226.104.50:9090/Api/Cargo/All/CargoDrivers/67"),
+          Uri.parse("http://164.90.174.113:9090/Api/Cargo/All/CargoDrivers/67"),
           headers: {
             "Authorization": "Bearer $accessToken",
           });

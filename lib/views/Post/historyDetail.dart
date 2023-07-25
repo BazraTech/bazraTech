@@ -22,7 +22,7 @@ class _cargoHistoryDetailState extends State<cargoHistoryDetail> {
     String? accessToken = await storageHelper.getToken();
     final response = await http.get(
         Uri.parse(
-            'http://64.226.104.50:9090/Api/Cargo/All/Cargos/${widget.cargoId}'),
+            'http://164.90.174.113:9090/Api/Cargo/All/Cargos/${widget.cargoId}'),
         headers: {
           "Content-Type": "application/json",
           'Accept': 'application/json',
