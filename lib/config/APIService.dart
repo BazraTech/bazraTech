@@ -2,6 +2,8 @@ class ApIConfig {
   static const String urlAPI = "164.90.174.113";
   static const updatedriverprofile =
       "http://164.90.174.113:9090/Api/Driver/UpdateInfo";
+  static const ownerlogo = "http://164.90.174.113:9090/Api/Admin/LogoandAvatar";
+
   static const aviablemarketfordriver =
       'http://164.90.174.113:9090/Api/Vehicle/All/Market';
   static const String aviablemarket = "/Api/Vehicle/All/Market";
@@ -16,7 +18,8 @@ class ApIConfig {
       "http://164.90.174.113:9090/Api/Vehicle/ChangeDriverStatus";
   static String changeVehicleStatus =
       "http://164.90.174.113:9090/Api/Vehicle/SetStatus";
-  static const String alert = "/Api/SignIn/Owner";
+  static const String alert =
+      "http://164.90.174.113:9090/Api/Vehicle/Alerts/ByStatus";
   static const String allvehicle =
       "http://164.90.174.113:9090/Api/Vehicle/Owner/All";
   static const String driverApi = "/Api/Vehicle/Owner/Drivers/All";

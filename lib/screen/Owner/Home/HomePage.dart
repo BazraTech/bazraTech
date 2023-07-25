@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
+import 'package:bazralogin/Route/Routes.dart';
+import 'package:bazralogin/config/APIService.dart';
 import 'package:bazralogin/controller/Localization.dart';
 import 'package:bazralogin/screen/Owner/Alert/Notification.dart';
 import 'package:badges/badges.dart' as badges;
@@ -80,7 +82,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
       'Authorization': 'Bearer $token',
     };
     final response = await http.get(
-        Uri.parse('http://164.90.174.113:9090/Api/Admin/LogoandAvatar'),
+        Uri.parse(ApIConfig.ownerlogo),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
@@ -114,9 +116,8 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    final response = await http.get(
-        Uri.parse('http://164.90.174.113:9090/Api/Admin/LogoandAvatar'),
-        headers: requestHeaders);
+    final response =
+        await http.get(Uri.parse(ApIConfig.ownerlogo), headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
       Map<String, dynamic> data = json.decode(response.body);
@@ -169,7 +170,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
       'Authorization': 'Bearer $token',
     };
     final response = await http.get(
-        Uri.parse('http://164.90.174.113:9090/Api/Vehicle/Alerts/ByStatus'),
+        Uri.parse(AppRoutes.alert),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {
