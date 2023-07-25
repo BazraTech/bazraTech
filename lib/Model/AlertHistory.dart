@@ -15,7 +15,7 @@ class Alert {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.alert);
+    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.alertforowner);
     var response = await client.get(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;

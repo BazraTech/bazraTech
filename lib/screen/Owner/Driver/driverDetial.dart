@@ -22,7 +22,7 @@ class _Driver_DetialState extends State<Driver_Detial> {
     try {
       var response = await http.get(
           Uri.parse(
-              'http://64.226.104.50:9090/Api/Vehicle/Owner/Drivers/All/${widget.id}'),
+              'http://164.90.174.113:9090/Api/Vehicle/Owner/Drivers/All/${widget.id}'),
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",

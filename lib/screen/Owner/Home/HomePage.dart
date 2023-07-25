@@ -81,9 +81,8 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    final response = await http.get(
-        Uri.parse(ApIConfig.ownerlogo),
-        headers: requestHeaders);
+    final response =
+        await http.get(Uri.parse(ApIConfig.ownerlogo), headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
       Map<String, dynamic> data = json.decode(response.body);
@@ -169,8 +168,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    final response = await http.get(
-        Uri.parse(AppRoutes.alert),
+    final response = await http.get(Uri.parse(ApIConfig.alertforowner),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {

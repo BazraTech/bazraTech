@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     if (hasInternetConnection) {
-      final response = await http.get(Uri.parse('http://64.226.104.50'));
+      final response = await http.get(Uri.parse('http://164.90.174.113'));
       if (response.statusCode == 200) {
         Navigator.pushReplacement(
           context,

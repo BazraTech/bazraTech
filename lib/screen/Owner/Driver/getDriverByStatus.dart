@@ -45,7 +45,7 @@ class _getDriversBystatusState extends State<getDriversBystatus> {
     };
     var response = await http.get(
         Uri.parse(
-            'http://64.226.104.50:9090/Api/Vehicle/Owner/Drivers/${widget.driverStatus}'),
+            'http://164.90.174.113:9090/Api/Vehicle/Owner/Drivers/${widget.driverStatus}'),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;

@@ -64,7 +64,7 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
 
     final formData = http.MultipartRequest(
       'POST',
-      Uri.parse("http://64.226.104.50:9090/Api/Driver/AddDriver"),
+      Uri.parse("http://164.90.174.113:9090/Api/Driver/AddDriver"),
     );
     formData.headers['Authorization'] = "Bearer $value";
     // final XFile? image =

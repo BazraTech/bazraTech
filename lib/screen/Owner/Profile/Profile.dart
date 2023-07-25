@@ -49,7 +49,7 @@ class _ProfileState extends State<Profile> {
       'Authorization': 'Bearer $token',
     };
     final response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+        Uri.parse('http://164.90.174.113:9090/Api/Admin/LogoandAvatar'),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.

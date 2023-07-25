@@ -23,7 +23,7 @@ class CountDrivers {
       'Authorization': 'Bearer $token',
     };
     var response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/Owner/Drivers/All'),
+        Uri.parse('http://164.90.174.113:9090/Api/Vehicle/Owner/Drivers/All'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {
@@ -54,7 +54,7 @@ class CountDrivers {
     };
     var response = await http.get(
         Uri.parse(
-            'http://64.226.104.50:9090/Api/Vehicle/Owner/Drivers/ASSIGNED'),
+            'http://164.90.174.113:9090/Api/Vehicle/Owner/Drivers/ASSIGNED'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {
@@ -84,7 +84,7 @@ class CountDrivers {
     };
     var response = await http.get(
         Uri.parse(
-            'http://64.226.104.50:9090/Api/Vehicle/Owner/Drivers/UNASSIGNED'),
+            'http://164.90.174.113:9090/Api/Vehicle/Owner/Drivers/UNASSIGNED'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {
@@ -114,7 +114,7 @@ class CountDrivers {
     };
     var response = await http.get(
         Uri.parse(
-            'http://64.226.104.50:9090/Api/Vehicle/Owner/Drivers/ONROUTE'),
+            'http://164.90.174.113:9090/Api/Vehicle/Owner/Drivers/ONROUTE'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {
@@ -143,7 +143,8 @@ class CountDrivers {
       'Authorization': 'Bearer $token',
     };
     var response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/Owner/Drivers/PERMIT'),
+        Uri.parse(
+            'http://164.90.174.113:9090/Api/Vehicle/Owner/Drivers/PERMIT'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {

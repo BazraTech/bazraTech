@@ -3,7 +3,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-
 class ApiControllerforowner extends GetxController {
   Map<String, dynamic>? dataList;
 
@@ -23,7 +22,7 @@ class ApiControllerforowner extends GetxController {
       'Authorization': 'Bearer $token',
     };
     var response = await http.get(
-        Uri.parse("http://64.226.104.50:9090/Api/Vehicle/Owner/Info"),
+        Uri.parse("http://164.90.174.113:9090/Api/Vehicle/Owner/Info"),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {
