@@ -116,7 +116,7 @@ export default function Driver_Table({ id, role, title }) {
     if (title == "Permit Vehicles") {
         currentPage = dataSource5.slice(indexOfFirstPage, indexOfLastPage);
     }
-console.log(currentPage[0].enabled)
+// console.log(currentPage[0].enabled)
     const onShowSizeChange = (current, pageSize) => {
         setpostPerPage(pageSize);
     }
