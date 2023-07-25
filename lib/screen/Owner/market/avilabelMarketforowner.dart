@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:bazralogin/Theme/Alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -43,7 +41,7 @@ class _availabelMarketState extends State<availabelMarket> {
       };
 
       var response = await client.get(
-          Uri.parse('http://64.226.104.50:9090/Api/Vehicle/All/Market'),
+          Uri.parse('http://164.90.174.113:9090/Api/Vehicle/All/Market'),
           headers: requestHeaders);
 
       print(response.body);

@@ -39,7 +39,7 @@ class _MyScreenState extends State<MyScreen> {
     };
     final response = await http.get(
         Uri.parse(
-          'http://64.226.104.50:9090/Api/Vehicle/Alerts/ByStatus',
+          'http://164.90.174.113:9090/Api/Vehicle/Alerts/ByStatus',
         ),
         headers: requestHeaders);
     if (response.statusCode == 200) {

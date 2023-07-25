@@ -46,7 +46,7 @@ class _CreateAlertState extends State {
       "alertType": "${alertType}",
       "location": "ADDIS ABABA",
     };
-    final url = Uri.parse("http://64.226.104.50:9090/Api/Driver/CreateAlert");
+    final url = Uri.parse("http://164.90.174.113:9090/Api/Driver/CreateAlert");
     final response = await http.post(url, body: json.encode(data), headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
@@ -105,7 +105,7 @@ class _CreateAlertState extends State {
       "location": "ADDIS ABABA",
     };
     final url = Uri.parse(
-        "http://64.226.104.50:9090/Api/Driver/FinishAlert/$Resultsm ");
+        "http://164.90.174.113:9090/Api/Driver/FinishAlert/$Resultsm ");
     http.post(url, body: json.encode(data), headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",

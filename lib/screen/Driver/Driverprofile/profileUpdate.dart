@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bazralogin/Route/Routes.dart';
 import 'package:bazralogin/Theme/Alert.dart';
 import 'package:bazralogin/Theme/TextInput.dart';
 import 'package:bazralogin/const/constant.dart';
@@ -74,7 +75,7 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
 
     final formData = http.MultipartRequest(
       'PUT',
-      Uri.parse("http://64.226.104.50:9090/Api/Driver/UpdateInfo"),
+      Uri.parse(AppRoutes.updateProfiles),
     );
     formData.headers['Authorization'] = "Bearer $value";
 
@@ -112,7 +113,7 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
       'Authorization': 'Bearer $token',
     };
     final response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+        Uri.parse('http://164.90.174.113:9090/Api/Admin/LogoandAvatar'),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.

@@ -24,7 +24,7 @@ class _vehicleDetialState extends State<vehicleDetial> {
     try {
       var response = await http.get(
           Uri.parse(
-              'http://64.226.104.50:9090/Api/Vehicle/Owner/All/${widget.id}'),
+              'http://164.90.174.113:9090/Api/Vehicle/Owner/All/${widget.id}'),
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",

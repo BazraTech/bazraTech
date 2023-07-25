@@ -117,7 +117,7 @@ class _CommunicationPageState extends State<CommunicationPage> {
     var value = await storage.read(key: 'jwt');
     Map data = {"message": _controller.text, "receipientPhone": listDriver};
     var response = await http.post(
-        Uri.parse('http://64.226.104.50:9090/Api/Message/CreateMessage'),
+        Uri.parse('http://164.90.174.113:9090/Api/Message/CreateMessage'),
         body: json.encode(data),
         headers: {
           "Content-Type": "application/json",

@@ -72,7 +72,7 @@ class _activeWorkState extends State<activeWork> {
 
       Map data = {"driverState": load};
       var response = await http.put(
-          Uri.parse('http://64.226.104.50:9090/Api/Driver/ChangeDriverState'),
+          Uri.parse('http://164.90.174.113:9090/Api/Driver/ChangeDriverState'),
           body: jsonEncode(data) as String,
           headers: {
             "Content-Type": "application/json",

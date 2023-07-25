@@ -32,7 +32,7 @@ class _driverReportState extends State<driverReport> {
     };
     final response = await http.get(
         Uri.parse(
-          'http://64.226.104.50:9090/Api/Driver/All/Cargos/FINISHED',
+          'http://164.90.174.113:9090/Api/Driver/All/Cargos/FINISHED',
         ),
         headers: requestHeaders);
     if (response.statusCode == 200) {
@@ -60,7 +60,7 @@ class _driverReportState extends State<driverReport> {
     };
     final response = await http.get(
         Uri.parse(
-          'http://64.226.104.50:9090/Api/Driver/Alerts/ByStatus',
+          'http://164.90.174.113:9090/Api/Driver/Alerts/ByStatus',
         ),
         headers: requestHeaders);
     if (response.statusCode == 200) {

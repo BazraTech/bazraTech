@@ -66,7 +66,7 @@ class _LoginState extends State<Login> {
         "phoneNumber": "${phoneController.text}",
       };
       var response = await http.post(
-          Uri.parse('http://64.226.104.50:9090/Api/User/GeneratePIN'),
+          Uri.parse('http://164.90.174.113:9090/Api/User/GeneratePIN'),
           body: jsonEncode(data) as String,
           headers: {
             "Content-Type": "application/json",

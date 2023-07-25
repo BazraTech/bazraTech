@@ -30,7 +30,7 @@ class _communicationHistoryState extends State<communicationHistory> {
       'Authorization': 'Bearer $token',
     };
     var response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Message/All'),
+        Uri.parse('http://164.90.174.113:9090/Api/Message/All'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {

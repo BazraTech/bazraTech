@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:bazralogin/Theme/Alert.dart';
+import 'package:bazralogin/config/APIService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -33,7 +33,7 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
     var value = await storage.read(key: 'jwt');
 
     final url =
-        Uri.parse("http://64.226.104.50:9090/Api/Vehicle/AcceptCargo/$id");
+        Uri.parse("http://164.90.174.113:9090/Api/Vehicle/AcceptCargo/$id");
     final response = await http.post(url, headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
@@ -62,7 +62,7 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
       };
 
       var response = await client.get(
-          Uri.parse('http://64.226.104.50:9090/Api/Vehicle/All/Market'),
+          Uri.parse(ApIConfig.aviablemarketfordriver),
           headers: requestHeaders);
 
       print(response.body);

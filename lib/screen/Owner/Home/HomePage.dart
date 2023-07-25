@@ -80,7 +80,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
       'Authorization': 'Bearer $token',
     };
     final response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+        Uri.parse('http://164.90.174.113:9090/Api/Admin/LogoandAvatar'),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
@@ -115,7 +115,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
       'Authorization': 'Bearer $token',
     };
     final response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
+        Uri.parse('http://164.90.174.113:9090/Api/Admin/LogoandAvatar'),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
@@ -169,7 +169,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
       'Authorization': 'Bearer $token',
     };
     final response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/Alerts/ByStatus'),
+        Uri.parse('http://164.90.174.113:9090/Api/Vehicle/Alerts/ByStatus'),
         headers: requestHeaders);
 
     if (response.statusCode == 200) {
@@ -189,7 +189,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
         print(istrue);
         if (istrue == true) {
           box.put(id, data);
-          
+
           setState(() {
             newItemCount++;
           });

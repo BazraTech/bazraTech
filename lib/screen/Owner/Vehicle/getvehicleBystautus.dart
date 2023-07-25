@@ -38,7 +38,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
       };
       var response = await http.get(
           Uri.parse(
-              'http://64.226.104.50:9090/Api/Vehicle/Owner/Status/${widget.route}'),
+              'http://164.90.174.113:9090/Api/Vehicle/Owner/Status/${widget.route}'),
           headers: requestHeaders);
       if (response.statusCode == 200) {
         var mapResponse = json.decode(response.body) as Map<String, dynamic>;

@@ -251,7 +251,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
       'Authorization': 'Bearer $token',
     };
     final response = await http.get(
-        Uri.parse("http://64.226.104.50:9090/Api/Vehicle/Owner/Status/INSTOCK"),
+        Uri.parse("http://164.90.174.113:9090/Api/Vehicle/Owner/Status/INSTOCK"),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
@@ -277,7 +277,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
       'Authorization': 'Bearer $token',
     };
     final response = await http.get(
-        Uri.parse("http://64.226.104.50:9090/Api/Vehicle/Owner/Status/ONROUTE"),
+        Uri.parse("http://164.90.174.113:9090/Api/Vehicle/Owner/Status/ONROUTE"),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
@@ -303,7 +303,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
       'Authorization': 'Bearer $token',
     };
     final response = await http.get(
-        Uri.parse("http://64.226.104.50:9090/Api/Vehicle/Owner/Status/PARKED"),
+        Uri.parse("http://164.90.174.113:9090/Api/Vehicle/Owner/Status/PARKED"),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
@@ -330,7 +330,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
     };
     final response = await http.get(
         Uri.parse(
-            "http://64.226.104.50:9090/Api/Vehicle/Owner/Status/MAINTAINING"),
+            "http://164.90.174.113:9090/Api/Vehicle/Owner/Status/MAINTAINING"),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.

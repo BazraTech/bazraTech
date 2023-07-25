@@ -7,13 +7,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:intl/intl.dart';
-import 'package:ionicons/ionicons.dart';
 
 import 'package:http/http.dart' as http;
-
 import '../../../../Theme/TextInput.dart';
 import '../../../../config/APIService.dart';
-import '../../Bottom/Bottom.dart';
+
 
 class Settrips extends StatefulWidget {
   String? drivername;

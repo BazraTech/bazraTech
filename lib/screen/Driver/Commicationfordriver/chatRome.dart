@@ -35,7 +35,7 @@ class _ChatRomeState extends State<ChatRome> {
       "receipientPhone": ["0966666666"]
     };
     var response = await http.post(
-        Uri.parse('http://64.226.104.50:9090/Api/Message/CreateMessage'),
+        Uri.parse('http:164.90.174.113:9090/Api/Message/CreateMessage'),
         body: json.encode(data),
         headers: {
           "Content-Type": "application/json",

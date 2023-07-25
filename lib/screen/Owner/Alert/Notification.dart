@@ -58,7 +58,7 @@ class _notificationPageState extends State<notificationPage> {
       'Authorization': 'Bearer $token',
     };
     var response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Vehicle/Alerts/ByStatus'),
+        Uri.parse('http://164.90.174.113:9090/Api/Vehicle/Alerts/ByStatus'),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body);
