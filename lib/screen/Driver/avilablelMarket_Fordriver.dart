@@ -541,6 +541,54 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
                                                                       screenWidth *
                                                                           0.35,
                                                                   child: Text(
+                                                                    "Price",
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    style: TextStyle(
+                                                                        fontFamily:
+                                                                            'Nunito',
+                                                                        fontSize:
+                                                                            AppFonts
+                                                                                .smallFontSize,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontWeight:
+                                                                            FontWeight.normal),
+                                                                  )),
+                                                              Container(
+                                                                  width:
+                                                                      screenWidth *
+                                                                          0.35,
+                                                                  child: Text(
+                                                                    driver["price"]
+                                                                        .toString(),
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    style: TextStyle(
+                                                                        fontFamily:
+                                                                            'Nunito',
+                                                                        fontSize:
+                                                                            AppFonts
+                                                                                .smallFontSize,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontWeight:
+                                                                            FontWeight.normal),
+                                                                  ))
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Container(
+                                                                  width:
+                                                                      screenWidth *
+                                                                          0.35,
+                                                                  child: Text(
                                                                     "CargoType",
                                                                     textAlign:
                                                                         TextAlign
@@ -784,13 +832,26 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
 void showErrorSnackbar(BuildContext context, String errorMessage) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      content: Center(child: Text(errorMessage)),
-      backgroundColor:
-          Colors.blue, // You can customize the background color here
+      content: Container(
+          height: 40,
+          child: Center(
+              child: Text(
+            errorMessage,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: "Nunito",
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              fontSize: AppFonts.smallFontSize,
+            ),
+          ))),
+      backgroundColor: Color.fromRGBO(
+          226, 193, 121, 1), // You can customize the background color here
       duration: Duration(seconds: 3),
-      behavior: SnackBarBehavior.floating, // Use a floating behavior
-      margin: EdgeInsets.only(
-          top: 70.0), // Adjust the duration as per your preference
+      behavior: SnackBarBehavior.floating,
+      // Use a floating behavior
+
+      padding: EdgeInsets.all(10),
     ),
   );
 }

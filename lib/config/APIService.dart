@@ -1,5 +1,9 @@
 class ApIConfig {
   static const String urlAPI = "164.90.174.113:9090";
+  static const unload = "/Api/Driver/ChangeDriverState";
+  static const ownerinfoupdate = "/Api/Vehicle/UpdateInfo";
+
+  static const String acceptwork = "/Api/Driver/All/Cargos/ACCEPTED";
   static const updatedriverprofile =
       "http://164.90.174.113:9090/Api/Driver/UpdateInfo";
   static const ownerlogo = "http://164.90.174.113:9090/Api/Admin/LogoandAvatar";
@@ -7,8 +11,9 @@ class ApIConfig {
       'http://164.90.174.113:9090/Api/Vehicle/All/Market';
   static const String aviablemarket = "/Api/Vehicle/All/Market";
   static const String drverInfo = "/Api/Driver/Info";
-  static const String ownerInfo =
-      "http://164.90.174.113:9090/Api/Vehicle/Owner/Info";
+   static const String  forgetpin = "/Api/User/GeneratePIN";
+  static const String ownerInfo = "/Api/Vehicle/Owner/Info";
+
   static const String logo =
       "http://164.90.174.113:9090/Api/Admin/LogoandAvatar";
   static String assignDriverApi =
@@ -19,6 +24,7 @@ class ApIConfig {
       "http://164.90.174.113:9090/Api/Vehicle/SetStatus";
   static const String alertforowner =
       "http://164.90.174.113:9090/Api/Vehicle/Alerts/ByStatus";
+      
   static const String allvehicle =
       "http://164.90.174.113:9090/Api/Vehicle/Owner/All";
   static const String driverApi = "/Api/Vehicle/Owner/Drivers/All";

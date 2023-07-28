@@ -397,6 +397,15 @@ class _CreateAlertState extends State {
                             padding: const EdgeInsets.all(20.0),
                             child: Container(
                               decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black
+                                          .withOpacity(0.3), // Shadow color
+                                      blurRadius: 3, // Spread radius
+                                      offset: Offset(
+                                          0, 3), // Offset in (x,y) coordinates
+                                    ),
+                                  ],
                                   color: Colors.white,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10))),
@@ -407,7 +416,7 @@ class _CreateAlertState extends State {
                                   return Column(
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                        padding: const EdgeInsets.all(10.0),
                                         child: Row(
                                           children: [
                                             Text(

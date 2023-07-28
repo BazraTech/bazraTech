@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
+import 'package:bazralogin/Theme/Alert.dart';
 import 'package:bazralogin/screen/Driver/driverBottomnav.dart';
 import 'package:bazralogin/screen/Loging/forgotPin.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -48,9 +49,6 @@ class _LoginState extends State<Login> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Future Total_Drivers() async {
-    final totalDrivers = await CountDrivers.TotalDrivers();
-  }
 
   Future vehicleFetch() async {
     // fetch list of total vehicles
@@ -117,7 +115,7 @@ class _LoginState extends State<Login> {
               MaterialPageRoute(
                   builder: (context) => BottomTabBarPageforowner()));
         } else {
-          showErrorSnackbar(context, "Unauthorized");
+          AlertDialoug.showMyDialog(context, "Alert", 'Unauthorized');
           setState(() {
             isLoading = false;
           });
@@ -131,7 +129,7 @@ class _LoginState extends State<Login> {
   void initState() {
     super.initState();
 
-    Total_Drivers();
+   
     vehicleFetch();
     //futureWelcome = fetchWelcome();
     //clickLoginBtn();

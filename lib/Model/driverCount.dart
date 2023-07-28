@@ -13,35 +13,7 @@ class CountDrivers {
   static int? totalPermit;
   static int? totalOnroute;
   // fetch list of car avilable
-  static TotalDrivers() async {
-    var client = http.Client();
-    final storage = new FlutterSecureStorage();
-    var token = await storage.read(key: 'jwt');
-    Map<String, String> requestHeaders = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
-    var response = await http.get(
-        Uri.parse('http://164.90.174.113:9090/Api/Vehicle/Owner/Drivers/All'),
-        headers: requestHeaders);
 
-    if (response.statusCode == 200) {
-      var mapResponse = json.decode(response.body) as Map<String, dynamic>;
-
-      List results = mapResponse['drivers'];
-      await storage.write(
-          key: "totalDrivers", value: mapResponse["totalDrivers"].toString());
-
-      totalDrivers = mapResponse['totalDrivers'];
-
-      print(totalDrivers);
-
-      return results;
-    } else {
-      // throw Exception('not loaded ');
-    }
-  }
 
   static AssignedDriver() async {
     var client = http.Client();

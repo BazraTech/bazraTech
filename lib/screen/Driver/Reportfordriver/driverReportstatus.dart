@@ -2,6 +2,7 @@ import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
 import '../../Owner/Vehicle/vehicleStatus.dart';
 import 'driverReport.dart';
+
 class driverReportstatus extends StatefulWidget {
   driverReportstatus({super.key});
   static bool isPressed = true;
@@ -45,12 +46,12 @@ class _driverReportstatusState extends State<driverReportstatus> {
                         fontWeight: FontWeight.bold))),
           ),
         ),
-        backgroundColor: Color.fromRGBO(236, 240, 243, 1),
+        backgroundColor: Colors.white,
         body: TabBarView(
           children: [driverReport(), driverReport(), driverReport()],
         ),
         bottomNavigationBar: Container(
-          margin: EdgeInsets.only(bottom: 10),
+          margin: EdgeInsets.only(bottom: 20),
           height: screenHeight * 0.08,
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -62,12 +63,13 @@ class _driverReportstatusState extends State<driverReportstatus> {
                 child: TabBar(
                   isScrollable: true,
                   labelColor: Colors.black,
+                  indicatorColor: Color.fromRGBO(226, 193, 121, 1),
                   labelPadding:
                       EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
                   overlayColor: MaterialStateColor.resolveWith(
                       (Set<MaterialState> states) {
                     if (states.contains(MaterialState.pressed)) {
-                      return Colors.blue;
+                      return Color.fromRGBO(226, 193, 121, 1);
                     }
                     if (states.contains(MaterialState.focused)) {
                       return Colors.orange;
@@ -86,17 +88,6 @@ class _driverReportstatusState extends State<driverReportstatus> {
                           child: SizedBox(
                             height: screenHeight * 0.03,
                             width: screenWidth * 0.05,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.red[400],
-                              radius: 8,
-                              child: Text("10",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontFamily: 'Nunito',
-                                      fontSize: AppFonts.smallFontSize,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.normal)),
-                            ),
                           ),
                         ),
                       ),
@@ -109,17 +100,6 @@ class _driverReportstatusState extends State<driverReportstatus> {
                           child: SizedBox(
                             height: screenHeight * 0.03,
                             width: screenWidth * 0.05,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.red[400],
-                              radius: 8,
-                              child: Text("10",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontFamily: 'Nunito',
-                                      fontSize: AppFonts.smallFontSize,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.normal)),
-                            ),
                           ),
                         ),
                       ),
@@ -132,17 +112,6 @@ class _driverReportstatusState extends State<driverReportstatus> {
                           child: SizedBox(
                             height: screenHeight * 0.03,
                             width: screenWidth * 0.05,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.red[400],
-                              radius: 8,
-                              child: Text("10",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontFamily: 'Nunito',
-                                      fontSize: AppFonts.smallFontSize,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.normal)),
-                            ),
                           ),
                         ),
                       ),

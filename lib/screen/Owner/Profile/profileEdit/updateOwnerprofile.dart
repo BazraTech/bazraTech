@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:bazralogin/Theme/Alert.dart';
 import 'package:bazralogin/Theme/TextInput.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
-
+import '../../../../config/APIService.dart';
 import '../../../../const/constant.dart';
 import '../../Driver/assignDriver.dart';
 
@@ -66,6 +65,11 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
   final housenumber = TextEditingController();
   final woreda = TextEditingController();
   final notificationmidia = TextEditingController();
+  final city = TextEditingController();
+  final speficcity = TextEditingController();
+  final region = TextEditingController();
+  final subcity = TextEditingController();
+
   final ImagePicker _picker = ImagePicker();
 
   void isPasswordView() {
@@ -74,13 +78,62 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
     });
   }
 
+  String? owneriamg;
+
   void takePicture(ImageSource source) async {
-    final pickedFile = await _picker.getImage(
-      source: source,
-    );
+    final XFile? image =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
     setState(() {
-      _pickedImage = pickedFile;
+      owneriamg = File(image!.path).path;
     });
+  }
+
+  registerDriver(String? pickedImage) async {
+    var value = await storage.read(key: 'jwt');
+
+    Map<String, String> headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": "Bearer $value",
+    };
+    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.ownerinfoupdate);
+    final formData = http.MultipartRequest(
+      'PUT',
+      url,
+    );
+    formData.headers['Authorization'] = "Bearer $value";
+
+    formData.files.add(
+      await http.MultipartFile.fromPath('vehicleOwnerPic', pickedImage!),
+    );
+    formData.fields['region'] = "Akaki";
+    formData.fields['subCity'] = "Akaki ";
+    formData.fields['specificLocation'] = speficcity.text;
+    formData.fields['city'] = city.text;
+    formData.fields['woreda'] = '${dropdownValue}';
+    formData.fields["houseNumber"] = housenumber.text;
+    formData.fields["notificationmedia"] = '${widget.notificationmedia}';
+    formData.fields["serviceRequired"] = 'TECH';
+    print("yared12222 992900");
+    print(
+        "/data/user/0/com.example.bazralogin/cache/0e681c23-32a7-4b98-9dbd-ba18c4f8e2c6/Screenshot_20230502-041436.png");
+
+    final response = await formData.send();
+    var responseData = await response.stream.bytesToString();
+    var decodedResponse = json.decode(responseData);
+
+    if (response.statusCode == 200) {
+      String alertContent = decodedResponse["message"];
+
+      alertutilsfordriver.showMyDialog(context, "Alert", alertContent);
+    } else {
+      // String alertContent = decodedResponse["message"];
+
+      // throw Exception(
+      //     'Failed load data with status code ${response.statusCode}');
+      print("no");
+    }
   }
 
   void performAction() {
@@ -102,7 +155,7 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
         "serviceRequired": "EXCELLENT"
       };
       var response = await http.put(
-          Uri.parse("http://64.226.104.50:9090/Api/Vehicle/UpdateInfo"),
+          Uri.parse("http://164.90.174.113:9090/Api/Vehicle/UpdateInfo"),
           body: json.encode(data),
           headers: {
             "Content-Type": "application/json",
@@ -121,7 +174,7 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
     });
   }
 
-  Future<String> _fetchLogo() async {
+  Future<Map<String, dynamic>> _fetchLogo() async {
     var client = http.Client();
     final storage = new FlutterSecureStorage();
     var token = await storage.read(key: 'jwt');
@@ -130,16 +183,14 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    final response = await http.get(
-        Uri.parse('http://64.226.104.50:9090/Api/Admin/LogoandAvatar'),
-        headers: requestHeaders);
+    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.ownerInfo);
+    final response = await http.get(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
-      Map<String, dynamic> data = json.decode(response.body);
-      await storage.write(key: "ownerpic", value: data["avatar"].toString());
+      var ownerinfo = json.decode(response.body);
+      Map<String, dynamic> data = ownerinfo["ownerINF"];
 
-      ownerpic = (await storage.read(key: 'ownerpic'))!;
-      return data["avatar"];
+      return data;
     } else {
       throw Exception('Failed to load image');
     }
@@ -594,7 +645,9 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
               margin: EdgeInsets.only(bottom: 20),
               height: height * 0.06,
               child: ElevatedButton(
-                  onPressed: isLoading ? null : performAction,
+                  onPressed: () {
+                    registerDriver(owneriamg);
+                  },
                   child: Container(
                     height: 55,
                     width: width,

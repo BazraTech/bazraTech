@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 import '../../../controller/apiController.dart';
+import '../../Loging/Login.dart';
 import '../../Loging/changePassword.dart';
 import '../../../../const/constant.dart';
 import '../Driver/assignDriver.dart';
@@ -36,10 +37,11 @@ class _ProfileState extends State<Profile> {
   Map<String, dynamic>? Result;
   Map<String, dynamic>? findVehicle;
   String? ownername;
+  var datas;
   String? ownerphone;
   String? owneremail;
 
-  Future<String> _fetchLogo() async {
+  Future<Map<String, dynamic>> _fetchLogo() async {
     var client = http.Client();
     final storage = new FlutterSecureStorage();
     var token = await storage.read(key: 'jwt');
@@ -48,16 +50,14 @@ class _ProfileState extends State<Profile> {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    final response = await http.get(
-        Uri.parse('http://164.90.174.113:9090/Api/Admin/LogoandAvatar'),
-        headers: requestHeaders);
+    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.ownerInfo);
+    final response = await http.get(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
-      Map<String, dynamic> data = json.decode(response.body);
-      await storage.write(key: "ownerpic", value: data["avatar"].toString());
+      var ownerinfo = json.decode(response.body);
+      Map<String, dynamic> data = ownerinfo["ownerINF"];
 
-      ownerpic = (await storage.read(key: 'ownerpic'))!;
-      return data["avatar"];
+      return data;
     } else {
       throw Exception('Failed to load image');
     }
@@ -71,8 +71,8 @@ class _ProfileState extends State<Profile> {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    var response =
-        await http.get(Uri.parse(ApIConfig.ownerInfo), headers: requestHeaders);
+    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.ownerInfo);
+    var response = await http.get(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;
       Map<String, dynamic> results = mapResponse['ownerINF'];
@@ -149,7 +149,7 @@ class _ProfileState extends State<Profile> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => ownerprofileUpadate(
-                                            image: "${ownerpic}",
+                                            image: "${datas["driverPic"]}",
                                             email: Result!['email'].toString(),
                                             phone: Result!["phoneNumber"],
                                             datebirth: "12/4/000",
@@ -167,7 +167,7 @@ class _ProfileState extends State<Profile> {
                             },
                             icon: Icon(
                               Ionicons.pencil,
-                              color: Colors.red,
+                              color: Color.fromRGBO(226, 193, 121, 1),
                             ),
                           ),
                         )
@@ -182,25 +182,31 @@ class _ProfileState extends State<Profile> {
                   Column(
                     children: [
                       Container(
-                        child: FutureBuilder(
+                        child: FutureBuilder<Map<String, dynamic>>(
                           future: _fetchLogo(),
                           builder: (BuildContext context,
-                              AsyncSnapshot<String> snapshot) {
+                              AsyncSnapshot<Map<String, dynamic>> snapshot) {
                             if (snapshot.connectionState !=
                                 ConnectionState.done) return Text("");
-                            return Container(
-                              height: screenHeight * 0.09,
-                              width: screenWidth * 0.18,
-                              child: ClipOval(
-                                child: Container(
-                                  child: SizedBox(
-                                      height: screenHeight * 0.06,
-                                      width: screenWidth * 0.05,
-                                      child: Image.network(
-                                          snapshot.data.toString())),
-                                ),
-                              ),
-                            );
+                            datas = snapshot.data;
+
+                            return SizedBox(
+                                height: screenHeight * 0.12,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                        child: ClipOval(
+                                      child: SizedBox(
+                                        height: screenHeight * 0.09,
+                                        width: screenWidth * 0.19,
+                                        child: Image.network(
+                                          snapshot.data!['pic'].toString(),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    )),
+                                  ],
+                                ));
                           },
                         ),
                       ),
@@ -628,7 +634,7 @@ class _ProfileState extends State<Profile> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              TranslationUtil.text("Setting"),
+                              TranslationUtil.text("Logout"),
                               textAlign: TextAlign.left,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -645,6 +651,78 @@ class _ProfileState extends State<Profile> {
                                 child: Icon(Ionicons.chevron_forward_outline)),
                           ),
                         ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: screenHeight * 0.06,
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black
+                                    .withOpacity(0.3), // Shadow color
+                                blurRadius: 3, // Spread radius
+                                offset:
+                                    Offset(0, 3), // Offset in (x,y) coordinates
+                              ),
+                            ],
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                            )),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Logout",
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontSize: AppFonts.smallFontSize,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ),
+                            Spacer(),
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => Login()),
+                                      (route) => false,
+                                    );
+                                  },
+                                  child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      // decoration: BoxDecoration(
+                                      //     color:
+                                      //         Color.fromRGBO(226, 193, 121, 1),
+                                      //     shape: BoxShape.circle),
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 5),
+                                        child: Icon(
+                                          Icons.logout,
+                                          color:
+                                              Color.fromRGBO(226, 193, 121, 1),
+                                          size: 30,
+                                        ),
+                                      )),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

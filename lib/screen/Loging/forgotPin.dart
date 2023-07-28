@@ -34,8 +34,9 @@ class _forgotPinState extends State<forgotPin> {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
+    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.forgetpin);
     var response =
-        await http.get(Uri.parse(ApIConfig.ownerInfo), headers: requestHeaders);
+        await http.get(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       var mapResponse = json.decode(response.body) as Map<String, dynamic>;
       Map<String, dynamic> results = mapResponse['ownerINF'];
@@ -60,7 +61,7 @@ class _forgotPinState extends State<forgotPin> {
         "pin": "${widget.newpin}",
       };
       var response = await http.post(
-          Uri.parse('http://64.226.104.50:9090/Api/User/SetPin'),
+          Uri.parse('http://164.90.174.113:9090/Api/User/SetPin'),
           body: jsonEncode(data) as String,
           headers: {
             "Content-Type": "application/json",

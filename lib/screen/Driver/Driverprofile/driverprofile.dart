@@ -14,6 +14,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 
+import '../../Loging/Login.dart';
 import '../../Loging/changePassword.dart';
 import '../../../../const/constant.dart';
 import '../Leaveform/leavePage.dart';
@@ -36,6 +37,7 @@ class _driverProfileState extends State<driverProfile> {
   String? ownername;
   String? ownerphone;
   String? owneremail;
+  var driverpic;
   Future<Map<String, dynamic>> fetchDriverinfo() async {
     final storage = new FlutterSecureStorage();
     var token = await storage.read(key: 'jwt');
@@ -135,7 +137,7 @@ class _driverProfileState extends State<driverProfile> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => driverprofileUpadate(
-                                      image: Result!["licensePic"],
+                                      image: "${driverpic["driverPic"]}",
                                       email: "abu@gmail.com",
                                       phone: Result!["phoneNumber"].toString(),
                                       datebirth:
@@ -146,7 +148,7 @@ class _driverProfileState extends State<driverProfile> {
                       },
                       icon: Icon(
                         Ionicons.pencil,
-                        color: Colors.red,
+                        color: Color.fromRGBO(226, 193, 121, 1),
                       ),
                     ),
                   )
@@ -175,7 +177,7 @@ class _driverProfileState extends State<driverProfile> {
                                     'Error: ${snapshot.error}'); // Show an error message if an error occurs
                               } else {
                                 // Access the fetched data using snapshot.data and display it
-                                final data = snapshot.data;
+                                driverpic = snapshot.data;
 
                                 // Display the data in your desired format
                                 return ClipOval(
@@ -183,7 +185,7 @@ class _driverProfileState extends State<driverProfile> {
                                         height: screenHeight * 0.03,
                                         width: screenWidth * 0.2,
                                         child: Image.network(
-                                          data!["driverPic"],
+                                          driverpic!["driverPic"],
                                           fit: BoxFit.cover,
                                         )));
                               }
@@ -509,54 +511,59 @@ class _driverProfileState extends State<driverProfile> {
                                 title: '',
                               )));
                 },
-                child: Container(
-                  height: screenHeight * 0.07,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                      )),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Container(
-                                height: screenWidth * 0.1,
-                                width: screenWidth * 0.08,
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(252, 221, 244, 1),
-                                    borderRadius: BorderRadius.circular(6)),
-                                child: Icon(Ionicons.calendar_number)),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                  child: Text(
-                                "Leave Request",
-                                textAlign: TextAlign.left,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                    fontFamily: 'Nunito',
-                                    fontSize: AppFonts.smallFontSize,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.normal),
-                              )),
-                            ),
-                            Spacer(),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Container(
-                                  child:
-                                      Icon(Ionicons.chevron_forward_outline)),
-                            ),
-                          ],
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    height: screenHeight * 0.08,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                        )),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                  margin: EdgeInsets.only(top: 12),
+                                  height: screenWidth * 0.07,
+                                  width: screenWidth * 0.08,
+                                  decoration: BoxDecoration(
+                                      color: Color.fromRGBO(252, 221, 244, 1),
+                                      borderRadius: BorderRadius.circular(6)),
+                                  child: Icon(Ionicons.calendar_number)),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                    margin: EdgeInsets.only(top: 6),
+                                    child: Text(
+                                      "Leave Request",
+                                      textAlign: TextAlign.left,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                          fontFamily: 'Nunito',
+                                          fontSize: AppFonts.smallFontSize,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal),
+                                    )),
+                              ),
+                              Spacer(),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Container(
+                                    child:
+                                        Icon(Ionicons.chevron_forward_outline)),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -572,7 +579,7 @@ class _driverProfileState extends State<driverProfile> {
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10),
                     )),
-                height: screenHeight * 0.24,
+                height: screenHeight * 0.28,
                 width: screenWidth,
                 child: Column(
                   children: [
@@ -696,6 +703,74 @@ class _driverProfileState extends State<driverProfile> {
                                 child: Icon(Ionicons.chevron_forward_outline)),
                           ),
                         ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: screenHeight * 0.06,
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black
+                                    .withOpacity(0.3), // Shadow color
+                                blurRadius: 3, // Spread radius
+                                offset:
+                                    Offset(0, 3), // Offset in (x,y) coordinates
+                              ),
+                            ],
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                            )),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Logout",
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontSize: AppFonts.smallFontSize,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ),
+                            Spacer(),
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => Login()),
+                                      (route) => false,
+                                    );
+                                  },
+                                  child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 5),
+                                        child: Icon(
+                                          Icons.logout,
+                                          color:
+                                              Color.fromRGBO(226, 193, 121, 1),
+                                          size: 30,
+                                        ),
+                                      )),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

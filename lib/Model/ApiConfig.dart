@@ -207,7 +207,6 @@ class APIService {
 
   static Future<bool> loginFetch(
     LoginRequestModel model,
-    
   ) async {
     final storage = new FlutterSecureStorage();
     var client = http.Client();

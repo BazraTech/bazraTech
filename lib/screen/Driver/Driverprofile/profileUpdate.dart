@@ -176,7 +176,7 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
                                 child: CircleAvatar(
                                   radius: 48,
                                   backgroundImage: owneriamg == null
-                                      ? null
+                                      ? NetworkImage("${widget.image}")
                                       : FileImage(File(owneriamg.toString()))
                                           as ImageProvider,
                                 ),
@@ -468,7 +468,7 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
                           style: TextStyle(
                               fontFamily: "Nunito",
                               fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                              color: Colors.black),
                         )
                       ],
                     ),
@@ -480,7 +480,7 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
                           return Color.fromRGBO(255, 148, 165, 223);
                         }
                         // 98, 172, 181
-                        return Colors.lightBlue;
+                        return Color.fromRGBO(226, 193, 121, 1);
                       }),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(

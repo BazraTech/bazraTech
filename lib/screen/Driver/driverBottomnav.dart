@@ -64,6 +64,7 @@ class _BottomTabBarPageState extends State<BottomTabBarPage> {
           });
         },
         showSelectedLabels: false, // hide selected labels
+        selectedItemColor: Color.fromRGBO(226, 193, 121, 1),
         showUnselectedLabels: false,
         items: _bottomNavBarItems,
       ),

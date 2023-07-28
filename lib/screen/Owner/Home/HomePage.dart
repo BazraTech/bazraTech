@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import 'package:bazralogin/Route/Routes.dart';
 import 'package:bazralogin/config/APIService.dart';
 import 'package:bazralogin/controller/Localization.dart';
 import 'package:bazralogin/screen/Owner/Alert/Notification.dart';
@@ -42,13 +41,12 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
   Offset distance = isPressed ? Offset(10, 10) : Offset(28, 28);
   double blur = isPressed ? 5.0 : 30.0;
   String Logoavtar = "";
-  bool? newnotification;
+
   String ownerpic = "";
   String bazralogo = "";
   bool showExitSnackbar = false;
   String? phoneNumber;
-  List newtotalnotification = [];
-  List oldtotalnotification = [];
+
   List Temp = [];
   int newItemCount = 0;
   List dataList = [];
@@ -58,9 +56,6 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
   Map<String, dynamic>? findVehicle;
   double _padding = 6.0;
   String query = '';
-
-  // fetch notification
-  // final Box<dynamic> itemsBox = Hive.box<dynamic>('items');
 
   List<dynamic> addBoolValueToList(List<dynamic> Result) {
     return Result.map((item) {
@@ -72,7 +67,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
     }).toList();
   }
 
-  Future<String> fetchImage() async {
+  Future<Map<String, dynamic>> fetchImage() async {
     var client = http.Client();
     final storage = new FlutterSecureStorage();
     var token = await storage.read(key: 'jwt');
@@ -85,11 +80,10 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
         await http.get(Uri.parse(ApIConfig.ownerlogo), headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
-      Map<String, dynamic> data = json.decode(response.body);
-      await storage.write(key: "ownerpic", value: data["avatar"].toString());
+      var ownerinfo = json.decode(response.body);
+      Map<String, dynamic> data = ownerinfo["ownerINF"];
 
-      ownerpic = (await storage.read(key: 'ownerpic'))!;
-      return data["logo"];
+      return data;
     } else {
       throw Exception('Failed to load image');
     }
@@ -106,7 +100,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
     });
   }
 
-  Future<String> _fetchLogo() async {
+  Future<Map<String, dynamic>> _fetchLogo() async {
     var client = http.Client();
     final storage = new FlutterSecureStorage();
     var token = await storage.read(key: 'jwt');
@@ -115,15 +109,14 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    final response =
-        await http.get(Uri.parse(ApIConfig.ownerlogo), headers: requestHeaders);
+    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.ownerInfo);
+    final response = await http.get(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
-      Map<String, dynamic> data = json.decode(response.body);
-      await storage.write(key: "ownerpic", value: data["avatar"].toString());
+      var ownerinfo = json.decode(response.body);
+      Map<String, dynamic> data = ownerinfo["ownerINF"];
 
-      ownerpic = (await storage.read(key: 'ownerpic'))!;
-      return data["avatar"];
+      return data;
     } else {
       throw Exception('Failed to load image');
     }
@@ -269,25 +262,32 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                 child: SizedBox(
                                   height: screenHeight * 0.1,
                                   width: screenWidth - 120,
-                                  child: FutureBuilder(
+                                  child: FutureBuilder<Map<String, dynamic>>(
                                     future: _fetchLogo(),
                                     builder: (BuildContext context,
-                                        AsyncSnapshot<String> snapshot) {
+                                        AsyncSnapshot<Map<String, dynamic>>
+                                            snapshot) {
                                       if (snapshot.connectionState !=
                                           ConnectionState.done) return Text("");
                                       return SizedBox(
-                                          height: screenHeight * 0.2,
                                           width: screenWidth * 0.28,
                                           child: Row(
                                             children: [
                                               Container(
-                                                  height: screenHeight * 0.1,
-                                                  child: Image.network(snapshot
-                                                      .data
-                                                      .toString())),
+                                                  child: ClipOval(
+                                                child: SizedBox(
+                                                  height: screenHeight * 0.09,
+                                                  width: screenWidth * 0.19,
+                                                  child: Image.network(
+                                                    snapshot.data!['pic']
+                                                        .toString(),
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              )),
                                               Container(
-                                                margin:
-                                                    EdgeInsets.only(top: 30),
+                                                margin: EdgeInsets.only(
+                                                    top: 30, left: 3),
                                                 child: Column(
                                                   children: [
                                                     Container(

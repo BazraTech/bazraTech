@@ -3,7 +3,7 @@ import '../../../../Theme/clippbox.dart';
 import '../../../../const/constant.dart';
 
 class alertComponent extends StatefulWidget {
-  final List<dynamic> data;
+  List<dynamic> data;
 
   alertComponent({
     required this.data,
@@ -243,333 +243,350 @@ class _alertComponentState extends State<alertComponent> {
                         ),
                         Container(
                           height: screenHeight - 134,
-                          child: Column(
-                              children: widget.data.map((vehicle) {
-                            return Container(
-                                width: double.infinity,
-                                child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                          ),
-                                          height: screenHeight * 0.2,
-                                          margin: EdgeInsets.zero,
-                                          width: screenWidth - 22,
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(6.0),
-                                              bottomLeft: Radius.circular(6.0),
+                          child: ListView.builder(
+                            itemCount: widget.data.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                  width: double.infinity,
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
                                             ),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                border: Border(
-                                                  left: BorderSide(
-                                                      color: Colors.blue,
-                                                      width: 6),
+                                            height: screenHeight * 0.2,
+                                            margin: EdgeInsets.zero,
+                                            width: screenWidth - 22,
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(6.0),
+                                                bottomLeft:
+                                                    Radius.circular(6.0),
+                                              ),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(
+                                                        color: Colors.blue,
+                                                        width: 6),
+                                                  ),
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Column(
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                              width:
+                                                                  screenWidth *
+                                                                      0.35,
+                                                              child: Text(
+                                                                  "Driver",
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Nunito',
+                                                                      fontSize:
+                                                                          AppFonts
+                                                                              .smallFontSize,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal))),
+                                                          SizedBox(
+                                                            width: screenWidth *
+                                                                0.08,
+                                                          ),
+                                                          Container(
+                                                              width: screenWidth *
+                                                                  0.35,
+                                                              child: Text(
+                                                                  widget.data[
+                                                                          index][
+                                                                      'driver'],
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Nunito',
+                                                                      fontSize:
+                                                                          AppFonts
+                                                                              .smallFontSize,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal)))
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                              width:
+                                                                  screenWidth *
+                                                                      0.35,
+                                                              child: Text(
+                                                                  "Plate Number")),
+                                                          SizedBox(
+                                                            width: screenWidth *
+                                                                0.08,
+                                                          ),
+                                                          Container(
+                                                              width: screenWidth *
+                                                                  0.35,
+                                                              child: Text(
+                                                                  widget.data[
+                                                                          index][
+                                                                      'plateNumber'],
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Nunito',
+                                                                      fontSize:
+                                                                          AppFonts
+                                                                              .smallFontSize,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal)))
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                              width:
+                                                                  screenWidth *
+                                                                      0.35,
+                                                              child: Text(
+                                                                  "Alert Type",
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Nunito',
+                                                                      fontSize:
+                                                                          AppFonts
+                                                                              .smallFontSize,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal))),
+                                                          SizedBox(
+                                                            width: screenWidth *
+                                                                0.08,
+                                                          ),
+                                                          Container(
+                                                              width: screenWidth *
+                                                                  0.35,
+                                                              child: Text(
+                                                                  widget.data[
+                                                                          index][
+                                                                      'alertType'],
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Nunito',
+                                                                      fontSize:
+                                                                          AppFonts
+                                                                              .smallFontSize,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal)))
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                              width:
+                                                                  screenWidth *
+                                                                      0.35,
+                                                              child: Text(
+                                                                  "Start Time",
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Nunito',
+                                                                      fontSize:
+                                                                          AppFonts
+                                                                              .smallFontSize,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal))),
+                                                          SizedBox(
+                                                            width: screenWidth *
+                                                                0.08,
+                                                          ),
+                                                          Container(
+                                                            width: screenWidth *
+                                                                0.35,
+                                                            child: Text(
+                                                                widget.data[
+                                                                        index][
+                                                                    'alertstart'],
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                style: TextStyle(
+                                                                    fontFamily:
+                                                                        'Nunito',
+                                                                    fontSize:
+                                                                        AppFonts
+                                                                            .smallFontSize,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .normal)),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                              width: screenWidth *
+                                                                  0.35,
+                                                              child: Text(
+                                                                  "End Time",
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Nunito',
+                                                                      fontSize:
+                                                                          AppFonts
+                                                                              .smallFontSize,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal))),
+                                                          SizedBox(
+                                                            width: screenWidth *
+                                                                0.08,
+                                                          ),
+                                                          Container(
+                                                            width: screenWidth *
+                                                                0.35,
+                                                            child: Text(
+                                                                widget.data[
+                                                                        index][
+                                                                    'alertfinish'],
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                style: TextStyle(
+                                                                    fontFamily:
+                                                                        'Nunito',
+                                                                    fontSize:
+                                                                        AppFonts
+                                                                            .smallFontSize,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .normal)),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                              width:
+                                                                  screenWidth *
+                                                                      0.35,
+                                                              child: Text(
+                                                                  "Alert Location",
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Nunito',
+                                                                      fontSize:
+                                                                          AppFonts
+                                                                              .smallFontSize,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal))),
+                                                          SizedBox(
+                                                            width: screenWidth *
+                                                                0.08,
+                                                          ),
+                                                          Container(
+                                                              width: screenWidth *
+                                                                  0.35,
+                                                              child: Text(
+                                                                  widget.data[
+                                                                          index][
+                                                                      "alertocation"],
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'Nunito',
+                                                                      fontSize:
+                                                                          AppFonts
+                                                                              .smallFontSize,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal)))
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Column(
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Container(
-                                                            width: screenWidth *
-                                                                0.35,
-                                                            child: Text("Driver",
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .left,
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    fontSize:
-                                                                        AppFonts
-                                                                            .smallFontSize,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal))),
-                                                        SizedBox(
-                                                          width: screenWidth *
-                                                              0.08,
-                                                        ),
-                                                        Container(
-                                                            width: screenWidth *
-                                                                0.35,
-                                                            child: Text(
-                                                                vehicle[
-                                                                    'driver'],
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .left,
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    fontSize:
-                                                                        AppFonts
-                                                                            .smallFontSize,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal)))
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Container(
-                                                            width: screenWidth *
-                                                                0.35,
-                                                            child: Text(
-                                                                "Plate Number")),
-                                                        SizedBox(
-                                                          width: screenWidth *
-                                                              0.08,
-                                                        ),
-                                                        Container(
-                                                            width: screenWidth *
-                                                                0.35,
-                                                            child: Text(
-                                                                vehicle[
-                                                                    'plateNumber'],
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .left,
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    fontSize:
-                                                                        AppFonts
-                                                                            .smallFontSize,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal)))
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Container(
-                                                            width: screenWidth *
-                                                                0.35,
-                                                            child: Text(
-                                                                "Alert Type",
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .left,
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    fontSize:
-                                                                        AppFonts
-                                                                            .smallFontSize,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal))),
-                                                        SizedBox(
-                                                          width: screenWidth *
-                                                              0.08,
-                                                        ),
-                                                        Container(
-                                                            width: screenWidth *
-                                                                0.35,
-                                                            child: Text(
-                                                                vehicle[
-                                                                    'alertType'],
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .left,
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    fontSize:
-                                                                        AppFonts
-                                                                            .smallFontSize,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal)))
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Container(
-                                                            width: screenWidth *
-                                                                0.35,
-                                                            child: Text(
-                                                                "Start Time",
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .left,
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    fontSize:
-                                                                        AppFonts
-                                                                            .smallFontSize,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal))),
-                                                        SizedBox(
-                                                          width: screenWidth *
-                                                              0.08,
-                                                        ),
-                                                        Container(
-                                                          width: screenWidth *
-                                                              0.35,
-                                                          child: Text(
-                                                              vehicle[
-                                                                  'alertstart'],
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .left,
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize: AppFonts
-                                                                      .smallFontSize,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal)),
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Container(
-                                                            width: screenWidth *
-                                                                0.35,
-                                                            child: Text(
-                                                                "End Time",
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .left,
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    fontSize:
-                                                                        AppFonts
-                                                                            .smallFontSize,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal))),
-                                                        SizedBox(
-                                                          width: screenWidth *
-                                                              0.08,
-                                                        ),
-                                                        Container(
-                                                          width: screenWidth *
-                                                              0.35,
-                                                          child: Text(
-                                                              vehicle[
-                                                                  'alertfinish'],
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .left,
-                                                              style: TextStyle(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize: AppFonts
-                                                                      .smallFontSize,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal)),
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Container(
-                                                            width: screenWidth *
-                                                                0.35,
-                                                            child: Text(
-                                                                "Alert Location",
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .left,
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    fontSize:
-                                                                        AppFonts
-                                                                            .smallFontSize,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal))),
-                                                        SizedBox(
-                                                          width: screenWidth *
-                                                              0.08,
-                                                        ),
-                                                        Container(
-                                                            width: screenWidth *
-                                                                0.35,
-                                                            child: Text(
-                                                                vehicle[
-                                                                    "alertocation"],
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .left,
-                                                                style: TextStyle(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    fontSize:
-                                                                        AppFonts
-                                                                            .smallFontSize,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal)))
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    )));
-                          }).toList()),
+                                        ],
+                                      )));
+                            },
+                          ),
                         ),
                       ],
                     ),

@@ -236,7 +236,7 @@ class DriverStatus extends StatelessWidget {
     };
     final response = await http.get(
         Uri.parse(
-            "http://64.226.104.50:9090/Api/Vehicle/Owner/Drivers/ONROUTE"),
+            "http://164.90.174.113:9090/Api/Vehicle/Owner/Drivers/ONROUTE"),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
@@ -262,7 +262,7 @@ class DriverStatus extends StatelessWidget {
       'Authorization': 'Bearer $token',
     };
     final response = await http.get(
-        Uri.parse("http://64.226.104.50:9090/Api/Vehicle/Owner/Drivers/PERMIT"),
+        Uri.parse("http://164.90.174.113:9090/Api/Vehicle/Owner/Drivers/PERMIT"),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
@@ -289,7 +289,7 @@ class DriverStatus extends StatelessWidget {
     };
     final response = await http.get(
         Uri.parse(
-            "http://64.226.104.50:9090/Api/Vehicle/Owner/Drivers/ASSIGNED"),
+            "http://164.90.174.113:9090/Api/Vehicle/Owner/Drivers/ASSIGNED"),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.

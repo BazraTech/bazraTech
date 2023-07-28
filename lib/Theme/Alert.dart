@@ -4,6 +4,7 @@ import 'package:bazralogin/screen/Loging/Login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ionicons/ionicons.dart';
 import '../controller/ownerinfocontroller.dart';
 import '../screen/Bottom/Bottom.dart';
 
@@ -30,23 +31,43 @@ class AlertDialoug {
               padding: EdgeInsets.all(10),
               child: Center(
                 child: Container(
-                  height: 20,
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
+                  // margin: EdgeInsets.only(
+                  //   left: 100,
+                  // ),
+                  height: 30,
+                  width: 70,
+                  child: Container(
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  Colors.black.withOpacity(0.3), // Shadow color
+                              blurRadius: 3, // Spread radius
+                              offset:
+                                  Offset(0, 3), // Offset in (x,y) coordinates
+                            ),
+                          ],
+                          color: Color.fromRGBO(226, 193, 121, 1),
+                          shape: BoxShape.circle),
+                      width: 50,
+                      height: 50,
+                      child: Container(
+                          child: Icon(
+                        Ionicons.alert,
+                        color: Color.fromRGBO(255, 255, 255, 1),
+                      ))),
                 ),
               ),
             ),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text(
-                    message,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  Center(
+                    child: Text(
+                      message,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                    ),
                   ),
                 ],
               ),
@@ -58,7 +79,7 @@ class AlertDialoug {
                   margin: EdgeInsets.only(right: 10),
                   width: 100,
                   decoration: const BoxDecoration(
-                    color: Colors.blue,
+                    color: const Color.fromRGBO(178, 142, 22, 1),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(6.0),
                       bottomLeft: Radius.circular(6.0),
@@ -217,105 +238,105 @@ class alertutilsfordriver {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(6.0),
+              bottomLeft: Radius.circular(6.0),
+              bottomRight: Radius.circular(6.0),
+              topRight: Radius.circular(6.0),
+            ),
+          ),
+          height: 200,
           child: AlertDialog(
             titlePadding: EdgeInsets.all(0),
             title: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10.0),
-                  bottomLeft: Radius.circular(10.0),
-                  bottomRight: Radius.circular(10.0),
-                  topRight: Radius.circular(10.0),
+                  topLeft: Radius.circular(6.0),
+                  bottomLeft: Radius.circular(6.0),
+                  bottomRight: Radius.circular(6.0),
+                  topRight: Radius.circular(6.0),
                 ),
               ),
               padding: EdgeInsets.all(10),
               child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 20,
-                      child: Text(
-                        title,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
+                child: Container(
+                  // margin: EdgeInsets.only(
+                  //   left: 100,
+                  // ),
+                  height: 30,
+                  width: 70,
+                  child: Container(
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  Colors.black.withOpacity(0.3), // Shadow color
+                              blurRadius: 3, // Spread radius
+                              offset:
+                                  Offset(0, 3), // Offset in (x,y) coordinates
+                            ),
+                          ],
+                          color: Color.fromRGBO(226, 193, 121, 1),
+                          shape: BoxShape.circle),
+                      width: 50,
+                      height: 50,
+                      child: Container(
+                          child: Icon(
+                        Ionicons.alert,
+                        color: Color.fromRGBO(255, 255, 255, 1),
+                      ))),
                 ),
               ),
             ),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text(
-                    message,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  Center(
+                    child: Text(
+                      message,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                    ),
                   ),
                 ],
               ),
             ),
             actions: <Widget>[
-              Container(
-                margin: EdgeInsets.only(right: 10),
-                width: 100,
-                decoration: const BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(6.0),
-                    bottomLeft: Radius.circular(6.0),
-                    bottomRight: Radius.circular(6.0),
-                    topRight: Radius.circular(6.0),
+              Center(
+                child: Container(
+                  margin: EdgeInsets.only(right: 10),
+                  width: 100,
+                  decoration: const BoxDecoration(
+                    color: Color.fromRGBO(226, 193, 121, 1),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(6.0),
+                      bottomLeft: Radius.circular(6.0),
+                      bottomRight: Radius.circular(6.0),
+                      topRight: Radius.circular(6.0),
+                    ),
                   ),
-                ),
-                height: 30,
-                child: TextButton(
-                  child: const Text(
-                    'OK',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close the dialog
-                    Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                          builder: (context) => BottomTabBarPage()),
-                      (route) => false,
-                    ); //
+                  height: 30,
+                  child: TextButton(
+                    child: const Text(
+                      'OK',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => BottomTabBarPage()),
+                        (route) => false,
+                      ); //
 
-                    // Navigator.of(context).pop(true);
-                  },
-                ),
-              ),
-              Container(
-                width: 100,
-                margin: EdgeInsets.only(right: 25),
-                decoration: const BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(6.0),
-                    bottomLeft: Radius.circular(6.0),
-                    bottomRight: Radius.circular(6.0),
-                    topRight: Radius.circular(6.0),
+                      // Navigator.of(context).pop(true);
+                    },
                   ),
-                ),
-                height: 30,
-                child: TextButton(
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
                 ),
               ),
             ],
@@ -335,6 +356,14 @@ class alertutilsforgetpin {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(6.0),
+              bottomLeft: Radius.circular(6.0),
+              bottomRight: Radius.circular(6.0),
+              topRight: Radius.circular(6.0),
+            ),
+          ),
           child: AlertDialog(
             titlePadding: EdgeInsets.all(0),
             title: Container(

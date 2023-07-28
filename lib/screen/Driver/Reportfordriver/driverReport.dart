@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../../../const/constant.dart';
 import 'alertComponent/alertcomponent.dart';
-import 'tripComponent/tripcomponent.dart';
+
 import 'workComponent/workComponent.dart';
 
 class driverReport extends StatefulWidget {
@@ -15,6 +16,7 @@ class driverReport extends StatefulWidget {
 
 class _driverReportState extends State<driverReport> {
   bool showList = false;
+  bool _isLoading = true;
   bool showList1 = true;
   bool showList2 = false;
   dynamic fetchedData;
@@ -40,6 +42,7 @@ class _driverReportState extends State<driverReport> {
       final mydata = data["cargos"];
       setState(() {
         workData = mydata;
+        _isLoading = false;
       });
       workComponentfordriver(
         data: mydata,
@@ -68,6 +71,7 @@ class _driverReportState extends State<driverReport> {
       final mydata = data["inactiveAlerts"];
       setState(() {
         fetchedData = mydata;
+        _isLoading = false;
       });
       alertComponent(
         data: mydata,
@@ -110,35 +114,42 @@ class _driverReportState extends State<driverReport> {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 60,
-            ),
-            Container(
-              child: tripComponentfordriver(),
-            ),
+        child: _isLoading
+            ? Center(
+                child: Container(
+                margin: EdgeInsets.only(top: screenHeight * 0.2),
+                child: LoadingAnimationWidget.hexagonDots(
+                  size: 100,
+                  color: Color.fromRGBO(178, 142, 22, 1),
+                ),
+              ))
+            : Column(
+              
+                children: [
+                  SizedBox(
+                    height: 60,
+                  ),
 
-            // alert report
-            Container(
-              child: workData != null
-                  ? workComponentfordriver(
-                      data: workData,
-                    )
-                  : Center(child: CircularProgressIndicator()),
-            ),
-            //work report
-            Container(
-              height: screenHeight,
-              child: fetchedData != null
-                  ? alertComponent(
-                      data: fetchedData,
-                    )
-                  : Center(child: CircularProgressIndicator()),
-              //
-            )
-          ],
-        ),
+                  // alert report
+                  Container(
+                      child: workData == null
+                          ? Container()
+                          : workComponentfordriver(
+                              data: workData,
+                            )),
+                  //work report
+                  Container(
+                      height: screenHeight,
+                      child: fetchedData == null
+                          ? Container()
+                          : alertComponent(
+                              data: fetchedData,
+                            )
+
+                      //
+                      )
+                ],
+              ),
       ),
     );
   }

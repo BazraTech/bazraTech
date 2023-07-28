@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import '../../../../const/constant.dart';
+import '../../../config/APIService.dart';
 
 class notificationPage extends StatefulWidget {
   const notificationPage({super.key});
@@ -17,9 +18,11 @@ class _notificationPageState extends State<notificationPage> {
   bool _isLoading = true;
   List Result = [];
   List existingData = [];
+  List newData = [];
+  List oldData = [];
   List results = [];
   List Temp = [];
-  List dataList = [];
+  List dataLists = [];
   List<Color> colors = [
     Colors.white,
     Color.fromRGBO(195, 215, 233, 1),
@@ -35,21 +38,15 @@ class _notificationPageState extends State<notificationPage> {
   }
 
   void updateDataInHive(int index) async {
-    final box = await Hive.openBox('datalist'); // Open the Hive box
+    // Open the Hive box
+    final box = Hive.box('dataBox');
+    final dataList = box.get('dataBox'); // Retrieve the data list from Hive
 
-    final dataList = box.get('datalist'); // Retrieve the data list from Hive
-
-    if (dataList != null) {
-      setState(() {
-        dataList[index]['isFlagged'] =
-            true; // Set the isFlagged value to true for the desired item
-
-        box.put('datalist', dataList);
-      });
-    }
+    if (dataList != null) {}
   }
 
-  Future<List<dynamic>> fetchDataFromApiAndStoreInHive() async {
+  Future<void> fetchDataFromApiAndStoreInHive() async {
+    // Fetch data from the API
     final storage = new FlutterSecureStorage();
     var token = await storage.read(key: 'jwt');
     Map<String, String> requestHeaders = {
@@ -57,80 +54,46 @@ class _notificationPageState extends State<notificationPage> {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    var response = await http.get(
-        Uri.parse('http://164.90.174.113:9090/Api/Vehicle/Alerts/ByStatus'),
+    final response = await http.get(Uri.parse(ApIConfig.alertforowner),
         headers: requestHeaders);
+
     if (response.statusCode == 200) {
-      var mapResponse = json.decode(response.body);
+      final responseData = json.decode(response.body);
+      List items = responseData["activeAlerts"];
+      // Get the Hive box
 
-      results = mapResponse['activeAlerts'];
-      final Box<dynamic> box = await Hive.openBox<dynamic>('listdata');
+      setState(() {
+        dataLists = items;
+      });
+      final box = Hive.box('dataBox');
+      final String lastStoredId = box.get('lastId', defaultValue: 0);
 
-      if (!box.containsKey('listdata')) {
-        // Data doesn't exist, store it in Hive
-        final modifiedDataList = addBoolValueToList(results);
-        setState(() {
-          box.put('dataList', modifiedDataList);
-          dataList = modifiedDataList;
-        });
-        return dataList; // Store the data in Hive
-      } else {
-        // Data already exists in Hive, retrieve it
-
-        setState(() {
-          dataList = box.get('listdata');
-        });
-
-        // Compare the existing data with the new data
-        if (_isDataEqual(dataList, results)) {
-          // New data is the same as existing data, return the existing data
-          return dataList;
-        } else {
-          // New data is different, update the data in Hive
-          // Store the new data in Hive
-          final modifiedDataList = addBoolValueToList(results);
+      // Store only new data in Hive
+      for (var data in items) {
+        String id = data["id"]
+            .toString(); // Assuming 'id' is the unique identifier in the API response
+        print(data["id"]);
+        // Check if the data already exists in Hive
+        bool istrue = !box.containsKey(id);
+        print(istrue);
+        if (istrue == true) {
           setState(() {
-            box.put('dataList', modifiedDataList);
-            dataList = modifiedDataList;
-            box.put('listdata', modifiedDataList);
+            newData.add(data);
+            final modifydata = addBoolValueToList(data);
+            box.put(id, modifydata);
           });
-          return dataList;
+        } else {
+          setState(() {
+            dataLists = items;
+          });
         }
       }
-    } else {
-      throw Exception('Failed to fetch data from API');
+      if (items.isNotEmpty) {
+        final lastItem = items.last;
+        final String lastItemId = lastItem['alertstart'];
+        box.put('lastId', lastItemId);
+      }
     }
-
-    // setState(() {
-    //   final int lastIndex = box.isEmpty ? 0 : box.length;
-    //   for (var i = 0; i < results.length; i++) {
-    //     final item = results[i];
-
-    //     final existingData = box.values.contains(
-    //       (data) => data["alertstart"] == item["alertstart"],
-    //     );
-
-    //     if (existingData == null) {
-
-    //     }
-    //   }
-    // });
-  }
-
-  // Future<void> fetchDataFromHive() async {
-  //   final box = await Hive.openBox('dataBox'); // Open the Hive box
-
-  //   final dataListFromHive =
-  //       box.get('dataList'); // Retrieve the data list from Hive
-
-  //   setState(() {
-  //     dataList =
-  //         dataListFromHive != null ? List<dynamic>.from(dataListFromHive) : [];
-  //   });
-  // }
-
-  bool _isDataEqual(List<dynamic> existingData, List<dynamic> newData) {
-    return existingData.length == newData.length;
   }
 
   void initState() {
@@ -142,7 +105,8 @@ class _notificationPageState extends State<notificationPage> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    print(dataList);
+    print("nee");
+    print(newData);
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
@@ -191,7 +155,7 @@ class _notificationPageState extends State<notificationPage> {
                 // margin: EdgeInsets.only(bottom: 200),
                 child: Column(
               children: [
-                if (dataList == null || dataList.isEmpty)
+                if (dataLists == null || dataLists.isEmpty)
                   Center(
                     child: Container(
                       margin: EdgeInsets.only(
@@ -216,63 +180,109 @@ class _notificationPageState extends State<notificationPage> {
                       child: ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.zero,
-                        itemCount: dataList.length,
+                        itemCount: dataLists.length,
                         itemBuilder: (context, index) {
-                          bool doesNotExist =
-                              dataList.contains(dataList[index]['isFlagged']) ==
-                                  false;
+                          bool doesNotExist = dataLists
+                                  .contains(dataLists[index]['isFlagged']) ==
+                              true;
                           return Column(
                             children: [
-                              GestureDetector(
-                                  onTap: () {
-                                    print(doesNotExist);
-                                    if (doesNotExist == true) {
-                                      // Set the isFlagged value to true for the desired item
-                                      updateDataInHive(index);
-                                    }
-                                  },
-                                  child: Column(
-                                    children: [
-                                      if (dataList[index]['isFlagged'] == false)
-                                        Container(
-                                          height: screenHeight * 0.1,
-                                          width: screenWidth,
-                                          decoration: BoxDecoration(
-                                            color: Color.fromRGBO(
-                                                212, 233, 253, 1),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey.shade400
-                                                    .withOpacity(0.3),
-                                                spreadRadius: -1,
-                                                blurRadius: 1,
-                                                offset: Offset(0,
-                                                    -4), // horizontal, vertical offset
-                                              ),
-                                            ],
-                                          ),
+                              Column(
+                                children: [
+                                  doesNotExist == false
+                                      ? GestureDetector(
+                                          onTap: () {
+                                            print(doesNotExist);
+                                            if (doesNotExist == false) {
+                                              final box = Hive.box('dataBox');
+
+                                              setState(() {
+                                                box.put(
+                                                    'dataBox',
+                                                    dataLists[index]
+                                                        ['isFlagged'] = true);
+                                              });
+                                            }
+                                          },
                                           child: Container(
-                                              child: Row(
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Container(
-                                                  child: SizedBox(
-                                                    height: screenHeight * 0.08,
-                                                    width: screenWidth * 0.1,
-                                                    child: CircleAvatar(
-                                                      backgroundColor:
-                                                          Colors.white,
-                                                      child: SizedBox(
-                                                          height: screenHeight *
-                                                              0.06,
-                                                          child: Center(
+                                            height: screenHeight * 0.1,
+                                            width: screenWidth,
+                                            decoration: BoxDecoration(
+                                              color: Color.fromRGBO(
+                                                  212, 233, 253, 1),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey.shade400
+                                                      .withOpacity(0.3),
+                                                  spreadRadius: -1,
+                                                  blurRadius: 1,
+                                                  offset: Offset(0,
+                                                      -4), // horizontal, vertical offset
+                                                ),
+                                              ],
+                                            ),
+                                            child: Container(
+                                                child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Container(
+                                                    child: SizedBox(
+                                                      height:
+                                                          screenHeight * 0.08,
+                                                      width: screenWidth * 0.1,
+                                                      child: CircleAvatar(
+                                                        backgroundColor:
+                                                            Colors.white,
+                                                        child: SizedBox(
+                                                            height:
+                                                                screenHeight *
+                                                                    0.06,
+                                                            child: Center(
+                                                              child: Text(
+                                                                dataLists[index]
+                                                                        [
+                                                                        "driver"]
+                                                                    .substring(
+                                                                        0, 1),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: const TextStyle(
+                                                                    fontFamily:
+                                                                        'Nunito',
+                                                                    fontSize:
+                                                                        AppFonts
+                                                                            .smallFontSize,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .normal),
+                                                              ),
+                                                            )),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  height: screenHeight * 0.08,
+                                                  width: screenWidth * 0.4,
+                                                  margin: EdgeInsets.only(
+                                                    top: screenHeight * 0.03,
+                                                  ),
+                                                  child: Column(
+                                                    children: [
+                                                      Column(
+                                                        children: [
+                                                          Container(
                                                             child: Text(
-                                                              dataList[index]
-                                                                      ["driver"]
-                                                                  .substring(
-                                                                      0, 1),
+                                                              dataLists[index][
+                                                                  'alertocation'],
                                                               textAlign:
                                                                   TextAlign
                                                                       .left,
@@ -290,105 +300,74 @@ class _notificationPageState extends State<notificationPage> {
                                                                       FontWeight
                                                                           .normal),
                                                             ),
-                                                          )),
-                                                    ),
+                                                          ),
+                                                          Container(
+                                                            margin: EdgeInsets.only(
+                                                                right:
+                                                                    screenWidth *
+                                                                        0.07),
+                                                            child: Text(
+                                                              dataLists[index]
+                                                                  ['alertType'],
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: const TextStyle(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: AppFonts
+                                                                      .smallFontSize,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                              ),
-                                              Container(
-                                                height: screenHeight * 0.08,
-                                                width: screenWidth * 0.4,
-                                                margin: EdgeInsets.only(
-                                                  top: screenHeight * 0.03,
+                                                Container(
+                                                  width: screenWidth * 0.22,
+                                                  margin: EdgeInsets.only(
+                                                      left: screenWidth * 0.15),
+                                                  child: Text(
+                                                    dataLists[index]
+                                                        ['alertstart'],
+                                                    textAlign: TextAlign.left,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Nunito',
+                                                        fontSize: AppFonts
+                                                            .smallFontSize,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.normal),
+                                                  ),
                                                 ),
-                                                child: Column(
-                                                  children: [
-                                                    Column(
-                                                      children: [
-                                                        Container(
-                                                          child: Text(
-                                                            dataList[index][
-                                                                'alertocation'],
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            style: const TextStyle(
-                                                                fontFamily:
-                                                                    'Nunito',
-                                                                fontSize: AppFonts
-                                                                    .smallFontSize,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal),
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          margin: EdgeInsets.only(
-                                                              right:
-                                                                  screenWidth *
-                                                                      0.07),
-                                                          child: Text(
-                                                            dataList[index]
-                                                                ['alertType'],
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            style: const TextStyle(
-                                                                fontFamily:
-                                                                    'Nunito',
-                                                                fontSize: AppFonts
-                                                                    .smallFontSize,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
+                                                SizedBox(
+                                                  width: 4,
                                                 ),
-                                              ),
-                                              Container(
-                                                width: screenWidth * 0.22,
-                                                margin: EdgeInsets.only(
-                                                    left: screenWidth * 0.15),
-                                                child: Text(
-                                                  dataList[index]['alertstart'],
-                                                  textAlign: TextAlign.left,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Nunito',
-                                                      fontSize: AppFonts
-                                                          .smallFontSize,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.normal),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 4,
-                                              ),
-                                              Container(
-                                                width: 10,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.red,
-                                                    shape: BoxShape.circle),
-                                              )
-                                            ],
-                                          )),
+                                                Container(
+                                                  width: 10,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.red,
+                                                      shape: BoxShape.circle),
+                                                )
+                                              ],
+                                            )),
+                                          ),
                                         )
-                                      else if (dataList[index]['isFlagged'] ==
-                                          true)
-                                        Container(
+                                      : Container(),
+                                  dataLists.isEmpty
+                                      ? Container()
+                                      : Container(
                                           height: screenHeight * 0.1,
                                           width: screenWidth,
                                           decoration: BoxDecoration(
@@ -422,7 +401,7 @@ class _notificationPageState extends State<notificationPage> {
                                                               0.06,
                                                           child: Center(
                                                             child: Text(
-                                                              dataList[index]
+                                                              dataLists[index]
                                                                       ["driver"]
                                                                   .substring(
                                                                       0, 1),
@@ -460,7 +439,7 @@ class _notificationPageState extends State<notificationPage> {
                                                       children: [
                                                         Container(
                                                           child: Text(
-                                                            dataList[index][
+                                                            dataLists[index][
                                                                 'alertocation'],
                                                             textAlign:
                                                                 TextAlign.left,
@@ -485,7 +464,7 @@ class _notificationPageState extends State<notificationPage> {
                                                                   screenWidth *
                                                                       0.07),
                                                           child: Text(
-                                                            dataList[index]
+                                                            dataLists[index]
                                                                 ['alertType'],
                                                             textAlign:
                                                                 TextAlign.left,
@@ -514,7 +493,8 @@ class _notificationPageState extends State<notificationPage> {
                                                 margin: EdgeInsets.only(
                                                     left: screenWidth * 0.15),
                                                 child: Text(
-                                                  dataList[index]['alertstart'],
+                                                  dataLists[index]
+                                                      ['alertstart'],
                                                   textAlign: TextAlign.left,
                                                   overflow:
                                                       TextOverflow.ellipsis,
@@ -530,8 +510,8 @@ class _notificationPageState extends State<notificationPage> {
                                             ],
                                           )),
                                         )
-                                    ],
-                                  )),
+                                ],
+                              ),
                             ],
                           );
                         },

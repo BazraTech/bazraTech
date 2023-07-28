@@ -1,7 +1,5 @@
-import 'package:bazralogin/Model/tripManagement.dart';
-import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
 
+import 'package:flutter/material.dart';
 import '../../../../Theme/clippbox.dart';
 import '../../../../const/constant.dart';
 

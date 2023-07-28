@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 
+import '../../Theme/clippbox.dart';
 import '../../config/APIService.dart';
 
 class activeWork extends StatefulWidget {
@@ -25,6 +26,30 @@ class _activeWorkState extends State<activeWork> {
     setState(() {
       _isActivebutton = isActive;
     });
+  }
+
+  Stream<List<dynamic>> fetchData() async* {
+    while (true) {
+      final storage = new FlutterSecureStorage();
+      var token = await storage.read(key: 'jwt');
+      var client = http.Client();
+      Map<String, String> requestHeaders = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      var url = Uri.http(ApIConfig.urlAPI, ApIConfig.acceptwork);
+      var response = await client.get(url, headers: requestHeaders);
+      if (response.statusCode == 200) {
+        var acceptwork = jsonDecode(response.body);
+        List<dynamic> data = acceptwork["cargos"];
+        yield data;
+      } else {
+        throw Exception('Failed to fetch data');
+      }
+      await Future.delayed(
+          Duration(seconds: 5)); // Delay for 5 seconds before fetching again
+    }
   }
 
   void setActiveButton2(bool isActive) {
@@ -71,14 +96,13 @@ class _activeWorkState extends State<activeWork> {
       var value = await storage.read(key: 'jwt');
 
       Map data = {"driverState": load};
-      var response = await http.put(
-          Uri.parse('http://164.90.174.113:9090/Api/Driver/ChangeDriverState'),
-          body: jsonEncode(data) as String,
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization": "Bearer $value",
-          });
+      var url = Uri.http(ApIConfig.urlAPI, ApIConfig.unload);
+      var response =
+          await http.put(url, body: jsonEncode(data) as String, headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer $value",
+      });
       final Map jsonResponse = json.decode(response.body);
 
       if (response.statusCode == 200) {
@@ -108,6 +132,33 @@ class _activeWorkState extends State<activeWork> {
       backgroundColor: kBackgroundColor,
       body: Column(
         children: [
+          Container(
+            width: screenWidth,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(178, 142, 22, 1),
+                  Color.fromRGBO(226, 193, 121, 1),
+                ],
+                // stops: [0.4, 0.4],
+              ),
+            ),
+            padding: EdgeInsets.zero,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Ionicons.arrow_back,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
           Stack(children: [
             Container(
               height: screenHeight * 0.15,
@@ -122,68 +173,221 @@ class _activeWorkState extends State<activeWork> {
                   borderRadius: BorderRadius.vertical(
                     bottom: Radius.circular(30),
                   )),
-              child: Padding(
-                padding: EdgeInsets.all(0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.zero,
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(
-                          Ionicons.arrow_back,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    // Text(
-                    //   " Manage Active Work",
-                    //   textAlign: TextAlign.left,
-                    //   overflow: TextOverflow.ellipsis,
-                    //   style: const TextStyle(
-                    //       fontFamily: 'Nunito',
-                    //       fontSize: AppFonts.mediumFontSize,
-                    //       color: Colors.white,
-                    //       fontWeight: FontWeight.bold),
-                    // )
-                  ],
-                ),
-              ),
             ),
             Positioned(
                 child: Column(
               children: [
-                // Container(
-                //     margin: EdgeInsets.only(top: 60),
-                //     child: Text(
-                //       "Active Work",
-                //       textAlign: TextAlign.left,
-                //       overflow: TextOverflow.ellipsis,
-                //       style: const TextStyle(
-                //           fontFamily: 'Nunito',
-                //           fontSize: AppFonts.smallFontSize,
-                //           color: Colors.white,
-                //           fontWeight: FontWeight.bold),
-                //     )),
-                Container(
-                    height: screenHeight * 0.22,
-                    margin: EdgeInsets.only(top: 10),
-                    child: _isLoading ? Text("") : Container()),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        height: screenHeight * 0.21,
+                        width: screenWidth - 42,
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            top: screenWidth * 0.05,
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                child: Center(
+                                    child: Text("Package",
+                                        textAlign: TextAlign.left,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                            fontFamily: 'Nunito',
+                                            fontSize: AppFonts.smallFontSize,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal))),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    height: 30,
+                                    child: StreamBuilder<List<dynamic>>(
+                                      stream: fetchData(),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasData) {
+                                          final List<dynamic> data =
+                                              snapshot.data!;
+
+                                          return Container(
+                                            child: data[0]["packaging"] == null
+                                                ? Container()
+                                                : Text(
+                                                    (data[0]["packaging"]),
+                                                    textAlign: TextAlign.left,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Nunito',
+                                                        fontSize: AppFonts
+                                                            .smallFontSize,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                          );
+                                        } else if (snapshot.hasError) {
+                                          return Container();
+                                        } else {
+                                          return Container();
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.trip_origin,
+                                    color: Colors.green,
+                                  ),
+                                  CustomPaint(
+                                    size: Size(screenWidth * 0.14, 2),
+                                    painter: DashLinePainter(),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Container(
+                                      height: screenHeight * 0.09,
+                                      width: screenWidth * 0.09,
+                                      child: Container(
+                                        child: Icon(
+                                          Icons.local_shipping,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  CustomPaint(
+                                    size: Size(screenWidth * 0.14, 2),
+                                    painter: DashLinePainter(),
+                                  ),
+                                  Icon(
+                                    Icons.trip_origin,
+                                    color: Colors.red,
+                                  )
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                      height: 30,
+                                      child: Center(
+                                        child: StreamBuilder<List<dynamic>>(
+                                          stream: fetchData(),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.hasData) {
+                                              final List<dynamic> data =
+                                                  snapshot.data!;
+
+                                              return Container(
+                                                child: data[0]["pickUp"] == null
+                                                    ? Container()
+                                                    : Text(
+                                                        (data[0]["pickUp"]),
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: const TextStyle(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            fontSize: AppFonts
+                                                                .smallFontSize,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal),
+                                                      ),
+                                              );
+                                            } else if (snapshot.hasError) {
+                                              return Container();
+                                            } else {
+                                              return Container();
+                                            }
+                                          },
+                                        ),
+                                      )),
+                                  SizedBox(
+                                    width: screenWidth * 0.25,
+                                  ),
+                                  Container(
+                                    height: 30,
+                                    child: Center(
+                                      child: StreamBuilder<List<dynamic>>(
+                                        stream: fetchData(),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasData) {
+                                            final List<dynamic> data =
+                                                snapshot.data!;
+                                            // driverstatus =
+                                            //     data["status"];
+
+                                            // Render your UI with the data
+                                            return Container(
+                                              child: data[0]["dropOff"] == null
+                                                  ? Container()
+                                                  : Container(
+                                                      margin: EdgeInsets.only(
+                                                          left: 20),
+                                                      child: Text(
+                                                        data[0]["dropOff"],
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: const TextStyle(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            fontSize: AppFonts
+                                                                .smallFontSize,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal),
+                                                      ),
+                                                    ),
+                                            );
+                                          } else if (snapshot.hasError) {
+                                            return Container();
+                                          } else {
+                                            return Container();
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ))
           ]),
-          Container(
-            height: screenHeight * 0.55,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    margin: EdgeInsets.only(top: screenHeight * 0),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
                     child: Row(
                       children: [
                         Container(
@@ -213,7 +417,7 @@ class _activeWorkState extends State<activeWork> {
                                 context: context,
                                 builder: (BuildContext context) => YesNoDialog(
                                   title: 'Confirmation',
-                                  message: 'Do you want to accept job?',
+                                  message: 'Do you want to depparrive?',
                                   onYesPressed: () async {
                                     Unloadandloadcar("DEPARRIVE");
                                     // Navigator.of(context).pop();
@@ -286,7 +490,7 @@ class _activeWorkState extends State<activeWork> {
                                 context: context,
                                 builder: (BuildContext context) => YesNoDialog(
                                   title: 'Confirmation',
-                                  message: 'Do you want to accept job?',
+                                  message: 'Do you want to  load?',
                                   onYesPressed: () async {
                                     Unloadandloadcar("LOAD");
                                     // Navigator.of(context).pop();
@@ -334,11 +538,8 @@ class _activeWorkState extends State<activeWork> {
                       ],
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    margin: EdgeInsets.only(top: screenHeight * 0.03),
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
                     child: Row(
                       children: [
                         Container(
@@ -369,7 +570,7 @@ class _activeWorkState extends State<activeWork> {
                                 context: context,
                                 builder: (BuildContext context) => YesNoDialog(
                                   title: 'Confirmation',
-                                  message: 'Do you want to accept job?',
+                                  message: 'Do you want to  destarrive?',
                                   onYesPressed: () async {
                                     Unloadandloadcar("DESTARRIVE");
                                     // Navigator.of(context).pop();
@@ -440,7 +641,7 @@ class _activeWorkState extends State<activeWork> {
                                 context: context,
                                 builder: (BuildContext context) => YesNoDialog(
                                   title: 'Confirmation',
-                                  message: 'Do you want to accept job?',
+                                  message: 'Do you want to  unload?',
                                   onYesPressed: () async {
                                     Unloadandloadcar("UNLOAD");
                                     // Navigator.of(context).pop();
@@ -487,12 +688,10 @@ class _activeWorkState extends State<activeWork> {
                       ],
                     ),
                   ),
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Container(
+                  Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 20),
                         decoration: BoxDecoration(
                             color: Color.fromARGB(255, 255, 255, 255),
                             borderRadius: BorderRadius.circular(10),
@@ -553,10 +752,10 @@ class _activeWorkState extends State<activeWork> {
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -568,13 +767,12 @@ class _activeWorkState extends State<activeWork> {
 void showErrorSnackbar(BuildContext context, String errorMessage) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      content: Center(child: Text(errorMessage)),
-      backgroundColor:
-          Colors.blue, // You can customize the background color here
+      content: Container(height: 40, child: Center(child: Text(errorMessage))),
+      backgroundColor: Color.fromRGBO(
+          226, 193, 121, 1), // You can customize the background color here
       duration: Duration(seconds: 3),
       behavior: SnackBarBehavior.floating, // Use a floating behavior
-      margin: EdgeInsets.only(
-          top: 70.0), // Adjust the duration as per your preference
+      padding: EdgeInsets.all(10), // Adjust the duration as per your preference
     ),
   );
 }

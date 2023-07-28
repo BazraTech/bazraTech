@@ -49,6 +49,7 @@ dependencies:
   file_picker: ^5.2.3
   pin_code_text_field: ^1.8.0
   cupertino_icons: ^1.0.5
+  loading_animation_widget: ^1.2.0+4
  
   fl_chart: ^0.55.2
  

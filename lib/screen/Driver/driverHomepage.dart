@@ -677,7 +677,8 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                           child: Icon(
                                             Icons.work,
                                             size: 35,
-                                            color: Colors.blue,
+                                            color: Color.fromRGBO(
+                                                226, 193, 121, 1),
                                           ),
                                         ),
                                         Container(
@@ -706,8 +707,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                         padding: const EdgeInsets.all(10),
                         child: GestureDetector(
                           onTap: () {
-                            if (driverworkstatus == "ACCEPTED" ||
-                                driverworkstatus == "ACCEPT") {
+                            if (driverworkstatus == "ACCEPTED") {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -753,7 +753,8 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                         child: Icon(
                                           Icons.work,
                                           size: 35,
-                                          color: Colors.blue,
+                                          color:
+                                              Color.fromRGBO(226, 193, 121, 1),
                                         ),
                                       ),
                                       Container(
@@ -821,7 +822,8 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                         child: Icon(
                                           Icons.insert_drive_file_rounded,
                                           size: 35,
-                                          color: Colors.blue,
+                                          color:
+                                              Color.fromRGBO(226, 193, 121, 1),
                                         ),
                                       ),
                                       Container(
@@ -895,7 +897,8 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                         child: Icon(
                                           Ionicons.alert,
                                           size: 35,
-                                          color: Colors.blue,
+                                          color:
+                                              Color.fromRGBO(226, 193, 121, 1),
                                         ),
                                       ),
                                       Container(
