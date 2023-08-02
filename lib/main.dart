@@ -1,15 +1,13 @@
-import 'package:cargo/shared/loading.dart';
+
 import 'package:cargo/views/Bottom_Navigation.dart';
-import 'package:cargo/views/usermanagement/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 
 import 'Components/Home_Page.dart';
 import 'localization/app_localizations.dart';
 import 'localization/localization_bloc.dart';
-import 'localization/localization_event.dart';
 import 'localization/localization_state.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -60,15 +58,15 @@ class MyApp extends StatelessWidget {
             builder: (context, navigationState) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                localizationsDelegates: [
+                localizationsDelegates:const [
                   AppLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,
                 ],
-                supportedLocales: [
-                  const Locale('en', ''),
-                  const Locale('am', ''),
+                supportedLocales: const [
+                 Locale('en', ''),
+                 Locale('am', ''),
                 ],
                 locale: localeState.locale,
                 home: MainApp(
@@ -76,7 +74,6 @@ class MyApp extends StatelessWidget {
                   routeName: navigationState.routeName,
                 ),
                 routes: {
-                  '/login': (BuildContext context) => TikTokLoadingSpinner(),
                   '/bottomNav': (BuildContext context) => BottomNav(),
                   '/home': (BuildContext context) => CargoOWnerHomePage(),
                   // Add more pages here

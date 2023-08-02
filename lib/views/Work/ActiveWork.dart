@@ -9,11 +9,12 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:modern_form_esys_flutter_share/modern_form_esys_flutter_share.dart';
-import 'Components/Noglow.dart';
-import 'localization/app_localizations.dart';
-import 'model/VehicleListForCargo.dart';
+import '../../Components/Noglow.dart';
+import '../../constant/global_variables.dart';
+import '../../localization/app_localizations.dart';
+import '../../model/VehicleListForCargo.dart';
 
-import 'shared/constant.dart';
+import '../../shared/constant.dart';
 
 class VehicleCargo extends StatefulWidget {
   final int? id;
@@ -45,6 +46,7 @@ class _VehicleCargoState extends State<VehicleCargo> {
           return Cargo_Vehicle(
             id: cargoDriverData['id'],
             driver: cargoDriverData['driver'],
+            driverState: cargoDriverData['driverState'] ?? "",
             driverID: cargoDriverData['driverID'],
             cargo: cargoDriverData['cargo'],
             vehicleOwner: cargoDriverData['vehicleOwner'],
@@ -148,36 +150,40 @@ class _VehicleCargoState extends State<VehicleCargo> {
   Future<void> updateDriverState(List<Map<String, dynamic>> drivers) async {
     StorageHelper storageHelper = StorageHelper();
     String? accessToken = await storageHelper.getToken();
-    if (drivers.isNotEmpty) {
-      final url =
-          'http://164.90.174.113:9090/Api/Cargo/ConfirmDriverState/${widget.id}';
-      final body = jsonEncode({
-        'drivers': drivers,
-      });
+    final url =
+        'http://164.90.174.113:9090/Api/Cargo/ConfirmDriverState/${widget.id}';
+    final body = jsonEncode({
+      'drivers': drivers,
+    });
 
-      final putResponse = await http.post(Uri.parse(url), body: body, headers: {
-        "Content-Type": "application/json",
-        'Accept': 'application/json',
-        "Authorization": "Bearer $accessToken",
-      });
-      final responseJson = jsonDecode(putResponse.body);
-      final message = responseJson['message'];
-      print("Status code: ${putResponse.statusCode}");
-      if (putResponse.statusCode == 200) {
-        Fluttertoast.showToast(
-          msg: message,
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.amber.shade200,
-          textColor: Colors.white,
-          fontSize: 14.0,
-        );
-      } else {
-        throw Exception('Failed to update driver state');
-      }
+    final response = await http.post(Uri.parse(url), body: body, headers: {
+      "Content-Type": "application/json",
+      'Accept': 'application/json',
+      "Authorization": "Bearer $accessToken",
+    });
+    final responseJson = jsonDecode(response.body);
+    final message = responseJson['message'];
+    print("Body: ${responseJson}");
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.amber.shade200,
+        textColor: Colors.white,
+        fontSize: 14.0,
+      );
     } else {
-      throw Exception('No drivers found');
+      Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.amber.shade200,
+        textColor: Colors.white,
+        fontSize: 14.0,
+      );
     }
   }
 
@@ -302,7 +308,7 @@ class _VehicleCargoState extends State<VehicleCargo> {
                                 color: Colors.white,
                                 border: Border(
                                   left: BorderSide(
-                                    color: Colors.blue,
+                                    color: GlobalVariables.primaryColor,
                                     width: 3,
                                   ),
                                 ),
@@ -317,8 +323,7 @@ class _VehicleCargoState extends State<VehicleCargo> {
                                       style: TextStyle(
                                         fontFamily: 'Roboto',
                                         fontSize: 12,
-                                        color:
-                                            Color.fromARGB(255, 123, 129, 236),
+                                        color: GlobalVariables.primaryColor,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -331,8 +336,7 @@ class _VehicleCargoState extends State<VehicleCargo> {
                                       style: TextStyle(
                                         fontFamily: 'Roboto',
                                         fontSize: 12,
-                                        color:
-                                            Color.fromARGB(255, 123, 129, 236),
+                                        color: GlobalVariables.primaryColor,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -345,8 +349,7 @@ class _VehicleCargoState extends State<VehicleCargo> {
                                       style: TextStyle(
                                         fontFamily: 'Roboto',
                                         fontSize: 12,
-                                        color:
-                                            Color.fromARGB(255, 123, 129, 236),
+                                        color: GlobalVariables.primaryColor,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -359,8 +362,7 @@ class _VehicleCargoState extends State<VehicleCargo> {
                                       style: TextStyle(
                                         fontFamily: 'Roboto',
                                         fontSize: 12,
-                                        color:
-                                            Color.fromARGB(255, 123, 129, 236),
+                                        color: GlobalVariables.primaryColor,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -371,7 +373,7 @@ class _VehicleCargoState extends State<VehicleCargo> {
                           ),
                           Container(
                             margin: EdgeInsets.only(top: 18),
-                            height: screenHeight * 0.55,
+                            height: screenHeight * 0.53,
                             child: Stack(
                               children: [
                                 ScrollConfiguration(
@@ -385,30 +387,33 @@ class _VehicleCargoState extends State<VehicleCargo> {
                                         onTap: () {
                                           setState(() {});
                                         },
-                                        child: Card(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              border: Border(
-                                                left: BorderSide(
-                                                  color: Colors.blue,
-                                                  width: 3,
+                                        child: SizedBox(
+                                          height: screenHeight * 0.1,
+                                          child: Card(
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: const Border(
+                                                  left: BorderSide(
+                                                    color: GlobalVariables
+                                                        .primaryColor,
+                                                    width: 3,
+                                                  ),
                                                 ),
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                      color: Colors
+                                                          .grey.shade200
+                                                          .withOpacity(0.7),
+                                                      blurRadius: 8.0,
+                                                      spreadRadius: 2.0,
+                                                      offset: const Offset(
+                                                        6, // Move to right 7.0 horizontally
+                                                        8, // Move to bottom 8.0 Vertically
+                                                      ))
+                                                ],
                                               ),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    color: Colors.grey.shade200
-                                                        .withOpacity(0.7),
-                                                    blurRadius: 8.0,
-                                                    spreadRadius: 2.0,
-                                                    offset: const Offset(
-                                                      6, // Move to right 7.0 horizontally
-                                                      8, // Move to bottom 8.0 Vertically
-                                                    ))
-                                              ],
-                                            ),
-                                            child: ExpansionTile(
-                                              title: Column(
+                                              child: Column(
                                                 children: [
                                                   ListTile(
                                                       title: Row(
@@ -420,12 +425,8 @@ class _VehicleCargoState extends State<VehicleCargo> {
                                                           style:
                                                               const TextStyle(
                                                             fontSize: 14,
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    123,
-                                                                    129,
-                                                                    236),
+                                                            color: GlobalVariables
+                                                                .primaryColor,
                                                             fontFamily:
                                                                 'Roboto',
                                                             fontWeight:
@@ -439,12 +440,8 @@ class _VehicleCargoState extends State<VehicleCargo> {
                                                           style:
                                                               const TextStyle(
                                                             fontSize: 14,
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    123,
-                                                                    129,
-                                                                    236),
+                                                            color: GlobalVariables
+                                                                .primaryColor,
                                                             fontFamily:
                                                                 'Roboto',
                                                             fontWeight:
@@ -459,12 +456,8 @@ class _VehicleCargoState extends State<VehicleCargo> {
                                                           style:
                                                               const TextStyle(
                                                             fontSize: 14,
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    123,
-                                                                    129,
-                                                                    236),
+                                                            color: GlobalVariables
+                                                                .primaryColor,
                                                             fontFamily:
                                                                 'Roboto',
                                                             fontWeight:
@@ -472,6 +465,48 @@ class _VehicleCargoState extends State<VehicleCargo> {
                                                           ),
                                                         ),
                                                       ),
+                                                      cargoDriver.driverState ==
+                                                              "UNLOADED"
+                                                          ? Container(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              height:
+                                                                  screenHeight *
+                                                                      0.02,
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        178,
+                                                                        142,
+                                                                        22,
+                                                                        1),
+                                                              ),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(11),
+                                                            )
+                                                          : Container(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              height:
+                                                                  screenHeight *
+                                                                      0.02,
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                                color:
+                                                                    Colors.red,
+                                                              ),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(11),
+                                                            ),
                                                     ],
                                                   )),
                                                 ],
@@ -490,6 +525,8 @@ class _VehicleCargoState extends State<VehicleCargo> {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       FloatingActionButton(
+                                        backgroundColor:
+                                            GlobalVariables.primaryColor,
                                         onPressed: () async {
                                           final pdf = pw.Document();
                                           pdf.addPage(
@@ -534,7 +571,10 @@ class _VehicleCargoState extends State<VehicleCargo> {
                                             'application/pdf',
                                           );
                                         },
-                                        child: Icon(Icons.share),
+                                        child: const Icon(
+                                          Icons.share,
+                                          color: Colors.black,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -543,7 +583,7 @@ class _VehicleCargoState extends State<VehicleCargo> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(bottom: 20),
+                            margin: EdgeInsets.only(bottom: 30),
                             child: CustomButton(
                                 onPressed: () async {
                                   try {
@@ -588,8 +628,8 @@ class _VehicleCargoState extends State<VehicleCargo> {
                                       blurRadius: 8.0,
                                       spreadRadius: 2.0,
                                       offset: const Offset(
-                                        6, // Move to right 7.0 horizontally
-                                        8, // Move to bottom 8.0 Vertically
+                                        6,
+                                        8,
                                       ))
                                 ],
                               ),

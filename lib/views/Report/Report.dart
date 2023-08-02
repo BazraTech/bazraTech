@@ -1,3 +1,4 @@
+import 'package:cargo/constant/global_variables.dart';
 import 'package:cargo/shared/customAppbar.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -78,12 +79,7 @@ class _ReportState extends State<Report> {
                     padding: const EdgeInsets.only(left: 8, right: 8),
                     margin: const EdgeInsets.only(bottom: 8),
                     child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BillDetailScreen()));
-                      },
+                      onTap: () {},
                       child: Card(
                           child: Container(
                         decoration: BoxDecoration(
@@ -113,7 +109,7 @@ class _ReportState extends State<Report> {
                                         bill.startTrip,
                                         style: TextStyle(
                                           fontSize: 14,
-                                          color: Colors.grey.shade600,
+                                          color: GlobalVariables.primaryColor,
                                           fontFamily: 'Roboto',
                                           fontWeight: FontWeight.bold,
                                         ),

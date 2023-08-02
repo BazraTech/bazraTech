@@ -7,7 +7,7 @@ class Cargo_Vehicle {
   final String vehicleOwner;
   final String plateNumber;
   final int driverID;
-
+  final String driverState;
   Cargo_Vehicle({
     required this.id,
     required this.driver,
@@ -15,6 +15,7 @@ class Cargo_Vehicle {
     required this.vehicleOwner,
     required this.plateNumber,
     required this.driverID,
+    required this.driverState,
   });
 
   factory Cargo_Vehicle.fromJson(Map<String, dynamic> json) {
@@ -25,6 +26,7 @@ class Cargo_Vehicle {
       vehicleOwner: json['vehicleOwner'],
       plateNumber: json['plateNumber'],
       driverID: json['driverID'],
+       driverState: json['driverState'],
     );
   }
 }

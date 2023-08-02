@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class TikTokLoadingSpinner extends StatefulWidget {
+class LoadingSpinner extends StatefulWidget {
   @override
-  _TikTokLoadingSpinnerState createState() => _TikTokLoadingSpinnerState();
+  _LoadingSpinnerState createState() => _LoadingSpinnerState();
 }
 
-class _TikTokLoadingSpinnerState extends State<TikTokLoadingSpinner>
+class _LoadingSpinnerState extends State<LoadingSpinner>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
 

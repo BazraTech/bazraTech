@@ -48,7 +48,7 @@ class _CommunicateState extends State<Communicate> {
       body: Column(
         children: [
           Container(
-            margin: EdgeInsets.only(top: 30),
+            margin: const EdgeInsets.only(top: 30),
             child: Padding(
                 padding: const EdgeInsets.only(left: 8.0, right: 8),
                 child: SizedBox(
@@ -78,7 +78,7 @@ class _CommunicateState extends State<Communicate> {
           ),
           Container(
               margin: EdgeInsets.only(right: screenWidth * 0.55),
-              width: screenWidth * 0.35,
+              width: screenWidth * 0.5,
               child: CustomButton(
                 onPressed: () {},
                 text: "Send",

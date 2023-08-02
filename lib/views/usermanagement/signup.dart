@@ -133,6 +133,7 @@ class _SignupState extends State<Signup> {
                           height: 30,
                         ),
                         CustomTextFieldForm(
+                          keyboardType: TextInputType.phone,
                           textStyle: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontStyle: FontStyle.normal),

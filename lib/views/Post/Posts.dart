@@ -162,7 +162,6 @@ class _PostsState extends State<Posts> {
     try {
       StorageHelper storageHelper = StorageHelper();
       String? accessToken = await storageHelper.getToken();
-      print("Access Tokennnnnnnnn: $accessToken");
       final response = await http.get(
         Uri.parse('http://164.90.174.113:9090/Api/Admin/All/CargoType'),
         headers: {
@@ -312,6 +311,7 @@ class _PostsState extends State<Posts> {
                   height: 20,
                 ),
                 CustomTextFieldForm(
+                  
                   textStyle: const TextStyle(
                       fontWeight: FontWeight.bold, fontStyle: FontStyle.normal),
                   hintText:

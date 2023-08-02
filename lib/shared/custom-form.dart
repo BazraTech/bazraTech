@@ -1,3 +1,4 @@
+import 'package:cargo/constant/global_variables.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFieldForm extends StatefulWidget {
@@ -9,12 +10,14 @@ class CustomTextFieldForm extends StatefulWidget {
   final Function(String) onChanged;
   final String? Function(String?)? validator;
   final bool obscureText;
+  final bool readOnly;
   final bool showSuffixIcon;
   final TextStyle hintTextStyle;
   final Function(bool)? onFocusChange;
-   // added onFocusChange callback
+  final bool disableKeyboard; // added disableKeyboard property
+
   const CustomTextFieldForm({
-    super.key,
+    Key? key,
     this.isPassword = false,
     this.showSuffixIcon = false,
     this.validator,
@@ -25,9 +28,10 @@ class CustomTextFieldForm extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     required this.onChanged,
     required this.obscureText,
-    this.onFocusChange, 
-
-  });
+    this.onFocusChange,
+    this.readOnly = false,
+    this.disableKeyboard = false, // set default value for disableKeyboard
+  }) : super(key: key);
 
   @override
   State<CustomTextFieldForm> createState() => _CustomTextFieldFormState();
@@ -54,15 +58,15 @@ class _CustomTextFieldFormState extends State<CustomTextFieldForm> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      keyboardType: widget.keyboardType,
+      keyboardType: widget.disableKeyboard ? TextInputType.none : widget.keyboardType,
       controller: widget.textController,
       validator: widget.validator,
       obscureText: widget.isPassword ? obscureText : false,
+      readOnly: widget.readOnly,
       decoration: InputDecoration(
         labelText: widget.hintText,
         fillColor: Colors.white,
         filled: true,
-        // contentPadding: contentPadding,
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.white, width: 20),
         ),
@@ -75,8 +79,10 @@ class _CustomTextFieldFormState extends State<CustomTextFieldForm> {
         focusedErrorBorder: const OutlineInputBorder(),
         suffixIcon: widget.isPassword && widget.showSuffixIcon
             ? IconButton(
-                icon:
-                    Icon(obscureText ? Icons.visibility_off : Icons.visibility),
+                icon: Icon(
+                  obscureText ? Icons.visibility_off : Icons.visibility,
+                  color: GlobalVariables.primaryColor,
+                ),
                 onPressed: showPassword,
               )
             : null,

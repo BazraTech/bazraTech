@@ -63,32 +63,39 @@ class _Work_BottomNavState extends State<Work_BottomNav>
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicatorPadding:
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
-                indicatorColor: Colors.white,
+                indicatorColor: Colors.black,
                 isScrollable: false,
                 indicatorWeight: 3,
                 tabs: [
                   Tab(
-                    icon: const Icon(Icons.remove_circle_outline),
+                    icon: const Icon(
+                      Icons.remove_circle_outline,
+                      color: Colors.black,
+                    ),
                     child: Text(
-                      AppLocalizations.of(context)?.translate("Active") ??
-                          "Active",
+                      AppLocalizations.of(context)?.translate("Pending") ??
+                          "Pending",
                       style: const TextStyle(
                         fontSize: 13,
-                        color: Colors.white,
+                        color: Colors.black,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 5),
                     child: Tab(
-                      icon: Icon(Icons.thumb_up),
+                      icon: const Icon(
+                        Icons.thumb_up,
+                        color: Colors.black,
+                      ),
                       child: Text(
-                        "Accepted",
-                        style: TextStyle(
+                        AppLocalizations.of(context)?.translate("Accepted") ??
+                            "Accepted",
+                        style: const TextStyle(
                           fontSize: 13,
-                          color: Colors.white,
+                          color: Colors.black,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.bold,
                         ),
@@ -96,13 +103,15 @@ class _Work_BottomNavState extends State<Work_BottomNav>
                     ),
                   ),
                   Tab(
-                    icon: const Icon(Icons.verified),
+                    icon: const Icon(
+                      Icons.verified,
+                      color: Colors.black,
+                    ),
                     child: Text(
-                      AppLocalizations.of(context)?.translate("Finished") ??
-                          "Finished",
+                      AppLocalizations.of(context)?.translate("Done") ?? "Done",
                       style: const TextStyle(
                         fontSize: 12,
-                        color: Colors.white,
+                        color: Colors.black,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.bold,
                       ),

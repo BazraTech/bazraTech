@@ -255,8 +255,6 @@ class _ForgetState extends State<Forget> {
                   letterSpacing: 1.0,
                   wordSpacing: 2.0,
                   color: Colors.grey,
-
-                  // ... other styles
                 ),
                 textController: _phoneController,
                 keyboardType: TextInputType.text,

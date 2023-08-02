@@ -58,34 +58,40 @@ class _Post_BottomNavState extends State<Post_BottomNav>
                   indicatorSize: TabBarIndicatorSize.label,
                   indicatorPadding:
                       const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-                  indicatorColor: Colors.white,
+                  indicatorColor: Colors.black,
                   isScrollable: true,
                   indicatorWeight: 3,
                   enableFeedback: true,
                   mouseCursor: SystemMouseCursors.click,
                   tabs: [
                     Tab(
-                      icon: const Icon(Icons.add),
+                      icon: const Icon(
+                        Icons.add,
+                        color: Colors.black,
+                      ),
                       child: Text(
                         AppLocalizations.of(context)?.translate("Post Cargo") ??
                             "Post Cargo",
                         style: const TextStyle(
                             fontSize: 18,
-                            color: Colors.white,
+                            color: Colors.black,
                             fontFamily: 'Roboto',
                             letterSpacing: 1,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
                     Tab(
-                      icon: const Icon(Icons.history_edu),
+                      icon: const Icon(
+                        Icons.history_edu,
+                        color: Colors.black,
+                      ),
                       child: Text(
                         AppLocalizations.of(context)
                                 ?.translate("Cargo History") ??
                             "Cargo History",
                         style: const TextStyle(
                             fontSize: 18,
-                            color: Colors.white,
+                            color: Colors.black,
                             fontFamily: 'Roboto',
                             letterSpacing: 1,
                             fontWeight: FontWeight.bold),

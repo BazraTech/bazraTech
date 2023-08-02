@@ -1,17 +1,23 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:image_picker/image_picker.dart';
 import '../../Components/Noglow.dart';
+import '../../constant/global_variables.dart';
+import '../../constant/utils.dart';
 import '../../localization/localization_bloc.dart';
 import '../../localization/localization_event.dart';
+import '../../model/CargoOwnerInfo.dart';
+import '../../services/api_service.dart';
 import '../../shared/cargoInfo.dart';
 import '../../shared/cargoInfo.dart';
 import '../../shared/cargoPhone.dart';
 import '../../shared/constant.dart';
+import '../../shared/networkError.dart';
 import '../../shared/storage_hepler.dart';
 import 'ProfileEdit.dart';
 import 'changePassword.dart';
@@ -28,6 +34,9 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   String ownerPic = "";
+  bool isLoading = true;
+
+  final AuthService authService = AuthService();
   Future<String> _fetchLogo() async {
     var client = http.Client();
     final storage = new FlutterSecureStorage();
@@ -53,17 +62,49 @@ class _ProfileState extends State<Profile> {
     }
   }
 
+  PickedFile? _pickedImage;
+  final ImagePicker _picker = ImagePicker();
   String name = '';
   String phone = '';
+  void takePicture(ImageSource source) async {
+    final XFile? pickedFile = await _picker.pickImage(
+      source: source,
+    );
+    setState(() {
+      _pickedImage = pickedFile != null ? PickedFile(pickedFile.path) : null;
+    });
+  }
+
+  Map<String, dynamic> responseData = {};
+  Future<void> cargoOwnerInfo({required BuildContext context}) async {
+    StorageHelper storageHelper = StorageHelper();
+    String? accessToken = await storageHelper.getToken();
+
+    http.Response response = await http.get(
+      Uri.parse('$uri/Api/CargoOwner/Info'),
+      headers: {
+        "Content-Type": "application/json",
+        'Accept': 'application/json',
+        "Authorization": "Bearer $accessToken",
+      },
+    );
+    if (response.statusCode == 200) {
+      setState(() {
+        responseData = json.decode(response.body) as Map<String, dynamic>;
+      });
+    } else {
+      print('Failed to fetch data: ${response.statusCode}');
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    if(mounted){
-    getCargoInfo();
-    getPhoneNumber();
+    if (mounted) {
+      getCargoInfo();
+      getPhoneNumber();
+      cargoOwnerInfo(context: context);
     }
-    
   }
 
   Future<void> getCargoInfo() async {
@@ -84,34 +125,8 @@ class _ProfileState extends State<Profile> {
     });
   }
 
-  void _showLogoutConfirmationDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Confirm Logout'),
-          content: Text('Are you sure you want to logout?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const Cargo_login()),
-                  (route) => false,
-                );
-              },
-              child: Text('Logout'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  final AuthService _authService = AuthService();
+  CargoOwnerInfo? _cargoOwnerInfo;
 
   Widget buildLanguageDropdown(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -166,135 +181,238 @@ class _ProfileState extends State<Profile> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
+    final cargoOwnerInfo = responseData!['cargoOwnerINF'];
+    final businessINF = responseData!['businessINF'];
+    final address = responseData!['address'];
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Container(
-          margin: EdgeInsets.only(top: 70),
+          margin: const EdgeInsets.only(top: 70),
           child: ScrollConfiguration(
             behavior: NoGlowScrollBehavior(),
             child: SingleChildScrollView(
               child: Column(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        FutureBuilder(
-                          future: _fetchLogo(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<String> snapshot) {
-                            if (snapshot.connectionState !=
-                                ConnectionState.done) return Text("");
-                            return CircleAvatar(
-                              radius: 58,
-                              backgroundColor: Colors.white,
-                              child: ClipOval(
-                                child: Image.network(
-                                  snapshot.data.toString(),
-                                  fit: BoxFit
-                                      .cover, // Adjust the fit property to your desired value
-                                ),
+                Container(
+                  height: screenHeight * 0.15,
+                  margin: const EdgeInsets.only(bottom: 30),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                          left: screenWidth * 0.35,
+                          height: screenHeight * 0.15,
+                          child: Column(
+                            children: [
+                              Stack(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 60,
+                                    backgroundColor: Colors.white,
+                                    backgroundImage: NetworkImage(
+                                        cargoOwnerInfo?['pic'] ?? ''),
+                                  ),
+                                  Positioned(
+                                    left: 59,
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                          top: screenHeight * 0.07),
+                                      child: RawMaterialButton(
+                                        onPressed: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext contex) {
+                                                return AlertDialog(
+                                                  title: const Text(
+                                                      'Choose Option',
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: GlobalVariables
+                                                            .primaryColor,
+                                                      )),
+                                                  content:
+                                                      SingleChildScrollView(
+                                                    child: ListBody(children: [
+                                                      InkWell(
+                                                          onTap: () {
+                                                            takePicture(
+                                                                ImageSource
+                                                                    .camera);
+                                                          },
+                                                          splashColor:
+                                                              GlobalVariables
+                                                                  .primaryColor,
+                                                          child: Row(
+                                                            children: [
+                                                              const Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(
+                                                                            8.0),
+                                                                child: Icon(
+                                                                  Icons.camera,
+                                                                  color: GlobalVariables
+                                                                      .primaryColor,
+                                                                ),
+                                                              ),
+                                                              Text('Camera',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      color: Colors
+                                                                              .grey[
+                                                                          500]))
+                                                            ],
+                                                          )),
+                                                      InkWell(
+                                                          onTap: () {
+                                                            takePicture(
+                                                                ImageSource
+                                                                    .gallery);
+                                                          },
+                                                          splashColor:
+                                                              GlobalVariables
+                                                                  .primaryColor,
+                                                          child: Row(
+                                                            children: [
+                                                              const Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(
+                                                                            8.0),
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .browse_gallery,
+                                                                  color: GlobalVariables
+                                                                      .primaryColor,
+                                                                ),
+                                                              ),
+                                                              Text('Galley',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      color: Colors
+                                                                              .grey[
+                                                                          500]))
+                                                            ],
+                                                          )),
+                                                      InkWell(
+                                                          onTap: () {},
+                                                          splashColor:
+                                                              GlobalVariables
+                                                                  .primaryColor,
+                                                          child: Row(
+                                                            children: [
+                                                              const Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(
+                                                                            8.0),
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .remove_circle,
+                                                                  color: Colors
+                                                                      .red,
+                                                                ),
+                                                              ),
+                                                              Text('Remove',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      color: Colors
+                                                                              .grey[
+                                                                          500]))
+                                                            ],
+                                                          )),
+                                                    ]),
+                                                  ),
+                                                );
+                                              });
+                                        },
+                                        elevation: 10,
+                                        fillColor: GlobalVariables.primaryColor,
+                                        shape: const CircleBorder(),
+                                        child: const Icon(Icons.add_a_photo),
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
-                            );
-                          },
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("$name"),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
+                            ],
+                          )),
+                    ],
+                  ),
                 ),
-                SizedBox(
-                  height: 20,
+                const SizedBox(
+                  height: 10,
                 ),
                 Container(
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                      )),
-                  height: screenHeight * 0.2,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                   width: screenWidth,
-                  child: Column(children: [
-                    SizedBox(
-                      child: ListTile(
+                  height: screenHeight * 0.35,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ListTile(
+                        title: Text("Region"),
+                        trailing: Text("${address?['subcity'] ?? 'N/A'}"),
+                      ),
+                      ListTile(
+                        title: Text("Business Name"),
+                        trailing:
+                            Text("${businessINF?['businessName'] ?? 'N/A'}"),
+                      ),
+                      ListTile(
+                        title: Text("Company Name"),
+                        trailing:
+                            Text("${cargoOwnerInfo?['ownerName'] ?? 'N/A'}"),
+                      ),
+                      ListTile(
+                        title: Text("Phone Number"),
+                        trailing:
+                            Text("${cargoOwnerInfo?['phoneNumber'] ?? 'N/A'}"),
+                      ),
+                      InkWell(
                         onTap: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ProfileEdit(
-                                      companyName: name,
-                                      ownerAvatar: ownerPic,
-                                    )),
+                              builder: (context) => ProfileEdit(
+                                  ownerAvatar: cargoOwnerInfo?['pic'],
+                                  companyName: cargoOwnerInfo?['ownerName'],
+                                  phoneNumber: cargoOwnerInfo?['phoneNumber'],
+                                  businessName: businessINF?['businessName'],
+                                  businessSector:
+                                      businessINF?['businessSector'],
+                                  businessType: businessINF?['businessType'],
+                                  region: address?['region'],
+                                  subcity: address?['subcity'],
+                                  specificLocation:
+                                      address?['specificLocation']),
+                            ),
                           );
                         },
-                        leading: Container(
-                          height: screenWidth * 0.08,
-                          width: screenWidth * 0.08,
-                          child: Icon(
-                            Icons.edit,
-                            color: Colors.black,
-                          ),
-                        ),
-                        title: const Text(
-                          'Edit Profile',
-                          style: TextStyle(
-                            fontFamily: "Nunito",
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        trailing: Icon(Icons.keyboard_arrow_right),
+                        child: ListTile(
+                            title: Text("Edit Profile"),
+                            trailing: const Icon(Icons.keyboard_arrow_right)),
                       ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Card(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.grey, width: 0.3),
-                        borderRadius: BorderRadius.circular(0),
-                      ),
-                      child: ListTile(
-                        title: const Text(
-                          "Phone Number",
-                          style: TextStyle(
-                            fontFamily: "Nunito",
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              "$phone",
-                              style: TextStyle(
-                                fontFamily: "Nunito",
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                  ]),
+                    ],
+                  ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 GestureDetector(
@@ -328,7 +446,7 @@ class _ProfileState extends State<Profile> {
                                   color: Color.fromRGBO(252, 221, 244, 1),
                                   borderRadius: BorderRadius.circular(6),
                                 ),
-                                child: Icon(Icons.language_sharp),
+                                child: const Icon(Icons.language_sharp),
                               ),
                               SizedBox(width: screenWidth * 0.04),
                               Text(
@@ -340,7 +458,7 @@ class _ProfileState extends State<Profile> {
                               ),
                             ],
                           ),
-                          Icon(Icons.keyboard_arrow_right),
+                          const Icon(Icons.keyboard_arrow_right),
                         ],
                       ),
                     ),
@@ -367,7 +485,7 @@ class _ProfileState extends State<Profile> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ChangePassword()),
+                                builder: (context) => const ChangePassword()),
                           );
                         },
                         leading: Container(
@@ -377,7 +495,7 @@ class _ProfileState extends State<Profile> {
                             color: Color.fromRGBO(201, 252, 248, 1),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: Icon(Icons.lock_outline),
+                          child: const Icon(Icons.lock_outline),
                         ),
                         title: const Text(
                           'Change password',
@@ -405,7 +523,7 @@ class _ProfileState extends State<Profile> {
                                 child: Icon(Icons.help)),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Container(
+                              child: SizedBox(
                                   width: screenWidth * 0.3,
                                   child: const Text(
                                     "Help",
@@ -434,10 +552,10 @@ class _ProfileState extends State<Profile> {
                                 decoration: BoxDecoration(
                                     color: Color.fromRGBO(201, 252, 248, 1),
                                     borderRadius: BorderRadius.circular(8)),
-                                child: Icon(Icons.settings)),
+                                child: const Icon(Icons.settings)),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Container(
+                              child: SizedBox(
                                   width: screenWidth * 0.3,
                                   child: const Text(
                                     "Setting",
@@ -451,7 +569,7 @@ class _ProfileState extends State<Profile> {
                             Container(
                                 margin:
                                     EdgeInsets.only(left: screenWidth * 0.37),
-                                child: Icon(Icons.keyboard_arrow_right)),
+                                child: const Icon(Icons.keyboard_arrow_right)),
                           ],
                         ),
                       ),
@@ -460,7 +578,7 @@ class _ProfileState extends State<Profile> {
                           // Other widgets in the row
                           Expanded(
                             child: Container(
-                              margin: EdgeInsets.only(left: 20),
+                              margin: const EdgeInsets.only(left: 20),
                               child: const Text(
                                 'Logout',
                                 style: TextStyle(
@@ -472,9 +590,14 @@ class _ProfileState extends State<Profile> {
                           ),
                           Expanded(
                             child: IconButton(
-                              icon: Icon(Icons.logout),
+                              icon: const Icon(Icons.logout),
                               onPressed: () {
-                                _showLogoutConfirmationDialog(context);
+                                Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const Cargo_login()),
+                                  (route) => false,
+                                );
                               },
                             ),
                           ),

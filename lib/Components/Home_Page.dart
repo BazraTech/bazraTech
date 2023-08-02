@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
+import '../constant/global_variables.dart';
 import '../localization/app_localizations.dart';
 import 'package:hive/hive.dart';
 import '../shared/cargoInfo.dart';
@@ -169,7 +170,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                   children: [
                     Center(
                       child: Container(
-                        margin: EdgeInsets.only(top: 20),
+                        margin: const EdgeInsets.only(top: 20),
                         child: CircleAvatar(
                           radius: 55,
                           backgroundColor: Colors.white,
@@ -185,7 +186,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                                   logo,
                                 );
                               } else {
-                                return Text('Logo not available');
+                                return const Text('Logo not available');
                               }
                             },
                           ),
@@ -206,13 +207,13 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                               context,
                               MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      Notifications()),
+                                      const Notifications()),
                             );
                           },
                           child: const Icon(
                             Icons.notifications,
                             size: 30,
-                            color: Color.fromRGBO(85, 164, 240, 1),
+                            color: GlobalVariables.primaryColor,
                           ),
                         ),
                       ),
@@ -229,7 +230,6 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                           Colors.black26,
                           Color.fromRGBO(250, 164, 246, 0.7),
                         ],
-                        //stops: [0.4, 0.4],
                       ),
                     ),
                     padding: EdgeInsets.all(8.0),

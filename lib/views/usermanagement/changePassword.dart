@@ -1,14 +1,14 @@
 import 'dart:convert';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:cargo/shared/constant.dart';
-
 import 'package:flutter/material.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
-
+import '../../constant/global_variables.dart';
 import '../../localization/app_localizations.dart';
 import '../../shared/custom-form.dart';
 import '../../shared/customButton.dart';
+import '../../shared/storage_hepler.dart';
 import 'Profile.dart';
 import 'login.dart';
 
@@ -22,48 +22,19 @@ class ChangePassword extends StatefulWidget {
 TextEditingController from = TextEditingController();
 
 class _ChangePasswordState extends State<ChangePassword> {
-  final _username = TextEditingController();
-  final _pin = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
+  final _currentPassController = TextEditingController();
+  final _newPasswordController = TextEditingController();
+  final _confirmPassController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  void _showSweetAlert(BuildContext context, AlertType alertType, String title,
-      String description) {
-    Alert(
-      context: context,
-      type: alertType,
-      title: title,
-      desc: description,
-      buttons: [
-        DialogButton(
-          child: Text(
-            'OK',
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          onPressed: () => {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => Cargo_login()),
-            )
-          },
-          width: 120,
-        ),
-      ],
-    ).show();
-  }
-
-  registerCargo(
-      String newPass, String confirmPass, String userName, String pin) async {
-    const url = 'http://164.90.174.113:9090/Api/User/SetPin';
+  changePassword(String currentPass, String newPass, String confirmPass) async {
+    const url = 'http://164.90.174.113:9090/Api/User/ChangePassword';
 
     // Define your request data as a Map
     Map requestData = {
-      'newpassword': "${newPass}",
-      'confirmPassword': "${confirmPass}",
-      'username': "${userName}",
-      'pin': "${pin}",
+      'currentPin': "${currentPass}",
+      'newPin': "${newPass}",
+      'confirmNewPin': "${confirmPass}",
     };
     print(requestData);
 
@@ -74,8 +45,8 @@ class _ChangePasswordState extends State<ChangePassword> {
     print("********************************");
     try {
       String body = json.encode(requestData);
-
-      // Make the request and handle the response
+      StorageHelper storageHelper = StorageHelper();
+      String? accessToken = await storageHelper.getToken();
       if (_formKey.currentState!.validate()) {
         _formKey.currentState?.save();
         final response = await http.post(
@@ -84,6 +55,7 @@ class _ChangePasswordState extends State<ChangePassword> {
           headers: {
             "Content-Type": "application/json",
             'Accept': 'application/json',
+            "Authorization": "Bearer $accessToken",
           },
         );
         print(response.body);
@@ -91,16 +63,38 @@ class _ChangePasswordState extends State<ChangePassword> {
         final Map jsonResponse = json.decode(response.body);
 
         if (response.statusCode == 200) {
-          _showSweetAlert(
-              context, AlertType.success, 'Success', jsonResponse['message']);
+          Fluttertoast.showToast(
+              msg: jsonResponse['message'],
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+              fontSize: 14.0);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (BuildContext context) => const Cargo_login()),
+          );
         } else {
-          _showSweetAlert(
-              context, AlertType.error, 'Error', jsonResponse['message']);
+          Fluttertoast.showToast(
+              msg: jsonResponse['message'],
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+              fontSize: 14.0);
         }
       }
     } catch (e) {
-      _showSweetAlert(context, AlertType.error, 'Error',
-          'An error occurred, please check your internet connection.');
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 14.0);
     }
   }
 
@@ -132,7 +126,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 AppLocalizations.of(context)
                         ?.translate("Password change page") ??
                     "Password change page",
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.grey,
                 ),
               ),
@@ -149,24 +143,23 @@ class _ChangePasswordState extends State<ChangePassword> {
               child: Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(bottom: 45),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.blue,
+                    margin: const EdgeInsets.only(bottom: 45),
+                    child: const CircleAvatar(
+                      backgroundColor: GlobalVariables.primaryColor,
                       radius: 60,
-                      child: Icon(Icons.lock, color: Colors.white, size: 70),
+                      child: Icon(Icons.lock, color: Colors.black, size: 70),
                     ),
                   ),
                   CustomTextFieldForm(
                     hintText: AppLocalizations.of(context)
                             ?.translate('Current Password') ??
                         "Current Password",
-                    textController: _passwordController,
+                    textController: _currentPassController,
                     isPassword: true,
                     hintTextStyle: TextStyle(
                       letterSpacing: 1.0,
                       wordSpacing: 2.0,
                       color: _isFocus ? Colors.red : Colors.grey,
-                      // ... other styles
                     ),
                     textStyle: TextStyle(fontSize: 16),
                     onChanged: (value) {
@@ -180,8 +173,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                                 ?.translate('Please enter Current password') ??
                             "Please enter Current password";
                       }
-                      return PasswordMatchValidator.validate(
-                          value!, _confirmPasswordController.text);
                     },
                   ),
                   const SizedBox(
@@ -191,7 +182,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     hintText: AppLocalizations.of(context)
                             ?.translate('New Password') ??
                         "New Password",
-                    textController: _passwordController,
+                    textController: _newPasswordController,
                     isPassword: true,
                     hintTextStyle: TextStyle(
                       letterSpacing: 1.0,
@@ -199,7 +190,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                       color: _isFocus ? Colors.red : Colors.grey,
                       // ... other styles
                     ),
-                    textStyle: TextStyle(fontSize: 16),
+                    textStyle:const TextStyle(fontSize: 16),
                     onChanged: (value) {
                       print("password changed: $value");
                     },
@@ -212,7 +203,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             "Please enter new password";
                       }
                       return PasswordMatchValidator.validate(
-                          value!, _confirmPasswordController.text);
+                          value, _newPasswordController.text);
                     },
                   ),
                   const SizedBox(
@@ -222,7 +213,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     hintText: AppLocalizations.of(context)
                             ?.translate('Confirm Password') ??
                         "Confirm Password",
-                    textController: _confirmPasswordController,
+                    textController: _confirmPassController,
                     isPassword: true,
                     hintTextStyle: TextStyle(
                       letterSpacing: 1.0,
@@ -243,7 +234,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             "Please Confirm Password";
                       }
                       return PasswordMatchValidator.validate(
-                          value!, _passwordController.text);
+                          value, _newPasswordController.text);
                     },
                   ),
                   const SizedBox(
@@ -251,11 +242,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                   ),
                   CustomButton(
                     onPressed: () async {
-                      await registerCargo(
-                        _passwordController.text,
-                        _confirmPasswordController.text,
-                        _username.text,
-                        _pin.text,
+                      await changePassword(
+                        _currentPassController.text,
+                        _newPasswordController.text,
+                        _confirmPassController.text,
                       );
                     },
                     text: AppLocalizations.of(context)

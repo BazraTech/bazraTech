@@ -63,33 +63,40 @@ class _BottomNavState extends State<BottomNav>
                 indicatorSize: TabBarIndicatorSize.label,
                 indicatorPadding:
                     const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-                indicatorColor: Colors.white,
+                indicatorColor: Colors.black,
                 isScrollable: true,
                 indicatorWeight: 3,
                 enableFeedback: true,
                 mouseCursor: SystemMouseCursors.click,
                 tabs: [
                   Tab(
-                    icon: const Icon(Icons.home),
+                    icon: const Icon(
+                      Icons.home,
+                      color: Colors.black,
+                    ),
                     child: Text(
                       AppLocalizations.of(context)?.translate("Home") ?? "Home",
                       style: const TextStyle(
                         fontSize: 13,
-                        color: Colors.white,
+                        color: Colors.black,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 5),
                     child: Tab(
-                      icon: Icon(Icons.location_on),
+                      icon: const Icon(
+                        Icons.location_on,
+                        color: Colors.black,
+                      ),
                       child: Text(
-                        "Tracking",
-                        style: TextStyle(
+                        AppLocalizations.of(context)?.translate("Tracking") ??
+                            "Tracking",
+                        style: const TextStyle(
                           fontSize: 13,
-                          color: Colors.white,
+                          color: Colors.black,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.bold,
                         ),
@@ -97,26 +104,32 @@ class _BottomNavState extends State<BottomNav>
                     ),
                   ),
                   Tab(
-                    icon: Icon(Icons.messenger),
+                    icon: const Icon(
+                      Icons.messenger,
+                      color: Colors.black,
+                    ),
                     child: Text(
                       AppLocalizations.of(context)?.translate("Message") ??
                           "Message",
                       style: const TextStyle(
                         fontSize: 12,
-                        color: Colors.white,
+                        color: Colors.black,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   Tab(
-                    icon: Icon(Icons.person),
+                    icon: const Icon(
+                      Icons.person,
+                      color: Colors.black,
+                    ),
                     child: Text(
                       AppLocalizations.of(context)?.translate("Profile") ??
                           "Profile",
                       style: const TextStyle(
                         fontSize: 13,
-                        color: Colors.white,
+                        color: Colors.black,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.bold,
                       ),

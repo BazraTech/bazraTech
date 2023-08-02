@@ -177,16 +177,16 @@ class _Cargo_loginState extends State<Cargo_login> {
           underline: null,
           items: [
             DropdownMenuItem(
+              value: Locale('en', ''),
               child: Text(
                 AppLocalizations.of(context)?.translate('English') ?? 'English',
               ),
-              value: Locale('en', ''),
             ),
             DropdownMenuItem(
+              value: Locale('am', ''),
               child: Text(
                 AppLocalizations.of(context)?.translate('Amharic') ?? 'Amharic',
               ),
-              value: Locale('am', ''),
             ),
           ],
         ),
@@ -203,7 +203,6 @@ class _Cargo_loginState extends State<Cargo_login> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -306,12 +305,12 @@ class _Cargo_loginState extends State<Cargo_login> {
                           fontFamily: "Roboto"),
                       hintText: '',
                       textController: _username,
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.phone,
                       onChanged: (value) {},
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return AppLocalizations.of(context)
-                                  ?.translate('Password') ??
+                          return AppLocalizations.of(context)?.translate(
+                                  'Please enter your phone number') ??
                               "Please enter your phone number";
                         }
                       },

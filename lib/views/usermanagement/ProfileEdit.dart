@@ -7,7 +7,9 @@ import 'package:cargo/shared/constant.dart';
 import 'package:cargo/views/usermanagement/login.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import '../../constant/global_variables.dart';
 import '../../localization/app_localizations.dart';
+import '../../services/api_service.dart';
 import '../../shared/custom-form.dart';
 import '../../shared/customButton.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -17,7 +19,24 @@ import 'package:image_picker/image_picker.dart';
 class ProfileEdit extends StatefulWidget {
   String? companyName;
   String? ownerAvatar;
-  ProfileEdit({super.key, this.companyName, required this.ownerAvatar});
+  String? phoneNumber;
+  String? businessName;
+  String? businessSector;
+  String? businessType;
+  String? region;
+  String? subcity;
+  String? specificLocation;
+  ProfileEdit(
+      {super.key,
+      this.companyName,
+      required this.ownerAvatar,
+      required this.phoneNumber,
+      required this.businessName,
+      required this.businessSector,
+      required this.businessType,
+      required this.region,
+      required this.subcity,
+      required this.specificLocation});
 
   @override
   State<ProfileEdit> createState() => _ProfileEditState();
@@ -33,14 +52,19 @@ class _ProfileEditState extends State<ProfileEdit> {
   final _formKey = GlobalKey<FormState>();
   PickedFile? _pickedImage;
   final ImagePicker _picker = ImagePicker();
+  String? owneriamg;
+  AuthService auth = AuthService();
 
   void takePicture(ImageSource source) async {
-    final XFile? pickedFile = await _picker.pickImage(
-      source: source,
-    );
+    final XFile? image = await ImagePicker().pickImage(source: source);
+
     setState(() {
-      _pickedImage = pickedFile != null ? PickedFile(pickedFile.path) : null;
+      owneriamg = File(image!.path).path;
     });
+  }
+
+  updateProfile(String? pro) {
+    auth.updateProfile(pro);
   }
 
   @override
@@ -49,122 +73,8 @@ class _ProfileEditState extends State<ProfileEdit> {
 
     _genderController.dispose();
     _emailController.dispose();
-    // _confirmPasswordController.dispose();
 
     super.dispose();
-  }
-
-  void _showSweetAlert(BuildContext context, AlertType alertType, String title,
-      String description) {
-    Alert(
-      context: context,
-      type: alertType,
-      title: title,
-      desc: description,
-      style: AlertStyle(
-        descStyle: TextStyle(fontSize: 14),
-        isOverlayTapDismiss: false,
-        overlayColor: Colors.black54,
-        animationType: AnimationType.grow,
-        alertBorder: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        titleStyle: TextStyle(
-          color: alertType == AlertType.error ? Colors.red : Colors.blue,
-        ),
-        alertAlignment: Alignment.center,
-        alertElevation: 10,
-      ),
-      buttons: [
-        DialogButton(
-          child: Text(
-            'OK',
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          onPressed: () {
-            if (alertType == AlertType.success) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => Cargo_login()),
-              );
-            } else if (alertType == AlertType.error) {
-              Navigator.pop(context);
-            }
-          },
-          width: 200,
-        ),
-      ],
-    ).show();
-  }
-
-  registerCargo(String company, String gender, String email) async {
-    const url = 'http://164.90.174.113:9090/Api/SignUp/Cargo';
-
-    // Define your request data as a Map
-    Map requestData = {
-      'companyName': "${company}",
-      'phone': "${gender}",
-      'confirmPassword': "${email}",
-    };
-    print(requestData);
-
-    print(requestData);
-
-    print("********************************");
-    print('Token: $requestData');
-    print("********************************");
-    try {
-      String body = json.encode(requestData);
-
-      // Make the request and handle the response
-      if (_formKey.currentState!.validate()) {
-        _formKey.currentState?.save();
-        final response = await http.post(
-          Uri.parse(url),
-          body: body,
-          headers: {
-            "Content-Type": "application/json",
-            'Accept': 'application/json',
-          },
-        );
-        print(response.body);
-        print(response.statusCode);
-        final Map jsonResponse = json.decode(response.body);
-
-        if (response.statusCode == 200) {
-          Fluttertoast.showToast(
-              msg: jsonResponse['message'],
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.green,
-              textColor: Colors.white,
-              fontSize: 14.0);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Cargo_login()),
-          );
-        } else {
-          Fluttertoast.showToast(
-              msg: jsonResponse['message'],
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
-              fontSize: 14.0);
-        }
-      }
-    } catch (e) {
-      Fluttertoast.showToast(
-          msg: 'An error occurred, please check your internet connection.',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 14.0);
-    }
   }
 
   bool _isErrorVisible = false;
@@ -214,192 +124,151 @@ class _ProfileEditState extends State<ProfileEdit> {
                   Container(
                     height: screenHeight * 0.15,
                     margin: const EdgeInsets.only(bottom: 30),
-                    child: Stack(
+                    child: Column(
                       children: [
-                        Positioned(
-                            left: screenWidth * 0.3,
-                            height: screenHeight * 0.15,
-                            child: Column(
-                              children: [
-                                Stack(
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 60,
-                                      backgroundColor: Colors.white,
-                                      child: CircleAvatar(
-                                        radius: 58,
-                                        backgroundColor: Colors.white,
-                                        backgroundImage: _pickedImage == null
-                                            ? NetworkImage(
-                                                "${widget.ownerAvatar}")
-                                            : FileImage(
-                                                    File(_pickedImage!.path))
-                                                as ImageProvider,
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 62,
-                                      child: Container(
-                                        margin: EdgeInsets.only(
-                                            top: screenHeight * 0.07),
-                                        child: RawMaterialButton(
-                                          onPressed: () {
-                                            showDialog(
-                                                context: context,
-                                                builder: (BuildContext contex) {
-                                                  return AlertDialog(
-                                                    title: Text('Choose Option',
+                        Stack(
+                          children: [
+                            CircleAvatar(
+                              radius: 60,
+                              backgroundColor: Colors.white,
+                              child: CircleAvatar(
+                                radius: 58,
+                                backgroundColor: Colors.white,
+                                backgroundImage: _pickedImage == null
+                                    ? NetworkImage("${widget.ownerAvatar}")
+                                    : FileImage(File(_pickedImage!.path))
+                                        as ImageProvider,
+                              ),
+                            ),
+                            Positioned(
+                              left: 62,
+                              child: Container(
+                                margin:
+                                    EdgeInsets.only(top: screenHeight * 0.07),
+                                child: RawMaterialButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text(
+                                            'Choose Option',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              color:
+                                                  GlobalVariables.primaryColor,
+                                            ),
+                                          ),
+                                          content: SingleChildScrollView(
+                                            child: ListBody(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    takePicture(
+                                                        ImageSource.camera);
+                                                  },
+                                                  child: Row(
+                                                    children: [
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsets.all(8.0),
+                                                        child: Icon(
+                                                          Icons.camera,
+                                                          color: GlobalVariables
+                                                              .primaryColor,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        'Camera',
                                                         style: TextStyle(
+                                                          fontSize: 18,
                                                           fontWeight:
-                                                              FontWeight.w600,
+                                                              FontWeight.w500,
                                                           color:
-                                                              Colors.lightBlue,
-                                                        )),
-                                                    content:
-                                                        SingleChildScrollView(
-                                                      child: ListBody(
-                                                          children: [
-                                                            InkWell(
-                                                                onTap: () {
-                                                                  takePicture(
-                                                                      ImageSource
-                                                                          .camera);
-                                                                },
-                                                                splashColor: Colors
-                                                                    .lightBlue,
-                                                                child: Row(
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              8.0),
-                                                                      child:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .camera,
-                                                                        color: Colors
-                                                                            .lightBlue,
-                                                                      ),
-                                                                    ),
-                                                                    Text(
-                                                                        'Camera',
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            color: Colors.grey[500]))
-                                                                  ],
-                                                                )),
-                                                            InkWell(
-                                                                onTap: () {
-                                                                  takePicture(
-                                                                      ImageSource
-                                                                          .gallery);
-                                                                },
-                                                                splashColor: Colors
-                                                                    .lightBlue,
-                                                                child: Row(
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              8.0),
-                                                                      child:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .browse_gallery,
-                                                                        color: Colors
-                                                                            .lightBlue,
-                                                                      ),
-                                                                    ),
-                                                                    Text(
-                                                                        'Galley',
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            color: Colors.grey[500]))
-                                                                  ],
-                                                                )),
-                                                            InkWell(
-                                                                onTap: () {},
-                                                                splashColor: Colors
-                                                                    .lightBlue,
-                                                                child: Row(
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              8.0),
-                                                                      child:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .remove_circle,
-                                                                        color: Colors
-                                                                            .red,
-                                                                      ),
-                                                                    ),
-                                                                    Text(
-                                                                        'Remove',
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                18,
-                                                                            fontWeight:
-                                                                                FontWeight.w500,
-                                                                            color: Colors.grey[500]))
-                                                                  ],
-                                                                )),
-                                                          ]),
+                                                              Colors.grey[500],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    takePicture(
+                                                        ImageSource.gallery);
+                                                  },
+                                                  splashColor: GlobalVariables
+                                                      .primaryColor,
+                                                  child: Row(
+                                                    children: [
+                                                      const Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Icon(
+                                                          Icons.browse_gallery,
+                                                          color: GlobalVariables
+                                                              .primaryColor,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        'Gallery',
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color:
+                                                              Colors.grey[500],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(8.0),
+                                                      child: Icon(
+                                                        Icons.remove_circle,
+                                                        color: Colors.red,
+                                                      ),
                                                     ),
-                                                  );
-                                                });
-                                          },
-                                          elevation: 10,
-                                          fillColor: Colors.lightBlue,
-                                          child: Icon(Icons.add_a_photo),
-                                          shape: CircleBorder(),
-                                        ),
-                                      ),
-                                    )
-                                  ],
+                                                    Text(
+                                                      'Remove',
+                                                      style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: Colors.grey[500],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  elevation: 10,
+                                  fillColor: GlobalVariables.primaryColor,
+                                  child: Icon(Icons.add_a_photo),
+                                  shape: CircleBorder(),
                                 ),
-                              ],
-                            )),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
-                  CustomTextFieldForm(
-                    textStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.normal,
-                        fontFamily: "Roboto"),
-                    hintText:
-                        AppLocalizations.of(context)?.translate("Full Name") ??
-                            "Full Name",
-                    textController: _companyController,
-                    keyboardType: TextInputType.text,
-                    hintTextStyle: TextStyle(
-                      letterSpacing: 1.0,
-                      wordSpacing: 2.0,
-                      color: _isFocus ? Colors.red : Colors.grey,
-                      // ... other styles
-                    ),
-                    onChanged: (value) {},
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return AppLocalizations.of(context)
-                                ?.translate("Please enter your full  name") ??
-                            "Please enter your full name";
-                      }
-                      return null;
-                    },
-                    obscureText: false,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  Container(
+                      alignment: Alignment.topLeft,
+                      margin: EdgeInsets.only(left: 10, bottom: 10),
+                      child: Text(AppLocalizations.of(context)
+                              ?.translate("Company Name") ??
+                          "Company Name")),
                   TextFormField(
                     controller: _companyController,
                     readOnly: true,
@@ -419,11 +288,10 @@ class _ProfileEditState extends State<ProfileEdit> {
                       errorBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.red, width: 1.5),
                       ),
-                      focusedErrorBorder: const OutlineInputBorder(),
                     ),
                     onChanged: (value) {},
                     validator: (value) {
-                      if (value!.isEmpty) {
+                      if ("${widget.companyName}" == null) {
                         return AppLocalizations.of(context)
                                 ?.translate('Please enter your company name') ??
                             "Please enter your company name";
@@ -435,13 +303,54 @@ class _ProfileEditState extends State<ProfileEdit> {
                   SizedBox(
                     height: 20,
                   ),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    margin: EdgeInsets.only(left: 10, bottom: 10),
+                    child: Text(AppLocalizations.of(context)
+                            ?.translate("Mobile Number") ??
+                        "Mobile Number"),
+                  ),
                   CustomTextFieldForm(
+                    readOnly: true,
+                    keyboardType: TextInputType.none,
                     textStyle: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal),
-                    hintText:
-                        AppLocalizations.of(context)?.translate("Email") ??
-                            "Email",
+                    hintText: "${widget.phoneNumber}",
+                    textController: _emailController,
+                    obscureText: false,
+                    hintTextStyle: TextStyle(
+                      letterSpacing: 1.0,
+                      wordSpacing: 2.0,
+                      color: _isFocus ? Colors.red : Colors.grey,
+                    ),
+                    onChanged: (value) {},
+                    validator: (value) {
+                      if ("${widget.phoneNumber}" == null) {
+                        return AppLocalizations.of(context)
+                                ?.translate('Please enter your email ') ??
+                            "Please enter your email ";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    margin: EdgeInsets.only(left: 10, bottom: 10),
+                    child: Text(AppLocalizations.of(context)
+                            ?.translate("Business Name") ??
+                        "Business Name"),
+                  ),
+                  CustomTextFieldForm(
+                    readOnly: true,
+                    keyboardType: TextInputType.none,
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.normal),
+                    hintText: "${widget.businessName}",
                     textController: _emailController,
                     obscureText: false,
                     hintTextStyle: TextStyle(
@@ -452,7 +361,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     onChanged: (value) {},
                     validator: (value) {
-                      if (value!.isEmpty) {
+                      if ("${widget.businessName}" == null) {
                         return AppLocalizations.of(context)
                                 ?.translate('Please enter your email ') ??
                             "Please enter your email ";
@@ -463,14 +372,20 @@ class _ProfileEditState extends State<ProfileEdit> {
                   SizedBox(
                     height: 20,
                   ),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    margin: EdgeInsets.only(left: 10, bottom: 10),
+                    child: Text(AppLocalizations.of(context)
+                            ?.translate("Business Sector") ??
+                        "Business Sector"),
+                  ),
                   CustomTextFieldForm(
+                    readOnly: true,
                     textStyle: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal),
-                    hintText:
-                        AppLocalizations.of(context)?.translate("Gender") ??
-                            "Gender",
-                    textController: _genderController,
+                    hintText: "${widget.businessSector}",
+                    textController: _emailController,
                     obscureText: false,
                     hintTextStyle: TextStyle(
                       letterSpacing: 1.0,
@@ -480,21 +395,156 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     onChanged: (value) {},
                     validator: (value) {
-                      if (value!.isEmpty) {
+                      if ("${widget.businessSector}" == null) {
                         return AppLocalizations.of(context)
-                                ?.translate('Please enter your gender') ??
-                            "Please enter your gender";
+                                ?.translate('Please enter your email ') ??
+                            "Please enter your email ";
                       }
                       return null;
                     },
                   ),
-                  const SizedBox(
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    margin: EdgeInsets.only(left: 10, bottom: 10),
+                    child: Text(AppLocalizations.of(context)
+                            ?.translate("Business Type") ??
+                        "Business Type"),
+                  ),
+                  CustomTextFieldForm(
+                    readOnly: true,
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.normal),
+                    hintText: "${widget.businessType}",
+                    textController: _emailController,
+                    obscureText: false,
+                    hintTextStyle: TextStyle(
+                      letterSpacing: 1.0,
+                      wordSpacing: 2.0,
+                      color: _isFocus ? Colors.red : Colors.grey,
+                      // ... other styles
+                    ),
+                    onChanged: (value) {},
+                    validator: (value) {
+                      if ("${widget.businessType}" == null) {
+                        return AppLocalizations.of(context)
+                                ?.translate('Please enter your email ') ??
+                            "Please enter your email ";
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    margin: EdgeInsets.only(left: 10, bottom: 10),
+                    child: Text(
+                        AppLocalizations.of(context)?.translate("Region") ??
+                            "Region"),
+                  ),
+                  CustomTextFieldForm(
+                    readOnly: true,
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.normal),
+                    hintText: "${widget.region}",
+                    textController: _emailController,
+                    obscureText: false,
+                    hintTextStyle: TextStyle(
+                      letterSpacing: 1.0,
+                      wordSpacing: 2.0,
+                      color: _isFocus ? Colors.red : Colors.grey,
+                      // ... other styles
+                    ),
+                    onChanged: (value) {},
+                    validator: (value) {
+                      if ("${widget.region}" == null) {
+                        return AppLocalizations.of(context)
+                                ?.translate('Please enter your email ') ??
+                            "Please enter your email ";
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    margin: EdgeInsets.only(left: 10, bottom: 10),
+                    child: Text(
+                        AppLocalizations.of(context)?.translate("Sub City") ??
+                            "Sub City"),
+                  ),
+                  CustomTextFieldForm(
+                    readOnly: true,
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.normal),
+                    hintText: "${widget.subcity}",
+                    textController: _emailController,
+                    obscureText: false,
+                    hintTextStyle: TextStyle(
+                      letterSpacing: 1.0,
+                      wordSpacing: 2.0,
+                      color: _isFocus ? Colors.red : Colors.grey,
+                      // ... other styles
+                    ),
+                    onChanged: (value) {},
+                    validator: (value) {
+                      if ("${widget.subcity}" == null) {
+                        return AppLocalizations.of(context)
+                                ?.translate('Please enter your email ') ??
+                            "Please enter your email ";
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    margin: EdgeInsets.only(left: 10, bottom: 10),
+                    child: Text(AppLocalizations.of(context)
+                            ?.translate("Specific Location") ??
+                        "Specific Location"),
+                  ),
+                  CustomTextFieldForm(
+                    readOnly: true,
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.normal),
+                    hintText: "${widget.specificLocation}",
+                    textController: _emailController,
+                    obscureText: false,
+                    hintTextStyle: TextStyle(
+                      letterSpacing: 1.0,
+                      wordSpacing: 2.0,
+                      color: _isFocus ? Colors.red : Colors.grey,
+                      // ... other styles
+                    ),
+                    onChanged: (value) {},
+                    validator: (value) {
+                      if ("${widget.specificLocation}" == null) {
+                        return AppLocalizations.of(context)
+                                ?.translate('Please enter your email ') ??
+                            "Please enter your email ";
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
                     height: 20,
                   ),
                   CustomButton(
-                    onPressed: () async {
-                      await registerCargo(_companyController.text,
-                          _genderController.text, _emailController.text);
+                    onPressed: () {
+                      updateProfile(owneriamg);
                     },
                     text: AppLocalizations.of(context)?.translate('Update') ??
                         "Update",

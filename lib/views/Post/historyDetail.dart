@@ -103,6 +103,13 @@ class _cargoHistoryDetailState extends State<cargoHistoryDetail> {
                     Card(
                       elevation: 3,
                       child: ListTile(
+                        title: Text("Cargo ID"),
+                        trailing: Text('${cargo.id}'),
+                      ),
+                    ),
+                    Card(
+                      elevation: 3,
+                      child: ListTile(
                         title: Text("From"),
                         trailing: Text('${cargo.pickUp}'),
                       ),
@@ -152,7 +159,7 @@ class _cargoHistoryDetailState extends State<cargoHistoryDetail> {
                     Card(
                       elevation: 3,
                       child: ListTile(
-                        title: Text("Status"),
+                        title: Text("Cargo Status"),
                         trailing: Text('${cargo.status}'),
                       ),
                     ),

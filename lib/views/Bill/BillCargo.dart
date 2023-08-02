@@ -9,6 +9,7 @@ import '../../Components/Noglow.dart';
 import '../../localization/app_localizations.dart';
 import '../../model/bill.dart';
 import '../../shared/loading.dart';
+import '../../shared/networkError.dart';
 import '../../shared/storage_hepler.dart';
 import '../Bottom_Navigation.dart';
 import 'billDetail.dart';
@@ -181,7 +182,8 @@ class _CargoBillState extends State<CargoBill> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const Bill_Detail()));
+                                    builder: (context) =>
+                                        Bill_Detail(cargoId: bill.id)));
                           },
                           child: Column(
                             children: [
@@ -313,62 +315,7 @@ class _CargoBillState extends State<CargoBill> {
                       }),
                 );
               }
-              return Center(
-                child: FutureBuilder(
-                  future: Future.delayed(const Duration(seconds: 10),
-                      () => _checkInternetConnection()),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return TikTokLoadingSpinner();
-                    } else {
-                      return Container(
-                          alignment: Alignment.center,
-                          height: screenHeight * 0.13,
-                          width: screenWidth * 0.7,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.shade200.withOpacity(0.7),
-                                  blurRadius: 8.0,
-                                  spreadRadius: 2.0,
-                                  offset: const Offset(
-                                    6, // Move to right 7.0 horizontally
-                                    8, // Move to bottom 8.0 Vertically
-                                  ))
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(top: 10),
-                                child: Text('Network Error',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.grey.shade500,
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                    'No Network. Connect your device to internet or mobile data',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey.shade500,
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                              ),
-                            ],
-                          ));
-                    }
-                  },
-                ),
-              );
+              return const NetWorkError();
             }));
   }
 }
