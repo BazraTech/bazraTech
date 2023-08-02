@@ -4,29 +4,10 @@ import { useForm } from 'react-hook-form';
 import { Link, useParams } from 'react-router-dom';
 import { HiMenuAlt1 } from "react-icons/hi";
 import { useState, useEffect } from 'react';
-import { SiTripdotcom } from "react-icons/si";
-import { SiGoogletagmanager } from "react-icons/si";
-import { BiTrip } from "react-icons/bi";
-import Header from '../../Header/Header';
-import { total } from './Data/jsonData';
-import { on_route } from './Data/Data';
-import { parked } from './Data/Data';
 import Navigation from '../Navigation/Navigation';
-import { Pagination } from 'antd';
-import Driver_detail from '../Drivers/Driver_detail';
-import { AiFillCar } from "react-icons/ai";
-import { FaRoute } from "react-icons/fa";
-import { BsSearch } from "react-icons/bs";
-import { AiFillFilter } from "react-icons/ai";
-import { FaParking } from "react-icons/fa";
 import swal from "sweetalert";
-import { IoSettingsOutline } from "react-icons/io5";
-import { FaUserSecret } from "react-icons/fa";
-import { FaUserCheck } from "react-icons/fa";
-import { FaUserTimes } from "react-icons/fa";
-import { FaUserMinus } from "react-icons/fa";
-import Vehicle_Table from './Vehicle_Table';
-import Driver_Table from './Driver_Table';
+import axios from 'axios';
+import { BsToggleOn,BsToggleOff } from "react-icons/bs"
 
 export default function Users_edit() {
 
@@ -67,7 +48,7 @@ export default function Users_edit() {
     const [cargoBusinessInfo, setCargoBusinessInfo] =useState({})
     const [cargoAddressInfo, setCargoAddressInfo] =useState({})
     const [cargoEnabled, setCargoEnabled]= useState('')
-
+    const [reloadKey, setReloadKey] = useState(0);
     const [Loading, setLoading] = useState([]);
     const { id, role } = useParams();
     const [updateCargoInfo, setUpdateCargoInfo] = useState({});
@@ -94,26 +75,26 @@ export default function Users_edit() {
 
  
   const   oldCargoOwnerInformation = {
-    licenseNumber: json.businessINF.licenseNumber,
-      tinNumber: json.businessINF.tinNumber,
-      businessName: json.businessINF.businessName,
-      businessType: json.businessINF.businessType,
-      businessSector: json.businessINF.businessSector,
-      region: json.address.region,
-      subCity: json.address.subcity,
-      specificLocation: json.address.specificLocation,
-      city: json.address.city,
-      woreda: json.address.woreda,
-      houseNumber: json.address.houseNum,
-      phoneNumber: json.address.phone,
-      licenseFile: json.businessINF.license,
-      tinFile:json.businessINF.tin,
+    "licenseNumber": json.businessINF.licenseNumber,
+      "tinNumber": json.businessINF.tinNumber,
+      "businessName": json.businessINF.businessName,
+      "businessType": json.businessINF.businessType,
+      "businessSector": json.businessINF.businessSector,
+      "region": json.address.region,
+      "subCity": json.address.subcity,
+      "specificLocation": json.address.specificLocation,
+      "city": json.address.city,
+      "woreda": json.address.woreda,
+      "houseNumber": json.address.houseNum,
+      "phoneNumber": json.address.phone,
+      "licenseFile": json.businessINF.license,
+      "tinFile":json.businessINF.tin,
     };
 
     setUpdateCargoInfo(oldCargoOwnerInformation);
  
             });
-    }, [])
+    }, [reloadKey])
 
     const [selecttag, setSelectTag] = useState(false)
     const [inputtag, setinputTag] = useState(true)
@@ -163,6 +144,11 @@ useEffect(() => {
 
 /*********************************update vehicle owner information************* */
 
+const handleReload = () => {
+    setReloadKey((prevKey) => prevKey + 1);
+    };
+    
+
 // console.log(updateVehicleInfo)
 const handleUpdateChange = (e) => {
     console.log('handleUpdateChange')
@@ -176,52 +162,113 @@ const handleUpdateChange = (e) => {
   const onSubmit =(e)=>{
         
     e.preventDefault();
-  console.log(updateCargoInfo)
-    // updatedData.append(updateCargoInfo);
-    for (const [key, value] of Object.entries(updateCargoInfo)) {
-        updatedData.append(key, value);
-    }
-    console.log(updatedData);
+
     update();
 }
-    async function update(){
-
-
-
    
+
+   /*******************update cargo inf***** */
+    
+
+const update = async (phone) => 
+    {
+
+            const formData = new FormData();
+            console.log(updateCargoInfo)
+            formData.append("licenseNumber", updateCargoInfo.licenseNumber);
+            formData.append("tinNumber", updateCargoInfo.tinNumber);
+            formData.append("businessName", updateCargoInfo.businessName);
+            formData.append("businessType", updateCargoInfo.businessType);
+            formData.append("businessSector", updateCargoInfo.businessSector);
+            formData.append("region", updateCargoInfo.region);
+            formData.append("subCity", updateCargoInfo.subCity);
+            formData.append("specificLocation", updateCargoInfo.specificLocation);
+            formData.append("city", updateCargoInfo.city);
+            formData.append("woreda", updateCargoInfo.woreda);
+            formData.append("houseNumber", updateCargoInfo.houseNumber);
+            formData.append("phoneNumber", updateCargoInfo.phoneNumber);
+            formData.append("licenseFile", updateCargoInfo.licenseFile);
+            formData.append("tinFile", updateCargoInfo.tinFile);
+            console.log(formData)
+
+        try{
+            const response = await axios.put(
+                `http://164.90.174.113:9090/Api/Admin/UpdateInfo/CargOwner/${id}`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        "Authorization": `Bearer ${jwt}`,
+                    },
+                    }
+                );
+              localStorage.setItem("message", JSON.stringify(response.data["message"]));
+                const mess = localStorage.getItem("message");
+                console.log(response);
+                swal("Successfully Updated", `${mess}`, "success", {
+                    button: true,
+                });
+               
+
+        } catch (error) {
+          if (error.response) {
+            localStorage.setItem('message', JSON.stringify(error.response.data['message']));
+            const messx = localStorage.getItem('message');
+            console.log('message', messx);
+            console.log(error.response.data);
+            swal("Error", `${messx}`, "error", {
+              button: true,
+            });
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log('Error', error.message);
+          }
+        }
+    }
+
+/******************** */
+
+
+const enableDisable = async (enable) => {
+    console.log('Im on submit function');
     const options = {
-        method: "PUT",
+        method: "POST",
         headers: {
             'Content-Type': 'application/json',
             "Accept": "application/json",
             "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(updatedData),
+       
     };
-    const url = `http://164.90.174.113:9090/Api/Admin/UpdateInfo/CargOwner/${id}`;
+    const url =`http://164.90.174.113:9090/Api/User/disable/${enable}`; 
     try {
         const response = await fetch(url, options);
         const result = await response.json();
         console.log(result);
-        localStorage.setItem("message", JSON.stringify(result["message"]));
+        localStorage.setItem("message", JSON.stringify(result["message"])); 
         const mess = localStorage.getItem("message");
         console.log(mess);
         if (response.ok) {
-            console.log("updated successful");
-            swal("Successful", `${mess}`, "success", {
-                buttons: false,
-                timer: 2000,
-            });
-           
+            swal("Successfully", `${mess}`, "success", {
+                button: true,
+                timer: 6000,
+                
+            },)
+            setTimeout(() => {
+                handleReload();
+              }, 1000); 
+            
         } else {
             console.log("failed");
-            swal(`Failed To update ${mess}`, "Error", "error");
+            swal(`Failed To ${mess}`, "Error", "error");
         }
     } catch (error) {
         console.error(error);
     }
 }
-
     return (
         <div>
             <div className="users_edit_container">
@@ -350,8 +397,8 @@ const handleUpdateChange = (e) => {
                                                 objectFit: "cover",
                                                 borderRadius: "5px",
                                                 display: "block",
-                                                width: "100%",
-                                                height: "100%",
+                                                width: "100px",
+                                                height: "100px",
                                                 overflow: "hidden",
                                                 marginBottom: "10px",
                                                 }}
@@ -459,15 +506,22 @@ const handleUpdateChange = (e) => {
                                              onChange={handleUpdateChange}
                                              type="text" ></input>
                                         </div>
-                                        
-                                        <div>
-                                                <p>Enabled Status </p>
-                                                <input 
-                                                 name ='licenseNumber' 
-                                                 onChange={handleUpdateChange} 
-                                                defaultValue={cargoEnabled} 
-                                                type="text" disabled={diabled}></input>
+                                            
+                                            
+                                            <div >
+                                            <p>Account </p>
+                                            <div style={{display:'flex'}}>
+                                            <input 
+                                              name ='enabled'
+                                              onChange={handleUpdateChange} 
+                                              id='enable'
+                                            value={cargoEnabled == 'true' ? 'Enabled' : 'Disabled'} type="text"  
+                                        ></input>{cargoEnabled == 'true' ? <BsToggleOn onClick={()=>enableDisable(cargoOwnerInfo.id)}className={styles.toggleOn} size="3rem"></BsToggleOn> : 
+                                        <BsToggleOff onClick={()=>enableDisable(cargoOwnerInfo.id)}className={styles.toggleOff} size="3rem"></BsToggleOff>
+                                        }
+                                        </div>
                                             </div>
+                                       
                                     </div>
                                 </div>
 
