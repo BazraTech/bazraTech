@@ -49,7 +49,6 @@ class _LoginState extends State<Login> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-
   Future vehicleFetch() async {
     // fetch list of total vehicles
     await APIService.vehicleFetch();
@@ -129,7 +128,6 @@ class _LoginState extends State<Login> {
   void initState() {
     super.initState();
 
-   
     vehicleFetch();
     //futureWelcome = fetchWelcome();
     //clickLoginBtn();

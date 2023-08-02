@@ -106,7 +106,7 @@ class _notificationPageState extends State<notificationPage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     print("nee");
-    print(newData);
+    print(dataLists);
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(

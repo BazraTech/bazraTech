@@ -68,6 +68,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
               labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
               labelColor: Colors.black,
               indicatorPadding: EdgeInsets.all(4),
+              indicatorColor: Color.fromRGBO(178, 142, 22, 1),
               overlayColor:
                   MaterialStateColor.resolveWith((Set<MaterialState> states) {
                 if (states.contains(MaterialState.pressed)) {
@@ -251,7 +252,8 @@ class _VehicleStatusState extends State<VehicleStatus> {
       'Authorization': 'Bearer $token',
     };
     final response = await http.get(
-        Uri.parse("http://164.90.174.113:9090/Api/Vehicle/Owner/Status/INSTOCK"),
+        Uri.parse(
+            "http://164.90.174.113:9090/Api/Vehicle/Owner/Status/INSTOCK"),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.
@@ -277,7 +279,8 @@ class _VehicleStatusState extends State<VehicleStatus> {
       'Authorization': 'Bearer $token',
     };
     final response = await http.get(
-        Uri.parse("http://164.90.174.113:9090/Api/Vehicle/Owner/Status/ONROUTE"),
+        Uri.parse(
+            "http://164.90.174.113:9090/Api/Vehicle/Owner/Status/ONROUTE"),
         headers: requestHeaders);
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON.

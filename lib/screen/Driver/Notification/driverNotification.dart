@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import '../../../../const/constant.dart';
 import '../../../config/APIService.dart';
+import 'detailNotification.dart';
 
 class drivernotificationPage extends StatefulWidget {
   const drivernotificationPage({super.key});
@@ -19,7 +20,8 @@ class _drivernotificationPageState extends State<drivernotificationPage> {
   List Result = [];
   List existingData = [];
   List newData = [];
-  List oldData = [];
+  var box;
+  var MyData;
   List results = [];
   List Temp = [];
   List dataLists = [];
@@ -63,7 +65,8 @@ class _drivernotificationPageState extends State<drivernotificationPage> {
       // Get the Hive box
 
       final box = Hive.box('dataBox');
-      final String lastStoredId = box.get('lastId', defaultValue: 0);
+      MyData = box.get('id');
+      // final String lastStoredId = box.get('lastId', defaultValue: 0);
 
       // Store only new data in Hive
       for (var data in items) {
@@ -74,9 +77,9 @@ class _drivernotificationPageState extends State<drivernotificationPage> {
         bool istrue = !box.containsKey(id);
         print(istrue);
         if (istrue == true) {
-          final modifydata = addBoolValueToList(data);
+          // final modifydata = addBoolValueToList(data);
 
-          box.put(id, modifydata);
+          box.put(id, data);
         } else {
           setState(() {
             dataLists = items;
@@ -101,7 +104,7 @@ class _drivernotificationPageState extends State<drivernotificationPage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     print("nee");
-    print(newData);
+    print(MyData);
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
@@ -200,6 +203,14 @@ class _drivernotificationPageState extends State<drivernotificationPage> {
                                                         ['isFlagged'] = true);
                                               });
                                             }
+                                            Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          notificationDetial(
+                                            id: dataLists[index]['id'],
+                                          )),
+                                );
                                           },
                                           child: Container(
                                             height: screenHeight * 0.1,

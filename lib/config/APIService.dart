@@ -4,14 +4,13 @@ class ApIConfig {
   static const ownerinfoupdate = "/Api/Vehicle/UpdateInfo";
 
   static const String acceptwork = "/Api/Driver/All/Cargos/ACCEPTED";
-  static const updatedriverprofile =
-      "http://164.90.174.113:9090/Api/Driver/UpdateInfo";
+
   static const ownerlogo = "http://164.90.174.113:9090/Api/Admin/LogoandAvatar";
   static const aviablemarketfordriver =
       'http://164.90.174.113:9090/Api/Vehicle/All/Market';
   static const String aviablemarket = "/Api/Vehicle/All/Market";
   static const String drverInfo = "/Api/Driver/Info";
-   static const String  forgetpin = "/Api/User/GeneratePIN";
+  static const String forgetpin = "/Api/User/GeneratePIN";
   static const String ownerInfo = "/Api/Vehicle/Owner/Info";
 
   static const String logo =
@@ -24,7 +23,7 @@ class ApIConfig {
       "http://164.90.174.113:9090/Api/Vehicle/SetStatus";
   static const String alertforowner =
       "http://164.90.174.113:9090/Api/Vehicle/Alerts/ByStatus";
-      
+
   static const String allvehicle =
       "http://164.90.174.113:9090/Api/Vehicle/Owner/All";
   static const String driverApi = "/Api/Vehicle/Owner/Drivers/All";
@@ -42,4 +41,6 @@ class ApIConfig {
       "http://164.90.174.113:9090/Api/Admin/CreateTrip";
   static const String avaiableTrip =
       "http://164.90.174.113:9090/Api/Vehicle/All/Driver";
+
+  static const String updatedriverprofile = "/Api/Driver/UpdateInfo";
 }

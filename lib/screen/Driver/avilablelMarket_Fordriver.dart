@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'package:bazralogin/Theme/Alert.dart';
 import 'package:bazralogin/config/APIService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import '../../../../Theme/clippbox.dart';
@@ -42,11 +44,11 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
     final Map jsonResponse = json.decode(response.body);
     if (response.statusCode == 200) {
       String alertContent = "Accept";
-      showErrorSnackbar(context, alertContent);
+      alertforscuccess().showCustomToast(alertContent);
     } else {
       String alertContent = jsonResponse["message"];
 
-      showErrorSnackbar(context, alertContent);
+      alertforeror().showCustomToast(alertContent);
     }
   }
 
@@ -233,7 +235,7 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
                                             );
                                           },
                                           child: Container(
-                                            height: screenHeight * 0.3,
+                                            height: screenHeight * 0.32,
                                             margin: EdgeInsets.zero,
                                             decoration: BoxDecoration(
                                                 color: Colors.white,
@@ -832,19 +834,22 @@ class _availabelMarketfordriverState extends State<availabelMarketfordriver> {
 void showErrorSnackbar(BuildContext context, String errorMessage) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      content: Container(
-          height: 40,
-          child: Center(
-              child: Text(
-            errorMessage,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: "Nunito",
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontSize: AppFonts.smallFontSize,
-            ),
-          ))),
+      content: Align(
+        alignment: Alignment.center,
+        child: Container(
+            height: 40,
+            child: Center(
+                child: Text(
+              errorMessage,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: "Nunito",
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: AppFonts.smallFontSize,
+              ),
+            ))),
+      ),
       backgroundColor: Color.fromRGBO(
           226, 193, 121, 1), // You can customize the background color here
       duration: Duration(seconds: 3),

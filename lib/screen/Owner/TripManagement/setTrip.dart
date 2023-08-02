@@ -12,7 +12,6 @@ import 'package:http/http.dart' as http;
 import '../../../../Theme/TextInput.dart';
 import '../../../../config/APIService.dart';
 
-
 class Settrips extends StatefulWidget {
   String? drivername;
   String? platenumber;
@@ -151,7 +150,7 @@ class _SettripsState extends State<Settrips> {
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
                   width: screenWidth,
-                  height: screenHeight * 0.8,
+                  height: screenHeight * 0.9,
                   margin: EdgeInsets.only(top: screenHeight * 0.04),
                   child: Column(children: [
                     Column(
@@ -373,7 +372,9 @@ class _SettripsState extends State<Settrips> {
                         ),
                       ),
                     ),
-                    endAutoCompleteTextField(),
+                    Container(
+                      child: endAutoCompleteTextField(),
+                    ),
                     Container(
                       margin: EdgeInsets.fromLTRB(screenWidth * 0.53, 20, 0, 0),
                       width: screenWidth * 0.4,
@@ -464,8 +465,9 @@ class _SettripsState extends State<Settrips> {
 
   endAutoCompleteTextField() {
     return Container(
-      margin: EdgeInsets.only(bottom: 15),
+      // margin: EdgeInsets.only(bottom: 15),
       width: MediaQuery.of(context).size.width - 32,
+
       child: GooglePlaceAutoCompleteTextField(
           textEditingController: endController,
           googleAPIKey: "AIzaSyDd81MpJcxjNdICQeKRg3Emywp4e_29Sfc",

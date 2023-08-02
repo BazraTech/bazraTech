@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bazralogin/Route/Routes.dart';
 import 'package:bazralogin/Theme/Alert.dart';
 import 'package:bazralogin/Theme/TextInput.dart';
 import 'package:bazralogin/const/constant.dart';
@@ -13,6 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../config/APIService.dart';
 import '../../Owner/Driver/assignDriver.dart';
 
 class driverprofileUpadate extends StatefulWidget {
@@ -56,10 +56,11 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
   void takePicture(ImageSource source) async {
     final XFile? image =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      owneriamg = File(image!.path).path;
-    });
+    image == null
+        ? Container()
+        : setState(() {
+            owneriamg = File(image!.path).path;
+          });
 
     print(owneriamg);
   }
@@ -72,10 +73,10 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
       "Accept": "application/json",
       "Authorization": "Bearer $value",
     };
-
+    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.updatedriverprofile);
     final formData = http.MultipartRequest(
       'PUT',
-      Uri.parse(AppRoutes.updateProfiles),
+      url,
     );
     formData.headers['Authorization'] = "Bearer $value";
 
@@ -93,7 +94,7 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
     if (response.statusCode == 200) {
       String alertContent = decodedResponse["message"];
 
-      alertutilsfordriver.showMyDialog(context, "Alert", alertContent);
+      alertforeror().showCustomToast(alertContent);
     } else {
       // String alertContent = decodedResponse["message"];
 
@@ -140,353 +141,349 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: height * 0.06, right: 10),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(
-                      Ionicons.arrow_back,
-                      color: Colors.black,
+        child: Container(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: height * 0.06, right: 10),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(
+                        Ionicons.arrow_back,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Container(
-              height: height * 0.2,
-              child: Stack(
-                children: [
-                  Positioned(
-                      left: width * 0.3,
-                      height: height * 0.2,
-                      child: Column(
-                        children: [
-                          Stack(
-                            children: [
-                              CircleAvatar(
-                                radius: 51,
-                                backgroundColor: Colors.blueGrey,
-                                child: CircleAvatar(
-                                  radius: 48,
-                                  backgroundImage: owneriamg == null
-                                      ? NetworkImage("${widget.image}")
-                                      : FileImage(File(owneriamg.toString()))
-                                          as ImageProvider,
-                                ),
-                              ),
-                              Positioned(
-                                left: 40,
-                                child: Container(
-                                  margin: EdgeInsets.only(top: height * 0.07),
-                                  child: RawMaterialButton(
-                                    onPressed: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext contex) {
-                                            return AlertDialog(
-                                              title: Text('Choose Option',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Colors.lightBlue,
-                                                  )),
-                                              content: SingleChildScrollView(
-                                                child: ListBody(children: [
-                                                  InkWell(
-                                                      onTap: () {
-                                                        takePicture(
-                                                            ImageSource.camera);
-                                                      },
-                                                      splashColor:
-                                                          Colors.lightBlue,
-                                                      child: Row(
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: Icon(
-                                                              Icons.camera,
-                                                              color: Colors
-                                                                  .lightBlue,
-                                                            ),
-                                                          ),
-                                                          Text('Camera',
-                                                              style: TextStyle(
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color: Colors
-                                                                          .grey[
-                                                                      500]))
-                                                        ],
-                                                      )),
-                                                  InkWell(
-                                                      onTap: () {
-                                                        takePicture(ImageSource
-                                                            .gallery);
-                                                      },
-                                                      splashColor:
-                                                          Colors.lightBlue,
-                                                      child: Row(
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: Icon(
-                                                              Icons
-                                                                  .browse_gallery,
-                                                              color: Colors
-                                                                  .lightBlue,
-                                                            ),
-                                                          ),
-                                                          Text('Galley',
-                                                              style: TextStyle(
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color: Colors
-                                                                          .grey[
-                                                                      500]))
-                                                        ],
-                                                      )),
-                                                  InkWell(
-                                                      onTap: () {},
-                                                      splashColor:
-                                                          Colors.lightBlue,
-                                                      child: Row(
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: Icon(
-                                                              Icons
-                                                                  .remove_circle,
-                                                              color: Colors.red,
-                                                            ),
-                                                          ),
-                                                          Text('Remove',
-                                                              style: TextStyle(
-                                                                  fontSize: 18,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color: Colors
-                                                                          .grey[
-                                                                      500]))
-                                                        ],
-                                                      )),
-                                                ]),
-                                              ),
-                                            );
-                                          });
-                                    },
-                                    elevation: 10,
-                                    fillColor: Colors.lightBlue,
-                                    child: Icon(Icons.add_a_photo),
-                                    shape: CircleBorder(),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      )),
                 ],
               ),
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                margin: EdgeInsets.only(left: width * 0.04),
-                child: Text(
-                  "Name",
-                  style: TextStyle(
-                    fontFamily: "Nunito",
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
+              Container(
+                height: height * 0.2,
+                child: Stack(
+                  children: [
+                    Positioned(
+                        left: width * 0.3,
+                        height: height * 0.2,
+                        child: Column(
+                          children: [
+                            Stack(
+                              children: [
+                                CircleAvatar(
+                                  radius: 51,
+                                  backgroundColor: Colors.blueGrey,
+                                  child: CircleAvatar(
+                                    radius: 48,
+                                    backgroundImage: owneriamg == null
+                                        ? NetworkImage("${widget.image}")
+                                        : FileImage(File(owneriamg.toString()))
+                                            as ImageProvider,
+                                  ),
+                                ),
+                                Positioned(
+                                  left: 40,
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: height * 0.07),
+                                    child: RawMaterialButton(
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext contex) {
+                                              return AlertDialog(
+                                                actions: [],
+                                                title: Text('Choose Option',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: Color.fromRGBO(
+                                                          226, 193, 121, 1),
+                                                    )),
+                                                content: SingleChildScrollView(
+                                                  child: ListBody(children: [
+                                                    InkWell(
+                                                        onTap: () {
+                                                          takePicture(
+                                                              ImageSource
+                                                                  .camera);
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        splashColor:
+                                                            Colors.lightBlue,
+                                                        child: Row(
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child: Icon(
+                                                                Icons.camera,
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        226,
+                                                                        193,
+                                                                        121,
+                                                                        1),
+                                                              ),
+                                                            ),
+                                                            Text('Camera',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        500]))
+                                                          ],
+                                                        )),
+                                                    InkWell(
+                                                        onTap: () {
+                                                          takePicture(
+                                                              ImageSource
+                                                                  .gallery);
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        splashColor:
+                                                            Colors.lightBlue,
+                                                        child: Row(
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child: Icon(
+                                                                Icons
+                                                                    .browse_gallery,
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        226,
+                                                                        193,
+                                                                        121,
+                                                                        1),
+                                                              ),
+                                                            ),
+                                                            Text('Galley',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: Colors
+                                                                            .grey[
+                                                                        500]))
+                                                          ],
+                                                        )),
+                                                  ]),
+                                                ),
+                                              );
+                                            });
+                                      },
+                                      elevation: 10,
+                                      fillColor:
+                                          Color.fromRGBO(226, 193, 121, 1),
+                                      child: Icon(Icons.add_a_photo),
+                                      shape: CircleBorder(),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        )),
+                  ],
                 ),
               ),
-            ),
-            SizedBox(height: 5),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: width - 32,
-                    height: height * 0.08,
-                    child: TextFormField(
-                        enabled: false,
-                        controller: TextEditingController(text: readOnlyText),
-                        decoration: ThemeHelper().textInputDecoration(""))),
-              ],
-            ),
-            SizedBox(height: 5),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                margin: EdgeInsets.only(left: width * 0.04),
-                child: Text(
-                  "Email",
-                  style: TextStyle(
-                    fontFamily: "Nunito",
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 5),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: width - 32,
-                    height: height * 0.08,
-                    child: TextFormField(
-                        enabled: false,
-                        controller: TextEditingController(
-                          text: email,
-                        ),
-                        decoration: ThemeHelper().textInputDecoration())),
-              ],
-            ),
-            SizedBox(height: 5),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                margin: EdgeInsets.only(left: width * 0.04),
-                child: Text(
-                  "Phone number",
-                  style: TextStyle(
-                    fontFamily: "Nunito",
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 5),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: width - 32,
-                    height: height * 0.07,
-                    child: TextFormField(
-                        enabled: false,
-                        controller: TextEditingController(text: phonenumber),
-                        decoration: ThemeHelper().textInputDecoration())),
-              ],
-            ),
-            SizedBox(height: 5),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                margin: EdgeInsets.only(left: width * 0.04),
-                child: Text(
-                  "Gender",
-                  style: TextStyle(
-                    fontFamily: "Nunito",
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 5),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: width - 32,
-                    height: height * 0.08,
-                    child: TextFormField(
-                        enabled: false,
-                        controller: TextEditingController(text: genderowner),
-                        decoration: ThemeHelper().textInputDecoration(""))),
-              ],
-            ),
-            SizedBox(height: 5),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                margin: EdgeInsets.only(left: width * 0.04),
-                child: Text(
-                  "Birth Date",
-                  style: TextStyle(
-                    fontFamily: "Nunito",
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 5),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: width - 32,
-                    height: height * 0.08,
-                    child: TextFormField(
-                        enabled: false,
-                        controller: TextEditingController(text: date),
-                        decoration: ThemeHelper().textInputDecoration())),
-              ],
-            ),
-            SizedBox(height: height * 0.03),
-            Container(
-              width: width - 20,
-              margin: EdgeInsets.only(bottom: 20),
-              height: height * 0.06,
-              child: ElevatedButton(
-                  onPressed: () {
-                    registerDriver(owneriamg!);
-                  },
-                  child: Container(
-                    height: 55,
-                    width: width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Empty SizedBox if not loading
-
-                        Text(
-                          'Update',
-                          style: TextStyle(
-                              fontFamily: "Nunito",
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        )
-                      ],
+              Align(
+                alignment: Alignment.topLeft,
+                child: Container(
+                  margin: EdgeInsets.only(left: width * 0.04),
+                  child: Text(
+                    "Name",
+                    style: TextStyle(
+                      fontFamily: "Nunito",
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.resolveWith((states) {
-                        if (states.contains(MaterialState.pressed)) {
-                          return Color.fromRGBO(255, 148, 165, 223);
-                        }
-                        // 98, 172, 181
-                        return Color.fromRGBO(226, 193, 121, 1);
-                      }),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6))))),
-            ),
-          ],
+                ),
+              ),
+              SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: width - 32,
+                      height: height * 0.08,
+                      child: TextFormField(
+                          enabled: false,
+                          controller: TextEditingController(text: readOnlyText),
+                          decoration: ThemeHelper().textInputDecoration(""))),
+                ],
+              ),
+              SizedBox(height: 5),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Container(
+                  margin: EdgeInsets.only(left: width * 0.04),
+                  child: Text(
+                    "Email",
+                    style: TextStyle(
+                      fontFamily: "Nunito",
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: width - 32,
+                      height: height * 0.08,
+                      child: TextFormField(
+                          enabled: false,
+                          controller: TextEditingController(
+                            text: email,
+                          ),
+                          decoration: ThemeHelper().textInputDecoration())),
+                ],
+              ),
+              SizedBox(height: 5),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Container(
+                  margin: EdgeInsets.only(left: width * 0.04),
+                  child: Text(
+                    "Phone number",
+                    style: TextStyle(
+                      fontFamily: "Nunito",
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: width - 32,
+                      height: height * 0.07,
+                      child: TextFormField(
+                          enabled: false,
+                          controller: TextEditingController(text: phonenumber),
+                          decoration: ThemeHelper().textInputDecoration())),
+                ],
+              ),
+              SizedBox(height: 5),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Container(
+                  margin: EdgeInsets.only(left: width * 0.04),
+                  child: Text(
+                    "Gender",
+                    style: TextStyle(
+                      fontFamily: "Nunito",
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: width - 32,
+                      height: height * 0.08,
+                      child: TextFormField(
+                          enabled: false,
+                          controller: TextEditingController(text: genderowner),
+                          decoration: ThemeHelper().textInputDecoration(""))),
+                ],
+              ),
+              SizedBox(height: 5),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Container(
+                  margin: EdgeInsets.only(left: width * 0.04),
+                  child: Text(
+                    "Birth Date",
+                    style: TextStyle(
+                      fontFamily: "Nunito",
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: width - 32,
+                      height: height * 0.08,
+                      child: TextFormField(
+                          enabled: false,
+                          controller: TextEditingController(text: date),
+                          decoration: ThemeHelper().textInputDecoration())),
+                ],
+              ),
+              SizedBox(height: height * 0.03),
+              Container(
+                width: width - 20,
+                margin: EdgeInsets.only(bottom: 20),
+                height: height * 0.06,
+                child: ElevatedButton(
+                    onPressed: () {
+                      registerDriver(owneriamg!);
+                    },
+                    child: Container(
+                      height: 55,
+                      width: width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Empty SizedBox if not loading
+
+                          Text(
+                            'Update',
+                            style: TextStyle(
+                                fontFamily: "Nunito",
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          )
+                        ],
+                      ),
+                    ),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith((states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return Color.fromRGBO(255, 148, 165, 223);
+                          }
+                          // 98, 172, 181
+                          return Color.fromRGBO(226, 193, 121, 1);
+                        }),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6))))),
+              ),
+            ],
+          ),
         ),
       ),
     );

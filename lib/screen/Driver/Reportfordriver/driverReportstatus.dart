@@ -51,8 +51,8 @@ class _driverReportstatusState extends State<driverReportstatus> {
           children: [driverReport(), driverReport(), driverReport()],
         ),
         bottomNavigationBar: Container(
-          margin: EdgeInsets.only(bottom: 20),
-          height: screenHeight * 0.08,
+          margin: EdgeInsets.only(bottom: 15),
+          height: screenHeight * 0.09,
           decoration: const BoxDecoration(
             color: Colors.white,
           ),

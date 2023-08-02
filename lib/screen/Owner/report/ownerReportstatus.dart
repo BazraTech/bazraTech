@@ -55,7 +55,7 @@ class _ownerReportstatusState extends State<ownerReportstatus> {
                   indicatorWeight: 4,
                   indicatorPadding: EdgeInsets.all(4),
                   labelColor: Colors.black,
-                  indicatorColor: Colors.blue,
+                  indicatorColor: Color.fromRGBO(178, 142, 22, 1),
                   overlayColor: MaterialStateColor.resolveWith(
                       (Set<MaterialState> states) {
                     if (states.contains(MaterialState.pressed)) {
@@ -77,13 +77,6 @@ class _ownerReportstatusState extends State<ownerReportstatus> {
                           child: SizedBox(
                             height: screenHeight * 0.03,
                             width: screenWidth * 0.05,
-                            child: Text("10",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    fontFamily: 'Nunito',
-                                    fontSize: AppFonts.smallFontSize,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.normal)),
                           ),
                         ),
                         text: "Daily Report",
@@ -97,13 +90,6 @@ class _ownerReportstatusState extends State<ownerReportstatus> {
                           child: SizedBox(
                             height: screenHeight * 0.03,
                             width: screenWidth * 0.05,
-                            child: Text("10",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    fontFamily: 'Nunito',
-                                    fontSize: AppFonts.smallFontSize,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.normal)),
                           ),
                         ),
                       ),
@@ -115,13 +101,6 @@ class _ownerReportstatusState extends State<ownerReportstatus> {
                           child: SizedBox(
                             height: screenHeight * 0.03,
                             width: screenWidth * 0.05,
-                            child: Text("10",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    fontFamily: 'Nunito',
-                                    fontSize: AppFonts.smallFontSize,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.normal)),
                           ),
                         ),
                         text: "Monthly Report",

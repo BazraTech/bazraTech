@@ -2,6 +2,7 @@ import 'package:bazralogin/Route/Routes.dart';
 import 'package:bazralogin/screen/Driver/driverBottomnav.dart';
 import 'package:bazralogin/screen/Loging/Login.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ionicons/ionicons.dart';
@@ -467,6 +468,35 @@ class alertutilsforgetpin {
           ),
         );
       },
+    );
+  }
+}
+
+// alert for error
+
+class alertforeror {
+  void showCustomToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+    );
+  }
+}
+
+// alertforsuccess
+class alertforscuccess {
+  void showCustomToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Color.fromRGBO(76, 176, 80, 1),
+      textColor: Colors.white,
     );
   }
 }

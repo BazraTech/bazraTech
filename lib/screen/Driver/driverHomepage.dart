@@ -204,7 +204,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
       List items = responseData["activeAlerts"];
       // Get the Hive box
       final box = Hive.box('dataBox');
-      final String lastStoredId = box.get('lastId', defaultValue: 0);
+      // final String lastStoredId = box.get('lastId', defaultValue: 0);
 
       // Store only new data in Hive
       for (var data in items) {
@@ -341,11 +341,21 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                               final data = snapshot.data;
 
                                               // Display the data in your desired format
-                                              return SizedBox(
+                                              return Container(
+                                                height: screenHeight * 0.034,
+                                                width: screenWidth * 0.24,
+                                                // decoration: BoxDecoration(
+                                                //   shape: BoxShape.circle,
+                                                //   border: Border.all(
+                                                //     color: Colors.white,
+                                                //     width: 2.0,
+                                                //   ),
+                                                // ),
                                                 child: ClipOval(
                                                   child: SizedBox(
-                                                    height: screenHeight * 0.03,
-                                                    width: screenWidth * 0.2,
+                                                    height:
+                                                        screenHeight * 0.034,
+                                                    width: screenWidth * 0.24,
                                                     child: Image.network(
                                                       data!["driverPic"],
                                                       fit: BoxFit.cover,
@@ -472,8 +482,8 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Container(
-                          height: screenHeight * 0.24,
-                          margin: EdgeInsets.only(top: 130),
+                          height: screenHeight * 0.29,
+                          margin: EdgeInsets.only(top: 120),
                           child: ListView.builder(
                               itemCount: 1,
                               physics: NeverScrollableScrollPhysics(),
@@ -489,7 +499,7 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                             color: Colors.white,
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10))),
-                                        height: screenHeight * 0.19,
+                                        height: screenHeight * 0.32,
                                         width: screenWidth - 42,
                                         child: Container(
                                           margin: EdgeInsets.only(
@@ -497,6 +507,116 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                           ),
                                           child: Column(
                                             children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Container(
+                                                      child:
+                                                          Text("Driver Status"),
+                                                    ),
+                                                    Container(
+                                                      child:
+                                                          Text("Work Status"),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Container(
+                                                      child: Container(
+                                                          height: 15,
+                                                          child: Center(
+                                                            child: StreamBuilder<
+                                                                Map<String,
+                                                                    dynamic>>(
+                                                              stream:
+                                                                  fetchData(),
+                                                              builder: (context,
+                                                                  snapshot) {
+                                                                if (snapshot
+                                                                    .hasData) {
+                                                                  final Map<
+                                                                          String,
+                                                                          dynamic>
+                                                                      data =
+                                                                      snapshot
+                                                                          .data!;
+                                                                  driverworkstatus =
+                                                                      data[
+                                                                          "workStatus"];
+                                                                  // Render your UI with the data
+                                                                  return Text(
+                                                                    data[
+                                                                        "status"],
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .blue),
+                                                                  );
+                                                                } else if (snapshot
+                                                                    .hasError) {
+                                                                  return Container();
+                                                                } else {
+                                                                  return Container();
+                                                                }
+                                                              },
+                                                            ),
+                                                          )),
+                                                    ),
+                                                    Container(
+                                                      child: Container(
+                                                          height: 15,
+                                                          child: Center(
+                                                            child: StreamBuilder<
+                                                                Map<String,
+                                                                    dynamic>>(
+                                                              stream:
+                                                                  fetchData(),
+                                                              builder: (context,
+                                                                  snapshot) {
+                                                                if (snapshot
+                                                                    .hasData) {
+                                                                  final Map<
+                                                                          String,
+                                                                          dynamic>
+                                                                      data =
+                                                                      snapshot
+                                                                          .data!;
+                                                                  driverworkstatus =
+                                                                      data[
+                                                                          "workStatus"];
+                                                                  // Render your UI with the data
+                                                                  return Text(
+                                                                    data[
+                                                                        "workStatus"],
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .blue),
+                                                                  );
+                                                                } else if (snapshot
+                                                                    .hasError) {
+                                                                  return Container();
+                                                                } else {
+                                                                  return Container();
+                                                                }
+                                                              },
+                                                            ),
+                                                          )),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                               Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
@@ -541,69 +661,85 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   Container(
-                                                      height: 30,
-                                                      child: Center(
-                                                        child: StreamBuilder<
-                                                            Map<String,
-                                                                dynamic>>(
-                                                          stream: fetchData(),
-                                                          builder: (context,
-                                                              snapshot) {
-                                                            if (snapshot
-                                                                .hasData) {
-                                                              final Map<String,
-                                                                      dynamic>
-                                                                  data =
-                                                                  snapshot
-                                                                      .data!;
-                                                              driverworkstatus =
-                                                                  data[
-                                                                      "workStatus"];
-                                                              // Render your UI with the data
-                                                              return Text(data[
-                                                                  "status"]);
-                                                            } else if (snapshot
-                                                                .hasError) {
-                                                              return Container();
-                                                            } else {
-                                                              return Container();
-                                                            }
-                                                          },
-                                                        ),
+                                                      height:
+                                                          screenHeight * 0.06,
+                                                      width: screenWidth * 0.25,
+                                                      decoration: BoxDecoration(
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              color: Colors
+                                                                  .black
+                                                                  .withOpacity(
+                                                                      0.3), // Shadow color
+                                                              blurRadius:
+                                                                  3, // Spread radius
+                                                              offset: Offset(0,
+                                                                  3), // Offset in (x,y) coordinates
+                                                            ),
+                                                          ],
+                                                          color: Colors.white,
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                          )),
+                                                      child: Column(
+                                                        children: [
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    top: 4),
+                                                            child: Text(
+                                                                "Platenumber"),
+                                                          ),
+                                                          Center(
+                                                            child: StreamBuilder<
+                                                                Map<String,
+                                                                    dynamic>>(
+                                                              stream:
+                                                                  fetchData(),
+                                                              builder: (context,
+                                                                  snapshot) {
+                                                                if (snapshot
+                                                                    .hasData) {
+                                                                  final Map<
+                                                                          String,
+                                                                          dynamic>
+                                                                      data =
+                                                                      snapshot
+                                                                          .data!;
+                                                                  driverworkstatus =
+                                                                      data[
+                                                                          "workStatus"];
+                                                                  // Render your UI with the data
+                                                                  return Text(
+                                                                    data[
+                                                                        "plateNumber"],
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .blue),
+                                                                  );
+                                                                } else if (snapshot
+                                                                    .hasError) {
+                                                                  return Container();
+                                                                } else {
+                                                                  return Container();
+                                                                }
+                                                              },
+                                                            ),
+                                                          ),
+                                                        ],
                                                       )),
-                                                  SizedBox(
-                                                    width: screenWidth * 0.25,
-                                                  ),
-                                                  Container(
-                                                    height: 30,
-                                                    child: Center(
-                                                      child: StreamBuilder<
-                                                          Map<String, dynamic>>(
-                                                        stream: fetchData(),
-                                                        builder: (context,
-                                                            snapshot) {
-                                                          if (snapshot
-                                                              .hasData) {
-                                                            final Map<String,
-                                                                    dynamic>
-                                                                data =
-                                                                snapshot.data!;
-                                                            driverstatus =
-                                                                data["status"];
-
-                                                            // Render your UI with the data
-                                                            return Text(
-                                                                data["status"]);
-                                                          } else if (snapshot
-                                                              .hasError) {
-                                                            return Container();
-                                                          } else {
-                                                            return Container();
-                                                          }
-                                                        },
-                                                      ),
-                                                    ),
-                                                  )
                                                 ],
                                               ),
                                             ],
@@ -713,8 +849,8 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                   MaterialPageRoute(
                                       builder: (context) => activeWork()));
                             } else {
-                              alertutilsfordriver.showMyDialog(
-                                  context, "Alert", "Driver not accept job");
+                              alertforeror()
+                                  .showCustomToast("Driver not accept job !");
                             }
                           },
                           child: AnimatedContainer(
@@ -857,8 +993,8 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                             title: '',
                                           )));
                             } else {
-                              alertutilsfordriver.showMyDialog(
-                                  context, "Alert", "Driver not onroute");
+                              alertforeror()
+                                  .showCustomToast("Driver not Onroute !");
                             }
                           }),
                           child: AnimatedContainer(

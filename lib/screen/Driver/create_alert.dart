@@ -56,10 +56,10 @@ class _CreateAlertState extends State {
     if (response.statusCode == 200) {
       String alertContent = jsonResponse["message"];
 
-      alertutilsfordriver.showMyDialog(context, "Alert", alertContent);
+      alertforscuccess().showCustomToast(alertContent);
     } else {
       String alertContent = jsonResponse["message"];
-      alertutilsfordriver.showMyDialog(context, "Alert", alertContent);
+      alertforscuccess().showCustomToast(alertContent);
     }
   }
 
@@ -111,9 +111,9 @@ class _CreateAlertState extends State {
       "Accept": "application/json",
       "Authorization": "Bearer $value",
     }).then((response) {
-      String alertContent = "Alert finished";
+      String alertContent = "Alert finished !";
 
-      alertutilsfordriver.showMyDialog(context, "Alert", alertContent);
+      alertforscuccess().showCustomToast(alertContent);
     }).catchError((error) {});
   }
 

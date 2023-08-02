@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'package:bazralogin/config/APIService.dart';
 import 'package:flutter/material.dart';
@@ -195,7 +194,7 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Container(
-                                                width: screenWidth * 0.25,
+                                                width: screenWidth * 0.30,
                                                 child: const Text(
                                                   "Vehicles",
                                                   textAlign: TextAlign.left,
@@ -599,7 +598,9 @@ class _OwnersVehicleState extends State<OwnersVehicle> {
                                                                       2.0, // Border width
                                                                 ),
                                                               ),
-                                                              height: 40,
+                                                              height:
+                                                                  screenHeight *
+                                                                      0.04,
                                                               child:
                                                                   const Center(
                                                                 child: Text(

@@ -123,7 +123,7 @@ class _driverProfileState extends State<driverProfile> {
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Container(
-          margin: EdgeInsets.only(top: 28),
+          margin: EdgeInsets.only(top: screenHeight * 0.03),
           child: SingleChildScrollView(
             child: Column(children: [
               Row(
@@ -217,222 +217,205 @@ class _driverProfileState extends State<driverProfile> {
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10),
                     )),
-                height: screenHeight * 0.25,
                 width: screenWidth,
                 child: Column(children: [
                   SizedBox(
                     height: screenHeight * 0.25,
                     child: _isLoading
                         ? Container()
-                        : ListView.builder(
-                            itemCount: 1,
-                            padding: EdgeInsets.zero,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        height: screenHeight * 0.06,
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                          bottom: BorderSide(
-                                            color: Colors.grey,
-                                            width: 0.2,
-                                          ),
-                                        )),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Container(
-                                                margin: EdgeInsets.only(
-                                                    left: screenWidth * 0.03),
-                                                width: screenWidth * 0.25,
-                                                child: Text(
-                                                  TranslationUtil.text(
-                                                      "Phone Number"),
-                                                  textAlign: TextAlign.left,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Nunito',
-                                                      fontSize: AppFonts
-                                                          .smallFontSize,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.normal),
-                                                )),
-                                            Spacer(),
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                      right: 20),
-                                                  child: Text(
-                                                    Result!["plateNumber"]
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                      fontFamily: "Nunito",
-                                                      fontSize: 13,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Icon(
-                                                  Ionicons
-                                                      .chevron_forward_outline,
+                        : Container(
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: screenHeight * 0.06,
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                      bottom: BorderSide(
+                                        color: Colors.grey,
+                                        width: 0.2,
+                                      ),
+                                    )),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Container(
+                                            margin: EdgeInsets.only(
+                                                left: screenWidth * 0.03),
+                                            width: screenWidth * 0.25,
+                                            child: Text(
+                                              TranslationUtil.text(
+                                                  "Phone Number"),
+                                              textAlign: TextAlign.left,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  fontFamily: 'Nunito',
+                                                  fontSize:
+                                                      AppFonts.smallFontSize,
                                                   color: Colors.black,
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        height: screenHeight * 0.06,
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                          bottom: BorderSide(
-                                            color: Colors.grey,
-                                            width: 0.3,
-                                          ),
-                                        )),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            )),
+                                        Spacer(),
+                                        Row(
                                           children: [
                                             Container(
-                                                margin:
-                                                    EdgeInsets.only(left: 10),
-                                                child: Text(
-                                                  TranslationUtil.text(
-                                                      "Date of Birth"),
-                                                  textAlign: TextAlign.left,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Nunito',
-                                                      fontSize: AppFonts
-                                                          .smallFontSize,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.normal),
-                                                )),
-                                            Spacer(),
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                      right: 20),
-                                                  child: Text(
-                                                    Result!["birthDate"]
-                                                        .toString(),
-                                                    textAlign: TextAlign.center,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                        fontFamily: 'Nunito',
-                                                        fontSize: AppFonts
-                                                            .smallFontSize,
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
+                                              margin:
+                                                  EdgeInsets.only(right: 20),
+                                              child: Text(
+                                                Result!["plateNumber"]
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  fontFamily: "Nunito",
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.normal,
                                                 ),
-                                                Container(
-                                                    child: Icon(Ionicons
-                                                        .chevron_forward_outline))
-                                              ],
+                                              ),
                                             ),
+                                            Icon(
+                                              Ionicons.chevron_forward_outline,
+                                              color: Colors.black,
+                                            )
                                           ],
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        height: screenHeight * 0.06,
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                          bottom: BorderSide(
-                                            color: Colors.grey,
-                                            width: 0.2,
-                                          ),
-                                        )),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                                margin:
-                                                    EdgeInsets.only(left: 10),
-                                                child: Text(
-                                                  TranslationUtil.text(
-                                                    "Gender",
-                                                  ),
-                                                  textAlign: TextAlign.left,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Nunito',
-                                                      fontSize: AppFonts
-                                                          .smallFontSize,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.normal),
-                                                )),
-                                            Spacer(),
-                                            Row(
-                                              children: [
-                                                Container(
-                                                    margin: EdgeInsets.only(
-                                                        right: 20),
-                                                    child: Center(
-                                                        child: Text(
-                                                      Result!["gender"]
-                                                          .toString(),
-                                                      textAlign: TextAlign.left,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: const TextStyle(
-                                                          fontFamily: 'Nunito',
-                                                          fontSize: AppFonts
-                                                              .smallFontSize,
-                                                          color: Colors.black,
-                                                          fontWeight: FontWeight
-                                                              .normal),
-                                                    ))),
-                                                SizedBox(
-                                                  width: 20,
-                                                ),
-                                                Container(
-                                                    child: Icon(Ionicons
-                                                        .chevron_forward_outline))
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              );
-                            },
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: screenHeight * 0.05,
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                      bottom: BorderSide(
+                                        color: Colors.grey,
+                                        width: 0.3,
+                                      ),
+                                    )),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                            margin: EdgeInsets.only(left: 10),
+                                            child: Text(
+                                              TranslationUtil.text(
+                                                  "Date of Birth"),
+                                              textAlign: TextAlign.left,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  fontFamily: 'Nunito',
+                                                  fontSize:
+                                                      AppFonts.smallFontSize,
+                                                  color: Colors.black,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            )),
+                                        Spacer(),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(right: 20),
+                                              child: Text(
+                                                Result!["birthDate"].toString(),
+                                                textAlign: TextAlign.center,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                    fontFamily: 'Nunito',
+                                                    fontSize:
+                                                        AppFonts.smallFontSize,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.normal),
+                                              ),
+                                            ),
+                                            Container(
+                                                child: Icon(Ionicons
+                                                    .chevron_forward_outline))
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: screenHeight * 0.06,
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                      bottom: BorderSide(
+                                        color: Colors.grey,
+                                        width: 0.2,
+                                      ),
+                                    )),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                            margin: EdgeInsets.only(left: 10),
+                                            child: Text(
+                                              TranslationUtil.text(
+                                                "Gender",
+                                              ),
+                                              textAlign: TextAlign.left,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  fontFamily: 'Nunito',
+                                                  fontSize:
+                                                      AppFonts.smallFontSize,
+                                                  color: Colors.black,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            )),
+                                        Spacer(),
+                                        Row(
+                                          children: [
+                                            Container(
+                                                margin:
+                                                    EdgeInsets.only(right: 20),
+                                                child: Center(
+                                                    child: Text(
+                                                  Result!["gender"].toString(),
+                                                  textAlign: TextAlign.left,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: AppFonts
+                                                          .smallFontSize,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.normal),
+                                                ))),
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            Container(
+                                                child: Icon(Ionicons
+                                                    .chevron_forward_outline))
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                   ),
                 ]),
@@ -534,9 +517,12 @@ class _driverProfileState extends State<driverProfile> {
                                   height: screenWidth * 0.07,
                                   width: screenWidth * 0.08,
                                   decoration: BoxDecoration(
-                                      color: Color.fromRGBO(252, 221, 244, 1),
+                                      color: Color.fromRGBO(226, 193, 121, 1),
                                       borderRadius: BorderRadius.circular(6)),
-                                  child: Icon(Ionicons.calendar_number)),
+                                  child: Icon(
+                                    Ionicons.calendar_number,
+                                    color: Colors.black,
+                                  )),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
@@ -579,7 +565,7 @@ class _driverProfileState extends State<driverProfile> {
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10),
                     )),
-                height: screenHeight * 0.28,
+                height: screenHeight * 0.32,
                 width: screenWidth,
                 child: Column(
                   children: [
@@ -588,7 +574,7 @@ class _driverProfileState extends State<driverProfile> {
                       child: Row(
                         children: [
                           Container(
-                              height: screenWidth * 0.06,
+                              height: screenWidth * 0.08,
                               width: screenWidth * 0.08,
                               decoration: BoxDecoration(
                                   color: Color.fromRGBO(201, 252, 248, 1),
@@ -642,10 +628,10 @@ class _driverProfileState extends State<driverProfile> {
                       child: Row(
                         children: [
                           Container(
-                              height: screenWidth * 0.05,
+                              height: screenWidth * 0.08,
                               width: screenWidth * 0.08,
                               decoration: BoxDecoration(
-                                  color: Color.fromRGBO(255, 245, 210, 1),
+                                  color: Color.fromRGBO(226, 193, 121, 1),
                                   borderRadius: BorderRadius.circular(6)),
                               child: Icon(Ionicons.help)),
                           Padding(
@@ -677,7 +663,7 @@ class _driverProfileState extends State<driverProfile> {
                         children: [
                           Container(
                               height: screenWidth * 0.08,
-                              width: screenWidth * 0.06,
+                              width: screenWidth * 0.08,
                               decoration: BoxDecoration(
                                   color: Color.fromRGBO(201, 252, 248, 1),
                                   borderRadius: BorderRadius.circular(8)),
@@ -730,15 +716,18 @@ class _driverProfileState extends State<driverProfile> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Logout",
-                                textAlign: TextAlign.left,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                    fontFamily: 'Nunito',
-                                    fontSize: AppFonts.smallFontSize,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.normal),
+                              child: Container(
+                                height: 40,
+                                child: Text(
+                                  "Logout",
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontFamily: 'Nunito',
+                                      fontSize: AppFonts.smallFontSize,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.normal),
+                                ),
                               ),
                             ),
                             Spacer(),
@@ -758,12 +747,17 @@ class _driverProfileState extends State<driverProfile> {
                                       height: 40,
                                       width: 40,
                                       child: Container(
-                                        margin: EdgeInsets.only(left: 5),
-                                        child: Icon(
-                                          Icons.logout,
-                                          color:
-                                              Color.fromRGBO(226, 193, 121, 1),
-                                          size: 30,
+                                        margin: EdgeInsets.only(
+                                          left: 5,
+                                        ),
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          child: Icon(
+                                            Icons.logout,
+                                            color: Color.fromRGBO(
+                                                226, 193, 121, 1),
+                                            size: 30,
+                                          ),
                                         ),
                                       )),
                                 ),

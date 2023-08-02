@@ -124,7 +124,6 @@ class _driverReportState extends State<driverReport> {
                 ),
               ))
             : Column(
-              
                 children: [
                   SizedBox(
                     height: 60,

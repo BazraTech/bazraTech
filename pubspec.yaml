@@ -50,6 +50,7 @@ dependencies:
   pin_code_text_field: ^1.8.0
   cupertino_icons: ^1.0.5
   loading_animation_widget: ^1.2.0+4
+  camera: ^0.10.5+2
  
   fl_chart: ^0.55.2
  
@@ -69,6 +70,7 @@ dependencies:
   flutter_polyline_points: ^1.0.0
   flutter_secure_storage: ^7.0.1
   flutter_svg: ^1.1.6
+  fluttertoast: ^8.2.2
   flutter_typeahead: ^4.1.1
  
   font_awesome_flutter: ^10.2.1

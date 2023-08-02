@@ -15,10 +15,50 @@ class alertComponent extends StatefulWidget {
 
 class _alertComponentState extends State<alertComponent> {
   bool isVisible = true;
+  ScrollController _scrollController = ScrollController();
   void toggleVisibility1() {
     setState(() {
       isVisible = !isVisible;
     });
+  }
+
+  @override
+  bool isLoading = false;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      _loadItems();
+    }
+  }
+
+  void _loadItems() {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+
+      // Simulate loading delay
+      Future.delayed(Duration(seconds: 2), () {
+        // Generate new items
+        List<String> newItems =
+            List.generate(10, (index) => 'Item ${widget.data.length + index}');
+        setState(() {
+          widget.data.addAll(newItems);
+          isLoading = false;
+        });
+      });
+    }
   }
 
   @override
@@ -242,7 +282,7 @@ class _alertComponentState extends State<alertComponent> {
                           )),
                         ),
                         Container(
-                          height: screenHeight - 134,
+                          height: screenHeight * 0.55,
                           child: ListView.builder(
                             itemCount: widget.data.length,
                             itemBuilder: (context, index) {

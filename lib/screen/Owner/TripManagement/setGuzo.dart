@@ -34,6 +34,7 @@ class tripHistory extends StatelessWidget {
           child: Container(
             child: TabBar(
               indicatorSize: TabBarIndicatorSize.label,
+              indicatorColor: Color.fromRGBO(178, 142, 22, 1),
               labelPadding: EdgeInsets.only(bottom: 0),
               tabs: const [
                 Tab(

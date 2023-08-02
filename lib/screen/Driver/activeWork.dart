@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
 
+import '../../Theme/Alert.dart';
 import '../../Theme/clippbox.dart';
 import '../../config/APIService.dart';
 
@@ -108,11 +109,11 @@ class _activeWorkState extends State<activeWork> {
       if (response.statusCode == 200) {
         String alertContent = jsonResponse["message"];
 
-        showErrorSnackbar(context, alertContent);
+        alertforscuccess().showCustomToast(alertContent);
       } else {
         String alertContent = jsonResponse["message"];
 
-        showErrorSnackbar(context, alertContent);
+        alertforeror().showCustomToast(alertContent);
       }
     } catch (e) {
       print(e);
@@ -187,7 +188,7 @@ class _activeWorkState extends State<activeWork> {
                             color: Colors.white,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10))),
-                        height: screenHeight * 0.21,
+                        height: screenHeight * 0.23,
                         width: screenWidth - 42,
                         child: Container(
                           margin: EdgeInsets.only(

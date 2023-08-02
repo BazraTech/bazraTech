@@ -169,7 +169,7 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
       List items = responseData["activeAlerts"];
       // Get the Hive box
       final box = Hive.box('dataBox');
-      final String lastStoredId = box.get('lastId', defaultValue: 0);
+      // final String lastStoredId = box.get('lastId', defaultValue: 0);
 
       // Store only new data in Hive
       for (var data in items) {

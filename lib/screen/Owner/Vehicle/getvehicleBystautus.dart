@@ -261,7 +261,7 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                         .blue; // Update border color for the else case
                                   }
                                   return Container(
-                                      height: screenHeight * 0.26,
+                                      height: screenHeight * 0.30,
                                       padding: EdgeInsets.only(
                                         left: 10,
                                         right: 10,
@@ -604,7 +604,8 @@ class _getvehicleBystatusState extends State<getvehicleBystatus> {
                                                                   2.0, // Border width
                                                             ),
                                                           ),
-                                                          height: 40,
+                                                          height: screenHeight *
+                                                              0.04,
                                                           margin:
                                                               EdgeInsets.only(
                                                                   top: 20),
