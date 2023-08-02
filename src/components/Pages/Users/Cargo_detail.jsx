@@ -61,75 +61,56 @@ export default function Users_edit() {
     // const [Loading, setLoading] = useState(false)
     const [totalPages, setTotalPage] = useState(1);
     const [totalPages2, setTotalPage2] = useState(1);
-    const [dataSource, setDataSource] = useState([])
-    const [dataSource2, setDataSource2] = useState([])
-    const [dataSource3, setDataSource3] = useState([])
-    const [dataSource5, setDataSource5] = useState([])
-    const [dataSource6, setDataSource6] = useState([])
-    const [dataSource7, setDataSource7] = useState([])
-    const [dataSource8, setDataSource8] = useState([])
-    const [dataSource9, setDataSource9] = useState([])
-    const [dataSource10, setDataSource10] = useState([])
-    const [dataSource11, setDataSource11] = useState([])
-    const [dataSource12, setDataSource12] = useState([])
-    const [dataSource13, setDataSource13] = useState([])
-    const [tableTitle, setTableTitle] = useState("Total Vehicles");
-    const [tableTitle2, setTableTitle2] = useState("Total Drivers");
+    const [tableTitle, setTableTitle] = useState("Total Posted Market");
+    // const [tableTitle2, setTableTitle2] = useState("Total Drivers");
+    const [cargoOwnerInfo,setCargoOwnerInfo]=useState({})
+    const [cargoBusinessInfo, setCargoBusinessInfo] =useState({})
+    const [cargoAddressInfo, setCargoAddressInfo] =useState({})
+    const [cargoEnabled, setCargoEnabled]= useState('')
 
     const [Loading, setLoading] = useState([]);
-    const { id, role, companyID } = useParams();
-    const [updateVehicleInfo, setUpdateVehicleInfo] = useState({});
-
+    const { id, role } = useParams();
+    const [updateCargoInfo, setUpdateCargoInfo] = useState({});
     let url;
 
-    if (role === "OWNER") {
-        url = `http://164.90.174.113:9090/Api/Admin/All/CompanyVehicleOwner/${id}`;
-    }
-    if (role === "INDIVIDUAL") {
-        url = `http://164.90.174.113:9090/Api/Admin/All/IndividualVehicleOwner/${id}`;
-    }
+    
+        url = `http://164.90.174.113:9090/Api/Admin/All/CargoOwner/${id}`;
+    
 
     useEffect(() => {
         setLoading(true)
         fetch(url, options)
             .then((response) => response.json())
             .then((json) => {
-                setDataSource(json.ownerINF)
-                setDataSource2(json.ownerINF.companyAddressINF)
-                setDataSource3(json.ownerINF.drivers)
-                setDataSource5(json.ownerINF.vehicles)
-                setDataSource6(json.ownerINF.inStockVehicles)
-                setDataSource7(json.ownerINF.onRouteVehicles)
-                setDataSource8(json.ownerINF.parkedVehicles)
-                setDataSource9(json.ownerINF.maintainingVehicles)
-                setDataSource10(json.ownerINF.assignedDriverINFs)
-                setDataSource11(json.ownerINF.unassignedDriverINFs)
-                setDataSource12(json.ownerINF.permitDriverINFs)
-                setDataSource13(json.ownerINF.onRouteDriverINFs)
-
-                setTotalPage2(json.ownerINF.drivers.length);
+                setCargoOwnerInfo(json.cargoOwnerINF)
+                setCargoBusinessInfo(json.businessINF)
+                setCargoAddressInfo(json.address)
+                setCargoEnabled(json.enabled)
+                console.log(cargoOwnerInfo)
+                console.log(cargoAddressInfo)
+                console.log(cargoBusinessInfo)
+                console.log(cargoEnabled)
                 setLoading(false)
 
  
-  const   oldVehicleOwnerInformation = {
-      companyName: json.ownerINF.companyName,
-      companyType: json.ownerINF.companyType,
-      companySector: json.ownerINF.companySector,
-      region: json.ownerINF.companyAddressINF.region,
-      subCity: json.ownerINF.companyAddressINF.subcity,
-      specificLocation: json.ownerINF.companyAddressINF.specificLocation,
-      city: json.ownerINF.companyAddressINF.city,
-      woreda: json.ownerINF.companyAddressINF.woreda,
-      houseNumber: json.ownerINF.companyAddressINF.houseNum,
-      firstName: json.ownerINF.firstName,
-      lastName: json.ownerINF.lastName,
-      ownerPhoneNumber:"",
-      email: json.ownerINF.email,
-      notificationmedia: json.ownerINF.notificationMedium,
-      serviceRequired: json.ownerINF.serviceNeeded
+  const   oldCargoOwnerInformation = {
+    licenseNumber: json.businessINF.licenseNumber,
+      tinNumber: json.businessINF.tinNumber,
+      businessName: json.businessINF.businessName,
+      businessType: json.businessINF.businessType,
+      businessSector: json.businessINF.businessSector,
+      region: json.address.region,
+      subCity: json.address.subcity,
+      specificLocation: json.address.specificLocation,
+      city: json.address.city,
+      woreda: json.address.woreda,
+      houseNumber: json.address.houseNum,
+      phoneNumber: json.address.phone,
+      licenseFile: json.businessINF.license,
+      tinFile:json.businessINF.tin,
     };
 
-    setUpdateVehicleInfo(oldVehicleOwnerInformation);
+    setUpdateCargoInfo(oldCargoOwnerInformation);
  
             });
     }, [])
@@ -141,22 +122,23 @@ export default function Users_edit() {
         setinputTag(!inputtag);
     } 
 /*************************************** */
-const comSector = "http://164.90.174.113:9090/Api/Admin/All/CompanySector/";
-const [companySector, setcompanySector] = useState([])
+const BusType = "http://164.90.174.113:9090/Api/Admin/All/BusinessTypes";
+const [BusinessType, setBusinessType] = useState([])
 useEffect(() => {
-    fetch(comSector, options)
+    fetch(BusType, options)
         .then(respnse => respnse.json())
         .then(data => {
-            setcompanySector(data.companySectors)
+            setBusinessType(data.businessSectors)
         })
 }, [])
-const comUrl = "http://164.90.174.113:9090/Api/Admin/All/CompanyType/";
-const [companyType, setcompany] = useState([])
+const Bussec= "http://164.90.174.113:9090/Api/Admin/All/BusinessSectors";
+const [BusinesSector, setBusinesSector] = useState([])
+
 useEffect(() => {
-    fetch(comUrl, options)
+    fetch(Bussec, options)
         .then(respnse => respnse.json())
         .then(data => {
-            setcompany(data.companyTypes)
+            setBusinesSector(data.businessSectors)
         })
 }, [])
     const notUrl = " http://164.90.174.113:9090/Api/Admin/All/NotificationMedium";
@@ -181,24 +163,32 @@ useEffect(() => {
 
 /*********************************update vehicle owner information************* */
 
-console.log(updateVehicleInfo)
+// console.log(updateVehicleInfo)
 const handleUpdateChange = (e) => {
     console.log('handleUpdateChange')
     const { name, value } = e.target;
-    setUpdateVehicleInfo((prevData) => ({
+    setUpdateCargoInfo((prevData) => ({
       ...prevData,
       [name]: value || prevData[name],// Keep the existing value if the input is empty
     }));
-    console.log(updateVehicleInfo)
   };
-
+  const updatedData = new FormData();
   const onSubmit =(e)=>{
         
     e.preventDefault();
-    update()
+  console.log(updateCargoInfo)
+    // updatedData.append(updateCargoInfo);
+    for (const [key, value] of Object.entries(updateCargoInfo)) {
+        updatedData.append(key, value);
+    }
+    console.log(updatedData);
+    update();
 }
     async function update(){
 
+
+
+   
     const options = {
         method: "PUT",
         headers: {
@@ -206,9 +196,9 @@ const handleUpdateChange = (e) => {
             "Accept": "application/json",
             "Authorization": `Bearer ${jwt}`
         },
-        body: JSON.stringify(updateVehicleInfo),
+        body: JSON.stringify(updatedData),
     };
-    const url = `http://164.90.174.113:9090/Api/Admin/UpdateInfo/VehicleOwner/${id}`;
+    const url = `http://164.90.174.113:9090/Api/Admin/UpdateInfo/CargOwner/${id}`;
     try {
         const response = await fetch(url, options);
         const result = await response.json();
@@ -231,6 +221,7 @@ const handleUpdateChange = (e) => {
         console.error(error);
     }
 }
+
     return (
         <div>
             <div className="users_edit_container">
@@ -249,89 +240,163 @@ const handleUpdateChange = (e) => {
 
                     <div className={styles.company_individual_header}>
                         <p ><h1 className={styles.companyHeader}>Company Detail</h1></p>
-                        <p ><h4 className={styles.vehicleDetail}>Name : {dataSource.role} <br /> User ID : {dataSource.id}</h4></p>
+                        <p ><h4 className={styles.vehicleDetail}>Name : {cargoOwnerInfo.ownerName}<br />
+                         User ID : {cargoOwnerInfo.id}</h4></p>
                     </div>
                     <form className='form' onSubmit={(onSubmit)}>
                         {/* {dataSource.map(item => { */}
 
                         <div className={styles.allDiv}>
                             <>
-                                {role === "INDIVIDUAL" ? "" :
+                              
                                     <div className='first_div'>
-                                        <h1>Company Information</h1>
+                                        <h1>Cargo Owner Information</h1>
                                         <div className={styles.company_information}>
                                             <div>
-                                                <p>Company Name </p>
+                                                <p>Owner Name </p>
                                                 <input 
-                                                 name ='companyName' 
+                                                 name ='phoneNumber' 
                                                  onChange={handleUpdateChange} 
-                                                value={dataSource.companyName} 
+                                                defaultValue={cargoOwnerInfo.ownerName} 
                                                 type="text" disabled={diabled}></input>
                                             </div>
                                             <div>
-                                                <p>Company type</p>
-                                                {/* {!selecttag ?<input defaultValue={dataSource.companyType} className='select' disabled={diabled}></input> : */}
-                                               {
-                                                !selecttag ? (
+                                            <p>phone number</p>
+                                                <input 
+                                                 name ='companyName' 
+                                                 onChange={handleUpdateChange} 
+                                                defaultValue={cargoOwnerInfo.phoneNumber} 
+                                                type="text" disabled={diabled}></input>
+                                            </div>
+                                            <div>
+                                                <p>Business type</p>
+                                             
+                                              {  !selecttag ? (
                                                   <input
-                                                    defaultValue={dataSource.companyType}
+                                                    defaultValue={cargoBusinessInfo.businessType}
                                                     className='select'
                                                     disabled={diabled}
                                                   />
                                                 ) : (
                                                   <select
                                                     className='select'
-                                                    name='companyType'
-                                                    value={dataSource.companyType}
+                                                    name='businessType'
+                                                    value={cargoBusinessInfo.businessType}
                                                     onChange={handleUpdateChange}
                                                   >
-                                                    <option value="">{dataSource.companyType}</option>
-                                                    {companyType.map((item) => (
-                                                      <option key={item.companyType} value={item.companyType}>
-                                                        {item.companyType}
+                                                    <option value=''>{cargoBusinessInfo.businessType}</option>
+                                                    {BusinessType.map((item) => (
+                                                      <option key={item.businessType} value={item.businessType}>
+                                                        {item.businessType}
                                                       </option>
                                                     ))}
                                                   </select>
                                                 )
                                               }
                                               
-                                                {/* <input onChange={(e) => setDataSource(e.target.value)} value={dataSource2.companyType} type="text" disabled={diabled}></input> */}
                                             </div>
                                             <div>
-                                                <p>Company Sector </p>
+                                                <p>Business Sector </p>
 
                                                 {
                                                         !selecttag ? (
                                                             <input
-                                                            defaultValue={dataSource.companySector}
+                                                            defaultValue={cargoBusinessInfo.businessSector}
                                                             className='select'
                                                             disabled={diabled}
                                                             />
                                                         ) : (
                                                             <select
                                                             className='select'
-                                                            name='companySector'
-                                                            value={dataSource.companySector}
+                                                            name='businessSector'
+                                                            defaultValue={cargoBusinessInfo.businessSector}
                                                             onChange={handleUpdateChange}
                                                             >
-                                                            <option value="">Select Vehicle Condition</option>
-                                                            {companySector.map((item) => (
-                                                                <option key={item.sectorName} value={item.sectorName}>
-                                                                {item.sectorName}
+                                                            <option value=''>{cargoBusinessInfo.businessSector}</option>
+                                                            {BusinesSector.map((item) => (
+                                                                <option key={item.businessSector} value={item.businessSector}>
+                                                                {item.businessSector}
                                                                 </option>
                                                             ))}
                                                             </select>
                                                         )
                                                         }
-
                                             </div>
+
+                                            <div>
+                                                <p>Tin Number </p>
+                                                <input 
+                                                 name ='tinNumber' 
+                                                 onChange={handleUpdateChange} 
+                                                value={cargoBusinessInfo.tinNumber} 
+                                                type="text" disabled={diabled}></input>
+                                            </div>
+                                            <div>
+                                                <p>License Number </p>
+                                                <input 
+                                                 name ='licenseNumber' 
+                                                 onChange={handleUpdateChange} 
+                                                value={cargoBusinessInfo.licenseNumber} 
+                                                type="text" disabled={diabled}></input>
+                                            </div>
+                                            <div>
+                                                <p>License Pic </p>
+                                                {/* {  !selecttag ?  */}
+                                                  <img
+                                                src={cargoBusinessInfo.license || ""}
+                                                alt="licence pic"
+                                                style={{
+                                                border: "1px solid black",
+                                                objectFit: "cover",
+                                                borderRadius: "5px",
+                                                display: "block",
+                                                width: "100%",
+                                                height: "100%",
+                                                overflow: "hidden",
+                                                marginBottom: "10px",
+                                                }}
+                                                className="img-licence"
+                                            />
+                                           {/* <input 
+                                                  name ='licenseFile' 
+                                                  onChange={handleUpdateChange} 
+                                                 value={cargoBusinessInfo.license} 
+                                                 type="file" disabled={diabled}>
+                                        </input>} */}
+                                            </div>
+                                            <div>
+                                            <p>Tin pic </p>
+                                            {/* { !selecttag ?   */}
+                                                  <img
+                                                src={cargoBusinessInfo.tin|| ""}
+                                                alt="tin pic"
+                                                style={{
+                                                border: "1px solid black",
+                                                objectFit: "cover",
+                                                borderRadius: "5px",
+                                                display: "block",
+                                                width: "50%",
+                                                height: "50%",
+                                                overflow: "hidden",
+                                                marginBottom: "10px",
+                                                }}
+                                                className="img-licence"
+                                            />
+                                           {/* <input 
+                                                  name ='licenseFile' 
+                                              onChange={handleUpdateChange} 
+                                             defaultValue={cargoBusinessInfo.tin} 
+                                                type="file" disabled={diabled}></input>
+                                                } */}
+                                            </div>
+                                            
                                         </div>
                                     </div>
-                                }
+                                
                                 {/* :""} */}
 
                                 <div className='second_div'>
-                                    {role === "INDIVIDUAL" ? <h1>Owner Address</h1> : <h1>Company Address</h1>}
+                               <h1>Company Address</h1>
                                     <div className={styles.company_Address}>
                                         <div>
                                             <p>Region </p>
@@ -339,7 +404,7 @@ const handleUpdateChange = (e) => {
                                             name ='region' 
                                             onChange={handleUpdateChange} 
                                             type="text"
-                                            defaultValue={dataSource2.region} 
+                                            defaultValue={cargoAddressInfo.region} 
                                             disabled={diabled}>
                                             </input>
                                         </div>
@@ -349,7 +414,7 @@ const handleUpdateChange = (e) => {
                                              name ='subCity' 
                                              onChange={handleUpdateChange} 
                                              type="text"
-                                             defaultValue={dataSource2.subcity} disabled={diabled}></input>
+                                             defaultValue={cargoAddressInfo.subcity} disabled={diabled}></input>
                                         </div>
                                         <div>
                                             <p>Specfic Location </p>
@@ -357,7 +422,7 @@ const handleUpdateChange = (e) => {
                                             name ='specificLocation' 
                                             onChange={handleUpdateChange} 
                                             type="text"
-                                            defaultValue={dataSource2.specificLocation} 
+                                            defaultValue={cargoAddressInfo.specificLocation} 
                                            disabled={diabled}></input>
                                         </div>
                                         <div>
@@ -366,7 +431,7 @@ const handleUpdateChange = (e) => {
                                             name ='city' 
                                             onChange={handleUpdateChange} 
                                             type="text"
-                                           defaultValue={dataSource2.city} disabled={diabled}></input>
+                                           defaultValue={cargoAddressInfo.city} disabled={diabled}></input>
                                         </div>
                                         <div>
                                             <p>Woreda </p>
@@ -374,7 +439,7 @@ const handleUpdateChange = (e) => {
                                              name ='woreda' 
                                              onChange={handleUpdateChange} 
                                              type="text"
-                                            defaultValue={dataSource2.woreda} 
+                                            defaultValue={cargoAddressInfo.woreda} 
                                             disabled={diabled}></input>
                                         </div>
                                         <div>
@@ -383,83 +448,30 @@ const handleUpdateChange = (e) => {
                                              name ='houseNumber' 
                                              onChange={handleUpdateChange} 
                                              type="text"
-                                            defaultValue={dataSource2.houseNum} disabled={diabled}></input>
+                                            defaultValue={cargoAddressInfo.houseNum} disabled={diabled}></input>
                                         </div>
                                         <div>
                                             <p>Phone Number </p>
                                             <input  
-                                            defaultValue={dataSource2.phone} disabled='true' type="text" ></input>
+                                            defaultValue={cargoAddressInfo.phone}
+                                             disabled='true'
+                                             name='phoneNumber'
+                                             onChange={handleUpdateChange}
+                                             type="text" ></input>
                                         </div>
+                                        
+                                        <div>
+                                                <p>Enabled Status </p>
+                                                <input 
+                                                 name ='licenseNumber' 
+                                                 onChange={handleUpdateChange} 
+                                                defaultValue={cargoEnabled} 
+                                                type="text" disabled={diabled}></input>
+                                            </div>
                                     </div>
                                 </div>
 
-                                <div className='Third_div'>
-                                    <h1>Owner Information</h1>
-                                    <div className={styles.owner_information}>
-                                        <div>
-                                            <p>First Name</p>
-                                            <input
-                                            name ='firstName' 
-                                            onChange={handleUpdateChange} 
-                                            defaultValue={dataSource.firstName} type="text" disabled={diabled}></input>
-                                        </div>
-                                        <div>
-                                            <p>Last Name </p>
-                                            <input
-                                             name ='firstName' 
-                                             onChange={handleUpdateChange} 
-                                            defaultValue={dataSource.lastName} type="text" disabled={diabled}></input>
-
-                                        </div>
-                                        <div>
-                                            <p>Phone Number</p>
-                                            <input
-                                             name ='lastName' 
-                                             onChange={handleUpdateChange} 
-                                            defaultValue={dataSource.phoneNumber} type="text"  disabled={diabled}></input>
-                                        </div>
-                                        <div>
-                                            <p>Email </p>
-                                            <input 
-                                              name ='email' 
-                                              onChange={handleUpdateChange} 
-                                            defaultValue={dataSource.email} type="email"  disabled={diabled}></input>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className='Third_div'>
-                                    <h1>Additional Information</h1>
-                                    <div className={styles.additional_information}>
-                                        <div>
-                                            <p>Notification Pereference</p>
-                                            <input className='select'
-                                             name ='notificationmedia' 
-                                             onChange={handleUpdateChange} 
-                                             defaultValue={dataSource.notificationMedium}  disabled></input>
-                                        </div>
-                                        <div>
-                                            <p>Service Neded </p>
-                                             <input
-                                            
-                                             defaultValue={dataSource.serviceNeeded} className='select'  disabled={diabled}>
-                                            </input> 
-                                            {/* {!selecttag ? :
-                                                <select className='select' name ='serviceRequired' 
-                                                onChange={handleUpdateChange}  defaultValue={dataSource.serviceNeeded}
-                                                >
-                                                <option defaultValue=" " >Select Vehicle Condition</option>
-
-                                                    {
-                                                        notification.map(item => {
-                                                            return <option>{item.conditionName}</option>
-                                                        })
-                                                    }
-                                                </select> } */}
-
-                                        </div>
-                                    </div>
-                                </div>
+                               
                                 <div className={styles.company_button}>
                                     <p className={styles.addd} onClick={() => {
                                         handleChange()
@@ -472,205 +484,6 @@ const handleUpdateChange = (e) => {
                             </>
                         </div>
                     </form>
-
-                    <div className={styles.allcards}>
-
-                        <div className={styles.vehicle} onClick={() => { setTableTitle("Total Vehicles") }}>
-                            <div className={styles.innerContents}>
-                                <h4>Total Vehicle</h4>
-                                <div className={styles.icon}>
-                                    <p><AiFillCar size="2.2rem"></AiFillCar><b>{dataSource5.length}</b></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className={styles.vehicle} onClick={() => { setTableTitle("On Route Vehicles") }}>
-                            <div className={styles.innerContents}>
-                                <h4>On Route</h4>
-                                <p><FaRoute size="2rem" ></FaRoute><b>{dataSource7.length}</b></p>
-                            </div>
-                        </div>
-
-                        <div className={styles.vehicle} onClick={() => { setTableTitle("On Stock Vehicles") }}>
-                            <div className={styles.innerContents}>
-                                <h4>In Stock</h4>
-                                <p><FaParking size="2rem" ></FaParking><b>{dataSource6.length}</b></p>
-                            </div>
-                        </div>
-
-                        <div className={styles.vehicle} onClick={() => { setTableTitle("Parked Vehicles") }}>
-                            <div className={styles.innerContents}>
-                                <h4>Parked</h4>
-                                <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{dataSource8.length}</b></p>
-                            </div>
-                        </div>
-
-                        <div className={styles.vehicle} onClick={() => { setTableTitle("Maintenance Vehicles") }}>
-                            <div className={styles.innerContents}>
-                                <h4>Maintenance</h4>
-                                <p><IoSettingsOutline size="2rem" ></IoSettingsOutline><b>{dataSource9.length}</b></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        {tableTitle === "Total Vehicles" && <Vehicle_Table id={id} role={role} title={tableTitle} />}
-                        {tableTitle === "On Route Vehicles" && <Vehicle_Table id={id} role={role} title={tableTitle} />}
-                        {tableTitle === "On Stock Vehicles" && <Vehicle_Table id={id} role={role} title={tableTitle} />}
-                        {tableTitle === "Parked Vehicles" && <Vehicle_Table id={id} role={role} title={tableTitle} />}
-                        {tableTitle === "Maintenance Vehicles" && <Vehicle_Table id={id} role={role} title={tableTitle} />}
-                    </div>
-
-                    <div className={styles.allcards}>
-
-                        <div className={styles.vehicle} onClick={() => { setTableTitle2("Total Drivers") }}>
-                            <div className={styles.innerContents}>
-                                <h4>Total Drivers</h4>
-                                <div className={styles.icon}>
-                                <p><FaUserSecret size="2.2rem"></FaUserSecret><b>{dataSource3.length}</b></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className={styles.vehicle} onClick={() => { setTableTitle2("On Route Drivers") }}>
-                            <div className={styles.innerContents}>
-                                <h4>On Route</h4>
-                                <p><FaRoute size="2rem" ></FaRoute><b>{dataSource13.length}</b></p>
-                            </div>
-                        </div>
-
-                        <div className={styles.vehicle} onClick={() => { setTableTitle2("Assigned Drivers") }}>
-                            <div className={styles.innerContents}>
-                                <h4>Assigned</h4>
-                                <p><FaUserCheck size="2rem" ></FaUserCheck><b>{dataSource10.length}</b></p>
-                            </div> 
-                        </div>
-
-                        <div className={styles.vehicle} onClick={() => { setTableTitle2("Unassigned Drivers") }}>
-                            <div className={styles.innerContents}>
-                                <h4>Unassigned</h4>
-                                <p><FaUserTimes size="2rem" ></FaUserTimes><b>{dataSource11.length}</b></p>
-                            </div>
-                        </div>
-
-                        <div className={styles.vehicle} onClick={() => { setTableTitle2("Permit Vehicles") }}>
-                            <div className={styles.innerContents}>
-                                <h4>Permit</h4>
-                                <p><FaUserMinus size="2rem" ></FaUserMinus><b>{dataSource12.length}</b></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        {tableTitle2 === "Total Drivers" && <Driver_Table id={id} role={role} title={tableTitle2} />}
-                        {tableTitle2 === "On Route Drivers" && <Driver_Table id={id} role={role} title={tableTitle2} />}
-                        {tableTitle2 === "Assigned Drivers" && <Driver_Table id={id} role={role} title={tableTitle2} />}
-                        {tableTitle2 === "Unassigned Drivers" && <Driver_Table id={id} role={role} title={tableTitle2} />}
-                        {tableTitle2 === "Permit Vehicles" && <Driver_Table id={id} role={role} title={tableTitle2} />}
-                    </div>
-
-
-
-
-
-                    {/* <div className={styles.outer_vehicle_table} id='myTable'> 
-
-                        <label>{tableTitle}</label> 
-
-                        <table class={styles.vehicle_table} id="myTable"> 
-
-                            <thead> 
-                                <tr> 
-                                    <th>Vehicle Name</th> 
-                                    <th>Assigned Driver</th> 
-                                    <th>Vehicle ID</th> 
-                                    <th>Vehicle Type</th> 
-                                    <th>Plate Number</th>  
-                                    <th>Status</th> 
-                                    <th>Detail</th> 
-                                    <th>Tracking</th> 
-                                </tr> 
-                            </thead> 
-                            <tbody> 
-                                {currentPage.map(item => (
-                                    <tr className={styles.active_row}> 
-
-                                        <td>{item.vehicleName}</td> 
-                                        <td>{item.driverName == "null" ? "unassignd" : `${item.driverName}`}</td> 
-                                        <td>{item.id}</td> 
-                                        <td>{item.vehicleCatagory}</td> 
-                                        <td>{item.plateNumber}</td> 
-                                        <td>{item.status}</td>
-                                        <td><Link to={`/vehicle_detail/${item.id}`}><button>Detail</button></Link></td> 
-                                        <td><Link to="/tracking"><button>Tracking</button></Link></td> 
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div className={styles.page}>
-                        <Pagination
-                            onChange={(page) => setCurentPage(page)}
-                            pageSize={postPerPage}
-                            current={page}
-                            total={totalPages}
-                            showQuickJumper
-                            showSizeChanger
-                            onShowSizeChange={onShowSizeChange}
-                        />
-                    </div> */}
-
-                    {/* <div className={styles.outer_vehicle_table} id='myTable'>
-
-                                    <div className={styles.second_div}>
-                                        <div className={styles.Vehicle_number}>
-                                            <p>Total Number Of Drivers</p>
-                                            <p className={styles.number} >{dataSource3.length}</p>
-                                        </div>
-                                    </div>
-
-                                    <label>Registerd Drivers</label>
-
-                                    <table class={styles.vehicle_table} id="myTable">
-
-                                        <thead>
-                                            <tr>
-                                                <th>Driver ID</th>
-                                                <th>Driver Name</th>
-                                                <th>License Number</th>
-                                                <th>Detail</th>
-                                                <th>Tracking</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {currentPage2.map(item => (
-                                                <tr className={styles.active_row}>
-
-                                                    <td>{item.id}</td>
-                                                    <td>{item.driverName}</td>
-                                                    <td>{item.licenseNumber}</td>
-                                                    <td><p onClick={() => {
-                                                        setEdit(item.id)
-                                                        setName("true")
-                                                    }}>Detail</p></td>
-                                                    <td><Link to=""><button>Manage</button></Link></td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div className={styles.page}>
-                                    <Pagination
-                                        onChange={(page2) => setCurentPage2(page2)}
-                                        pageSize={postPerPage2}
-                                        current={page2}
-                                        total={totalPages2}
-                                        showQuickJumper
-                                        showSizeChanger
-                                        onShowSizeChange={onShowSizeChange2}
-                                    />
-                                </div> */}
 
                 </section>
 

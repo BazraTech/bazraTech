@@ -1356,9 +1356,7 @@ useEffect(() => {
 
                 <div className='outer_setting'>
                     <div title='cargo type' className='setting_header'>Cargo type</div>
-                    <AddItem title="Add_Cargo_Type" post='driverState' 
-                    url= "http://64.226.104.50:9090/Api/Admin/CreateCargoType"
-                        />
+                  <PopUp title="Add_Cargo_Typer" />
                     <div>
                         {Loading
                             ? <p className='loading'><SyncLoader
@@ -1456,8 +1454,7 @@ useEffect(() => {
                 {/* /********Driver state */}
                 <div className='outer_setting'>
                     <div title='Driver state' className='setting_header'>Driver state</div>
-                    <AddItem title="driver State"
-                          url="http://64.226.104.50:9090/Api/Admin/CreateDriverState" />
+                    <PopUp title="driverState" />
                     <div>
                         {Loading
                             ? <p className='loading'><SyncLoader

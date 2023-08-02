@@ -128,7 +128,7 @@ const send = false
     
     // Rest of your component rendering logic
     
- console.log(dataSource);
+//  console.log(dataSource);
  const url1 = `http://164.90.174.113:9090/Api/Admin/All/Cargos/${id}`;
 
  const [dataSource1, setDataSource1] = useState([])
@@ -143,7 +143,7 @@ const send = false
          })
  }, [reloadKey])
 // console.log(JSON.stringify(dataSource1.status));
-
+console.log(dataSource1)
 const trueorFalse = dataSource1.status == 'ACCEPT' ? 'false' :'true'
     const navigate = useNavigate();
     const goBack = () => {
@@ -164,6 +164,7 @@ const trueorFalse = dataSource1.status == 'ACCEPT' ? 'false' :'true'
                 <div className={styles.tripHeader} onClick={handleReload}>
                   <div className={styles.vehicleName} ><h1 className={styles.avaliableVehicles}>Post cargo Detail</h1></div>
                     <h4>Cargo Owner Name : {dataSource1.cargoOwner} <br /> Pakaging : {dataSource1.packaging}<br/>
+                   {/* Status : {dataSource1.status}<br/> */}
                     Trip : {dataSource1.pickUp} TO {dataSource1.dropOff}</h4>
                 </div>
                 <div className={styles.allDiv}>
@@ -208,6 +209,8 @@ const trueorFalse = dataSource1.status == 'ACCEPT' ? 'false' :'true'
                                                     <th>vihicle owner Name</th>
                                                     <th>Driver Name</th>
                                                     <th>Plate number</th>
+                                                    <th>Vehicle Capacity</th>
+                                                    <th>State</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -217,6 +220,8 @@ const trueorFalse = dataSource1.status == 'ACCEPT' ? 'false' :'true'
                                                         <td>{item.vehicleOwner}</td>
                                                         <td>{item.driver}</td>
                                                         <td>{item.plateNumber}</td>
+                                                        <td>{item.vehicleCapacity}</td>
+                                                        <td>{item.driverState}</td>
                                                                                                              
                                                     </tr>
                                               ))}

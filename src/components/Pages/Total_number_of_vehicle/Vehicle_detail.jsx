@@ -93,7 +93,7 @@ export default function Users_edit() {
         .then(response => response.json())
         .then(data =>{
             setStatus(data.driverStatus)
-            console.log(status)
+   
         })
     },[])
     const [updatedData, setUpdatedData] = useState(dataSource)
@@ -105,10 +105,11 @@ export default function Users_edit() {
           ...prevData,
           [name]: value || prevData[name],// Keep the existing value if the input is empty
         }));
-        console.log(updatedData)
+       
       };
 
-    
+      console.log(updatedData)
+      
     const onSubmit =(e)=>{
         
         e.preventDefault();

@@ -168,7 +168,10 @@
 .vehicle_table tbody .active_row {
     color: #005d4a;
 }
-
+disabled{
+    cursor: not-allowed;
+    background-color: lightslategray;
+}
 
 /* ------------------ pagination ------------------- */
 .page {

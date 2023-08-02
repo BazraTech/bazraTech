@@ -158,9 +158,9 @@ export default function (props) {
                                         </div>
  
                                     </div>
-                                    {/* <div className={styles.addButton}>
-                                    <button>Submit </button>
-                                    </div> */}
+                                    <div className={styles.addButton}>
+                                    <button>Edit </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

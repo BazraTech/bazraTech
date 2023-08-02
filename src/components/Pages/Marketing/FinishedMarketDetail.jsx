@@ -89,19 +89,33 @@ const { id } = useParams()
     };
    
     const url2 = `http://164.90.174.113:9090/Api/Admin/All/CargoDrivers/${id}`;
+    const [error, setError] = useState(null);
 
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
         // setLoading(true);
-        fetch(url2, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource(data.cargoDriversINFs)
-                console.log(dataSource.cargoDriversINFs)
-                // setLoading(false);
-            })
-    }, [])
- console.log(dataSource);
+                    fetch(url2, options)
+                        .then(response => response.json())
+                        .then(response => {
+                          
+                            if (response.status == 500) {
+                                throw new Error('Failed to get the drivers');
+                            }
+                            return response.json();
+                            })
+                            .then(response => {
+                                console.log(response);
+                                setDataSource( response.cargoDriversINFs)
+                                console.log(dataSource.cargoDriversINFs)
+                            })
+                            .catch(error => {
+                    
+                            setError(error.message);
+                            swal(`Failed ${error}`, "Error", "error");
+                            });
+                          
+            }  ,[])
+    // }, [])
  const url1 = `http://164.90.174.113:9090/Api/Admin/All/Cargos/${id}`;
 
  const [dataSource1, setDataSource1] = useState([])
@@ -110,7 +124,7 @@ const { id } = useParams()
      fetch(url1, options)
          .then(respnse => respnse.json())
          .then(data => {
-             setDataSource1(data)
+             setDataSource1(data ? data : '')
              console.log(dataSource1)
              // setLoading(false);
          })
@@ -130,7 +144,7 @@ console.log(dataSource1);
 
         <div>
 
-          {dataSource.status ='ACTIVE' ?<Navigation path="/marketing" title="Post progress" link="/marketing" past="marketing"></Navigation>:
+          {dataSource1.status ='ACTIVE' ?<Navigation path="/marketing" title="Post progress" link="/marketing" past="marketing"></Navigation>:
            <Navigation path="/marketing" title="Post progress" link={`/Post_market/${id}`} past="post marketing"></Navigation>}
 
             <div className={styles.main_content}>
@@ -146,25 +160,23 @@ console.log(dataSource1);
 
                         <div className={styles.forms}>
                         <div>
-                                        <p>Neded</p>
+                                        <p>Total Weight</p>
                                         <input  value={dataSource1.weight} type="text" disabled={diabled}></input>
                                 </div> 
                                 <div>
-                                    <p>Remaining</p>
-                                        <input  value={dataSource1.remaining} type="text" disabled={diabled}></input>
-                                </div>
-                                
-                                    <div className={styles.progressBar}>
-                                    <p> Progress Bar </p>
-                                    <div className={styles.progressDiv}>
-                                        
-                                      <div></div><div className={styles.progress}style={{ width: `${percent}%`, backgroundColor: percent <= 25 ?'red' : 'green' }} >
-                                        </div>
-                                    </div><span>{percent}%</span>
-                                 </div>
-                                                      
+                                        <p>Date</p>
+                                        <input  value={dataSource1.date} type="text" disabled={diabled}></input>
+                                </div> 
+                                <div>
+                                        <p>Work Status</p>
+                                        <input  value={dataSource1.status} type="text" disabled={diabled}></input>
+                                </div> 
+                                <div>
+                                        <p>payment</p>
+                                        <input  value={dataSource1.payent} type="text" disabled={diabled}></input>
+                                </div>               
                         </div>  
-                       {dataSource1.status == 'ACCEPTED' ? <p  className={styles.button3}>already send to cargo owner</p>: <button className={styles.button3}>Send to Cargo Owner</button>}
+                       {/* {dataSource1.status == 'ACCEPTED' ? <p  className={styles.button3}>already send to cargo owner</p>: <button className={styles.button3}>Send to Cargo Owner</button>} */}
                     </form>
                  </div>
 
@@ -181,6 +193,7 @@ console.log(dataSource1);
                                                     <th>Driver Name</th>
                                                     <th>Plate number</th>
                                                     <th>State</th>
+                                                    <th>paid/Unpaid</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -190,7 +203,8 @@ console.log(dataSource1);
                                                         <td>{item.vehicleOwner}</td>
                                                         <td>{item.driver}</td>
                                                         <td>{item.plateNumber}</td>
-                                                        <td>{item.state}</td>                          
+                                                        <td>{item.driverState}</td> 
+                                                        <td>Unpaid</td>                          
                                                     </tr>
                                               ))}
                                             </tbody>
