@@ -147,7 +147,8 @@ const [refresh, serRefresh] = useState(false)
         setShow(show);
     }
     /*************************Total vehicles***************/
-    const VehUrl = "http://164.90.174.113:9090/Api/Admin/All/Vehicles";
+    const [ownerId,setOwnerId]=useState('')
+    const VehUrl = `http://164.90.174.113:9090/Api/Admin/Drivers/All/${ownerId}`;
     const [AllVehicles, setAllVehicles] = useState([])
     useEffect(() => {
         setLoading(true); 
@@ -365,6 +366,7 @@ console.log(searchResult)
                                                     setdriverLicense(item.licenseNumber)
                                                     setdriverName(item.driverName)
                                                     setdriverStatus(item.status)
+                                                    setOwnerId(item.ownerID )
                                                     }}>
                                                         Manage</button></td>
                                         </tr>

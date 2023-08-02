@@ -48,7 +48,7 @@ export default function () {
     const [dataSource2, setDataSource2] = useState([])
     const [dataSource02, setDataSource02] = useState([])
     // const [Loading, setLoading] = useState([])
-    const url2 = "http://64.226.104.50:9090/Api/Admin/All/VehicleOwners/Role/owner";
+    const url2 = "http://164.90.174.113:9090/Api/Admin/All/VehicleOwners/Role/owner";
     useEffect(() => {
         setLoading(true)
         fetch(url2, options)
@@ -98,7 +98,7 @@ export default function () {
         setpostPerPage(pageSize);
     }
 
-    const urlthree = "http://64.226.104.50:9090/Api/Admin/All/VehicleCatagory";
+    const urlthree = "http://164.90.174.113:9090/Api/Admin/All/VehicleCatagory";
     const [dataSource5, setDataSource5] = useState([])
     useEffect(() => {
         fetch(urlthree, options)
@@ -108,7 +108,7 @@ export default function () {
             })
     }, [])
 
-    const urlFour = "http://64.226.104.50:9090/Api/Admin/All/VehicleCondition";
+    const urlFour = "http://164.90.174.113:9090/Api/Admin/All/VehicleCondition";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         fetch(urlFour, options)

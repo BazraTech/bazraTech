@@ -298,7 +298,7 @@ const enableDisable = async (enable) => {
             },)
             setTimeout(() => {
                 handleReload();
-              }, 2500); 
+              }, 1000); 
             
         } else {
             console.log("failed");
@@ -308,7 +308,7 @@ const enableDisable = async (enable) => {
         console.error(error);
     }
 }
-console.log(selecttag)
+console.log(dataSource.enabled)
     return (
         <div>
             <div className="users_edit_container">
@@ -568,11 +568,11 @@ console.log(selecttag)
                                             <h1>Account </h1>
                                             <div className={styles.toggleDiv}>
                                             <input 
-                                              name ='enabled' 
+                                              name ='enabled'
                                               onChange={handleUpdateChange} 
                                               id='enable'
-                                            defaultValue={dataSource.enabled == true ? 'Enabled' : 'Disabled'} type="text"  
-                                        ></input>{selecttag  &&  dataSource.enabled ? <BsToggleOn onClick={()=>enableDisable(dataSource.id)}className={styles.toggleOn} size="3rem"></BsToggleOn> : 
+                                            value={dataSource.enabled == true ? 'Enabled' : 'Disabled'} type="text"  
+                                        ></input>{dataSource.enabled == true ? <BsToggleOn onClick={()=>enableDisable(dataSource.id)}className={styles.toggleOn} size="3rem"></BsToggleOn> : 
                                         <BsToggleOff onClick={()=>enableDisable(dataSource.id)}className={styles.toggleOff} size="3rem"></BsToggleOff>
                                         }
                                             </div>

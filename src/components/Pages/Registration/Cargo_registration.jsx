@@ -39,6 +39,7 @@ export default function Cargo_registration() {
     const [businessSector, setBusinessSector] = useState("");
     const [licenseFile, setLicenseFile] = useState("");
     const [tinFile, setTinFile] = useState("");
+    const [cargOwnerPic, setProPic] =useState("")
     
 
    
@@ -72,6 +73,7 @@ export default function Cargo_registration() {
             formData.append("phoneNumber", phoneNumber);
             formData.append("licenseFile", licenseFile);
             formData.append("tinFile", tinFile);
+            formData.append('cargOwnerPic',cargOwnerPic);
 
         try{
             const response = await axios.post(
@@ -105,6 +107,7 @@ export default function Cargo_registration() {
                 setBusinessName("");
                 setTinNumber("");
                 setTinFile("");
+                setProPic("")
 
         } catch (error) {
           if (error.response) {
@@ -458,6 +461,17 @@ export default function Cargo_registration() {
                                        id='license' >
                                     </input>
                                     {errors.licenseFile && <span className={styles.validate_text}>{errors.licenseFile.message}</span>}
+                                </div>
+                                <div>
+                                    <p>Cargo owner picture <FaStarOfLife style={{marginBottom:"2px"}} className='icon' size="0.5rem" color='red'></FaStarOfLife></p>
+                                    <input name='cargOwnerPic' type="file"
+                                        // value={licenseFile}
+                                        {...register("cargOwnerPic", { required: "*please enter your picture" })}
+                                        placeholder='Enter Your pic'
+                                        onChange={(e) => setProPic(e.target.files[0])}
+                                       id='cargOwnerPic'>
+                                    </input>
+                                    {errors.cargOwnerPic && <span className={styles.validate_text}>{errors.cargOwnerPic.message}</span>}
                                 </div>
                             </div>
                         </div>

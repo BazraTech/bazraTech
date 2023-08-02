@@ -121,7 +121,7 @@ export default function () {
                 setLoading(false)
             })
     }, [])
-
+console.log(dataSource3)
 
     const [popup, setPop] = useState(false);
     const [popup1, setPop1] = useState(false);
@@ -356,7 +356,10 @@ export default function () {
         }
     };
     const [color, setColor] = useState("green");
+    const ApiData = JSON.parse(localStorage.getItem('ApiData'))
 
+    const totalUser = ApiData.CargoOwner + ApiData.CompanyOwner + ApiData.IndividualOwner
+console.log(totalUser)
     return (
 
         <div className="containerr">
@@ -378,7 +381,7 @@ export default function () {
                             <div className={styles.innerContents}>
                                 <h4>Total Users</h4>
                                 <div>
-                                    <p><FaUsers size="2.2rem"></FaUsers><b>{dataSource.length}</b></p>
+                                    <p><FaUsers size="2.2rem"></FaUsers><b>{totalUser}</b></p>
                                 </div>
                             </div>
                         </Link>
@@ -460,12 +463,12 @@ export default function () {
                                             </thead>
                                             <tbody>
                                                 {currentPage.map(item => (
-                                                    <tr className={styles.active_row}>
+                                                    <tr className={styles.active_row} key={item.id}>
                                                         <td>{item.id}</td>
                                                         <td>{item.ownerName}</td>
                                                         <td>{item.phoneNumber}</td>
                                                         <td>{item.enabled ? 'Enabled' : 'Disabled'}</td>
-                                                        <td>{item.roles[0].name}</td>
+                                                        <td>-</td>
                                                         <td><Link to={`/cargo/${item.id}`}>
                                                             <button>Detail</button></Link>
                                                             </td>

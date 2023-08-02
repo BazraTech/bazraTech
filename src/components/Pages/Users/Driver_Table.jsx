@@ -24,7 +24,10 @@ export default function Driver_Table({ id, role, title }) {
     const handleClickopen = () => {
         setPop1(!popup1);
     }
-
+    const [reloadKey, setReloadKey] = useState(0)
+    const handleReload = () => {
+        setReloadKey((prevKey) => prevKey + 1);
+        };
     const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
 
     const options = {
@@ -87,7 +90,7 @@ export default function Driver_Table({ id, role, title }) {
 
                 setLoading(false)
             });
-    }, [])
+    }, [reloadKey])
 
     const [selecttag, setSelectTag] = useState(false)
     const [inputtag, setinputTag] = useState(true)
@@ -116,7 +119,7 @@ export default function Driver_Table({ id, role, title }) {
     if (title == "Permit Vehicles") {
         currentPage = dataSource5.slice(indexOfFirstPage, indexOfLastPage);
     }
-// console.log(currentPage[0].enabled)
+console.log(currentPage)
     const onShowSizeChange = (current, pageSize) => {
         setpostPerPage(pageSize);
     }
@@ -212,6 +215,7 @@ const enableDisable = async (enable) => {
         const mess = localStorage.getItem("message");
         console.log(mess);
         if (response.ok) {
+            handleReload()
             swal("Successfully", `${mess}`, "success", {
                 button: true,
                 timer: 6000,
@@ -274,7 +278,7 @@ const enableDisable = async (enable) => {
                                 <td><button style={{backgroundColor: item.enabled ? 'red':'green'}}
                                             onClick={() => {
                                                     enableDisable(item.id)
-                                                    }}>{item.enabled ? 'Enable' : 'Disable' }</button></td>
+                                                    }}>{item.enabled ? 'Disable' : 'Enable' }</button></td>
                             </tr>
                         ))}
                     </tbody>
@@ -324,7 +328,7 @@ const enableDisable = async (enable) => {
                     onShowSizeChange={onShowSizeChange}
                 />
             </div>
-            {name === "true" && <Driver_detail data={edit} changeName={changeName} />}
+            {name === "true" && <Driver_detail id={edit} changeName={changeName} />}
         </>
 
     )
