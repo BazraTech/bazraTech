@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../../const/constant.dart';
 import 'alertComponet/alertComponetforowner.dart';
 import 'tripReport/tripReport.dart';
@@ -27,7 +28,37 @@ class _MyScreenState extends State<MyScreen> {
   List<String> yourList = [];
   // Your initial list of data
   List filteredDataList = [];
-  int currentPage = 1;
+  dynamic workData;
+  bool _isLoading = true;
+  workReport() async {
+    final storage = new FlutterSecureStorage();
+    var token = await storage.read(key: 'jwt');
+    var client = http.Client();
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    final response = await http.get(
+        Uri.parse(
+          'http://164.90.174.113:9090/Api/Driver/All/Cargos/FINISHED',
+        ),
+        headers: requestHeaders);
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final mydata = data["cargos"];
+      setState(() {
+        workData = mydata;
+        _isLoading = false;
+      });
+      workComponentforowner(
+        data: mydata,
+      );
+    } else {
+      throw Exception('Failed to fetch data');
+    }
+  }
+
   fetchData() async {
     final storage = new FlutterSecureStorage();
     var token = await storage.read(key: 'jwt');
@@ -65,13 +96,12 @@ class _MyScreenState extends State<MyScreen> {
 
         setState(() {
           fetchedData = filteredDataList;
-          currentPage++;
+          _isLoading = false;
         });
         alertComponentforowner(
           data: filteredDataList,
           startdate: endDate,
           enddate: startDate,
-          scrollController: _scrollController,
         );
       } else if (Weekly == "${widget.time}") {
         var output = <String>[];
@@ -92,13 +122,12 @@ class _MyScreenState extends State<MyScreen> {
 
         setState(() {
           fetchedData = filteredDataList;
-          currentPage++;
+          _isLoading = false;
         });
         alertComponentforowner(
           data: filteredDataList,
           enddate: startDate,
           startdate: endDate,
-          scrollController: _scrollController,
         );
       } else {
         var output = <String>[];
@@ -118,13 +147,12 @@ class _MyScreenState extends State<MyScreen> {
 
         setState(() {
           fetchedData = filteredDataList;
-          currentPage++;
+          _isLoading = false;
         });
         alertComponentforowner(
           data: filteredDataList,
           enddate: startDate,
           startdate: endDate,
-          scrollController: _scrollController,
         );
       }
     } else {
@@ -169,6 +197,7 @@ class _MyScreenState extends State<MyScreen> {
     super.initState();
     _scrollController.addListener(_scrollListener);
     fetchData();
+    workReport();
   }
 
   @override
@@ -203,34 +232,43 @@ class _MyScreenState extends State<MyScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 60,
-            ),
-            Container(
-              child: tripComponentforowner(),
-            ),
-            // alert report
+        child: _isLoading
+            ? Center(
+                child: Container(
+                margin: EdgeInsets.only(top: screenHeight * 0.2),
+                child: LoadingAnimationWidget.hexagonDots(
+                  size: 100,
+                  color: Color.fromRGBO(178, 142, 22, 1),
+                ),
+              ))
+            : Column(
+                children: [
+                  SizedBox(
+                    height: 60,
+                  ),
 
-            Container(
-              child: workComponentforowner(),
-            ),
-            //work report
-            Container(
-              height: screenHeight - 30,
-              child: fetchedData != null
-                  ? alertComponentforowner(
-                      enddate: startdate,
-                      startdate: endDate,
-                      data: fetchedData,
-                      scrollController: _scrollController,
-                    )
-                  : Center(child: CircularProgressIndicator()),
-              //
-            )
-          ],
-        ),
+                  // alert report
+                  Container(
+                      child: workData == null
+                          ? Container()
+                          : workComponentforowner(
+                              data: workData,
+                            )),
+                  //work report
+                  Container(
+                      height: screenHeight,
+                      child: fetchedData == null
+                          ? Container()
+                          : alertComponentforowner(
+                              data: fetchedData,
+                              enddate: endDate,
+                              startdate: startdate,
+                            )
+
+                      //
+                      )
+                ],
+              ),
       ),
     );
   }

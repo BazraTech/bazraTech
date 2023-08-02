@@ -10,12 +10,12 @@ class alertComponentforowner extends StatefulWidget {
 
   final startdate;
   final enddate;
-  final ScrollController scrollController;
+  
   alertComponentforowner({
     required this.data,
     required this.startdate,
     required this.enddate,
-    required this.scrollController,
+ 
   });
 
   @override
