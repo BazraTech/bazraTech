@@ -74,8 +74,10 @@ export default function Users_edit() {
                 setLoading(false)
 
  
-  const   oldCargoOwnerInformation = {
-    "licenseNumber": json.businessINF.licenseNumber,
+ 
+
+    setUpdateCargoInfo({
+        "licenseNumber": json.businessINF.licenseNumber,
       "tinNumber": json.businessINF.tinNumber,
       "businessName": json.businessINF.businessName,
       "businessType": json.businessINF.businessType,
@@ -89,9 +91,7 @@ export default function Users_edit() {
       "phoneNumber": json.address.phone,
       "licenseFile": json.businessINF.license,
       "tinFile":json.businessINF.tin,
-    };
-
-    setUpdateCargoInfo(oldCargoOwnerInformation);
+    });
  
             });
     }, [reloadKey])

@@ -13,7 +13,20 @@ export default function (props) {
     const handleClickopen = () => {
         setPop(!popup);
     }
+  const [diabled, setDiabled] = useState(true);
+    const handleChange = () => {
+        setDiabled(!diabled);
+    }
+      const [selecttag, setSelectTag] = useState(false)
+    const [inputtag, setinputTag] = useState(true)
+    const select = () => {
+        setSelectTag(!selecttag);
+        setinputTag(!inputtag);
+    } 
 
+    const toggle = () => {
+        setState(!state);
+    };
     const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
 
     const options = {
@@ -43,6 +56,18 @@ export default function (props) {
     const closePopup5 = () => {
         setPop1(false);
     }
+    
+    const [driverName,setDriverName] = useState(dataSource.driverName)
+    const [licenseNumber,setlicenseNumber] =useState(dataSource.licenseNumber)
+    const [licensePic, setlicensePic]= useState(dataSource.licensePic)
+    const [driverPic,setdriverPic]= useState(dataSource.driverPic)
+    const [OwnerPhone,setOwnerPhone]=useState(dataSource.phoneNumber)
+    const [driverPhone,setdriverPhone]=useState(dataSource.phoneNumber)
+    const [birthDate,setbirthDate]=useState(dataSource.birthDate)
+    const [experience,setexperience]=useState(dataSource.experience)
+    const [licenseGrade,setlicenseGrade]=useState(dataSource.licenseGrade)
+    const [licenseIssueDate,setlicenseIssueDate]=useState(dataSource.licenseIssueDate)
+    const [licenseExpireDate,setlicenseExpireDate]=useState(dataSource.licenseExpireDate)
 
     return (
 
@@ -64,8 +89,10 @@ export default function (props) {
 
                                         <div className={styles.input}>
                                             <lable>First Name</lable>
-                                            <input name='driverName' type="text"
-                                                value={dataSource.driverName}
+                                            <input 
+                                            name='driverName' type="text"
+                                                value={driverName}
+                                                disabled={diabled}
                                             ></input>
                                         </div>
 
@@ -77,26 +104,34 @@ export default function (props) {
                                         <div className={styles.input}>
                                             <lable>License Number</lable>
                                             <input name='licenseNumber' type="text"
-                                                value={dataSource.licenseNumber}
+                                                value={licenseNumber}
+                                                disabled={diabled}
                                             ></input>
                                         </div>
 
                                         <div className={styles.input}>
                                             <lable>Driver Licence Picture</lable>
-                                            <a href={dataSource.licensePic} target="_blank" rel="noopener noreferrer">
-                                            <img src={dataSource.licensePic} 
-                                            alt={`${dataSource.driverName}`} 
+                                           {!select ? <a href={licensePic} target="_blank" rel="noopener noreferrer">
+                                            <img src={licensePic} 
+                                            alt={`${driverName}`} 
                                              />
-                                             </a>
+                                             </a>:
+                                             <input type='file'
+                                             name='licensePic'
+                                             onChange={(e)=>setlicensePic(e.target.files[0])}>
+                                             </input>}
                                         </div>
 
                                         <div className={styles.input}>
                                             <lable>Driver Picture</lable>
-                                            <a href={dataSource.driverPic} target="_blank" rel="noopener noreferrer">
-                                            <img src={dataSource.driverPic} 
-                                            alt={`${dataSource.driverName}`} 
+                                            {!select ? <a href={driverPic} target="_blank" rel="noopener noreferrer">
+                                            <img src={driverPic} 
+                                            alt={`${driverName}`} 
                                              />
-                                             </a>
+                                             </a> :
+                                             <input type='file'
+                                            onChange={(e)=>{setdriverPic(e.target.files[0])}}>
+                                                </input>}
                                         </div>
 
                                         <div className={styles.input}>
@@ -110,35 +145,39 @@ export default function (props) {
                                         <div className={styles.input}>
                                             <lable>Phone Number</lable>
                                             <input name='phoneNumber' type="text"
-                                                value={dataSource.phoneNumber}
+                                                value={OwnerPhone}
+                                                    disabled={diabled}
                                             ></input>
                                         </div>
 
                                         <div className={styles.input}>
                                             <lable>Exeperiance</lable>
-                                            <input name='Exeperiance' type="text"
-                                                value={dataSource.experience}
+                                            <input name='experience' type="text"
+                                                value={experience}
+                                                disabled={diabled}
                                             ></input>
                                         </div>
 
                                         <div className={styles.input}>
                                             <lable>License Grade</lable>
-                                            <input name='License Grade' type="text"
-                                                value={dataSource.licenseGrade}
+                                            <input name='licenseGrade' type="text"
+                                                value={licenseGrade}
+                                                disabled={diabled}
                                             ></input>
                                         </div>
 
                                         <div className={styles.input}>
                                             <lable>Issue Date</lable>
-                                            <input name='Issue Date' type="date"
-                                                value={dataSource.licenseIssueDate}
+                                            <input name='licenseIssueDate' type="date"
+                                                value={licenseIssueDate}
                                             ></input>
                                         </div>
 
                                         <div className={styles.input}>
                                             <lable>Expire Date</lable>
-                                            <input name='Expire Date' type="date"
-                                                value={dataSource.licenseExpireDate}
+                                            <input name='licenseExpireDate' type="date"
+                                                value={licenseExpireDate}
+                                                disabled={diabled}
                                             ></input>
                                         </div>
 
@@ -146,21 +185,29 @@ export default function (props) {
                                             <lable>Status</lable>
                                             <input name='Expire Date' type="text"
                                                 value={dataSource.status}
+                                                diabled={diabled}
                                             ></input>
                                         </div>
 
                                         <div className={styles.input}>
                                             <lable>Vehicle Owner</lable>
-                                            <input name='Expire Date' type="text"
+                                            <input name='status' type="text"
                                                 value={dataSource.vehicleOwner}
+                                                // disabled={diabled}
                                             ></input>
 
                                         </div>
  
                                     </div>
-                                    <div className={styles.addButton}>
-                                    <button>Edit </button>
-                                    </div>
+                                    <div className={styles.company_button}>
+                                    <p className={styles.addd} onClick={() => {
+                                        handleChange()
+                                        toggle()
+                                        select()
+                                    }}>{state ? "Cancle" : "Edit"}</p>
+                                    <br />
+                                    <button className={styles.ad} disabled={diabled}>Update</button>
+                                </div>
                                 </div>
                             </div>
                         </div>

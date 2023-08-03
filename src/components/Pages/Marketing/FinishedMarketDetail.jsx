@@ -18,45 +18,54 @@ const { id } = useParams()
         formState: { errors }, 
     } = useForm();
     
-    const onSubmit = (e) => {
-        e.preventDefault();
+    const onSubmit = () => {
         handleClick();
     };
 
 
     const handleClick = async () => {
+       const formData = new FormData()
+       formData.append("weybill", weybill);
+       formData.append("f1Form", f1Form);
+       formData.append("amount", amount);
+       formData.append("driverPhone", driverPhone);
+       formData.append("cargoId", cargoId);
+        console.log(formData);
         
-        console.log('Im on submit function');
-        const options = {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                "Accept": "application/json",
-                "Authorization": `Bearer ${jwt}`
-            },
-           
-        };
-        const url =`http://164.90.174.113:9090/Api/Admin/AcceptedCargo/${id}`; 
-        try {
-            const response = await fetch(url, options);
-            const result = await response.json();
-            console.log(result);
-            localStorage.setItem("message", JSON.stringify(result["message"])); 
-            const mess = localStorage.getItem("message");
-            console.log(mess);
-            if (response.ok) {
-                console.log("Posted successful");
-                swal("Successfully Posted to cargo owner", `${mess}`, "success", {
+        try{
+            const response = await axios.post(
+                'http://164.90.174.113:9090/Api/Payment/ToDriver',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        "Authorization": `Bearer ${jwt}`,
+                    },
+                    }
+                );
+              localStorage.setItem("message", JSON.stringify(response.data["message"]));
+                const mess = localStorage.getItem("message");
+                console.log(response);
+                swal("Successfull", `${mess}`, "success", {
                     button: true,
-                    timer: 60000,
                 });
-               
-            } else {
-                console.log("failed");
-                swal(`Failed To Post ${mess}`, "Error", "error");
-            }
+
         } catch (error) {
-            console.error(error);
+          if (error.response) {
+            localStorage.setItem('message', JSON.stringify(error.response.data['message']));
+            const messx = localStorage.getItem('message');
+            console.log('message', messx);
+            console.log(error.response.data);
+            swal("Error", `${messx}`, "error", {
+              button: true,
+            });
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log('Error', error.message);
+          }
         }
     }
 
@@ -155,59 +164,8 @@ console.log(dataSource)
   const [weybill, setWybill] = useState('')
   const [f1Form,setF1Form]=useState('')
   const [amount, setPayment]=useState('')
-//   const [driverPhone,setDriverPhone]=useState('')
+  const [driverPhone,setDriverPhone]=useState('')
   const [cargoId,setCargoId] = useState(dataSource.cargo)
-    const remaining = dataSource1.remaining == dataSource1.weight ? 0 : dataSource1.remaining == 0 ? dataSource1.weight : dataSource1.remaining
-    let percent = (remaining/dataSource1.weight) * 100;
-
-
-    const payForDriver = async (phone) => 
-    {
-
-            const formData = new FormData();
-            formData.append("weybill", weybill);
-            formData.append("f1Form", f1Form);
-            formData.append("amount", amount);
-            formData.append("driverPhone", phone);
-            formData.append("cargoId", cargoId);
-            console.log(formData)
-
-        try{
-            const response = await axios.post(
-                'http://164.90.174.113:9090Api/Payment/ToDriver',
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        "Authorization": `Bearer ${jwt}`,
-                    },
-                    }
-                );
-              localStorage.setItem("message", JSON.stringify(response.data["message"]));
-                const mess = localStorage.getItem("message");
-                console.log(response);
-                swal("Successfully ", `${mess}`, "success", {
-                    button: true,
-                });
-        } catch (error) {
-          if (error.response) {
-            localStorage.setItem('message', JSON.stringify(error.response.data['message']));
-            const messx = localStorage.getItem('message');
-            console.log('message', messx);
-            console.log(error.response.data);
-            swal("Error", `${messx}`, "error", {
-              button: true,
-            });
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            console.log(error.request);
-          } else {
-            console.log('Error', error.message);
-          }
-        }
-    }
-
 
     return (
 
@@ -240,29 +198,7 @@ console.log(dataSource)
                                         <p>Work Status</p>
                                         <input  value={dataSource1.status} type="text" disabled={diabled}></input>
                                 </div> 
-                                <div>
-                                        <p>weybill</p>
-                                        <input 
-                                        name='weybill'
-                                         onChange={(e)=>setWybill(e.target.files[0])}
-                                          type="file"></input>
-                                </div>   
-                                <div>
-                                        <p>F1 form</p>
-                                        <input 
-                                        name='f1Form'
-                                         onChange={(e)=>setF1Form(e.target.files[0])}
-                                        type="file" 
-                                        ></input>
-                                </div>  
-                                <div>
-                                        <p>payment</p>
-                                        <input  
-                                        onChange={(e)=>setPayment(e.target.value)}
-                                        // value={dataSource1.payemt} 
-                                        placeholder='Enter pyment for driver'
-                                        type="text"></input>
-                                </div>          
+                                       
                         </div>  
                        {/* {dataSource1.status == 'ACCEPTED' ? <p  className={styles.button3}>already send to cargo owner</p>: <button className={styles.button3}>Send to Cargo Owner</button>} */}
                     </form>
@@ -294,13 +230,48 @@ console.log(dataSource)
                                                         <td>{item.driverState}</td> 
                                                         <td>
                                                             <button
-                                                            onClick={()=>payForDriver(item.driverPhone)} 
+                                                            onClick={()=>{
+                                                                setDriverPhone(item.driverPhone)
+                                                                handleClickopen()}} 
                                                             >Pay</button> </td>                          
                                                     </tr>
                                               ))}
                                             </tbody>
                                         </table>
-            </div>
+                     </div>
+                     {popup ?
+                    <div>
+                        <div className={styles.popup}>
+                            <div className={styles.popupInner}>
+                                <div className={styles.ewq}>
+                                    <button className={styles.closeBtn} onClick={()=>{handleClickopen()}}>X</button>
+                                    <div>
+                                        <form onSubmit={handleSubmit(onSubmit)}>
+                                            <div className={styles.assignetDiver}>
+                                                <lable className={styles.lable}>Payment for Driver</lable>
+                                                <lable >weybill</lable>
+                                                <input
+                                                 type='file'
+                                                onChange={(e)=>setWybill(e.target.files[0])}
+                                                ></input>
+                                                <label>f1Form</label>
+                                                <input
+                                                 type='file'
+                                                onChange={(e)=>setF1Form(e.target.files[0])}></input>
+                                                <lable>Amount</lable>
+                                                <input type='number'
+                                                placeholder='Enter Price'
+                                                onChange={(e)=>{setPayment(e.target.value)}}
+                                                ></input>
+                                                <button>Pay</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div> : ""}
             <div className={styles.page}>
               {/* <Pagination 
                 onChange={(page) => setCurentPage(page)}

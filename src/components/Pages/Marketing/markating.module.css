@@ -172,6 +172,33 @@ disabled{
     cursor: not-allowed;
     background-color: lightslategray;
 }
+/*************************glow box****/
+.glow_box {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    font-weight: bolder;
+    padding: .5em;
+    margin: .5em;
+    /* background-color: #f1f1f1; */
+    box-shadow: 0 0 20px hwb(108 57% 4%), 0 0 40px hwb(108 57% 4%), 0 0 60px hwb(108 57% 4%), 0 0 80px hwb(108 57% 4%);
+    animation: glow 2s infinite;
+  }
+  
+  @keyframes glow {
+    0% {
+      box-shadow: 0 0 20px hwb(108 57% 4%), 0 0 40px hwb(108 57% 4%), 0 0 60px hwb(108 57% 4%), 0 0 80px hwb(108 57% 4%);
+    }
+    50% {
+      box-shadow: none;
+    }
+    100% {
+      box-shadow: 0 0 20px hwb(108 57% 4%), 0 0 40px hwb(108 57% 4%), 0 0 60px hwb(108 57% 4%), 0 0 80px hwb(108 57% 4%);
+    }
+  }
+  
 
 /* ------------------ pagination ------------------- */
 .page {

@@ -230,6 +230,38 @@ const enableDisable = async (enable) => {
         console.error(error);
     }
 }
+/********change pin******** */
+async function handlePinChange(phoneNumber) {
+    let item =
+    {
+        phoneNumber,
+    };
+    console.log(item)
+    const options = {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json', 
+        "Accept": "application/json"},
+        body: JSON.stringify(item),
+    };
+    const url = "http://164.90.174.113:9090/Api/User/GeneratePIN";
+    try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        localStorage.setItem("message", JSON.stringify(result["message"]));
+        const  mess = localStorage.getItem("message");
+        if (response.ok) {
+            console.log(mess)
+            swal("Get your Pin before it's to late ", `${mess}`, "success",
+             { buttons: false, timer: 10000, });
+            
+        } else {
+            console.log("failed");
+            swal(`Failed To Register ${mess}`, "error");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
     return (
         <>
             <div className={styles.outer_vehicle_table} id='myTable'>
@@ -249,7 +281,9 @@ const enableDisable = async (enable) => {
                             <th>Company</th>
                             <th>Id</th>
                             <th>Detail</th>
+                            <th>Generate Pin</th>
                             <th>Manage</th>
+                            
                             <th>Enable/Disable</th>
                         </tr>
                     </thead>
@@ -269,6 +303,9 @@ const enableDisable = async (enable) => {
                                     setEdit(item.id)
                                     setName("true")
                                 }}>Detail</button></td>
+                                <td><button style={{width:'auto'}}
+                                onClick={()=>{handlePinChange(item.phoneNumber)}}
+                                >Generate</button></td>
                                 <td><button onClick={() => {
                                                     handleClickopen()
                                                     setdriverLicense(item.licenseNumber)

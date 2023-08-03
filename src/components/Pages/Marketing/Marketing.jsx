@@ -9,15 +9,19 @@ import { BiTrip } from "react-icons/bi";
 import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
-
+import beep from './beep.mp3'
 export default function () {
-
  
   const [popup, setPop1] = useState(false);
   const handleClickopen = () => {
     setPop1(!popup);
   }
 
+  const playBeep = () => {
+    const audio = new Audio(beep); 
+    audio.play();
+    console.log('beep')
+  };
   const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from login api
 
   const options = {
@@ -29,6 +33,12 @@ export default function () {
     },
 
   };
+  const [reloadKey, setReloadKey] = useState(0);
+
+  const handleReload = () => {
+  setReloadKey((prevKey) => prevKey + 1);
+  };
+  const [NewMarket,setNewMarkets]=useState(0)
   const [Loading, setLoading] = useState([])
   const [totalPages, setTotalPage] = useState(1);
   const url2 = "http://164.90.174.113:9090/Api/Admin/All/Cargos";
@@ -39,18 +49,24 @@ export default function () {
       .then(respnse => respnse.json())
       .then(data => {
         setDataSource2(data && data.cargos.filter(item => item.status != 'FINISHED'))
+        setNewMarkets(data && data.cargos.filter(item => item.status === 'NEW'))
+        check()
+      
         setTotalPage(data.cargos); 
+      
         setLoading(false);
 
       })
-  }, [dataSource2.status])
+  }, [reloadKey])
+const check =()=>{
+  if(NewMarket.length > 0 ) playBeep()
 
+}
   const [page, setCurentPage] = useState(1);
   const [postPerPage, setpostPerPage] = useState(7);
 
   const indexOfLastPage = page * postPerPage;
   const indexOfFirstPage = indexOfLastPage - postPerPage;
-  const currentPage = dataSource2 && dataSource2.slice(indexOfFirstPage, indexOfLastPage);
 
   const onShowSizeChange = (current, pageSize) => {
     setpostPerPage(pageSize);
@@ -58,7 +74,7 @@ export default function () {
   const [color, setColor] = useState("green");
   const [margin, setMargin] = useState("");
 
-  const [filteredRows, setFilteredRows] = useState([]);
+  const [filteredRows, setFilteredRows] = useState(dataSource2);
   const [searchValue, setSearchValue] = useState('');
 
 
@@ -66,7 +82,7 @@ export default function () {
       const value = e.target.value;
       setSearchValue(value);
    
-      const filteredData = currentPage.filter((item) => {
+      const filteredData = dataSource2.filter((item) => {
         // Customize the conditions as per your search requirements
         return (
           item.cargoOwner.toLowerCase().includes(value.toLowerCase()) ||
@@ -78,10 +94,12 @@ export default function () {
           
         );
       });
-  
+
       setFilteredRows(filteredData);
     };
-  const searchResult = searchValue === '' ? currentPage : filteredRows;
+    const currentPage = (searchValue === '' ? dataSource2 : filteredRows).slice(indexOfFirstPage, indexOfLastPage);
+
+  const searchResult = currentPage
 
 
 
@@ -98,7 +116,7 @@ export default function () {
 
 <section className={styles.main_content}>
 
-    <div className={styles.company_individual_header}>
+    <div className={styles.company_individual_header} onClick={()=>handleReload()}>
         <p ><Link style={{ textDecoration: 'none' }} to="#"><h1 className={styles.companyHeader}>Available Works</h1></Link></p>
         <p><Link style={{ textDecoration: 'none' }} to="/FinishedWorks"><h1>Finished Works</h1></Link></p>
     </div>
@@ -116,7 +134,8 @@ export default function () {
             {/*---------------- table ------------------- */}
 
             <div className={styles.outer_vehicle_table} id='myTable'>
-              <p>Available  markate</p>
+             <div style={{display:'flex'}}> <p>Available  markate</p> 
+              <span onClick={handleReload}className={styles.glow_box}>{NewMarket.length} New Markets</span></div>
               <table className={styles.vehicle_table} id="myTable">
                                             <thead>
                                                 <tr>
@@ -135,7 +154,7 @@ export default function () {
                                                         <td>{item.packaging}</td>
                                                         <td>{item.pickUp +' => '+ item.dropOff }</td>
                                                         <td>{item.weight}</td>
-                                                        <td>{item.status}</td>
+                                                        <td style={{color:item.status === 'NEW' ? 'fbff00': ''}}>{item.status}</td>
                                                        {/* <td><Link to={`/cargo/${item.id}`}>
                                                             <button>Detail</button></Link>
                                                             </td> */}
@@ -152,7 +171,7 @@ export default function () {
                 onChange={(page) => setCurentPage(page)}
                 pageSize={postPerPage}
                 current={page}
-                total={totalPages && totalPages.length}
+                total={totalPages.length}
               showQuickJumper
               showSizeChanger
               onShowSizeChange={onShowSizeChange}
