@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:http/http.dart' as http;
+import 'package:nb_utils/nb_utils.dart';
 
 import '../../Loging/Login.dart';
 import '../../Loging/changePassword.dart';
@@ -101,6 +102,8 @@ class _driverProfileState extends State<driverProfile> {
     }
   }
 
+  // vehicle info
+
   void initState() {
     fetchDriverinfos();
     BackButtonInterceptor.add(myInterceptor);
@@ -110,6 +113,141 @@ class _driverProfileState extends State<driverProfile> {
   void dispose() {
     BackButtonInterceptor.remove(myInterceptor);
     super.dispose();
+  }
+
+  void _showCenteredDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        Future.delayed(Duration(seconds: 6), () {
+          Navigator.of(context).pop();
+        });
+
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          child: Container(
+            height: 150,
+            width: 300,
+            margin: EdgeInsets.only(
+              top: 50,
+            ),
+            padding: EdgeInsets.all(16.0),
+            child: ListView.builder(
+              itemCount: 1,
+              itemBuilder: (context, index) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Vehicle Capacity",
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: AppFonts.smallFontSize,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          Result!["vehicleCapacity"],
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: AppFonts.smallFontSize,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "VehicleCondtion",
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: AppFonts.smallFontSize,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          Result!["vehicleCatagory"],
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: AppFonts.mediumFontSize,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "VehicleCategory",
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: AppFonts.smallFontSize,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          Result!["vehicleCatagory"],
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: AppFonts.smallFontSize,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Vehicle owner',
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: AppFonts.smallFontSize,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          Result!["vehicleOwner"],
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: AppFonts.smallFontSize,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal),
+                        )
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -420,9 +558,7 @@ class _driverProfileState extends State<driverProfile> {
                   ),
                 ]),
               ),
-              SizedBox(
-                height: 20,
-              ),
+              8.height,
               InkWell(
                 onTap: () {
                   Navigator.push(
@@ -482,9 +618,7 @@ class _driverProfileState extends State<driverProfile> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
+              8.height,
               InkWell(
                 onTap: () {
                   Navigator.push(
@@ -547,6 +681,54 @@ class _driverProfileState extends State<driverProfile> {
                             ],
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              8.height,
+              GestureDetector(
+                onTap: () {
+                  _showCenteredDialog(context);
+                },
+                child: Container(
+                  height: screenHeight * 0.07,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      )),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Container(
+                            height: screenWidth * 0.08,
+                            width: screenWidth * 0.08,
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(226, 193, 121, 1),
+                                borderRadius: BorderRadius.circular(6)),
+                            child: Icon(
+                              Icons.local_shipping,
+                            )),
+                        2.width,
+                        Container(
+                            child: Text(
+                          'Vehicle detial',
+                          textAlign: TextAlign.left,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: AppFonts.smallFontSize,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal),
+                        )),
+                        Spacer(),
+                        Container(
+                            child: Icon(Ionicons.chevron_forward_outline)),
                       ],
                     ),
                   ),
