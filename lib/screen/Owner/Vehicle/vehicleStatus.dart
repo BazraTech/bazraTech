@@ -57,7 +57,7 @@ class _VehicleStatusState extends State<VehicleStatus> {
           ),
         ),
         bottomNavigationBar: Container(
-          margin: EdgeInsets.only(bottom: 20),
+          margin: EdgeInsets.only(bottom: 42),
           height: screenHeight * 0.08,
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -65,7 +65,9 @@ class _VehicleStatusState extends State<VehicleStatus> {
           child: Container(
             child: TabBar(
               isScrollable: true,
-              labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
+              labelPadding: EdgeInsets.symmetric(
+                horizontal: 10.0,
+              ),
               labelColor: Colors.black,
               indicatorPadding: EdgeInsets.all(4),
               indicatorColor: Color.fromRGBO(178, 142, 22, 1),

@@ -447,7 +447,9 @@ class _DriversFormOwnerState extends State<DriversFormOwner> {
                                   .pickImage(source: ImageSource.gallery);
 
                               setState(() {
-                                driverPic.text = File(image!.path).path;
+                                image == null
+                                    ? Container()
+                                    : driverPic.text = File(image!.path).path;
                               });
                               print(driverPic.text);
                             },

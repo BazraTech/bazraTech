@@ -51,9 +51,9 @@ class _MyScreenState extends State<MyScreen> {
         workData = mydata;
         _isLoading = false;
       });
-      workComponentforowner(
-        data: mydata,
-      );
+      // workComponentforowner(
+      //   data: mydata,
+      // );
     } else {
       throw Exception('Failed to fetch data');
     }

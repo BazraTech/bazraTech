@@ -50,6 +50,7 @@ dependencies:
   pin_code_text_field: ^1.8.0
   cupertino_icons: ^1.0.5
   loading_animation_widget: ^1.2.0+4
+  nb_utils: ^6.0.2
   camera: ^0.10.5+2
  
   fl_chart: ^0.55.2

@@ -507,294 +507,107 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Container(
-                                height: screenHeight * 0.29,
+                                height: screenHeight * 0.32,
                                 margin: EdgeInsets.only(top: 130),
-                                child: ListView.builder(
-                                    itemCount: 1,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    padding: EdgeInsets.zero,
-                                    itemBuilder: (context, index) {
-                                      return Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(12))),
-                                              height: screenHeight * 0.32,
-                                              width: screenWidth - 42,
-                                              child: Container(
-                                                margin: EdgeInsets.only(
-                                                  top: screenWidth * 0.05,
-                                                ),
-                                                child: Column(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12))),
+                                        height: screenHeight * 0.32,
+                                        width: screenWidth - 42,
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                            top: screenWidth * 0.05,
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              10.0),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Container(
-                                                            child: Text(
-                                                              "Driver Status",
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .left,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: const TextStyle(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize: AppFonts
-                                                                      .smallFontSize,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal),
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            child: Text(
-                                                              "Work Status",
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .left,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              style: const TextStyle(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  fontSize: AppFonts
-                                                                      .smallFontSize,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal),
-                                                            ),
-                                                          ),
-                                                        ],
+                                                    Container(
+                                                      child: Text(
+                                                        "Driver Status",
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: const TextStyle(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            fontSize: AppFonts
+                                                                .smallFontSize,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal),
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              10.0),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Container(
-                                                            child: Container(
-                                                                height: 15,
-                                                                child: Center(
-                                                                  child: StreamBuilder<
-                                                                      Map<String,
-                                                                          dynamic>>(
-                                                                    stream:
-                                                                        fetchData(),
-                                                                    builder:
-                                                                        (context,
-                                                                            snapshot) {
-                                                                      if (snapshot
-                                                                          .hasData) {
-                                                                        final Map<String,
-                                                                                dynamic>
-                                                                            data =
-                                                                            snapshot.data!;
-                                                                        driverworkstatus =
-                                                                            data["workStatus"];
-                                                                        // Render your UI with the data
-                                                                        return Text(
-                                                                          data[
-                                                                              "status"],
-                                                                          textAlign:
-                                                                              TextAlign.left,
-                                                                          overflow:
-                                                                              TextOverflow.ellipsis,
-                                                                          style: const TextStyle(
-                                                                              fontFamily: 'Nunito',
-                                                                              fontSize: AppFonts.smallFontSize,
-                                                                              color: Colors.blue,
-                                                                              fontWeight: FontWeight.normal),
-                                                                        );
-                                                                      } else if (snapshot
-                                                                          .hasError) {
-                                                                        return Container();
-                                                                      } else {
-                                                                        return Container();
-                                                                      }
-                                                                    },
-                                                                  ),
-                                                                )),
-                                                          ),
-                                                          Container(
-                                                            child: Container(
-                                                                height: 15,
-                                                                child: Center(
-                                                                  child: StreamBuilder<
-                                                                      Map<String,
-                                                                          dynamic>>(
-                                                                    stream:
-                                                                        fetchData(),
-                                                                    builder:
-                                                                        (context,
-                                                                            snapshot) {
-                                                                      if (snapshot
-                                                                          .hasData) {
-                                                                        final Map<String,
-                                                                                dynamic>
-                                                                            data =
-                                                                            snapshot.data!;
-                                                                        driverworkstatus =
-                                                                            data["workStatus"];
-                                                                        // Render your UI with the data
-                                                                        return Text(
-                                                                          data[
-                                                                              "workStatus"],
-                                                                          textAlign:
-                                                                              TextAlign.left,
-                                                                          overflow:
-                                                                              TextOverflow.ellipsis,
-                                                                          style: const TextStyle(
-                                                                              fontFamily: 'Nunito',
-                                                                              fontSize: AppFonts.smallFontSize,
-                                                                              color: Colors.blue,
-                                                                              fontWeight: FontWeight.normal),
-                                                                        );
-                                                                      } else if (snapshot
-                                                                          .hasError) {
-                                                                        return Container();
-                                                                      } else {
-                                                                        return Container();
-                                                                      }
-                                                                    },
-                                                                  ),
-                                                                )),
-                                                          ),
-                                                        ],
+                                                    Container(
+                                                      child: Text(
+                                                        "Work Status",
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: const TextStyle(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            fontSize: AppFonts
+                                                                .smallFontSize,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal),
                                                       ),
                                                     ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Icon(
-                                                          Icons.trip_origin,
-                                                          color: Colors.green,
-                                                        ),
-                                                        CustomPaint(
-                                                          size: Size(
-                                                              screenWidth *
-                                                                  0.14,
-                                                              2),
-                                                          painter:
-                                                              DashLinePainter(),
-                                                        ),
-                                                        Align(
-                                                          alignment: Alignment
-                                                              .bottomCenter,
-                                                          child: Container(
-                                                            height:
-                                                                screenHeight *
-                                                                    0.09,
-                                                            width: screenWidth *
-                                                                0.09,
-                                                            child: Container(
-                                                              child: Icon(
-                                                                Icons
-                                                                    .local_shipping,
-                                                                color:
-                                                                    Colors.blue,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        CustomPaint(
-                                                          size: Size(
-                                                              screenWidth *
-                                                                  0.14,
-                                                              2),
-                                                          painter:
-                                                              DashLinePainter(),
-                                                        ),
-                                                        Icon(
-                                                          Icons.trip_origin,
-                                                          color: Colors.red,
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Container(
-                                                            height:
-                                                                screenHeight *
-                                                                    0.06,
-                                                            width: screenWidth *
-                                                                0.25,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                                    boxShadow: [
-                                                                  BoxShadow(
-                                                                    color: Colors
-                                                                        .black
-                                                                        .withOpacity(
-                                                                            0.3), // Shadow color
-                                                                    blurRadius:
-                                                                        3, // Spread radius
-                                                                    offset: Offset(
-                                                                        0,
-                                                                        3), // Offset in (x,y) coordinates
-                                                                  ),
-                                                                ],
-                                                                    color: Color
-                                                                        .fromRGBO(
-                                                                            226,
-                                                                            193,
-                                                                            121,
-                                                                            1),
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .only(
-                                                                      topLeft: Radius
-                                                                          .circular(
-                                                                              10),
-                                                                      topRight:
-                                                                          Radius.circular(
-                                                                              10),
-                                                                      bottomLeft:
-                                                                          Radius.circular(
-                                                                              10),
-                                                                      bottomRight:
-                                                                          Radius.circular(
-                                                                              10),
-                                                                    )),
-                                                            child: Column(
-                                                              children: [
-                                                                Container(
-                                                                  margin: EdgeInsets
-                                                                      .only(
-                                                                          top:
-                                                                              4),
-                                                                  child: Text(
-                                                                    "Platenumber",
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Container(
+                                                      child: Container(
+                                                          height: 15,
+                                                          child: Center(
+                                                            child: StreamBuilder<
+                                                                Map<String,
+                                                                    dynamic>>(
+                                                              stream:
+                                                                  fetchData(),
+                                                              builder: (context,
+                                                                  snapshot) {
+                                                                if (snapshot
+                                                                    .hasData) {
+                                                                  final Map<
+                                                                          String,
+                                                                          dynamic>
+                                                                      data =
+                                                                      snapshot
+                                                                          .data!;
+                                                                  driverworkstatus =
+                                                                      data[
+                                                                          "workStatus"];
+                                                                  // Render your UI with the data
+                                                                  return Text(
+                                                                    data[
+                                                                        "status"],
                                                                     textAlign:
                                                                         TextAlign
                                                                             .left,
@@ -810,61 +623,237 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                                                         color: Colors
                                                                             .black,
                                                                         fontWeight:
-                                                                            FontWeight.normal),
-                                                                  ),
-                                                                ),
-                                                                Center(
-                                                                  child: StreamBuilder<
-                                                                      Map<String,
-                                                                          dynamic>>(
-                                                                    stream:
-                                                                        fetchData(),
-                                                                    builder:
-                                                                        (context,
-                                                                            snapshot) {
-                                                                      if (snapshot
-                                                                          .hasData) {
-                                                                        final Map<String,
-                                                                                dynamic>
-                                                                            data =
-                                                                            snapshot.data!;
-                                                                        driverworkstatus =
-                                                                            data["workStatus"];
-                                                                        // Render your UI with the data
-                                                                        return Text(
-                                                                          data[
-                                                                              "plateNumber"],
-                                                                          textAlign:
-                                                                              TextAlign.left,
-                                                                          overflow:
-                                                                              TextOverflow.ellipsis,
-                                                                          style: const TextStyle(
-                                                                              fontFamily: 'Nunito',
-                                                                              fontSize: AppFonts.smallFontSize,
-                                                                              color: Colors.black,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        );
-                                                                      } else if (snapshot
-                                                                          .hasError) {
-                                                                        return Container();
-                                                                      } else {
-                                                                        return Container();
-                                                                      }
-                                                                    },
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            )),
-                                                      ],
+                                                                            FontWeight.bold),
+                                                                  );
+                                                                } else if (snapshot
+                                                                    .hasError) {
+                                                                  return Container();
+                                                                } else {
+                                                                  return Container();
+                                                                }
+                                                              },
+                                                            ),
+                                                          )),
+                                                    ),
+                                                    Container(
+                                                      child: Container(
+                                                          height: 15,
+                                                          child: Center(
+                                                            child: StreamBuilder<
+                                                                Map<String,
+                                                                    dynamic>>(
+                                                              stream:
+                                                                  fetchData(),
+                                                              builder: (context,
+                                                                  snapshot) {
+                                                                if (snapshot
+                                                                    .hasData) {
+                                                                  final Map<
+                                                                          String,
+                                                                          dynamic>
+                                                                      data =
+                                                                      snapshot
+                                                                          .data!;
+                                                                  driverworkstatus =
+                                                                      data[
+                                                                          "workStatus"];
+                                                                  // Render your UI with the data
+                                                                  return Text(
+                                                                    data[
+                                                                        "workStatus"],
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    style: const TextStyle(
+                                                                        fontFamily:
+                                                                            'Nunito',
+                                                                        fontSize:
+                                                                            AppFonts
+                                                                                .smallFontSize,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  );
+                                                                } else if (snapshot
+                                                                    .hasError) {
+                                                                  return Container();
+                                                                } else {
+                                                                  return Container();
+                                                                }
+                                                              },
+                                                            ),
+                                                          )),
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                            ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons.trip_origin,
+                                                    color: Colors.green,
+                                                  ),
+                                                  CustomPaint(
+                                                    size: Size(
+                                                        screenWidth * 0.14, 2),
+                                                    painter: DashLinePainter(),
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.bottomCenter,
+                                                    child: Container(
+                                                      height:
+                                                          screenHeight * 0.09,
+                                                      width: screenWidth * 0.09,
+                                                      child: Container(
+                                                        child: Icon(
+                                                          Icons.local_shipping,
+                                                          color: Colors.blue,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  CustomPaint(
+                                                    size: Size(
+                                                        screenWidth * 0.14, 2),
+                                                    painter: DashLinePainter(),
+                                                  ),
+                                                  Icon(
+                                                    Icons.trip_origin,
+                                                    color: Colors.red,
+                                                  )
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                      height:
+                                                          screenHeight * 0.06,
+                                                      width: screenWidth * 0.25,
+                                                      decoration: BoxDecoration(
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              color: Colors
+                                                                  .black
+                                                                  .withOpacity(
+                                                                      0.3), // Shadow color
+                                                              blurRadius:
+                                                                  3, // Spread radius
+                                                              offset: Offset(0,
+                                                                  3), // Offset in (x,y) coordinates
+                                                            ),
+                                                          ],
+                                                          color: Color.fromRGBO(
+                                                              226, 193, 121, 1),
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    10),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    10),
+                                                          )),
+                                                      child: Column(
+                                                        children: [
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    top: 4),
+                                                            child: Text(
+                                                              "Platenumber",
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: const TextStyle(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  fontSize: AppFonts
+                                                                      .smallFontSize,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal),
+                                                            ),
+                                                          ),
+                                                          Center(
+                                                            child: StreamBuilder<
+                                                                Map<String,
+                                                                    dynamic>>(
+                                                              stream:
+                                                                  fetchData(),
+                                                              builder: (context,
+                                                                  snapshot) {
+                                                                if (snapshot
+                                                                    .hasData) {
+                                                                  final Map<
+                                                                          String,
+                                                                          dynamic>
+                                                                      data =
+                                                                      snapshot
+                                                                          .data!;
+                                                                  driverworkstatus =
+                                                                      data[
+                                                                          "workStatus"];
+                                                                  // Render your UI with the data
+                                                                  return Text(
+                                                                    data[
+                                                                        "plateNumber"],
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    style: const TextStyle(
+                                                                        fontFamily:
+                                                                            'Nunito',
+                                                                        fontSize:
+                                                                            AppFonts
+                                                                                .smallFontSize,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  );
+                                                                } else if (snapshot
+                                                                    .hasError) {
+                                                                  return Container();
+                                                                } else {
+                                                                  return Container();
+                                                                }
+                                                              },
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )),
+                                                ],
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      );
-                                    }),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],

@@ -513,7 +513,6 @@ class _driverProfileState extends State<driverProfile> {
                           child: Row(
                             children: [
                               Container(
-                                  margin: EdgeInsets.only(top: 12),
                                   height: screenWidth * 0.07,
                                   width: screenWidth * 0.08,
                                   decoration: BoxDecoration(
