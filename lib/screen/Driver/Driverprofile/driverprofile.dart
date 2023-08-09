@@ -119,7 +119,7 @@ class _driverProfileState extends State<driverProfile> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        Future.delayed(Duration(seconds: 6), () {
+        Future.delayed(Duration(seconds: 8), () {
           Navigator.of(context).pop();
         });
 

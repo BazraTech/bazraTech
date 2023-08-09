@@ -31,7 +31,7 @@ class _leavepremmissionPageState extends State {
   String? alertType;
   String? Results;
   List findVehicle = [];
-
+  String? selectedType;
   List<bool> _checkedItems = [false, false, false, false, false];
   List<String> type = [
     "Vaction",
@@ -286,22 +286,20 @@ class _leavepremmissionPageState extends State {
                     Container(
                       child: Container(
                         decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black
-                                    .withOpacity(0.3), // Shadow color
-                                blurRadius: 5, // Spread radius
-                                offset:
-                                    Offset(0, 3), // Offset in (x,y) coordinates
-                              ),
-                            ],
-                            color: Color.fromRGBO(236, 240, 243, 1),
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: Color.fromRGBO(
-                                  255, 255, 255, 1), // Set the border color
-                              width: 2.5,
-                            )),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              blurRadius: 5,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                          color: Color.fromRGBO(236, 240, 243, 1),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: Color.fromRGBO(255, 255, 255, 1),
+                            width: 2.5,
+                          ),
+                        ),
                         height: screenHeight * 0.07,
                         width: screenWidth * 0.9,
                         child: Padding(
@@ -315,7 +313,8 @@ class _leavepremmissionPageState extends State {
                                 child: Transform.scale(
                                   scale: 1.1,
                                   child: Radio(
-                                    value: 1,
+                                    value:
+                                        0, // Assign a different value for the first radio button
                                     groupValue: selectedIndex,
                                     onChanged: (value) {
                                       setState(() {
@@ -338,10 +337,11 @@ class _leavepremmissionPageState extends State {
                                   textAlign: TextAlign.left,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
-                                      fontFamily: 'Nunito',
-                                      fontSize: AppFonts.smallFontSize,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal),
+                                    fontFamily: 'Nunito',
+                                    fontSize: AppFonts.smallFontSize,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                                 ),
                               ),
                               SizedBox(
@@ -353,7 +353,8 @@ class _leavepremmissionPageState extends State {
                                 child: Transform.scale(
                                   scale: 1.1,
                                   child: Radio(
-                                    value: 1,
+                                    value:
+                                        1, // Assign a different value for the second radio button
                                     groupValue: selectedIndex,
                                     onChanged: (value) {
                                       setState(() {
@@ -376,12 +377,13 @@ class _leavepremmissionPageState extends State {
                                   textAlign: TextAlign.left,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
-                                      fontFamily: 'Nunito',
-                                      fontSize: AppFonts.smallFontSize,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal),
+                                    fontFamily: 'Nunito',
+                                    fontSize: AppFonts.smallFontSize,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -446,6 +448,7 @@ class _leavepremmissionPageState extends State {
                                     margin: EdgeInsets.only(top: 5),
                                     child: Icon(
                                       Ionicons.calendar,
+                                      color: Color.fromRGBO(178, 142, 22, 1),
                                     ))
                               ],
                             ),
@@ -458,128 +461,9 @@ class _leavepremmissionPageState extends State {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(
-                bottom: 30,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: screenHeight * 0.4,
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: type.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                top: screenHeight * 0.01,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    child: Column(children: [
-                                      Column(
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.black
-                                                        .withOpacity(
-                                                            0.3), // Shadow color
-                                                    blurRadius:
-                                                        5, // Spread radius
-                                                    offset: Offset(0,
-                                                        3), // Offset in (x,y) coordinates
-                                                  ),
-                                                ],
-                                                color: Color.fromRGBO(
-                                                    236, 240, 243, 1),
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                border: Border.all(
-                                                  color: Color.fromRGBO(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      1), // Set the border color
-                                                  width: 2.5,
-                                                )),
-                                            height: screenHeight * 0.07,
-                                            width: screenWidth * 0.9,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(9.0),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    height: screenHeight * 0.02,
-                                                    width: screenWidth * 0.04,
-                                                    child: Transform.scale(
-                                                      scale: 1.1,
-                                                      child: Radio(
-                                                        value: index,
-                                                        groupValue:
-                                                            selectedIndex,
-                                                        onChanged: (value) {
-                                                          setState(() {
-                                                            selectedIndex =
-                                                                value!;
-                                                            alertType =
-                                                                type[index];
-                                                            isalert = false;
-                                                          });
-                                                        },
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Container(
-                                                    height: screenHeight * 0.03,
-                                                    margin:
-                                                        EdgeInsets.only(top: 5),
-                                                    child: Text(
-                                                      type[index],
-                                                      textAlign: TextAlign.left,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: const TextStyle(
-                                                          fontFamily: 'Nunito',
-                                                          fontSize: AppFonts
-                                                              .smallFontSize,
-                                                          color: Colors.black,
-                                                          fontWeight: FontWeight
-                                                              .normal),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ]),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
+              margin: EdgeInsets.only(bottom: 20, right: 20, left: 20, top: 10),
+              padding: const EdgeInsets.all(9),
+              height: screenHeight * 0.3,
               decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -589,65 +473,72 @@ class _leavepremmissionPageState extends State {
                     ),
                   ],
                   color: Color.fromRGBO(236, 240, 243, 1),
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: BorderRadius.circular(10),
                   border: Border.all(
                     color: Color.fromRGBO(
                         255, 255, 255, 1), // Set the border color
                     width: 2.5,
                   )),
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.1,
-              margin: EdgeInsets.only(bottom: 20, right: 20, left: 20),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 15),
-                        child: ElevatedButton(
-                          onPressed: () => {},
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.resolveWith((states) {
-                                if (states.contains(MaterialState.pressed)) {
-                                  return Color.fromRGBO(255, 148, 165, 223);
-                                }
-                                // 98, 172, 181
-                                return Colors.white;
-                              }),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(30)))),
-                          child: GestureDetector(
-                            onTap: () {
-                              Create_Alert();
-                            },
-                            child: Container(
-                              width: screenWidth * 0.4,
-                              height: screenHeight * 0.06,
-                              child: Center(
-                                child: Text(
-                                  'Request Leave',
-                                  textAlign: TextAlign.left,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      fontFamily: 'Nunito',
-                                      fontSize: AppFonts.smallFontSize,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal),
-                                ),
-                              ),
-                            ),
+              child: ListView.builder(
+                itemCount: type.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return RadioListTile(
+                    title: Text(type[index]),
+                    value: type[index],
+                    groupValue: selectedType,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedType = value;
+                      });
+                    },
+                  );
+                },
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3), // Shadow color
+                          blurRadius: 5, // Spread radius
+                          offset: Offset(0, 3), // Offset in (x,y) coordinates
+                        ),
+                      ],
+                      color: Color.fromRGBO(236, 240, 243, 1),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: Color.fromRGBO(
+                            255, 255, 255, 1), // Set the border color
+                        width: 2.5,
+                      )),
+                  height: screenHeight * 0.07,
+                  width: screenWidth * 0.9,
+                  child: Padding(
+                    padding: const EdgeInsets.all(9.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 5),
+                          child: Text(
+                            "Leave Request",
+                            textAlign: TextAlign.left,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontFamily: 'Nunito',
+                                fontSize: AppFonts.smallFontSize,
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),
