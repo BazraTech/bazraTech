@@ -41,7 +41,8 @@ export default function () {
             "Authorization": `Bearer ${jwt}`
         },
     };
-const [refresh, serRefresh] = useState(false)
+    const [error, setError] = useState(null);
+    const [refresh, serRefresh] = useState(false)
     const [Loading, setLoading] = useState([]);
     const url = "http://164.90.174.113:9090/Api/Admin/All/Drivers";
     const [dataSource, setDataSource] = useState([])
@@ -49,12 +50,24 @@ const [refresh, serRefresh] = useState(false)
         setLoading(true);
         fetch(url, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource(data.drivers)
-                setTotalPage(data.totalDrivers);
-                setLoading(false);
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error('cant fetch drivers');
+          }
+          else{
+            setDataSource(response.drivers)
+            setTotalPage(response.totalDrivers)
+            setLoading(false);
+        }
+    })
+        .catch(error => {
 
-            })
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [refresh])
 
     const [totalPages, setTotalPage] = useState(1);
@@ -64,11 +77,23 @@ const [refresh, serRefresh] = useState(false)
         setLoading(true);
         fetch(url2, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource2(data.drivers);
-                setLoading(false);
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
+            setDataSource2(response.drivers);
 
-            })
+            setLoading(false);
+        }
+    })
+        .catch(error => {
+
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
 
 
@@ -78,11 +103,23 @@ const [refresh, serRefresh] = useState(false)
         setLoading(true);
         fetch(url3, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource3(data.drivers)
-                setLoading(false);
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
+            setDataSource3(response.drivers)
 
-            })
+            setLoading(false);
+        }
+    })
+        .catch(error => {
+
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
 
     const url4 = "http://164.90.174.113:9090/Api/Admin/Drivers/UNASSIGNED";
@@ -91,10 +128,23 @@ const [refresh, serRefresh] = useState(false)
         setLoading(true);
         fetch(url4, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource4(data.drivers)
-                setLoading(false);
-            })
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
+            setDataSource4(response.drivers)
+
+            setLoading(false);
+        }
+    })
+        .catch(error => {
+
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
 
     const url5 = "http://164.90.174.113:9090/Api/Admin/Drivers/PERMIT";
@@ -103,11 +153,23 @@ const [refresh, serRefresh] = useState(false)
         setLoading(true);
         fetch(url5, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource5(data.drivers)
-                setLoading(false);
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
+            setDataSource5(response.drivers)
 
-            })
+            setLoading(false);
+        }
+    })
+        .catch(error => {
+
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
 
     const statusUrl = "http://164.90.174.113:9090/Api/Admin/DriverStatus/All"
@@ -115,10 +177,23 @@ const [refresh, serRefresh] = useState(false)
     useEffect(() => {
         fetch(statusUrl, options)
         .then(response => response.json())
-        .then(data =>{
-            setStatus(data.driverStatus)
-            console.log(status)
-        })
+        .then(response => {
+            localStorage.setItem("message", JSON.stringify(response["message"])); 
+            const mess = localStorage.getItem("message");
+            console.log(response.status)
+      if (response.status == 500) {
+        throw new Error(response.status);
+      }else{
+        setStatus(response.driverStatus)
+
+        setLoading(false);
+    }
+})
+    .catch(error => {
+
+      setError(error.message);
+      swal(`Failed ${error}`, "Error", "error");
+    });
     },[])
 
     const [page, setCurentPage] = useState(1);
@@ -154,10 +229,22 @@ const [refresh, serRefresh] = useState(false)
         setLoading(true); 
         fetch(VehUrl, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setAllVehicles(data.vehiclesINF)
-
-            })
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
+            setAllVehicles(response.vehiclesINF)
+            setLoading(false);
+        }
+    })
+        .catch(error => {
+    
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
     const [selectVehicles, setSelect] =useState(false)
     const [plateNumber,setPlateNumber] =useState('')

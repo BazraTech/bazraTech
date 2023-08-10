@@ -10,13 +10,15 @@ import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
 import beep from './beep.mp3'
+import swal from "sweetalert";
+
 export default function () {
  
   const [popup, setPop1] = useState(false);
   const handleClickopen = () => {
     setPop1(!popup);
   }
-
+const [error,setError]=useState('')
   const playBeep = () => {
     const audio = new Audio(beep); 
     audio.play();
@@ -47,21 +49,28 @@ export default function () {
     setLoading(true);
     fetch(url2, options)
       .then(respnse => respnse.json())
-      .then(data => {
-        setDataSource2(data && data.cargos.filter(item => item.status != 'FINISHED'))
-        setNewMarkets(data && data.cargos.filter(item => item.status === 'NEW'))
-        check()
-      
-        setTotalPage(data.cargos); 
-      
-        setLoading(false);
+      .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+              if (response.status == 500) {
+              throw new Error('Failed to get the drivers');
+              }else{
+                setDataSource2(response.cargos.filter(item => item.status != 'FINISHED'))
+                setNewMarkets(response.cargos.filter(item => item.status === 'NEW'))
+                setTotalPage(response.cargos); 
+                setLoading(false);
+              }
+              })
+              .catch(error => {
 
-      })
+              setError(error.message);
+              swal(`Failed ${error}`, "Error", "error");
+              }
+              );
   }, [reloadKey])
-const check =()=>{
-  if(NewMarket.length > 0 ) playBeep()
 
-}
+console.log(dataSource2)
   const [page, setCurentPage] = useState(1);
   const [postPerPage, setpostPerPage] = useState(7);
 
@@ -135,7 +144,8 @@ const check =()=>{
 
             <div className={styles.outer_vehicle_table} id='myTable'>
              <div style={{display:'flex'}}> <p>Available  markate</p> 
-              <span onClick={handleReload}className={styles.glow_box}>{NewMarket.length} New Markets</span></div>
+             {NewMarket.length > 0 &&  <span onClick={handleReload}className={styles.glow_box}>{NewMarket.length} New Markets</span>}
+             </div>
               <table className={styles.vehicle_table} id="myTable">
                                             <thead>
                                                 <tr>

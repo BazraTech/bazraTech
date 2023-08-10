@@ -359,8 +359,8 @@ console.log(checkedId)
 
                                 currentPage.map(item => {
                                     return <tr>
-                                        <td>{item.from}</td>
                                         <td>{item.to}</td>
+                                        <td>{item.from}</td>
                                         <td>{item.message}</td>
                                         <td>{item.status}</td>
 

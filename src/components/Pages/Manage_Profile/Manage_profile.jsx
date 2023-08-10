@@ -76,11 +76,17 @@ export default function () {
         setLoading(true)
         fetch(url, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource(data)
-                // setTotalPage(data.totalPages)
-                setLoading(false)
-            })
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (!response.ok) {
+            throw new Error('Failed to get the drivers');
+          }else{
+            setDataSource(response)
+            setLoading(false);
+        }
+    })
     }, [])
 
     const url2 = "http://164.90.174.113:9090/Api/Admin/All/VehicleOwners/";
@@ -89,12 +95,19 @@ export default function () {
         setLoading(true);
         fetch(url2, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource2(data && data.vehicleOwnerINF)
-                setTotalPage(data ? data.vehicleOwnerINF.length : 0);
-                setLoading(false);
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (!response.ok) {
+            throw new Error('Failed to get the vehicle owners');
+          }else{
+            setDataSource2(response.vehicleOwnerINF)
+            setTotalPage(response.vehicleOwnerINF.length);
+            setLoading(false);
 
-            })
+        }
+    })
     }, [])
 
     const [page, setCurentPage] = useState(1);
@@ -148,35 +161,43 @@ export default function () {
     useEffect(() => {
         fetch(urlCargo, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setCargo(data.cargoOwners)
-             
-            })
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (!response.ok) {
+            throw new Error('Failed to get the cargo owners');
+          }else{
+            setCargo(response.cargoOwners)
+            setLoading(false);
+
+        }
+    })
     }, [])
 /*******************Drivers********** */
-    const urlDriver = "http://164.90.174.113:9090/Api/Admin/All/Drivers";
-    const [drivers, setDrivers] = useState([])
-    useEffect(() => {
-        setLoading(true);
-        fetch(urlDriver, options)
-            .then(response => response.json())
-            .then(response => {
+    // const urlDriver = "http://164.90.174.113:9090/Api/Admin/All/Drivers";
+    // const [drivers, setDrivers] = useState([])
+    // useEffect(() => {
+    //     setLoading(true);
+    //     fetch(urlDriver, options)
+    //         .then(response => response.json())
+    //         .then(response => {
               
-                if (response.status == 500) {
-                    throw new Error('Failed to get the drivers');
-                  }
-                  return response.json();
-                })
-                .then(data => {
-                    setDrivers(data.drivers)
-                })
-                .catch(error => {
+    //             if (!response.ok) {
+    //                 throw new Error('Failed to get the drivers');
+    //               }
+    //               return response.json();
+    //             })
+    //             .then(data => {
+    //                 setDrivers(data.drivers)
+    //             })
+    //             .catch(error => {
         
-                  setError(error.message);
-                  swal(`Failed ${error}`, "Error", "error");
-                })
-            },   
-     [])
+    //               setError(error.message);
+    //               swal(`Failed ${error}`, "Error", "error");
+    //             })
+    //         },   
+    //  [])
 
     /****************Enable and disable user********** */
     const enableDisable = async (enable) => {
@@ -267,8 +288,8 @@ async function handleConfirm() {
      }
  }
     console.log(currentPage)
-    const allusers = [...currentPage, ...cargo ,...drivers]
-    console.log(allusers)
+    // const allusers = [...currentPage, ...cargo ,...drivers]
+    // console.log(allusers)
     return (
 
         <div className="vehicle_container">
@@ -280,17 +301,7 @@ async function handleConfirm() {
 
             {/* --------------- users --------------- */}
             <div className='main_content'>
-                {Loading ?
-                    <p className={styles.loading} >
-                        <SyncLoader
-                            color={color}
-                            Left={margin}
-                            loading={Loading}
-                            size={10}
-                            aria-label="Loading Spinner"
-                            data-testid="loader"
-                        /></p>
-                    :
+               
 
                     <>
                         <div className={styles.outer_vehicle_table} id='myTable'>
@@ -307,6 +318,17 @@ async function handleConfirm() {
                                         <th></th>
                                     </tr>
                                 </thead>
+                                {Loading ?
+                    <p className={styles.loading} >
+                        <SyncLoader
+                            color={color}
+                            Left={margin}
+                            loading={Loading}
+                            size={10}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                        /></p>
+                    :
                                 <tbody>
                                     <tr className={styles.active_row}>
                                         <td>{user.username}</td>
@@ -322,6 +344,7 @@ async function handleConfirm() {
                                     </tr>
 
                                 </tbody>
+                                }
                             </table>
                         </div>
                         <div className={styles.page}>
@@ -336,7 +359,7 @@ async function handleConfirm() {
                             />
                         </div>
                     </>
-                }
+                
                     {popup ?
                                         <div>
                                             <div className={styles.popup}>
@@ -401,6 +424,17 @@ async function handleConfirm() {
                                         <th>Account</th>
                                     </tr>
                                 </thead>
+                                {Loading ?
+                    <p className={styles.loading} >
+                        <SyncLoader
+                            color={color}
+                            Left={margin}
+                            loading={Loading}
+                            size={10}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                        /></p>
+                    :
                                 <tbody>
                                     {currentPage.map(item => (
                                        <tr className={styles.active_row} key={item.id}>
@@ -418,6 +452,7 @@ async function handleConfirm() {
                                         </tr>
                                     ))}
                                 </tbody>
+                            }
                             </table>
                         </div>
                         <div className={styles.page}>

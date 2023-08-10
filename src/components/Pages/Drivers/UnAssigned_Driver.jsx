@@ -20,6 +20,7 @@ import { FaUserSecret } from "react-icons/fa";
 import { FaUserCheck } from "react-icons/fa";
 import { FaUserTimes } from "react-icons/fa";
 import { FaUserMinus } from "react-icons/fa";
+import swal from "sweetalert";
 
 
 export default function () {
@@ -48,6 +49,7 @@ export default function () {
     }
 
     let [state, setState] = useState("false");
+    const [error, setError] = useState(null);
 
     const [popup, setPop] = useState(false);
     const handleClickopen = () => {
@@ -73,11 +75,23 @@ export default function () {
         setLoading(true);
         fetch(url, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource(data.drivers)
-                setLoading(false);
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
+            setDataSource(response.drivers)
 
-            })
+            setLoading(false);
+        }
+    })
+        .catch(error => {
+
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
 
     const [totalPages, setTotalPage] = useState(1);
@@ -87,11 +101,23 @@ export default function () {
         setLoading(true);
         fetch(url2, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource2(data.drivers);
-                setLoading(false);
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
+            setDataSource2(response.drivers);
 
-            })
+            setLoading(false);
+        }
+    })
+        .catch(error => {
+
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
 
 
@@ -101,11 +127,23 @@ export default function () {
         setLoading(true);
         fetch(url3, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource3(data.drivers);
-                setLoading(false);
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
+            setDataSource3(response.drivers);
 
-            })
+            setLoading(false);
+        }
+    })
+        .catch(error => {
+
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
 
     const url4 = "http://164.90.174.113:9090/Api/Admin/Drivers/UNASSIGNED";
@@ -114,11 +152,24 @@ export default function () {
         setLoading(true);
         fetch(url4, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource4(data.drivers)
-                setTotalPage(data.totalDrivers);
-                setLoading(false);
-            })
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
+
+            setDataSource4(response.drivers)
+            setTotalPage(response.totalDrivers);
+            setLoading(false);
+        }
+    })
+        .catch(error => {
+
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
 
 
@@ -128,11 +179,24 @@ export default function () {
         setLoading(true);
         fetch(url5, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource5(data.drivers)
-                setLoading(false);
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
 
-            })
+            setDataSource5(response.drivers)
+
+            setLoading(false);
+        }
+    })
+        .catch(error => {
+
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
 
     const [page, setCurentPage] = useState(1);
