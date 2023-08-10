@@ -1,14 +1,10 @@
 import React from 'react'
-import { FaHome } from 'react-icons/fa';
 import styles from './markating.module.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { SiTripdotcom } from "react-icons/si";
-import { SiGoogletagmanager } from "react-icons/si";
-import { BiTrip } from "react-icons/bi";
-import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import { Pagination } from 'antd';
+import swal from "sweetalert";
 
 export default function FinishedWorks () {
 
@@ -29,6 +25,7 @@ export default function FinishedWorks () {
     },
 
   };
+  const [error,setError]=useState('')
   const [Loading, setLoading] = useState([])
   const [totalPages, setTotalPage] = useState(1);
   const url2 = "http://164.90.174.113:9090/Api/Admin/All/CargosBy/FINISHED";
@@ -37,12 +34,23 @@ export default function FinishedWorks () {
     setLoading(true);
     fetch(url2, options)
       .then(respnse => respnse.json())
-      .then(data => {
-        setDataSource2(data.cargos)
-        setTotalPage(data.cargos); 
+      .then(response => {
+        localStorage.setItem("message", JSON.stringify(response["message"])); 
+        const mess = localStorage.getItem("message");
+        console.log(response.status)
+  if (response.status == 500) {
+    throw new Error('Failed to get the drivers');
+  }else{
+    setDataSource2(response.cargos)
+        setTotalPage(response.cargos); 
         setLoading(false);
+}
+})
+.catch(error => {
 
-      })
+  setError(error.message);
+  swal(`Failed ${error}`, "Error", "error");
+});
   }, [])
 
   const [page, setCurentPage] = useState(1);
@@ -50,7 +58,7 @@ export default function FinishedWorks () {
 
   const indexOfLastPage = page * postPerPage;
   const indexOfFirstPage = indexOfLastPage - postPerPage;
-  const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
+  // const currentPage = dataSource2.slice(indexOfFirstPage, indexOfLastPage);
 
   const onShowSizeChange = (current, pageSize) => {
     setpostPerPage(pageSize);
@@ -66,22 +74,24 @@ export default function FinishedWorks () {
       const value = e.target.value;
       setSearchValue(value);
    
-      const filteredData = currentPage.filter((item) => {
+      const filteredData = dataSource2.filter((item) => {
         // Customize the conditions as per your search requirements
         return (
           item.cargoOwner.toLowerCase().includes(value.toLowerCase()) ||
           item.packaging.toLowerCase().includes(value.toLowerCase()) ||
           item.weight.toString().toLowerCase().includes(value.toLowerCase())||
-          item.status.toLowerCase().includes(value.toLowerCase())
+          item.status.toLowerCase().includes(value.toLowerCase())||
+          item.pickUp.toLowerCase().includes(value.toLowerCase())||
+          item.dropOff.toLowerCase().includes(value.toLowerCase())
           
         );
       });
   
       setFilteredRows(filteredData);
     };
-  const searchResult = searchValue === '' ? currentPage : filteredRows;
+    const currentPage = (searchValue === '' ? dataSource2 : filteredRows).slice(indexOfFirstPage, indexOfLastPage);
 
-
+    const searchResult = currentPage
 
   return (
     <>

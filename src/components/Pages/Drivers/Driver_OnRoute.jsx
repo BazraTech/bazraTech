@@ -19,6 +19,7 @@ import { FaUserSecret } from "react-icons/fa";
 import { FaUserCheck } from "react-icons/fa";
 import { FaUserTimes } from "react-icons/fa";
 import { FaUserMinus } from "react-icons/fa";
+import swal from "sweetalert";
 
 
 export default function () {
@@ -45,7 +46,7 @@ export default function () {
             }
         }
     }
-
+    const [error, setError] = useState(null);
     let [active, setActive] = useState("total_vehicle");
     let [state, setState] = useState("false");
     const [popup, setPop] = useState(false);
@@ -64,71 +65,132 @@ export default function () {
     };
 
     const [Loading, setLoading] = useState([]);
-    const url = "http://64.226.104.50:9090/Api/Admin/All/Drivers";
+    const url = "http://164.90.174.113:9090/Api/Admin/All/Drivers";
     const [dataSource, setDataSource] = useState([])
     useEffect(() => {
         setLoading(true);
         fetch(url, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource(data.drivers)
-                setLoading(false);
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
+            setDataSource(response.drivers)
 
-            })
+            setLoading(false);
+        }
+    })
+        .catch(error => {
+
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
 
     const [totalPages, setTotalPage] = useState(1);
-    const url2 = "http://64.226.104.50:9090/Api/Admin/Drivers/ONROUTE";
+    const url2 = "http://164.90.174.113:9090/Api/Admin/Drivers/ONROUTE";
     const [dataSource2, setDataSource2] = useState([])
     useEffect(() => {
         setLoading(true);
         fetch(url2, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource2(data.drivers);
-                setTotalPage(data.totalDrivers);
-                setLoading(false);
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
+           
+            setDataSource2(response.drivers);
+            setTotalPage(response.totalDrivers);
+            setLoading(false);
+        }
+    })
+        .catch(error => {
 
-            })
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
 
 
-    const url3 = "http://64.226.104.50:9090/Api/Admin/Drivers/ASSIGNED";
+    const url3 = "http://164.90.174.113:9090/Api/Admin/Drivers/ASSIGNED";
     const [dataSource3, setDataSource3] = useState([])
     useEffect(() => {
         setLoading(true);
         fetch(url3, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource3(data.drivers)
-                setLoading(false);
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
+            setDataSource3(response.drivers)
 
-            })
+            setLoading(false);
+        }
+    })
+        .catch(error => {
+
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
 
-    const url4 = "http://64.226.104.50:9090/Api/Admin/Drivers/UNASSIGNED";
+    const url4 = "http://164.90.174.113:9090/Api/Admin/Drivers/UNASSIGNED";
     const [dataSource4, setDataSource4] = useState([])
     useEffect(() => {
         setLoading(true);
         fetch(url4, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource4(data.drivers)
-                setLoading(false);
-            })
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
+            setDataSource4(response.drivers)
+
+            setLoading(false);
+        }
+    })
+        .catch(error => {
+
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
 
-    const url5 = "http://64.226.104.50:9090/Api/Admin/Drivers/PERMIT";
+    const url5 = "http://164.90.174.113:9090/Api/Admin/Drivers/PERMIT";
     const [dataSource5, setDataSource5] = useState([])
     useEffect(() => {
         setLoading(true);
         fetch(url5, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource5(data.drivers)
-                setLoading(false);
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
+            setDataSource5(response.drivers)
 
-            })
+            setLoading(false);
+        }
+    })
+        .catch(error => {
+
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
 
     const [page, setCurentPage] = useState(1);

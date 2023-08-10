@@ -14,7 +14,6 @@ import { ImUserTie } from "react-icons/im";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styles from './dashboard.module.css';
-import Header from '../../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import AllApiData from '../../../AllApiData';
 export default function Dashboard() {
@@ -41,7 +40,6 @@ useEffect(() => {
 
         <AllApiData/>
             <Navigation path="/dashboard" title="Dashboard"></Navigation>
-
             {/* ---------------header--------------- */}
             {/* <Header title="Dashboard"></Header> */}
  

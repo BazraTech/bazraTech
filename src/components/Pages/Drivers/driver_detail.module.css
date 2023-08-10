@@ -131,7 +131,51 @@
     font-size: 13px;
     
   }
-
+/* -------------------- Buttons -------------------- */
+.company_button{
+    margin-top: 5%;
+    display: flex; 
+    justify-content: space-around;
+    cursor: pointer;
+    margin-bottom: 50px;
+  
+  }
+  .company_button .addd{ 
+    padding: 1%;
+    padding-left: 10%;
+    padding-right: 10%;
+    text-align: center;
+    background-color: #272727;
+    border: none;
+    border-radius: 8px;
+    color: var(--white);
+    cursor: pointer;
+  
+      
+  }
+  .company_button .ad{
+    padding: 1%;
+    padding-left: 10%;
+    padding-right: 10%;
+    text-align: center;
+    background-color: #272727;
+    border: none;
+    border-radius: 8px;
+    color: var(--white);
+    cursor: pointer;
+      
+  }
+  .ad:disabled{
+      padding: 1%;
+      padding-left: 10%;
+      padding-right: 10%;
+      text-align: center;
+      background-color: #c0c0c0;
+      border: none;
+      border-radius: 8px;
+      color: var(--white);
+        
+    }
   @media screen and (max-width: 750px) {
 
     .allcards {

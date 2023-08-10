@@ -57,17 +57,23 @@ const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from lo
             })
     }, [individualVOwner])
     const cargourl = "http://164.90.174.113:9090/Api/Admin/All/CargoOwners";
-    const [allCargoOwner, setallCargoOwner] = useState([])
+    const [allCargoOwner, setallCargoOwner] = useState(0)
     useEffect(() => {
         fetch(cargourl, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setallCargoOwner(data && data.cargoOwners.length)
-              
-            })
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (!response.ok) {
+            setallCargoOwner('!')
+            throw new Error('Failed to get cargo owners');
+            
+          }else{
+            setallCargoOwner(response.cargoOwners.length )
+        }})
     }, [])
-
-
+  
     const url3 = "http://164.90.174.113:9090/Api/Admin/Alerts/OFFROAD";
     const [alertOffroad, setalertOffroad] = useState([])
     useEffect(() => {
@@ -174,15 +180,7 @@ const [IndividualOwner, setIndividual] = useState([])
                 setIndividual(data.totalusers)
             })
     }, [])
-    const cargoOwnerurl = "http://164.90.174.113:9090/Api/Admin/All/CargoOwners";
-    const [CargoOwner, setCargoOwner] = useState([])
-    useEffect(() => {
-        fetch(cargoOwnerurl, options)
-            .then(respnse => respnse.json())
-            .then(data => {
-                setCargoOwner(data && data.cargoOwners.length)
-            })
-    }, [])
+
 
     localStorage.setItem("ApiData", JSON.stringify({"allvehicles":allvehicles,
     "allDrivers":allDrivers,
@@ -199,7 +197,7 @@ const [IndividualOwner, setIndividual] = useState([])
     "VehicleOwners":VehicleOwners,
     "CompanyOwner":CompanyOwner,
     "IndividualOwner":IndividualOwner,
-    "CargoOwner":CargoOwner
+    "CargoOwner":allCargoOwner
 }))
 return(
     <></>

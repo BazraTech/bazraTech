@@ -22,7 +22,7 @@ const send = false
         e.preventDefault();
         handleClick();
     };
-
+const [loding,setLoading]=useState('false')
 
     const handleClick = async () => {
         
@@ -100,21 +100,19 @@ const send = false
 
     const [dataSource, setDataSource] = useState([]);
     const [error, setError] = useState(null);
-    
     useEffect(() => {
       fetch(url2, options)
+      .then(respnse => respnse.json())
             .then(response => {
                 localStorage.setItem("message", JSON.stringify(response["message"])); 
                 const mess = localStorage.getItem("message");
                 console.log(response.status)
-          if (response.status == 500) {
-            throw new Error('Failed to get the drivers');
-          }
-          return response.json();
-        })
-        .then(data => {
-          setDataSource(data && data.cargoDriversINFs);
-        })
+          if (!response.ok) {
+            throw new Error('Failed to get the cargo drivers');
+          }else{
+          setDataSource(response.cargoDriversINFs);
+        }
+    })
         .catch(error => {
 
           setError(error.message);
@@ -122,25 +120,31 @@ const send = false
         });
     }, [reloadKey]);
     
-    // if (error) {
-    //   return <div>Error: {error}</div>;
-    // }
-    
-    // Rest of your component rendering logic
-    
-//  console.log(dataSource);
+  
  const url1 = `http://164.90.174.113:9090/Api/Admin/All/Cargos/${id}`;
 
  const [dataSource1, setDataSource1] = useState([])
  useEffect(() => {
-     // setLoading(true);
+     setLoading(true);
      fetch(url1, options)
          .then(respnse => respnse.json())
-         .then(data => {
-             setDataSource1(data)
-            //  console.log(data.status)
-             // setLoading(false);
-         })
+         .then(response => {
+            localStorage.setItem("message", JSON.stringify(response["message"])); 
+            const mess = localStorage.getItem("message");
+            console.log(response.status)
+      if (!response.ok) {
+        throw new Error('Failed to get the cargo');
+      }else{
+        setDataSource1(response)
+        setLoading(false);
+
+    }
+})
+    .catch(error => {
+
+      setError(error.message);
+      swal(`Failed ${error}`, "Error", "error");
+    });
  }, [reloadKey])
 // console.log(JSON.stringify(dataSource1.status));
 console.log(dataSource1)

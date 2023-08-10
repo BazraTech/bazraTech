@@ -20,7 +20,7 @@ import Swal from 'sweetalert2'
 import 'animate.css';
 import "./header.css"
 import './navigation.css';
-
+import NewMarkets from '../Marketing/NewMarkets';
 export default function Navigation({ path, title, link, past }) {
 
     const [popup, setPop] = useState(false);
@@ -146,7 +146,11 @@ export default function Navigation({ path, title, link, past }) {
     return (
         <>
             <div>
+            <NewMarkets/>
+
                 <div className={toggles}>
+                <NewMarkets/>
+
                     <ul>
                         <li>
                             <Link to="/dashboard" style={path == "/dashboard" ? { color: getColor() } : { color: getColor2() }}>
