@@ -32,7 +32,7 @@ useEffect(() => {
     const handleClickopen1 = () => {
         setPop1(!popup1);
     }
-
+const allUsers = ApiData.CargoOwner + ApiData.CompanyOwner + ApiData.IndividualOwner
     
     return (
 
@@ -86,7 +86,7 @@ useEffect(() => {
                             <h4>Total Users</h4>
                             <div className={styles.innerCard3}>
                                 <FaUsers size="2.5rem" color='#002e4d'></FaUsers>
-                                <p>{ApiData ? ApiData.allCargoOwner : 0}</p>
+                                <p>{allUsers}</p>
                             </div>
                         </Link>
                     </div>

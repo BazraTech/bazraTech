@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 import beep from './beep.mp3';
 
 export default function NewMarkets() {
@@ -60,7 +61,7 @@ export default function NewMarkets() {
 
   return (
     <div>
-      <ToastContainer />
+     <Link to='/marketing'><ToastContainer /></Link> 
     </div>
   );
 }

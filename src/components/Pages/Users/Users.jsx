@@ -39,6 +39,7 @@ export default function () {
             "Authorization": `Bearer ${jwt}`
         },
     };
+    const [error, setError] = useState(null);
 
     const [totalPages, setTotalPage] = useState(1);
     const [dataSource, setDataSource] = useState([])
@@ -48,12 +49,24 @@ export default function () {
         setLoading(true)
         fetch(url, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource(data.vehicleOwnerINF)
-                setTotalPage(data.totalusers)
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
+            setDataSource(response.vehicleOwnerINF)
+                setTotalPage(response.totalusers)
                 console.log(dataSource)
                 setLoading(false)
-            })
+        }
+    })
+        .catch(error => {
+
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
 
 
@@ -94,9 +107,23 @@ export default function () {
     useEffect(() => {
         fetch(urlthree, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setDataSource5(data.vehicleCatagories)
-            })
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status == 500) {
+            throw new Error(response.status);
+          }else{
+            setDataSource5(response.vehicleCatagories)
+
+            setLoading(false);
+        }
+    })
+        .catch(error => {
+
+          setError(error.message);
+          swal(`Failed ${error}`, "Error", "error");
+        });
     }, [])
 
     const urlFour = "http://164.90.174.113:9090/Api/Admin/All/VehicleCondition";
