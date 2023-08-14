@@ -107,7 +107,7 @@ const [loding,setLoading]=useState('false')
                 localStorage.setItem("message", JSON.stringify(response["message"])); 
                 const mess = localStorage.getItem("message");
                 console.log(response.status)
-          if (!response.ok) {
+          if (response.status === 500) {
             throw new Error('Failed to get the cargo drivers');
           }else{
           setDataSource(response.cargoDriversINFs);
@@ -132,8 +132,8 @@ const [loding,setLoading]=useState('false')
             localStorage.setItem("message", JSON.stringify(response["message"])); 
             const mess = localStorage.getItem("message");
             console.log(response.status)
-      if (!response.ok) {
-        throw new Error('Failed to get the cargo');
+      if (response.status === 500) {
+        throw new Error('Failed to get the cargo detail');
       }else{
         setDataSource1(response)
         setLoading(false);
