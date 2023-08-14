@@ -73,7 +73,7 @@ class _Post_BottomNavState extends State<Post_BottomNav>
                         AppLocalizations.of(context)?.translate("Post Cargo") ??
                             "Post Cargo",
                         style: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 15,
                             color: Colors.black,
                             fontFamily: 'Roboto',
                             letterSpacing: 1,
@@ -90,7 +90,7 @@ class _Post_BottomNavState extends State<Post_BottomNav>
                                 ?.translate("Cargo History") ??
                             "Cargo History",
                         style: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 15,
                             color: Colors.black,
                             fontFamily: 'Roboto',
                             letterSpacing: 1,

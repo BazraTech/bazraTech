@@ -319,8 +319,8 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                               decoration: BoxDecoration(
                                   color: Color.fromARGB(255, 255, 255, 255),
                                   borderRadius: BorderRadius.circular(10),
-                                  boxShadow: isPressed
-                                      ? [
+                                  boxShadow: 
+                                      [
                                           BoxShadow(
                                             color: Colors.grey.shade400,
                                             offset: Offset(4, 4),
@@ -334,7 +334,7 @@ class _CargoOWnerHomePageState extends State<CargoOWnerHomePage> {
                                             spreadRadius: 1,
                                           ),
                                         ]
-                                      : null),
+                                  ),
                               child: Column(
                                 children: [
                                   Container(

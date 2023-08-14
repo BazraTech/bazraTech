@@ -13,9 +13,7 @@ import '../../Components/Noglow.dart';
 import '../../constant/global_variables.dart';
 import '../../localization/app_localizations.dart';
 import '../../model/VehicleListForCargo.dart';
-
 import '../../shared/constant.dart';
-
 class VehicleCargo extends StatefulWidget {
   final int? id;
   @override
@@ -80,7 +78,6 @@ class _VehicleCargoState extends State<VehicleCargo> {
           fontSize: 14.0);
     }
   }
-
   List activeCargoStatus = [];
   @override
   void initState() {
@@ -89,7 +86,6 @@ class _VehicleCargoState extends State<VehicleCargo> {
       setState(() {});
     });
   }
-
   TextEditingController searchController = TextEditingController();
   Future searchCargosByOwnerName(String status) async {
     try {
@@ -121,7 +117,6 @@ class _VehicleCargoState extends State<VehicleCargo> {
     }
     return false;
   }
-
   bool isPressed = true;
   Future<List<Map<String, dynamic>>> fetchData() async {
     StorageHelper storageHelper = StorageHelper();
@@ -141,13 +136,11 @@ class _VehicleCargoState extends State<VehicleCargo> {
     print('Drivers: $drivers');
     return drivers;
   }
-
   Future<int> fetchDriversLength() async {
     List<Map<String, dynamic>> drivers = await fetchData();
     return drivers.length;
   }
-
-  Future<void> updateDriverState(List<Map<String, dynamic>> drivers) async {
+  Future updateDriverState(List<Map<String, dynamic>> drivers) async {
     StorageHelper storageHelper = StorageHelper();
     String? accessToken = await storageHelper.getToken();
     final url =
@@ -222,8 +215,7 @@ class _VehicleCargoState extends State<VehicleCargo> {
                       controller: searchController,
                       onChanged: (value) {
                         searchCargosByOwnerName(value).then((searchedCargos) {
-                          setState(() {
-                            // Wrap the assignment in a setState to refresh the Widget
+                          setState(() {                         
                           });
                         }).catchError((error) {});
                       },
@@ -371,215 +363,245 @@ class _VehicleCargoState extends State<VehicleCargo> {
                               ),
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(top: 18),
-                            height: screenHeight * 0.53,
-                            child: Stack(
-                              children: [
-                                ScrollConfiguration(
-                                  behavior: NoGlowScrollBehavior(),
-                                  child: ListView.builder(
-                                    itemCount: snapshot.data!.length,
-                                    itemBuilder: (context, index) {
-                                      Cargo_Vehicle cargoDriver =
-                                          snapshot.data![index];
-                                      return InkWell(
-                                        onTap: () {
-                                          setState(() {});
-                                        },
-                                        child: SizedBox(
-                                          height: screenHeight * 0.1,
-                                          child: Card(
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                border: const Border(
-                                                  left: BorderSide(
-                                                    color: GlobalVariables
-                                                        .primaryColor,
-                                                    width: 3,
+                          RefreshIndicator(
+                            onRefresh: () async {
+                              final drivers = await fetchData();
+                              await updateDriverState(drivers);
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(top: 18),
+                              height: screenHeight * 0.53,
+                              child: Stack(
+                                children: [
+                                  ScrollConfiguration(
+                                    behavior: NoGlowScrollBehavior(),
+                                    child: ListView.builder(
+                                      itemCount: snapshot.data!.length,
+                                      itemBuilder: (context, index) {
+                                        Cargo_Vehicle cargoDriver =
+                                            snapshot.data![index];
+                                        return InkWell(
+                                          onTap: () {
+                                            setState(() {});
+                                          },
+                                          child: SizedBox(
+                                            height: screenHeight * 0.1,
+                                            child: Card(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  border: const Border(
+                                                    left: BorderSide(
+                                                      color: GlobalVariables
+                                                          .primaryColor,
+                                                      width: 3,
+                                                    ),
                                                   ),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors
+                                                            .grey.shade200
+                                                            .withOpacity(0.7),
+                                                        blurRadius: 8.0,
+                                                        spreadRadius: 2.0,
+                                                        offset: const Offset(
+                                                          6, // Move to right 7.0 horizontally
+                                                          8, // Move to bottom 8.0 Vertically
+                                                        ))
+                                                  ],
                                                 ),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      color: Colors
-                                                          .grey.shade200
-                                                          .withOpacity(0.7),
-                                                      blurRadius: 8.0,
-                                                      spreadRadius: 2.0,
-                                                      offset: const Offset(
-                                                        6, // Move to right 7.0 horizontally
-                                                        8, // Move to bottom 8.0 Vertically
-                                                      ))
-                                                ],
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  ListTile(
-                                                      title: Row(
-                                                    children: [
-                                                      Expanded(
-                                                        child: Text(
-                                                          cargoDriver
-                                                              .vehicleOwner,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 14,
-                                                            color: GlobalVariables
-                                                                .primaryColor,
-                                                            fontFamily:
-                                                                'Roboto',
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: Text(
-                                                          cargoDriver.driver,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 14,
-                                                            color: GlobalVariables
-                                                                .primaryColor,
-                                                            fontFamily:
-                                                                'Roboto',
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: Text(
-                                                          cargoDriver
-                                                              .plateNumber,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 14,
-                                                            color: GlobalVariables
-                                                                .primaryColor,
-                                                            fontFamily:
-                                                                'Roboto',
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      cargoDriver.driverState ==
-                                                              "UNLOADED"
-                                                          ? Container(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              height:
-                                                                  screenHeight *
-                                                                      0.02,
-                                                              decoration:
-                                                                  const BoxDecoration(
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                                color: Color
-                                                                    .fromRGBO(
-                                                                        178,
-                                                                        142,
-                                                                        22,
-                                                                        1),
-                                                              ),
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(11),
-                                                            )
-                                                          : Container(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              height:
-                                                                  screenHeight *
-                                                                      0.02,
-                                                              decoration:
-                                                                  const BoxDecoration(
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                                color:
-                                                                    Colors.red,
-                                                              ),
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(11),
+                                                child: Column(
+                                                  children: [
+                                                    ListTile(
+                                                        title: Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: Text(
+                                                            cargoDriver
+                                                                .vehicleOwner,
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 14,
+                                                              color: GlobalVariables
+                                                                  .primaryColor,
+                                                              fontFamily:
+                                                                  'Roboto',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
                                                             ),
-                                                    ],
-                                                  )),
-                                                ],
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Text(
+                                                            cargoDriver.driver,
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 14,
+                                                              color: GlobalVariables
+                                                                  .primaryColor,
+                                                              fontFamily:
+                                                                  'Roboto',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Text(
+                                                            cargoDriver
+                                                                .plateNumber,
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 14,
+                                                              color: GlobalVariables
+                                                                  .primaryColor,
+                                                              fontFamily:
+                                                                  'Roboto',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        cargoDriver.driverState ==
+                                                                "UNLOAD"
+                                                            ? Container(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                height:
+                                                                    screenHeight *
+                                                                        0.02,
+                                                                decoration:
+                                                                    const BoxDecoration(
+                                                                  shape: BoxShape
+                                                                      .circle,
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          178,
+                                                                          142,
+                                                                          22,
+                                                                          1),
+                                                                ),
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(11),
+                                                              )
+                                                            : cargoDriver
+                                                                        .driverState ==
+                                                                    "UNLOADED"
+                                                                ? Container(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                    height:
+                                                                        screenHeight *
+                                                                            0.02,
+                                                                    decoration:
+                                                                        const BoxDecoration(
+                                                                      shape: BoxShape
+                                                                          .circle,
+                                                                      color: Colors
+                                                                          .green,
+                                                                    ),
+                                                                    padding:
+                                                                        const EdgeInsets.all(
+                                                                            11),
+                                                                  )
+                                                                : Container(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                    height:
+                                                                        screenHeight *
+                                                                            0.02,
+                                                                    decoration:
+                                                                        const BoxDecoration(
+                                                                      shape: BoxShape
+                                                                          .circle,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                    padding:
+                                                                        const EdgeInsets.all(
+                                                                            11),
+                                                                  ),
+                                                      ],
+                                                    )),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      );
-                                    },
+                                        );
+                                      },
+                                    ),
                                   ),
-                                ),
-                                Positioned(
-                                  bottom: 100,
-                                  right: 4,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      FloatingActionButton(
-                                        backgroundColor:
-                                            GlobalVariables.primaryColor,
-                                        onPressed: () async {
-                                          final pdf = pw.Document();
-                                          pdf.addPage(
-                                            pw.MultiPage(
-                                              pageFormat: PdfPageFormat.a4,
-                                              build: (pw.Context context) => [
-                                                pw.Header(
-                                                    text: 'My Cargos',
-                                                    level: 0),
-                                                pw.Table.fromTextArray(
-                                                  headers: [
-                                                    '#',
-                                                    'Vehicle Owner Name',
-                                                    'Driver Name',
-                                                    'Plate Number'
-                                                  ],
-                                                  data: List<
-                                                      List<String>>.generate(
-                                                    snapshot.data!.length > 5
-                                                        ? 5
-                                                        : snapshot.data!.length,
-                                                    (index) => [
-                                                      (index + 1).toString(),
-                                                      snapshot.data![index]
-                                                          .vehicleOwner,
-                                                      snapshot
-                                                          .data![index].driver,
-                                                      snapshot.data![index]
-                                                          .plateNumber,
+                                  Positioned(
+                                    bottom: 100,
+                                    right: 4,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        FloatingActionButton(
+                                          backgroundColor:
+                                              GlobalVariables.primaryColor,
+                                          onPressed: () async {
+                                            final pdf = pw.Document();
+                                            pdf.addPage(
+                                              pw.MultiPage(
+                                                pageFormat: PdfPageFormat.a4,
+                                                build: (pw.Context context) => [
+                                                  pw.Header(
+                                                      text: 'My Cargos',
+                                                      level: 0),
+                                                  pw.Table.fromTextArray(
+                                                    headers: [
+                                                      '#',
+                                                      'Vehicle Owner Name',
+                                                      'Driver Name',
+                                                      'Plate Number'
                                                     ],
+                                                    data: List<
+                                                        List<String>>.generate(
+                                                      snapshot.data!.length > 5
+                                                          ? 5
+                                                          : snapshot
+                                                              .data!.length,
+                                                      (index) => [
+                                                        (index + 1).toString(),
+                                                        snapshot.data![index]
+                                                            .vehicleOwner,
+                                                        snapshot.data![index]
+                                                            .driver,
+                                                        snapshot.data![index]
+                                                            .plateNumber,
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-
-                                          final bytes = await pdf.save();
-                                          await Share.file(
-                                            'My Cargos',
-                                            'my_cargos.pdf',
-                                            bytes.buffer.asUint8List(),
-                                            'application/pdf',
-                                          );
-                                        },
-                                        child: const Icon(
-                                          Icons.share,
-                                          color: Colors.black,
+                                                ],
+                                              ),
+                                            );
+                                            final bytes = await pdf.save();
+                                            await Share.file(
+                                              'My Cargos',
+                                              'my_cargos.pdf',
+                                              bytes.buffer.asUint8List(),
+                                              'application/pdf',
+                                            );
+                                          },
+                                          child: const Icon(
+                                            Icons.share,
+                                            color: Colors.black,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           Container(
@@ -603,7 +625,6 @@ class _VehicleCargoState extends State<VehicleCargo> {
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   }
-
                   return Center(
                     child: FutureBuilder(
                       future: Future.delayed(Duration(seconds: 10),

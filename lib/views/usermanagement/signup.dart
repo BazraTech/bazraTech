@@ -36,10 +36,6 @@ class _SignupState extends State<Signup> {
         password: password,
         confirmPassword: confirm,
       );
-      print('Name: $companyName');
-      print('phone: $phone');
-      print('Password: $password');
-      print('Confirm: $confirm');
     }
   }
 

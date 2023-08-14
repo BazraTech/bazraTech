@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cargo/shared/loading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -169,7 +170,7 @@ class _cargoHistoryDetailState extends State<cargoHistoryDetail> {
             } else if (snapshot.hasError) {
               return Center(child: Text('${snapshot.error}'));
             }
-            return Center(child: CircularProgressIndicator());
+            return Center(child: LoadingSpinner());
           },
         ),
       ),
