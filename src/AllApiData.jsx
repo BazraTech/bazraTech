@@ -18,44 +18,71 @@ const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from lo
     useEffect(() => {
         fetch(url1, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setAllvehicles(data.totalVehicles)
-
-            })
-    }, [allvehicles])
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                // const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status === 500) {
+            setAllvehicles(0)
+            throw new Error('Failed to get the vehicles');
+            
+          }else{
+            setAllvehicles(response.totalVehicles)
+        }})
+    }, [])
 
     const url2 = "http://164.90.174.113:9090/Api/Admin/All/Drivers";
     const [allDrivers, setAllDrivers] = useState([])
     useEffect(() => {
         fetch(url2, options) 
             .then(respnse => respnse.json())
-            .then(data => {
-                setAllDrivers(data.totalDrivers)
-
-            })
-    }, [allDrivers])
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                // const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status === 500) {
+            setAllDrivers(0)
+            throw new Error('Failed to get the drivers');
+            
+          }else{
+            setAllDrivers(response.totalDrivers)
+        }})
+    }, [])
 
     const url = "http://164.90.174.113:9090/Api/Admin/All/VehicleOwners/";
     const [allVehiclwOwner, setAllVehiclwOwner] = useState([])
     useEffect(() => {
         fetch(url, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setAllVehiclwOwner(data.totalusers) 
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                // const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status === 500) {
+            setAllVehiclwOwner(0)
+            throw new Error('Failed to get vehicleOwners');
             
-
-            })
+          }else{
+            setAllVehiclwOwner(response.totalusers) 
+        }})
     }, [])
     const [individualVOwner, setindividualVOwner] = useState([])
     const urin = "http://164.90.174.113:9090/Api/Admin/All/VehicleOwners/Role/individual";
     useEffect(() => {
         fetch(urin, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setindividualVOwner(data.totalusers)
-               
-            })
-    }, [individualVOwner])
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                // const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status === 500) {
+            setindividualVOwner(0)
+            throw new Error('Failed to get individual owners');
+            
+          }else{
+            setindividualVOwner(response.totalusers)
+        }})
+    }, [])
     const cargourl = "http://164.90.174.113:9090/Api/Admin/All/CargoOwners";
     const [allCargoOwner, setallCargoOwner] = useState(0)
     useEffect(() => {
@@ -65,8 +92,8 @@ const jwt = JSON.parse(localStorage.getItem('jwt'));// Getting the token from lo
                 localStorage.setItem("message", JSON.stringify(response["message"])); 
                 const mess = localStorage.getItem("message");
                 console.log(response.status)
-          if (!response.ok) {
-            setallCargoOwner('!')
+          if (response.status === 500) {
+            setallCargoOwner(0)
             throw new Error('Failed to get cargo owners');
             
           }else{
@@ -116,10 +143,18 @@ const onRouteUrl = "http://164.90.174.113:9090/Api/Admin/All/Vehicles/Status/ONR
     useEffect(() => {
         fetch(onRouteUrl, options)
             .then(respnse => respnse.json())
-            .then(data => {
-                setonRoute(data.inRouteVehicles)
-            })
-    }, [onRoute])
+            .then(response => {
+                localStorage.setItem("message", JSON.stringify(response["message"])); 
+                // const mess = localStorage.getItem("message");
+                console.log(response.status)
+          if (response.status === 500) {
+            setonRoute(0)
+            throw new Error('Failed to get the vehicles');
+            
+          }else{
+            setonRoute(response.inRouteVehicles)
+        }})
+    }, [])
 
     const inStockUrl = "http://164.90.174.113:9090/Api/Admin/All/Vehicles/Status/INSTOCK";
     const [inStock, setinStock] = useState([])

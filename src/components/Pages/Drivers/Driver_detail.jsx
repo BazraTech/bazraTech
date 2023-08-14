@@ -125,8 +125,8 @@ console.log(updateDriverInfo)
     formData.append("licenseGrade", updateDriverInfo.licenseGrade);
     formData.append("licenseIssueDate", updateDriverInfo.licenseIssueDate);
     formData.append("licenseExpireDate", updateDriverInfo.licenseExpireDate);
-    formData.append("licenseFile", updateDriverInfo.licenseFile);
-    formData.append("tinFile", updateDriverInfo.tinFile);
+    // formData.append("licenseFile", updateDriverInfo.licenseFile);
+    // formData.append("tinFile", updateDriverInfo.tinFile);
  //Coudn't change the name  i don't know
     //formData.append("licenseFile", updateCargoInfo.licenseFile);
     //formData.append("tinFile", updateCargoInfo.tinFile);
