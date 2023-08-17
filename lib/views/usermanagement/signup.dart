@@ -1,5 +1,6 @@
-import 'package:cargo/shared/constant.dart';
-import 'package:cargo/views/usermanagement/login.dart';
+
+import 'package:bazraLogistic/shared/constant.dart';
+import 'package:bazraLogistic/views/usermanagement/login.dart';
 import 'package:flutter/material.dart';
 import '../../constant/global_variables.dart';
 import '../../localization/app_localizations.dart';

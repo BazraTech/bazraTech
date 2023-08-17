@@ -1,11 +1,11 @@
-import 'package:cargo/constant/global_variables.dart';
-import 'package:cargo/shared/customAppbar.dart';
+
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 
 import '../../Components/Home_Page.dart';
 
 import '../../Components/Noglow.dart';
+import '../../constant/global_variables.dart';
 import '../../model/report.dart';
 import '../Bill/billDetail.dart';
 import '../Bottom_Navigation.dart';

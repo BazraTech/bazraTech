@@ -1,8 +1,8 @@
-import 'package:cargo/Components/Home_Page.dart';
-import 'package:cargo/shared/customAppbar.dart';
-import 'package:cargo/shared/customButton.dart';
+
 
 import 'package:flutter/material.dart';
+
+import '../shared/customButton.dart';
 
 class Communicate extends StatefulWidget {
   const Communicate({super.key});

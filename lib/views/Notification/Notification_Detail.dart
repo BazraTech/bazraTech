@@ -1,8 +1,8 @@
-import 'package:cargo/shared/customAppbar.dart';
-import 'package:cargo/shared/customButton.dart';
-import 'package:cargo/views/Notification/Notification.dart';
+
+import 'package:bazraLogistic/views/Notification/Notification.dart';
 import 'package:flutter/material.dart';
 import '../../model/post.dart';
+import '../../shared/customButton.dart';
 
 class NotificationDetail extends StatefulWidget {
   const NotificationDetail({super.key});

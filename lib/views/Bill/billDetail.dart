@@ -1,8 +1,7 @@
 import 'dart:convert';
-
-import 'package:cargo/constant/global_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../../constant/global_variables.dart';
 import '../../model/bill_details.dart';
 import '../../shared/storage_hepler.dart';
 import 'BillCargo.dart';

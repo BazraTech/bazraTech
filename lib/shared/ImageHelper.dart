@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'package:cargo/shared/storage_hepler.dart';
+import 'package:bazraLogistic/shared/storage_hepler.dart';
 import 'package:http/http.dart' as http;
 
 class ImageHelper {

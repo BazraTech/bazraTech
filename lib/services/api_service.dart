@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:cargo/views/Bottom_Navigation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import "package:http/http.dart" as http;
 import 'package:flutter/material.dart';
@@ -13,8 +12,8 @@ import '../constant/global_variables.dart';
 import '../constant/utils.dart';
 import '../model/CargoOwnerInfo.dart';
 import '../shared/storage_hepler.dart';
+import '../views/Bottom_Navigation.dart';
 import '../views/usermanagement/login.dart';
-
 class AuthService {
   Future<void> signUpUser({
     required BuildContext context,
@@ -226,7 +225,6 @@ class AuthService {
       } else if (e is TimeoutException) {
         errorMessage = "Request timed out";
       }
-      // Handle the exception
     }
   }
 }

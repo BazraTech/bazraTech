@@ -1,4 +1,4 @@
-import 'package:cargo/views/Post/histrory.dart';
+import 'package:bazraLogistic/views/Post/copyHistory.dart';
 import 'package:flutter/material.dart';
 import '../../localization/app_localizations.dart';
 import 'Posts.dart';

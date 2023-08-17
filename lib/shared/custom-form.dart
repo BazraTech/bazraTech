@@ -1,5 +1,7 @@
-import 'package:cargo/constant/global_variables.dart';
+
 import 'package:flutter/material.dart';
+
+import '../constant/global_variables.dart';
 
 class CustomTextFieldForm extends StatefulWidget {
   final String hintText;

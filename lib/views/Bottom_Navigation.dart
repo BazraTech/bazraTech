@@ -1,4 +1,5 @@
-import 'package:cargo/localization/app_localizations.dart';
+
+import 'package:bazraLogistic/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../Components/Communicate.dart';
 import 'usermanagement/Profile.dart';

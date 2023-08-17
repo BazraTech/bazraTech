@@ -1,10 +1,10 @@
-import 'package:cargo/Components/Home_Page.dart';
-import 'package:cargo/localization/app_localizations.dart';
-import 'package:cargo/views/Bottom_Navigation.dart';
-import 'package:cargo/views/usermanagement/Profile.dart';
+
+import 'package:bazraLogistic/views/Bottom_Navigation.dart';
+import 'package:bazraLogistic/views/usermanagement/Profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../localization/app_localizations.dart';
 import '../../localization/localization_bloc.dart';
 import '../../localization/localization_event.dart';
 import '../../model/Language.dart';

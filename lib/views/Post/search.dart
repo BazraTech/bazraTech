@@ -1,4 +1,4 @@
-import 'package:cargo/shared/constant.dart';
+
 import 'package:dotted_line/dotted_line.dart';
 import '../../model/cargo.dart';
 import '../../localization/app_localizations.dart';

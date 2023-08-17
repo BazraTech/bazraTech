@@ -1,8 +1,8 @@
-import 'package:cargo/shared/customAppbar.dart';
-import 'package:cargo/views/Bottom_Navigation.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../model/alert.dart';
+import '../Bottom_Navigation.dart';
 import 'Alert_Detail.dart';
 
 class Alert_Type extends StatefulWidget {

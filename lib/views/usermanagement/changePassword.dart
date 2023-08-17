@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:cargo/shared/constant.dart';
 import 'package:flutter/material.dart';
 import '../../constant/global_variables.dart';
 import '../../localization/app_localizations.dart';
+import '../../shared/constant.dart';
 import '../../shared/custom-form.dart';
 import '../../shared/customButton.dart';
 import '../../shared/storage_hepler.dart';

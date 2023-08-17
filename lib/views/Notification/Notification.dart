@@ -1,7 +1,7 @@
-import 'package:cargo/shared/constant.dart';
-import 'package:cargo/shared/customAppbar.dart';
+
 import 'package:flutter/material.dart';
 import '../../model/post.dart';
+import '../../shared/constant.dart';
 import '../Bottom_Navigation.dart';
 import 'Notification_Detail.dart';
 

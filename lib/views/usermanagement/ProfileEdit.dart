@@ -1,15 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:cargo/views/usermanagement/Profile.dart';
+import 'package:bazraLogistic/views/usermanagement/Profile.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:cargo/shared/constant.dart';
-import 'package:cargo/views/usermanagement/login.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../constant/global_variables.dart';
 import '../../localization/app_localizations.dart';
 import '../../services/api_service.dart';
+import '../../shared/constant.dart';
 import '../../shared/custom-form.dart';
 import '../../shared/customButton.dart';
 import 'package:fluttertoast/fluttertoast.dart';

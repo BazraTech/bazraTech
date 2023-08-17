@@ -1,6 +1,6 @@
-import 'package:cargo/shared/customButton.dart';
-import 'package:cargo/shared/storage_hepler.dart';
-import 'package:cargo/views/Bottom_Navigation.dart';
+
+import 'package:bazraLogistic/shared/storage_hepler.dart';
+import 'package:bazraLogistic/views/Bottom_Navigation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -14,6 +14,7 @@ import '../../constant/global_variables.dart';
 import '../../localization/app_localizations.dart';
 import '../../model/VehicleListForCargo.dart';
 import '../../shared/constant.dart';
+import '../../shared/customButton.dart';
 class VehicleCargo extends StatefulWidget {
   final int? id;
   @override

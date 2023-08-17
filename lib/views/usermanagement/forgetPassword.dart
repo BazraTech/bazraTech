@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:cargo/constant/global_variables.dart';
-import 'package:cargo/localization/app_localizations.dart';
-import 'package:cargo/shared/constant.dart';
-import 'package:cargo/shared/customButton.dart';
+import 'package:bazraLogistic/constant/global_variables.dart';
+import 'package:bazraLogistic/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import '../../shared/constant.dart';
 import '../../shared/custom-form.dart';
 import 'package:hive/hive.dart';
+import '../../shared/customButton.dart';
 import '../../shared/storage_hepler.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:path_provider/path_provider.dart';

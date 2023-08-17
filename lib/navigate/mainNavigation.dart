@@ -1,11 +1,12 @@
-import 'package:cargo/Components/Home_Page.dart';
-import 'package:cargo/views/Bottom_Navigation.dart';
-import 'package:cargo/views/usermanagement/login.dart';
+
+import 'package:bazraLogistic/Components/Home_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import '../localization/app_localizations.dart';
+import '../views/Bottom_Navigation.dart';
 import '../views/Post/Post_Navigation.dart';
+import '../views/usermanagement/login.dart';
 import 'navigateBloc.dart';
 import 'navigatestateEvent.dart';
 

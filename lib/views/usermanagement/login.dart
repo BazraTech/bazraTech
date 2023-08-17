@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:bazraLogistic/views/usermanagement/signup.dart';
 import 'package:hive/hive.dart';
-import 'package:cargo/shared/constant.dart';
-import 'package:cargo/views/usermanagement/signup.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +14,7 @@ import '../../localization/app_localizations.dart';
 import '../../localization/localization_bloc.dart';
 import '../../localization/localization_event.dart';
 import '../../services/api_service.dart';
+import '../../shared/constant.dart';
 import '../../shared/custom-form.dart';
 import '../../shared/storage_hepler.dart';
 import 'package:path_provider/path_provider.dart';
@@ -74,22 +74,16 @@ class _Cargo_loginState extends State<Cargo_login> {
     });
     initHive();
   }
-
-// Initialize Hive and open the logoBox
   Future<void> initHive() async {
     final appDocumentDir = await getApplicationDocumentsDirectory();
     Hive.init(appDocumentDir.path);
     await Hive.openBox<String>('logoBox');
     logoBox = Hive.box<String>('logoBox');
   }
-
-// Call initHive before using the fetchImage function
-
   Future<String> fetchImage() async {
     var client = http.Client();
     StorageHelper storageHelper = StorageHelper();
     String? accessToken = await storageHelper.getToken();
-
     try {
       Map<String, String> requestHeaders = {
         'Content-Type': 'application/json',
@@ -100,7 +94,6 @@ class _Cargo_loginState extends State<Cargo_login> {
           headers: requestHeaders);
 
       if (response.statusCode == 200) {
-        // If the server returns a 200 OK response, parse the JSON.
         Map<String, dynamic> data = json.decode(response.body);
         return data["logo"];
       } else {
@@ -145,18 +138,16 @@ class _Cargo_loginState extends State<Cargo_login> {
       print('Failed to store logo in Hive');
     }
   }
-
   bool isLoading = false;
   Widget buildLanguageDropdown(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     final localeBloc = context.read<LocaleBloc>();
     bool isPressed = true;
-
     return Container(
       height: screenHeight * 0.07,
       width: screenWidth * 0.3,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(6)),
       ),
@@ -193,9 +184,7 @@ class _Cargo_loginState extends State<Cargo_login> {
       ),
     );
   }
-
   Future<String?> getPhoneNumberSync() async {
-    // Retrieve the phone number asynchronously
     final storage = FlutterSecureStorage();
     return await storage.read(key: 'phoneNumber');
   }
@@ -232,7 +221,7 @@ class _Cargo_loginState extends State<Cargo_login> {
                         );
                       } else {
                         return const Text(
-                          'Bazra Technology Group',
+                          '',
                           style: TextStyle(
                             fontFamily: "Roboto",
                             fontSize: 20,
@@ -346,7 +335,7 @@ class _Cargo_loginState extends State<Cargo_login> {
                         letterSpacing: 1.0,
                         wordSpacing: 2.0,
                         color: _isFocused ? Colors.red : Colors.grey,
-                        // ... other styles
+                        
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {

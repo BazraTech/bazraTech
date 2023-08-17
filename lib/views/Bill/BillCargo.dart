@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http;
 import '../../Components/Noglow.dart';
 import '../../localization/app_localizations.dart';
 import '../../model/bill.dart';
-import '../../shared/loading.dart';
 import '../../shared/networkError.dart';
 import '../../shared/storage_hepler.dart';
 import '../Bottom_Navigation.dart';
@@ -210,7 +209,7 @@ class _CargoBillState extends State<CargoBill> {
                         builder: (context, snapshot) {
                           return snapshot.connectionState ==
                                   ConnectionState.waiting
-                              ? LoadingSpinner()
+                              ? const NetWorkError()
                               : snapshot.data!.isEmpty && searchQuery.isNotEmpty
                                   ? (searchQuery.length < 3 ||
                                           searchQuery.contains('dummy'))
@@ -229,8 +228,13 @@ class _CargoBillState extends State<CargoBill> {
                                             fit: BoxFit.cover,
                                           ),
                                         )
-                                  : snapshot.hasData
-                                      ? ScrollConfiguration(
+                                  : snapshot.data!.isEmpty
+                                      ? Center(
+                                          child: Lottie.asset(
+                                          'assets/images/noapidatas.json',
+                                          fit: BoxFit.cover,
+                                        ))
+                                      : ScrollConfiguration(
                                           behavior: NoGlowScrollBehavior(),
                                           child: ListView.builder(
                                               itemCount: snapshot.data!.length,
@@ -449,8 +453,7 @@ class _CargoBillState extends State<CargoBill> {
                                                   ),
                                                 );
                                               }),
-                                        )
-                                      : NetWorkError();
+                                        );
                         })))));
   }
 }
