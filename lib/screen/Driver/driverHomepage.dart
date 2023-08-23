@@ -360,29 +360,36 @@ class _Driver_HompageState extends State<Driver_Hompage> {
 
                                                     // Display the data in your desired format
                                                     return Container(
-                                                      height:
-                                                          screenHeight * 0.034,
-                                                      width: screenWidth * 0.24,
-                                                      // decoration: BoxDecoration(
-                                                      //   shape: BoxShape.circle,
-                                                      //   border: Border.all(
-                                                      //     color: Colors.white,
-                                                      //     width: 2.0,
-                                                      //   ),
-                                                      // ),
-                                                      child: ClipOval(
+                                                        height: screenHeight *
+                                                            0.034,
+                                                        width:
+                                                            screenWidth * 0.24,
+                                                        // decoration: BoxDecoration(
+                                                        //   shape: BoxShape.circle,
+                                                        //   border: Border.all(
+                                                        //     color: Colors.white,
+                                                        //     width: 2.0,
+                                                        //   ),
+                                                        // ),
                                                         child: SizedBox(
                                                           height: screenHeight *
                                                               0.034,
                                                           width: screenWidth *
                                                               0.24,
-                                                          child: Image.network(
-                                                            data!["driverPic"],
-                                                            fit: BoxFit.cover,
+                                                          child: ListTile(
+                                                            leading:
+                                                                CircleAvatar(
+                                                              radius: 30,
+                                                              backgroundImage:
+                                                                  Image.network(
+                                                                data![
+                                                                    "driverPic"],
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ).image,
+                                                            ),
                                                           ),
-                                                        ),
-                                                      ),
-                                                    );
+                                                        ));
                                                   }
                                                 },
                                               ),
@@ -605,25 +612,22 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                                                       data[
                                                                           "workStatus"];
                                                                   // Render your UI with the data
-                                                                  return Text(
-                                                                    data[
-                                                                        "status"],
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .left,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                    style: const TextStyle(
-                                                                        fontFamily:
-                                                                            'Nunito',
-                                                                        fontSize:
-                                                                            AppFonts
-                                                                                .smallFontSize,
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontWeight:
-                                                                            FontWeight.bold),
+                                                                  return Container(
+                                                                    child: data["status"] ==
+                                                                            null
+                                                                        ? Container()
+                                                                        : Text(
+                                                                            data["status"],
+                                                                            textAlign:
+                                                                                TextAlign.left,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                            style: const TextStyle(
+                                                                                fontFamily: 'Nunito',
+                                                                                fontSize: AppFonts.smallFontSize,
+                                                                                color: Colors.black,
+                                                                                fontWeight: FontWeight.bold),
+                                                                          ),
                                                                   );
                                                                 } else if (snapshot
                                                                     .hasError) {
@@ -658,25 +662,22 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                                                       data[
                                                                           "workStatus"];
                                                                   // Render your UI with the data
-                                                                  return Text(
-                                                                    data[
-                                                                        "workStatus"],
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .left,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                    style: const TextStyle(
-                                                                        fontFamily:
-                                                                            'Nunito',
-                                                                        fontSize:
-                                                                            AppFonts
-                                                                                .smallFontSize,
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontWeight:
-                                                                            FontWeight.bold),
+                                                                  return Container(
+                                                                    child: data["workStatus"] ==
+                                                                            null
+                                                                        ? Container()
+                                                                        : Text(
+                                                                            data["workStatus"],
+                                                                            textAlign:
+                                                                                TextAlign.left,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                            style: const TextStyle(
+                                                                                fontFamily: 'Nunito',
+                                                                                fontSize: AppFonts.smallFontSize,
+                                                                                color: Colors.black,
+                                                                                fontWeight: FontWeight.bold),
+                                                                          ),
                                                                   );
                                                                 } else if (snapshot
                                                                     .hasError) {
@@ -814,25 +815,22 @@ class _Driver_HompageState extends State<Driver_Hompage> {
                                                                       data[
                                                                           "workStatus"];
                                                                   // Render your UI with the data
-                                                                  return Text(
-                                                                    data[
-                                                                        "plateNumber"],
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .left,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                    style: const TextStyle(
-                                                                        fontFamily:
-                                                                            'Nunito',
-                                                                        fontSize:
-                                                                            AppFonts
-                                                                                .smallFontSize,
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontWeight:
-                                                                            FontWeight.bold),
+                                                                  return Container(
+                                                                    child: data["plateNumber"] ==
+                                                                            null
+                                                                        ? Container()
+                                                                        : Text(
+                                                                            data["plateNumber"],
+                                                                            textAlign:
+                                                                                TextAlign.left,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                            style: const TextStyle(
+                                                                                fontFamily: 'Nunito',
+                                                                                fontSize: AppFonts.smallFontSize,
+                                                                                color: Colors.black,
+                                                                                fontWeight: FontWeight.bold),
+                                                                          ),
                                                                   );
                                                                 } else if (snapshot
                                                                     .hasError) {

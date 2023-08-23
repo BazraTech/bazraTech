@@ -318,14 +318,19 @@ class _driverProfileState extends State<driverProfile> {
                                 driverpic = snapshot.data;
 
                                 // Display the data in your desired format
-                                return ClipOval(
-                                    child: SizedBox(
-                                        height: screenHeight * 0.03,
-                                        width: screenWidth * 0.2,
-                                        child: Image.network(
-                                          driverpic!["driverPic"],
-                                          fit: BoxFit.cover,
-                                        )));
+                                return SizedBox(
+                                  height: screenHeight * 0.034,
+                                  width: screenWidth * 0.24,
+                                  child: ListTile(
+                                    leading: CircleAvatar(
+                                      radius: 30,
+                                      backgroundImage: Image.network(
+                                        driverpic!["driverPic"],
+                                        fit: BoxFit.cover,
+                                      ).image,
+                                    ),
+                                  ),
+                                );
                               }
                             },
                           ),

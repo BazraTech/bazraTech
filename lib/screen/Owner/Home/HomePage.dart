@@ -287,15 +287,19 @@ class _OwenerHomepageState extends State<OwenerHomepage> {
                                               child: Row(
                                                 children: [
                                                   Container(
-                                                      child: ClipOval(
-                                                    child: SizedBox(
-                                                      height:
-                                                          screenHeight * 0.09,
-                                                      width: screenWidth * 0.19,
-                                                      child: Image.network(
-                                                        snapshot.data!['pic']
-                                                            .toString(),
-                                                        fit: BoxFit.cover,
+                                                      child: SizedBox(
+                                                    height:
+                                                        screenHeight * 0.034,
+                                                    width: screenWidth * 0.24,
+                                                    child: ListTile(
+                                                      leading: CircleAvatar(
+                                                        radius: 30,
+                                                        backgroundImage:
+                                                            Image.network(
+                                                          snapshot.data!['pic']
+                                                              .toString(),
+                                                          fit: BoxFit.cover,
+                                                        ).image,
                                                       ),
                                                     ),
                                                   )),
