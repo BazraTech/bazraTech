@@ -74,12 +74,14 @@ class _Cargo_loginState extends State<Cargo_login> {
     });
     initHive();
   }
+
   Future<void> initHive() async {
     final appDocumentDir = await getApplicationDocumentsDirectory();
     Hive.init(appDocumentDir.path);
     await Hive.openBox<String>('logoBox');
     logoBox = Hive.box<String>('logoBox');
   }
+
   Future<String> fetchImage() async {
     var client = http.Client();
     StorageHelper storageHelper = StorageHelper();
@@ -138,6 +140,7 @@ class _Cargo_loginState extends State<Cargo_login> {
       print('Failed to store logo in Hive');
     }
   }
+
   bool isLoading = false;
   Widget buildLanguageDropdown(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -184,6 +187,7 @@ class _Cargo_loginState extends State<Cargo_login> {
       ),
     );
   }
+
   Future<String?> getPhoneNumberSync() async {
     final storage = FlutterSecureStorage();
     return await storage.read(key: 'phoneNumber');
@@ -200,7 +204,7 @@ class _Cargo_loginState extends State<Cargo_login> {
         child: Column(
           children: [
             Container(
-                margin: EdgeInsets.only(top: 50, left: 240),
+                margin: EdgeInsets.only(top: 50, left: 200),
                 child: buildLanguageDropdown(context)),
             Center(
               child: Container(
@@ -307,8 +311,7 @@ class _Cargo_loginState extends State<Cargo_login> {
                       hintTextStyle: TextStyle(
                         letterSpacing: 1.0,
                         wordSpacing: 2.0,
-                        color: _isFocused ? Colors.green.shade700 : Colors.grey,
-                        // ... other styles
+                        color: _isFocused ? Colors.green.shade700 : Colors.grey,                    
                       ),
                     ),
                     const SizedBox(
@@ -335,7 +338,6 @@ class _Cargo_loginState extends State<Cargo_login> {
                         letterSpacing: 1.0,
                         wordSpacing: 2.0,
                         color: _isFocused ? Colors.red : Colors.grey,
-                        
                       ),
                       validator: (value) {
                         if (value!.isEmpty) {

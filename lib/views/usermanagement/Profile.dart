@@ -195,162 +195,12 @@ class _ProfileState extends State<Profile> {
             child: SingleChildScrollView(
               child: Column(children: [
                 Container(
-                  height: screenHeight * 0.15,
+                  height: screenHeight * 0.22,
                   margin: const EdgeInsets.only(bottom: 30),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                          left: screenWidth * 0.35,
-                          height: screenHeight * 0.15,
-                          child: Column(
-                            children: [
-                              Stack(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 60,
-                                    backgroundColor: Colors.white,
-                                    backgroundImage: NetworkImage(
-                                        cargoOwnerInfo?['pic'] ?? ''),
-                                  ),
-                                  Positioned(
-                                    left: 59,
-                                    child: Container(
-                                      margin: EdgeInsets.only(
-                                          top: screenHeight * 0.07),
-                                      child: RawMaterialButton(
-                                        onPressed: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (BuildContext contex) {
-                                                return AlertDialog(
-                                                  title: const Text(
-                                                      'Choose Option',
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: GlobalVariables
-                                                            .primaryColor,
-                                                      )),
-                                                  content:
-                                                      SingleChildScrollView(
-                                                    child: ListBody(children: [
-                                                      InkWell(
-                                                          onTap: () {
-                                                            takePicture(
-                                                                ImageSource
-                                                                    .camera);
-                                                          },
-                                                          splashColor:
-                                                              GlobalVariables
-                                                                  .primaryColor,
-                                                          child: Row(
-                                                            children: [
-                                                              const Padding(
-                                                                padding:
-                                                                    EdgeInsets
-                                                                        .all(
-                                                                            8.0),
-                                                                child: Icon(
-                                                                  Icons.camera,
-                                                                  color: GlobalVariables
-                                                                      .primaryColor,
-                                                                ),
-                                                              ),
-                                                              Text('Camera',
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: Colors
-                                                                              .grey[
-                                                                          500]))
-                                                            ],
-                                                          )),
-                                                      InkWell(
-                                                          onTap: () {
-                                                            takePicture(
-                                                                ImageSource
-                                                                    .gallery);
-                                                          },
-                                                          splashColor:
-                                                              GlobalVariables
-                                                                  .primaryColor,
-                                                          child: Row(
-                                                            children: [
-                                                              const Padding(
-                                                                padding:
-                                                                    EdgeInsets
-                                                                        .all(
-                                                                            8.0),
-                                                                child: Icon(
-                                                                  Icons
-                                                                      .browse_gallery,
-                                                                  color: GlobalVariables
-                                                                      .primaryColor,
-                                                                ),
-                                                              ),
-                                                              Text('Galley',
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: Colors
-                                                                              .grey[
-                                                                          500]))
-                                                            ],
-                                                          )),
-                                                      InkWell(
-                                                          onTap: () {},
-                                                          splashColor:
-                                                              GlobalVariables
-                                                                  .primaryColor,
-                                                          child: Row(
-                                                            children: [
-                                                              const Padding(
-                                                                padding:
-                                                                    EdgeInsets
-                                                                        .all(
-                                                                            8.0),
-                                                                child: Icon(
-                                                                  Icons
-                                                                      .remove_circle,
-                                                                  color: Colors
-                                                                      .red,
-                                                                ),
-                                                              ),
-                                                              Text('Remove',
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: Colors
-                                                                              .grey[
-                                                                          500]))
-                                                            ],
-                                                          )),
-                                                    ]),
-                                                  ),
-                                                );
-                                              });
-                                        },
-                                        elevation: 10,
-                                        fillColor: GlobalVariables.primaryColor,
-                                        shape: const CircleBorder(),
-                                        child: const Icon(Icons.add_a_photo),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          )),
-                    ],
+                  child: CircleAvatar(
+                    radius: 65,
+                    backgroundColor: Colors.white,
+                    backgroundImage: NetworkImage(cargoOwnerInfo?['pic'] ?? ''),
                   ),
                 ),
                 const SizedBox(
@@ -574,8 +424,8 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // Other widgets in the row
                           Expanded(
                             child: Container(
                               margin: const EdgeInsets.only(left: 20),
