@@ -6,9 +6,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:ionicons/ionicons.dart';
+import '../const/constant.dart';
 import '../controller/ownerinfocontroller.dart';
 import '../screen/Bottom/Bottom.dart';
-
+ Map<String, dynamic>? Result;
 class AlertDialoug {
   static showMyDialog(
       BuildContext context, String title, String message) async {
@@ -500,3 +501,5 @@ class alertforscuccess {
     );
   }
 }
+
+
