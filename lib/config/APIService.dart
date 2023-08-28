@@ -2,7 +2,7 @@ class ApIConfig {
   static const String urlAPI = "164.90.174.113:9090";
   static const unload = "/Api/Driver/ChangeDriverState";
   static const ownerinfoupdate = "/Api/Vehicle/UpdateInfo";
-
+static const billapi = "/Api/Payment/VehicleOwner";
   static const String acceptwork = "/Api/Driver/All/Cargos/ACCEPTED";
 
   static const ownerlogo = "http://164.90.174.113:9090/Api/Admin/LogoandAvatar";

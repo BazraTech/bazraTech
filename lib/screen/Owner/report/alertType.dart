@@ -2,13 +2,9 @@ import 'package:bazralogin/const/constant.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../Model/driverCount.dart';
-
-import '../Communication/communicationPage.dart';
-import '../Vehicle/TotalVehicles.dart';
-
-import '../communication/Communication.dart';
 import 'getAlertStatus.dart';
 
+// ignore: must_be_immutable
 class AlertType extends StatelessWidget {
   AlertType({super.key});
   static bool isPressed = true;

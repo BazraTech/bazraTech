@@ -1,12 +1,14 @@
+// ignore_for_file: must_be_immutable
 import 'dart:convert';
+import 'package:bazralogin/screen/Owner/report/billReport/billReport.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../../const/constant.dart';
+import '../../../config/APIService.dart';
 import 'alertComponet/alertComponetforowner.dart';
-import 'tripReport/tripReport.dart';
 import 'workComponent/workComponent.dart';
 
 class MyScreen extends StatefulWidget {
@@ -21,6 +23,7 @@ class _MyScreenState extends State<MyScreen> {
   bool showList1 = false;
   bool showList2 = false;
   dynamic fetchedData;
+  dynamic fetchedBill;
   String? endDate;
   String? startdate;
 
@@ -29,6 +32,7 @@ class _MyScreenState extends State<MyScreen> {
   // Your initial list of data
   List filteredDataList = [];
   dynamic workData;
+  dynamic billData;
   bool _isLoading = true;
   workReport() async {
     final storage = new FlutterSecureStorage();
@@ -49,6 +53,34 @@ class _MyScreenState extends State<MyScreen> {
       final mydata = data["cargos"];
       setState(() {
         workData = mydata;
+        _isLoading = false;
+      });
+      // workComponentforowner(
+      //   data: mydata,
+      // );
+    } else {
+      throw Exception('Failed to fetch data');
+    }
+  }
+
+  // work report for driver
+  billReport() async {
+    final storage = new FlutterSecureStorage();
+    var token = await storage.read(key: 'jwt');
+    var client = http.Client();
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    var url = Uri.http(ApIConfig.urlAPI, ApIConfig.billapi);
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final mydata = data["paymentINFs"];
+      setState(() {
+        billData = mydata;
         _isLoading = false;
       });
       // workComponentforowner(
@@ -197,6 +229,7 @@ class _MyScreenState extends State<MyScreen> {
     super.initState();
     _scrollController.addListener(_scrollListener);
     fetchData();
+    billReport();
     workReport();
   }
 
@@ -204,6 +237,7 @@ class _MyScreenState extends State<MyScreen> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+    print(billData);
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: AppBar(
@@ -264,6 +298,16 @@ class _MyScreenState extends State<MyScreen> {
                               enddate: endDate,
                               startdate: startdate,
                             )
+
+                      //
+                      ),
+
+                  // bill report
+                  Container(
+                      height: screenHeight,
+                      child: billReportcomponent(
+                        data: billData,
+                      )
 
                       //
                       )
