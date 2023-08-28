@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:bazralogin/screen/Owner/TripManagement/avilabelVehiclefortrip.dart';
-import 'package:bazralogin/screen/Owner/TripManagement/tripDetail.dart';
+import 'package:BazraLogisticsVe/screen/Owner/TripManagement/avilabelVehiclefortrip.dart';
+import 'package:BazraLogisticsVe/screen/Owner/TripManagement/tripDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lottie/lottie.dart';

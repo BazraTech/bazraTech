@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:ui';
-import 'package:bazralogin/Theme/Alert.dart';
-import 'package:bazralogin/screen/Driver/driverBottomnav.dart';
-import 'package:bazralogin/screen/Loging/forgotPin.dart';
+import 'package:BazraLogisticsVe/Theme/Alert.dart';
+import 'package:BazraLogisticsVe/screen/Driver/driverBottomnav.dart';
+import 'package:BazraLogisticsVe/screen/Loging/forgotPin.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;

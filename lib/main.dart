@@ -1,7 +1,7 @@
-import 'package:bazralogin/controller/Localization.dart';
-import 'package:bazralogin/screen/Bottom/Bottom.dart';
-import 'package:bazralogin/screen/Driver/driverBottomnav.dart';
-import 'package:bazralogin/screen/Loging/Landingpage.dart';
+import 'package:BazraLogisticsVe/controller/Localization.dart';
+import 'package:BazraLogisticsVe/screen/Bottom/Bottom.dart';
+import 'package:BazraLogisticsVe/screen/Driver/driverBottomnav.dart';
+import 'package:BazraLogisticsVe/screen/Loging/Landingpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:bazralogin/config/APIService.dart';
-import 'package:bazralogin/screen/Owner/TripManagement/setTrip.dart';
+import 'package:BazraLogisticsVe/config/APIService.dart';
+import 'package:BazraLogisticsVe/screen/Owner/TripManagement/setTrip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lottie/lottie.dart';

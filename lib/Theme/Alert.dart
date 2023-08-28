@@ -1,6 +1,6 @@
-import 'package:bazralogin/Route/Routes.dart';
-import 'package:bazralogin/screen/Driver/driverBottomnav.dart';
-import 'package:bazralogin/screen/Loging/Login.dart';
+import 'package:BazraLogisticsVe/Route/Routes.dart';
+import 'package:BazraLogisticsVe/screen/Driver/driverBottomnav.dart';
+import 'package:BazraLogisticsVe/screen/Loging/Login.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';

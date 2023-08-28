@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bazralogin/Theme/Alert.dart';
-import 'package:bazralogin/Theme/TextInput.dart';
-import 'package:bazralogin/const/constant.dart';
+import 'package:BazraLogisticsVe/Theme/Alert.dart';
+import 'package:BazraLogisticsVe/Theme/TextInput.dart';
+import 'package:BazraLogisticsVe/const/constant.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -85,7 +85,7 @@ class _driverprofileUpadateState extends State<driverprofileUpadate> {
     );
     print("yared12222 992900");
     print(
-        "/data/user/0/com.example.bazralogin/cache/0e681c23-32a7-4b98-9dbd-ba18c4f8e2c6/Screenshot_20230502-041436.png");
+        "/data/user/0/com.example.BazraLogisticsVe/cache/0e681c23-32a7-4b98-9dbd-ba18c4f8e2c6/Screenshot_20230502-041436.png");
 
     final response = await formData.send();
     var responseData = await response.stream.bytesToString();

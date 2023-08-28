@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:bazralogin/const/constant.dart';
-import 'package:bazralogin/screen/Driver/Commicationfordriver/chatRome.dart';
+import 'package:BazraLogisticsVe/const/constant.dart';
+import 'package:BazraLogisticsVe/screen/Driver/Commicationfordriver/chatRome.dart';
 
 import 'package:flutter/material.dart';
 

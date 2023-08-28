@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:bazralogin/Route/Routes.dart';
-import 'package:bazralogin/Theme/Alert.dart';
-import 'package:bazralogin/const/constant.dart';
+import 'package:BazraLogisticsVe/Route/Routes.dart';
+import 'package:BazraLogisticsVe/Theme/Alert.dart';
+import 'package:BazraLogisticsVe/const/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';

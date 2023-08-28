@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:bazralogin/Theme/Alert.dart';
-import 'package:bazralogin/Theme/TextInput.dart';
+import 'package:BazraLogisticsVe/Theme/Alert.dart';
+import 'package:BazraLogisticsVe/Theme/TextInput.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -117,7 +117,7 @@ class _ownerprofileUpadateState extends State<ownerprofileUpadate> {
     formData.fields["serviceRequired"] = 'TECH';
     print("yared12222 992900");
     print(
-        "/data/user/0/com.example.bazralogin/cache/0e681c23-32a7-4b98-9dbd-ba18c4f8e2c6/Screenshot_20230502-041436.png");
+        "/data/user/0/com.example.BazraLogisticsVe/cache/0e681c23-32a7-4b98-9dbd-ba18c4f8e2c6/Screenshot_20230502-041436.png");
 
     final response = await formData.send();
     var responseData = await response.stream.bytesToString();

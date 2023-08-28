@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import 'package:bazralogin/config/APIService.dart';
-import 'package:bazralogin/controller/Localization.dart';
-import 'package:bazralogin/screen/Owner/Profile/profileEdit/updateOwnerprofile.dart';
+import 'package:BazraLogisticsVe/config/APIService.dart';
+import 'package:BazraLogisticsVe/controller/Localization.dart';
+import 'package:BazraLogisticsVe/screen/Owner/Profile/profileEdit/updateOwnerprofile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';

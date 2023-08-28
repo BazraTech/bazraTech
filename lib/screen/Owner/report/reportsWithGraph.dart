@@ -1,4 +1,4 @@
-import 'package:bazralogin/const/constant.dart';
+import 'package:BazraLogisticsVe/const/constant.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 

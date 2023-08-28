@@ -1,6 +1,6 @@
-import 'package:bazralogin/screen/Loging/Login.dart';
-import 'package:bazralogin/screen/Owner/Alert/Notification.dart';
-import 'package:bazralogin/screen/Owner/Driver/vehicleOnStock.dart';
+import 'package:BazraLogisticsVe/screen/Loging/Login.dart';
+import 'package:BazraLogisticsVe/screen/Owner/Alert/Notification.dart';
+import 'package:BazraLogisticsVe/screen/Owner/Driver/vehicleOnStock.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
