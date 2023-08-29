@@ -180,7 +180,7 @@ class _AcceptedCargoState extends State<AcceptedCargo> {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: kBackgroundColor,
-       appBar: AppBar(
+        appBar: AppBar(
           toolbarHeight: 80,
           elevation: 0,
           leading: InkWell(
